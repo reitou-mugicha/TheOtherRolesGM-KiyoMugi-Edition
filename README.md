@@ -1,108 +1,71 @@
-![eisbison banner](./Images/TOR_logo.png)
-<p align="center"><a href="https://github.com/Eisbison/TheOtherRoles/releases/"><img src="https://badgen.net/github/release/eisbison/theotherroles"></a></p>
+# The Other Roles: GM Edition
 
-<p align="center">
-This mod is not affiliated with Among Us or Innersloth LLC, and the content contained therein is not endorsed or otherwise sponsored by Innersloth LLC. Portions of the materials contained herein are property of Innersloth LLC. © Innersloth LLC.</p>
+This fork introduces a number of changes to [The Other Roles](https://github.com/Eisbison/TheOtherRoles).
 
-[![Discord](./Images/TOR_server.png)](https://discord.gg/77RkMJHWsM)
-![eisbison infographic](./Images/TOR_roles.jpg)
+* New Roles
+  * [GM](#gm) by [Virtual_Dusk](https://twitter.com/Virtual_Dusk)
+  * [Madmate](#madmate) by [tomarai](https://github.com/tomarai)
+  * [Opportunist](#opportunist) by [libhalt](https://twitter.com/libhalt)
+  * [Ninja](#ninja) by [Virtual_Dusk](https://twitter.com/Virtual_Dusk)
+  * [Evil Swapper](#swapper) by [Virtual_Dusk](https://twitter.com/Virtual_Dusk)
+  * [Chain-Shifter](#shifter) by [Virtual_Dusk](https://twitter.com/Virtual_Dusk)
+  * [Plague Doctor](#plague-doctor) by [haoming37](https://github.com/haoming37)
+  * [Serial Killer](#serial-killer) by [haoming37](https://github.com/haoming37)
+  * [Neko-Kabocha](#neko-kabocha) by [Virtual_Dusk](https://twitter.com/Virtual_Dusk)
+  * [Fox & Immoralist](#fox) by [haoming37](https://github.com/haoming37)
+  * [Fortune Teller](#serial-killer) by [haoming37](https://github.com/haoming37)
+  * [Watcher](#watcher) by [Virtual_Dusk](https://twitter.com/Virtual_Dusk)
+* Pluralized Roles
+  * Lovers (up to 7 couples)
+  * Sheriff
+  * And more...
+* [Translation](#translation) into any language supported by Among Us
+* Custom Hats
+  * Almost 90 new hats drawn by members of the Japanese Among Us community
 
+This mod is not affiliated with Among Us or Innersloth LLC, and the content contained therein is not endorsed or otherwise sponsored by Innersloth LLC. Portions of the materials contained herein are property of Innersloth LLC. © Innersloth LLC.
 
 # The Other Roles
 
-The **The Other Roles**, is a mod for [Among Us](https://store.steampowered.com/app/945360/Among_Us) which adds many new roles, new [Settings](#settings), new [Custom Hats](#custom-hats) and support for [10+ Player Lobbies](#Custom-Servers-and-10+-Players) to the game.
+The **The Other Roles**, is a mod for [Among Us](https://store.steampowered.com/app/945360/Among_Us) which adds many new roles, new [Settings](#settings), and new [Custom Hats](#custom-hats) to the game.
 Even more roles are coming soon :)
 
-| Impostors | Crewmates | Neutral | Secondary |
+| Impostors | Crewmates | Neutral | Other | 
 |----------|-------------|-----------------|----------------|
-| [Evil Mini](#mini) | [Nice Mini](#mini) | [Arsonist](#arsonist) | [Lover](#lovers) |
-| [Evil Guesser](#guesser) | [Nice Guesser](#guesser) | [Jester](#jester) |  |
+| [Evil Mini](#mini) | [Nice Mini](#mini) | [Arsonist](#arsonist) | [GM](#gm) |
+| [Evil Guesser](#guesser) | [Nice Guesser](#guesser) | [Jester](#jester) |  
 | [Bounty Hunter](#bounty-hunter) | [Detective](#detective) | [Jackal](#jackal) |  |
 | [Camouflager](#camouflager) | [Engineer](#engineer) | [Sidekick](#sidekick) |  |
-| [Cleaner](#cleaner) | [Hacker](#hacker) | [Vulture](#vulture) |  |
-| [Eraser](#eraser) | [Lighter](#lighter) | [Lawyer](#lawyer) |  |
-| [Godfather (Mafia)](#mafia) | [Mayor](#mayor) |  |  |
-| [Mafioso (Mafia)](#mafia) | [Medic](#medic) |  |  |
-| [Janitor (Mafia)](#mafia)  | [Security Guard](#security-guard) |  |  |
-| [Morphling](#morphling) | [Seer](#seer) |  |  |
-| [Trickster](#trickster) | [Sheriff](#sheriff) 
-| [Vampire](#vampire) | [Deputy](#deputy) |  |
-| [Warlock](#warlock) | [Shifter](#shifter) |  |  |
-| [Witch](#witch) | [Snitch](#snitch) |  |  |
-|  | [Spy](#spy) |  |  |
-|  | [Swapper](#swapper) |  |  |
-|  | [Time Master](#time-master) |  |  |
-|  |  [Tracker](#tracker) |  |  |
-|  |  [Bait](#bait) |  |
-|  |  [Medium](#medium) |  |
+| [Cleaner](#cleaner) | [Hacker](#hacker) | [Lover](#lovers) |  |
+| [Eraser](#eraser) | [Lighter](#lighter) | [Opportunist](#opportunist) |  |
+| [Godfather (Mafia)](#mafia) | [Mayor](#mayor) | [Vulture](#vulture)  |  |
+| [Mafioso (Mafia)](#mafia) | [Medic](#medic) | [Lawyer](#lawyer) |  |
+| [Janitor (Mafia)](#mafia)  | [Security Guard](#security-guard) | [Chain-Shifter](#shifter) |  |
+| [Morphling](#morphling) | [Seer](#seer) | [Plague Doctor](#plague-doctor) |  |
+| [Trickster](#trickster) | [Sheriff](#sheriff) | [Fox & Immoralist](#fox) |  |
+| [Vampire](#vampire) | [Shifter](#shifter) |  |  |
+| [Warlock](#warlock) | [Snitch](#snitch) |  |  |
+| [Witch](#witch) | [Spy](#spy) |  |  |
+| [Ninja](#ninja) | [Nice Swapper](#swapper) |  |  |
+| [Evil Swapper](#swapper) | [Time Master](#time-master) |  |  |
+| [Serial Killer](#serial-killer) |  [Tracker](#tracker) |  |  |
+| [Neko-Kabocha](#neko-kabocha) |  [Bait](#bait) |  |  |
+| [Evil Watcher](#Watcher) |  [Madmate](#madmate)  |  |  |
+|  |  [Medium](#medium) |  |  |
+|  |  [Fortune Teller](#fortune-teller) |  |  |
+|  |  [Nice Watcher](#Watcher) |  |  |
 
 The [Role Assignment](#role-assignment) sections explains how the roles are being distributed among the players.
 
 # Releases
-| Among Us - Version| Mod Version | Link |
+| Among Us - Version | GM Verrsion | Mod Version | Link |
 |----------|-------------|-----------------|
-| 2022.2.23s| v3.4.4| [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v3.4.4/TheOtherRoles.zip)
-| 2021.12.15s| v3.4.3| [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v3.4.3/TheOtherRoles.zip)
-| 2021.12.15s| v3.4.2| [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v3.4.2/TheOtherRoles.zip)
-| 2021.12.15s| v3.4.1| [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v3.4.1/TheOtherRoles.zip)
-| 2021.12.15s| v3.4.0| [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v3.4.0/TheOtherRoles.zip)
-| 2021.12.15s| v3.3.3| [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v3.3.3/TheOtherRoles.zip)
-| 2021.12.15s| v3.3.2| [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v3.3.2/TheOtherRoles.zip)
-| 2021.12.14s| v3.3.1| [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v3.3.1/TheOtherRoles.zip)
-| 2021.12.14s| v3.3.0| [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v3.3.0/TheOtherRoles.zip)
-| 2021.11.9.5s| v3.2.4| [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v3.2.4/TheOtherRoles.zip)
-| 2021.11.9.5s| v3.2.3| [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v3.2.3/TheOtherRoles.zip)
-| 2021.11.9.5s| v3.2.2| [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v3.2.2/TheOtherRoles.zip)
-| 2021.11.9.5s| v3.2.1| [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v3.2.1/TheOtherRoles.zip)
-| 2021.11.9.5s| v3.2.0| [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v3.2.0/TheOtherRoles.zip)
-| 2021.11.9.5s| v3.1.2| [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v3.1.2/TheOtherRoles.zip)
-| 2021.11.9.5s| v3.1.1| [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v3.1.1/TheOtherRoles.zip)
-| 2021.11.9.5s| v3.1.0| [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v3.1.0/TheOtherRoles.zip)
-| 2021.11.9.5s| v3.0.0| [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v3.0.0/TheOtherRoles.zip)
-| 2021.6.30s| v2.9.2| [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v2.9.2/TheOtherRoles.zip)
-| 2021.6.30s| v2.9.1| [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v2.9.1/TheOtherRoles.zip)
-| 2021.6.30s| v2.9.0| [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v2.9.0/TheOtherRoles.zip)
-| 2021.6.30s| v2.8.1| [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v2.8.1/TheOtherRoles.zip)
-| 2021.6.30s| v2.8.0| [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v2.8.0/TheOtherRoles.zip)
-| 2021.6.30s| v2.7.3| [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v2.7.3/TheOtherRoles.zip)
-| 2021.6.15s| v2.7.1| [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v2.7.1/TheOtherRoles.zip)
-| 2021.6.15s| v2.7.0| [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v2.7.0/TheOtherRoles.zip)
-| 2021.5.25.2s| v2.6.7| [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v2.6.7/TheOtherRoles.zip)
-| 2021.5.10s| v2.6.6| [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v2.6.6/TheOtherRoles.zip)
-| 2021.5.10s| v2.6.5| [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v2.6.5/TheOtherRoles.zip)
-| 2021.5.10s| v2.6.4| [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v2.6.4/TheOtherRoles.zip)
-| 2021.5.10s| v2.6.3| [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v2.6.3/TheOtherRoles.zip)
-| 2021.5.10s| v2.6.2| [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v2.6.2/TheOtherRoles.zip)
-| 2021.4.14s| v2.6.1| [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v2.6.1/TheOtherRoles.zip)
-| 2021.4.14s| v2.6.0| [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v2.6.0/TheOtherRoles.zip)
-| 2021.4.14s| v2.5.1| [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v2.5.1/TheOtherRoles.zip)
-| 2021.4.14s| v2.5.0| [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v2.5.0/TheOtherRoles.zip)
-| 2021.4.14s| v2.4.0| [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v2.4.0/TheOtherRoles.zip)
-| 2021.4.14s| v2.3.0| [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v2.3.0/TheOtherRoles.zip)
-| 2021.4.14s| v2.2.2| [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v2.2.2/TheOtherRoles.zip)
-| 2021.4.12s| v2.2.1| [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v2.2.1/TheOtherRoles.zip)
-| 2021.4.12s| v2.2.0| [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v2.2.0/TheOtherRoles.zip)
-| 2021.3.31.3s| v2.1.0| [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v2.1.0/TheOtherRoles.zip)
-| 2021.3.31.3s| v2.0.1 beta| [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v2.0.1/TheOtherRoles.zip)
-| 2021.3.31.3s | v2.0.0 beta | [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v2.0.0/TheOtherRoles.zip)
-| 2021.3.5s | v1.8.2 | [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v1.8.2/TheOtherRoles.zip)
-| 2021.3.5s | v1.8.1 | [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v1.8.1/TheOtherRoles.zip)
-| 2021.3.5s | v1.8 | [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v1.8/TheOtherRoles.zip)
-| 2021.3.5s | v1.7 | [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v1.7/TheOtherRoles.zip)
-| 2021.3.5s | v1.6 | [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v1.6/TheOtherRoles.zip)
-| 2021.3.5s | v1.5 | [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v1.5/TheOtherRoles.zip)
-| 2021.3.5s | v1.4 | [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v1.4/TheOtherRoles.zip)
-| 2021.3.5s | v1.3 | [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v1.3/TheOtherRoles.zip)
-| 2020.12.19s | v1.1 | [Download](https://github.com/Eisbison/TheOtherRoles/releases/download/v1.1/TheOtherRoles.zip)
-| 2020.12.19s | v1.0 | [Download](https://github.com/Eisbison/TheOtherRoles/files/6097191/TheOtherRoles.zip)
+| 2022.3.29s | Ver.3.5.5 | Ver.1.0.2.1 | [Download](https://github.com/Dekokiyo/TheOtherRolesGM-KiyoMugi-Edition/releases/download/1.0.2.1/TheOtherRolesGM-KiyoMugi-Edition.1.0.2.1.zip) |
 
 # Changelog
 <details>
   <summary>Click to show the Changelog</summary>
 
-**Version 3.4.4**
-- Fixed a bug where games were not finished properly on official servers (special thanks to miniduikboot & 6pak)
-  
 **Version 3.4.3**
 - Fixed a bug where "Guesser Is Impostor Chance" crashed the role system
 - Fixed a bug where a sidekicked Hacker was stuck
@@ -164,6 +127,14 @@ The [Role Assignment](#role-assignment) sections explains how the roles are bein
 - New option for the Hacker "Max Mobile Gadget Charges"
 - New option for the Hacker "Number Of Tasks Needed For Recharging"
 - Fixed some UI bugs during the meeting  
+  
+**Version 3.2.5 (GM)**
+- Allow hiding nameplates on an individual basis
+- A failed Shifter is marked as a suicide now
+- Fix for the Lawyer stealing a win when they were ejected
+- Fix for players sometimes having their clothes/names swapped around
+- Hide the kill button on the meeting screen
+- Fix for non-Vampire/Warlock kills sometimes happening without a warp
 
 **Version 3.2.4**
 - Fixed a bug where the Vampire teleported when the bitten player died
@@ -226,24 +197,80 @@ The [Role Assignment](#role-assignment) sections explains how the roles are bein
 - For now we removed the option "Jester Can Sabotage"
 - The Sheriff now always dies, when they try to kill a not fully grown Mini
 
-**Hotfix 2.9.2**
-- Fixed a bug where the names of all players were visible during camouflage
-- Fixed a bug where the Morphling didn't take over the name of its target
+**Hotfix 2.9.2.1**
 
-**Version 2.9.1**
-- Fixed a bug where [Camouflager](#camouflager) & [Morphling](#morphling) caused performance issues
-- Fixed a bug where [Medium](#medium) did not exlude the Evil [Mini](#mini)
-- [Vulture](#vulture) "Number Of Corpses Needed To Be Eaten" max value extended to 10
-- Added Vulture Option: "Show Arrows Pointing Towards The Corpes"
-- Removed Medium Question: "What is your name?" (name of the soul is added after each question)
+- Fix for Morphing/Camoflauger's powers not properly ending when the timer ran out.
 
+**Version 2.9.2**
 
-**Version 2.9.0**
+- Merged from upstream
 - **New Role:** [Medium](#medium)
 - **New Role:** [Vulture](#vulture)
 - Added Jackal Option: "Jackal Can See If Engineer Is In A Vent"
 - Added Guesser Option: "Guesser Can Shoot Multiple Times Per Meeting"
 - Fixed a bug that occured when the Shifter shifted the Bait
+- Fixed a bug where [Medium](#medium) did not exlude the Evil [Mini](#mini)
+- [Vulture](#vulture) "Number Of Corpses Needed To Be Eaten" max value extended to 12
+- Added Vulture Option: "Show Arrows Pointing Towards The Corpses"
+
+## v2.9.1
+
+**New Features:**
+
+  * Added an overlay to display current settings/role summary in-game (press H key to display)
+  Japanese summaries by [Ao](https://twitter.com/aokunnnnn2525)
+  * New Camouflager Option: Randomize Colors
+  * New Guesser Option: Only Show Available Roles
+  * New Sheriff Option: Misfire Kills Target
+  * New GM Edition exclusive hats, 30 designs based on Japanese Among Us streamers and drawn by [Unohana Shiune](https://twitter.com/konken5)
+
+**Major Changes:**
+
+  * Opportunist is now handled as a Neutral role instead of a Crew role
+    As a result, the Opportunist can now be killed by the Sheriff
+  * Shifter now dies when attempting to steal Opportunist or Madmate (Opportunist is a Neutral role, and Madmate is technically a Crew role but effectively an Impostor role)
+  * An erased Neutral role no longer results in the player having to do tasks
+  * Adjusted Lovers quite a bit
+    * Option "Can Win With Crew" replaced with "Counts as Separate Team"
+    * When off, Lovers now properly behaves like old TOR (some fixes from the previous update left us inconsistent there)
+  * Hide number of tasks completed during a Comms sabotage
+  * Expanded the Impostors setting from 1-3 to 0-15
+  * Extended all Kill Cooldowns to go down as far as 2.5s
+  * More granular info on the results screen, such as Lovers who committed suicide or players who were torched by the Arsonist
+  * Replace the On/Off special device restriction with a more granular time-based system (idea by [tomarai](https://github.com/tomarai))
+    * Time limits are shared across the entire crew, and can be reset after each round if desired
+    * Setting the time limit to 0s is the same as disabling the device entirely
+
+**Bug Fixes:**
+
+  * Briefly display a black screen in the period between the report animation and the meeting starting
+  * Fix a bug with the original game where a kill happening *after* a meeting begins results in a corpse being left behind for some players
+  * Fix a bug with the original game where the arrow for a task completed during a Comms sabotage stays behind
+  * Don't highlight potential targets while inside a vent
+  * Fix issues with the Snitch arrows sometimes showing the wrong color
+  * The Security Guard's cameras now display their room name properly on Polus and Airship
+  * Fix Airship showing up as Dleks on the options menu after every game
+  * Results screen didn't display properly if the game ended during a Camouflage or Morph
+  * Fix the UI getting lost if you open and then close the map while zoomed out
+  * A task win cannot occur if there are zero players with tasks (ie. everyone is an Impostor or Neutral role)
+
+**Hotfix 2.9.0.1**
+- **New Role:** [Opportunist](#opportunist) (created by [libhalt](https://twitter.com/libhalt))
+- Fixed a bug causing the Guesser to be unable to shoot
+- Added support for a second repository for custom hats
+
+**Version 2.9.0**
+- **New Role:** [Madmate](#madmate) (created by [tomarai](https://github.com/tomarai))
+- **New Role:** [GM](#gm) (created by [Virtual_Dusk](https://twitter.com/Virtual_Dusk))
+- Added Lovers Options: "Lovers Can Win With Crew", "Lovers Tasks Are Counted"
+- Added Sheriff Options: "Number of Shots"
+- Changed [Mafia](#mafia) so that if only the Janitor and crew remain, the game automatically ends, as the Janitor is unable to kill.
+- Completely overhauled how options are displayed on the lobby screen
+- Post-game results now displays in a more legible table format
+- Improved performance of Morphling/Camouflager abilities
+- Options to disable admin, security, vitals, and vents
+- Added Japanese translation (by [Virtual_Dusk](https://twitter.com/Virtual_Dusk)) and support for adding [other languages](#translation).
+- Numerous miscellaneous changes and bugfixes
 
 **Hotfix 2.8.1**
 - Fixed a game breaking bug where killing the Bait resulted in a ban of the Bait
@@ -488,77 +515,6 @@ The [Role Assignment](#role-assignment) sections explains how the roles are bein
 - A bug was removed where the game of the Lovers crashed if they were the last players killed by the host of the lobby.
 </details>
 
-# Installation
-## Windows Auto Installation/Updating Using The AmongUsModUpdater
-This tool was made by [Narua](https://github.com/Narua2010) and [Jolle](https://github.com/joelweih). It automatically installs/updates the TheOtherRoles mod to the newest version, runs the game and
-syncs your game options automatically.
-
-1. Simply get the newest [release](https://github.com/Narua2010/AmongUsModUpdater/releases/latest) of the [AmongUsModUpdater](https://github.com/Narua2010/AmongUsModUpdater)
-2. Unzip the folder and run the **setup.exe**
-
-If you have problems with the AmongUsModUpdater, make sure to [contact us](https://discord.gg/csa3pHYdPU).
-
-## Windows Manual Installation
-1. Download and unzip the newest [release](https://github.com/Eisbison/TheOtherRoles/releases/latest)
-2. Find the folder of your game, for Steam players you can right click in Steam, on the game, a menu will appear proposing you to go to the folders.
-3. Make a copy of your game, it's not obligatory but advised, put it where you want.
-4. Drag or extract the files from the zip into your game, at the `.exe` level.
-5. Run the game (the first launch might take a while)
-
-Not working? You might want to install the dependency [vc_redist](https://aka.ms/vs/16/release/vc_redist.x86.exe)
-
-![Install](https://i.imgur.com/pvBAyZN.png)
-
-**Linux Manual**
-1. Install Among Us via Steam
-2. Download newest [release](https://github.com/Eisbison/TheOtherRoles/releases/latest) and extract it to ~/.steam/steam/steamapps/common/Among Us
-3. Enable `winhttp.dll` via the proton winecfg (https://docs.bepinex.dev/articles/advanced/steam_interop.html#open-winecfg-for-the-target-game)
-4. Launch the game via Steam
-
-# Custom Servers and 10+ Players
-We always recommend you to play on custom servers rather than on the official ones. If you want to play with more than 10 players in one lobby, you're required to use a custom server. Credits for the original implementation that allowed 10+ player lobbies go to the creators of the [CrowdedMod](https://github.com/CrowdedMods/CrowdedMod).
-
-**Setup the Clients:**
-1. Open the region menu where you can choose between the different regions
-2. Select the region *Custom*
-3. Enter the ip/domain and the port of your custom server in the corresponding text fields
-
-**Setup the Server:**
-1. Get the [Impostor](https://github.com/Impostor/Impostor) release for the Among Us version **2021.3.31 - 2021.4.2**
-2. Follow the steps (using the server release you just downloaded) on the official [Impostor-Documentation](https://github.com/Impostor/Impostor/wiki/Running-the-server)
-3. Make sure to set the following values to false in the `config.json` file:
-```
-    ...
-    "AntiCheat": {
-      "Enabled": false,
-      "BanIpFromGame": false
-    }
-```
-4. Make sure to forward the right ports on the hosting machine
-5. Run the server and setup the client
-
-**Setting up Server as Docker Container:** \
-If you want to run the server as a docker container you'll need to use the image
-```
-aeonlucid/impostor:nightly
-```
-(Currently only the "nightly" tag is starting a server supporting 2021.3.31 or later)
-
-In addition to running it, the environment variables to disable the AntiCheat feature need to be set.
-```
-IMPOSTOR_AntiCheat__Enabled=false
-IMPOSTOR_AntiCheat__BanIpFromGame=false
-```
-
-Example to docker run command:
-```
-docker run -p 22023:22023/udp --env IMPOSTOR_AntiCheat__Enabled=false --env IMPOSTOR_AntiCheat__BanIpFromGame=false aeonlucid/impostor:nightly
-```
-
-Or use to run it in the background
-```
-docker run -d -p 22023:22023/udp --env IMPOSTOR_AntiCheat__Enabled=false --env IMPOSTOR_AntiCheat__BanIpFromGame=false aeonlucid/impostor:nightly
-```
 
 
 # Credits & Resources
@@ -662,7 +618,7 @@ The count you set will only be reached, if there are enough Crewmates/Impostors 
 **Example:**\
 Settings: 2 special Crewmate roles, Snitch: 100%, Hacker: 10%, Tracker: 30%\
 Result: Snitch is assigned, then one role out of the pool [Hacker, Tracker, Tracker, Tracker] is being selected\
-Note: Changing the settings to Hacker: 20%, Tracker: 60% would statistically result in the same outcome .
+Note: Changing the settings to Hacker: 20%, Tracker: 60% would statistically result in the same outcome.
 
 
 ## Mafia
@@ -674,6 +630,7 @@ The Janitor is an Impostor who cannot kill, but they can hide dead bodies instea
 \
 **NOTE:**
 - There have to be 3 Impostors activated for the mafia to spawn.
+- If only the Janitor is left alive, the Mafia loses as there's no one left able to kill.
 
 ### Game Options
 | Name | Description |
@@ -756,8 +713,8 @@ they can also erase them (Impostors will lose their special Impostor ability).
 - The Shifter shift will always be triggered before the Erase (hence either the new role of the Shifter will be erased or the Shifter saves the role of their target, depending on whom the Eraser erased)
 - Erasing a Lover automatically erases the other Lover as well (if the second Lover is an ImpLover, they will turn into an Impostor)
 - Erasing a Jackal that has a Sidekick, triggers the Sidekick promotion if it's activated in the settings
-- As the erase is being triggered before the ejection of a player, erasing and voting out a Lover in the same round, would result in the
-ex-Lover surviving, as the partnership was erased before. Also a Jester win would not happen, as the erase will be triggered before.
+- As the erasing is being triggered before the eject of a player, erasing and voting out a Lover in the same round, would result in the
+ex Lover surviving as the partnership was erased before. Also a Jester win would not happen, as the erase will be triggered before.
 
 ### Game Options
 | Name | Description |
@@ -808,7 +765,7 @@ The Cleaner is an Impostor who has the ability to clean up dead bodies.\
 The Warlock is an Impostor, that can curse another player (the cursed player doesn't get notified).\
 If the cursed person stands next to another player, the Warlock is able to kill that player (no matter how far away they are).\
 Performing a kill with the help of a cursed player, will lift the curse and it will result in the Warlock being unable to move for a configurable amount of time.\
-The Warlock can still perform normal kills, but the two buttons share the same cooldown.\
+The Warlock can still perform normal kills, but the two buttons share the same cooldown.
 
 \
 **NOTE:**
@@ -847,6 +804,32 @@ Depending on the options, there'll be an arrow pointing towards the current targ
 | Additional Cooldown After Killing Others | Time will be added to the normal impostor cooldown if the Bounty Hunter kills a not-bounty player
 | Show Arrow Pointing Towards The Bounty | If set to true an arrow will appear (only visiable for the Bounty Hunter)
 | Bounty Hunter Arrow Update Interval | Sets how often the position is being updated
+
+-----------------------
+
+
+## Madmate
+### **Team: Impostor**
+TheOtherRoles implementation by [tomarai](https://github.com/tomarai)
+
+The Madmate is a crewmate that works to support the impostors.
+The concepted originally comes from Are You a Werewolf?, and the name for this role is taken from [au.libhalt.net's mod](https://au.libhalt.net/#madmate) (Japanese only).
+
+1. Functionally, the Madmate is a crewmate role.
+2. If the Impostors win, the Madmate wins as well.
+3. The Madmate doesn't know who the Impostors are, and vice versa.
+4. The Madmate doesn't have tasks.
+5. The Madmate cannot fix lights.
+
+### Game Options
+| Name | Description
+|----------|:-------------:|
+| Madmate Spawn Chance | - |
+| Madmate Can Die To Sheriff | Allows the Sheriff to kill the Madmate
+| Madmate Can Enter Vents | Allow the Madmate to enter/exit vents
+| Madmate Has Impostor Vision | Give the Madmate the same vision as the Impostors have
+| Madmate Can Sabotage | Allow the Madmate to sabotage
+| Madmate Can Fix Comm | Allow the Madmate to fix comms
 -----------------------
 
 ## Witch
@@ -876,6 +859,24 @@ Depending on the options you can choose whether voting the Witch out will save a
 | Voting The Witch Saves All The Targets | If set to true, all the cursed targets will survive at the end of the meeting
 -----------------------
 
+## Ninja
+### **Team: Impostors**
+Created by [Virtual_Dusk](https://twitter.com/Virtual_Dusk)
+Original Idea by [うるさくてすみま船](https://twitter.com/nakanocchi2)
+
+The Ninja is an Impostor that can turn invisible. While stealthed, the Ninja moves faster than a normal Crewmate, and kills don't cause them to warp. However, using their stealth ability increases their kill cooldown--a penalty for killing while invisible, and a short penalty applied after unstealthing.
+
+## Serial Killer
+### **Team: Impostors**
+Created by [haoming37](https://github.com/haoming37)
+
+The Serial Killer is an Impostor that has a reduced kill cooldown at the cost of their own life. Once the Serial Killer has their first taste of blood, they must kill again within a set time or be driven crazy by bloodlust and commit suicide.
+
+## Neko-Kabocha
+### **Team: Impostors**
+Created by [Virtual_Dusk](https://twitter.com/Virtual_Dusk)
+
+The Neko-Kabocha is an Impostor capable of taking revenge on their killer. If killed by a Sheriff, Jackal, or other player, the killer will die alongside the Neko-Kabocha.
 
 ## Guesser
 ### **Team: Crewmates or Impostors**
@@ -904,7 +905,6 @@ Depending on the options, the Guesser can't guess the shielded player and depend
 | Evil Guesser Can Guess The Spy | -
 | Both Guesser Spawn Rate | -
 | Guesser Can't Guess Snitch When Tasks Completed | -
-
 -----------------------
 
 ## Lovers
@@ -915,9 +915,8 @@ If one Lover dies (and the option is activated), the other Lover suicides.\
 You can select if Lovers are able to have a second role (could be a Neutral, Crewmate or Impostor Role)\
 You can specify the chance of one Lover being an Impostor.\
 The Lovers never know the role of their partner, they only see who their partner is.\
-The Lovers win, if they are both alive when the game ends. They can also win with their original team (e.g. a dead Impostor Lover can win with the Impostors, an Arsonist Lover can still achieve an Arsonist win)\
-If one of the Lovers is a killer (i.e. Jackal/Sidekick/Impostor), they can achieve a "Lovers solo win" where only the Lovers win.\
-If there is no killer among the Lovers (e.g. an Arsonist Lover + Crewmate Lover) and they are both alive when the game ends, they win together with the Crewmates.\
+The Lovers win if they are both alive when the game ends. \
+If there is no killer among the Lovers (e.g. an Arsonist Lover + Crewmate Lover) and they are both alive when the game ends, they can win together with the Crewmates.\
 If there's a team Impostor/Jackal Lover in the game, the tasks of a Crewmate Lover won't be counted (for a task win) as long as they're alive. If the Lover dies, their tasks will also be counted.\
 You can enable an exclusive chat only for Lovers\
 \
@@ -930,8 +929,10 @@ You can enable an exclusive chat only for Lovers\
 |----------|:-------------:|
 | Lovers Spawn Chance | -
 | Chance That One Lover Is Impostor | -
-| Both Lovers Die | Whether the second Lover suicides, if the first one dies
+| Both Lovers Die | Whether the second Lover suicides when the first one dies
 | Lovers Can Have Another Role | If set to true, the Lovers can have a second role
+| Lovers Can Win With Crew | When false, the Lovers are treated as a separate team. (True: original TheOtherRoles behavior.)
+| Lovers Tasks Are Counted | Whether the Lovers' tasks count toward overall task completion.
 | Enable Lover Chat | -
 -----------------------
 
@@ -949,34 +950,9 @@ If they try to kill a Crewmate, they die instead.
 | Name | Description |
 |----------|:-------------:|
 | Sheriff Spawn Chance | -
+| Sheriff Number of Shots | The number of times the Sheriff is able to kill
 | Sheriff Cooldown | -
-| Sheriff Can Kill Neutrals | -
-| Sheriff Has A Deputy | Deputy can not be in game without Sheriff
------------------------
-
-## Deputy
-### **Team: Crewmates**
-The Deputy has the ability to handcuff player.
-Handcuffs will be hidden until the handcuffed player try to use a disabled button/hotkey.
-Handcuffs disable: 
-- Kill
-- Abilities
-- Vent
-- Report
-
-**NOTE:**
-- Duration starts after the handcuffs become visible.
-- Deputy can not be in game without Sheriff.
-
-### Game Options
-| Name | Description |
-|----------|:-------------:|
-| Deputy Number Of Handcuffs | -
-| Handcuff Cooldown| -
-| Handcuff Duration | -
-| Sheriff And Deputy Know Each Other | -
-| Deputy Gets Promoted To Sheriff | "Off", "On (Immediately)" or "On (After Meeting)"
-| Deputy Keeps Handcuffs When Promoted |-
+| Neutrals Can Die To Sheriff | -
 -----------------------
 
 ## Jester
@@ -1164,7 +1140,7 @@ While accessing those mobile gadgets, the Hacker is not able to move.\
 
 
 ## Shifter
-### **Team: Crewmates**
+### **Team: Crewmates or Neutral**
 The Shifter can take over the role of another Crewmate, the other player will transform into a Crewmate.\
 The Shift will always be performed at the end of the next meeting right before a player is exiled. The target needs to be chosen during the round.\
 Even if the Shifter or the target dies before the meeting, the Shift will still be performed.\
@@ -1172,7 +1148,9 @@ Swapping roles with an Impostor or Neutral fails and the Shifter commits suicide
 The Shifter aims to save roles from leaving the game, by e.g. taking over a Sheriff or Medic that is known to the Impostors.\
 This works especially well against the Eraser, but also gives the Eraser the possibility to act like a Shifter.\
 The **special interactions** with the Shifter are noted in the chapters of the respective roles.\
-\
+
+A Neutral version of the Shifter, known as the Chain-Shifter, is able to steal roles from any player, regardless of their team. The shifted player then inherits the role of Chain-Shifter, and must steal another player's role. The player who retains the Chain-Shifter role at the end of the game automatically loses.
+
 **NOTE:**
 - The Shifter shift will always be triggered before the Erase (hence either the new role of the Shifter will be erased or the Shifter saves the role of their target, depending on whom the Eraser erased)
 - If the Shifter takes over a role, their new cooldowns will start at the maximum cooldown of the ability
@@ -1212,7 +1190,7 @@ The Time Master won't be affected by the rewind.\
 -----------------------
 
 ## Swapper
-### **Team: Crewmates**
+### **Team: Crewmates or Impostor**
 During meetings the Swapper can exchange votes that two people get (i.e. all votes
 that player A got will be given to player B and vice versa).\
 Because of the Swapper's strength in meetings, they might not start emergency meetings
@@ -1287,9 +1265,9 @@ The priority of the win conditions is the following:
 **NOTE:**
 - The Jackal (and their Sidekick) may be killed by a Sheriff.
 - A Jackal cannot target the Mini, while it's growing up. After that they can kill it or select it as its Sidekick.
-- The Crew can still win, even if all of their members are dead, if they finish their tasks fast enough (That's why converting the last Crewmate with tasks left into a Sidekick results in a task win for the crew.)
+- The Crew can still win, even if all of their members are dead, if they finish their tasks fast enough (that's why converting the last Crewmate with tasks left into a Sidekick results in a task win for the crew)
 
-If both Impostors and Jackals are in the game the game, continues even if all Crewmates are dead. Crewmates may still win in this case by completing their tasks. Jackal and Impostor have to kill each other.
+If both Impostors and Jackals are in the game the game continues even if all Crewmates are dead. Crewmates may still win in this case by completing their tasks. Jackal and Impostor have to kill each other.
 
 
 
@@ -1388,7 +1366,29 @@ an outline or all vents do).
 | Bait Highlight All Vents | If set to true, all vents will be highlighted if a player is inside of one of them. If set to false, only the vents where players are siting in will be highlighted.
 | Bait Report Delay | -
 | Warn The Killer With A Flash | -
------------------------
+
+## Opportunist
+### **Team: N/A**
+Created by [libhalt](https://twitter.com/libhalt)
+
+The Opportunist is a outsider role. So long as they are alive at the end of the game, they win alongside the victorious team. They can choose to side with any team they wish to ensure their own survival.
+
+## GM
+### **Team: N/A**
+Created by [Virtual_Dusk](https://twitter.com/Virtual_Dusk)
+
+The GM (Game Master) is an observer role. Their presence has no effect on the game itself, and all players know who the GM is at all times. The GM cannot be targeted by other players, cannot fix sabotages, and cannot vote or be voted for. They are a completely external presence, provided with a range of tools at their disposal to efficiently observe the flow of the game.
+
+The GM role is intended to allow groups to play with a wide variety of rules not supported by Among Us natively. 
+
+### Game Options
+| Name | Description
+|----------|:-------------:|
+| GM is always the host | Always assign the GM role to the lobby's host
+| GM can warp to other players | Allow the GM to teleport to other players
+| GM can kill/revive players | Allow the GM to indiscriminately murder or revive players
+| Hide settings from other players | Hides mod-related settings from everyone except the lobby host
+| GM dies at start of game | The GM begins the game dead
 
 ## Medium
 ### **Team: Crewmates**
@@ -1424,9 +1424,9 @@ If there is a Vulture in the game, there can't be a Cleaner.
 |----------|:-------------:|
 | Vulture Spawn Chance | -
 | Vulture Countdown | -
-| Number Of Corpses Needed To Be Eaten | Corpes needed to be eaten to win the game
+| Number Of Corpses Needed To Be Eaten | Corpses needed to be eaten to win the game
 | Vulture Can Use Vents | -
-| Show Arrows Pointing Towards The Corpes | -
+| Show Arrows Pointing Towards The Corpses | -
 -----------------------
 
 ## Lawyer
@@ -1464,12 +1464,60 @@ In order to achieve this goal, the Pursuer has an ability called "Blank", where 
 If the killer fires the "Blank", shields (e.g. Medic shield or Time Master shield) will not be triggered.
 The Pursuer has tasks (which can already be done while being a Lawyer), that count towards the task win for the Crewmates. If the Pursuer dies, their tasks won't be counted anymore.
 
+## Plague Doctor
+### **Team: Neutral**
+
+Created by [haoming37](https://github.com/haoming37)
+
+The Plague Doctor is a neutral role whose goal is to infect every living player. They start by choosing one player to infect, after which anyone who spends a set amount of time in range of the infected player becomes infected themselves. Infection progress is cumulative, and does not reset with distance or after meetings.
+
+The Plague Doctor is still able to win even if dead. Furthermore, if killed, their killer is automatically infected.
+
+A set period of time after each meeting, players are immune from infection, letting them get safely away from potentially infected players.
+
+## Fox
+### **Team: Neutral**
+
+Created by [haoming37](https://github.com/haoming37)
+
+The Fox is a Neutral role whose goal is to keep themselves hidden from both the Crew and Impostors while completing their own tasks. The Fox is always aware of where any threats are, and has numerous abilities to protect themselves.
+
+## Immoralist
+### **Team: Neutral**
+
+Created by [haoming37](https://github.com/haoming37)
+
+The Immoralist's objective is to support the Fox in any way they can, even if it means sacrificing their own life.
+
+## Fortune Teller
+### **Team: Crewmate**
+
+Created by [haoming37](https://github.com/haoming37)
+
+The Fortune Teller is a Crewmate with the power to divine a single player's role. They start out believing themselves to be an ordinary Crewmate, only awakening to their powers after completing a designated number of tasks.
+
+## Watcher
+### **Team: Crewmate or Impostors**
+Created by [Virtual_Dusk](https://twitter.com/Virtual_Dusk)
+
+The Watcher is a player capable of seeing everyone's votes during meetings.
+
+## Evil Hacker
+### **Team: Impostors**
+Created by [tomarai](https://github.com/tomarai) Source by [haoming37](https://github.com/haoming37)
+
+## Evil Mayor
+### **Team: Impostors**
+Created by [Kiyomori](https://twitter.com/kiyo_deko) Idea by [Mugicha](https://github.com/Reitou-Mugicha)
+
+## Hawk Eye
+### **Team: Impostors**
+Created by [Kiyomori](https://twitter.com/kiyo_deko) Idea by [libhalt](https://twitter.com/libhalt)
+
+
 # Source code
 It's bad I know, this is a side project and my second week of modding. So there are no best practices around here.
 You can use parts of the code but don't copy paste the whole thing. Make sure you give credits to the other developers, because some parts of the code are based on theirs.
 
-# Bugs, suggestions and requests
-If you found any bugs, have an idea for a new role or any other request, join our [Discord server](https://discord.gg/77RkMJHWsM).
-
-# Copyedit
-Thanks for fixing our typos [jacktose](https://github.com/jacktose) ✌️
+# Translation
+As of v2.9.0, The Other Roles GM now supports translation into other languages. To add a new language, add translations to [Strings.xlsx](/Strings.xlsx) and submit a pull request.
