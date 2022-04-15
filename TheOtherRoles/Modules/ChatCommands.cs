@@ -8,11 +8,11 @@ using HarmonyLib;
 using UnityEngine;
 using System.Linq;
 using UnhollowerBaseLib;
+using static TheOtherRoles.TheOtherRoles;
 
 namespace TheOtherRoles.Modules {
     [HarmonyPatch]
     public static class ChatCommands {
-        public static bool isLover(this PlayerControl player) => !(player == null) && (player == Lovers.lover1 || player == Lovers.lover2);
 
         [HarmonyPatch(typeof(ChatController), nameof(ChatController.SendChat))]
         private static class SendChatPatch {
@@ -31,7 +31,7 @@ namespace TheOtherRoles.Modules {
                             }
                         }
                     } else if (text.ToLower().StartsWith("/ban ")) {
-                        string playerName = text.Substring(6);
+                        string playerName = text.Substring(5);
                         PlayerControl target = PlayerControl.AllPlayerControls.ToArray().ToList().FirstOrDefault(x => x.Data.PlayerName.Equals(playerName));
                         if (target != null && AmongUsClient.Instance != null && AmongUsClient.Instance.CanBan()) {
                             var client = AmongUsClient.Instance.GetClient(target.OwnerId);
@@ -76,11 +76,12 @@ namespace TheOtherRoles.Modules {
                 return !handled;
             }
         }
+
         [HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]
         public static class EnableChat {
             public static void Postfix(HudManager __instance) {
-                if (!__instance.Chat.isActiveAndEnabled && (AmongUsClient.Instance.GameMode == GameModes.FreePlay || (PlayerControl.LocalPlayer.isLover() && Lovers.enableChat)))
-                    __instance.Chat.SetVisible(true);
+                if (__instance?.Chat?.isActiveAndEnabled == false && (AmongUsClient.Instance?.GameMode == GameModes.FreePlay || (PlayerControl.LocalPlayer.isLovers() && Lovers.enableChat)))
+                    __instance?.Chat?.SetVisible(true);
             }
         }
 
@@ -93,13 +94,15 @@ namespace TheOtherRoles.Modules {
         }
 
         [HarmonyPatch(typeof(ChatController), nameof(ChatController.AddChat))]
-        public static class AddChat {
+        public static class AddChatPatch {
             public static bool Prefix(ChatController __instance, [HarmonyArgument(0)] PlayerControl sourcePlayer) {
                 if (__instance != DestroyableSingleton<HudManager>.Instance.Chat)
                     return true;
                 PlayerControl localPlayer = PlayerControl.LocalPlayer;
-                return localPlayer == null || (MeetingHud.Instance != null || LobbyBehaviour.Instance != null || (localPlayer.Data.IsDead || localPlayer.isLover() && Lovers.enableChat) || (int)sourcePlayer.PlayerId == (int)PlayerControl.LocalPlayer.PlayerId);
-
+                return localPlayer == null ||
+                    (MeetingHud.Instance != null || LobbyBehaviour.Instance != null ||
+                    localPlayer.isDead() || localPlayer.PlayerId == sourcePlayer.PlayerId ||
+                    (Lovers.enableChat && localPlayer.getPartner() == sourcePlayer));
             }
         }
     }

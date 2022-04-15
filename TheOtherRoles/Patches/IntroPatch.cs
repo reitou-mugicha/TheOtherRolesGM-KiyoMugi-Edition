@@ -1,6 +1,7 @@
 using HarmonyLib;
 using System;
 using static TheOtherRoles.TheOtherRoles;
+using static TheOtherRoles.TheOtherRolesGM;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,30 +12,33 @@ namespace TheOtherRoles.Patches {
     {
         public static void Prefix(IntroCutscene __instance) {
             // Generate and initialize player icons
-            int playerCounter = 0;
-            if (PlayerControl.LocalPlayer != null && HudManager.Instance != null) {
+            if (PlayerControl.LocalPlayer != null && HudManager.Instance != null)
+            {
                 Vector3 bottomLeft = new Vector3(-HudManager.Instance.UseButton.transform.localPosition.x, HudManager.Instance.UseButton.transform.localPosition.y, HudManager.Instance.UseButton.transform.localPosition.z);
                 foreach (PlayerControl p in PlayerControl.AllPlayerControls) {
                     GameData.PlayerInfo data = p.Data;
                     PoolablePlayer player = UnityEngine.Object.Instantiate<PoolablePlayer>(__instance.PlayerPrefab, HudManager.Instance.transform);
-                    PlayerControl.SetPlayerMaterialColors(data.DefaultOutfit.ColorId, player.Body);
-                    DestroyableSingleton<HatManager>.Instance.SetSkin(player.Skin.layer, data.DefaultOutfit.SkinId);
-                    player.HatSlot.SetHat(data.DefaultOutfit.HatId, data.DefaultOutfit.ColorId);
-                    PlayerControl.SetPetImage(data.DefaultOutfit.PetId, data.DefaultOutfit.ColorId, player.PetSlot);
-                    player.NameText.text = data.PlayerName;
+                    player.UpdateFromPlayerOutfit(p.Data.DefaultOutfit, p.Data.IsDead);
                     player.SetFlipX(true);
+                    player.PetSlot.gameObject.SetActive(false);
+                    player.NameText.text = p.Data.DefaultOutfit.PlayerName;
                     MapOptions.playerIcons[p.PlayerId] = player;
 
-                    if (PlayerControl.LocalPlayer == Arsonist.arsonist && p != Arsonist.arsonist) {
-                        player.transform.localPosition = bottomLeft + new Vector3(-0.25f, -0.25f, 0) + Vector3.right * playerCounter++ * 0.35f;
-                        player.transform.localScale = Vector3.one * 0.2f;
-                        player.setSemiTransparent(true);
-                        player.gameObject.SetActive(true);
-                    } else if (PlayerControl.LocalPlayer == BountyHunter.bountyHunter) {
+                    if (PlayerControl.LocalPlayer == BountyHunter.bountyHunter)
+                    {
                         player.transform.localPosition = bottomLeft + new Vector3(-0.25f, 0f, 0);
                         player.transform.localScale = Vector3.one * 0.4f;
                         player.gameObject.SetActive(false);
-                    } else {
+                    }
+                    else if (PlayerControl.LocalPlayer == GM.gm)
+                    {
+                        player.transform.localPosition = Vector3.zero;
+                        player.transform.localScale = Vector3.one * 0.3f;
+                        player.setSemiTransparent(false);
+                        player.gameObject.SetActive(false);
+                    }
+                    else
+                    {
                         player.gameObject.SetActive(false);
                     }
                 }
@@ -50,19 +54,56 @@ namespace TheOtherRoles.Patches {
                     BountyHunter.cooldownText.transform.localPosition = bottomLeft + new Vector3(0f, -1f, -1f);
                     BountyHunter.cooldownText.gameObject.SetActive(true);
                 }
-            } 
-
             }
+
+            Arsonist.updateIcons();
+            Morphling.resetMorph();
+            Camouflager.resetCamouflage();
+
+            if (PlayerControl.LocalPlayer == GM.gm && !GM.hasTasks)
+            {
+                PlayerControl.LocalPlayer.clearAllTasks();
+            }
+
+            if (PlayerControl.LocalPlayer.isGM())
+            {
+                HudManager.Instance.ShadowQuad.gameObject.SetActive(false);
+                HudManager.Instance.ReportButton.gameObject.SetActiveRecursively(false);
+                HudManager.Instance.ReportButton.SetActive(false);
+                HudManager.Instance.ReportButton.graphic.enabled = false;
+                HudManager.Instance.ReportButton.enabled = false;
+                HudManager.Instance.ReportButton.graphic.sprite = null;
+                HudManager.Instance.ReportButton.buttonLabelText.enabled = false;
+                HudManager.Instance.ReportButton.buttonLabelText.SetText("");
+
+                HudManager.Instance.roomTracker.gameObject.SetActiveRecursively(false);
+                HudManager.Instance.roomTracker.text.enabled = false;
+                HudManager.Instance.roomTracker.text.SetText("");
+                HudManager.Instance.roomTracker.enabled = false;
+            }
+        }
     }
 
     [HarmonyPatch]
     class IntroPatch {
         public static void setupIntroTeamIcons(IntroCutscene __instance, ref  Il2CppSystem.Collections.Generic.List<PlayerControl> yourTeam) {
             // Intro solo teams
-            if (PlayerControl.LocalPlayer == Jester.jester || PlayerControl.LocalPlayer == Jackal.jackal || PlayerControl.LocalPlayer == Arsonist.arsonist || PlayerControl.LocalPlayer == Vulture.vulture || PlayerControl.LocalPlayer == Lawyer.lawyer) {
+            if (PlayerControl.LocalPlayer.isNeutral() || PlayerControl.LocalPlayer == GM.gm) {
                 var soloTeam = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
                 soloTeam.Add(PlayerControl.LocalPlayer);
                 yourTeam = soloTeam;
+            }
+
+            // Don't show the GM
+            if (!PlayerControl.LocalPlayer.isGM())
+            {
+                var newTeam = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
+                foreach (PlayerControl p in yourTeam)
+                {
+                    if (p != GM.gm)
+                        newTeam.Add(p);
+                }
+                yourTeam = newTeam;
             }
 
             // Add the Spy to the Impostor team (for the Impostors)
@@ -80,53 +121,73 @@ namespace TheOtherRoles.Patches {
 
         public static void setupIntroTeam(IntroCutscene __instance, ref  Il2CppSystem.Collections.Generic.List<PlayerControl> yourTeam) {
             List<RoleInfo> infos = RoleInfo.getRoleInfoForPlayer(PlayerControl.LocalPlayer);
-            RoleInfo roleInfo = infos.Where(info => info.roleId != RoleId.Lover).FirstOrDefault();
+            RoleInfo roleInfo = infos.Where(info => info.roleType != RoleType.Lovers).FirstOrDefault();
             if (roleInfo == null) return;
-            if (roleInfo.isNeutral) {
-                var neutralColor = new Color32(76, 84, 78, 255);
-                __instance.BackgroundBar.material.color = neutralColor;
-                __instance.TeamTitle.text = "Neutral";
-                __instance.TeamTitle.color = neutralColor;
+            if (PlayerControl.LocalPlayer.isNeutral() || PlayerControl.LocalPlayer.isGM())
+            {
+                __instance.BackgroundBar.material.color = roleInfo.color;
+                __instance.TeamTitle.text = roleInfo.name;
+                __instance.TeamTitle.color = roleInfo.color;
+                __instance.ImpostorText.text = "";
             }
         }
 
-        [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.SetUpRoleText))]
-        class SetUpRoleTextPatch {
-            public static void Postfix(IntroCutscene __instance) {
+        [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.ShowRole))]
+        class ShowRolePatch
+        {
+            public static void Postfix(IntroCutscene __instance)
+            {
                 if (!CustomOptionHolder.activateRoles.getBool()) return; // Don't override the intro of the vanilla roles
 
-                List<RoleInfo> infos = RoleInfo.getRoleInfoForPlayer(PlayerControl.LocalPlayer);
-                RoleInfo roleInfo = infos.Where(info => info.roleId != RoleId.Lover).FirstOrDefault();
+                List<RoleInfo> infos = RoleInfo.getRoleInfoForPlayer(PlayerControl.LocalPlayer, new RoleType[] { RoleType.Lovers });
+                RoleInfo roleInfo = infos.FirstOrDefault();
 
-                if (roleInfo != null) {
-                    __instance.RoleText.text = roleInfo.name;
-                    __instance.RoleText.color = roleInfo.color;
-                    __instance.RoleBlurbText.text = roleInfo.introDescription;
-                    __instance.RoleBlurbText.color = roleInfo.color;
-                }
+                Color color = new Color(__instance.YouAreText.color.r, __instance.YouAreText.color.g, __instance.YouAreText.color.b, 0f);
+                __instance.StartCoroutine(Effects.Lerp(0.5f, new Action<float>((t) =>
+                {
+                    if (roleInfo != null && roleInfo != RoleInfo.crewmate && roleInfo != RoleInfo.impostor && !(roleInfo == RoleInfo.fortuneTeller && FortuneTeller.numTasks > 0))
+                    {
+                        __instance.RoleText.text = roleInfo.name;
+                        __instance.RoleBlurbText.text = roleInfo.introDescription;
+                        color = roleInfo.color;
+                    }
 
-                if (infos.Any(info => info.roleId == RoleId.Lover)) {
-                    PlayerControl otherLover = PlayerControl.LocalPlayer == Lovers.lover1 ? Lovers.lover2 : Lovers.lover1;
-                    __instance.RoleBlurbText.text += Helpers.cs(Lovers.color, $"\n♥ You are in love with {otherLover?.Data?.PlayerName ?? ""} ♥");
-                }
-                if (Deputy.knowsSheriff && Deputy.deputy != null && Sheriff.sheriff != null) {
-                    if (infos.Any(info => info.roleId == RoleId.Sheriff)) 
-                        __instance.RoleBlurbText.text += Helpers.cs(Sheriff.color, $"\nYour Deputy is {Deputy.deputy?.Data?.PlayerName ?? ""}");
-                    else if (infos.Any(info => info.roleId == RoleId.Deputy))
-                        __instance.RoleBlurbText.text += Helpers.cs(Sheriff.color, $"\nYour Sheriff is {Sheriff.sheriff?.Data?.PlayerName ?? ""}");
-                }
+                    if (PlayerControl.LocalPlayer.hasModifier(ModifierType.Madmate))
+                    {
+                        if (roleInfo == RoleInfo.crewmate)
+                        {
+                            __instance.RoleText.text = ModTranslation.getString("madmate");
+                        }
+                        else
+                        {
+                            __instance.RoleText.text = ModTranslation.getString("madmatePrefix") + __instance.RoleText.text;
+                        }
+                        __instance.RoleBlurbText.text = ModTranslation.getString("madmateIntroDesc");
+                        color = Madmate.color;
+                    }
 
+                    if (infos.Any(info => info.roleType == RoleType.Lovers))
+                    {
+                        PlayerControl otherLover = PlayerControl.LocalPlayer.getPartner();
+                        __instance.RoleBlurbText.text += "\n" + Helpers.cs(Lovers.color, String.Format(ModTranslation.getString("loversFlavor"), otherLover?.Data?.PlayerName ?? ""));
+                    }
+
+                    color.a = t;
+                    __instance.YouAreText.color = color;
+                    __instance.RoleText.color = color;
+                    __instance.RoleBlurbText.color = color;
+                })));
             }
         }
 
         [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.BeginCrewmate))]
         class BeginCrewmatePatch {
-            public static void Prefix(IntroCutscene __instance, ref  Il2CppSystem.Collections.Generic.List<PlayerControl> yourTeam) {
-                setupIntroTeamIcons(__instance, ref yourTeam);
+            public static void Prefix(IntroCutscene __instance, ref  Il2CppSystem.Collections.Generic.List<PlayerControl> teamToDisplay) {
+                setupIntroTeamIcons(__instance, ref teamToDisplay);
             }
 
-            public static void Postfix(IntroCutscene __instance, ref  Il2CppSystem.Collections.Generic.List<PlayerControl> yourTeam) {
-                setupIntroTeam(__instance, ref yourTeam);
+            public static void Postfix(IntroCutscene __instance, ref  Il2CppSystem.Collections.Generic.List<PlayerControl> teamToDisplay) {
+                setupIntroTeam(__instance, ref teamToDisplay);
             }
         }
 
@@ -142,4 +203,3 @@ namespace TheOtherRoles.Patches {
         }
     }
 }
-

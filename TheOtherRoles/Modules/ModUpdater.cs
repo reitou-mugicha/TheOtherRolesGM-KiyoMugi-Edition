@@ -44,7 +44,7 @@ namespace TheOtherRoles.Modules {
             
             var text = button.transform.GetChild(0).GetComponent<TMPro.TMP_Text>();
             __instance.StartCoroutine(Effects.Lerp(0.1f, new System.Action<float>((p) => {
-                text.SetText("Update\nThe Other Roles");
+                text.SetText(ModTranslation.getString("updateButton"));
             })));
 
             TwitchManager man = DestroyableSingleton<TwitchManager>.Instance;
@@ -88,16 +88,16 @@ namespace TheOtherRoles.Modules {
         }
 
         public static void ExecuteUpdate() {
-            string info = "Updating The Other Roles\nPlease wait...";
+            string info = ModTranslation.getString("updatePleaseWait");
             ModUpdater.InfoPopup.Show(info); // Show originally
             if (updateTask == null) {
                 if (updateURI != null) {
                     updateTask = downloadUpdate();
                 } else {
-                    info = "Unable to auto-update\nPlease update manually";
+                    info = ModTranslation.getString("updateManually");
                 }
             } else {
-                info = "Update might already\nbe in progress";
+                info = ModTranslation.getString("updateInProgress");
             }
             ModUpdater.InfoPopup.StartCoroutine(Effects.Lerp(0.01f, new System.Action<float>((p) => { ModUpdater.setPopupText(info); })));
         }
@@ -117,8 +117,7 @@ namespace TheOtherRoles.Modules {
             try {
                 HttpClient http = new HttpClient();
                 http.DefaultRequestHeaders.Add("User-Agent", "TheOtherRoles Updater");
-                var response = await http.GetAsync(new System.Uri("https://api.github.com/repos/Eisbison/TheOtherRoles/releases/latest"), HttpCompletionOption.ResponseContentRead);
-                // var response = await http.GetAsync(new System.Uri("https://api.github.com/repos/EoF-1141/TheOtherRoles/releases/latest"), HttpCompletionOption.ResponseContentRead);
+                var response = await http.GetAsync(new System.Uri("https://api.github.com/repos/Dekokiyo/TheOtherRolesGM-Kiyomugi-Edition/releases/latest"), HttpCompletionOption.ResponseContentRead);
                 if (response.StatusCode != HttpStatusCode.OK || response.Content == null) {
                     System.Console.WriteLine("Server returned no data: " + response.StatusCode.ToString());
                     return false;
@@ -131,17 +130,14 @@ namespace TheOtherRoles.Modules {
                     return false; // Something went wrong
                 }
 
-                string changeLog = data["body"]?.ToString();
+                string changeLog = ModTranslation.getString("Ver.1.0.2.1");
                 if (changeLog != null) announcement = changeLog;
                 // check version
                 System.Version ver = System.Version.Parse(tagname.Replace("v", ""));
                 int diff = TheOtherRolesPlugin.Version.CompareTo(ver);
                 if (diff < 0) { // Update required
                     hasUpdate = true;
-                    announcement = $@"<size=150%>A new <color=#FC0303>THE OTHER ROLES</color>
-update to v{ver} is available</size>
-
-{announcement}";
+                    announcement = string.Format(ModTranslation.getString("announcementUpdate"), ver, announcement);
 
                     JToken assets = data["assets"];
                     if (!assets.HasValues)
@@ -158,9 +154,7 @@ update to v{ver} is available</size>
                         }
                     }
                 }  else {
-                    announcement = $@"<size=150%><color=#FC0303>THE OTHER ROLES</color> Version {ver}:</size>
-
-{announcement}";
+                    announcement = string.Format(ModTranslation.getString("announcementChangelog"), ver, announcement);
                 }
             } catch (System.Exception ex) {
                 TheOtherRolesPlugin.Instance.Log.LogError(ex.ToString());
@@ -191,13 +185,13 @@ update to v{ver} is available</size>
                         responseStream.CopyTo(fileStream); 
                     }
                 }
-                showPopup("The Other Roles\nupdated successfully\nPlease restart the game.");
+                showPopup(ModTranslation.getString("updateRestart"));
                 return true;
             } catch (System.Exception ex) {
                 TheOtherRolesPlugin.Instance.Log.LogError(ex.ToString());
                 System.Console.WriteLine(ex);
             }
-            showPopup("Update wasn't successful\nTry again later,\nor update manually.");
+            showPopup(ModTranslation.getString("updateFailed"));
             return false;
         }
         private static void showPopup(string message) {

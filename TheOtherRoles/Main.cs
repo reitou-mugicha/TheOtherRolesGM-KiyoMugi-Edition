@@ -16,20 +16,19 @@ using TheOtherRoles.Modules;
 
 namespace TheOtherRoles
 {
-    [BepInPlugin(Id, "The Other Roles", VersionString)]
+    [BepInPlugin(Id, "The Other Roles GM", VersionString)]
     [BepInProcess("Among Us.exe")]
     public class TheOtherRolesPlugin : BasePlugin
     {
         public const string Id = "me.eisbison.theotherroles";
-        public const string VersionString = "3.4.4";
-
+        public const string VersionString = "1.0.2.1";
         public static System.Version Version = System.Version.Parse(VersionString);
         internal static BepInEx.Logging.ManualLogSource Logger;
 
         public Harmony Harmony { get; } = new Harmony(Id);
         public static TheOtherRolesPlugin Instance;
 
-        public static int optionsPage = 1;
+        public static int optionsPage = 0;
 
         public static ConfigEntry<bool> DebugMode { get; private set; }
         public static ConfigEntry<bool> StreamerMode { get; set; }
@@ -37,11 +36,15 @@ namespace TheOtherRoles
         public static ConfigEntry<bool> GhostsSeeRoles { get; set; }
         public static ConfigEntry<bool> GhostsSeeVotes{ get; set; }
         public static ConfigEntry<bool> ShowRoleSummary { get; set; }
+        public static ConfigEntry<bool> HideNameplates { get; set; }
         public static ConfigEntry<bool> ShowLighterDarker { get; set; }
+        public static ConfigEntry<bool> HideTaskArrows { get; set; }
+        public static ConfigEntry<bool> HorseMode { get; set; }
         public static ConfigEntry<string> StreamerModeReplacementText { get; set; }
         public static ConfigEntry<string> StreamerModeReplacementColor { get; set; }
         public static ConfigEntry<string> Ip { get; set; }
         public static ConfigEntry<ushort> Port { get; set; }
+        public static ConfigEntry<string> DebugRepo { get; private set; }
         public static ConfigEntry<string> ShowPopUpVersion { get; set; }
 
         public static Sprite ModStamp;
@@ -57,7 +60,9 @@ namespace TheOtherRoles
             serverManager.AvailableRegions = regions;
         }
 
-        public override void Load() {
+        public override void Load()
+        {
+            ModTranslation.Load();
             Logger = Log;
             DebugMode = Config.Bind("Custom", "Enable Debug Mode", false);
             StreamerMode = Config.Bind("Custom", "Enable Streamer Mode", false);
@@ -65,11 +70,14 @@ namespace TheOtherRoles
             GhostsSeeRoles = Config.Bind("Custom", "Ghosts See Roles", true);
             GhostsSeeVotes = Config.Bind("Custom", "Ghosts See Votes", true);
             ShowRoleSummary = Config.Bind("Custom", "Show Role Summary", true);
-            ShowLighterDarker = Config.Bind("Custom", "Show Lighter / Darker", true);
+            HideNameplates = Config.Bind("Custom", "Hide Nameplates", false);
+            ShowLighterDarker = Config.Bind("Custom", "Show Lighter / Darker", false);
+            HideTaskArrows = Config.Bind("Custom", "Hide Task Arrows", false);
+            HorseMode = Config.Bind("Custom", "Horse Mode", false);
             ShowPopUpVersion = Config.Bind("Custom", "Show PopUp", "0");
-            StreamerModeReplacementText = Config.Bind("Custom", "Streamer Mode Replacement Text", "\n\nThe Other Roles");
+            StreamerModeReplacementText = Config.Bind("Custom", "Streamer Mode Replacement Text", "\n\nTheOtherRolesGMK");
             StreamerModeReplacementColor = Config.Bind("Custom", "Streamer Mode Replacement Text Hex Color", "#87AAF5FF");
-            
+            DebugRepo = Config.Bind("Custom", "Debug Hat Repo", "");
 
             Ip = Config.Bind("Custom", "Custom Server IP", "127.0.0.1");
             Port = Config.Bind("Custom", "Custom Server Port", (ushort)22023);
@@ -77,7 +85,8 @@ namespace TheOtherRoles
 
             UpdateRegions();
 
-            GameOptionsData.RecommendedImpostors = GameOptionsData.MaxImpostors = Enumerable.Repeat(3, 16).ToArray(); // Max Imp = Recommended Imp = 3
+            GameOptionsData.RecommendedImpostors = Enumerable.Repeat(3, 16).ToArray();
+            GameOptionsData.MaxImpostors = Enumerable.Repeat(15, 16).ToArray(); // Max Imp = Recommended Imp = 3
             GameOptionsData.MinPlayers = Enumerable.Repeat(4, 15).ToArray(); // Min Players = 4
 
             DebugMode = Config.Bind("Custom", "Enable Debug Mode", false);
@@ -87,6 +96,7 @@ namespace TheOtherRoles
 
             Harmony.PatchAll();
         }
+
         public static Sprite GetModStamp() {
             if (ModStamp) return ModStamp;
             return ModStamp = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.ModStamp.png", 150f);
@@ -102,6 +112,7 @@ namespace TheOtherRoles
             __result = false;
         }
     }
+
     [HarmonyPatch(typeof(ChatController), nameof(ChatController.Awake))]
     public static class ChatControllerAwakePatch {
         private static void Prefix() {
@@ -111,9 +122,10 @@ namespace TheOtherRoles
             }
         }
     }
-    
+
     // Debugging tools
     [HarmonyPatch(typeof(KeyboardJoystick), nameof(KeyboardJoystick.Update))]
+    //DebugModeがONの時使用可
     public static class DebugManager
     {
         private static readonly System.Random random = new System.Random((int)DateTime.Now.Ticks);
@@ -121,6 +133,21 @@ namespace TheOtherRoles
 
         public static void Postfix(KeyboardJoystick __instance)
         {
+            // F11でクルー強制勝利
+            if (Input.GetKeyDown(KeyCode.F11) && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started)
+            {
+                MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.CrewmateEnd, Hazel.SendOption.Reliable, -1);
+                AmongUsClient.Instance.FinishRpcImmediately(writer);
+                RPCProcedure.crewmateEnd();
+            }
+            // F12でクルー強制勝利
+            if (Input.GetKeyDown(KeyCode.F12) && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started)
+            {
+                MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.ImpostorEnd, Hazel.SendOption.Reliable, -1);
+                AmongUsClient.Instance.FinishRpcImmediately(writer);
+                RPCProcedure.impostorEnd();
+            }
+
             if (!TheOtherRolesPlugin.DebugMode.Value) return;
 
             // Spawn dummys
@@ -131,20 +158,25 @@ namespace TheOtherRoles
                 bots.Add(playerControl);
                 GameData.Instance.AddPlayer(playerControl);
                 AmongUsClient.Instance.Spawn(playerControl, -2, InnerNet.SpawnFlags.None);
-                
+
+                int hat = random.Next(HatManager.Instance.allHats.Count);
+                int pet = random.Next(HatManager.Instance.allPets.Count);
+                int skin = random.Next(HatManager.Instance.allSkins.Count);
+                int visor = random.Next(HatManager.Instance.allVisors.Count);
+                int color = random.Next(Palette.PlayerColors.Length);
+                int nameplate = random.Next(HatManager.Instance.allNamePlates.Count);
+
                 playerControl.transform.position = PlayerControl.LocalPlayer.transform.position;
                 playerControl.GetComponent<DummyBehaviour>().enabled = true;
                 playerControl.NetTransform.enabled = false;
                 playerControl.SetName(RandomString(10));
-                playerControl.SetColor((byte) random.Next(Palette.PlayerColors.Length));
+                playerControl.SetColor(color);
+                playerControl.SetHat(HatManager.Instance.allHats[hat].ProductId, color);
+                playerControl.SetPet(HatManager.Instance.allPets[pet].ProductId, color);
+                playerControl.SetVisor(HatManager.Instance.allVisors[visor].ProductId);
+                playerControl.SetSkin(HatManager.Instance.allSkins[skin].ProductId, color);
+                playerControl.SetNamePlate(HatManager.Instance.allNamePlates[nameplate].ProductId);
                 GameData.Instance.RpcSetTasks(playerControl.PlayerId, new byte[0]);
-            }
-
-            // Terminate round
-            if(Input.GetKeyDown(KeyCode.L)) {
-                MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.ForceEnd, Hazel.SendOption.Reliable, -1);
-                AmongUsClient.Instance.FinishRpcImmediately(writer);
-                RPCProcedure.forceEnd();
             }
         }
 
