@@ -59,7 +59,7 @@ The [Role Assignment](#role-assignment) sections explains how the roles are bein
 
 # Releases
 | Among Us - Version | GM Verrsion | Mod Version | Link |
-|----------|-------------|-----------------|
+|----------|-------------|-----------------|-----------------|
 | 2022.3.29s | Ver.3.5.5 | Ver.1.0.2.1 | [Download](https://github.com/Dekokiyo/TheOtherRolesGM-KiyoMugi-Edition/releases/download/1.0.2.1/TheOtherRolesGM-KiyoMugi-Edition.1.0.2.1.zip) |
 
 # Changelog
