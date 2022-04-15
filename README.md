@@ -15,6 +15,9 @@ This fork introduces a number of changes to [The Other Roles](https://github.com
   * [Fox & Immoralist](#fox) by [haoming37](https://github.com/haoming37)
   * [Fortune Teller](#serial-killer) by [haoming37](https://github.com/haoming37)
   * [Watcher](#watcher) by [Virtual_Dusk](https://twitter.com/Virtual_Dusk)
+  * [Evil Hacker](#evil-hacker) by [tomarai](https://github.com/tomarai) Source by [haoming37](https://github.com/haoming37)
+  * [Evil Mayor](#evil-mayor) by [Kiyomori](https://twitter.com/kiyo_deko) Idea by [Mugicha](https://github.com/Reitou-Mugicha)
+  * [Hawk Eye](#hawk-eye) by [Kiyomori](https://twitter.com/kiyo_deko) Idea by [libhalt](https://twitter.com/libhalt)
 * Pluralized Roles
   * Lovers (up to 7 couples)
   * Sheriff
@@ -51,9 +54,9 @@ Even more roles are coming soon :)
 | [Serial Killer](#serial-killer) |  [Tracker](#tracker) |  |  |
 | [Neko-Kabocha](#neko-kabocha) |  [Bait](#bait) |  |  |
 | [Evil Watcher](#Watcher) |  [Madmate](#madmate)  |  |  |
-|  |  [Medium](#medium) |  |  |
-|  |  [Fortune Teller](#fortune-teller) |  |  |
-|  |  [Nice Watcher](#Watcher) |  |  |
+| [Evil Hacker](#evil-hacker) |  [Medium](#medium) |  |  |
+| [Evil Mayor](#evil-mayor) |  [Fortune Teller](#fortune-teller) |  |  |
+| [Hawk Eye](#hawk-eye) |  [Nice Watcher](#Watcher) |  |  |
 
 The [Role Assignment](#role-assignment) sections explains how the roles are being distributed among the players.
 
