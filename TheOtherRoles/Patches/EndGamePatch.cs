@@ -25,6 +25,7 @@ namespace TheOtherRoles.Patches
         LawyerSoloWin = 16,
         PlagueDoctorWin = 17,
         FoxWin = 18,
+        TeamKingdomWin = 19,
     }
 
     enum WinCondition
@@ -44,6 +45,7 @@ namespace TheOtherRoles.Patches
         AdditionalAlivePursuerWin,
         PlagueDoctorWin,
         FoxWin,
+        KingdomWin,
 
         EveryoneDied,
     }
@@ -131,12 +133,31 @@ namespace TheOtherRoles.Patches
                     gameOverReason != (GameOverReason)CustomGameOverReason.ArsonistWin &&
                     gameOverReason != (GameOverReason)CustomGameOverReason.JesterWin &&
                     gameOverReason != (GameOverReason)CustomGameOverReason.VultureWin &&
+                    gameOverReason != (GameOverReason)CustomGameOverReason.TeamKingdomWin &&
                     gameOverReason != (GameOverReason)GameOverReason.HumansByTask)
                 {
                     gameOverReason = (GameOverReason)CustomGameOverReason.FoxWin;
                 }
             }
             AdditionalTempData.clear();
+            /*
+            bool isKingAkive = King.isKingAlive();
+            bool isKingCompletedTasks = King.isKingCompletedTasks();
+            if (isKingAkive && isKingCompletedTasks) {
+                if (gameOverReason == GameOverReason.HumansByTask && !King.crewWinsByTasks)
+                {
+                    gameOverReason = (GameOverReason)CustomGameOverReason.TeamKingdomWin;
+                }
+                 else if (gameOverReason != (GameOverReason)CustomGameOverReason.PlagueDoctorWin &&
+                    gameOverReason != (GameOverReason)CustomGameOverReason.ArsonistWin &&
+                    gameOverReason != (GameOverReason)CustomGameOverReason.JesterWin &&
+                    gameOverReason != (GameOverReason)CustomGameOverReason.VultureWin &&
+                    gameOverReason != (GameOverReason)CustomGameOverReason.FoxWin &&
+                    gameOverReason != (GameOverReason)GameOverReason.HumansByTask)
+                {
+                    gameOverReason = (GameOverReason)CustomGameOverReason.TeamKingdomWin;
+                }
+            }*/
 
             //foreach (var pc in PlayerControl.AllPlayerControls)
             var excludeRoles = new RoleType[] { RoleType.Lovers };
@@ -181,6 +202,8 @@ namespace TheOtherRoles.Patches
             if (Vulture.vulture != null) notWinners.Add(Vulture.vulture);
             if (Lawyer.lawyer != null) notWinners.Add(Lawyer.lawyer);
             if (Pursuer.pursuer != null) notWinners.Add(Pursuer.pursuer);
+            //if (King.king !=null) notWinners.Add(King.king);
+            //if (Minions.minions !=null) notWinners.Add(Minions.minions);
 
             notWinners.AddRange(Jackal.formerJackals);
             notWinners.AddRange(Madmate.allPlayers);
@@ -189,6 +212,7 @@ namespace TheOtherRoles.Patches
             notWinners.AddRange(PlagueDoctor.allPlayers);
             notWinners.AddRange(Fox.allPlayers);
             notWinners.AddRange(Immoralist.allPlayers);
+            //notWinners.AddRange(King.allPlayers);
 
             // Neutral shifter can't win
             if (Shifter.shifter != null && Shifter.isNeutral) notWinners.Add(Shifter.shifter);
@@ -223,6 +247,7 @@ namespace TheOtherRoles.Patches
             bool lawyerSoloWin = Lawyer.lawyer != null && gameOverReason == (GameOverReason)CustomGameOverReason.LawyerSoloWin;
             bool plagueDoctorWin = PlagueDoctor.exists && gameOverReason == (GameOverReason)CustomGameOverReason.PlagueDoctorWin;
             bool foxWin = Fox.exists && gameOverReason == (GameOverReason)CustomGameOverReason.FoxWin;
+            //bool teamKingdomWin = gameOverReason == (GameOverReason)CustomGameOverReason.TeamKingdomWin && ((King.king != null && King.king.isAlive())) || (Minions.minions != null && !Minions.minions.isAlive());
             bool everyoneDead = AdditionalTempData.playerRoles.All(x => x.Status != FinalStatus.Alive);
 
             
@@ -351,7 +376,23 @@ namespace TheOtherRoles.Patches
                     TempData.winners.Add(wpd);
                 }
                 AdditionalTempData.winCondition = WinCondition.FoxWin;
-            }
+            }/*
+            // Kingdom Win condition
+            else if (teamKingdomWin)
+            {
+                TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
+                foreach (var king in King.players)
+                {
+                    WinningPlayerData wpd = new WinningPlayerData(king.player.Data);
+                    TempData.winners.Add(wpd);
+                }
+                foreach (var minions in Minions.players)
+                {
+                    WinningPlayerData wpd = new WinningPlayerData(minions.player.Data);
+                    TempData.winners.Add(wpd);
+                }
+                AdditionalTempData.winCondition = WinCondition.KingdomWin;
+            }*/
 
             // Madmate win with impostors
             if (Madmate.exists && TempData.winners.ToArray().Any(x => x.IsImpostor))
@@ -552,7 +593,13 @@ namespace TheOtherRoles.Patches
                         bonusText = "foxWin";
                         textRenderer.color = Fox.color;
                         __instance.BackgroundBar.material.SetColor("_Color", Fox.color);
-                    }
+                    }/*
+                    else if (AdditionalTempData.winCondition == WinCondition.KingdomWin)
+                    {
+                        bonusText = "kingdomWin";
+                        textRenderer.color = King.color;
+                        __instance.BackgroundBar.material.SetColor("_Color", King.color);
+                    }*/
                     else if (AdditionalTempData.winCondition == WinCondition.LoversTeamWin)
                     {
                         bonusText = "crewWin";
@@ -854,6 +901,36 @@ namespace TheOtherRoles.Patches
                         }
                     }
 
+                    //Source By Fox 
+                    /*
+                    if (King.exists && !King.crewWinsByTasks)
+                    {
+                        // 王生存かつタスク完了時に生存中のクルーがタスクを全て終わらせたら勝ち
+                        // 死んだプレイヤーが意図的にタスクを終了させないのを防止するため
+                        bool isKingAlive = King.isKingAlive();
+                        bool isKingCompletedtasks = King.isKingCompletedTasks();
+                        int numDeadPlayerUncompletedTasks = 0;
+                        foreach (var player in PlayerControl.AllPlayerControls)
+                        {
+                            foreach (var task in player.Data.Tasks)
+                            {
+                                if (player.Data.IsDead && player.isCrew() && !player.hasModifier(ModifierType.Madmate) && !player.hasModifier(ModifierType.CreatedMadmate))
+                                {
+                                    if (!task.Complete)
+                                    {
+                                        numDeadPlayerUncompletedTasks++;
+                                    }
+                                }
+                            }
+                        }
+
+                        if (isKingCompletedtasks && isKingAlive && GameData.Instance.TotalTasks > 0 && GameData.Instance.TotalTasks <= GameData.Instance.CompletedTasks + numDeadPlayerUncompletedTasks)
+                        {
+                            UncheckedEndGame(GameOverReason.HumansByTask);
+                            return true;
+                        }
+                    }*/
+
                     return false;
                 }
 
@@ -869,7 +946,7 @@ namespace TheOtherRoles.Patches
 
                 private static bool CheckAndEndGameForJackalWin(ShipStatus __instance, PlayerStatistics statistics)
                 {
-                    if (statistics.TeamJackalAlive >= statistics.TotalAlive - statistics.TeamJackalAlive - statistics.FoxAlive &&
+                    if (statistics.TeamJackalAlive >= statistics.TotalAlive - statistics.TeamJackalAlive - statistics.FoxAlive - statistics.KingAlive &&
                         statistics.TeamImpostorsAlive == 0 && 
                         (statistics.TeamJackalLovers == 0 || statistics.TeamJackalLovers >= statistics.CouplesAlive * 2)
                        )
@@ -882,7 +959,7 @@ namespace TheOtherRoles.Patches
 
                 private static bool CheckAndEndGameForImpostorWin(ShipStatus __instance, PlayerStatistics statistics)
                 {
-                    if (statistics.TeamImpostorsAlive >= statistics.TotalAlive - statistics.TeamImpostorsAlive - statistics.FoxAlive &&
+                    if (statistics.TeamImpostorsAlive >= statistics.TotalAlive - statistics.TeamImpostorsAlive - statistics.FoxAlive - statistics.KingAlive &&
                         statistics.TeamJackalAlive == 0 &&
                         (statistics.TeamImpostorLovers == 0 || statistics.TeamImpostorLovers >= statistics.CouplesAlive * 2)
                        )
@@ -949,6 +1026,7 @@ namespace TheOtherRoles.Patches
                 public int TeamImpostorLovers { get; set; }
                 public int TeamJackalLovers { get; set; }
                 public int FoxAlive { get; set; }
+                public int KingAlive { get; set; }
 
                 public PlayerStatistics(ShipStatus __instance)
                 {
@@ -1033,6 +1111,7 @@ namespace TheOtherRoles.Patches
                     TeamImpostorLovers = impLovers;
                     TeamJackalLovers = jackalLovers;
                     FoxAlive = Fox.livingPlayers.Count;
+                    //KingAlive = King.livingPlayers.Count;
                 }
             }
         }

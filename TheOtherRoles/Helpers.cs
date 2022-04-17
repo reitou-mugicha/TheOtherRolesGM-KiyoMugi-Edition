@@ -312,6 +312,8 @@ namespace TheOtherRoles {
                     player.isRole(RoleType.Vulture) ||
                     player.isRole(RoleType.Lawyer) ||
                     player.isRole(RoleType.Pursuer) ||
+                    //player.isRole(RoleType.King) ||
+                    //player.isRole(RoleType.Minions) ||
                     (player.isRole(RoleType.Shifter) && Shifter.isNeutral)));
         }
 
@@ -497,8 +499,6 @@ namespace TheOtherRoles {
                     roleCouldUse = false;
                 else if (!HawkEye.canUseVents && player.isRole(RoleType.HawkEye))
                     roleCouldUse = false;
-                //else if (!SimpleKiller.canUseVents && player.isRole(RoleType.SimpleKiller))
-                    //roleCouldUse = false;
                 else
                     roleCouldUse = true;
             }
@@ -518,22 +518,11 @@ namespace TheOtherRoles {
                 roleCouldUse = false;
             else if (!Janitor.canSabotage && player.isRole(RoleType.Janitor))
                 roleCouldUse = false;
-            //else if (!SimpleKiller.canSabotage && player.isRole(RoleType.SimpleKiller))
-                //roleCouldUse = false;
             else if (player.Data?.Role != null && player.Data.Role.IsImpostor)
                 roleCouldUse = true;
 
             return roleCouldUse;
         }
-
-        //public static bool roleCanReport(this PlayerControl player)
-        //{
-        //    bool roleCouldUse = true;
-        //    if (!SimpleKiller.canReport && player.isRole(RoleType.SimpleKiller))
-        //        roleCouldUse = false;
-
-        //    return roleCouldUse;
-        //}
 
         public static MurderAttemptResult checkMuderAttempt(PlayerControl killer, PlayerControl target, bool blockRewind = false) {
             // Modified vanilla checks

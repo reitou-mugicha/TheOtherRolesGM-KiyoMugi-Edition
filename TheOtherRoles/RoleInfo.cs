@@ -97,6 +97,9 @@ namespace TheOtherRoles
         public static RoleInfo sprinter = new RoleInfo("sprinter", Sprinter.color, CustomOptionHolder.sprinterSpawnRate, RoleType.Sprinter);
         public static RoleInfo evilHacker = new RoleInfo("evilHacker", EvilHacker.color, CustomOptionHolder.evilHackerSpawnRate, RoleType.EvilHacker);
         public static RoleInfo hawkEye = new RoleInfo("hawkEye", HawkEye.color, CustomOptionHolder.hawkEyeSpawnRate,RoleType.HawkEye);
+        //public static RoleInfo king = new RoleInfo("king", King.color, CustomOptionHolder.kingdomSpawnRate, RoleType.King);
+        //public static RoleInfo minions = new RoleInfo("minions", Minions.color, CustomOptionHolder.kingdomSpawnRate, RoleType.Minions);
+        //public static RoleInfo chunibyo = new RoleInfo("chunibyo", Chunibyo.color, CustomOptionHolder.chunibyoSpawnRate, RoleType.Chunibyo);
         //public static RoleInfo simpleKiller = new RoleInfo("simpleKiller", SimpleKiller.color, CustomOptionHolder.simpleKillerSpawnRate,RoleType.SimpleKiller);
 
         public static List<RoleInfo> allRoleInfos = new List<RoleInfo>() {
@@ -159,8 +162,10 @@ namespace TheOtherRoles
                 fortuneTeller,
                 sprinter,
                 evilHacker,
-                hawkEye,
-                //simpleKiller
+                hawkEye
+                //king,
+                //minions,
+                //chunibyo
             };
 
         public static string tl(string key)
@@ -218,7 +223,9 @@ namespace TheOtherRoles
             if (p.isRole(RoleType.Pursuer)) infos.Add(pursuer);
             if (p.isRole(RoleType.Ninja)) infos.Add(ninja);
             if (p.isRole(RoleType.HawkEye)) infos.Add(hawkEye);
-            //if (p.isRole(RoleType.SimpleKiller)) infos.Add(simpleKiller);
+            //if (p.isRole(RoleType.King)) infos.Add(king);
+            //if (p.isRole(RoleType.Minions)) infos.Add(minions);
+            //if (p.isRole(RoleType.Chunibyo)) infos.Add(chunibyo);
             if (p.isRole(RoleType.PlagueDoctor)) infos.Add(plagueDoctor);
             if (p.isRole(RoleType.NekoKabocha)) infos.Add(nekoKabocha);
             if (p.isRole(RoleType.SerialKiller)) infos.Add(serialKiller);

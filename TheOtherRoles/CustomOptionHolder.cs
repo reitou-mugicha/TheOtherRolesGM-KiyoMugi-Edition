@@ -43,9 +43,6 @@ namespace TheOtherRoles {
         public static CustomOption camouflagerDuration;
         public static CustomOption camouflagerRandomColors;
 
-        //public static CustomRoleOption simpleKillerSpawnRate;
-        //public static CustomOption simpleKillerCooldown;
-
         public static CustomRoleOption evilHackerSpawnRate;
         public static CustomOption evilHackerCanHasBetterAdmin;
         public static CustomOption evilHackerCanCreateMadmate;
@@ -87,6 +84,10 @@ namespace TheOtherRoles {
         public static CustomOption loversSeparateTeam;
         public static CustomOption loversTasksCount;
         public static CustomOption loversEnableChat;
+
+        //public static CustomRoleOption kingdomSpawnRate;
+        //public static CustomOption kingdomCrewWinsByTasks;
+        //public static CustomTasksOption kingTasks;
 
         public static CustomRoleOption guesserSpawnRate;
         public static CustomOption guesserIsImpGuesserRate;
@@ -283,6 +284,8 @@ namespace TheOtherRoles {
 
 		public static CustomOption allowParallelMedBayScans;
 
+        public static CustomOption ventAnimation;
+
         public static CustomOption dynamicMap;
         public static CustomOption dynamicMapEnableSkeld;
         public static CustomOption dynamicMapEnableMira;
@@ -371,6 +374,10 @@ namespace TheOtherRoles {
         public static CustomOption sprinterCooldown;
         public static CustomOption sprinterDuration;
         public static CustomOption sprinterSpeedBonus;
+
+        //public static CustomRoleOption chunibyoSpawnRate;
+        //public static CustomOption chunibyoCooldown;
+        //public static CustomOption chunibyoDuration;
 
         internal static Dictionary<byte, byte[]> blockedRolePairings = new Dictionary<byte, byte[]>();
 
@@ -540,6 +547,10 @@ namespace TheOtherRoles {
             guesserKillsThroughShield = CustomOption.Create(316, "guesserPierceShield", true, guesserSpawnRate);
             guesserEvilCanKillSpy = CustomOption.Create(318, "guesserEvilCanKillSpy", true, guesserSpawnRate);
 			guesserCantGuessSnitchIfTaksDone = CustomOption.Create(319, "guesserCantGuessSnitchIfTaksDone", true, guesserSpawnRate);
+
+            //kingdomSpawnRate = new CustomRoleOption(5030, "kingdom", King.color, 1);
+            //kingdomCrewWinsByTasks = CustomOption.Create(5031, "kingdomCrewWinsByTasks", true, kingdomSpawnRate);
+            //kingTasks = new CustomTasksOption(5032, 5, 3, 7, kingdomSpawnRate);
 
             mayorSpawnRate = new CustomRoleOption(80, "mayor", Mayor.color, 1);
             mayorIsImpMayorRate = CustomOption.Create(81, "mayorIsImpMayorRate", rates, mayorSpawnRate);
@@ -720,6 +731,10 @@ namespace TheOtherRoles {
             sprinterDuration = CustomOption.Create(1052, "sprinterDuration", 15f, 2.5f, 60f, 2.5f, sprinterSpawnRate, format: "unitSeconds");
             sprinterSpeedBonus = CustomOption.Create(1053, "sprinterSpeedBonus", 125f, 50f, 200f, 5f, sprinterSpawnRate, format: "unitPercent");
 
+            //chunibyoSpawnRate = new CustomRoleOption(6000, "chunibyo", Chunibyo.color, 15);
+            //chunibyoCooldown = CustomOption.Create(6001, "chunibyoCooldown", 30f, 2.5f, 60f, 2.5f, chunibyoSpawnRate, format: "unitSeconds");
+            //chunibyoDuration = CustomOption.Create(6002, "chunibyoDuration", 10f, 2.5f, 60f, 2.5f, chunibyoSpawnRate, format: "unitSeconds");
+
             // Other options
             specialOptions = new CustomOptionBlank(null);
             maxNumberOfMeetings = CustomOption.Create(3, "maxNumberOfMeetings", 10, 0, 15, 1, specialOptions, true);
@@ -728,6 +743,7 @@ namespace TheOtherRoles {
             hideOutOfSightNametags = CustomOption.Create(550, "hideOutOfSightNametags", false, specialOptions);
             refundVotesOnDeath = CustomOption.Create(551, "refundVotesOnDeath", true, specialOptions);
             allowParallelMedBayScans = CustomOption.Create(540, "parallelMedbayScans", false, specialOptions);
+            ventAnimation = CustomOption.Create(541, "ventAnimation", true, specialOptions);
             hideSettings = CustomOption.Create(520, "hideSettings", false, specialOptions);
 
             restrictDevices = CustomOption.Create(510, "restrictDevices", new string[] { "optionOff", "restrictPerTurn", "restrictPerGame" }, specialOptions);

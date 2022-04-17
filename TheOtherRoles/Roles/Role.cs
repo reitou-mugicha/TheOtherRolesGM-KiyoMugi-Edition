@@ -81,7 +81,10 @@ namespace TheOtherRoles
         Fox,
         Immoralist,
         HawkEye,
-        SimpleKiller,
+        //SimpleKiller,
+        //King,
+        //Minions,
+        //Chunibyo,
 
 
         GM = 200,
@@ -101,19 +104,22 @@ namespace TheOtherRoles
             { RoleType.Lighter, typeof(RoleBase<Lighter>) },
             { RoleType.FortuneTeller, typeof(RoleBase<FortuneTeller>) },
             { RoleType.Sprinter, typeof(RoleBase<Sprinter>) },
+            //{ RoleType.Chunibyo, typeof(RoleBase<Chunibyo>) },
 
             // Impostor
             { RoleType.Ninja, typeof(RoleBase<Ninja>) },
             { RoleType.NekoKabocha, typeof(RoleBase<NekoKabocha>) },
             { RoleType.SerialKiller, typeof(RoleBase<SerialKiller>) },
             { RoleType.HawkEye, typeof(RoleBase<HawkEye>) },
-            { RoleType.SimpleKiller, typeof(RoleBase<SimpleKiller>) },
+            //{ RoleType.SimpleKiller, typeof(RoleBase<SimpleKiller>) },
 
             // Neutral
             { RoleType.Opportunist, typeof(RoleBase<Opportunist>) },
             { RoleType.PlagueDoctor, typeof(RoleBase<PlagueDoctor>) },
             { RoleType.Fox, typeof(RoleBase<Fox>) },
             { RoleType.Immoralist, typeof(RoleBase<Immoralist>) },
+            //{ RoleType.King, typeof(RoleBase<King>) },
+            //{ RoleType.Minions, typeof(RoleBase<Minions>) },
 
             // Other
             { RoleType.Watcher, typeof(RoleBase<Watcher>) },

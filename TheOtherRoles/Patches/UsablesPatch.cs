@@ -164,6 +164,30 @@ namespace TheOtherRoles.Patches
             }
         }
 
+        [HarmonyPatch(typeof(Vent), nameof(Vent.EnterVent))]
+        class EnterVentAnimPatch {
+            public static bool Prefix(Vent __instance, [HarmonyArgument(0)] PlayerControl pc) 
+            {
+                if (Helpers.GameStarted && CustomOptionHolder.ventAnimation.getBool())
+                {
+                    return pc.AmOwner;
+                }
+                return true;
+            }
+        }
+
+        [HarmonyPatch(typeof(Vent), nameof(Vent.ExitVent))]
+        class ExitVentAnimPatch {
+            public static bool Prefix(Vent __instance, [HarmonyArgument(0)] PlayerControl pc)
+            {
+                if (Helpers.GameStarted && CustomOptionHolder.ventAnimation.getBool())
+                {
+                    return pc.AmOwner;
+                }
+                return true;
+            }
+        }
+
         [HarmonyPatch(typeof(VentButton), nameof(VentButton.DoClick))]
         class VentButtonDoClickPatch
         {
@@ -222,7 +246,6 @@ namespace TheOtherRoles.Patches
                 {
                     HudManager.Instance.ImpostorVentButton.Hide();
                     HudManager.Instance.SabotageButton.Hide();
-                    //HudManager.Instance.ReportButton.Hide();
 
                     if (Helpers.ShowButtons)
                     {
@@ -234,11 +257,6 @@ namespace TheOtherRoles.Patches
                             HudManager.Instance.SabotageButton.Show();
                             HudManager.Instance.SabotageButton.gameObject.SetActive(true);
                         }
-                        //if (__instance.roleCanReport())
-                        //{
-                        //    HudManager.Instance.ReportButton.Show();
-                        //    HudManager.Instance.SabotageButton.gameObject.SetActive(true);
-                        //}
                     }
                 }
             }
@@ -307,19 +325,6 @@ namespace TheOtherRoles.Patches
                 {
                     HudManager.Instance.SabotageButton.SetDisabled();
                 }
-            }
-        }
-
-        [HarmonyPatch(typeof(ReportButton), nameof(ReportButton.DoClick))]
-        public static class ReportButtonDoClickPatch
-        {
-            public static bool Prefix(ReportButton __instance)
-            {
-                // The report button behaves just fine if it's a regular impostor
-                if (PlayerControl.LocalPlayer.Data.Role.TeamType == RoleTeamTypes.Impostor) return true;
-
-                DestroyableSingleton<HudManager>.Instance.ShowMap((Il2CppSystem.Action<MapBehaviour>)((m) => { m.ShowSabotageMap(); }));
-                return false;
             }
         }
 

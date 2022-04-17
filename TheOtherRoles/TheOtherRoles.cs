@@ -373,7 +373,7 @@ namespace TheOtherRoles
         {
             public static PlayerControl hacker;
             public static Minigame vitals = null;
-        public static Minigame doorLog = null;
+            public static Minigame doorLog = null;
             public static Color color = new Color32(117, 250, 76, byte.MaxValue);
 
             public static float cooldown = 30f;

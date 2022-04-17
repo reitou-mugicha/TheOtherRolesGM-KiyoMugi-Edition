@@ -153,7 +153,6 @@ namespace TheOtherRoles.Patches
             impSettings.Add((byte)RoleType.NekoKabocha, CustomOptionHolder.nekoKabochaSpawnRate.data);
             impSettings.Add((byte)RoleType.SerialKiller, CustomOptionHolder.serialKillerSpawnRate.data);
             impSettings.Add((byte)RoleType.HawkEye, CustomOptionHolder.hawkEyeSpawnRate.data);
-            //impSettings.Add((byte)RoleType.SimpleKiller, CustomOptionHolder.simpleKillerSpawnRate.data);
 
             neutralSettings.Add((byte)RoleType.Jester, CustomOptionHolder.jesterSpawnRate.data);
             neutralSettings.Add((byte)RoleType.Arsonist, CustomOptionHolder.arsonistSpawnRate.data);
@@ -179,6 +178,7 @@ namespace TheOtherRoles.Patches
             crewSettings.Add((byte)RoleType.Bait, CustomOptionHolder.baitSpawnRate.data);
             crewSettings.Add((byte)RoleType.SecurityGuard, CustomOptionHolder.securityGuardSpawnRate.data);
             crewSettings.Add((byte)RoleType.Medium, CustomOptionHolder.mediumSpawnRate.data);
+            //crewSettings.Add((byte)RoleType.Chunibyo, CustomOptionHolder.chunibyoSpawnRate.data);
             if (impostors.Count > 1)
             {
                 // Only add Spy if more than 1 impostor as the spy role is otherwise useless
@@ -295,6 +295,14 @@ namespace TheOtherRoles.Patches
                 setRoleToRandomPlayer((byte)RoleType.Mafioso, data.impostors);
                 data.maxImpostorRoles -= 3;
             }
+
+            //// Assign Kingdom
+            //if (data.maxNeutralRoles >= 2 && (rnd.Next(1, 101) <= CustomOptionHolder.kingdomSpawnRate.getSelection() * 10))
+            //{
+            //    setRoleToRandomPlayer((byte)RoleType.King, data.neutral);
+            //    setRoleToRandomPlayer((byte)RoleType.Minions, data.neutral);
+            //    data.maxNeutralRoles -= 2;
+            //}
         }
 
         private static void selectFactionForFactionIndependentRoles(RoleAssignmentData data)
@@ -655,6 +663,7 @@ namespace TheOtherRoles.Patches
         {
             public List<PlayerControl> crewmates { get; set; }
             public List<PlayerControl> impostors { get; set; }
+            public List<PlayerControl> neutral { get; set; }
             public Dictionary<byte, (int rate, int count)> impSettings = new Dictionary<byte, (int, int)>();
             public Dictionary<byte, (int rate, int count)> neutralSettings = new Dictionary<byte, (int, int)>();
             public Dictionary<byte, (int rate, int count)> crewSettings = new Dictionary<byte, (int, int)>();

@@ -11,28 +11,20 @@ using static TheOtherRoles.GameHistory;
 namespace TheOtherRoles
 {
     [HarmonyPatch]
-    public class SimpleKiller : RoleBase<SimpleKiller>
+    public class Minions : RoleBase<Minions>
     {
-        public static Color color = Palette.ImpostorRed;
+        public static PlayerControl minions;
+        public static Color color = Palette.CrewmateBlue;
 
-        public static bool canUseVents = false;
-        public static bool canSabotage = false;
-        public static bool canReport = true;
-        //public static float killCooldown { get { return CustomOptionHolder.simpleKillerCooldown.getFloat(); } }
-
-        public SimpleKiller()
+        public Minions()
         {
-            RoleType = roleId = RoleType.SimpleKiller;
+            RoleType = roleId = RoleType.Minions;
         }
 
         public override void OnMeetingStart() { }
         public override void OnMeetingEnd() { }
         public override void FixedUpdate() { }
-        public override void OnKill(PlayerControl target) 
-        { 
-            //if (PlayerControl.LocalPlayer == player)
-                //player.SetKillTimerUnchecked(killCooldown);
-        }
+        public override void OnKill(PlayerControl target) { }
         public override void OnDeath(PlayerControl killer = null) { }
         public override void HandleDisconnect(PlayerControl player, DisconnectReasons reason) { }
 
@@ -41,7 +33,7 @@ namespace TheOtherRoles
 
         public static void Clear()
         {
-            players = new List<SimpleKiller>();
+            players = new List<Minions>();
         }
     }
 }
