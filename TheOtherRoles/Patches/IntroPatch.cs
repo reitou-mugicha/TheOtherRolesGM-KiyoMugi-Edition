@@ -6,6 +6,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TheOtherRoles.Objects;
 using BepInEx.IL2CPP.Utils.Collections;
 
 namespace TheOtherRoles.Patches {
@@ -225,6 +226,22 @@ namespace TheOtherRoles.Patches {
 
             public static void Postfix(IntroCutscene __instance, ref  Il2CppSystem.Collections.Generic.List<PlayerControl> yourTeam) {
                 setupIntroTeam(__instance, ref yourTeam);
+            }
+        }
+
+        [HarmonyPatch(typeof(Constants), nameof(Constants.ShouldHorseAround))]
+        public static class ShouldAlwaysHorseAround
+        {
+            public static bool isHorseMode;
+            public static bool Prefix(ref bool __result)
+            {
+                if (isHorseMode != MapOptions.enableHorseMode && LobbyBehaviour.Instance != null) __result = isHorseMode;
+                else
+                {
+                    __result = MapOptions.enableHorseMode;
+                    isHorseMode = MapOptions.enableHorseMode;
+                }
+                return false;
             }
         }
     }

@@ -98,29 +98,29 @@ namespace TheOtherRoles
         public static class Mayor
         {
             public static PlayerControl mayor;
-            public static PlayerControl evilMayor;
+            // public static PlayerControl evilMayor;
             public static Color color = new Color32(32, 77, 66, byte.MaxValue);
             public static int numVotes = 2;
             public static int evilNumVotes = 2;
 
             public static bool isMayor(byte playerId)
             {
-                if ((mayor != null && mayor.PlayerId == playerId) || (evilMayor != null && evilMayor.PlayerId == playerId)) return true;
+                if ((mayor != null && mayor.PlayerId == playerId)/* || (evilMayor != null && evilMayor.PlayerId == playerId)*/) return true;
                 return false;
             }
 
             public static void clear(byte playerId)
             {
                 if (mayor != null && mayor.PlayerId == playerId) mayor = null;
-                else if (evilMayor != null && evilMayor.PlayerId == playerId) evilMayor = null;
+                // else if (evilMayor != null && evilMayor.PlayerId == playerId) evilMayor = null;
             }
 
             public static void clearAndReload()
             {
                 mayor = null;
-                evilMayor = null;
+                // evilMayor = null;
                 numVotes = (int)CustomOptionHolder.mayorNumVotes.getFloat();
-                evilNumVotes = (int)CustomOptionHolder.evilMayorNumVotes.getFloat();
+                // evilNumVotes = (int)CustomOptionHolder.evilMayorNumVotes.getFloat();
             }
         }
 

@@ -10,7 +10,7 @@ namespace TheOtherRoles.Patches {
     [HarmonyPatch]
     public static class CredentialsPatch {
 
-        public static string baseCredentials = $@"<size=130%><color=#ff351f>TheOtherRolesGM K</color></size> Ver.{TheOtherRolesPlugin.Version.ToString()}";
+        public static string baseCredentials = $@"<size=130%><color=#ff351f>TheOtherRolesGM KM</color></size> Ver.{TheOtherRolesPlugin.Version.ToString()}";
 
 
         public static string contributorsCredentials = "<size=80%>GitHub Contributors: Alex2911, amsyarasyiq, gendelo3</size>";
@@ -57,21 +57,55 @@ namespace TheOtherRoles.Patches {
         }
 
         [HarmonyPatch(typeof(MainMenuManager), nameof(MainMenuManager.Start))]
-        private static class LogoPatch
+        public static class LogoPatch
         {
-            static void Postfix(MainMenuManager __instance) {
-                DestroyableSingleton<ModManager>.Instance.ShowModStamp();
-
+            public static SpriteRenderer renderer;
+            public static Sprite bannerSprite;
+            public static Sprite horseBannerSprite;
+            private static PingTracker instance;
+            static void Postfix(PingTracker __instance)
+            {
                 var amongUsLogo = GameObject.Find("bannerLogo_AmongUs");
-                if (amongUsLogo != null) {
+                if (amongUsLogo != null)
+                {
                     amongUsLogo.transform.localScale *= 0.6f;
                     amongUsLogo.transform.position += Vector3.up * 0.25f;
                 }
 
                 var torLogo = new GameObject("bannerLogo_TOR");
                 torLogo.transform.position = Vector3.up;
-                var renderer = torLogo.AddComponent<SpriteRenderer>();
+                renderer = torLogo.AddComponent<SpriteRenderer>();
+                loadSprites();
                 renderer.sprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.Banner.png", 300f);
+
+                instance = __instance;
+                loadSprites();
+                renderer.sprite = MapOptions.enableHorseMode ? horseBannerSprite : bannerSprite;
+            }
+
+            public static void loadSprites()
+            {
+                if (bannerSprite == null) bannerSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.Banner.png", 300f);
+                if (horseBannerSprite == null) horseBannerSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.bannerTheHorseRoles.png", 300f);
+            }
+
+            public static void updateSprite()
+            {
+                loadSprites();
+                if (renderer != null)
+                {
+                    float fadeDuration = 1f;
+                    instance.StartCoroutine(Effects.Lerp(fadeDuration, new Action<float>((p) => {
+                        renderer.color = new Color(1, 1, 1, 1 - p);
+                        if (p == 1)
+                        {
+                            renderer.sprite = MapOptions.enableHorseMode ? horseBannerSprite : bannerSprite;
+                            instance.StartCoroutine(Effects.Lerp(fadeDuration, new Action<float>((p) => {
+                                renderer.color = new Color(1, 1, 1, p);
+                            })));
+                        }
+                    })));
+                }
             }
         }
     }

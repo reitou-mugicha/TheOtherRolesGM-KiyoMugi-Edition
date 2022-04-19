@@ -108,19 +108,20 @@ namespace TheOtherRoles.Patches {
                         if (GM.gm != null && votedFor == GM.gm.PlayerId) continue;
 
                         int currentVotes;
+                        // int evilCurrentVotes;
                         int additionalVotes = (Mayor.mayor != null && Mayor.mayor.PlayerId == playerVoteArea.TargetPlayerId) ? Mayor.numVotes : 1; // Mayor vote
-                        int evilAdditionalVotes = (Mayor.evilMayor != null && Mayor.evilMayor.PlayerId == playerVoteArea.TargetPlayerId) ? Mayor.evilNumVotes : 1; // EvilMayor vote
+                        // int evilAdditionalVotes = (Mayor.evilMayor != null && Mayor.evilMayor.PlayerId == playerVoteArea.TargetPlayerId) ? Mayor.evilNumVotes : 1; // EvilMayor vote
 
                         if (dictionary.TryGetValue(votedFor, out currentVotes))
                             dictionary[votedFor] = currentVotes + additionalVotes;
                         else
                             dictionary[votedFor] = additionalVotes;
-
-                        if (dictionary.TryGetValue(votedFor, out currentVotes))
-                            dictionary[votedFor] = currentVotes + evilAdditionalVotes;
+                        /*
+                        if (dictionary.TryGetValue(votedFor, out evilCurrentVotes))
+                            dictionary[votedFor] = evilCurrentVotes + evilAdditionalVotes;
                         else
                             dictionary[votedFor] = evilAdditionalVotes;
-                    }
+                    */}
                 }
 
                 // Swapper swap votes
@@ -270,7 +271,7 @@ namespace TheOtherRoles.Patches {
                         votesApplied[voter.PlayerId]++;
 
                         // Major vote, redo this iteration to place a second vote
-                        if (Mayor.mayor != null && voter.PlayerId == Mayor.mayor.PlayerId && votesApplied[voter.PlayerId] < Mayor.numVotes || Mayor.evilMayor != null && voter.PlayerId == Mayor.evilMayor.PlayerId && votesApplied[voter.PlayerId] < Mayor.evilNumVotes) {
+                        if (Mayor.mayor != null && voter.PlayerId == Mayor.mayor.PlayerId && votesApplied[voter.PlayerId] < Mayor.numVotes /*|| Mayor.evilMayor != null && voter.PlayerId == Mayor.evilMayor.PlayerId && votesApplied[voter.PlayerId] < Mayor.evilNumVotes*/) {
                             j--;    
                         }
                     }
@@ -433,7 +434,7 @@ namespace TheOtherRoles.Patches {
                 Transform button = UnityEngine.Object.Instantiate(buttonTemplate, buttonParent);
                 Transform buttonMask = UnityEngine.Object.Instantiate(maskTemplate, buttonParent);
                 TMPro.TextMeshPro label = UnityEngine.Object.Instantiate(textTemplate, button);
-                button.GetComponent<SpriteRenderer>().sprite = DestroyableSingleton<HatManager>.Instance.AllNamePlates[0].viewData.viewData.Image;
+                button.GetComponent<SpriteRenderer>().sprite = DestroyableSingleton<HatManager>.Instance.GetNamePlateById("nameplate_NoPlate")?.viewData?.viewData?.Image;
                 buttons.Add(button);
                 int row = i/5, col = i%5;
                 buttonParent.localPosition = new Vector3(-3.47f + 1.75f * col, 1.5f - 0.45f * row, -200f);

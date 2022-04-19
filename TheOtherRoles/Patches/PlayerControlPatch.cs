@@ -1202,24 +1202,8 @@ namespace TheOtherRoles.Patches
             }
 
             // Seer show flash and add dead player position
-            if (Seer.seer != null && PlayerControl.LocalPlayer == Seer.seer && !Seer.seer.Data.IsDead && Seer.seer != target && Seer.mode <= 1)
-            {
-                HudManager.Instance.FullScreen.enabled = true;
-                HudManager.Instance.StartCoroutine(Effects.Lerp(1f, new Action<float>((p) =>
-                {
-                    var renderer = HudManager.Instance.FullScreen;
-                    if (p < 0.5)
-                    {
-                        if (renderer != null)
-                            renderer.color = new Color(42f / 255f, 187f / 255f, 245f / 255f, Mathf.Clamp01(p * 2 * 0.75f));
-                    }
-                    else
-                    {
-                        if (renderer != null)
-                            renderer.color = new Color(42f / 255f, 187f / 255f, 245f / 255f, Mathf.Clamp01((1 - p) * 2 * 0.75f));
-                    }
-                    if (p == 1f && renderer != null) renderer.enabled = false;
-                })));
+            if (Seer.seer != null && PlayerControl.LocalPlayer == Seer.seer && !Seer.seer.Data.IsDead && Seer.seer != target && Seer.mode <= 1) {
+                Helpers.showFlash(new Color(42f / 255f, 187f / 255f, 245f / 255f));
             }
             if (Seer.deadBodyPositions != null) Seer.deadBodyPositions.Add(target.transform.position);
 
@@ -1256,19 +1240,7 @@ namespace TheOtherRoles.Patches
 			
             // Show flash on bait kill to the killer if enabled
             if (Bait.bait != null && target == Bait.bait && Bait.showKillFlash && __instance != Bait.bait && __instance == PlayerControl.LocalPlayer) {
-                HudManager.Instance.FullScreen.enabled = true;
-                HudManager.Instance.StartCoroutine(Effects.Lerp(1f, new Action<float>((p) => {
-                    var renderer = HudManager.Instance.FullScreen;
-                    if (p < 0.5) {
-                        if (renderer != null)
-                            renderer.color = new Color(204f / 255f, 102f / 255f, 0f / 255f, Mathf.Clamp01(p * 2 * 0.75f));
-                    }
-                    else {
-                        if (renderer != null)
-                            renderer.color = new Color(204f / 255f, 102f / 255f, 0f / 255f, Mathf.Clamp01((1 - p) * 2 * 0.75f));
-                    }
-                    if (p == 1f && renderer != null) renderer.enabled = false;
-                })));
+                Helpers.showFlash(new Color(204f / 255f, 102f / 255f, 0f / 255f));
             }
 
             __instance.OnKill(target);

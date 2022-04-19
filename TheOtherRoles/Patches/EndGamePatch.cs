@@ -140,24 +140,6 @@ namespace TheOtherRoles.Patches
                 }
             }
             AdditionalTempData.clear();
-            /*
-            bool isKingAkive = King.isKingAlive();
-            bool isKingCompletedTasks = King.isKingCompletedTasks();
-            if (isKingAkive && isKingCompletedTasks) {
-                if (gameOverReason == GameOverReason.HumansByTask && !King.crewWinsByTasks)
-                {
-                    gameOverReason = (GameOverReason)CustomGameOverReason.TeamKingdomWin;
-                }
-                 else if (gameOverReason != (GameOverReason)CustomGameOverReason.PlagueDoctorWin &&
-                    gameOverReason != (GameOverReason)CustomGameOverReason.ArsonistWin &&
-                    gameOverReason != (GameOverReason)CustomGameOverReason.JesterWin &&
-                    gameOverReason != (GameOverReason)CustomGameOverReason.VultureWin &&
-                    gameOverReason != (GameOverReason)CustomGameOverReason.FoxWin &&
-                    gameOverReason != (GameOverReason)GameOverReason.HumansByTask)
-                {
-                    gameOverReason = (GameOverReason)CustomGameOverReason.TeamKingdomWin;
-                }
-            }*/
 
             //foreach (var pc in PlayerControl.AllPlayerControls)
             var excludeRoles = new RoleType[] { RoleType.Lovers };
@@ -376,23 +358,7 @@ namespace TheOtherRoles.Patches
                     TempData.winners.Add(wpd);
                 }
                 AdditionalTempData.winCondition = WinCondition.FoxWin;
-            }/*
-            // Kingdom Win condition
-            else if (teamKingdomWin)
-            {
-                TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
-                foreach (var king in King.players)
-                {
-                    WinningPlayerData wpd = new WinningPlayerData(king.player.Data);
-                    TempData.winners.Add(wpd);
-                }
-                foreach (var minions in Minions.players)
-                {
-                    WinningPlayerData wpd = new WinningPlayerData(minions.player.Data);
-                    TempData.winners.Add(wpd);
-                }
-                AdditionalTempData.winCondition = WinCondition.KingdomWin;
-            }*/
+            }
 
             // Madmate win with impostors
             if (Madmate.exists && TempData.winners.ToArray().Any(x => x.IsImpostor))
@@ -522,7 +488,7 @@ namespace TheOtherRoles.Patches
                         poolablePlayer.UpdateFromPlayerOutfit(winningPlayerData2, winningPlayerData2.IsDead);
                         if (winningPlayerData2.IsDead)
                         {
-                            poolablePlayer.CurrentBodySprite.BodySprite.sprite = __instance.GhostSprite;
+                            poolablePlayer.CurrentBodySprite.BodySprite.sprite = poolablePlayer.CurrentBodySprite.GhostSprite;
                             poolablePlayer.SetDeadFlipX(i % 2 == 0);
                         }
                         else
@@ -593,13 +559,7 @@ namespace TheOtherRoles.Patches
                         bonusText = "foxWin";
                         textRenderer.color = Fox.color;
                         __instance.BackgroundBar.material.SetColor("_Color", Fox.color);
-                    }/*
-                    else if (AdditionalTempData.winCondition == WinCondition.KingdomWin)
-                    {
-                        bonusText = "kingdomWin";
-                        textRenderer.color = King.color;
-                        __instance.BackgroundBar.material.SetColor("_Color", King.color);
-                    }*/
+                    }
                     else if (AdditionalTempData.winCondition == WinCondition.LoversTeamWin)
                     {
                         bonusText = "crewWin";
@@ -900,37 +860,6 @@ namespace TheOtherRoles.Patches
                             return true;
                         }
                     }
-
-                    //Source By Fox 
-                    /*
-                    if (King.exists && !King.crewWinsByTasks)
-                    {
-                        // 王生存かつタスク完了時に生存中のクルーがタスクを全て終わらせたら勝ち
-                        // 死んだプレイヤーが意図的にタスクを終了させないのを防止するため
-                        bool isKingAlive = King.isKingAlive();
-                        bool isKingCompletedtasks = King.isKingCompletedTasks();
-                        int numDeadPlayerUncompletedTasks = 0;
-                        foreach (var player in PlayerControl.AllPlayerControls)
-                        {
-                            foreach (var task in player.Data.Tasks)
-                            {
-                                if (player.Data.IsDead && player.isCrew() && !player.hasModifier(ModifierType.Madmate) && !player.hasModifier(ModifierType.CreatedMadmate))
-                                {
-                                    if (!task.Complete)
-                                    {
-                                        numDeadPlayerUncompletedTasks++;
-                                    }
-                                }
-                            }
-                        }
-
-                        if (isKingCompletedtasks && isKingAlive && GameData.Instance.TotalTasks > 0 && GameData.Instance.TotalTasks <= GameData.Instance.CompletedTasks + numDeadPlayerUncompletedTasks)
-                        {
-                            UncheckedEndGame(GameOverReason.HumansByTask);
-                            return true;
-                        }
-                    }*/
-
                     return false;
                 }
 

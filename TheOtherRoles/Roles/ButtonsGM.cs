@@ -31,7 +31,7 @@ namespace TheOtherRoles
             Immoralist.SetButtonCooldowns();
             Sprinter.SetButtonCooldowns();
             HawkEye.SetButtonCooldowns();
-            //Chunibyo.SetButtonCooldowns();
+            DiePlayer.SetButtonCooldowns();
 
             foreach (CustomButton gmButton in gmButtons)
             {
@@ -58,7 +58,7 @@ namespace TheOtherRoles
             FortuneTeller.MakeButtons(hm);
             Sprinter.MakeButtons(hm);
             HawkEye.MakeButtons(hm);
-            //Chunibyo.MakeButtons(hm);
+            DiePlayer.MakeButtons(hm);
 
             gmButtons = new List<CustomButton>();
             gmKillButtons = new List<CustomButton>();

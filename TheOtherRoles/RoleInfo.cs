@@ -39,7 +39,7 @@ namespace TheOtherRoles
 
         public static RoleInfo jester = new RoleInfo("jester", Jester.color, CustomOptionHolder.jesterSpawnRate, RoleType.Jester);
         public static RoleInfo mayor = new RoleInfo("mayor", Mayor.color, CustomOptionHolder.mayorSpawnRate, RoleType.Mayor);
-        public static RoleInfo evilMayor = new RoleInfo("evilMayor", Palette.ImpostorRed, CustomOptionHolder.mayorSpawnRate, RoleType.EvilMayor);
+        //public static RoleInfo evilMayor = new RoleInfo("evilMayor", Palette.ImpostorRed, CustomOptionHolder.mayorSpawnRate, RoleType.EvilMayor);
         public static RoleInfo engineer = new RoleInfo("engineer", Engineer.color, CustomOptionHolder.engineerSpawnRate, RoleType.Engineer);
         public static RoleInfo sheriff = new RoleInfo("sheriff", Sheriff.color, CustomOptionHolder.sheriffSpawnRate, RoleType.Sheriff);
         public static RoleInfo lighter = new RoleInfo("lighter", Lighter.color, CustomOptionHolder.lighterSpawnRate, RoleType.Lighter);
@@ -123,7 +123,7 @@ namespace TheOtherRoles
                 niceGuesser,
                 evilGuesser,
                 mayor,
-                evilMayor,
+                //evilMayor,
                 lovers,
                 jester,
                 arsonist,
@@ -163,9 +163,6 @@ namespace TheOtherRoles
                 sprinter,
                 evilHacker,
                 hawkEye
-                //king,
-                //minions,
-                //chunibyo
             };
 
         public static string tl(string key)
@@ -180,7 +177,7 @@ namespace TheOtherRoles
             // Special roles
             if (p.isRole(RoleType.Jester)) infos.Add(jester);
             if (p.isRole(RoleType.Mayor)) infos.Add(mayor);
-            if (p.isRole(RoleType.EvilMayor)) infos.Add(evilMayor);
+            //if (p.isRole(RoleType.EvilMayor)) infos.Add(evilMayor);
             if (p.isRole(RoleType.Engineer)) infos.Add(engineer);
             if (p.isRole(RoleType.Sheriff)) infos.Add(sheriff);
             if (p.isRole(RoleType.Lighter)) infos.Add(lighter);

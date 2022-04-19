@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 using static UnityEngine.UI.Button;
 using Object = UnityEngine.Object;
 
-namespace TheOtherRoles.Patches 
+namespace TheOtherRoles.Patches
 {
     [HarmonyPatch]
     public static class ClientOptionsPatch
@@ -26,17 +26,7 @@ namespace TheOtherRoles.Patches
             }, TheOtherRolesPlugin.HideNameplates.Value),
             new SelectionBehaviour("showLighterDarker", () => MapOptions.showLighterDarker = TheOtherRolesPlugin.ShowLighterDarker.Value = !TheOtherRolesPlugin.ShowLighterDarker.Value, TheOtherRolesPlugin.ShowLighterDarker.Value),
             new SelectionBehaviour("hideTaskArrows", () => MapOptions.hideTaskArrows = TheOtherRolesPlugin.HideTaskArrows.Value = !TheOtherRolesPlugin.HideTaskArrows.Value, TheOtherRolesPlugin.HideTaskArrows.Value),
-            new SelectionBehaviour("horseMode", () =>HorseChange(), TheOtherRolesPlugin.HorseMode.Value),
         };
-
-        public static bool HorseChange()
-        {
-            if (AmongUsClient.Instance.GameState == AmongUsClient.GameStates.NotJoined)
-            {
-                TheOtherRolesPlugin.HorseMode.Value = !TheOtherRolesPlugin.HorseMode.Value;
-            }
-            return TheOtherRolesPlugin.HorseMode.Value;
-        }
 
         private static GameObject popUp;
         private static TextMeshPro titleText;
@@ -45,7 +35,7 @@ namespace TheOtherRoles.Patches
         private static List<ToggleButtonBehaviour> modButtons;
         private static TextMeshPro titleTextTitle;
 
-        private static ToggleButtonBehaviour buttonPrefab;
+        public static ToggleButtonBehaviour buttonPrefab;
         
         [HarmonyPostfix]
         [HarmonyPatch(typeof(MainMenuManager), nameof(MainMenuManager.Start))]
@@ -232,7 +222,7 @@ namespace TheOtherRoles.Patches
             }
         }
 
-        private class SelectionBehaviour
+        public class SelectionBehaviour
         {
             public string Title;
             public Func<bool> OnClick;

@@ -125,10 +125,10 @@ namespace TheOtherRoles.Patches {
             {
                 setPlayerNameColor(PlayerControl.LocalPlayer, Mayor.color);
             }
-            else if (PlayerControl.LocalPlayer.isRole(RoleType.EvilMayor))
+            /*else if (PlayerControl.LocalPlayer.isRole(RoleType.EvilMayor))
             {
                 setPlayerNameColor(PlayerControl.LocalPlayer, Palette.ImpostorRed);
-            }
+            }*/
             else if (PlayerControl.LocalPlayer.isRole(RoleType.Bait))
             {
                 setPlayerNameColor(PlayerControl.LocalPlayer, Bait.color);

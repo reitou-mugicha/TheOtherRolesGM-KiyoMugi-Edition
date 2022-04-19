@@ -178,7 +178,6 @@ namespace TheOtherRoles.Patches
             crewSettings.Add((byte)RoleType.Bait, CustomOptionHolder.baitSpawnRate.data);
             crewSettings.Add((byte)RoleType.SecurityGuard, CustomOptionHolder.securityGuardSpawnRate.data);
             crewSettings.Add((byte)RoleType.Medium, CustomOptionHolder.mediumSpawnRate.data);
-            //crewSettings.Add((byte)RoleType.Chunibyo, CustomOptionHolder.chunibyoSpawnRate.data);
             if (impostors.Count > 1)
             {
                 // Only add Spy if more than 1 impostor as the spy role is otherwise useless
@@ -341,7 +340,7 @@ namespace TheOtherRoles.Patches
                 else data.crewSettings.Add((byte)RoleType.NiceGuesser, (CustomOptionHolder.guesserSpawnRate.getSelection(), 1));
             }
 
-            // Assign Mayor (chance to be impostor based on setting)
+            /*// Assign Mayor (chance to be impostor based on setting)
             bool isEvilMayor = (rnd.Next(1, 101) <= CustomOptionHolder.mayorIsImpMayorRate.getSelection() * 10);
             if (CustomOptionHolder.mayorSpawnBothRate.getSelection() > 0) {
                 if (rnd.Next(1, 101) <= CustomOptionHolder.mayorSpawnRate.getSelection() * 10) {
@@ -363,7 +362,7 @@ namespace TheOtherRoles.Patches
             } else {
                 if (isEvilMayor) data.impSettings.Add((byte)RoleType.EvilMayor, (CustomOptionHolder.mayorSpawnRate.getSelection(), 1)); 
                 else data.crewSettings.Add((byte)RoleType.Mayor, (CustomOptionHolder.mayorSpawnRate.getSelection(), 1));
-            }
+            }*/
 
             // Assign Swapper (chance to be impostor based on setting)
             if (data.impostors.Count > 0 && data.maxImpostorRoles > 0 && rnd.Next(1, 101) <= CustomOptionHolder.swapperIsImpRate.getSelection() * 10)

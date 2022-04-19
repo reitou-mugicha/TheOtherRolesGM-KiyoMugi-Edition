@@ -68,7 +68,7 @@ namespace TheOtherRoles
         NiceGuesser,
         Jester,
         Mayor,
-        EvilMayor,
+        //EvilMayor,
         Arsonist,
         Jackal,
         Sidekick,
@@ -253,8 +253,8 @@ namespace TheOtherRoles
                     return Jester.jester == player;
                 case RoleType.Mayor:
                     return Mayor.mayor == player;
-                case RoleType.EvilMayor:
-                    return Mayor.evilMayor == player;
+                /*case RoleType.EvilMayor:
+                    return Mayor.evilMayor == player;*/
                 case RoleType.Engineer:
                     return Engineer.engineer == player;
                 case RoleType.Godfather:
@@ -356,9 +356,9 @@ namespace TheOtherRoles
                 case RoleType.Mayor:
                     Mayor.mayor = player;
                     break;
-                case RoleType.EvilMayor:
+                /*case RoleType.EvilMayor:
                     Mayor.evilMayor = player;
-                    break;
+                    break;*/
                 case RoleType.Engineer:
                     Engineer.engineer = player;
                     break;
@@ -566,7 +566,7 @@ namespace TheOtherRoles
             }
 
             if (player.isRole(RoleType.Mayor)) Mayor.mayor = target;
-            if (player.isRole(RoleType.EvilMayor)) Mayor.evilMayor = target;
+            // if (player.isRole(RoleType.EvilMayor)) Mayor.evilMayor = target;
             if (player.isRole(RoleType.Engineer)) Engineer.engineer = target;
             if (player.isRole(RoleType.Detective)) Detective.detective = target;
             if (player.isRole(RoleType.TimeMaster)) TimeMaster.timeMaster = target;

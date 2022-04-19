@@ -85,10 +85,6 @@ namespace TheOtherRoles {
         public static CustomOption loversTasksCount;
         public static CustomOption loversEnableChat;
 
-        //public static CustomRoleOption kingdomSpawnRate;
-        //public static CustomOption kingdomCrewWinsByTasks;
-        //public static CustomTasksOption kingTasks;
-
         public static CustomRoleOption guesserSpawnRate;
         public static CustomOption guesserIsImpGuesserRate;
         public static CustomOption guesserNumberOfShots;
@@ -101,10 +97,10 @@ namespace TheOtherRoles {
         public static CustomOption guesserCantGuessSnitchIfTaksDone;
 
         public static CustomRoleOption mayorSpawnRate;
-        public static CustomOption mayorIsImpMayorRate;
-        public static CustomOption mayorSpawnBothRate;
+        //public static CustomOption mayorIsImpMayorRate;
+        //public static CustomOption mayorSpawnBothRate;
         public static CustomOption mayorNumVotes;
-        public static CustomOption evilMayorNumVotes;
+        //public static CustomOption evilMayorNumVotes;
 
         public static CustomRoleOption jesterSpawnRate;
         public static CustomOption jesterCanCallEmergency;
@@ -285,6 +281,7 @@ namespace TheOtherRoles {
 		public static CustomOption allowParallelMedBayScans;
 
         public static CustomOption ventAnimation;
+        public static CustomOption enableDiePlayerZoomInOut;
 
         public static CustomOption dynamicMap;
         public static CustomOption dynamicMapEnableSkeld;
@@ -374,10 +371,6 @@ namespace TheOtherRoles {
         public static CustomOption sprinterCooldown;
         public static CustomOption sprinterDuration;
         public static CustomOption sprinterSpeedBonus;
-
-        //public static CustomRoleOption chunibyoSpawnRate;
-        //public static CustomOption chunibyoCooldown;
-        //public static CustomOption chunibyoDuration;
 
         internal static Dictionary<byte, byte[]> blockedRolePairings = new Dictionary<byte, byte[]>();
 
@@ -509,9 +502,6 @@ namespace TheOtherRoles {
             hawkEyeTime = CustomOption.Create(5022, "hawkTime", 5f, 5f, 30f, 5f, hawkEyeSpawnRate, format:"unitSeconds");
             hawkCanUseVents = CustomOption.Create(5023, "hawkCanUseVents", false, hawkEyeSpawnRate);
 
-            //simpleKillerSpawnRate = new CustomRoleOption(5024, "simpleKiller", SimpleKiller.color, 1);
-            //simpleKillerCooldown = CustomOption.Create(5025, "simpleKillerKillCooldown", 15f, 2.5f, 60f, 2.5f, simpleKillerSpawnRate, format: "unitSeconds");
-
             madmateSpawnRate = new CustomRoleOption(360, "madmate", Madmate.color);
             madmateType = CustomOption.Create(366, "madmateType", new string[] { "madmateDefault", "madmateWithRole", "madmateRandom" }, madmateSpawnRate);
             madmateFixedRole = new CustomRoleSelectionOption(369, "madmateFixedRole", Madmate.validRoles, madmateType);
@@ -548,15 +538,11 @@ namespace TheOtherRoles {
             guesserEvilCanKillSpy = CustomOption.Create(318, "guesserEvilCanKillSpy", true, guesserSpawnRate);
 			guesserCantGuessSnitchIfTaksDone = CustomOption.Create(319, "guesserCantGuessSnitchIfTaksDone", true, guesserSpawnRate);
 
-            //kingdomSpawnRate = new CustomRoleOption(5030, "kingdom", King.color, 1);
-            //kingdomCrewWinsByTasks = CustomOption.Create(5031, "kingdomCrewWinsByTasks", true, kingdomSpawnRate);
-            //kingTasks = new CustomTasksOption(5032, 5, 3, 7, kingdomSpawnRate);
-
             mayorSpawnRate = new CustomRoleOption(80, "mayor", Mayor.color, 1);
-            mayorIsImpMayorRate = CustomOption.Create(81, "mayorIsImpMayorRate", rates, mayorSpawnRate);
-            mayorSpawnBothRate = CustomOption.Create(82, "mayorSpawnBothRate", rates, mayorIsImpMayorRate);
+            //mayorIsImpMayorRate = CustomOption.Create(81, "mayorIsImpMayorRate", rates, mayorSpawnRate);
+            //mayorSpawnBothRate = CustomOption.Create(82, "mayorSpawnBothRate", rates, mayorIsImpMayorRate);
             mayorNumVotes = CustomOption.Create(83, "mayorNumVotes", 2f, 2f, 10f, 1f, mayorSpawnRate, format: "unitVotes");
-            evilMayorNumVotes = CustomOption.Create(84, "evilMayorNumVotes", 2f, 2f, 10f, 1f, mayorIsImpMayorRate, format: "unitVotes");
+            //evilMayorNumVotes = CustomOption.Create(84, "evilMayorNumVotes", 2f, 2f, 10f, 1f, mayorIsImpMayorRate, format: "unitVotes");
 
             swapperSpawnRate = new CustomRoleOption(150, "swapper", Swapper.color, 1);
             swapperIsImpRate = CustomOption.Create(153, "swapperIsImpRate", rates, swapperSpawnRate);
@@ -731,10 +717,6 @@ namespace TheOtherRoles {
             sprinterDuration = CustomOption.Create(1052, "sprinterDuration", 15f, 2.5f, 60f, 2.5f, sprinterSpawnRate, format: "unitSeconds");
             sprinterSpeedBonus = CustomOption.Create(1053, "sprinterSpeedBonus", 125f, 50f, 200f, 5f, sprinterSpawnRate, format: "unitPercent");
 
-            //chunibyoSpawnRate = new CustomRoleOption(6000, "chunibyo", Chunibyo.color, 15);
-            //chunibyoCooldown = CustomOption.Create(6001, "chunibyoCooldown", 30f, 2.5f, 60f, 2.5f, chunibyoSpawnRate, format: "unitSeconds");
-            //chunibyoDuration = CustomOption.Create(6002, "chunibyoDuration", 10f, 2.5f, 60f, 2.5f, chunibyoSpawnRate, format: "unitSeconds");
-
             // Other options
             specialOptions = new CustomOptionBlank(null);
             maxNumberOfMeetings = CustomOption.Create(3, "maxNumberOfMeetings", 10, 0, 15, 1, specialOptions, true);
@@ -744,6 +726,8 @@ namespace TheOtherRoles {
             refundVotesOnDeath = CustomOption.Create(551, "refundVotesOnDeath", true, specialOptions);
             allowParallelMedBayScans = CustomOption.Create(540, "parallelMedbayScans", false, specialOptions);
             ventAnimation = CustomOption.Create(541, "ventAnimation", true, specialOptions);
+            enableDiePlayerZoomInOut = CustomOption.Create(542, "diePlayerCanZoomInOut", false, specialOptions);
+
             hideSettings = CustomOption.Create(520, "hideSettings", false, specialOptions);
 
             restrictDevices = CustomOption.Create(510, "restrictDevices", new string[] { "optionOff", "restrictPerTurn", "restrictPerGame" }, specialOptions);

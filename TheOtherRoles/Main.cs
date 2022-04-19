@@ -21,7 +21,7 @@ namespace TheOtherRoles
     public class TheOtherRolesPlugin : BasePlugin
     {
         public const string Id = "me.eisbison.theotherroles";
-        public const string VersionString = "1.0.2.2";
+        public const string VersionString = "1.0.3";
         public static System.Version Version = System.Version.Parse(VersionString);
         internal static BepInEx.Logging.ManualLogSource Logger;
 
@@ -39,7 +39,7 @@ namespace TheOtherRoles
         public static ConfigEntry<bool> HideNameplates { get; set; }
         public static ConfigEntry<bool> ShowLighterDarker { get; set; }
         public static ConfigEntry<bool> HideTaskArrows { get; set; }
-        public static ConfigEntry<bool> HorseMode { get; set; }
+        public static ConfigEntry<bool> EnableHorseMode { get; set; }
         public static ConfigEntry<string> StreamerModeReplacementText { get; set; }
         public static ConfigEntry<string> StreamerModeReplacementColor { get; set; }
         public static ConfigEntry<string> Ip { get; set; }
@@ -73,7 +73,7 @@ namespace TheOtherRoles
             HideNameplates = Config.Bind("Custom", "Hide Nameplates", false);
             ShowLighterDarker = Config.Bind("Custom", "Show Lighter / Darker", false);
             HideTaskArrows = Config.Bind("Custom", "Hide Task Arrows", false);
-            HorseMode = Config.Bind("Custom", "Horse Mode", false);
+            EnableHorseMode = Config.Bind("Custom", "Enable Horse Mode", false);
             ShowPopUpVersion = Config.Bind("Custom", "Show PopUp", "0");
             StreamerModeReplacementText = Config.Bind("Custom", "Streamer Mode Replacement Text", "\n\nTheOtherRolesGMK");
             StreamerModeReplacementColor = Config.Bind("Custom", "Streamer Mode Replacement Text Hex Color", "#87AAF5FF");
@@ -133,20 +133,22 @@ namespace TheOtherRoles
 
         public static void Postfix(KeyboardJoystick __instance)
         {
-            // F11でクルー強制勝利
-            if (Input.GetKeyDown(KeyCode.F11) && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started)
+            // F10でクルー強制勝利
+            if (Input.GetKeyDown(KeyCode.F10) && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started)
             {
                 MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.CrewmateEnd, Hazel.SendOption.Reliable, -1);
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
                 RPCProcedure.crewmateEnd();
             }
-            // F12でクルー強制勝利
-            if (Input.GetKeyDown(KeyCode.F12) && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started)
+            // F11でクルー強制勝利
+            if (Input.GetKeyDown(KeyCode.F11) && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started)
             {
                 MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.ImpostorEnd, Hazel.SendOption.Reliable, -1);
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
                 RPCProcedure.impostorEnd();
             }
+            
+            // F11&F12を変えた理由・・・誰かがSteamでスクショ撮ろうとして廃村したから
 
             if (!TheOtherRolesPlugin.DebugMode.Value) return;
 

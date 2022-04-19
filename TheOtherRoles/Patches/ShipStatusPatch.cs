@@ -34,8 +34,6 @@ namespace TheOtherRoles.Patches {
                 __result = __instance.MaxLightRadius * PlayerControl.GameOptions.ImpostorLightMod;
             else if (PlayerControl.LocalPlayer.isRole(RoleType.Lighter) && Lighter.isLightActive(PlayerControl.LocalPlayer)) // if player is Lighter and Lighter has his ability active
                 __result = Mathf.Lerp(__instance.MaxLightRadius * Lighter.lighterModeLightsOffVision, __instance.MaxLightRadius * Lighter.lighterModeLightsOnVision, num);
-            /*else if (PlayerControl.LocalPlayer.isRole(RoleType.Chunibyo) && Chunibyo.isLightActive(PlayerControl.LocalPlayer)) // if player is Chunibyo and Chunibyo has his ability active
-                __result = Mathf.Lerp(__instance.MaxLightRadius * Chunibyo.lighterModeLightsOffVision, __instance.MaxLightRadius * Chunibyo.lighterModeLightsOnVision, num);*/
             else if (Trickster.trickster != null && Trickster.lightsOutTimer > 0f) {
                 float lerpValue = 1f;
                 if (Trickster.lightsOutDuration - Trickster.lightsOutTimer < 0.5f) lerpValue = Mathf.Clamp01((Trickster.lightsOutDuration - Trickster.lightsOutTimer) * 2);
