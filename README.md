@@ -62,10 +62,10 @@ The [Role Assignment](#role-assignment) sections explains how the roles are bein
 # Releases
 | Among Us - Version | GM Verrsion | Mod Version | Link |
 |----------|-------------|-----------------|-----------------|
-| 5022.3.29s | Ver.3.5.5 | Ver.1.0.3 | [Download](https://github.com/Dekokiyo/TheOtherRolesGM-KiyoMugi-Edition/releases/download/1.0.3/TheOtherRolesGMK1.0.3.zip) |
-| 5022.3.29s | Ver.3.5.5 | Ver.1.0.2.4 | [Download](https://github.com/Dekokiyo/TheOtherRolesGM-KiyoMugi-Edition/releases/download/1.0.2.4/TheOtherRolesGMK1.0.2.4.zip) |
-| 5022.3.29s | Ver.3.5.5 | Ver.1.0.2.3 | [Download](https://github.com/Dekokiyo/TheOtherRolesGM-KiyoMugi-Edition/releases/download/1.0.2.3/TheOtherRolesGMK1.0.2.3.zip) |
-| 5022.3.29s | Ver.3.5.5 | Ver.1.0.2.2 | [Download](https://github.com/Dekokiyo/TheOtherRolesGM-KiyoMugi-Edition/releases/download/1.0.2.2/TheOtherRolesGMK1.0.2.2.zip) |
+| 2022.3.29s | Ver.3.5.5 | Ver.1.0.3 | [Download](https://github.com/Dekokiyo/TheOtherRolesGM-KiyoMugi-Edition/releases/download/1.0.3/TheOtherRolesGMK1.0.3.zip) |
+| 2022.3.29s | Ver.3.5.5 | Ver.1.0.2.4 | [Download](https://github.com/Dekokiyo/TheOtherRolesGM-KiyoMugi-Edition/releases/download/1.0.2.4/TheOtherRolesGMK1.0.2.4.zip) |
+| 2022.3.29s | Ver.3.5.5 | Ver.1.0.2.3 | [Download](https://github.com/Dekokiyo/TheOtherRolesGM-KiyoMugi-Edition/releases/download/1.0.2.3/TheOtherRolesGMK1.0.2.3.zip) |
+| 2022.3.29s | Ver.3.5.5 | Ver.1.0.2.2 | [Download](https://github.com/Dekokiyo/TheOtherRolesGM-KiyoMugi-Edition/releases/download/1.0.2.2/TheOtherRolesGMK1.0.2.2.zip) |
 | 2022.3.29s | Ver.3.5.5 | Ver.1.0.2.1 | [Download](https://github.com/Dekokiyo/TheOtherRolesGM-KiyoMugi-Edition/releases/download/1.0.2.1/TheOtherRolesGMK1.0.2.1.zip) |
 
 # Credits & Resources
