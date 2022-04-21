@@ -17,6 +17,8 @@ This fork introduces a number of changes to [The Other Roles](https://github.com
   * [Watcher](#watcher) by [Virtual_Dusk](https://twitter.com/Virtual_Dusk)
   * [Evil Hacker](#evil-hacker) by [tomarai](https://github.com/tomarai) Source by [haoming37](https://github.com/haoming37)
   * [Hawk Eye](#hawk-eye) by [Kiyomori](https://twitter.com/kiyo_deko) Idea by [libhalt](https://twitter.com/libhalt)
+
+  * [Flip Map](#flip-map) by [Mugicha](https://github.com/reitou-mugicha)
 * Pluralized Roles
   * Lovers (up to 7 couples)
   * Sheriff
@@ -62,6 +64,7 @@ The [Role Assignment](#role-assignment) sections explains how the roles are bein
 # Releases
 | Among Us - Version | GM Verrsion | Mod Version | Link |
 |----------|-------------|-----------------|-----------------|
+| 2022.3.29s | Ver.3.5.5.1 | Ver.1.0.4 | [Download](https://github.com/Dekokiyo/TheOtherRolesGM-KiyoMugi-Edition/releases/download/1.0.4/TheOtherRolesGMK1.0.4.zip) |
 | 2022.3.29s | Ver.3.5.5 | Ver.1.0.3 | [Download](https://github.com/Dekokiyo/TheOtherRolesGM-KiyoMugi-Edition/releases/download/1.0.3/TheOtherRolesGMK1.0.3.zip) |
 | 2022.3.29s | Ver.3.5.5 | Ver.1.0.2.4 | [Download](https://github.com/Dekokiyo/TheOtherRolesGM-KiyoMugi-Edition/releases/download/1.0.2.4/TheOtherRolesGMK1.0.2.4.zip) |
 | 2022.3.29s | Ver.3.5.5 | Ver.1.0.2.3 | [Download](https://github.com/Dekokiyo/TheOtherRolesGM-KiyoMugi-Edition/releases/download/1.0.2.3/TheOtherRolesGMK1.0.2.3.zip) |
@@ -93,6 +96,7 @@ The Many Roles and System from their mods...\
 [TheOtherRolesGM](https://github.com/yukinogatari/TheOtherRoles-GM) By Virtual Dusk\
 [TheOtherRolesGM-Haoming](https://github.com/haoming37/TheOtherRoles-GM-Haoming) By Haoming\
 [TownOfHost](https://github.com/tukasa0001/TownOfHost) By tukasa0001 and more...\
+[TownOfPlus](https://github.com/tugaru1975/TownOfPlus) By tugaru1975\
 [SuperNewRoles](https://github.com/ykundesu/SuperNewRoles/) By Ykundesu
 
 # Settings
@@ -1075,3 +1079,11 @@ You can use parts of the code but don't copy paste the whole thing. Make sure yo
 
 # Translation
 As of v2.9.0, The Other Roles GM now supports translation into other languages. To add a new language, add translations to [Strings.xlsx](/Strings.xlsx) and submit a pull request.
+
+# Flip Map
+Flip Map made from [Mugicha](https://github.com/reitou-mugicha)\
+Add three flip map.
+| Original Map | Flip Map Name |
+| The Skeld | dlekS ehT |
+| MIRA HQ | QH ARIM |
+| Polus | suloP |
