@@ -1084,6 +1084,7 @@ As of v2.9.0, The Other Roles GM now supports translation into other languages. 
 Flip Map made from [Mugicha](https://github.com/reitou-mugicha)\
 Add three flip map.
 | Original Map | Flip Map Name |
+|--------------|---------------|
 | The Skeld | dlekS ehT |
 | MIRA HQ | QH ARIM |
 | Polus | suloP |
