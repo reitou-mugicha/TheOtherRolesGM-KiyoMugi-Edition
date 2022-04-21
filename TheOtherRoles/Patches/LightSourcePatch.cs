@@ -5,17 +5,22 @@ using UnityEngine;
 using UnityEngine.Rendering;
 
 
-namespace TheOtherRoles.Patches {
+namespace TheOtherRoles.Patches
+{
 
 	[HarmonyPatch(typeof(LightSource), nameof(LightSource.DrawOcclusion))]
 
-	class LightSourceUpdatePatch {
-		static bool Prefix(LightSource __instance, float effectiveRadius) {
-			if (__instance.cb == null) {
+	class LightSourceUpdatePatch
+	{
+		static bool Prefix(LightSource __instance, float effectiveRadius)
+		{
+			if (__instance.cb == null)
+			{
 				__instance.cb = new CommandBuffer();
 				__instance.cb.name = "Draw occlusion";
 			}
-			if (__instance.shadowTexture && __instance.shadowCasterMaterial) {
+			if (__instance.shadowTexture && __instance.shadowCasterMaterial)
+			{
 				float num = (float)__instance.shadowTexture.width;
 				__instance.shadowCasterMaterial.SetFloat("_DepthCompressionValue", effectiveRadius);
 				__instance.cb.Clear();
@@ -33,4 +38,4 @@ namespace TheOtherRoles.Patches {
 			return false;
 		}
 	}
-} 
+}

@@ -21,8 +21,7 @@ namespace TheOtherRoles
 
         ResetVaribles = 60,
         ShareOptions,
-        CrewmateEnd,
-        ImpostorEnd,
+        ForceEnd,
         SetRole,
         SetLovers,
         VersionHandshake,
@@ -52,7 +51,6 @@ namespace TheOtherRoles
         TrackerUsedTracker,
         VampireSetBitten,
         PlaceGarlic,
-        EvilHackerCreatesMadmate,
         JackalCreatesSidekick,
         SidekickPromotes,
         ErasePlayerRoles,
@@ -94,6 +92,9 @@ namespace TheOtherRoles
         FoxCreatesImmoralist,
         SwapperAnimate,
         SprinterSprint,
+        AkujoSetHonmei,
+        AkujoSetKeep,
+        AkujoSuicide,
     }
 
     public static class RPCProcedure
@@ -136,21 +137,16 @@ namespace TheOtherRoles
             }
         }
 
-        public static void impostorEnd()
+        public static void forceEnd()
         {
-            if (AmongUsClient.Instance.AmHost)
+            foreach (PlayerControl player in PlayerControl.AllPlayerControls)
             {
-                ShipStatus.Instance.enabled = false;
-                ShipStatus.RpcEndGame(GameOverReason.ImpostorByKill, false);
-            }
-        }
-
-        public static void crewmateEnd()
-        {
-            if (AmongUsClient.Instance.AmHost)
-            {
-                ShipStatus.Instance.enabled = false;
-                ShipStatus.RpcEndGame(GameOverReason.HumansByTask, false);
+                if (!player.Data.Role.IsImpostor)
+                {
+                    player.RemoveInfected();
+                    player.MurderPlayer(player);
+                    player.Data.IsDead = true;
+                }
             }
         }
 
@@ -368,7 +364,7 @@ namespace TheOtherRoles
             bool isShieldedAndShow = Medic.shielded == PlayerControl.LocalPlayer && Medic.showAttemptToShielded;
             bool isMedicAndShow = Medic.medic == PlayerControl.LocalPlayer && Medic.showAttemptToMedic;
 
-           if (isShieldedAndShow || isMedicAndShow) Helpers.showFlash(Palette.ImpostorRed, duration: 0.5f);
+            if (isShieldedAndShow || isMedicAndShow) Helpers.showFlash(Palette.ImpostorRed, duration: 0.5f);
         }
 
         public static void shifterShift(byte targetId)
@@ -387,7 +383,7 @@ namespace TheOtherRoles
             }
 
             // Suicide (exile) when impostor or impostor variants
-            if (!Shifter.isNeutral && (player.Data.Role.IsImpostor || player.isNeutral() || player.hasModifier(ModifierType.Madmate) || player.hasModifier(ModifierType.CreatedMadmate)))
+            if (!Shifter.isNeutral && (player.Data.Role.IsImpostor || player.isNeutral() || player.hasModifier(ModifierType.Madmate)))
             {
                 oldShifter.Exiled();
                 finalStatuses[oldShifter.PlayerId] = FinalStatus.Suicide;
@@ -488,44 +484,6 @@ namespace TheOtherRoles
             new Garlic(position);
         }
 
-        public static void evilHackerCreatesMadmate(byte targetId)
-        {
-            PlayerControl player = Helpers.playerById(targetId);
-            if (!EvilHacker.canCreateMadmateFromJackal && player.isRole(RoleType.Jackal))
-            {
-                EvilHacker.fakeMadmate = player;
-            }
-            else if (!EvilHacker.canCreateMadmateFromFox && player.isRole(RoleType.Fox))
-            {
-                EvilHacker.fakeMadmate = player;
-            }
-            else
-            {
-                // Jackalバグ対応
-                List<PlayerControl> tmpFormerJackals = new List<PlayerControl>(Jackal.formerJackals);
-
-                // タスクがないプレイヤーがMadmateになった場合はショートタスクを必要数割り当てる
-                if (Helpers.hasFakeTasks(player))
-                {
-                    if (CreatedMadmate.hasTasks)
-                    {
-                        Helpers.clearAllTasks(player);
-                        player.generateAndAssignTasks(0, CreatedMadmate.numTasks, 0);
-                    }
-                }
-
-                player.RemoveInfected();
-                erasePlayerRoles(player.PlayerId, true, false);
-
-                // Jackalバグ対応
-                Jackal.formerJackals = tmpFormerJackals;
-
-                player.addModifier(ModifierType.CreatedMadmate);
-            }
-            EvilHacker.canCreateMadmate = false;
-            return;
-        }
-
         public static void trackerUsedTracker(byte targetId)
         {
             Tracker.usedTracker = true;
@@ -545,7 +503,7 @@ namespace TheOtherRoles
                 Jackal.fakeSidekick = player;
             }else {
                 DestroyableSingleton<RoleManager>.Instance.SetRole(player, RoleTypes.Crewmate);
-                erasePlayerRoles(player.PlayerId, true);
+                erasePlayerRoles(player.PlayerId, RoleType.Sidekick);
                 Sidekick.sidekick = player;
                 if (player.PlayerId == PlayerControl.LocalPlayer.PlayerId) PlayerControl.LocalPlayer.moveable = true; 
                 if(Fox.exists && !Fox.isFoxAlive())
@@ -568,22 +526,17 @@ namespace TheOtherRoles
             return;
         }
 
-        public static void erasePlayerRoles(byte playerId, bool ignoreLovers = false, bool clearNeutralTasks = true)
+        public static void erasePlayerRoles(byte playerId, RoleType newRole = RoleType.NoRole)
         {
             PlayerControl player = Helpers.playerById(playerId);
             if (player == null) return;
 
             // Don't give a former neutral role tasks because that destroys the balance.
-            if (player.isNeutral() && clearNeutralTasks)
+            if (player.isNeutral())
                 player.clearAllTasks();
 
             player.eraseAllRoles();
-            player.eraseAllModifiers();
-
-            if (!ignoreLovers && player.isLovers())
-            { // The whole Lover couple is being erased
-                Lovers.eraseCouple(player);
-            }
+            player.eraseAllModifiers(newRole);
         }
 
         public static void setFutureErased(byte playerId)
@@ -868,9 +821,41 @@ namespace TheOtherRoles
         {
             PlayerControl player = Helpers.playerById(targetId);
             DestroyableSingleton<RoleManager>.Instance.SetRole(player, RoleTypes.Crewmate);
-            erasePlayerRoles(player.PlayerId, true);
+            erasePlayerRoles(player.PlayerId, RoleType.Immoralist);
             player.setRole(RoleType.Immoralist);
             player.clearAllTasks();
+        }
+
+        public static void akujoSetHonmei(byte akujoId, byte targetId)
+        {
+            Akujo akujo = Akujo.getRole(Helpers.playerById(akujoId));
+            PlayerControl target = Helpers.playerById(targetId);
+
+            if (akujo != null)
+            {
+                akujo.setHonmei(target);
+            }
+        }
+
+        public static void akujoSetKeep(byte akujoId, byte targetId)
+        {
+            Akujo akujo = Akujo.getRole(Helpers.playerById(akujoId));
+            PlayerControl target = Helpers.playerById(targetId);
+
+            if (akujo != null)
+            {
+                akujo.setKeep(target);
+            }
+        }
+
+        public static void akujoSuicide(byte akujoId)
+        {
+            Akujo akujo = Akujo.getRole(Helpers.playerById(akujoId));
+            if (akujo != null)
+            {
+                akujo.player.MurderPlayer(akujo.player);
+                finalStatuses[akujo.player.PlayerId] = FinalStatus.Loneliness;
+            }
         }
 
         public static void GMKill(byte targetId)
@@ -1036,6 +1021,8 @@ namespace TheOtherRoles
             }
         }
 
+
+
         [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.HandleRpc))]
         class RPCHandlerPatch
         {
@@ -1053,11 +1040,8 @@ namespace TheOtherRoles
                     case (byte)CustomRPC.ShareOptions:
                         RPCProcedure.ShareOptions((int)reader.ReadPackedUInt32(), reader);
                         break;
-                    case (byte)CustomRPC.CrewmateEnd:
-                        RPCProcedure.crewmateEnd();
-                        break;
-                    case (byte)CustomRPC.ImpostorEnd:
-                        RPCProcedure.impostorEnd();
+                    case (byte)CustomRPC.ForceEnd:
+                        RPCProcedure.forceEnd();
                         break;
                     case (byte)CustomRPC.SetRole:
                         byte roleId = reader.ReadByte();
@@ -1170,9 +1154,6 @@ namespace TheOtherRoles
                         break;
                     case (byte)CustomRPC.PlaceGarlic:
                         RPCProcedure.placeGarlic(reader.ReadBytesAndSize());
-                        break;
-                        case (byte)CustomRPC.EvilHackerCreatesMadmate:
-                        RPCProcedure.evilHackerCreatesMadmate(reader.ReadByte());
                         break;
                     case (byte)CustomRPC.TrackerUsedTracker:
                         RPCProcedure.trackerUsedTracker(reader.ReadByte());
@@ -1307,6 +1288,15 @@ namespace TheOtherRoles
                         break;
                     case (byte)CustomRPC.FoxCreatesImmoralist:
                         RPCProcedure.foxCreatesImmoralist(reader.ReadByte());
+                        break;
+                    case (byte)CustomRPC.AkujoSetHonmei:
+                        RPCProcedure.akujoSetHonmei(reader.ReadByte(), reader.ReadByte());
+                        break;
+                    case (byte)CustomRPC.AkujoSetKeep:
+                        RPCProcedure.akujoSetKeep(reader.ReadByte(), reader.ReadByte());
+                        break;
+                    case (byte)CustomRPC.AkujoSuicide:
+                        RPCProcedure.akujoSuicide(reader.ReadByte());
                         break;
                 }
             }

@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 using static UnityEngine.UI.Button;
 using Object = UnityEngine.Object;
 
-namespace TheOtherRoles.Patches
+namespace TheOtherRoles.Patches 
 {
     [HarmonyPatch]
     public static class ClientOptionsPatch
@@ -27,7 +27,7 @@ namespace TheOtherRoles.Patches
             new SelectionBehaviour("showLighterDarker", () => MapOptions.showLighterDarker = TheOtherRolesPlugin.ShowLighterDarker.Value = !TheOtherRolesPlugin.ShowLighterDarker.Value, TheOtherRolesPlugin.ShowLighterDarker.Value),
             new SelectionBehaviour("hideTaskArrows", () => MapOptions.hideTaskArrows = TheOtherRolesPlugin.HideTaskArrows.Value = !TheOtherRolesPlugin.HideTaskArrows.Value, TheOtherRolesPlugin.HideTaskArrows.Value),
         };
-
+        
         private static GameObject popUp;
         private static TextMeshPro titleText;
 
@@ -35,7 +35,8 @@ namespace TheOtherRoles.Patches
         private static List<ToggleButtonBehaviour> modButtons;
         private static TextMeshPro titleTextTitle;
 
-        public static ToggleButtonBehaviour buttonPrefab;
+        private static ToggleButtonBehaviour buttonPrefab;
+        private static Vector3? _origin;
         
         [HarmonyPostfix]
         [HarmonyPatch(typeof(MainMenuManager), nameof(MainMenuManager.Start))]
@@ -95,12 +96,26 @@ namespace TheOtherRoles.Patches
 
         private static void InitializeMoreButton(OptionsMenuBehaviour __instance)
         {
-            __instance.BackButton.transform.localPosition += Vector3.right * 1.8f;
             moreOptions = Object.Instantiate(buttonPrefab, __instance.CensorChatButton.transform.parent);
-            moreOptions.transform.localPosition = __instance.CensorChatButton.transform.localPosition + Vector3.down * 0.5f;
-            
+            var transform = __instance.CensorChatButton.transform;
+            __instance.CensorChatButton.Text.transform.localScale = new Vector3(1 / 0.66f, 1, 1);
+
+            _origin ??= transform.localPosition;
+
+            transform.localPosition = _origin.Value + Vector3.left * 0.45f;
+            transform.localScale = new Vector3(0.66f, 1, 1);
+            __instance.EnableFriendInvitesButton.transform.localScale = new Vector3(0.66f, 1, 1);
+            __instance.EnableFriendInvitesButton.transform.localPosition += Vector3.right * 0.5f;
+            __instance.EnableFriendInvitesButton.Text.transform.localScale = new Vector3(1.2f, 1, 1);
+
+            moreOptions.transform.localPosition = _origin.Value + Vector3.right * 4f / 3f;
+            moreOptions.transform.localScale = new Vector3(0.66f, 1, 1);
+
             moreOptions.gameObject.SetActive(true);
             moreOptions.Text.text = ModTranslation.getString("modOptionsText");
+            moreOptions.Text.transform.localScale = new Vector3(1 / 0.66f, 1, 1);
+            moreOptions.Background.color = Palette.White;
+
             var moreOptionsButton = moreOptions.GetComponent<PassiveButton>();
             moreOptionsButton.OnClick = new ButtonClickedEvent();
             moreOptionsButton.OnClick.AddListener((Action) (() =>
@@ -121,12 +136,6 @@ namespace TheOtherRoles.Patches
                 CheckSetTitle();
                 RefreshOpen();
             }));
-
-            var leaveGameButton = GameObject.Find("LeaveGameButton");
-            if (leaveGameButton != null)
-            {
-                leaveGameButton.transform.localPosition += (Vector3.right * 1.3f);
-            }
         }
 
         private static void RefreshOpen()

@@ -108,20 +108,12 @@ namespace TheOtherRoles.Patches {
                         if (GM.gm != null && votedFor == GM.gm.PlayerId) continue;
 
                         int currentVotes;
-                        // int evilCurrentVotes;
                         int additionalVotes = (Mayor.mayor != null && Mayor.mayor.PlayerId == playerVoteArea.TargetPlayerId) ? Mayor.numVotes : 1; // Mayor vote
-                        // int evilAdditionalVotes = (Mayor.evilMayor != null && Mayor.evilMayor.PlayerId == playerVoteArea.TargetPlayerId) ? Mayor.evilNumVotes : 1; // EvilMayor vote
-
                         if (dictionary.TryGetValue(votedFor, out currentVotes))
                             dictionary[votedFor] = currentVotes + additionalVotes;
                         else
                             dictionary[votedFor] = additionalVotes;
-                        /*
-                        if (dictionary.TryGetValue(votedFor, out evilCurrentVotes))
-                            dictionary[votedFor] = evilCurrentVotes + evilAdditionalVotes;
-                        else
-                            dictionary[votedFor] = evilAdditionalVotes;
-                    */}
+                    }
                 }
 
                 // Swapper swap votes
@@ -271,7 +263,7 @@ namespace TheOtherRoles.Patches {
                         votesApplied[voter.PlayerId]++;
 
                         // Major vote, redo this iteration to place a second vote
-                        if (Mayor.mayor != null && voter.PlayerId == Mayor.mayor.PlayerId && votesApplied[voter.PlayerId] < Mayor.numVotes /*|| Mayor.evilMayor != null && voter.PlayerId == Mayor.evilMayor.PlayerId && votesApplied[voter.PlayerId] < Mayor.evilNumVotes*/) {
+                        if (Mayor.mayor != null && voter.PlayerId == Mayor.mayor.PlayerId && votesApplied[voter.PlayerId] < Mayor.numVotes) {
                             j--;    
                         }
                     }
@@ -614,28 +606,14 @@ namespace TheOtherRoles.Patches {
             meetingInfoText.text = "";
             meetingInfoText.gameObject.SetActive(false);
 
-            if (MeetingHud.Instance.state != MeetingHud.VoteStates.Voted &&
-                MeetingHud.Instance.state != MeetingHud.VoteStates.NotVoted &&
-                MeetingHud.Instance.state != MeetingHud.VoteStates.Discussion)
-                return;
-
-            if (PlayerControl.LocalPlayer.isRole(RoleType.Swapper) && Swapper.numSwaps > 0 && !Swapper.swapper.Data.IsDead)
+            if (Helpers.ShowMeetingText)
             {
-                meetingInfoText.text = String.Format(ModTranslation.getString("swapperSwapsLeft"), Swapper.numSwaps);
-                meetingInfoText.gameObject.SetActive(true);
-            }
-
-            var numGuesses = Guesser.remainingShots(PlayerControl.LocalPlayer.PlayerId);
-            if (Guesser.isGuesser(PlayerControl.LocalPlayer.PlayerId) && PlayerControl.LocalPlayer.isAlive() && numGuesses > 0)
-            {
-                meetingInfoText.text = String.Format(ModTranslation.getString("guesserGuessesLeft"), numGuesses);
-                meetingInfoText.gameObject.SetActive(true);
-            }
-
-            if (PlayerControl.LocalPlayer.isRole(RoleType.Shifter) && Shifter.futureShift != null)
-            {
-                meetingInfoText.text = String.Format(ModTranslation.getString("shifterTargetInfo"), Shifter.futureShift.Data.PlayerName);
-                meetingInfoText.gameObject.SetActive(true);
+                var infoText = PlayerControl.LocalPlayer.meetingInfoText();
+                if (infoText != "")
+                {
+                    meetingInfoText.text = infoText;
+                    meetingInfoText.gameObject.SetActive(true);
+                }
             }
         }
 

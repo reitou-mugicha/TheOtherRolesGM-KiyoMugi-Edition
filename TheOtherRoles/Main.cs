@@ -21,7 +21,7 @@ namespace TheOtherRoles
     public class TheOtherRolesPlugin : BasePlugin
     {
         public const string Id = "me.eisbison.theotherroles";
-        public const string VersionString = "1.0.3";
+        public const string VersionString = "3.5.5.1";
         public static System.Version Version = System.Version.Parse(VersionString);
         internal static BepInEx.Logging.ManualLogSource Logger;
 
@@ -39,7 +39,6 @@ namespace TheOtherRoles
         public static ConfigEntry<bool> HideNameplates { get; set; }
         public static ConfigEntry<bool> ShowLighterDarker { get; set; }
         public static ConfigEntry<bool> HideTaskArrows { get; set; }
-        public static ConfigEntry<bool> EnableHorseMode { get; set; }
         public static ConfigEntry<string> StreamerModeReplacementText { get; set; }
         public static ConfigEntry<string> StreamerModeReplacementColor { get; set; }
         public static ConfigEntry<string> Ip { get; set; }
@@ -73,9 +72,8 @@ namespace TheOtherRoles
             HideNameplates = Config.Bind("Custom", "Hide Nameplates", false);
             ShowLighterDarker = Config.Bind("Custom", "Show Lighter / Darker", false);
             HideTaskArrows = Config.Bind("Custom", "Hide Task Arrows", false);
-            EnableHorseMode = Config.Bind("Custom", "Enable Horse Mode", false);
             ShowPopUpVersion = Config.Bind("Custom", "Show PopUp", "0");
-            StreamerModeReplacementText = Config.Bind("Custom", "Streamer Mode Replacement Text", "\n\nTheOtherRolesGMK");
+            StreamerModeReplacementText = Config.Bind("Custom", "Streamer Mode Replacement Text", "\n\nThe Other Roles GM");
             StreamerModeReplacementColor = Config.Bind("Custom", "Streamer Mode Replacement Text Hex Color", "#87AAF5FF");
             DebugRepo = Config.Bind("Custom", "Debug Hat Repo", "");
 
@@ -122,10 +120,9 @@ namespace TheOtherRoles
             }
         }
     }
-
+    
     // Debugging tools
     [HarmonyPatch(typeof(KeyboardJoystick), nameof(KeyboardJoystick.Update))]
-    //DebugModeがONの時使用可
     public static class DebugManager
     {
         private static readonly System.Random random = new System.Random((int)DateTime.Now.Ticks);
@@ -133,23 +130,6 @@ namespace TheOtherRoles
 
         public static void Postfix(KeyboardJoystick __instance)
         {
-            // F10でクルー強制勝利
-            if (Input.GetKeyDown(KeyCode.F10) && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started)
-            {
-                MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.CrewmateEnd, Hazel.SendOption.Reliable, -1);
-                AmongUsClient.Instance.FinishRpcImmediately(writer);
-                RPCProcedure.crewmateEnd();
-            }
-            // F11でクルー強制勝利
-            if (Input.GetKeyDown(KeyCode.F11) && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started)
-            {
-                MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.ImpostorEnd, Hazel.SendOption.Reliable, -1);
-                AmongUsClient.Instance.FinishRpcImmediately(writer);
-                RPCProcedure.impostorEnd();
-            }
-            
-            // F11&F12を変えた理由・・・誰かがSteamでスクショ撮ろうとして廃村したから
-
             if (!TheOtherRolesPlugin.DebugMode.Value) return;
 
             // Spawn dummys
@@ -179,6 +159,13 @@ namespace TheOtherRoles
                 playerControl.SetSkin(HatManager.Instance.allSkins[skin].ProductId, color);
                 playerControl.SetNamePlate(HatManager.Instance.allNamePlates[nameplate].ProductId);
                 GameData.Instance.RpcSetTasks(playerControl.PlayerId, new byte[0]);
+            }
+
+            // Terminate round
+            if(Input.GetKeyDown(KeyCode.L) && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started) {
+                MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.ForceEnd, Hazel.SendOption.Reliable, -1);
+                AmongUsClient.Instance.FinishRpcImmediately(writer);
+                RPCProcedure.forceEnd();
             }
         }
 

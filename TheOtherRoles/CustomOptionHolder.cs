@@ -43,20 +43,6 @@ namespace TheOtherRoles {
         public static CustomOption camouflagerDuration;
         public static CustomOption camouflagerRandomColors;
 
-        public static CustomRoleOption evilHackerSpawnRate;
-        public static CustomOption evilHackerCanHasBetterAdmin;
-        public static CustomOption evilHackerCanCreateMadmate;
-        public static CustomOption evilHackerCanCreateMadmateFromFox;
-        public static CustomOption evilHackerCanCreateMadmateFromJackal;
-        public static CustomOption createdMadmateCanDieToSheriff;
-        public static CustomOption createdMadmateCanEnterVents;
-        public static CustomOption createdMadmateHasImpostorVision;
-        public static CustomOption createdMadmateCanSabotage;
-        public static CustomOption createdMadmateCanFixComm;
-        public static CustomOption createdMadmateAbility;
-        public static CustomOption createdMadmateNumTasks;
-        public static CustomOption createdMadmateExileCrewmate;
-
         public static CustomRoleOption vampireSpawnRate;
         public static CustomOption vampireKillDelay;
         public static CustomOption vampireCooldown;
@@ -66,11 +52,6 @@ namespace TheOtherRoles {
         public static CustomOption eraserCooldown;
         public static CustomOption eraserCooldownIncrease;
         public static CustomOption eraserCanEraseAnyone;
-
-        public static CustomRoleOption hawkEyeSpawnRate;
-        public static CustomOption hawkZoomCooldown;
-        public static CustomOption hawkEyeTime;
-        public static CustomOption hawkCanUseVents;
 
         public static CustomRoleOption miniSpawnRate;
         public static CustomOption miniGrowingUpDuration;
@@ -95,12 +76,6 @@ namespace TheOtherRoles {
         public static CustomOption guesserEvilCanKillSpy;
         public static CustomOption guesserSpawnBothRate;
         public static CustomOption guesserCantGuessSnitchIfTaksDone;
-
-        public static CustomRoleOption mayorSpawnRate;
-        //public static CustomOption mayorIsImpMayorRate;
-        //public static CustomOption mayorSpawnBothRate;
-        public static CustomOption mayorNumVotes;
-        //public static CustomOption evilMayorNumVotes;
 
         public static CustomRoleOption jesterSpawnRate;
         public static CustomOption jesterCanCallEmergency;
@@ -151,6 +126,9 @@ namespace TheOtherRoles {
         public static CustomOption fortuneTellerResults;
         public static CustomOption fortuneTellerDistance;
         public static CustomOption fortuneTellerDuration;
+
+        public static CustomRoleOption mayorSpawnRate;
+        public static CustomOption mayorNumVotes;
 
         public static CustomRoleOption engineerSpawnRate;
         public static CustomOption engineerNumberOfFixes;
@@ -280,9 +258,6 @@ namespace TheOtherRoles {
 
 		public static CustomOption allowParallelMedBayScans;
 
-        public static CustomOption ventAnimation;
-        public static CustomOption enableDiePlayerZoomInOut;
-
         public static CustomOption dynamicMap;
         public static CustomOption dynamicMapEnableSkeld;
         public static CustomOption dynamicMapEnableMira;
@@ -301,7 +276,6 @@ namespace TheOtherRoles {
         public static CustomRoleSelectionOption madmateFixedRole;
         public static CustomOption madmateAbility;
         public static CustomTasksOption madmateTasks;
-        public static CustomOption madmateExilePlayer;
 
         public static CustomRoleOption opportunistSpawnRate;
 
@@ -372,6 +346,13 @@ namespace TheOtherRoles {
         public static CustomOption sprinterDuration;
         public static CustomOption sprinterSpeedBonus;
 
+        public static CustomRoleOption akujoSpawnRate;
+        public static CustomOption akujoTimeLimit;
+        public static CustomOption akujoKnowsRoles;
+        public static CustomOption akujoNumKeeps;
+
+        public static CustomOption enabledHorseMode;
+
         internal static Dictionary<byte, byte[]> blockedRolePairings = new Dictionary<byte, byte[]>();
 
         public static string cs(Color c, string s) {
@@ -416,7 +397,7 @@ namespace TheOtherRoles {
             janitorCanRepair = CustomOption.Create(16, "janitorCanRepair", false, mafiaSpawnRate);
             janitorCanVent = CustomOption.Create(17, "janitorCanVent", false, mafiaSpawnRate);
 
-            morphlingSpawnRate = new CustomRoleOption(20, "morphling", Morphling.color, 1, roleEnabled: false);
+            morphlingSpawnRate = new CustomRoleOption(20, "morphling", Morphling.color, 1);
             morphlingCooldown = CustomOption.Create(21, "morphlingCooldown", 30f, 2.5f, 60f, 2.5f, morphlingSpawnRate, format: "unitSeconds");
             morphlingDuration = CustomOption.Create(22, "morphlingDuration", 10f, 1f, 20f, 0.5f, morphlingSpawnRate, format: "unitSeconds");
 
@@ -424,20 +405,6 @@ namespace TheOtherRoles {
             camouflagerCooldown = CustomOption.Create(31, "camouflagerCooldown", 30f, 2.5f, 60f, 2.5f, camouflagerSpawnRate, format: "unitSeconds");
             camouflagerDuration = CustomOption.Create(32, "camouflagerDuration", 10f, 1f, 20f, 0.5f, camouflagerSpawnRate, format: "unitSeconds");
             camouflagerRandomColors = CustomOption.Create(33, "camouflagerRandomColors", false, camouflagerSpawnRate);
-
-            evilHackerSpawnRate = new CustomRoleOption(5000, "evilHacker", EvilHacker.color, 1);
-            evilHackerCanHasBetterAdmin = CustomOption.Create(5001, "evilHackerCanHasBetterAdmin", false, evilHackerSpawnRate);
-            evilHackerCanCreateMadmate = CustomOption.Create(5002, "evilHackerCanCreateMadmate", false, evilHackerSpawnRate);
-            createdMadmateCanDieToSheriff = CustomOption.Create(5003, "createdMadmateCanDieToSheriff", false, evilHackerCanCreateMadmate);
-            createdMadmateCanEnterVents = CustomOption.Create(5004, "createdMadmateCanEnterVents", false, evilHackerCanCreateMadmate);
-            evilHackerCanCreateMadmateFromFox = CustomOption.Create(5005, "evilHackerCanCreateMadmateFromFox", false, evilHackerCanCreateMadmate);
-            evilHackerCanCreateMadmateFromJackal = CustomOption.Create(5006, "evilHackerCanCreateMadmateFromJackal", false, evilHackerCanCreateMadmate);
-            createdMadmateHasImpostorVision = CustomOption.Create(5007, "createdMadmateHasImpostorVision", false, evilHackerCanCreateMadmate);
-            createdMadmateCanSabotage = CustomOption.Create(5008, "createdMadmateCanSabotage", false, evilHackerCanCreateMadmate);
-            createdMadmateCanFixComm = CustomOption.Create(5009, "createdMadmateCanFixComm", true, evilHackerCanCreateMadmate);
-            createdMadmateAbility = CustomOption.Create(5010, "madmateAbility", new string[] { "madmateNone", "madmateFanatic" }, evilHackerCanCreateMadmate);
-            createdMadmateNumTasks = CustomOption.Create(5011, "createdMadmateNumTasks", 4f, 1f, 20f, 1f, createdMadmateAbility);
-            createdMadmateExileCrewmate = CustomOption.Create(5012, "createdMadmateExileCrewmate", false, evilHackerCanCreateMadmate);
 
             vampireSpawnRate = new CustomRoleOption(40, "vampire", Vampire.color, 1);
             vampireKillDelay = CustomOption.Create(41, "vampireKillDelay", 10f, 1f, 20f, 1f, vampireSpawnRate, format: "unitSeconds");
@@ -497,10 +464,6 @@ namespace TheOtherRoles {
             nekoKabochaRevengeImpostor = CustomOption.Create(1023, "nekoKabochaRevengeImpostor", true, nekoKabochaSpawnRate);
             nekoKabochaRevengeExile = CustomOption.Create(1024, "nekoKabochaRevengeExile", false, nekoKabochaSpawnRate);
 
-            hawkEyeSpawnRate = new CustomRoleOption(5020, "hawkEye", HawkEye.color, 1);
-            hawkZoomCooldown = CustomOption.Create(5021, "hawkZoomCooldown", 30f, 2.5f, 60f, 2.5f, hawkEyeSpawnRate, format:"unitSeconds");
-            hawkEyeTime = CustomOption.Create(5022, "hawkTime", 5f, 5f, 30f, 5f, hawkEyeSpawnRate, format:"unitSeconds");
-            hawkCanUseVents = CustomOption.Create(5023, "hawkCanUseVents", false, hawkEyeSpawnRate);
 
             madmateSpawnRate = new CustomRoleOption(360, "madmate", Madmate.color);
             madmateType = CustomOption.Create(366, "madmateType", new string[] { "madmateDefault", "madmateWithRole", "madmateRandom" }, madmateSpawnRate);
@@ -512,7 +475,6 @@ namespace TheOtherRoles {
             madmateHasImpostorVision = CustomOption.Create(363, "madmateHasImpostorVision", false, madmateSpawnRate);
             madmateCanSabotage = CustomOption.Create(364, "madmateCanSabotage", false, madmateSpawnRate);
             madmateCanFixComm = CustomOption.Create(365, "madmateCanFixComm", true, madmateSpawnRate);
-            madmateExilePlayer = CustomOption.Create(366, "madmateExileCrewmate", false, madmateSpawnRate);
 
             miniSpawnRate = new CustomRoleOption(180, "mini", Mini.color, 1);
             miniIsImpRate = CustomOption.Create(182, "miniIsImpRate", rates, miniSpawnRate);
@@ -537,12 +499,6 @@ namespace TheOtherRoles {
             guesserKillsThroughShield = CustomOption.Create(316, "guesserPierceShield", true, guesserSpawnRate);
             guesserEvilCanKillSpy = CustomOption.Create(318, "guesserEvilCanKillSpy", true, guesserSpawnRate);
 			guesserCantGuessSnitchIfTaksDone = CustomOption.Create(319, "guesserCantGuessSnitchIfTaksDone", true, guesserSpawnRate);
-
-            mayorSpawnRate = new CustomRoleOption(80, "mayor", Mayor.color, 1);
-            //mayorIsImpMayorRate = CustomOption.Create(81, "mayorIsImpMayorRate", rates, mayorSpawnRate);
-            //mayorSpawnBothRate = CustomOption.Create(82, "mayorSpawnBothRate", rates, mayorIsImpMayorRate);
-            mayorNumVotes = CustomOption.Create(83, "mayorNumVotes", 2f, 2f, 10f, 1f, mayorSpawnRate, format: "unitVotes");
-            //evilMayorNumVotes = CustomOption.Create(84, "evilMayorNumVotes", 2f, 2f, 10f, 1f, mayorIsImpMayorRate, format: "unitVotes");
 
             swapperSpawnRate = new CustomRoleOption(150, "swapper", Swapper.color, 1);
             swapperIsImpRate = CustomOption.Create(153, "swapperIsImpRate", rates, swapperSpawnRate);
@@ -609,6 +565,12 @@ namespace TheOtherRoles {
             watcherSpawnRate = new CustomDualRoleOption(1040, "watcher", Watcher.color, RoleType.Watcher, 15);
 
 
+            akujoSpawnRate = new CustomRoleOption(1060, "akujo", Akujo.color, 7, roleEnabled: false);
+            akujoTimeLimit = CustomOption.Create(1061, "akujoTimeLimit", 300f, 30f, 1200f, 30f, akujoSpawnRate, format: "unitSeconds");
+            akujoKnowsRoles = CustomOption.Create(1062, "akujoKnowsRoles", false, akujoSpawnRate);
+            akujoNumKeeps = CustomOption.Create(1063, "akujoNumKeeps", 1f, 1f, 15f, 1f, akujoSpawnRate, format: "unitPlayers");
+
+
             foxSpawnRate = new CustomRoleOption(910, "fox", Fox.color, 1);
             foxCanFixReactorAndO2 = CustomOption.Create(911, "foxCanFixReactorAndO2", false, foxSpawnRate);
             foxCrewWinsByTasks = CustomOption.Create(912, "foxCrewWinsByTasks", true, foxSpawnRate);
@@ -624,6 +586,10 @@ namespace TheOtherRoles {
             fortuneTellerResults = CustomOption.Create(942, "fortuneTellerResults ", new string[] { "fortuneTellerResultCrew", "fortuneTellerResultTeam", "fortuneTellerResultRole" }, fortuneTellerSpawnRate);
             fortuneTellerDuration = CustomOption.Create(943, "fortuneTellerDuration ", 20f, 1f, 50f, 0.5f, fortuneTellerSpawnRate, format: "unitSeconds");
             fortuneTellerDistance = CustomOption.Create(944, "fortuneTellerDistance ", 2.5f, 1f, 10f, 0.5f, fortuneTellerSpawnRate, format: "unitMeters");
+
+
+            mayorSpawnRate = new CustomRoleOption(80, "mayor", Mayor.color, 1);
+            mayorNumVotes = CustomOption.Create(81, "mayorNumVotes", 2f, 2f, 10f, 1f, mayorSpawnRate, format: "unitVotes");
 
             engineerSpawnRate = new CustomRoleOption(90, "engineer", Engineer.color, 1);
             engineerNumberOfFixes = CustomOption.Create(91, "engineerNumFixes", 1f, 0f, 3f, 1f, engineerSpawnRate);
@@ -725,10 +691,8 @@ namespace TheOtherRoles {
             hideOutOfSightNametags = CustomOption.Create(550, "hideOutOfSightNametags", false, specialOptions);
             refundVotesOnDeath = CustomOption.Create(551, "refundVotesOnDeath", true, specialOptions);
             allowParallelMedBayScans = CustomOption.Create(540, "parallelMedbayScans", false, specialOptions);
-            ventAnimation = CustomOption.Create(541, "ventAnimation", true, specialOptions);
-            enableDiePlayerZoomInOut = CustomOption.Create(542, "diePlayerCanZoomInOut", false, specialOptions);
-
             hideSettings = CustomOption.Create(520, "hideSettings", false, specialOptions);
+            enabledHorseMode = CustomOption.Create(552, "enabledHorseMode", false, specialOptions);
 
             restrictDevices = CustomOption.Create(510, "restrictDevices", new string[] { "optionOff", "restrictPerTurn", "restrictPerGame" }, specialOptions);
             restrictAdmin = CustomOption.Create(501, "disableAdmin", 30f, 0f, 600f, 5f, restrictDevices, format: "unitSeconds");
@@ -754,6 +718,10 @@ namespace TheOtherRoles {
             blockedRolePairings.Add((byte)RoleType.Mini, new [] { (byte)RoleType.Spy});
             blockedRolePairings.Add((byte)RoleType.Vulture, new [] { (byte)RoleType.Cleaner});
             blockedRolePairings.Add((byte)RoleType.Cleaner, new [] { (byte)RoleType.Vulture});
+
+            // RoleInfo is dependent on our options, so make sure not to initialize it until
+            // *after* all the options have been created (lmao programming sucks ass)
+            RoleInfo.Init();
         }
     }
 

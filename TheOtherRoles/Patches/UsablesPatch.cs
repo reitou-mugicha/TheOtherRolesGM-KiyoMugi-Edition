@@ -31,11 +31,6 @@ namespace TheOtherRoles.Patches
                 return true;
             }
 
-            if (pc.hasModifier(ModifierType.CreatedMadmate) && (isLights || (isComms && !CreatedMadmate.canFixComm)))
-            {
-                return true;
-            }
-
             if (pc.isGM() && (isLights || isComms || isReactor || isO2))
             {
                 return true;
@@ -164,30 +159,6 @@ namespace TheOtherRoles.Patches
             }
         }
 
-        [HarmonyPatch(typeof(Vent), nameof(Vent.EnterVent))]
-        class EnterVentAnimPatch {
-            public static bool Prefix(Vent __instance, [HarmonyArgument(0)] PlayerControl pc) 
-            {
-                if (Helpers.GameStarted && CustomOptionHolder.ventAnimation.getBool())
-                {
-                    return pc.AmOwner;
-                }
-                return true;
-            }
-        }
-
-        [HarmonyPatch(typeof(Vent), nameof(Vent.ExitVent))]
-        class ExitVentAnimPatch {
-            public static bool Prefix(Vent __instance, [HarmonyArgument(0)] PlayerControl pc)
-            {
-                if (Helpers.GameStarted && CustomOptionHolder.ventAnimation.getBool())
-                {
-                    return pc.AmOwner;
-                }
-                return true;
-            }
-        }
-
         [HarmonyPatch(typeof(VentButton), nameof(VentButton.DoClick))]
         class VentButtonDoClickPatch
         {
@@ -207,7 +178,7 @@ namespace TheOtherRoles.Patches
                 bool canUse;
                 bool couldUse;
                 __instance.CanUse(PlayerControl.LocalPlayer.Data, out canUse, out couldUse);
-                bool canMoveInVents = PlayerControl.LocalPlayer != Spy.spy && !PlayerControl.LocalPlayer.hasModifier(ModifierType.Madmate) && !PlayerControl.LocalPlayer.hasModifier(ModifierType.CreatedMadmate);
+                bool canMoveInVents = PlayerControl.LocalPlayer != Spy.spy && !PlayerControl.LocalPlayer.hasModifier(ModifierType.Madmate);
                 if (!canUse) return false; // No need to execute the native method as using is disallowed anyways
 
                 bool isEnter = !PlayerControl.LocalPlayer.inVent;
@@ -328,6 +299,19 @@ namespace TheOtherRoles.Patches
             }
         }
 
+        [HarmonyPatch(typeof(SabotageButton), nameof(SabotageButton.DoClick))]
+        public static class SabotageButtonDoClickPatch
+        {
+            public static bool Prefix(SabotageButton __instance)
+            {
+                // The sabotage button behaves just fine if it's a regular impostor
+                if (PlayerControl.LocalPlayer.Data.Role.TeamType == RoleTeamTypes.Impostor) return true;
+
+                DestroyableSingleton<HudManager>.Instance.ShowMap((Il2CppSystem.Action<MapBehaviour>)((m) => { m.ShowSabotageMap(); }));
+                return false;
+            }
+        }
+
         [HarmonyPatch(typeof(UseButton), nameof(UseButton.SetTarget))]
         class UseButtonSetTargetPatch
         {
@@ -409,7 +393,7 @@ namespace TheOtherRoles.Patches
                 {
                     int localRemaining = PlayerControl.LocalPlayer.RemainingEmergencies;
                     int teamRemaining = Mathf.Max(0, maxNumberOfMeetings - meetingsCount);
-                    int remaining = Mathf.Min(localRemaining, (Mayor.mayor != null && Mayor.mayor == PlayerControl.LocalPlayer /*|| Mayor.evilMayor != null && Mayor.evilMayor == PlayerControl.LocalPlayer*/) ? 1 : teamRemaining);
+                    int remaining = Mathf.Min(localRemaining, (Mayor.mayor != null && Mayor.mayor == PlayerControl.LocalPlayer) ? 1 : teamRemaining);
 
                     __instance.StatusText.text = "<size=100%>" + String.Format(ModTranslation.getString("meetingStatus"), PlayerControl.LocalPlayer.name) + "</size>";
                     __instance.NumberText.text = String.Format(ModTranslation.getString("meetingCount"), localRemaining.ToString(), teamRemaining.ToString());

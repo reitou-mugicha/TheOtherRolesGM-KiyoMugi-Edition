@@ -23,7 +23,6 @@ namespace TheOtherRoles
         public static bool misfireKillsTarget { get { return CustomOptionHolder.sheriffMisfireKillsTarget.getBool(); } }
         public static bool spyCanDieToSheriff { get { return CustomOptionHolder.spyCanDieToSheriff.getBool(); } }
         public static bool madmateCanDieToSheriff { get { return CustomOptionHolder.madmateCanDieToSheriff.getBool(); } }
-        public static bool createdMadmateCanDieToSheriff { get { return CustomOptionHolder.createdMadmateCanDieToSheriff.getBool(); } }
 
         public int numShots = 2;
         public PlayerControl currentTarget;
@@ -70,7 +69,6 @@ namespace TheOtherRoles
                         if ((local.currentTarget.Data.Role.IsImpostor && (local.currentTarget != Mini.mini || Mini.isGrownUp())) ||
                             (Sheriff.spyCanDieToSheriff && Spy.spy == local.currentTarget) ||
                             (Sheriff.madmateCanDieToSheriff && local.currentTarget.hasModifier(ModifierType.Madmate)) ||
-                            (Sheriff.createdMadmateCanDieToSheriff && local.currentTarget.hasModifier(ModifierType.CreatedMadmate)) ||
                             (Sheriff.canKillNeutrals && local.currentTarget.isNeutral()) ||
                             (Jackal.jackal == local.currentTarget || Sidekick.sidekick == local.currentTarget))
                         {

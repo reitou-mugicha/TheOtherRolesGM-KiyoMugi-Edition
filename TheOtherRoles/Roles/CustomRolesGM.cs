@@ -33,17 +33,13 @@ namespace TheOtherRoles
             Opportunist.Clear();
             Ninja.Clear();
             Madmate.Clear();
-            CreatedMadmate.Clear();
             PlagueDoctor.Clear();
             Lighter.Clear();
             SerialKiller.Clear();
             Fox.Clear();
             FortuneTeller.Clear();
+            Akujo.Clear();
             HawkEye.Clear();
-            //SimpleKiller.Clear();
-            //King.Clear();
-            //Minions.Clear();
-            //Chunibyo.Clear();
             Role.ClearAll();
         }
 

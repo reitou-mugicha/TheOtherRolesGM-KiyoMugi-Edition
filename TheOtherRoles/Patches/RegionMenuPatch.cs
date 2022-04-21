@@ -38,14 +38,17 @@ namespace TheOtherRoles.Patches {
 
         public static void Postfix(RegionMenu __instance) {
             var template = DestroyableSingleton<JoinGameButton>.Instance;
-            if (template == null || template.GameIdText == null) return;
             var joinGameButtons = GameObject.FindObjectsOfType<JoinGameButton>();
-            foreach (var t in joinGameButtons) {  // The correct button has a background, the other 2 dont
-                if (t.GameIdText != null && t.GameIdText.Background != null) {
+            foreach (var t in joinGameButtons)
+            {  // The correct button has a background, the other 2 dont
+                if (t.GameIdText != null && t.GameIdText.Background != null)
+                {
                     template = t;
                     break;
                 }
             }
+
+            if (template == null || template.GameIdText == null) return;
 
             if (ipField == null || ipField.gameObject == null) {
                 ipField = UnityEngine.Object.Instantiate(template.GameIdText, __instance.transform);

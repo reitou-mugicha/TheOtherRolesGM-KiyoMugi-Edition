@@ -202,13 +202,6 @@ namespace TheOtherRoles.Patches
             setPlayerOutline(Morphling.currentTarget, Morphling.color);
         }
 
-        static void evilHackerSetTarget()
-        {
-            if (EvilHacker.evilHacker == null || EvilHacker.evilHacker != PlayerControl.LocalPlayer) return;
-            EvilHacker.currentTarget = setTarget(true);
-            setPlayerOutline(EvilHacker.currentTarget, EvilHacker.color);
-        }
-
         static void trackerSetTarget()
         {
             if (Tracker.tracker == null || Tracker.tracker != PlayerControl.LocalPlayer) return;
@@ -506,13 +499,15 @@ namespace TheOtherRoles.Patches
                 }
             }
 
-            var canSeeEverything = PlayerControl.LocalPlayer.isDead() || PlayerControl.LocalPlayer.isGM();
+            bool canSeeEverything = PlayerControl.LocalPlayer.isDead() || PlayerControl.LocalPlayer.isGM();
             foreach (PlayerControl p in PlayerControl.AllPlayerControls)
             {
                 if (p == null) continue;
 
-                var canSeeInfo =
-                    canSeeEverything ||
+                bool isAkujo = Akujo.isPartner(PlayerControl.LocalPlayer, p);
+
+                bool canSeeInfo =
+                    canSeeEverything || isAkujo ||
                     p == PlayerControl.LocalPlayer || p.isGM() || 
                     (Lawyer.lawyerKnowsRole && PlayerControl.LocalPlayer == Lawyer.lawyer && p == Lawyer.target);
 
@@ -549,6 +544,7 @@ namespace TheOtherRoles.Patches
 
                     var (tasksCompleted, tasksTotal) = TasksHandler.taskInfo(p.Data);
                     string roleNames = RoleInfo.GetRolesString(p, true, new RoleType[] { RoleType.Lovers });
+                    string roleNamesFull = RoleInfo.GetRolesString(p, true, new RoleType[] { RoleType.Lovers }, true);
 
                     var completedStr = commsActive ? "?" : tasksCompleted.ToString();
                     string taskInfo = tasksTotal > 0 ? $"<color=#FAD934FF>({completedStr}/{tasksTotal})</color>" : "";
@@ -557,17 +553,33 @@ namespace TheOtherRoles.Patches
                     string meetingInfoText = "";
                     if (p == PlayerControl.LocalPlayer)
                     {
-                        playerInfoText = $"{roleNames}";
+                        playerInfoText = $"{(PlayerControl.LocalPlayer.isAlive() ? roleNames : roleNamesFull)}";
                         if (DestroyableSingleton<TaskPanelBehaviour>.InstanceExists)
                         {
                             TMPro.TextMeshPro tabText = DestroyableSingleton<TaskPanelBehaviour>.Instance.tab.transform.FindChild("TabText_TMP").GetComponent<TMPro.TextMeshPro>();
                             tabText.SetText($"{TranslationController.Instance.GetString(StringNames.Tasks)} {taskInfo}");
                         }
-                        meetingInfoText = $"{roleNames} {taskInfo}".Trim();
+                        meetingInfoText = $"{playerInfoText} {taskInfo}".Trim();
+                    }
+                    else if (PlayerControl.LocalPlayer.isAlive() && isAkujo)
+                    {
+                        if (Akujo.knowsRoles)
+                        {
+                            playerInfoText = roleNamesFull;
+                            meetingInfoText = roleNamesFull;
+                        }
+                        else if (p.hasModifier(ModifierType.AkujoHonmei))
+                        {
+                            playerInfoText = Helpers.cs(Akujo.color, ModTranslation.getString("akujoHonmei"));
+                        }
+                        else if (p.hasModifier(ModifierType.AkujoKeep))
+                        {
+                            playerInfoText = Helpers.cs(Akujo.color, ModTranslation.getString("akujoKeep"));
+                        }
                     }
                     else if (MapOptions.ghostsSeeRoles && MapOptions.ghostsSeeTasks)
                     {
-                        playerInfoText = $"{roleNames} {taskInfo}".Trim();
+                        playerInfoText = $"{roleNamesFull} {taskInfo}".Trim();
                         meetingInfoText = playerInfoText;
                     }
                     else if (MapOptions.ghostsSeeTasks)
@@ -577,18 +589,18 @@ namespace TheOtherRoles.Patches
                     }
                     else if (MapOptions.ghostsSeeRoles || (Lawyer.lawyerKnowsRole && PlayerControl.LocalPlayer == Lawyer.lawyer && p == Lawyer.target))
                     {
-                        playerInfoText = $"{roleNames}";
+                        playerInfoText = $"{roleNamesFull}";
                         meetingInfoText = playerInfoText;
                     }
                     else if (p.isGM() || PlayerControl.LocalPlayer.isGM())
                     {
-                        playerInfoText = $"{roleNames} {taskInfo}".Trim();
+                        playerInfoText = $"{roleNamesFull} {taskInfo}".Trim();
                         meetingInfoText = playerInfoText;
                     }
 
                     playerInfo.text = playerInfoText;
                     playerInfo.gameObject.SetActive(p.Visible && !Helpers.hidePlayerName(p));
-                    if (meetingInfo != null) meetingInfo.text = MeetingHud.Instance.state == MeetingHud.VoteStates.Results ? "" : meetingInfoText;
+                    if (meetingInfo != null) meetingInfo.text = Helpers.ShowMeetingText ? meetingInfoText : "";
                 }
             }
         }
@@ -1005,8 +1017,6 @@ namespace TheOtherRoles.Patches
                 engineerUpdate();
                 // Tracker
                 trackerUpdate();
-                // EvilHacker
-                evilHackerSetTarget();
                 // Jackal
                 jackalSetTarget();
                 // Sidekick
@@ -1202,7 +1212,8 @@ namespace TheOtherRoles.Patches
             }
 
             // Seer show flash and add dead player position
-            if (Seer.seer != null && PlayerControl.LocalPlayer == Seer.seer && !Seer.seer.Data.IsDead && Seer.seer != target && Seer.mode <= 1) {
+            if (Seer.seer != null && PlayerControl.LocalPlayer == Seer.seer && !Seer.seer.Data.IsDead && Seer.seer != target && Seer.mode <= 1)
+            {
                 Helpers.showFlash(new Color(42f / 255f, 187f / 255f, 245f / 255f));
             }
             if (Seer.deadBodyPositions != null) Seer.deadBodyPositions.Add(target.transform.position);

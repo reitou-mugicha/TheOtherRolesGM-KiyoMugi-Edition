@@ -34,11 +34,22 @@ namespace TheOtherRoles {
             }
         }
 
+        public static bool ShowMeetingText
+        {
+            get
+            {
+                return MeetingHud.Instance != null &&
+                    (MeetingHud.Instance.state == MeetingHud.VoteStates.Voted ||
+                     MeetingHud.Instance.state == MeetingHud.VoteStates.NotVoted ||
+                     MeetingHud.Instance.state == MeetingHud.VoteStates.Discussion);
+            }
+        }
+
         public static bool GameStarted
         {
             get
             {
-                return AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started;
+                return AmongUsClient.Instance != null && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started;
             }
         }
 
@@ -125,13 +136,12 @@ namespace TheOtherRoles {
             RPCProcedure.uncheckedSetTasks(player.PlayerId, taskTypeIds.ToArray());
         }
 
-        public static void setSkinWithAnim(PlayerPhysics playerPhysics, string SkinId)
+        public static void setSkinWithAnim(PlayerPhysics playerPhysics, string SkinId, int ColorId)
         {
-            SkinViewData nextSkin = DestroyableSingleton<HatManager>.Instance.GetSkinById(SkinId).viewData.viewData;
+            SkinViewData nextSkin = HatManager.Instance.GetSkinById(SkinId).viewData.viewData;
             AnimationClip clip = null;
             var spriteAnim = playerPhysics.Skin.animator;
             var anim = spriteAnim.m_animator;
-            var skinLayer = playerPhysics.Skin;
 
             var currentPhysicsAnim = playerPhysics.Animator.GetCurrentAnimation();
             if (currentPhysicsAnim == playerPhysics.CurrentAnimationGroup.RunAnim) clip = nextSkin.RunAnim;
@@ -142,7 +152,7 @@ namespace TheOtherRoles {
             else clip = nextSkin.IdleAnim;
 
             float progress = playerPhysics.Animator.m_animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
-            skinLayer.skin = nextSkin;
+            playerPhysics.myPlayer.RawSetSkin(SkinId, ColorId);
 
             spriteAnim.Play(clip, 1f);
             anim.Play("a", 0, progress % 1);
@@ -267,7 +277,7 @@ namespace TheOtherRoles {
                 player.myTasks.Insert(0, task);
             }
 
-            if (player.hasModifier(ModifierType.Madmate) || player.hasModifier(ModifierType.CreatedMadmate))
+            if (player.hasModifier(ModifierType.Madmate))
             {
                 var task = new GameObject("RoleTask").AddComponent<ImportantTextTask>();
                 task.transform.SetParent(player.transform, false);
@@ -312,8 +322,8 @@ namespace TheOtherRoles {
                     player.isRole(RoleType.Vulture) ||
                     player.isRole(RoleType.Lawyer) ||
                     player.isRole(RoleType.Pursuer) ||
-                    //player.isRole(RoleType.King) ||
-                    //player.isRole(RoleType.Minions) ||
+                    player.isRole(RoleType.Akujo) ||
+                    player.hasModifier(ModifierType.AkujoHonmei) ||
                     (player.isRole(RoleType.Shifter) && Shifter.isNeutral)));
         }
 
@@ -329,14 +339,18 @@ namespace TheOtherRoles {
 
         public static bool hasFakeTasks(this PlayerControl player) {
             return (player.isNeutral() && !player.neutralHasTasks()) ||
-                   (player.hasModifier(ModifierType.CreatedMadmate) && !CreatedMadmate.hasTasks) ||
-                   (player.hasModifier(ModifierType.Madmate) && !Madmate.hasTasks) || 
-                   (player.isLovers() && Lovers.separateTeam && !Lovers.tasksCount);
+                   (player.hasModifier(ModifierType.Madmate) && !Madmate.hasTasks) ||
+                   (player.isLovers() && Lovers.separateTeam && !Lovers.tasksCount) ||
+                   (player.hasModifier(ModifierType.AkujoHonmei) && !player.isImpostor() && !player.neutralHasTasks());
         }
 
         public static bool neutralHasTasks(this PlayerControl player)
         {
-            return player.isNeutral() && (player.isRole(RoleType.Lawyer) || player.isRole(RoleType.Pursuer) || player.isRole(RoleType.Shifter) || player.isRole(RoleType.Fox));
+            return player.isNeutral() && 
+                (player.isRole(RoleType.Lawyer) ||
+                 player.isRole(RoleType.Pursuer) ||
+                 player.isRole(RoleType.Shifter) ||
+                 player.isRole(RoleType.Fox));
         }
 
         public static bool isGM(this PlayerControl player)
@@ -347,6 +361,28 @@ namespace TheOtherRoles {
         public static bool isLovers(this PlayerControl player)
         {
             return player != null && Lovers.isLovers(player);
+        }
+
+        public static bool isAkujoLover(this PlayerControl player)
+        {
+            return player != null &&
+                (player.isRole(RoleType.Akujo) ||
+                 player.hasModifier(ModifierType.AkujoHonmei) ||
+                 player.hasModifier(ModifierType.AkujoKeep));
+        }
+
+        public static bool isAkujoPartners(this PlayerControl player, PlayerControl partner)
+        {
+            foreach (var akujo in Akujo.players)
+            {
+                if ((akujo.player == player && akujo.isPartner(partner)) ||
+                    (akujo.player == partner && akujo.isPartner(player)))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public static PlayerControl getPartner(this PlayerControl player)
@@ -466,11 +502,33 @@ namespace TheOtherRoles {
             spriteAnim.m_animator.Update(0f);
 
             if (target.CurrentPet) UnityEngine.Object.Destroy(target.CurrentPet.gameObject);
-            target.CurrentPet = UnityEngine.Object.Instantiate(DestroyableSingleton<HatManager>.Instance.GetPetById(petId).PetPrefabRef.Asset).Cast<PetBehaviour>();
+            target.CurrentPet = UnityEngine.Object.Instantiate<PetBehaviour>(DestroyableSingleton<HatManager>.Instance.GetPetById(petId).viewData.viewData);
             target.CurrentPet.transform.position = target.transform.position;
             target.CurrentPet.Source = target;
             target.CurrentPet.Visible = target.Visible;
             PlayerControl.SetPlayerMaterialColors(colorId, target.CurrentPet.rend);
+        }
+
+        public static void showFlash(Color color, float duration = 1f)
+        {
+            if (HudManager.Instance == null || HudManager.Instance.FullScreen == null) return;
+            HudManager.Instance.FullScreen.gameObject.SetActive(true);
+            HudManager.Instance.FullScreen.enabled = true;
+            HudManager.Instance.StartCoroutine(Effects.Lerp(duration, new Action<float>((p) => {
+                var renderer = HudManager.Instance.FullScreen;
+
+                if (p < 0.5)
+                {
+                    if (renderer != null)
+                        renderer.color = new Color(color.r, color.g, color.b, Mathf.Clamp01(p * 2 * 0.75f));
+                }
+                else
+                {
+                    if (renderer != null)
+                        renderer.color = new Color(color.r, color.g, color.b, Mathf.Clamp01((1 - p) * 2 * 0.75f));
+                }
+                if (p == 1f && renderer != null) renderer.enabled = false;
+            })));
         }
 
         public static bool roleCanUseVents(this PlayerControl player) {
@@ -485,8 +543,6 @@ namespace TheOtherRoles {
                 roleCouldUse = true;
             else if (Madmate.canEnterVents && player.hasModifier(ModifierType.Madmate))
                 roleCouldUse = true;
-            else if (CreatedMadmate.canEnterVents && player.hasModifier(ModifierType.CreatedMadmate))
-                roleCouldUse = true;
             else if (Vulture.canUseVents && player.isRole(RoleType.Vulture))
                 roleCouldUse = true;
             else if (player.Data?.Role != null && player.Data.Role.CanVent)
@@ -496,8 +552,6 @@ namespace TheOtherRoles {
                 else if (!Mafioso.canVent && player.isRole(RoleType.Mafioso))
                     roleCouldUse = false;
                 else if (!Ninja.canUseVents && player.isRole(RoleType.Ninja))
-                    roleCouldUse = false;
-                else if (!HawkEye.canUseVents && player.isRole(RoleType.HawkEye))
                     roleCouldUse = false;
                 else
                     roleCouldUse = true;
@@ -509,8 +563,6 @@ namespace TheOtherRoles {
         {
             bool roleCouldUse = false;
             if (Madmate.canSabotage && player.hasModifier(ModifierType.Madmate))
-                roleCouldUse = true;
-            else if (CreatedMadmate.canSabotage && player.hasModifier(ModifierType.CreatedMadmate))
                 roleCouldUse = true;
             else if (Jester.canSabotage && player.isRole(RoleType.Jester))
                 roleCouldUse = true;
@@ -580,24 +632,6 @@ namespace TheOtherRoles {
                 RPCProcedure.uncheckedMurderPlayer(killer.PlayerId, target.PlayerId, showAnimation ? Byte.MaxValue : (byte)0);
             }
             return murder;            
-        }
-
-        public static void showFlash(Color color, float duration=1f) {
-            if (HudManager.Instance == null || HudManager.Instance.FullScreen == null) return;
-            HudManager.Instance.FullScreen.gameObject.SetActive(true);
-            HudManager.Instance.FullScreen.enabled = true;
-            HudManager.Instance.StartCoroutine(Effects.Lerp(duration, new Action<float>((p) => {
-                var renderer = HudManager.Instance.FullScreen;
-
-                if (p < 0.5) {
-                    if (renderer != null)
-                        renderer.color = new Color(color.r, color.g, color.b, Mathf.Clamp01(p * 2 * 0.75f));
-                } else {
-                    if (renderer != null)
-                        renderer.color = new Color(color.r, color.g, color.b, Mathf.Clamp01((1 - p) * 2 * 0.75f));
-                }
-                if (p == 1f && renderer != null) renderer.enabled = false;
-            })));
         }
     
         public static void shareGameVersion() {
