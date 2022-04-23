@@ -21,7 +21,8 @@ namespace TheOtherRoles
 
         ResetVaribles = 60,
         ShareOptions,
-        ForceEnd,
+        CrewmateEnd,
+        ImpostorEnd,
         SetRole,
         SetLovers,
         VersionHandshake,
@@ -51,6 +52,7 @@ namespace TheOtherRoles
         TrackerUsedTracker,
         VampireSetBitten,
         PlaceGarlic,
+        EvilHackerCreatesMadmate,
         JackalCreatesSidekick,
         SidekickPromotes,
         ErasePlayerRoles,
@@ -92,9 +94,7 @@ namespace TheOtherRoles
         FoxCreatesImmoralist,
         SwapperAnimate,
         SprinterSprint,
-        AkujoSetHonmei,
-        AkujoSetKeep,
-        AkujoSuicide,
+        AddTasks,
     }
 
     public static class RPCProcedure
@@ -137,16 +137,21 @@ namespace TheOtherRoles
             }
         }
 
-        public static void forceEnd()
+        public static void impostorEnd()
         {
-            foreach (PlayerControl player in PlayerControl.AllPlayerControls)
+            if (AmongUsClient.Instance.AmHost)
             {
-                if (!player.Data.Role.IsImpostor)
-                {
-                    player.RemoveInfected();
-                    player.MurderPlayer(player);
-                    player.Data.IsDead = true;
-                }
+                ShipStatus.Instance.enabled = false;
+                ShipStatus.RpcEndGame(GameOverReason.ImpostorByKill, false);
+            }
+        }
+
+        public static void crewmateEnd()
+        {
+            if (AmongUsClient.Instance.AmHost)
+            {
+                ShipStatus.Instance.enabled = false;
+                ShipStatus.RpcEndGame(GameOverReason.HumansByTask, false);
             }
         }
 
@@ -263,7 +268,8 @@ namespace TheOtherRoles
             GameData.Instance.SetTasks(playerId, taskTypeIds);
         }
 
-        public static void dynamicMapOption(byte mapId) {
+        public static void dynamicMapOption(byte mapId)
+        {
             PlayerControl.GameOptions.MapId = mapId;
         }
 
@@ -383,7 +389,7 @@ namespace TheOtherRoles
             }
 
             // Suicide (exile) when impostor or impostor variants
-            if (!Shifter.isNeutral && (player.Data.Role.IsImpostor || player.isNeutral() || player.hasModifier(ModifierType.Madmate)))
+            if (!Shifter.isNeutral && (player.Data.Role.IsImpostor || player.isNeutral() || player.hasModifier(ModifierType.Madmate) || player.hasModifier(ModifierType.CreatedMadmate) || player.hasModifier(ModifierType.TaskHacker)))
             {
                 oldShifter.Exiled();
                 finalStatuses[oldShifter.PlayerId] = FinalStatus.Suicide;
@@ -484,6 +490,44 @@ namespace TheOtherRoles
             new Garlic(position);
         }
 
+        public static void evilHackerCreatesMadmate(byte targetId)
+        {
+            PlayerControl player = Helpers.playerById(targetId);
+            if (!EvilHacker.canCreateMadmateFromJackal && player.isRole(RoleType.Jackal))
+            {
+                EvilHacker.fakeMadmate = player;
+            }
+            else if (!EvilHacker.canCreateMadmateFromFox && player.isRole(RoleType.Fox))
+            {
+                EvilHacker.fakeMadmate = player;
+            }
+            else
+            {
+                // Jackalバグ対応
+                List<PlayerControl> tmpFormerJackals = new List<PlayerControl>(Jackal.formerJackals);
+
+                // タスクがないプレイヤーがMadmateになった場合はショートタスクを必要数割り当てる
+                if (Helpers.hasFakeTasks(player))
+                {
+                    if (CreatedMadmate.hasTasks)
+                    {
+                        Helpers.clearAllTasks(player);
+                        player.generateAndAssignTasks(0, CreatedMadmate.numTasks, 0);
+                    }
+                }
+
+                player.RemoveInfected();
+                erasePlayerRoles(player.PlayerId, true, false);
+
+                // Jackalバグ対応
+                Jackal.formerJackals = tmpFormerJackals;
+
+                player.addModifier(ModifierType.CreatedMadmate);
+            }
+            EvilHacker.canCreateMadmate = false;
+            return;
+        }
+
         public static void trackerUsedTracker(byte targetId)
         {
             Tracker.usedTracker = true;
@@ -497,18 +541,23 @@ namespace TheOtherRoles
             PlayerControl player = Helpers.playerById(targetId);
             if (player == null) return;
 
-            if (!Jackal.canCreateSidekickFromImpostor && player.Data.Role.IsImpostor) {
+            if (!Jackal.canCreateSidekickFromImpostor && player.Data.Role.IsImpostor)
+            {
                 Jackal.fakeSidekick = player;
-            }else if (!Jackal.canCreateSidekickFromFox && player.isRole(RoleType.Fox)){
+            }
+            else if (!Jackal.canCreateSidekickFromFox && player.isRole(RoleType.Fox))
+            {
                 Jackal.fakeSidekick = player;
-            }else {
+            }
+            else
+            {
                 DestroyableSingleton<RoleManager>.Instance.SetRole(player, RoleTypes.Crewmate);
-                erasePlayerRoles(player.PlayerId, RoleType.Sidekick);
+                erasePlayerRoles(player.PlayerId, true);
                 Sidekick.sidekick = player;
-                if (player.PlayerId == PlayerControl.LocalPlayer.PlayerId) PlayerControl.LocalPlayer.moveable = true; 
-                if(Fox.exists && !Fox.isFoxAlive())
+                if (player.PlayerId == PlayerControl.LocalPlayer.PlayerId) PlayerControl.LocalPlayer.moveable = true;
+                if (Fox.exists && !Fox.isFoxAlive())
                 {
-                    foreach(var immoralist in Immoralist.allPlayers)
+                    foreach (var immoralist in Immoralist.allPlayers)
                     {
                         immoralist.MurderPlayer(immoralist);
                     }
@@ -526,17 +575,22 @@ namespace TheOtherRoles
             return;
         }
 
-        public static void erasePlayerRoles(byte playerId, RoleType newRole = RoleType.NoRole)
+        public static void erasePlayerRoles(byte playerId, bool ignoreLovers = false, bool clearNeutralTasks = true)
         {
             PlayerControl player = Helpers.playerById(playerId);
             if (player == null) return;
 
             // Don't give a former neutral role tasks because that destroys the balance.
-            if (player.isNeutral())
+            if (player.isNeutral() && clearNeutralTasks)
                 player.clearAllTasks();
 
             player.eraseAllRoles();
-            player.eraseAllModifiers(newRole);
+            player.eraseAllModifiers();
+
+            if (!ignoreLovers && player.isLovers())
+            { // The whole Lover couple is being erased
+                Lovers.eraseCouple(player);
+            }
         }
 
         public static void setFutureErased(byte playerId)
@@ -661,7 +715,7 @@ namespace TheOtherRoles
                 default: camera.NewName = StringNames.ExitButton; break;
             }
 
-            if (PlayerControl.GameOptions.MapId == 2 || PlayerControl.GameOptions.MapId == 4) camera.transform.localRotation = new Quaternion(0, 0, 1, 1); // Polus and Airship 
+            if (PlayerControl.GameOptions.MapId == 2 || PlayerControl.GameOptions.MapId == 4) camera.transform.localRotation = new Quaternion(0, 0, 1, 1); // Polus and Airship
 
             if (PlayerControl.LocalPlayer == SecurityGuard.securityGuard)
             {
@@ -811,6 +865,15 @@ namespace TheOtherRoles
             Sprinter.setSprinting(player, sprinting);
         }
 
+        public static void taskHackerAddCrewTasks(byte playerId)
+        {
+            PlayerControl player = Helpers.playerById(playerId);
+            if (player.isCrew())
+            {
+                player.generateAndAssignTasks(0, TaskHacker.addCrewNumTask, 0);
+            }
+        }
+
         public static void foxStealth(byte playerId, bool stealthed)
         {
             PlayerControl player = Helpers.playerById(playerId);
@@ -821,41 +884,9 @@ namespace TheOtherRoles
         {
             PlayerControl player = Helpers.playerById(targetId);
             DestroyableSingleton<RoleManager>.Instance.SetRole(player, RoleTypes.Crewmate);
-            erasePlayerRoles(player.PlayerId, RoleType.Immoralist);
+            erasePlayerRoles(player.PlayerId, true);
             player.setRole(RoleType.Immoralist);
             player.clearAllTasks();
-        }
-
-        public static void akujoSetHonmei(byte akujoId, byte targetId)
-        {
-            Akujo akujo = Akujo.getRole(Helpers.playerById(akujoId));
-            PlayerControl target = Helpers.playerById(targetId);
-
-            if (akujo != null)
-            {
-                akujo.setHonmei(target);
-            }
-        }
-
-        public static void akujoSetKeep(byte akujoId, byte targetId)
-        {
-            Akujo akujo = Akujo.getRole(Helpers.playerById(akujoId));
-            PlayerControl target = Helpers.playerById(targetId);
-
-            if (akujo != null)
-            {
-                akujo.setKeep(target);
-            }
-        }
-
-        public static void akujoSuicide(byte akujoId)
-        {
-            Akujo akujo = Akujo.getRole(Helpers.playerById(akujoId));
-            if (akujo != null)
-            {
-                akujo.player.MurderPlayer(akujo.player);
-                finalStatuses[akujo.player.PlayerId] = FinalStatus.Loneliness;
-            }
         }
 
         public static void GMKill(byte targetId)
@@ -987,14 +1018,16 @@ namespace TheOtherRoles
             if (serialKiller == null) return;
             serialKiller.MurderPlayer(serialKiller);
         }
-		
-        public static void fortuneTellerUsedDivine(byte fortuneTellerId, byte targetId) {
+
+        public static void fortuneTellerUsedDivine(byte fortuneTellerId, byte targetId)
+        {
             PlayerControl fortuneTeller = Helpers.playerById(fortuneTellerId);
             PlayerControl target = Helpers.playerById(targetId);
             if (target == null) return;
             if (target.isDead()) return;
             // 呪殺
-            if (target.isRole(RoleType.Fox)) {
+            if (target.isRole(RoleType.Fox))
+            {
                 KillAnimationCoPerformKillPatch.hideNextAnimation = true;
                 if (PlayerControl.LocalPlayer.isRole(RoleType.FortuneTeller))
                 {
@@ -1009,7 +1042,8 @@ namespace TheOtherRoles
             }
 
             // インポスターの場合は占い師の位置に矢印を表示
-            if (PlayerControl.LocalPlayer.isImpostor()) {
+            if (PlayerControl.LocalPlayer.isImpostor())
+            {
                 FortuneTeller.fortuneTellerMessage(ModTranslation.getString("fortuneTellerDivinedSomeone"), 5f, Color.white);
                 FortuneTeller.setDivinedFlag(fortuneTeller, true);
             }
@@ -1020,8 +1054,6 @@ namespace TheOtherRoles
                 FortuneTeller.fortuneTellerMessage(ModTranslation.getString("fortuneTellerDivinedYou"), 5f, Color.white);
             }
         }
-
-
 
         [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.HandleRpc))]
         class RPCHandlerPatch
@@ -1040,8 +1072,11 @@ namespace TheOtherRoles
                     case (byte)CustomRPC.ShareOptions:
                         RPCProcedure.ShareOptions((int)reader.ReadPackedUInt32(), reader);
                         break;
-                    case (byte)CustomRPC.ForceEnd:
-                        RPCProcedure.forceEnd();
+                    case (byte)CustomRPC.CrewmateEnd:
+                        RPCProcedure.crewmateEnd();
+                        break;
+                    case (byte)CustomRPC.ImpostorEnd:
+                        RPCProcedure.impostorEnd();
                         break;
                     case (byte)CustomRPC.SetRole:
                         byte roleId = reader.ReadByte();
@@ -1103,9 +1138,9 @@ namespace TheOtherRoles
                         RPCProcedure.uncheckedSetTasks(reader.ReadByte(), reader.ReadBytesAndSize());
                         break;
                     case (byte)CustomRPC.DynamicMapOption:
-	                    byte mapId = reader.ReadByte();
-	                    RPCProcedure.dynamicMapOption(mapId);
-	                    break;
+                        byte mapId = reader.ReadByte();
+                        RPCProcedure.dynamicMapOption(mapId);
+                        break;
 
                     // Role functionality
 
@@ -1154,6 +1189,9 @@ namespace TheOtherRoles
                         break;
                     case (byte)CustomRPC.PlaceGarlic:
                         RPCProcedure.placeGarlic(reader.ReadBytesAndSize());
+                        break;
+                    case (byte)CustomRPC.EvilHackerCreatesMadmate:
+                        RPCProcedure.evilHackerCreatesMadmate(reader.ReadByte());
                         break;
                     case (byte)CustomRPC.TrackerUsedTracker:
                         RPCProcedure.trackerUsedTracker(reader.ReadByte());
@@ -1241,6 +1279,9 @@ namespace TheOtherRoles
                     case (byte)CustomRPC.SprinterSprint:
                         RPCProcedure.sprinterSprint(reader.ReadByte(), reader.ReadBoolean());
                         break;
+                    case (byte)CustomRPC.AddTasks:
+                        RPCProcedure.taskHackerAddCrewTasks(reader.ReadByte());
+                        break;
 
                     case (byte)CustomRPC.GMKill:
                         RPCProcedure.GMKill(reader.ReadByte());
@@ -1288,15 +1329,6 @@ namespace TheOtherRoles
                         break;
                     case (byte)CustomRPC.FoxCreatesImmoralist:
                         RPCProcedure.foxCreatesImmoralist(reader.ReadByte());
-                        break;
-                    case (byte)CustomRPC.AkujoSetHonmei:
-                        RPCProcedure.akujoSetHonmei(reader.ReadByte(), reader.ReadByte());
-                        break;
-                    case (byte)CustomRPC.AkujoSetKeep:
-                        RPCProcedure.akujoSetKeep(reader.ReadByte(), reader.ReadByte());
-                        break;
-                    case (byte)CustomRPC.AkujoSuicide:
-                        RPCProcedure.akujoSuicide(reader.ReadByte());
                         break;
                 }
             }

@@ -16,7 +16,6 @@ using static TheOtherRoles.TheOtherRoles;
 using static TheOtherRoles.TheOtherRolesGM;
 using TheOtherRoles.Patches;
 using System.Reflection;
-using System.Text;
 
 namespace TheOtherRoles
 {
@@ -68,6 +67,7 @@ namespace TheOtherRoles
         EvilGuesser,
         NiceGuesser,
         Jester,
+        Mayor,
         Arsonist,
         Jackal,
         Sidekick,
@@ -79,10 +79,7 @@ namespace TheOtherRoles
         Watcher,
         Fox,
         Immoralist,
-        Akujo,
         HawkEye,
-        Mayor,
-        EvilMayor,
 
 
         GM = 200,
@@ -114,7 +111,6 @@ namespace TheOtherRoles
             { RoleType.PlagueDoctor, typeof(RoleBase<PlagueDoctor>) },
             { RoleType.Fox, typeof(RoleBase<Fox>) },
             { RoleType.Immoralist, typeof(RoleBase<Immoralist>) },
-            { RoleType.Akujo, typeof(RoleBase<Akujo>) },
 
             // Other
             { RoleType.Watcher, typeof(RoleBase<Watcher>) },
@@ -135,8 +131,6 @@ namespace TheOtherRoles
         public abstract void HandleDisconnect(PlayerControl player, DisconnectReasons reason);
         public virtual void ResetRole() { }
         public virtual void PostInit() { }
-        public virtual string modifyNameText(string nameText) { return nameText; }
-        public virtual string meetingInfoText() { return ""; }
 
         public static void ClearAll()
         {
@@ -206,15 +200,13 @@ namespace TheOtherRoles
             return players.Any(x => x.player == player);
         }
 
-        public static T setRole(PlayerControl player)
+        public static void setRole(PlayerControl player)
         {
             if (!isRole(player))
             {
                 T role = new T();
                 role.Init(player);
-                return role;
             }
-            return null;
         }
 
         public static void eraseRole(PlayerControl player)
@@ -252,8 +244,8 @@ namespace TheOtherRoles
                     return Jester.jester == player;
                 case RoleType.Mayor:
                     return Mayor.mayor == player;
-                case RoleType.EvilMayor:
-                    return Mayor.evilMayor == player;
+                /*case RoleType.EvilMayor:
+                    return Mayor.evilMayor == player;*/
                 case RoleType.Engineer:
                     return Engineer.engineer == player;
                 case RoleType.Godfather:
@@ -329,7 +321,7 @@ namespace TheOtherRoles
                 case RoleType.Pursuer:
                     return Pursuer.pursuer == player;
                 default:
-                    TheOtherRolesPlugin.Logger.LogError($"isRole: no method found for role type {role}");
+                    TheOtherRolesPlugin.Logger.LogError("isRole: no method found for role type {role}");
                     break;
             }
 
@@ -355,9 +347,9 @@ namespace TheOtherRoles
                 case RoleType.Mayor:
                     Mayor.mayor = player;
                     break;
-                case RoleType.EvilMayor:
+                /*case RoleType.EvilMayor:
                     Mayor.evilMayor = player;
-                    break;
+                    break;*/
                 case RoleType.Engineer:
                     Engineer.engineer = player;
                     break;
@@ -470,7 +462,7 @@ namespace TheOtherRoles
                     Pursuer.pursuer = player;
                     break;
                 default:
-                    TheOtherRolesPlugin.Logger.LogError($"setRole: no method found for role type {role}");
+                    TheOtherRolesPlugin.Logger.LogError("setRole: no method found for role type {role}");
                     return;
             }
         }
@@ -487,7 +479,7 @@ namespace TheOtherRoles
                         return;
                     }
                 }
-                TheOtherRolesPlugin.Logger.LogError($"eraseRole: no method found for role type {role}");
+                TheOtherRolesPlugin.Logger.LogError("eraseRole: no method found for role type {role}");
             }
         }
 
@@ -565,7 +557,7 @@ namespace TheOtherRoles
             }
 
             if (player.isRole(RoleType.Mayor)) Mayor.mayor = target;
-            if (player.isRole(RoleType.EvilMayor)) Mayor.evilMayor = target;
+            // if (player.isRole(RoleType.EvilMayor)) Mayor.evilMayor = target;
             if (player.isRole(RoleType.Engineer)) Engineer.engineer = target;
             if (player.isRole(RoleType.Detective)) Detective.detective = target;
             if (player.isRole(RoleType.TimeMaster)) TimeMaster.timeMaster = target;
@@ -606,75 +598,6 @@ namespace TheOtherRoles
             if (player.isRole(RoleType.Vulture)) Vulture.vulture = target;
             if (player.isRole(RoleType.Lawyer)) Lawyer.lawyer = target;
             if (player.isRole(RoleType.Pursuer)) Pursuer.pursuer = target;
-        }
-
-        public static string modifyNameText(this PlayerControl player, string nameText)
-        {
-            if (player == null || player.Data.Disconnected) return nameText;
-
-            foreach (var role in Role.allRoles)
-            {
-                if (role.player == player)
-                    nameText = role.modifyNameText(nameText);
-            }
-
-            foreach (var mod in Modifier.allModifiers)
-            {
-                if (mod.player == player)
-                    nameText = mod.modifyNameText(nameText);
-            }
-
-            nameText += Lovers.getIcon(player);
-
-            return nameText;
-        }
-
-        public static string modifyRoleText(this PlayerControl player, string roleText, List<RoleInfo> roleInfo, bool useColors = true, bool includeHidden = false)
-        {
-            foreach (var mod in Modifier.allModifiers)
-            {
-                if (mod.player == player)
-                    roleText = mod.modifyRoleText(roleText, roleInfo, useColors, includeHidden);
-            }
-            return roleText;
-        }
-
-        public static string meetingInfoText(this PlayerControl player)
-        {
-            var text = "";
-            StringBuilder lines = new StringBuilder();
-            foreach (var role in Role.allRoles.Where(x => x.player == player))
-            {
-                text = role.meetingInfoText();
-                if (text != "") lines.AppendLine(text);
-            }
-
-            foreach (var mod in Modifier.allModifiers.Where(x => x.player == player))
-            {
-                text = mod.meetingInfoText();
-                if (text != "") lines.AppendLine(text);
-            }
-
-            if (player.isRole(RoleType.Swapper) && Swapper.numSwaps > 0 && player.isAlive())
-            {
-                text = String.Format(ModTranslation.getString("swapperSwapsLeft"), Swapper.numSwaps);
-                if (text != "") lines.AppendLine(text);
-            }
-
-            var numGuesses = Guesser.remainingShots(player.PlayerId);
-            if (Guesser.isGuesser(player.PlayerId) && player.isAlive() && numGuesses > 0)
-            {
-                text = String.Format(ModTranslation.getString("guesserGuessesLeft"), numGuesses);
-                if (text != "") lines.AppendLine(text);
-            }
-
-            if (player.isRole(RoleType.Shifter) && Shifter.futureShift != null)
-            {
-                text = String.Format(ModTranslation.getString("shifterTargetInfo"), Shifter.futureShift.Data.PlayerName);
-                if (text != "") lines.AppendLine(text);
-            }
-
-            return lines.ToString();
         }
 
         public static void OnKill(this PlayerControl player, PlayerControl target)

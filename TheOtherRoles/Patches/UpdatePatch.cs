@@ -64,8 +64,6 @@ namespace TheOtherRoles.Patches {
         static void setNameColors() {
             if (PlayerControl.LocalPlayer.isRole(RoleType.Jester))
                 setPlayerNameColor(PlayerControl.LocalPlayer, Jester.color);
-            else if (PlayerControl.LocalPlayer.isRole(RoleType.Mayor))
-                setPlayerNameColor(PlayerControl.LocalPlayer, Mayor.color);
             else if (PlayerControl.LocalPlayer.isRole(RoleType.Engineer))
                 setPlayerNameColor(PlayerControl.LocalPlayer, Engineer.color);
             else if (PlayerControl.LocalPlayer.isRole(RoleType.Sheriff))
@@ -123,6 +121,10 @@ namespace TheOtherRoles.Patches {
             {
                 setPlayerNameColor(PlayerControl.LocalPlayer, Palette.ImpostorRed);
             }
+            else if (PlayerControl.LocalPlayer.isRole(RoleType.Mayor))
+            {
+                setPlayerNameColor(PlayerControl.LocalPlayer, Mayor.color);
+            }
             else if (PlayerControl.LocalPlayer.isRole(RoleType.Bait))
             {
                 setPlayerNameColor(PlayerControl.LocalPlayer, Bait.color);
@@ -163,12 +165,39 @@ namespace TheOtherRoles.Patches {
             {
                 setPlayerNameColor(PlayerControl.LocalPlayer, FortuneTeller.color);
             }
-            else if (PlayerControl.LocalPlayer.isRole(RoleType.Akujo))
+            if (PlayerControl.LocalPlayer.hasModifier(ModifierType.Madmate))
             {
-                setPlayerNameColor(PlayerControl.LocalPlayer, Akujo.color);
+                setPlayerNameColor(PlayerControl.LocalPlayer, Madmate.color);
+
+                if (Madmate.knowsImpostors(PlayerControl.LocalPlayer))
+                {
+                    foreach (var p in PlayerControl.AllPlayerControls)
+                    {
+                        if (p.isImpostor() || p.isRole(RoleType.Spy))
+                        {
+                            setPlayerNameColor(p, Palette.ImpostorRed);
+                        }
+                    }
+                }
             }
 
-            if (PlayerControl.LocalPlayer.hasModifier(ModifierType.Madmate))
+            else if (PlayerControl.LocalPlayer.hasModifier(ModifierType.CreatedMadmate))
+            {
+                setPlayerNameColor(PlayerControl.LocalPlayer, Madmate.color);
+
+                if (CreatedMadmate.knowsImpostors(PlayerControl.LocalPlayer))
+                {
+                    foreach (var p in PlayerControl.AllPlayerControls)
+                    {
+                        if (p.isImpostor() || p.isRole(RoleType.Spy))
+                        {
+                            setPlayerNameColor(p, Palette.ImpostorRed);
+                        }
+                    }
+                }
+            }
+
+            else if (PlayerControl.LocalPlayer.hasModifier(ModifierType.TaskHacker))
             {
                 setPlayerNameColor(PlayerControl.LocalPlayer, Madmate.color);
 
@@ -244,7 +273,7 @@ namespace TheOtherRoles.Patches {
                         else if (Janitor.janitor != null && Janitor.janitor.PlayerId == player.TargetPlayerId)
                             player.NameText.text = Janitor.janitor.Data.PlayerName + $" ({ModTranslation.getString("mafiaJ")})";
             }
-            
+
             // Lovers
             if (PlayerControl.LocalPlayer.isLovers() && PlayerControl.LocalPlayer.isAlive()) {
                 string suffix = Lovers.getIcon(PlayerControl.LocalPlayer);
@@ -259,93 +288,6 @@ namespace TheOtherRoles.Patches {
                     foreach (PlayerVoteArea player in MeetingHud.Instance.playerStates)
                         if (lover1.PlayerId == player.TargetPlayerId || lover2.PlayerId == player.TargetPlayerId)
                             player.NameText.text += suffix;
-            }
-
-            // Akujo
-            if (PlayerControl.LocalPlayer.isAlive() &&
-                (PlayerControl.LocalPlayer.isRole(RoleType.Akujo) ||
-                 PlayerControl.LocalPlayer.hasModifier(ModifierType.AkujoHonmei) ||
-                 PlayerControl.LocalPlayer.hasModifier(ModifierType.AkujoKeep)))
-            {
-                foreach (var akujo in Akujo.players)
-                {
-                    string suffix = Helpers.cs(akujo.iconColor, " ♥");
-                    if (PlayerControl.LocalPlayer == akujo.player)
-                    {
-                        PlayerControl.LocalPlayer.nameText.text += suffix;
-                        if (akujo.honmei != null && !Helpers.hidePlayerName(akujo.honmei.player))
-                            akujo.honmei.player.nameText.text += suffix;
-
-                        foreach (var keep in akujo.keeps)
-                        {
-                            if (!Helpers.hidePlayerName(keep.player))
-                                keep.player.nameText.text += suffix;
-                        }
-
-                        if (Helpers.ShowMeetingText)
-                        {
-                            foreach (PlayerVoteArea player in MeetingHud.Instance.playerStates)
-                            {
-                                if (PlayerControl.LocalPlayer.PlayerId == player.TargetPlayerId ||
-                                    akujo.honmei?.player?.PlayerId == player.TargetPlayerId ||
-                                    akujo.keeps.Any(x => x.player.PlayerId == player.TargetPlayerId))
-                                    player.NameText.text += suffix;
-                            }
-                        }
-                    }
-
-                    else if (PlayerControl.LocalPlayer == akujo.honmei?.player || akujo.keeps.Any(x => PlayerControl.LocalPlayer == x?.player))
-                    {
-                        PlayerControl.LocalPlayer.nameText.text += suffix;
-                        if (!Helpers.hidePlayerName(akujo.player))
-                            akujo.player.nameText.text += suffix;
-
-                        if (Helpers.ShowMeetingText)
-                        {
-                            foreach (PlayerVoteArea player in MeetingHud.Instance.playerStates)
-                            {
-                                if (PlayerControl.LocalPlayer.PlayerId == player.TargetPlayerId || akujo.player.PlayerId == player.TargetPlayerId)
-                                    player.NameText.text += suffix;
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (MapOptions.ghostsSeeRoles && PlayerControl.LocalPlayer.isDead())
-            {
-                foreach (var couple in Lovers.couples)
-                {
-                    string suffix = Lovers.getIcon(couple.lover1);
-                    couple.lover1.nameText.text += suffix;
-                    couple.lover2.nameText.text += suffix;
-
-                    if (Helpers.ShowMeetingText)
-                        foreach (PlayerVoteArea player in MeetingHud.Instance.playerStates)
-                            if (couple.lover1.PlayerId == player.TargetPlayerId || couple.lover2.PlayerId == player.TargetPlayerId)
-                                player.NameText.text += suffix;
-                }
-
-                foreach (var akujo in Akujo.players)
-                {
-                    string suffix = Helpers.cs(akujo.iconColor, " ♥");
-                    akujo.player.nameText.text += suffix;
-                    if (akujo.honmei != null)
-                        akujo.honmei.player.nameText.text += suffix;
-                    foreach (var keep in akujo.keeps)
-                        keep.player.nameText.text += suffix;
-
-                    if (Helpers.ShowMeetingText)
-                    {
-                        foreach (PlayerVoteArea player in MeetingHud.Instance.playerStates)
-                        {
-                            if (akujo.player.PlayerId == player.TargetPlayerId ||
-                                akujo.honmei?.player?.PlayerId == player.TargetPlayerId ||
-                                akujo.keeps.Any(x => x.player.PlayerId == player.TargetPlayerId))
-                                player.NameText.text += suffix;
-                        }
-                    }
-                }
             }
 
             // Lawyer
@@ -389,12 +331,12 @@ namespace TheOtherRoles.Patches {
 
         public static void miniUpdate() {
             if (Mini.mini == null || Camouflager.camouflageTimer > 0f) return;
-                
+
             float growingProgress = Mini.growingProgress();
             float scale = growingProgress * 0.35f + 0.35f;
             string suffix = "";
             if (growingProgress != 1f)
-                suffix = " <color=#FAD934FF>(" + Mathf.FloorToInt(growingProgress * 18) + ")</color>"; 
+                suffix = " <color=#FAD934FF>(" + Mathf.FloorToInt(growingProgress * 18) + ")</color>";
 
             if (!Helpers.hidePlayerName(Mini.mini))
                 Mini.mini.nameText.text += suffix;
@@ -418,7 +360,7 @@ namespace TheOtherRoles.Patches {
                 enabled &= false;
             else if (PlayerControl.LocalPlayer.isRole(RoleType.Janitor))
                 enabled &= false;
-            
+
             if (enabled) __instance.KillButton.Show();
             else __instance.KillButton.Hide();
         }

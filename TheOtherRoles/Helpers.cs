@@ -14,14 +14,16 @@ using HarmonyLib;
 using Hazel;
 using TheOtherRoles.Patches;
 
-namespace TheOtherRoles {
+namespace TheOtherRoles
+{
 
-    public enum MurderAttemptResult {
+    public enum MurderAttemptResult
+    {
         PerformKill,
         SuppressKill,
         BlankKill
     }
-	
+
     public static class Helpers
     {
         public static bool ShowButtons
@@ -159,40 +161,53 @@ namespace TheOtherRoles {
             anim.Update(0f);
         }
 
-        public static Sprite loadSpriteFromResources(string path, float pixelsPerUnit) {
-            try {
+        public static Sprite loadSpriteFromResources(string path, float pixelsPerUnit)
+        {
+            try
+            {
                 Texture2D texture = loadTextureFromResources(path);
                 return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f), pixelsPerUnit);
-            } catch {
+            }
+            catch
+            {
                 System.Console.WriteLine("Error loading sprite from path: " + path);
             }
             return null;
         }
 
-        public static Texture2D loadTextureFromResources(string path) {
-            try {
+        public static Texture2D loadTextureFromResources(string path)
+        {
+            try
+            {
                 Texture2D texture = new Texture2D(2, 2, TextureFormat.ARGB32, true);
                 Assembly assembly = Assembly.GetExecutingAssembly();
                 Stream stream = assembly.GetManifestResourceStream(path);
                 var byteTexture = new byte[stream.Length];
-                var read = stream.Read(byteTexture, 0, (int) stream.Length);
+                var read = stream.Read(byteTexture, 0, (int)stream.Length);
                 LoadImage(texture, byteTexture, false);
                 return texture;
-            } catch {
+            }
+            catch
+            {
                 System.Console.WriteLine("Error loading texture from resources: " + path);
             }
             return null;
         }
 
-        public static Texture2D loadTextureFromDisk(string path) {
-            try {          
-                if (File.Exists(path))     {
+        public static Texture2D loadTextureFromDisk(string path)
+        {
+            try
+            {
+                if (File.Exists(path))
+                {
                     Texture2D texture = new Texture2D(2, 2, TextureFormat.ARGB32, true);
                     byte[] byteTexture = File.ReadAllBytes(path);
                     LoadImage(texture, byteTexture, false);
                     return texture;
                 }
-            } catch {
+            }
+            catch
+            {
                 System.Console.WriteLine("Error loading texture from disk: " + path);
             }
             return null;
@@ -200,10 +215,11 @@ namespace TheOtherRoles {
 
         internal delegate bool d_LoadImage(IntPtr tex, IntPtr data, bool markNonReadable);
         internal static d_LoadImage iCall_LoadImage;
-        private static bool LoadImage(Texture2D tex, byte[] data, bool markNonReadable) {
+        private static bool LoadImage(Texture2D tex, byte[] data, bool markNonReadable)
+        {
             if (iCall_LoadImage == null)
                 iCall_LoadImage = IL2CPP.ResolveICall<d_LoadImage>("UnityEngine.ImageConversion::LoadImage");
-            var il2cppArray = (Il2CppStructArray<byte>) data;
+            var il2cppArray = (Il2CppStructArray<byte>)data;
             return iCall_LoadImage.Invoke(tex.Pointer, il2cppArray.Pointer, markNonReadable);
         }
 
@@ -214,7 +230,7 @@ namespace TheOtherRoles {
                     return player;
             return null;
         }
-        
+
         public static Dictionary<byte, PlayerControl> allPlayersById()
         {
             Dictionary<byte, PlayerControl> res = new Dictionary<byte, PlayerControl>();
@@ -223,7 +239,8 @@ namespace TheOtherRoles {
             return res;
         }
 
-        public static void handleVampireBiteOnBodyReport() {
+        public static void handleVampireBiteOnBodyReport()
+        {
             // Murder the bitten player and reset bitten (regardless whether the kill was successful or not)
             Helpers.checkMuderAttemptAndKill(Vampire.vampire, Vampire.bitten, true, false);
             MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.VampireSetBitten, Hazel.SendOption.Reliable, -1);
@@ -233,51 +250,59 @@ namespace TheOtherRoles {
             RPCProcedure.vampireSetBitten(byte.MaxValue, byte.MaxValue);
         }
 
-        public static void refreshRoleDescription(PlayerControl player) {
+        public static void refreshRoleDescription(PlayerControl player)
+        {
             if (player == null) return;
 
-            List<RoleInfo> infos = RoleInfo.getRoleInfoForPlayer(player); 
+            List<RoleInfo> infos = RoleInfo.getRoleInfoForPlayer(player);
 
             var toRemove = new List<PlayerTask>();
-            foreach (PlayerTask t in player.myTasks) {
+            foreach (PlayerTask t in player.myTasks)
+            {
                 var textTask = t.gameObject.GetComponent<ImportantTextTask>();
-                if (textTask != null) {
+                if (textTask != null)
+                {
                     var info = infos.FirstOrDefault(x => textTask.Text.StartsWith(x.name));
                     if (info != null)
                         infos.Remove(info); // TextTask for this RoleInfo does not have to be added, as it already exists
                     else
                         toRemove.Add(t); // TextTask does not have a corresponding RoleInfo and will hence be deleted
                 }
-            }   
+            }
 
-            foreach (PlayerTask t in toRemove) {
+            foreach (PlayerTask t in toRemove)
+            {
                 t.OnRemove();
                 player.myTasks.Remove(t);
                 UnityEngine.Object.Destroy(t.gameObject);
             }
 
             // Add TextTask for remaining RoleInfos
-            foreach (RoleInfo roleInfo in infos) {
+            foreach (RoleInfo roleInfo in infos)
+            {
                 var task = new GameObject("RoleTask").AddComponent<ImportantTextTask>();
                 task.transform.SetParent(player.transform, false);
 
-                if (roleInfo.roleType == RoleType.Jackal) {
+                if (roleInfo.roleType == RoleType.Jackal)
+                {
                     if (Jackal.canCreateSidekick)
                     {
                         task.Text = cs(roleInfo.color, $"{roleInfo.name}: " + ModTranslation.getString("jackalWithSidekick"));
-                    } 
+                    }
                     else
                     {
                         task.Text = cs(roleInfo.color, $"{roleInfo.name}: " + ModTranslation.getString("jackalShortDesc"));
                     }
-                } else {
-                    task.Text = cs(roleInfo.color, $"{roleInfo.name}: {roleInfo.shortDescription}");  
+                }
+                else
+                {
+                    task.Text = cs(roleInfo.color, $"{roleInfo.name}: {roleInfo.shortDescription}");
                 }
 
                 player.myTasks.Insert(0, task);
             }
 
-            if (player.hasModifier(ModifierType.Madmate))
+            if (player.hasModifier(ModifierType.Madmate) || player.hasModifier(ModifierType.CreatedMadmate) || player.hasModifier(ModifierType.TaskHacker))
             {
                 var task = new GameObject("RoleTask").AddComponent<ImportantTextTask>();
                 task.transform.SetParent(player.transform, false);
@@ -286,11 +311,13 @@ namespace TheOtherRoles {
             }
         }
 
-        public static bool isLighterColor(int colorId) {
+        public static bool isLighterColor(int colorId)
+        {
             return CustomColors.lighterColors.Contains(colorId);
         }
 
-        public static bool isCustomServer() {
+        public static bool isCustomServer()
+        {
             if (DestroyableSingleton<ServerManager>.Instance == null) return false;
             StringNames n = DestroyableSingleton<ServerManager>.Instance.CurrentRegion.TranslateName;
             return n != StringNames.ServerNA && n != StringNames.ServerEU && n != StringNames.ServerAS;
@@ -299,7 +326,7 @@ namespace TheOtherRoles {
         public static bool isDead(this PlayerControl player)
         {
             return player == null || player?.Data?.IsDead == true || player?.Data?.Disconnected == true ||
-                  (finalStatuses != null && finalStatuses.ContainsKey(player.PlayerId) && finalStatuses[player.PlayerId] != FinalStatus.Alive);
+                (finalStatuses != null && finalStatuses.ContainsKey(player.PlayerId) && finalStatuses[player.PlayerId] != FinalStatus.Alive);
         }
 
         public static bool isAlive(this PlayerControl player)
@@ -310,7 +337,7 @@ namespace TheOtherRoles {
         public static bool isNeutral(this PlayerControl player)
         {
             return (player != null &&
-                   (player.isRole(RoleType.Jackal) ||
+                    (player.isRole(RoleType.Jackal) ||
                     player.isRole(RoleType.Sidekick) ||
                     Jackal.formerJackals.Contains(player) ||
                     player.isRole(RoleType.Arsonist) ||
@@ -322,8 +349,6 @@ namespace TheOtherRoles {
                     player.isRole(RoleType.Vulture) ||
                     player.isRole(RoleType.Lawyer) ||
                     player.isRole(RoleType.Pursuer) ||
-                    player.isRole(RoleType.Akujo) ||
-                    player.hasModifier(ModifierType.AkujoHonmei) ||
                     (player.isRole(RoleType.Shifter) && Shifter.isNeutral)));
         }
 
@@ -337,16 +362,18 @@ namespace TheOtherRoles {
             return player != null && player.Data.Role.IsImpostor;
         }
 
-        public static bool hasFakeTasks(this PlayerControl player) {
+        public static bool hasFakeTasks(this PlayerControl player)
+        {
             return (player.isNeutral() && !player.neutralHasTasks()) ||
+                   (player.hasModifier(ModifierType.CreatedMadmate) && !CreatedMadmate.hasTasks) ||
+                   (player.hasModifier(ModifierType.TaskHacker) && !TaskHacker.hasTasks) ||
                    (player.hasModifier(ModifierType.Madmate) && !Madmate.hasTasks) ||
-                   (player.isLovers() && Lovers.separateTeam && !Lovers.tasksCount) ||
-                   (player.hasModifier(ModifierType.AkujoHonmei) && !player.isImpostor() && !player.neutralHasTasks());
+                   (player.isLovers() && Lovers.separateTeam && !Lovers.tasksCount);
         }
 
         public static bool neutralHasTasks(this PlayerControl player)
         {
-            return player.isNeutral() && 
+            return player.isNeutral() &&
                 (player.isRole(RoleType.Lawyer) ||
                  player.isRole(RoleType.Pursuer) ||
                  player.isRole(RoleType.Shifter) ||
@@ -362,72 +389,65 @@ namespace TheOtherRoles {
         {
             return player != null && Lovers.isLovers(player);
         }
-
-        public static bool isAkujoLover(this PlayerControl player)
-        {
-            return player != null &&
-                (player.isRole(RoleType.Akujo) ||
-                 player.hasModifier(ModifierType.AkujoHonmei) ||
-                 player.hasModifier(ModifierType.AkujoKeep));
-        }
-
-        public static bool isAkujoPartners(this PlayerControl player, PlayerControl partner)
-        {
-            foreach (var akujo in Akujo.players)
-            {
-                if ((akujo.player == player && akujo.isPartner(partner)) ||
-                    (akujo.player == partner && akujo.isPartner(player)))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
         public static PlayerControl getPartner(this PlayerControl player)
         {
             return Lovers.getPartner(player);
         }
 
-        public static bool canBeErased(this PlayerControl player) {
+        public static bool canBeErased(this PlayerControl player)
+        {
             return (player != Jackal.jackal && player != Sidekick.sidekick && !Jackal.formerJackals.Contains(player));
         }
 
-        public static void clearAllTasks(this PlayerControl player) {
+        public static void clearAllTasks(this PlayerControl player)
+        {
             if (player == null) return;
-            for (int i = 0; i < player.myTasks.Count; i++) {
+            for (int i = 0; i < player.myTasks.Count; i++)
+            {
                 PlayerTask playerTask = player.myTasks[i];
                 playerTask.OnRemove();
                 UnityEngine.Object.Destroy(playerTask.gameObject);
             }
             player.myTasks.Clear();
-            
+
             if (player.Data != null && player.Data.Tasks != null)
                 player.Data.Tasks.Clear();
         }
 
-        public static void setSemiTransparent(this PoolablePlayer player, bool value) {
+        public static void taskHackerAddCrewTasks(this PlayerControl player)
+        {
+            if (player.isCrew())
+            {
+                player.generateAndAssignTasks(0, TaskHacker.addCrewNumTask, 0);
+            }
+        }
+
+        public static void setSemiTransparent(this PoolablePlayer player, bool value)
+        {
             float alpha = value ? 0.25f : 1f;
             foreach (SpriteRenderer r in player.gameObject.GetComponentsInChildren<SpriteRenderer>())
                 r.color = new Color(r.color.r, r.color.g, r.color.b, alpha);
             player.NameText.color = new Color(player.NameText.color.r, player.NameText.color.g, player.NameText.color.b, alpha);
         }
 
-        public static string GetString(this TranslationController t, StringNames key, params Il2CppSystem.Object[] parts) {
+        public static string GetString(this TranslationController t, StringNames key, params Il2CppSystem.Object[] parts)
+        {
             return t.GetString(key, parts);
         }
 
-        public static string cs(Color c, string s) {
+        public static string cs(Color c, string s)
+        {
             return string.Format("<color=#{0:X2}{1:X2}{2:X2}{3:X2}>{4}</color>", ToByte(c.r), ToByte(c.g), ToByte(c.b), ToByte(c.a), s);
         }
- 
-        private static byte ToByte(float f) {
+
+        private static byte ToByte(float f)
+        {
             f = Mathf.Clamp01(f);
             return (byte)(f * 255);
         }
 
-        public static KeyValuePair<byte, int> MaxPair(this Dictionary<byte, int> self, out bool tie) {
+        public static KeyValuePair<byte, int> MaxPair(this Dictionary<byte, int> self, out bool tie)
+        {
             tie = true;
             KeyValuePair<byte, int> result = new KeyValuePair<byte, int>(byte.MaxValue, int.MinValue);
             foreach (KeyValuePair<byte, int> keyValuePair in self)
@@ -474,11 +494,13 @@ namespace TheOtherRoles {
             return true;
         }
 
-        public static void setDefaultLook(this PlayerControl target) {
+        public static void setDefaultLook(this PlayerControl target)
+        {
             target.setLook(target.Data.PlayerName, target.Data.DefaultOutfit.ColorId, target.Data.DefaultOutfit.HatId, target.Data.DefaultOutfit.VisorId, target.Data.DefaultOutfit.SkinId, target.Data.DefaultOutfit.PetId);
         }
 
-        public static void setLook(this PlayerControl target, String playerName, int colorId, string hatId, string visorId, string skinId, string petId) {
+        public static void setLook(this PlayerControl target, String playerName, int colorId, string hatId, string visorId, string skinId, string petId)
+        {
             target.RawSetColor(colorId);
             target.RawSetVisor(visorId);
             target.RawSetHat(hatId, colorId);
@@ -514,7 +536,8 @@ namespace TheOtherRoles {
             if (HudManager.Instance == null || HudManager.Instance.FullScreen == null) return;
             HudManager.Instance.FullScreen.gameObject.SetActive(true);
             HudManager.Instance.FullScreen.enabled = true;
-            HudManager.Instance.StartCoroutine(Effects.Lerp(duration, new Action<float>((p) => {
+            HudManager.Instance.StartCoroutine(Effects.Lerp(duration, new Action<float>((p) =>
+            {
                 var renderer = HudManager.Instance.FullScreen;
 
                 if (p < 0.5)
@@ -531,7 +554,8 @@ namespace TheOtherRoles {
             })));
         }
 
-        public static bool roleCanUseVents(this PlayerControl player) {
+        public static bool roleCanUseVents(this PlayerControl player)
+        {
             bool roleCouldUse = false;
             if (player.isRole(RoleType.Engineer))
                 roleCouldUse = true;
@@ -543,6 +567,10 @@ namespace TheOtherRoles {
                 roleCouldUse = true;
             else if (Madmate.canEnterVents && player.hasModifier(ModifierType.Madmate))
                 roleCouldUse = true;
+            else if (CreatedMadmate.canEnterVents && player.hasModifier(ModifierType.CreatedMadmate))
+                roleCouldUse = true;
+            else if (TaskHacker.canEnterVents && player.hasModifier(ModifierType.TaskHacker))
+                roleCouldUse = true;
             else if (Vulture.canUseVents && player.isRole(RoleType.Vulture))
                 roleCouldUse = true;
             else if (player.Data?.Role != null && player.Data.Role.CanVent)
@@ -552,6 +580,8 @@ namespace TheOtherRoles {
                 else if (!Mafioso.canVent && player.isRole(RoleType.Mafioso))
                     roleCouldUse = false;
                 else if (!Ninja.canUseVents && player.isRole(RoleType.Ninja))
+                    roleCouldUse = false;
+                else if (!HawkEye.canUseVents && player.isRole(RoleType.HawkEye))
                     roleCouldUse = false;
                 else
                     roleCouldUse = true;
@@ -563,6 +593,10 @@ namespace TheOtherRoles {
         {
             bool roleCouldUse = false;
             if (Madmate.canSabotage && player.hasModifier(ModifierType.Madmate))
+                roleCouldUse = true;
+            else if (CreatedMadmate.canSabotage && player.hasModifier(ModifierType.CreatedMadmate))
+                roleCouldUse = true;
+            else if (TaskHacker.canSabotage && player.hasModifier(ModifierType.TaskHacker))
                 roleCouldUse = true;
             else if (Jester.canSabotage && player.isRole(RoleType.Jester))
                 roleCouldUse = true;
@@ -576,14 +610,16 @@ namespace TheOtherRoles {
             return roleCouldUse;
         }
 
-        public static MurderAttemptResult checkMuderAttempt(PlayerControl killer, PlayerControl target, bool blockRewind = false) {
+        public static MurderAttemptResult checkMuderAttempt(PlayerControl killer, PlayerControl target, bool blockRewind = false)
+        {
             // Modified vanilla checks
             if (AmongUsClient.Instance.IsGameOver) return MurderAttemptResult.SuppressKill;
             if (killer == null || killer.Data == null || killer.Data.IsDead || killer.Data.Disconnected) return MurderAttemptResult.SuppressKill; // Allow non Impostor kills compared to vanilla code
             if (target == null || target.Data == null || target.Data.IsDead || target.Data.Disconnected) return MurderAttemptResult.SuppressKill; // Allow killing players in vents compared to vanilla code
 
             // Handle blank shot
-            if (Pursuer.blankedList.Any(x => x.PlayerId == killer.PlayerId)) {
+            if (Pursuer.blankedList.Any(x => x.PlayerId == killer.PlayerId))
+            {
                 MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SetBlanked, Hazel.SendOption.Reliable, -1);
                 writer.Write(killer.PlayerId);
                 writer.Write((byte)0);
@@ -594,7 +630,8 @@ namespace TheOtherRoles {
             }
 
             // Block impostor shielded kill
-            if (Medic.shielded != null && Medic.shielded == target) {
+            if (Medic.shielded != null && Medic.shielded == target)
+            {
                 MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(killer.NetId, (byte)CustomRPC.ShieldedMurderAttempt, Hazel.SendOption.Reliable, -1);
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
                 RPCProcedure.shieldedMurderAttempt();
@@ -602,13 +639,16 @@ namespace TheOtherRoles {
             }
 
             // Block impostor not fully grown mini kill
-            else if (Mini.mini != null && target.isRole(RoleType.Mini) && !Mini.isGrownUp()) {
+            else if (Mini.mini != null && target.isRole(RoleType.Mini) && !Mini.isGrownUp())
+            {
                 return MurderAttemptResult.SuppressKill;
             }
 
             // Block Time Master with time shield kill
-            else if (TimeMaster.shieldActive && TimeMaster.timeMaster != null && TimeMaster.timeMaster == target) {
-                if (!blockRewind) { // Only rewind the attempt was not called because a meeting startet 
+            else if (TimeMaster.shieldActive && TimeMaster.timeMaster != null && TimeMaster.timeMaster == target)
+            {
+                if (!blockRewind)
+                { // Only rewind the attempt was not called because a meeting startet
                     MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(killer.NetId, (byte)CustomRPC.TimeMasterRewindTime, Hazel.SendOption.Reliable, -1);
                     AmongUsClient.Instance.FinishRpcImmediately(writer);
                     RPCProcedure.timeMasterRewindTime();
@@ -618,12 +658,14 @@ namespace TheOtherRoles {
             return MurderAttemptResult.PerformKill;
         }
 
-        public static MurderAttemptResult checkMuderAttemptAndKill(PlayerControl killer, PlayerControl target, bool isMeetingStart = false, bool showAnimation = true)  {
+        public static MurderAttemptResult checkMuderAttemptAndKill(PlayerControl killer, PlayerControl target, bool isMeetingStart = false, bool showAnimation = true)
+        {
             // The local player checks for the validity of the kill and performs it afterwards (different to vanilla, where the host performs all the checks)
             // The kill attempt will be shared using a custom RPC, hence combining modded and unmodded versions is impossible
 
             MurderAttemptResult murder = checkMuderAttempt(killer, target, isMeetingStart);
-            if (murder == MurderAttemptResult.PerformKill) {
+            if (murder == MurderAttemptResult.PerformKill)
+            {
                 MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.UncheckedMurderPlayer, Hazel.SendOption.Reliable, -1);
                 writer.Write(killer.PlayerId);
                 writer.Write(target.PlayerId);
@@ -631,10 +673,11 @@ namespace TheOtherRoles {
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
                 RPCProcedure.uncheckedMurderPlayer(killer.PlayerId, target.PlayerId, showAnimation ? Byte.MaxValue : (byte)0);
             }
-            return murder;            
+            return murder;
         }
-    
-        public static void shareGameVersion() {
+
+        public static void shareGameVersion()
+        {
             MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.VersionHandshake, Hazel.SendOption.Reliable, -1);
             writer.WritePacked(TheOtherRolesPlugin.Version.Major);
             writer.WritePacked(TheOtherRolesPlugin.Version.Minor);
@@ -646,20 +689,23 @@ namespace TheOtherRoles {
             RPCProcedure.versionHandshake(TheOtherRolesPlugin.Version.Major, TheOtherRolesPlugin.Version.Minor, TheOtherRolesPlugin.Version.Build, TheOtherRolesPlugin.Version.Revision, Assembly.GetExecutingAssembly().ManifestModule.ModuleVersionId, AmongUsClient.Instance.ClientId);
         }
 
-        public static List<PlayerControl> getKillerTeamMembers(PlayerControl player) {
+        public static List<PlayerControl> getKillerTeamMembers(PlayerControl player)
+        {
             List<PlayerControl> team = new List<PlayerControl>();
-            foreach(PlayerControl p in PlayerControl.AllPlayerControls) {
+            foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+            {
                 if (player.Data.Role.IsImpostor && p.Data.Role.IsImpostor && player.PlayerId != p.PlayerId && team.All(x => x.PlayerId != p.PlayerId)) team.Add(p);
-                else if (player.isRole(RoleType.Jackal) && p.isRole(RoleType.Sidekick)) team.Add(p); 
+                else if (player.isRole(RoleType.Jackal) && p.isRole(RoleType.Sidekick)) team.Add(p);
                 else if (player.isRole(RoleType.Sidekick) && p.isRole(RoleType.Jackal)) team.Add(p);
             }
-            
+
             return team;
         }
 
         public static void shuffle<T>(this IList<T> self, int startAt = 0)
         {
-            for (int i = startAt; i < self.Count - 1; i++) {
+            for (int i = startAt; i < self.Count - 1; i++)
+            {
                 T value = self[i];
                 int index = UnityEngine.Random.Range(i, self.Count);
                 self[i] = self[index];
@@ -669,7 +715,8 @@ namespace TheOtherRoles {
 
         public static void shuffle<T>(this System.Random r, IList<T> self)
         {
-            for (int i = 0; i < self.Count; i++) {
+            for (int i = 0; i < self.Count; i++)
+            {
                 T value = self[i];
                 int index = r.Next(self.Count);
                 self[i] = self[index];

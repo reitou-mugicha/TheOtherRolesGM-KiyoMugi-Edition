@@ -34,7 +34,8 @@ namespace TheOtherRoles.Patches {
         static void UseAdminTime()
         {
             // Don't waste network traffic if we're out of time.
-            if (MapOptions.restrictDevices > 0 && MapOptions.restrictAdminTime > 0f && PlayerControl.LocalPlayer.isAlive() && !(PlayerControl.LocalPlayer.isRole(RoleType.EvilHacker)))
+            if (MapOptions.restrictDevices > 0 && MapOptions.restrictAdminTime > 0f && PlayerControl.LocalPlayer.isAlive() &&
+                    !(PlayerControl.LocalPlayer.isRole(RoleType.EvilHacker)))
             {
                 MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.UseAdminTime, Hazel.SendOption.Reliable, -1);
                 writer.Write(adminTimer);
@@ -133,12 +134,32 @@ namespace TheOtherRoles.Patches {
                         return false;
                     }
 
-                    clearedIcons = false;
-                    OutOfTime.gameObject.SetActive(false);
-                    string timeString = TimeSpan.FromSeconds(MapOptions.restrictAdminTime).ToString(@"mm\:ss\.ff");
-                    TimeRemaining.text = String.Format(ModTranslation.getString("timeRemaining"), timeString);
-                    //TimeRemaining.color = MapOptions.restrictAdminTime > 10f ? Palette.AcceptedGreen : Palette.ImpostorRed;
-                    TimeRemaining.gameObject.SetActive(true);
+                    if (PlayerControl.LocalPlayer.isRole(RoleType.EvilHacker))
+                    {
+                        TimeRemaining.gameObject.SetActive(false);
+                    }
+                    else
+                    {
+                        if (MapOptions.restrictAdminTime <= 0f)
+                        {
+                            __instance.BackgroundColor.SetColor(Palette.DisabledGrey);
+                            OutOfTime.gameObject.SetActive(true);
+                            TimeRemaining.gameObject.SetActive(false);
+                            if (clearedIcons == false)
+                            {
+                                foreach (CounterArea ca in __instance.CountAreas) ca.UpdateCount(0);
+                                clearedIcons = true;
+                            }
+                            return false;
+                        }
+
+                        clearedIcons = false;
+                        OutOfTime.gameObject.SetActive(false);
+                        string timeString = TimeSpan.FromSeconds(MapOptions.restrictAdminTime).ToString(@"mm\:ss\.ff");
+                        TimeRemaining.text = String.Format(ModTranslation.getString("timeRemaining"), timeString);
+                        //TimeRemaining.color = MapOptions.restrictAdminTime > 10f ? Palette.AcceptedGreen : Palette.ImpostorRed;
+                        TimeRemaining.gameObject.SetActive(true);
+                    }
                 }
 
                 bool commsActive = false;
@@ -241,6 +262,18 @@ namespace TheOtherRoles.Patches {
                 if (playerColors.ContainsKey(__instance.RoomType))
                 {
                     List<Color> colors = playerColors[__instance.RoomType];
+                    List<Color> impostorColors = new List<Color>();
+                    List<Color> mimicKColors = new List<Color>();
+                    List<Color> deadBodyColors = new List<Color>();
+                    foreach (var p in PlayerControl.AllPlayerControls)
+                    {
+                        // var color = p.myRend.material.GetColor("_BodyColor");
+                        var color = Palette.PlayerColors[p.Data.DefaultOutfit.ColorId];
+                        if (p.isDead())
+                        {
+                            deadBodyColors.Add(color);
+                        }
+                    }
 
                     for (int i = 0; i < __instance.myIcons.Count; i++)
                     {
@@ -266,6 +299,52 @@ namespace TheOtherRoles.Patches {
                                     renderer.material.SetColor("_BackColor", Palette.ShadowColors[id]);
                                 }
                                 renderer.material.SetColor("_VisorColor", Palette.VisorColor);
+                            }
+                            else if ((PlayerControl.LocalPlayer.isRole(RoleType.EvilHacker) && EvilHacker.canHasBetterAdmin))
+                            {
+                                renderer.material = newMat;
+                                var color = colors[i];
+                                if (impostorColors.Contains(color))
+                                {
+                                    if (mimicKColors.Contains(color))
+                                    {
+                                        color = Palette.PlayerColors[3];
+                                    }
+                                    else
+                                    {
+                                        color = Palette.ImpostorRed;
+                                    }
+                                    renderer.material.SetColor("_BodyColor", color);
+                                    var id = Palette.PlayerColors.IndexOf(color);
+                                    if (id < 0)
+                                    {
+                                        renderer.material.SetColor("_BackColor", color);
+                                    }
+                                    else
+                                    {
+                                        renderer.material.SetColor("_BackColor", Palette.ShadowColors[id]);
+                                    }
+                                    renderer.material.SetColor("_VisorColor", Palette.VisorColor);
+                                }
+                                else if (deadBodyColors.Contains(color))
+                                {
+                                    color = Palette.Black;
+                                    renderer.material.SetColor("_BodyColor", color);
+                                    var id = Palette.PlayerColors.IndexOf(color);
+                                    if (id < 0)
+                                    {
+                                        renderer.material.SetColor("_BackColor", color);
+                                    }
+                                    else
+                                    {
+                                        renderer.material.SetColor("_BackColor", Palette.ShadowColors[id]);
+                                    }
+                                    renderer.material.SetColor("_VisorColor", Palette.VisorColor);
+                                }
+                                else
+                                {
+                                    renderer.material = defaultMat;
+                                }
                             }
                             else
                             {

@@ -18,7 +18,7 @@ namespace TheOtherRoles
 
         private const string blankText = "[BLANK]";
 
-        public ModTranslation() { 
+        public ModTranslation() {
 
         }
 

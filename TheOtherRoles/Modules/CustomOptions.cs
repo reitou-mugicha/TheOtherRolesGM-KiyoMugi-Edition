@@ -121,7 +121,7 @@ namespace TheOtherRoles
         public static void ShareOptionSelections()
         {
             if (PlayerControl.AllPlayerControls.Count <= 1 || AmongUsClient.Instance?.AmHost == false && PlayerControl.LocalPlayer == null) return;
-            
+
             MessageWriter messageWriter = AmongUsClient.Instance.StartRpc(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.ShareOptions, Hazel.SendOption.Reliable);
             messageWriter.WritePacked((uint)CustomOption.options.Count);
             foreach (CustomOption option in CustomOption.options)
@@ -253,7 +253,7 @@ namespace TheOtherRoles
         public RoleType roleType;
 
         public int impChance { get { return roleImpChance.getSelection(); } }
-        
+
         public bool assignEqually { get { return roleAssignEqually.getSelection() == 0; } }
 
         public CustomDualRoleOption(int id, string name, Color color, RoleType roleType, int max = 15, bool roleEnabled = true) : base(id, name, color, max, roleEnabled)
@@ -375,6 +375,7 @@ namespace TheOtherRoles
     {
         public static void Postfix(GameOptionsMenu __instance)
         {
+
             if (GameObject.Find("TORSettings") != null)
             { // Settings setup has already been performed, fixing the title of the tab and returning
                 GameObject.Find("TORSettings").transform.FindChild("GameGroup").FindChild("Text").GetComponent<TMPro.TextMeshPro>().SetText(ModTranslation.getString("torSettings"));
@@ -408,7 +409,8 @@ namespace TheOtherRoles
                 if (button == null) continue;
                 int copiedIndex = i;
                 button.OnClick = new UnityEngine.UI.Button.ButtonClickedEvent();
-                button.OnClick.AddListener((UnityEngine.Events.UnityAction)(() => {
+                button.OnClick.AddListener((UnityEngine.Events.UnityAction)(() =>
+                {
                     gameSettingMenu.RegularGameSettings.SetActive(false);
                     gameSettingMenu.RolesSettings.gameObject.SetActive(false);
                     torSettings.gameObject.SetActive(false);
@@ -457,8 +459,8 @@ namespace TheOtherRoles
             torMenu.Children = torOptions.ToArray();
             torSettings.gameObject.SetActive(false);
 
-/*            var numImpostorsOption = __instance.Children.FirstOrDefault(x => x.name == "NumImpostors").TryCast<NumberOption>();
-            if (numImpostorsOption != null) numImpostorsOption.ValidRange = new FloatRange(0f, 15f);*/
+            var numImpostorsOption = __instance.Children.FirstOrDefault(x => x.name == "NumImpostors").TryCast<NumberOption>();
+            if (numImpostorsOption != null) numImpostorsOption.ValidRange = new FloatRange(0f, 15f);
 
             var killCoolOption = __instance.Children.FirstOrDefault(x => x.name == "KillCooldown").TryCast<NumberOption>();
             if (killCoolOption != null) killCoolOption.ValidRange = new FloatRange(2.5f, 60f);
@@ -549,6 +551,19 @@ namespace TheOtherRoles
         private static float timer = 1f;
         public static void Postfix(GameOptionsMenu __instance)
         {
+            foreach (var ob in __instance.Children)
+            {
+                switch (ob.Title)
+                {
+                    case StringNames.GameRecommendedSettings:
+                        ob.enabled = false;
+                        ob.gameObject.SetActive(false);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
             if (__instance.Children.Length < 100) return; // TODO: Introduce a cleaner way to seperate the TOR settings from the game settings
 
             timer += Time.deltaTime;
@@ -670,19 +685,6 @@ namespace TheOtherRoles
                 }
                 return false;
             }
-        }
-    }
-    [HarmonyPatch(typeof(Constants), nameof(Constants.ShouldHorseAround))]
-    class ConstantsShouldHorseAroundPatch
-    {
-        public static bool Prefix(ref bool __result)
-        {
-            if (Helpers.GameStarted && CustomOptionHolder.enabledHorseMode.getBool())
-            {
-                __result = true;
-                return false;
-            }
-            return true;
         }
     }
 

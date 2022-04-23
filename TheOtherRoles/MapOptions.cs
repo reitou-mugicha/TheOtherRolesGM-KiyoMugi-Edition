@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System;
 using UnityEngine;
+using TheOtherRoles.Patches;
 using static TheOtherRoles.TheOtherRoles;
 
 namespace TheOtherRoles{
@@ -34,6 +35,7 @@ namespace TheOtherRoles{
         public static bool allowParallelMedBayScans = false;
         public static bool showLighterDarker = false;
         public static bool hideTaskArrows = false;
+        public static bool enableHorseMode = false;
 
         // Updating values
         public static int meetingsCount = 0;
@@ -64,16 +66,19 @@ namespace TheOtherRoles{
             restrictCamerasTime = restrictCamerasTimeMax = CustomOptionHolder.restrictCameras.getFloat();
             restrictVitalsTime = restrictVitalsTimeMax = CustomOptionHolder.restrictVents.getFloat();
             disableVents = CustomOptionHolder.disableVents.getBool();
+        }
 
+        public static void reloadPluginOptions() {
             allowParallelMedBayScans = CustomOptionHolder.allowParallelMedBayScans.getBool();
-
             ghostsSeeRoles = TheOtherRolesPlugin.GhostsSeeRoles.Value;
             ghostsSeeTasks = TheOtherRolesPlugin.GhostsSeeTasks.Value;
             ghostsSeeVotes = TheOtherRolesPlugin.GhostsSeeVotes.Value;
             showRoleSummary = TheOtherRolesPlugin.ShowRoleSummary.Value;
             hideNameplates = TheOtherRolesPlugin.HideNameplates.Value;
             showLighterDarker = TheOtherRolesPlugin.ShowLighterDarker.Value;
-            hideTaskArrows = TheOtherRolesPlugin.HideTaskArrows.Value;
+            //hideTaskArrows = TheOtherRolesPlugin.HideTaskArrows.Value;
+            enableHorseMode = TheOtherRolesPlugin.EnableHorseMode.Value;
+            IntroPatch.ShouldAlwaysHorseAround.isHorseMode = TheOtherRolesPlugin.EnableHorseMode.Value;
         }
 
         public static void resetDeviceTimes()

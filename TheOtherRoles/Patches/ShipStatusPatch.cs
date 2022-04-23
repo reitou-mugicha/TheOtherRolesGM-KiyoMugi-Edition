@@ -19,7 +19,7 @@ namespace TheOtherRoles.Patches {
             if (switchSystem == null) return true;
 
             float num = (float)switchSystem.Value / 255f;
-            
+
             if (player == null || player.IsDead || player.PlayerId == GM.gm?.PlayerId) // IsDead
                 __result = __instance.MaxLightRadius;
             else if (player.Role.IsImpostor
@@ -27,6 +27,8 @@ namespace TheOtherRoles.Patches {
                 || (Sidekick.sidekick != null && Sidekick.sidekick.PlayerId == player.PlayerId && Sidekick.hasImpostorVision)
                 || (Spy.spy != null && Spy.spy.PlayerId == player.PlayerId && Spy.hasImpostorVision)
                 || (player.Object.hasModifier(ModifierType.Madmate) && Madmate.hasImpostorVision) // Impostor, Jackal/Sidekick, Spy, or Madmate with Impostor vision
+                || (player.Object.hasModifier(ModifierType.TaskHacker) && TaskHacker.hasImpostorVision) // Impostor, Jackal/Sidekick, Spy, or Madmate with Impostor vision
+                || (player.Object.hasModifier(ModifierType.CreatedMadmate) && CreatedMadmate.hasImpostorVision) // Impostor, Jackal/Sidekick, Spy, or Madmate with Impostor vision
                 || (Jester.jester != null && Jester.jester.PlayerId == player.PlayerId && Jester.hasImpostorVision) // Jester with Impostor vision
                 || (player.Object.isRole(RoleType.Fox))
                 )
@@ -94,7 +96,7 @@ namespace TheOtherRoles.Patches {
             PlayerControl.GameOptions.NumShortTasks = originalNumShortTasksOption;
             PlayerControl.GameOptions.NumLongTasks = originalNumLongTasksOption;
         }
-            
+
     }
 
 }

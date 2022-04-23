@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.ResourceManagement.AsyncOperations;
-
 namespace TheOtherRoles
 {
     public static class MorphHandler
@@ -12,12 +11,10 @@ namespace TheOtherRoles
         {
             setOutfit(pc, target.Data.DefaultOutfit, target.Visible);
         }
-
         public static void setOutfit(this PlayerControl pc, GameData.PlayerOutfit outfit, bool visible = true)
         {
             pc.Data.Outfits[PlayerOutfitType.Shapeshifted] = outfit;
             pc.CurrentOutfitType = PlayerOutfitType.Shapeshifted;
-
             pc.RawSetName(outfit.PlayerName);
             pc.RawSetHat(outfit.HatId, outfit.ColorId);
             pc.RawSetVisor(outfit.VisorId);
@@ -53,5 +50,4 @@ namespace TheOtherRoles
             pc.CurrentOutfitType = PlayerOutfitType.Default;
         }
     }
-
 }

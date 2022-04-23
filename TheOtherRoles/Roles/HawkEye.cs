@@ -18,7 +18,7 @@ namespace TheOtherRoles
 
         public static float hawkCooldown { get { return CustomOptionHolder.hawkZoomCooldown.getFloat(); } }
         public static float hawkTime { get { return CustomOptionHolder.hawkEyeTime.getFloat(); } }
-        public static bool canUseVents { get { return CustomOptionHolder.hawkCanUseVents.getBool(); } }
+        public static bool canUseVents{ get { return CustomOptionHolder.hawkCanUseVents.getBool(); } }
         public bool lightActive = false;
 
         public HawkEye()
@@ -27,7 +27,7 @@ namespace TheOtherRoles
         }
 
         public override void OnMeetingStart()
-        {
+        { 
             hawkButton.isEffectActive = false;
             hawkButton.Timer = hawkButton.MaxTimer = HawkEye.hawkCooldown;
         }
@@ -50,8 +50,8 @@ namespace TheOtherRoles
             return buttonSprite;
         }
 
-        public static void MakeButtons(HudManager hm)
-        {
+        public static void MakeButtons(HudManager hm) 
+        { 
             // Hawk Eye Button
             hawkButton = new CustomButton(
                 () => {
@@ -98,8 +98,8 @@ namespace TheOtherRoles
             hawkButton.effectCancellable = false;
         }
 
-        public static void SetButtonCooldowns()
-        {
+        public static void SetButtonCooldowns() 
+        { 
             hawkButton.MaxTimer = HawkEye.hawkCooldown;
         }
 
