@@ -747,7 +747,7 @@ namespace TheOtherRoles
             ventAnimation = CustomOption.Create(541, "ventAnimation", true, specialOptions);
             enableDiePlayerZoomInOut = CustomOption.Create(542, "diePlayerCanZoomInOut", false, specialOptions);
             onePlayerStart = CustomOption.Create(543, "onePlayerStart", false, specialOptions);
-            airshipReactorDuration = CustomOption.Create(9999, "airshipReactorDuration", 60f, 0f, 600f, 5f, specialOptions, format: "unitSeconds");
+            airshipReactorDuration = CustomOption.Create(9999, "airShipReactorDuration", 60f, 0f, 600f, 5f, specialOptions, format: "unitSeconds");
             helloweenMode = CustomOption.Create(544, "helloweenMode", false, specialOptions);
 
             inversionSkeld = CustomOption.Create(3950, "inversionSkeld", false, specialOptions);

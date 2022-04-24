@@ -34,7 +34,7 @@ namespace TheOtherRoles
         public static ConfigEntry<bool> StreamerMode { get; set; }
         public static ConfigEntry<bool> GhostsSeeTasks { get; set; }
         public static ConfigEntry<bool> GhostsSeeRoles { get; set; }
-        public static ConfigEntry<bool> GhostsSeeVotes{ get; set; }
+        public static ConfigEntry<bool> GhostsSeeVotes { get; set; }
         public static ConfigEntry<bool> ShowRoleSummary { get; set; }
         public static ConfigEntry<bool> HideNameplates { get; set; }
         public static ConfigEntry<bool> ShowLighterDarker { get; set; }
@@ -50,7 +50,8 @@ namespace TheOtherRoles
         public static Sprite ModStamp;
 
         public static IRegionInfo[] defaultRegions;
-        public static void UpdateRegions() {
+        public static void UpdateRegions()
+        {
             ServerManager serverManager = DestroyableSingleton<ServerManager>.Instance;
             IRegionInfo[] regions = defaultRegions;
 
@@ -97,7 +98,8 @@ namespace TheOtherRoles
             Harmony.PatchAll();
         }
 
-        public static Sprite GetModStamp() {
+        public static Sprite GetModStamp()
+        {
             if (ModStamp) return ModStamp;
             return ModStamp = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.ModStamp.png", 150f);
         }
@@ -114,9 +116,12 @@ namespace TheOtherRoles
     }
 
     [HarmonyPatch(typeof(ChatController), nameof(ChatController.Awake))]
-    public static class ChatControllerAwakePatch {
-        private static void Prefix() {
-            if (!EOSManager.Instance.IsMinor()) {
+    public static class ChatControllerAwakePatch
+    {
+        private static void Prefix()
+        {
+            if (!EOSManager.Instance.IsMinor())
+            {
                 SaveManager.chatModeType = 1;
                 SaveManager.isGuest = false;
             }
@@ -153,9 +158,10 @@ namespace TheOtherRoles
             if (!TheOtherRolesPlugin.DebugMode.Value) return;
 
             // Spawn dummys
-            if (Input.GetKeyDown(KeyCode.F)) {
+            if (Input.GetKeyDown(KeyCode.F))
+            {
                 var playerControl = UnityEngine.Object.Instantiate(AmongUsClient.Instance.PlayerPrefab);
-                var i = playerControl.PlayerId = (byte) GameData.Instance.GetAvailableId();
+                var i = playerControl.PlayerId = (byte)GameData.Instance.GetAvailableId();
 
                 bots.Add(playerControl);
                 GameData.Instance.AddPlayer(playerControl);
