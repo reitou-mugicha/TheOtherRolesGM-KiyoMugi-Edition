@@ -2,3 +2,17 @@
 .vscode/tasks.json
 TODO
 .DS_Store
+TheOtherRoles/obj/Debug/netstandard2.1/.NETStandard,Version=v2.1.AssemblyAttributes.cs
+TheOtherRoles/obj/Debug/netstandard2.1/TheOtherRoles.AssemblyInfo.cs
+TheOtherRoles/obj/Debug/netstandard2.1/TheOtherRoles.AssemblyInfoInputs.cache
+TheOtherRoles/obj/Debug/netstandard2.1/TheOtherRoles.assets.cache
+TheOtherRoles/obj/Debug/netstandard2.1/TheOtherRoles.csproj.AssemblyReference.cache
+TheOtherRoles/obj/Debug/netstandard2.1/TheOtherRoles.csproj.CoreCompileInputs.cache
+TheOtherRoles/obj/Debug/netstandard2.1/TheOtherRoles.csproj.FileListAbsolute.txt
+TheOtherRoles/obj/Debug/netstandard2.1/TheOtherRoles.GeneratedMSBuildEditorConfig.editorconfig
+TheOtherRoles/obj/Debug/netstandard2.1/TheOtherRolesGM.dll
+TheOtherRoles/obj/project.assets.json
+TheOtherRoles/obj/project.nuget.cache
+TheOtherRoles/obj/TheOtherRoles.csproj.nuget.dgspec.json
+TheOtherRoles/obj/TheOtherRoles.csproj.nuget.g.props
+TheOtherRoles/obj/TheOtherRoles.csproj.nuget.g.targets
