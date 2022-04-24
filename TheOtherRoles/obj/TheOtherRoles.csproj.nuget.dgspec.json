@@ -1,0 +1,89 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\shota\\Desktop\\TheOtherRolesGM KM\\TheOtherRolesGM-KiyoMugi-Edition\\TheOtherRoles\\TheOtherRoles.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\shota\\Desktop\\TheOtherRolesGM KM\\TheOtherRolesGM-KiyoMugi-Edition\\TheOtherRoles\\TheOtherRoles.csproj": {
+      "version": "1.0.4.2",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\shota\\Desktop\\TheOtherRolesGM KM\\TheOtherRolesGM-KiyoMugi-Edition\\TheOtherRoles\\TheOtherRoles.csproj",
+        "projectName": "TheOtherRolesGM",
+        "projectPath": "C:\\Users\\shota\\Desktop\\TheOtherRolesGM KM\\TheOtherRolesGM-KiyoMugi-Edition\\TheOtherRoles\\TheOtherRoles.csproj",
+        "packagesPath": "C:\\Users\\shota\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\shota\\Desktop\\TheOtherRolesGM KM\\TheOtherRolesGM-KiyoMugi-Edition\\TheOtherRoles\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\shota\\Desktop\\TheOtherRolesGM KM\\TheOtherRolesGM-KiyoMugi-Edition\\NuGet.Config",
+          "C:\\Users\\shota\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.bepinex.dev/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "targetAlias": "netstandard2.1",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "targetAlias": "netstandard2.1",
+          "dependencies": {
+            "AmongUs.GameLibs.Steam": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2022.3.29, )"
+            },
+            "BepInEx.AutoPlugin": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.0.1, )"
+            },
+            "BepInEx.IL2CPP": {
+              "target": "Package",
+              "version": "[6.0.0-be.540, )"
+            },
+            "BepInEx.IL2CPP.MSBuild": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.0.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "NETStandard.Library": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

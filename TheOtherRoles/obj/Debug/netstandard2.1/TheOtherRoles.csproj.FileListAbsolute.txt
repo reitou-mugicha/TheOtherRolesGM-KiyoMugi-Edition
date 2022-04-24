@@ -1,0 +1,5 @@
+C:\Users\shota\Desktop\TheOtherRolesGM KM\TheOtherRolesGM-KiyoMugi-Edition\TheOtherRoles\obj\Debug\netstandard2.1\TheOtherRoles.csproj.AssemblyReference.cache
+C:\Users\shota\Desktop\TheOtherRolesGM KM\TheOtherRolesGM-KiyoMugi-Edition\TheOtherRoles\obj\Debug\netstandard2.1\TheOtherRoles.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\shota\Desktop\TheOtherRolesGM KM\TheOtherRolesGM-KiyoMugi-Edition\TheOtherRoles\obj\Debug\netstandard2.1\TheOtherRoles.AssemblyInfoInputs.cache
+C:\Users\shota\Desktop\TheOtherRolesGM KM\TheOtherRolesGM-KiyoMugi-Edition\TheOtherRoles\obj\Debug\netstandard2.1\TheOtherRoles.AssemblyInfo.cs
+C:\Users\shota\Desktop\TheOtherRolesGM KM\TheOtherRolesGM-KiyoMugi-Edition\TheOtherRoles\obj\Debug\netstandard2.1\TheOtherRoles.csproj.CoreCompileInputs.cache

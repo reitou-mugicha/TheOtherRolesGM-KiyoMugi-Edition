@@ -90,7 +90,6 @@ namespace TheOtherRoles {
                          (playerInfo.PlayerId == Pursuer.pursuer?.PlayerId && Pursuer.pursuer.Data.IsDead) || // Tasks of the Pursuer only count, if he's alive
                           playerInfo.Object?.isRole(RoleType.Fox) == true ||
                          (Madmate.hasTasks && playerInfo.Object?.hasModifier(ModifierType.Madmate) == true) ||
-                         (TaskHacker.hasTasks && playerInfo.Object?.hasModifier(ModifierType.TaskHacker) == true) ||
                          (CreatedMadmate.hasTasks && playerInfo.Object?.hasModifier(ModifierType.CreatedMadmate) == true)
                         )
                     )
