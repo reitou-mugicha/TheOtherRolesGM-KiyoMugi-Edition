@@ -3,22 +3,26 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 
-namespace TheOtherRoles.Objects {
-    public class Arrow {
+namespace TheOtherRoles.Objects
+{
+    public class Arrow
+    {
         public float perc = 0.925f;
         public SpriteRenderer image;
         public GameObject arrow;
         private Vector3 oldTarget;
 
         private static Sprite sprite;
-        public static Sprite getSprite() {
+        public static Sprite getSprite()
+        {
             if (sprite) return sprite;
             sprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.Arrow.png", 200f);
             return sprite;
         }
 
 
-        public Arrow(Color color) {
+        public Arrow(Color color)
+        {
             arrow = new GameObject("Arrow");
             arrow.layer = 5;
             image = arrow.AddComponent<SpriteRenderer>();
@@ -26,7 +30,8 @@ namespace TheOtherRoles.Objects {
             image.color = color;
         }
 
-        public void Update() {
+        public void Update()
+        {
             Vector3 target = oldTarget;
             if (target == null) target = Vector3.zero;
             Update(target);
@@ -63,7 +68,8 @@ namespace TheOtherRoles.Objects {
             LookAt2d(arrow.transform, target);
         }
 
-        private void LookAt2d(Transform transform, Vector3 target) {
+        private void LookAt2d(Transform transform, Vector3 target)
+        {
             Vector3 vector = target - transform.position;
             vector.Normalize();
             float num = Mathf.Atan2(vector.y, vector.x);
@@ -72,7 +78,8 @@ namespace TheOtherRoles.Objects {
             transform.rotation = Quaternion.Euler(0f, 0f, num * 57.29578f);
         }
 
-        private bool Between(float value, float min, float max) {
+        private bool Between(float value, float min, float max)
+        {
             return value > min && value < max;
         }
     }

@@ -36,10 +36,14 @@ namespace TheOtherRoles
         public static float immunityTime { get { return CustomOptionHolder.plagueDoctorImmunityTime.getFloat(); } }
 
         public static bool infectKiller { get { return CustomOptionHolder.plagueDoctorInfectKiller.getBool(); } }
-        public static bool resetAfterMeeting { get {
+        public static bool resetAfterMeeting
+        {
+            get
+            {
                 //return CustomOptionHolder.plagueDoctorResetMeeting.getBool();
                 return false;
-            } }
+            }
+        }
         public static bool canWinDead { get { return CustomOptionHolder.plagueDoctorWinDead.getBool(); } }
 
         public PlagueDoctor()
@@ -247,7 +251,8 @@ namespace TheOtherRoles
                     local.currentTarget = null;
                 },
                 () => {/*ボタンが有効になる条件*/ return PlayerControl.LocalPlayer.isRole(RoleType.PlagueDoctor) && local.numInfections > 0 && !PlayerControl.LocalPlayer.isDead(); },
-                () => {/*ボタンが使える条件*/
+                () =>
+                {/*ボタンが使える条件*/
                     if (numInfectionsText != null)
                     {
                         if (local.numInfections > 0)

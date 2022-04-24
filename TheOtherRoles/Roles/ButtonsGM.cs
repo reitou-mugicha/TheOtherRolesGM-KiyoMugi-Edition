@@ -264,7 +264,8 @@ namespace TheOtherRoles
             }
 
             gmZoomOut = new CustomButton(
-                () => {
+                () =>
+                {
 
                     if (Camera.main.orthographicSize < 18.0f)
                     {
@@ -298,7 +299,8 @@ namespace TheOtherRoles
             gmZoomOut.LocalScale = Vector3.one * 0.275f;
 
             gmZoomIn = new CustomButton(
-                () => {
+                () =>
+                {
 
                     if (Camera.main.orthographicSize > 3.0f)
                     {

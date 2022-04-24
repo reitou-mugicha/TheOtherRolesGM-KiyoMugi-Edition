@@ -65,7 +65,8 @@ namespace TheOtherRoles
         public static void MakeButtons(HudManager hm)
         {
             sprintButton = new CustomButton(
-                () => {
+                () =>
+                {
                     if (sprintButton.isEffectActive)
                     {
                         sprintButton.Timer = 0;
@@ -79,7 +80,8 @@ namespace TheOtherRoles
                     RPCProcedure.sprinterSprint(PlayerControl.LocalPlayer.PlayerId, true);
                 },
                 () => { return PlayerControl.LocalPlayer.isRole(RoleType.Sprinter) && !PlayerControl.LocalPlayer.Data.IsDead; },
-                () => {
+                () =>
+                {
                     if (sprintButton.isEffectActive)
                     {
                         sprintButton.buttonText = ModTranslation.getString("SprinterStopText");
@@ -90,7 +92,8 @@ namespace TheOtherRoles
                     }
                     return PlayerControl.LocalPlayer.CanMove;
                 },
-                () => {
+                () =>
+                {
                     sprintButton.Timer = sprintButton.MaxTimer = sprintCooldown;
                 },
                 getButtonSprite(),
@@ -100,7 +103,8 @@ namespace TheOtherRoles
                 KeyCode.F,
                 true,
                 sprintDuration,
-                () => {
+                () =>
+                {
                     sprintButton.Timer = sprintButton.MaxTimer = sprintCooldown;
 
                     MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SprinterSprint, Hazel.SendOption.Reliable, -1);

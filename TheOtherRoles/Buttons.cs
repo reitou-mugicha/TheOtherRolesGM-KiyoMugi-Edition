@@ -375,7 +375,8 @@ namespace TheOtherRoles
 
             // EvilHacker button
             evilHackerButton = new CustomButton(
-                () => {
+                () =>
+                {
                     PlayerControl.LocalPlayer.NetTransform.Halt();
                     Action<MapBehaviour> tmpAction = (MapBehaviour m) => { m.ShowCountOverlay(); };
                     DestroyableSingleton<HudManager>.Instance.ShowMap(tmpAction);
@@ -385,10 +386,11 @@ namespace TheOtherRoles
                         ConsoleJoystick.SetMode_Task();
                     }
                 },
-                () => {
+                () =>
+                {
                     return EvilHacker.evilHacker != null &&
-                      EvilHacker.evilHacker == PlayerControl.LocalPlayer &&
-                      PlayerControl.LocalPlayer.isAlive();
+                    EvilHacker.evilHacker == PlayerControl.LocalPlayer &&
+                    PlayerControl.LocalPlayer.isAlive();
                 },
                 () => { return PlayerControl.LocalPlayer.CanMove; },
                 () => { },
@@ -406,7 +408,8 @@ namespace TheOtherRoles
 
             // EvilHacker creates madmate button
             evilHackerCreatesMadmateButton = new CustomButton(
-                () => {
+                () =>
+                {
                     /*
                      * creates madmate
                      */
@@ -415,11 +418,12 @@ namespace TheOtherRoles
                     AmongUsClient.Instance.FinishRpcImmediately(writer);
                     RPCProcedure.evilHackerCreatesMadmate(EvilHacker.currentTarget.PlayerId);
                 },
-                () => {
+                () =>
+                {
                     return EvilHacker.evilHacker != null &&
-                      EvilHacker.evilHacker == PlayerControl.LocalPlayer &&
-                      EvilHacker.canCreateMadmate &&
-                      PlayerControl.LocalPlayer.isAlive();
+                    EvilHacker.evilHacker == PlayerControl.LocalPlayer &&
+                    EvilHacker.canCreateMadmate &&
+                    PlayerControl.LocalPlayer.isAlive();
                 },
                 () => { return EvilHacker.currentTarget && PlayerControl.LocalPlayer.CanMove; },
                 () => { },
@@ -463,7 +467,7 @@ namespace TheOtherRoles
                        DestroyableSingleton<HudManager>.Instance.ShowMap((System.Action<MapBehaviour>)(m => m.ShowCountOverlay()));
 
                    if (Hacker.cantMove) PlayerControl.LocalPlayer.moveable = false;
-                   PlayerControl.LocalPlayer.NetTransform.Halt(); // Stop current movement 
+                   PlayerControl.LocalPlayer.NetTransform.Halt(); // Stop current movement
                    Hacker.chargesAdminTable--;
                },
                () => { return Hacker.hacker != null && Hacker.hacker == PlayerControl.LocalPlayer && MapOptions.couldUseAdmin && PlayerControl.LocalPlayer.isAlive(); },
@@ -471,7 +475,7 @@ namespace TheOtherRoles
                {
                    if (hackerAdminTableChargesText != null)
                        hackerAdminTableChargesText.text = hackerVitalsChargesText.text = String.Format(ModTranslation.getString("hackerChargesText"), Hacker.chargesAdminTable, Hacker.toolsNumber);
-                   return Hacker.chargesAdminTable > 0 && MapOptions.canUseAdmin;; 
+                   return Hacker.chargesAdminTable > 0 && MapOptions.canUseAdmin; ;
                },
                () =>
                {
@@ -532,7 +536,7 @@ namespace TheOtherRoles
                    }
 
                    if (Hacker.cantMove) PlayerControl.LocalPlayer.moveable = false;
-                   PlayerControl.LocalPlayer.NetTransform.Halt(); // Stop current movement 
+                   PlayerControl.LocalPlayer.NetTransform.Halt(); // Stop current movement
 
                    Hacker.chargesVitals--;
                },
@@ -563,7 +567,7 @@ namespace TheOtherRoles
                () =>
                {
                    hackerVitalsButton.Timer = hackerVitalsButton.MaxTimer;
-                   if(!hackerAdminTableButton.isEffectActive) PlayerControl.LocalPlayer.moveable = true;
+                   if (!hackerAdminTableButton.isEffectActive) PlayerControl.LocalPlayer.moveable = true;
                    if (Minigame.Instance)
                    {
                        if (PlayerControl.GameOptions.MapId == 1) Hacker.doorLog.ForceClose();
@@ -1047,9 +1051,12 @@ namespace TheOtherRoles
             securityGuardButtonScrewsText.transform.localPosition += new Vector3(-0.05f, 0.7f, 0);
 
             securityGuardCamButton = new CustomButton(
-                () => {
-                    if (PlayerControl.GameOptions.MapId != 1) {
-                        if (SecurityGuard.minigame == null) {
+                () =>
+                {
+                    if (PlayerControl.GameOptions.MapId != 1)
+                    {
+                        if (SecurityGuard.minigame == null)
+                        {
                             byte mapId = PlayerControl.GameOptions.MapId;
                             var e = UnityEngine.Object.FindObjectsOfType<SystemConsole>().FirstOrDefault(x => x.gameObject.name.Contains("Surv_Panel"));
                             if (mapId == 0 || mapId == 3) e = UnityEngine.Object.FindObjectsOfType<SystemConsole>().FirstOrDefault(x => x.gameObject.name.Contains("SurvConsole"));
@@ -1060,8 +1067,11 @@ namespace TheOtherRoles
                         SecurityGuard.minigame.transform.SetParent(Camera.main.transform, false);
                         SecurityGuard.minigame.transform.localPosition = new Vector3(0.0f, 0.0f, -50f);
                         SecurityGuard.minigame.Begin(null);
-                    } else {
-                        if (SecurityGuard.minigame == null) {
+                    }
+                    else
+                    {
+                        if (SecurityGuard.minigame == null)
+                        {
                             var e = UnityEngine.Object.FindObjectsOfType<SystemConsole>().FirstOrDefault(x => x.gameObject.name.Contains("SurvLogConsole"));
                             if (e == null || Camera.main == null) return;
                             SecurityGuard.minigame = UnityEngine.Object.Instantiate(e.MinigamePrefab, Camera.main.transform, false);
@@ -1073,10 +1083,11 @@ namespace TheOtherRoles
                     SecurityGuard.charges--;
 
                     if (SecurityGuard.cantMove) PlayerControl.LocalPlayer.moveable = false;
-                    PlayerControl.LocalPlayer.NetTransform.Halt(); // Stop current movement 
+                    PlayerControl.LocalPlayer.NetTransform.Halt(); // Stop current movement
                 },
                 () => { return SecurityGuard.securityGuard != null && SecurityGuard.securityGuard == PlayerControl.LocalPlayer && !PlayerControl.LocalPlayer.Data.IsDead && SecurityGuard.remainingScrews < Mathf.Min(SecurityGuard.ventPrice, SecurityGuard.camPrice); },
-                () => {
+                () =>
+                {
                     if (securityGuardChargesText != null)
                         securityGuardChargesText.text = securityGuardChargesText.text = String.Format(ModTranslation.getString("hackerChargesText"), SecurityGuard.charges, SecurityGuard.maxCharges);
                     securityGuardCamButton.actionButton.graphic.sprite = PlayerControl.GameOptions.MapId == 1 ? SecurityGuard.getLogSprite() : SecurityGuard.getCamSprite();
@@ -1085,7 +1096,8 @@ namespace TheOtherRoles
                         TranslationController.Instance.GetString(StringNames.SecurityCamsSystem));
                     return PlayerControl.LocalPlayer.CanMove && SecurityGuard.charges > 0;
                 },
-                () => {
+                () =>
+                {
                     securityGuardCamButton.Timer = securityGuardCamButton.MaxTimer;
                     securityGuardCamButton.isEffectActive = false;
                     securityGuardCamButton.actionButton.cooldownTimerText.color = Palette.EnabledColor;
@@ -1097,9 +1109,11 @@ namespace TheOtherRoles
                 KeyCode.Q,
                 true,
                 0f,
-                () => {
+                () =>
+                {
                     securityGuardCamButton.Timer = securityGuardCamButton.MaxTimer;
-                    if (Minigame.Instance) {
+                    if (Minigame.Instance)
+                    {
                         SecurityGuard.minigame.ForceClose();
                     }
                     PlayerControl.LocalPlayer.moveable = true;
@@ -1306,7 +1320,7 @@ namespace TheOtherRoles
                     if (randomNumber == 0) msg = string.Format(ModTranslation.getString("mediumQuestion1"), RoleInfo.GetRolesString(Medium.target.player, false, includeHidden: true)) + name;
                     else if (randomNumber == 1) msg = string.Format(ModTranslation.getString("mediumQuestion2"), typeOfColor) + name;
                     else if (randomNumber == 2) msg = string.Format(ModTranslation.getString("mediumQuestion3"), Math.Round(timeSinceDeath / 1000)) + name;
-                    else msg = string.Format(ModTranslation.getString("mediumQuestion4"), RoleInfo.GetRolesString(Medium.target.killerIfExisting, false, includeHidden: true)) + name; ; // Excludes mini 
+                    else msg = string.Format(ModTranslation.getString("mediumQuestion4"), RoleInfo.GetRolesString(Medium.target.killerIfExisting, false, includeHidden: true)) + name; ; // Excludes mini
 
                     DestroyableSingleton<HudManager>.Instance.Chat.AddChat(PlayerControl.LocalPlayer, $"{msg}");
 

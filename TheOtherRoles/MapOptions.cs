@@ -5,8 +5,10 @@ using UnityEngine;
 using TheOtherRoles.Patches;
 using static TheOtherRoles.TheOtherRoles;
 
-namespace TheOtherRoles{
-    static class MapOptions {
+namespace TheOtherRoles
+{
+    static class MapOptions
+    {
         // Set values
         public static int maxNumberOfMeetings = 10;
         public static bool blockSkippingInEmergencyMeetings = false;
@@ -43,7 +45,8 @@ namespace TheOtherRoles{
         public static List<Vent> ventsToSeal = new List<Vent>();
         public static Dictionary<byte, PoolablePlayer> playerIcons = new Dictionary<byte, PoolablePlayer>();
 
-        public static void clearAndReloadMapOptions() {
+        public static void clearAndReloadMapOptions()
+        {
             meetingsCount = 0;
             camerasToAdd = new List<SurvCamera>();
             ventsToSeal = new List<Vent>();
@@ -68,7 +71,8 @@ namespace TheOtherRoles{
             disableVents = CustomOptionHolder.disableVents.getBool();
         }
 
-        public static void reloadPluginOptions() {
+        public static void reloadPluginOptions()
+        {
             allowParallelMedBayScans = CustomOptionHolder.allowParallelMedBayScans.getBool();
             ghostsSeeRoles = TheOtherRolesPlugin.GhostsSeeRoles.Value;
             ghostsSeeTasks = TheOtherRolesPlugin.GhostsSeeTasks.Value;
@@ -76,7 +80,7 @@ namespace TheOtherRoles{
             showRoleSummary = TheOtherRolesPlugin.ShowRoleSummary.Value;
             hideNameplates = TheOtherRolesPlugin.HideNameplates.Value;
             showLighterDarker = TheOtherRolesPlugin.ShowLighterDarker.Value;
-            //hideTaskArrows = TheOtherRolesPlugin.HideTaskArrows.Value;
+            hideTaskArrows = TheOtherRolesPlugin.HideTaskArrows.Value;
             enableHorseMode = TheOtherRolesPlugin.EnableHorseMode.Value;
             IntroPatch.ShouldAlwaysHorseAround.isHorseMode = TheOtherRolesPlugin.EnableHorseMode.Value;
         }

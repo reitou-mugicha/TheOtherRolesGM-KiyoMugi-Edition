@@ -298,9 +298,9 @@ namespace TheOtherRoles.Patches
         static void sidekickCheckPromotion()
         {
             // If LocalPlayer is Sidekick, the Jackal is disconnected and Sidekick promotion is enabled, then trigger promotion
-            if (Sidekick.promotesToJackal && 
+            if (Sidekick.promotesToJackal &&
                 PlayerControl.LocalPlayer.isRole(RoleType.Sidekick) &&
-                PlayerControl.LocalPlayer.isAlive() && 
+                PlayerControl.LocalPlayer.isAlive() &&
                 (Jackal.jackal == null || Jackal.jackal.Data.Disconnected))
             {
                 MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SidekickPromotes, Hazel.SendOption.Reliable, -1);
@@ -513,7 +513,7 @@ namespace TheOtherRoles.Patches
 
                 var canSeeInfo =
                     canSeeEverything ||
-                    p == PlayerControl.LocalPlayer || p.isGM() || 
+                    p == PlayerControl.LocalPlayer || p.isGM() ||
                     (Lawyer.lawyerKnowsRole && PlayerControl.LocalPlayer == Lawyer.lawyer && p == Lawyer.target);
 
                 if (canSeeInfo)
@@ -542,9 +542,10 @@ namespace TheOtherRoles.Patches
                     }
 
                     // Set player name higher to align in middle
-                    if (meetingInfo != null && playerVoteArea != null) {
+                    if (meetingInfo != null && playerVoteArea != null)
+                    {
                         var playerName = playerVoteArea.NameText;
-                        playerName.transform.localPosition = new Vector3(0.3384f, (0.0311f + 0.0683f), -0.1f);    
+                        playerName.transform.localPosition = new Vector3(0.3384f, (0.0311f + 0.0683f), -0.1f);
                     }
 
                     var (tasksCompleted, tasksTotal) = TasksHandler.taskInfo(p.Data);
@@ -614,10 +615,12 @@ namespace TheOtherRoles.Patches
             SecurityGuard.ventTarget = target;
         }
 
-        public static void securityGuardUpdate() {
+        public static void securityGuardUpdate()
+        {
             if (SecurityGuard.securityGuard == null || PlayerControl.LocalPlayer != SecurityGuard.securityGuard || SecurityGuard.securityGuard.Data.IsDead) return;
             var (playerCompleted, _) = TasksHandler.taskInfo(SecurityGuard.securityGuard.Data);
-            if (playerCompleted == SecurityGuard.rechargedTasks) {
+            if (playerCompleted == SecurityGuard.rechargedTasks)
+            {
                 SecurityGuard.rechargedTasks += SecurityGuard.rechargeTasksNumber;
                 if (SecurityGuard.maxCharges > SecurityGuard.charges) SecurityGuard.charges++;
             }
@@ -667,10 +670,12 @@ namespace TheOtherRoles.Patches
 
                     // Update the arrows' color every time bc things go weird when you add a sidekick or someone dies
                     Color c = Palette.ImpostorRed;
-                    if(arrowForTeamJackal){
+                    if (arrowForTeamJackal)
+                    {
                         c = Jackal.color;
                     }
-                    else if(arrowForFox){
+                    else if (arrowForFox)
+                    {
                         c = Fox.color;
                     }
                     if (!p.Data.IsDead && (arrowForImp || arrowForTeamJackal || arrowForFox))
@@ -931,10 +936,12 @@ namespace TheOtherRoles.Patches
             }
         }
 
-        public static void hackerUpdate() {
+        public static void hackerUpdate()
+        {
             if (Hacker.hacker == null || PlayerControl.LocalPlayer != Hacker.hacker || Hacker.hacker.Data.IsDead) return;
             var (playerCompleted, _) = TasksHandler.taskInfo(Hacker.hacker.Data);
-            if (playerCompleted == Hacker.rechargedTasks) {
+            if (playerCompleted == Hacker.rechargedTasks)
+            {
                 Hacker.rechargedTasks += Hacker.rechargeTasksNumber;
                 if (Hacker.toolsNumber > Hacker.chargesVitals) Hacker.chargesVitals++;
                 if (Hacker.toolsNumber > Hacker.chargesAdminTable) Hacker.chargesAdminTable++;
@@ -1202,7 +1209,8 @@ namespace TheOtherRoles.Patches
             }
 
             // Seer show flash and add dead player position
-            if (Seer.seer != null && PlayerControl.LocalPlayer == Seer.seer && !Seer.seer.Data.IsDead && Seer.seer != target && Seer.mode <= 1) {
+            if (Seer.seer != null && PlayerControl.LocalPlayer == Seer.seer && !Seer.seer.Data.IsDead && Seer.seer != target && Seer.mode <= 1)
+            {
                 Helpers.showFlash(new Color(42f / 255f, 187f / 255f, 245f / 255f));
             }
             if (Seer.deadBodyPositions != null) Seer.deadBodyPositions.Add(target.transform.position);
@@ -1237,9 +1245,10 @@ namespace TheOtherRoles.Patches
 
             // Update arsonist status
             Arsonist.updateStatus();
-			
+
             // Show flash on bait kill to the killer if enabled
-            if (Bait.bait != null && target == Bait.bait && Bait.showKillFlash && __instance != Bait.bait && __instance == PlayerControl.LocalPlayer) {
+            if (Bait.bait != null && target == Bait.bait && Bait.showKillFlash && __instance != Bait.bait && __instance == PlayerControl.LocalPlayer)
+            {
                 Helpers.showFlash(new Color(204f / 255f, 102f / 255f, 0f / 255f));
             }
 
@@ -1275,10 +1284,12 @@ namespace TheOtherRoles.Patches
     }
 
     [HarmonyPatch(typeof(KillAnimation), nameof(KillAnimation.CoPerformKill))]
-    class KillAnimationCoPerformKillPatch {
+    class KillAnimationCoPerformKillPatch
+    {
         public static bool hideNextAnimation = false;
 
-        public static void Prefix(KillAnimation __instance, [HarmonyArgument(0)]ref PlayerControl source, [HarmonyArgument(1)]ref PlayerControl target) {
+        public static void Prefix(KillAnimation __instance, [HarmonyArgument(0)] ref PlayerControl source, [HarmonyArgument(1)] ref PlayerControl target)
+        {
             if (hideNextAnimation)
                 source = target;
             hideNextAnimation = false;
@@ -1286,17 +1297,21 @@ namespace TheOtherRoles.Patches
     }
 
     [HarmonyPatch(typeof(KillAnimation), nameof(KillAnimation.SetMovement))]
-    class KillAnimationSetMovementPatch {
+    class KillAnimationSetMovementPatch
+    {
         private static int? colorId = null;
-        public static void Prefix(PlayerControl source, bool canMove) {
+        public static void Prefix(PlayerControl source, bool canMove)
+        {
             Color color = source.MyRend.material.GetColor("_BodyColor");
-            if (color != null && Morphling.morphling != null && source.Data.PlayerId == Morphling.morphling.PlayerId) {
+            if (color != null && Morphling.morphling != null && source.Data.PlayerId == Morphling.morphling.PlayerId)
+            {
                 var index = Palette.PlayerColors.IndexOf(color);
                 if (index != -1) colorId = index;
             }
         }
 
-        public static void Postfix(PlayerControl source, bool canMove) {
+        public static void Postfix(PlayerControl source, bool canMove)
+        {
             if (colorId.HasValue) source.RawSetColor(colorId.Value);
             colorId = null;
         }

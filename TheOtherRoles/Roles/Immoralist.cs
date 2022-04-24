@@ -46,7 +46,7 @@ namespace TheOtherRoles
 
         public static void Clear()
         {
-            foreach(Arrow arrow in arrows)
+            foreach (Arrow arrow in arrows)
             {
                 if (arrow?.arrow != null)
                 {

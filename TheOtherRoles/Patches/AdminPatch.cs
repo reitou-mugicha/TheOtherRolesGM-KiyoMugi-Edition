@@ -5,7 +5,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using static TheOtherRoles.TheOtherRoles;
 
-namespace TheOtherRoles.Patches {
+namespace TheOtherRoles.Patches
+{
     [Harmony]
     public class AdminPatch
     {

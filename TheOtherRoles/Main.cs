@@ -38,7 +38,7 @@ namespace TheOtherRoles
         public static ConfigEntry<bool> ShowRoleSummary { get; set; }
         public static ConfigEntry<bool> HideNameplates { get; set; }
         public static ConfigEntry<bool> ShowLighterDarker { get; set; }
-        //public static ConfigEntry<bool> HideTaskArrows { get; set; }
+        public static ConfigEntry<bool> HideTaskArrows { get; set; }
         public static ConfigEntry<bool> EnableHorseMode { get; set; }
         public static ConfigEntry<string> StreamerModeReplacementText { get; set; }
         public static ConfigEntry<string> StreamerModeReplacementColor { get; set; }
@@ -46,7 +46,6 @@ namespace TheOtherRoles
         public static ConfigEntry<ushort> Port { get; set; }
         public static ConfigEntry<string> DebugRepo { get; private set; }
         public static ConfigEntry<string> ShowPopUpVersion { get; set; }
-
         public static Sprite ModStamp;
 
         public static IRegionInfo[] defaultRegions;
@@ -73,10 +72,10 @@ namespace TheOtherRoles
             ShowRoleSummary = Config.Bind("Custom", "Show Role Summary", true);
             HideNameplates = Config.Bind("Custom", "Hide Nameplates", false);
             ShowLighterDarker = Config.Bind("Custom", "Show Lighter / Darker", false);
-            //HideTaskArrows = Config.Bind("Custom", "Hide Task Arrows", false);
+            HideTaskArrows = Config.Bind("Custom", "Hide Task Arrows", false);
             EnableHorseMode = Config.Bind("Custom", "Enable Horse Mode", false);
             ShowPopUpVersion = Config.Bind("Custom", "Show PopUp", "0");
-            StreamerModeReplacementText = Config.Bind("Custom", "Streamer Mode Replacement Text", "\n\nTheOtherRolesGMK");
+            StreamerModeReplacementText = Config.Bind("Custom", "Streamer Mode Replacement Text", "\n\nTheOtherRolesGM KM");
             StreamerModeReplacementColor = Config.Bind("Custom", "Streamer Mode Replacement Text Hex Color", "#87AAF5FF");
             DebugRepo = Config.Bind("Custom", "Debug Hat Repo", "");
 

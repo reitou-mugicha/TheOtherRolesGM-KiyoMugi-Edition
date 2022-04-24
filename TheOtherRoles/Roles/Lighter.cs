@@ -71,7 +71,8 @@ namespace TheOtherRoles
                 KeyCode.F,
                 true,
                 duration,
-                () => {
+                () =>
+                {
                     local.lightActive = false;
                     lighterButton.Timer = lighterButton.MaxTimer;
                 }

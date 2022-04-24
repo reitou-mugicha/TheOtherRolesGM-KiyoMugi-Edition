@@ -6,19 +6,20 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace TheOtherRoles.Patches {
+namespace TheOtherRoles.Patches
+{
     [HarmonyPatch]
-    public static class CredentialsPatch {
+    public static class CredentialsPatch
+    {
 
         public static string baseCredentials = $@"<size=130%><color=#ff351f>TheOtherRolesGM KM</color></size> Ver.{TheOtherRolesPlugin.Version.ToString()}";
-
-
         public static string contributorsCredentials = "<size=80%>GitHub Contributors: Alex2911, amsyarasyiq, gendelo3</size>";
 
         [HarmonyPatch(typeof(VersionShower), nameof(VersionShower.Start))]
         private static class VersionShowerPatch
         {
-            static void Postfix(VersionShower __instance) {
+            static void Postfix(VersionShower __instance)
+            {
                 var amongUsLogo = GameObject.Find("bannerLogo_AmongUs");
                 if (amongUsLogo == null) return;
 
@@ -40,16 +41,23 @@ namespace TheOtherRoles.Patches {
         [HarmonyPatch(typeof(PingTracker), nameof(PingTracker.Update))]
         private static class PingTrackerPatch
         {
-            static void Postfix(PingTracker __instance){
+            static void Postfix(PingTracker __instance)
+            {
                 __instance.text.alignment = TMPro.TextAlignmentOptions.TopRight;
-                if (AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started) {
+                if (AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started)
+                {
                     __instance.text.text = $"{baseCredentials}\n{__instance.text.text}";
-                    if (PlayerControl.LocalPlayer.Data.IsDead || (!(PlayerControl.LocalPlayer == null) && PlayerControl.LocalPlayer.isLovers())) {
+                    if (PlayerControl.LocalPlayer.Data.IsDead || (!(PlayerControl.LocalPlayer == null) && PlayerControl.LocalPlayer.isLovers()))
+                    {
                         __instance.transform.localPosition = new Vector3(3.45f, __instance.transform.localPosition.y, __instance.transform.localPosition.z);
-                    } else {
+                    }
+                    else
+                    {
                         __instance.transform.localPosition = new Vector3(4.2f, __instance.transform.localPosition.y, __instance.transform.localPosition.z);
                     }
-                } else {
+                }
+                else
+                {
                     __instance.text.text = $"{baseCredentials}\n{ModTranslation.getString("creditsFull")}\n{__instance.text.text}";
                     __instance.transform.localPosition = new Vector3(3.5f, __instance.transform.localPosition.y, __instance.transform.localPosition.z);
                 }
@@ -95,12 +103,14 @@ namespace TheOtherRoles.Patches {
                 if (renderer != null)
                 {
                     float fadeDuration = 1f;
-                    instance.StartCoroutine(Effects.Lerp(fadeDuration, new Action<float>((p) => {
+                    instance.StartCoroutine(Effects.Lerp(fadeDuration, new Action<float>((p) =>
+                    {
                         renderer.color = new Color(1, 1, 1, 1 - p);
                         if (p == 1)
                         {
                             renderer.sprite = MapOptions.enableHorseMode ? horseBannerSprite : bannerSprite;
-                            instance.StartCoroutine(Effects.Lerp(fadeDuration, new Action<float>((p) => {
+                            instance.StartCoroutine(Effects.Lerp(fadeDuration, new Action<float>((p) =>
+                            {
                                 renderer.color = new Color(1, 1, 1, p);
                             })));
                         }

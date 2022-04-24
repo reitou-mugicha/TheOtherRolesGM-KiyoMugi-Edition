@@ -15,15 +15,15 @@ namespace TheOtherRoles
         public static Color color = Palette.CrewmateBlue;
         private static CustomButton zoomIn;
         private static CustomButton zoomOut;
-        private static bool enableZoomInOut {get {return CustomOptionHolder.enableDiePlayerZoomInOut.getBool();}}
+        private static bool enableZoomInOut { get { return CustomOptionHolder.enableDiePlayerZoomInOut.getBool(); } }
         public static Sprite zoomInIcon;
         public static Sprite zoomOutIcon;
         public static void resetZoom()
-            {
-                Camera.main.orthographicSize = 3.0f;
-                HudManager.Instance.UICamera.orthographicSize = 3.0f;
-                HudManager.Instance.transform.localScale = Vector3.one;
-            }
+        {
+            Camera.main.orthographicSize = 3.0f;
+            HudManager.Instance.UICamera.orthographicSize = 3.0f;
+            HudManager.Instance.transform.localScale = Vector3.one;
+        }
 
         public DiePlayer()
         {
@@ -42,8 +42,9 @@ namespace TheOtherRoles
 
         public static void MakeButtons(HudManager hm)
         {
-            zoomIn = new CustomButton( 
-                () => {
+            zoomIn = new CustomButton(
+                () =>
+                {
 
                     if (Camera.main.orthographicSize > 3.0f)
                     {
@@ -72,8 +73,9 @@ namespace TheOtherRoles
             zoomIn.showButtonText = false;
             zoomIn.LocalScale = Vector3.one * 0.5f;
 
-            zoomOut = new CustomButton( 
-                () => {
+            zoomOut = new CustomButton(
+                () =>
+                {
 
                     if (Camera.main.orthographicSize < 18.0f)
                     {

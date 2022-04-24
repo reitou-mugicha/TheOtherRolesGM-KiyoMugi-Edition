@@ -312,7 +312,8 @@ namespace TheOtherRoles
             string msgInfo = "";
             Color color = Color.white;
 
-            if (divineResult == DivineResults.BlackWhite) {
+            if (divineResult == DivineResults.BlackWhite)
+            {
                 if (p.isCrew())
                 {
                     msgBase = "divineMessageIsCrew";
@@ -325,7 +326,8 @@ namespace TheOtherRoles
                 }
             }
 
-            else if (divineResult == DivineResults.Team) {
+            else if (divineResult == DivineResults.Team)
+            {
                 msgBase = "divineMessageTeam";
                 if (p.isCrew())
                 {
@@ -344,7 +346,8 @@ namespace TheOtherRoles
                 }
             }
 
-            else if (divineResult == DivineResults.Role) { 
+            else if (divineResult == DivineResults.Role)
+            {
                 msgBase = "divineMessageRole";
                 msgInfo = String.Join(" ", RoleInfo.getRoleInfoForPlayer(p).Select(x => Helpers.cs(x.color, x.name)).ToArray());
             }

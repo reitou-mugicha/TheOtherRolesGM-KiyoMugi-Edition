@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace TheOtherRoles.Mode.InversionMode
 {
-    
     [HarmonyPatch(typeof(ShipStatus), nameof(GameStartManager.Start))]
     public class inversion
     {
@@ -40,7 +39,7 @@ namespace TheOtherRoles.Mode.InversionMode
             {
                 airship = GameObject.Find("Airship(Clone)");
                 airship.transform.localScale = new Vector3(-0.7f, 0.7f, 1f);
-                airshipの選択スポーンシステムの対応ができてないため非表示 
+                airshipの選択スポーンシステムの対応ができてないため非表示
             }*/
 
         }

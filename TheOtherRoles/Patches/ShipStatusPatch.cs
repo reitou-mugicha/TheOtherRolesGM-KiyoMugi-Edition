@@ -5,14 +5,17 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TheOtherRoles.Patches {
+namespace TheOtherRoles.Patches
+{
 
     [HarmonyPatch(typeof(ShipStatus))]
-    public class ShipStatusPatch {
+    public class ShipStatusPatch
+    {
 
         [HarmonyPostfix]
         [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.CalculateLightRadius))]
-        public static bool Prefix(ref float __result, ShipStatus __instance, [HarmonyArgument(0)] GameData.PlayerInfo player) {
+        public static bool Prefix(ref float __result, ShipStatus __instance, [HarmonyArgument(0)] GameData.PlayerInfo player)
+        {
             ISystemType systemType = __instance.Systems.ContainsKey(SystemTypes.Electrical) ? __instance.Systems[SystemTypes.Electrical] : null;
             if (systemType == null) return true;
             SwitchSystem switchSystem = systemType.TryCast<SwitchSystem>();
@@ -34,7 +37,8 @@ namespace TheOtherRoles.Patches {
                 __result = __instance.MaxLightRadius * PlayerControl.GameOptions.ImpostorLightMod;
             else if (PlayerControl.LocalPlayer.isRole(RoleType.Lighter) && Lighter.isLightActive(PlayerControl.LocalPlayer)) // if player is Lighter and Lighter has his ability active
                 __result = Mathf.Lerp(__instance.MaxLightRadius * Lighter.lighterModeLightsOffVision, __instance.MaxLightRadius * Lighter.lighterModeLightsOnVision, num);
-            else if (Trickster.trickster != null && Trickster.lightsOutTimer > 0f) {
+            else if (Trickster.trickster != null && Trickster.lightsOutTimer > 0f)
+            {
                 float lerpValue = 1f;
                 if (Trickster.lightsOutDuration - Trickster.lightsOutTimer < 0.5f) lerpValue = Mathf.Clamp01((Trickster.lightsOutDuration - Trickster.lightsOutTimer) * 2);
                 else if (Trickster.lightsOutTimer < 0.5) lerpValue = Mathf.Clamp01(Trickster.lightsOutTimer * 2);
@@ -80,9 +84,9 @@ namespace TheOtherRoles.Patches {
             originalNumCommonTasksOption = PlayerControl.GameOptions.NumCommonTasks;
             originalNumShortTasksOption = PlayerControl.GameOptions.NumShortTasks;
             originalNumLongTasksOption = PlayerControl.GameOptions.NumLongTasks;
-            if(PlayerControl.GameOptions.NumCommonTasks > commonTaskCount) PlayerControl.GameOptions.NumCommonTasks = commonTaskCount;
-            if(PlayerControl.GameOptions.NumShortTasks > normalTaskCount) PlayerControl.GameOptions.NumShortTasks = normalTaskCount;
-            if(PlayerControl.GameOptions.NumLongTasks > longTaskCount) PlayerControl.GameOptions.NumLongTasks = longTaskCount;
+            if (PlayerControl.GameOptions.NumCommonTasks > commonTaskCount) PlayerControl.GameOptions.NumCommonTasks = commonTaskCount;
+            if (PlayerControl.GameOptions.NumShortTasks > normalTaskCount) PlayerControl.GameOptions.NumShortTasks = normalTaskCount;
+            if (PlayerControl.GameOptions.NumLongTasks > longTaskCount) PlayerControl.GameOptions.NumLongTasks = longTaskCount;
             return true;
         }
 

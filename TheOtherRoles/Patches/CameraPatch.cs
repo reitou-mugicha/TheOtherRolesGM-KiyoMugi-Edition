@@ -7,7 +7,8 @@ using UnityEngine;
 using static TheOtherRoles.TheOtherRoles;
 using System.Reflection;
 
-namespace TheOtherRoles.Patches {
+namespace TheOtherRoles.Patches
+{
 
     [Harmony]
     public class CameraPatch

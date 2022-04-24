@@ -10,7 +10,8 @@ using TheOtherRoles.Patches;
 namespace TheOtherRoles
 {
     [HarmonyPatch]
-    public class SerialKiller : RoleBase<SerialKiller> {
+    public class SerialKiller : RoleBase<SerialKiller>
+    {
 
         private static CustomButton serialKillerButton;
 
@@ -84,7 +85,8 @@ namespace TheOtherRoles
             serialKillerButton.isEffectActive = true;
         }
 
-        public void suicide() {
+        public void suicide()
+        {
             byte targetId = PlayerControl.LocalPlayer.PlayerId;
             MessageWriter killWriter = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SerialKillerSuicide, Hazel.SendOption.Reliable, -1); killWriter.Write(targetId);
             AmongUsClient.Instance.FinishRpcImmediately(killWriter);

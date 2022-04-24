@@ -27,7 +27,8 @@ namespace TheOtherRoles
             RoleType = roleId = RoleType.NekoKabocha;
         }
 
-        public override void OnMeetingStart() {
+        public override void OnMeetingStart()
+        {
             meetingKiller = null;
         }
 
@@ -38,7 +39,7 @@ namespace TheOtherRoles
 
         public override void FixedUpdate() { }
         public override void OnKill(PlayerControl target) { }
-        
+
         public override void OnDeath(PlayerControl killer = null)
         {
             killer = killer ?? meetingKiller;

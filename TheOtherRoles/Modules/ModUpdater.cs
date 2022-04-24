@@ -25,10 +25,13 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using Twitch;
 
-namespace TheOtherRoles.Modules {
+namespace TheOtherRoles.Modules
+{
     [HarmonyPatch(typeof(MainMenuManager), nameof(MainMenuManager.Start))]
-    public class ModUpdaterButton {
-        private static void Prefix(MainMenuManager __instance) {
+    public class ModUpdaterButton
+    {
+        private static void Prefix(MainMenuManager __instance)
+        {
             CustomHatLoader.LaunchHatFetcher();
             ModUpdater.LaunchUpdater();
             if (!ModUpdater.hasUpdate) return;
@@ -42,14 +45,16 @@ namespace TheOtherRoles.Modules {
             SpriteRenderer buttonSprite = button.GetComponent<SpriteRenderer>();
             passiveButton.OnClick = new Button.ButtonClickedEvent();
             passiveButton.OnClick.AddListener((UnityEngine.Events.UnityAction)onClick);
-            
+
             var text = button.transform.GetChild(0).GetComponent<TMPro.TMP_Text>();
-            __instance.StartCoroutine(Effects.Lerp(0.1f, new System.Action<float>((p) => {
+            __instance.StartCoroutine(Effects.Lerp(0.1f, new System.Action<float>((p) =>
+            {
                 text.SetText(ModTranslation.getString("updateButton"));
             })));
 
             buttonSprite.color = text.color = Color.red;
-            passiveButton.OnMouseOut.AddListener((UnityEngine.Events.UnityAction)delegate {
+            passiveButton.OnMouseOut.AddListener((UnityEngine.Events.UnityAction)delegate
+            {
                 buttonSprite.color = text.color = Color.red;
             });
 
@@ -58,7 +63,8 @@ namespace TheOtherRoles.Modules {
             ModUpdater.InfoPopup.TextAreaTMP.fontSize *= 0.7f;
             ModUpdater.InfoPopup.TextAreaTMP.enableAutoSizing = false;
 
-            void onClick() {
+            void onClick()
+            {
                 ModUpdater.ExecuteUpdate();
                 button.SetActive(false);
             }
@@ -66,15 +72,18 @@ namespace TheOtherRoles.Modules {
     }
 
     [HarmonyPatch(typeof(AnnouncementPopUp), nameof(AnnouncementPopUp.UpdateAnnounceText))]
-    public static class Announcement {
-        public static bool Prefix(AnnouncementPopUp __instance) {       
+    public static class Announcement
+    {
+        public static bool Prefix(AnnouncementPopUp __instance)
+        {
             var text = __instance.AnnounceTextMeshPro;
             text.text = ModUpdater.announcement;
             return false;
         }
     }
 
-    public class ModUpdater { 
+    public class ModUpdater
+    {
         public static bool running = false;
         public static bool hasUpdate = false;
         public static string updateURI = null;
@@ -82,58 +91,75 @@ namespace TheOtherRoles.Modules {
         public static string announcement = "";
         public static GenericPopup InfoPopup;
 
-        public static void LaunchUpdater() {
+        public static void LaunchUpdater()
+        {
             if (running) return;
             running = true;
             checkForUpdate().GetAwaiter().GetResult();
             clearOldVersions();
-            if (hasUpdate || TheOtherRolesPlugin.ShowPopUpVersion.Value != TheOtherRolesPlugin.VersionString) {
+            if (hasUpdate || TheOtherRolesPlugin.ShowPopUpVersion.Value != TheOtherRolesPlugin.VersionString)
+            {
                 DestroyableSingleton<MainMenuManager>.Instance.Announcement.gameObject.SetActive(true);
                 TheOtherRolesPlugin.ShowPopUpVersion.Value = TheOtherRolesPlugin.VersionString;
             }
             MapOptions.reloadPluginOptions();
         }
 
-        public static void ExecuteUpdate() {
+        public static void ExecuteUpdate()
+        {
             string info = ModTranslation.getString("updatePleaseWait");
             ModUpdater.InfoPopup.Show(info); // Show originally
-            if (updateTask == null) {
-                if (updateURI != null) {
+            if (updateTask == null)
+            {
+                if (updateURI != null)
+                {
                     updateTask = downloadUpdate();
-                } else {
+                }
+                else
+                {
                     info = ModTranslation.getString("updateManually");
                 }
-            } else {
+            }
+            else
+            {
                 info = ModTranslation.getString("updateInProgress");
             }
             ModUpdater.InfoPopup.StartCoroutine(Effects.Lerp(0.01f, new System.Action<float>((p) => { ModUpdater.setPopupText(info); })));
         }
-        
-        public static void clearOldVersions() {
-            try {
+
+        public static void clearOldVersions()
+        {
+            try
+            {
                 DirectoryInfo d = new DirectoryInfo(Path.GetDirectoryName(Application.dataPath) + @"\BepInEx\plugins");
                 string[] files = d.GetFiles("*.old").Select(x => x.FullName).ToArray(); // Getting old versions
                 foreach (string f in files)
                     File.Delete(f);
-            } catch (System.Exception e) {
+            }
+            catch (System.Exception e)
+            {
                 System.Console.WriteLine("Exception occured when clearing old versions:\n" + e);
             }
         }
 
-        public static async Task<bool> checkForUpdate() {
-            try {
+        public static async Task<bool> checkForUpdate()
+        {
+            try
+            {
                 HttpClient http = new HttpClient();
                 http.DefaultRequestHeaders.Add("User-Agent", "TheOtherRoles Updater");
                 var response = await http.GetAsync(new System.Uri("https://api.github.com/repos/Dekokiyo/TheOtherRolesGM-KiyoMugi-Edition/releases/latest"), HttpCompletionOption.ResponseContentRead);
-                if (response.StatusCode != HttpStatusCode.OK || response.Content == null) {
+                if (response.StatusCode != HttpStatusCode.OK || response.Content == null)
+                {
                     System.Console.WriteLine("Server returned no data: " + response.StatusCode.ToString());
                     return false;
                 }
                 string json = await response.Content.ReadAsStringAsync();
                 JObject data = JObject.Parse(json);
-                
+
                 string tagname = data["tag_name"]?.ToString();
-                if (tagname == null) {
+                if (tagname == null)
+                {
                     return false; // Something went wrong
                 }
 
@@ -142,7 +168,8 @@ namespace TheOtherRoles.Modules {
                 // check version
                 System.Version ver = System.Version.Parse(tagname.Replace("v", ""));
                 int diff = TheOtherRolesPlugin.Version.CompareTo(ver);
-                if (diff < 0) { // Update required
+                if (diff < 0)
+                { // Update required
                     hasUpdate = true;
                     announcement = string.Format(ModTranslation.getString("release"), ver, announcement);
 
@@ -150,32 +177,42 @@ namespace TheOtherRoles.Modules {
                     if (!assets.HasValues)
                         return false;
 
-                    for (JToken current = assets.First; current != null; current = current.Next) {
+                    for (JToken current = assets.First; current != null; current = current.Next)
+                    {
                         string browser_download_url = current["browser_download_url"]?.ToString();
-                        if (browser_download_url != null && current["content_type"] != null) {
+                        if (browser_download_url != null && current["content_type"] != null)
+                        {
                             if (current["content_type"].ToString().Equals("application/x-msdownload") &&
-                                browser_download_url.EndsWith(".dll")) {
+                                browser_download_url.EndsWith(".dll"))
+                            {
                                 updateURI = browser_download_url;
                                 return true;
                             }
                         }
                     }
-                }  else {
+                }
+                else
+                {
                     announcement = string.Format(ModTranslation.getString("release"), ver, announcement);
                 }
-            } catch (System.Exception ex) {
+            }
+            catch (System.Exception ex)
+            {
                 TheOtherRolesPlugin.Instance.Log.LogError(ex.ToString());
                 System.Console.WriteLine(ex);
             }
             return false;
         }
 
-        public static async Task<bool> downloadUpdate() {
-            try {
+        public static async Task<bool> downloadUpdate()
+        {
+            try
+            {
                 HttpClient http = new HttpClient();
                 http.DefaultRequestHeaders.Add("User-Agent", "TheOtherRoles Updater");
                 var response = await http.GetAsync(new System.Uri(updateURI), HttpCompletionOption.ResponseContentRead);
-                if (response.StatusCode != HttpStatusCode.OK || response.Content == null) {
+                if (response.StatusCode != HttpStatusCode.OK || response.Content == null)
+                {
                     System.Console.WriteLine("Server returned no data: " + response.StatusCode.ToString());
                     return false;
                 }
@@ -187,29 +224,36 @@ namespace TheOtherRoles.Modules {
 
                 File.Move(fullname, fullname + ".old"); // rename current executable to old
 
-                using (var responseStream = await response.Content.ReadAsStreamAsync()) {
-                    using (var fileStream = File.Create(fullname)) { // probably want to have proper name here
-                        responseStream.CopyTo(fileStream); 
+                using (var responseStream = await response.Content.ReadAsStreamAsync())
+                {
+                    using (var fileStream = File.Create(fullname))
+                    { // probably want to have proper name here
+                        responseStream.CopyTo(fileStream);
                     }
                 }
                 showPopup(ModTranslation.getString("updateRestart"));
                 return true;
-            } catch (System.Exception ex) {
+            }
+            catch (System.Exception ex)
+            {
                 TheOtherRolesPlugin.Instance.Log.LogError(ex.ToString());
                 System.Console.WriteLine(ex);
             }
             showPopup(ModTranslation.getString("updateFailed"));
             return false;
         }
-        private static void showPopup(string message) {
+        private static void showPopup(string message)
+        {
             setPopupText(message);
             InfoPopup.gameObject.SetActive(true);
         }
 
-        public static void setPopupText(string message) {
+        public static void setPopupText(string message)
+        {
             if (InfoPopup == null)
                 return;
-            if (InfoPopup.TextAreaTMP != null) {
+            if (InfoPopup.TextAreaTMP != null)
+            {
                 InfoPopup.TextAreaTMP.text = message;
             }
         }

@@ -7,9 +7,11 @@ using System.Collections;
 using static TheOtherRoles.TheOtherRoles;
 using static TheOtherRoles.TheOtherRolesGM;
 
-namespace TheOtherRoles {
+namespace TheOtherRoles
+{
     [Harmony]
-    public class CustomOverlays {
+    public class CustomOverlays
+    {
 
         public static Sprite helpButton;
         private static Sprite colorBG;
@@ -77,7 +79,8 @@ namespace TheOtherRoles {
                 infoOverlayRules.enabled = false;
             }
 
-            if (infoOverlayRoles == null) { 
+            if (infoOverlayRoles == null)
+            {
                 infoOverlayRoles = UnityEngine.Object.Instantiate(infoOverlayRules, hudManager.transform);
                 infoOverlayRoles.maxVisibleLines = 28;
                 infoOverlayRoles.fontSize = infoOverlayRoles.fontSizeMin = infoOverlayRoles.fontSizeMax = 1.15f;
@@ -131,7 +134,7 @@ namespace TheOtherRoles {
                 MapBehaviour.Instance.Close();
 
             hudManager.SetHudActive(false);
-            
+
             overlayShown = true;
 
             Transform parent;

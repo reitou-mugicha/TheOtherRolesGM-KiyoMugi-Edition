@@ -37,7 +37,8 @@ namespace TheOtherRoles
         public override void OnMeetingStart() { }
         public override void OnMeetingEnd() { }
 
-        public override void FixedUpdate() {
+        public override void FixedUpdate()
+        {
             if (player == PlayerControl.LocalPlayer && numShots > 0)
             {
                 currentTarget = setTarget();
@@ -49,7 +50,8 @@ namespace TheOtherRoles
         public override void OnDeath(PlayerControl killer = null) { }
         public override void HandleDisconnect(PlayerControl player, DisconnectReasons reason) { }
 
-        public static void MakeButtons(HudManager hm) {
+        public static void MakeButtons(HudManager hm)
+        {
 
             // Sheriff Kill
             sheriffKillButton = new CustomButton(

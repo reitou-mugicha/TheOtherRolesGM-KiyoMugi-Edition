@@ -9,51 +9,66 @@ using TheOtherRoles.Objects;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TheOtherRoles.Patches {
+namespace TheOtherRoles.Patches
+{
     [HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]
     class HudManagerUpdatePatch
     {
-        static void resetNameTagsAndColors() {
+        static void resetNameTagsAndColors()
+        {
             Dictionary<byte, PlayerControl> playersById = Helpers.allPlayersById();
 
-            foreach (PlayerControl player in PlayerControl.AllPlayerControls) {
+            foreach (PlayerControl player in PlayerControl.AllPlayerControls)
+            {
                 player.nameText.text = Helpers.hidePlayerName(PlayerControl.LocalPlayer, player) ? "" : player.CurrentOutfit.PlayerName;
-                if (PlayerControl.LocalPlayer.isImpostor() && player.isImpostor()) {
+                if (PlayerControl.LocalPlayer.isImpostor() && player.isImpostor())
+                {
                     player.nameText.color = Palette.ImpostorRed;
-                } else {
+                }
+                else
+                {
                     player.nameText.color = Color.white;
                 }
             }
 
-            if (MeetingHud.Instance != null) {
-                foreach (PlayerVoteArea player in MeetingHud.Instance.playerStates) {
+            if (MeetingHud.Instance != null)
+            {
+                foreach (PlayerVoteArea player in MeetingHud.Instance.playerStates)
+                {
                     PlayerControl playerControl = playersById.ContainsKey((byte)player.TargetPlayerId) ? playersById[(byte)player.TargetPlayerId] : null;
-                    if (playerControl != null) {
+                    if (playerControl != null)
+                    {
                         player.NameText.text = playerControl.Data.PlayerName;
-                        if (PlayerControl.LocalPlayer.Data.Role.IsImpostor && playerControl.Data.Role.IsImpostor) {
+                        if (PlayerControl.LocalPlayer.Data.Role.IsImpostor && playerControl.Data.Role.IsImpostor)
+                        {
                             player.NameText.color = Palette.ImpostorRed;
-                        } else {
+                        }
+                        else
+                        {
                             player.NameText.color = Color.white;
                         }
                     }
                 }
             }
 
-            if (PlayerControl.LocalPlayer.isImpostor()) {
+            if (PlayerControl.LocalPlayer.isImpostor())
+            {
                 List<PlayerControl> impostors = PlayerControl.AllPlayerControls.ToArray().Where(x => x.isImpostor()).ToList();
                 foreach (PlayerControl player in impostors)
                     player.nameText.color = Palette.ImpostorRed;
                 if (MeetingHud.Instance != null)
-                    foreach (PlayerVoteArea player in MeetingHud.Instance.playerStates) {
+                    foreach (PlayerVoteArea player in MeetingHud.Instance.playerStates)
+                    {
                         PlayerControl playerControl = Helpers.playerById((byte)player.TargetPlayerId);
                         if (playerControl != null && playerControl.Data.Role.IsImpostor)
-                            player.NameText.color =  Palette.ImpostorRed;
+                            player.NameText.color = Palette.ImpostorRed;
                     }
             }
 
         }
 
-        static void setPlayerNameColor(PlayerControl p, Color color) {
+        static void setPlayerNameColor(PlayerControl p, Color color)
+        {
             p.nameText.color = color;
             if (MeetingHud.Instance != null)
                 foreach (PlayerVoteArea player in MeetingHud.Instance.playerStates)
@@ -61,7 +76,8 @@ namespace TheOtherRoles.Patches {
                         player.NameText.color = color;
         }
 
-        static void setNameColors() {
+        static void setNameColors()
+        {
             if (PlayerControl.LocalPlayer.isRole(RoleType.Jester))
                 setPlayerNameColor(PlayerControl.LocalPlayer, Jester.color);
             else if (PlayerControl.LocalPlayer.isRole(RoleType.Engineer))
@@ -197,21 +213,25 @@ namespace TheOtherRoles.Patches {
                 }
             }
 
-            if (GM.gm != null) {
+            if (GM.gm != null)
+            {
                 setPlayerNameColor(GM.gm, GM.color);
             }
 
             // No else if here, as a Lover of team Jackal needs the colors
-            if (PlayerControl.LocalPlayer.isRole(RoleType.Sidekick)) {
+            if (PlayerControl.LocalPlayer.isRole(RoleType.Sidekick))
+            {
                 // Sidekick can see the jackal
                 setPlayerNameColor(Sidekick.sidekick, Sidekick.color);
-                if (Jackal.jackal != null) {
+                if (Jackal.jackal != null)
+                {
                     setPlayerNameColor(Jackal.jackal, Jackal.color);
                 }
             }
 
             // No else if here, as the Impostors need the Spy name to be colored
-            if (Spy.spy != null && PlayerControl.LocalPlayer.Data.Role.IsImpostor) {
+            if (Spy.spy != null && PlayerControl.LocalPlayer.Data.Role.IsImpostor)
+            {
                 setPlayerNameColor(Spy.spy, Spy.color);
             }
 
@@ -225,7 +245,7 @@ namespace TheOtherRoles.Patches {
 
             if (PlayerControl.LocalPlayer.isRole(RoleType.Immoralist))
             {
-                foreach(var fox in Fox.allPlayers)
+                foreach (var fox in Fox.allPlayers)
                 {
                     setPlayerNameColor(fox, Fox.color);
                 }
@@ -235,9 +255,11 @@ namespace TheOtherRoles.Patches {
             // Impostor roles with no changes: Morphling, Camouflager, Vampire, Godfather, Eraser, Janitor, Cleaner, Warlock, BountyHunter,  Witch and Mafioso
         }
 
-        static void setNameTags() {
+        static void setNameTags()
+        {
             // Mafia
-            if (PlayerControl.LocalPlayer != null && PlayerControl.LocalPlayer.Data.Role.IsImpostor) {
+            if (PlayerControl.LocalPlayer != null && PlayerControl.LocalPlayer.Data.Role.IsImpostor)
+            {
                 foreach (PlayerControl player in PlayerControl.AllPlayerControls)
                 {
                     if (player.nameText.text == "") continue;
@@ -259,7 +281,8 @@ namespace TheOtherRoles.Patches {
             }
 
             // Lovers
-            if (PlayerControl.LocalPlayer.isLovers() && PlayerControl.LocalPlayer.isAlive()) {
+            if (PlayerControl.LocalPlayer.isLovers() && PlayerControl.LocalPlayer.isAlive())
+            {
                 string suffix = Lovers.getIcon(PlayerControl.LocalPlayer);
                 var lover1 = PlayerControl.LocalPlayer;
                 var lover2 = PlayerControl.LocalPlayer.getPartner();
@@ -277,7 +300,8 @@ namespace TheOtherRoles.Patches {
             // Lawyer
             bool localIsLawyer = Lawyer.lawyer != null && Lawyer.target != null && Lawyer.lawyer == PlayerControl.LocalPlayer;
             bool localIsKnowingTarget = Lawyer.lawyer != null && Lawyer.target != null && Lawyer.targetKnows && Lawyer.target == PlayerControl.LocalPlayer;
-            if (localIsLawyer || (localIsKnowingTarget && !Lawyer.lawyer.Data.IsDead)) {
+            if (localIsLawyer || (localIsKnowingTarget && !Lawyer.lawyer.Data.IsDead))
+            {
                 string suffix = Helpers.cs(Lawyer.color, " §");
                 if (!Helpers.hidePlayerName(Lawyer.target))
                     Lawyer.target.nameText.text += suffix;
@@ -289,31 +313,38 @@ namespace TheOtherRoles.Patches {
             }
 
             // Hacker and Detective
-            if (PlayerControl.LocalPlayer != null && MapOptions.showLighterDarker) {
-                if (Helpers.ShowMeetingText) {
-                    foreach (PlayerVoteArea player in MeetingHud.Instance.playerStates) {
+            if (PlayerControl.LocalPlayer != null && MapOptions.showLighterDarker)
+            {
+                if (Helpers.ShowMeetingText)
+                {
+                    foreach (PlayerVoteArea player in MeetingHud.Instance.playerStates)
+                    {
                         var target = Helpers.playerById(player.TargetPlayerId);
-                        if (target != null)  player.NameText.text += $" ({(Helpers.isLighterColor(target.Data.DefaultOutfit.ColorId) ? ModTranslation.getString("detectiveLightLabel") : ModTranslation.getString("detectiveDarkLabel"))})";
+                        if (target != null) player.NameText.text += $" ({(Helpers.isLighterColor(target.Data.DefaultOutfit.ColorId) ? ModTranslation.getString("detectiveLightLabel") : ModTranslation.getString("detectiveDarkLabel"))})";
                     }
                 }
             }
         }
 
-        static void updateShielded() {
+        static void updateShielded()
+        {
             if (Medic.shielded == null) return;
 
-            if (Medic.shielded.Data.IsDead || Medic.medic == null || Medic.medic.Data.IsDead) {
+            if (Medic.shielded.Data.IsDead || Medic.medic == null || Medic.medic.Data.IsDead)
+            {
                 Medic.shielded = null;
             }
         }
 
-        static void timerUpdate() {
+        static void timerUpdate()
+        {
             Hacker.hackerTimer -= Time.deltaTime;
             Trickster.lightsOutTimer -= Time.deltaTime;
             Tracker.corpsesTrackingTimer -= Time.deltaTime;
         }
 
-        public static void miniUpdate() {
+        public static void miniUpdate()
+        {
             if (Mini.mini == null || Camouflager.camouflageTimer > 0f) return;
 
             float growingProgress = Mini.growingProgress();
@@ -325,7 +356,8 @@ namespace TheOtherRoles.Patches {
             if (!Helpers.hidePlayerName(Mini.mini))
                 Mini.mini.nameText.text += suffix;
 
-            if (MeetingHud.Instance != null) {
+            if (MeetingHud.Instance != null)
+            {
                 foreach (PlayerVoteArea player in MeetingHud.Instance.playerStates)
                     if (player.NameText != null && Mini.mini.PlayerId == player.TargetPlayerId)
                         player.NameText.text += suffix;
@@ -335,7 +367,8 @@ namespace TheOtherRoles.Patches {
                 Morphling.morphling.nameText.text += suffix;
         }
 
-        static void updateImpostorKillButton(HudManager __instance) {
+        static void updateImpostorKillButton(HudManager __instance)
+        {
             if (!PlayerControl.LocalPlayer.Data.Role.IsImpostor || MeetingHud.Instance) return;
             bool enabled = Helpers.ShowButtons;
             if (PlayerControl.LocalPlayer.isRole(RoleType.Vampire))

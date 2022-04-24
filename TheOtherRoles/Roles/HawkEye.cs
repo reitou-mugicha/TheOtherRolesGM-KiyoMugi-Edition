@@ -18,18 +18,20 @@ namespace TheOtherRoles
 
         public static float hawkCooldown { get { return CustomOptionHolder.hawkZoomCooldown.getFloat(); } }
         public static float hawkTime { get { return CustomOptionHolder.hawkEyeTime.getFloat(); } }
-        public static bool canUseVents{ get { return CustomOptionHolder.hawkCanUseVents.getBool(); } }
-        public bool lightActive = false;
+        public static bool canUseVents { get { return CustomOptionHolder.hawkCanUseVents.getBool(); } }
+        public static GameObject normalEye;
 
         public HawkEye()
         {
             RoleType = roleId = RoleType.HawkEye;
+            normalEye = GameObject.Find("ShadowQuad");
         }
 
         public override void OnMeetingStart()
-        { 
+        {
             hawkButton.isEffectActive = false;
             hawkButton.Timer = hawkButton.MaxTimer = HawkEye.hawkCooldown;
+            normalEye.active = true;
         }
         public override void OnMeetingEnd() { }
         public override void FixedUpdate() { }
@@ -37,6 +39,7 @@ namespace TheOtherRoles
         {
             hawkButton.isEffectActive = false;
             hawkButton.Timer = hawkButton.MaxTimer = HawkEye.hawkCooldown;
+            normalEye.active = true;
         }
         public override void OnKill(PlayerControl target) { }
         public override void OnDeath(PlayerControl killer = null) { }
@@ -46,24 +49,29 @@ namespace TheOtherRoles
         public static Sprite getButtonSprite()
         {
             if (buttonSprite) return buttonSprite;
-            buttonSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.hawkButton.png", 115f);
+            buttonSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.HawkButton.png", 115f);
             return buttonSprite;
         }
 
-        public static void MakeButtons(HudManager hm) 
-        { 
+        public static void MakeButtons(HudManager hm)
+        {
             // Hawk Eye Button
             hawkButton = new CustomButton(
-                () => {
+                () =>
+                {
+                    if (hawkButton.isEffectActive)
+                    {
+                        hawkButton.Timer = 0;
+                        return;
+                    }
                     hm.transform.localScale *= 4.5f;
                     Camera.main.orthographicSize *= 4.5f;
                     hm.UICamera.orthographicSize *= 4.5f;
-                    hawkButton.Timer = 0;
-                    local.lightActive = true;
-                    return;
+                    normalEye.active = false;
                 },
                 () => { return PlayerControl.LocalPlayer.isRole(RoleType.HawkEye) && !PlayerControl.LocalPlayer.Data.IsDead; },
-                () => {
+                () =>
+                {
                     if (hawkButton.isEffectActive)
                     {
                         hawkButton.buttonText = ModTranslation.getString("HawkEyeFinishText");
@@ -74,10 +82,10 @@ namespace TheOtherRoles
                     }
                     return PlayerControl.LocalPlayer.CanMove;
                 },
-                () => {
+                () =>
+                {
                     hawkButton.Timer = hawkButton.MaxTimer = HawkEye.hawkCooldown;
-                    local.lightActive = false;
-                    hawkButton.isEffectActive = false;
+                    return;
                 },
                 HawkEye.getButtonSprite(),
                 new Vector3(-1.8f, -0.06f, 0),
@@ -86,20 +94,21 @@ namespace TheOtherRoles
                 KeyCode.F,
                 true,
                 HawkEye.hawkTime,
-                () => {
+                () =>
+                {
                     hawkButton.Timer = hawkButton.MaxTimer = HawkEye.hawkCooldown;
                     hm.transform.localScale /= 4.5f;
                     Camera.main.orthographicSize /= 4.5f;
                     hm.UICamera.orthographicSize /= 4.5f;
-                    return;
+                    normalEye.active = true;
                 }
             );
             hawkButton.buttonText = ModTranslation.getString("HawkEyeText");
-            hawkButton.effectCancellable = false;
+            hawkButton.effectCancellable = true;
         }
 
-        public static void SetButtonCooldowns() 
-        { 
+        public static void SetButtonCooldowns()
+        {
             hawkButton.MaxTimer = HawkEye.hawkCooldown;
         }
 

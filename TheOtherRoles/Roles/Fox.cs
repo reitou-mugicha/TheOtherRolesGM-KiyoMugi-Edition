@@ -91,7 +91,8 @@ namespace TheOtherRoles
 
         public override void FixedUpdate()
         {
-            if (player == PlayerControl.LocalPlayer) {
+            if (player == PlayerControl.LocalPlayer)
+            {
                 arrowUpdate();
                 if (player.isAlive())
                 {
