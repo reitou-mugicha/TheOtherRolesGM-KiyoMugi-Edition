@@ -49,7 +49,7 @@ namespace TheOtherRoles.Patches
                     __instance.text.text = $"{baseCredentials}\n{__instance.text.text}";
                     if (PlayerControl.LocalPlayer.Data.IsDead || (!(PlayerControl.LocalPlayer == null) && PlayerControl.LocalPlayer.isLovers()))
                     {
-                        __instance.transform.localPosition = new Vector3(3.45f, __instance.transform.localPosition.y, __instance.transform.localPosition.z);
+                        __instance.transform.localPosition = new Vector3(5f, 4f, -10f);
                     }
                     else
                     {
@@ -59,7 +59,7 @@ namespace TheOtherRoles.Patches
                 else
                 {
                     __instance.text.text = $"{baseCredentials}\n{ModTranslation.getString("creditsFull")}\n{__instance.text.text}";
-                    __instance.transform.localPosition = new Vector3(3.5f, __instance.transform.localPosition.y, __instance.transform.localPosition.z);
+                    __instance.transform.localPosition = new Vector3(4f, __instance.transform.localPosition.y, __instance.transform.localPosition.z);
                 }
             }
         }
