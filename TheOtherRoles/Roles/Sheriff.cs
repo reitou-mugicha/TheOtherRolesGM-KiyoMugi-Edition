@@ -70,6 +70,7 @@ namespace TheOtherRoles
                         if ((local.currentTarget.Data.Role.IsImpostor && (local.currentTarget != Mini.mini || Mini.isGrownUp())) ||
                             (Sheriff.spyCanDieToSheriff && Spy.spy == local.currentTarget) ||
                             (Sheriff.madmateCanDieToSheriff && local.currentTarget.hasModifier(ModifierType.Madmate)) ||
+                            (Sheriff.madmateCanDieToSheriff && local.currentTarget.hasModifier(ModifierType.TaskHacker)) ||
                             (Sheriff.createdMadmateCanDieToSheriff && local.currentTarget.hasModifier(ModifierType.CreatedMadmate)) ||
                             (Sheriff.canKillNeutrals && local.currentTarget.isNeutral()) ||
                             (Jackal.jackal == local.currentTarget || Sidekick.sidekick == local.currentTarget))

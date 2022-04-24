@@ -25,6 +25,7 @@ namespace TheOtherRoles.Patches
         LawyerSoloWin = 16,
         PlagueDoctorWin = 17,
         FoxWin = 18,
+        TeamKingdomWin = 19,
     }
 
     enum WinCondition
@@ -837,7 +838,7 @@ namespace TheOtherRoles.Patches
                         {
                             foreach (var task in player.Data.Tasks)
                             {
-                                if (player.Data.IsDead && player.isCrew() && !player.hasModifier(ModifierType.Madmate) && !player.hasModifier(ModifierType.CreatedMadmate))
+                                if (player.Data.IsDead && player.isCrew() && !player.hasModifier(ModifierType.Madmate) && !player.hasModifier(ModifierType.CreatedMadmate) && !player.hasModifier(ModifierType.TaskHacker))
                                 {
                                     if (!task.Complete)
                                     {

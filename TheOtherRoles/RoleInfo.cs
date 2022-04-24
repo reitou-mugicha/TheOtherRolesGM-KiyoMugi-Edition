@@ -272,7 +272,7 @@ namespace TheOtherRoles
             string roleName = String.Join(" ", roleInfo.Select(x => useColors ? Helpers.cs(x.color, x.name) : x.name).ToArray());
             if (Lawyer.target != null && p?.PlayerId == Lawyer.target.PlayerId && PlayerControl.LocalPlayer != Lawyer.target) roleName += (useColors ? Helpers.cs(Pursuer.color, " §") : " §");
 
-            if (p.hasModifier(ModifierType.Madmate) || p.hasModifier(ModifierType.CreatedMadmate))
+            if (p.hasModifier(ModifierType.Madmate) || p.hasModifier(ModifierType.CreatedMadmate) || p.hasModifier(ModifierType.TaskHacker))
             {
                 // Madmate only
                 if (roleInfo.Contains(crewmate))
