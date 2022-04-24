@@ -94,7 +94,6 @@ namespace TheOtherRoles
         FoxCreatesImmoralist,
         SwapperAnimate,
         SprinterSprint,
-        AddTasks,
     }
 
     public static class RPCProcedure
@@ -389,7 +388,7 @@ namespace TheOtherRoles
             }
 
             // Suicide (exile) when impostor or impostor variants
-            if (!Shifter.isNeutral && (player.Data.Role.IsImpostor || player.isNeutral() || player.hasModifier(ModifierType.Madmate) || player.hasModifier(ModifierType.CreatedMadmate) || player.hasModifier(ModifierType.TaskHacker)))
+            if (!Shifter.isNeutral && (player.Data.Role.IsImpostor || player.isNeutral() || player.hasModifier(ModifierType.Madmate) || player.hasModifier(ModifierType.CreatedMadmate)))
             {
                 oldShifter.Exiled();
                 finalStatuses[oldShifter.PlayerId] = FinalStatus.Suicide;
@@ -865,15 +864,6 @@ namespace TheOtherRoles
             Sprinter.setSprinting(player, sprinting);
         }
 
-        public static void taskHackerAddCrewTasks(byte playerId)
-        {
-            PlayerControl player = Helpers.playerById(playerId);
-            if (player.isCrew())
-            {
-                player.generateAndAssignTasks(0, TaskHacker.addCrewNumTask, 0);
-            }
-        }
-
         public static void foxStealth(byte playerId, bool stealthed)
         {
             PlayerControl player = Helpers.playerById(playerId);
@@ -1278,9 +1268,6 @@ namespace TheOtherRoles
                         break;
                     case (byte)CustomRPC.SprinterSprint:
                         RPCProcedure.sprinterSprint(reader.ReadByte(), reader.ReadBoolean());
-                        break;
-                    case (byte)CustomRPC.AddTasks:
-                        RPCProcedure.taskHackerAddCrewTasks(reader.ReadByte());
                         break;
 
                     case (byte)CustomRPC.GMKill:

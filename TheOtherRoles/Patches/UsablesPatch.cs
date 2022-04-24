@@ -31,12 +31,6 @@ namespace TheOtherRoles.Patches
                 return true;
             }
 
-            if (pc.hasModifier(ModifierType.TaskHacker) && (isLights || (isComms && !Madmate.canFixComm)))
-            {
-                return true;
-            }
-
-
             if (pc.hasModifier(ModifierType.CreatedMadmate) && (isLights || (isComms && !CreatedMadmate.canFixComm)))
             {
                 return true;
@@ -213,7 +207,7 @@ namespace TheOtherRoles.Patches
                 bool canUse;
                 bool couldUse;
                 __instance.CanUse(PlayerControl.LocalPlayer.Data, out canUse, out couldUse);
-                bool canMoveInVents = PlayerControl.LocalPlayer != Spy.spy && !PlayerControl.LocalPlayer.hasModifier(ModifierType.Madmate) && !PlayerControl.LocalPlayer.hasModifier(ModifierType.CreatedMadmate) && !PlayerControl.LocalPlayer.hasModifier(ModifierType.TaskHacker);
+                bool canMoveInVents = PlayerControl.LocalPlayer != Spy.spy && !PlayerControl.LocalPlayer.hasModifier(ModifierType.Madmate) && !PlayerControl.LocalPlayer.hasModifier(ModifierType.CreatedMadmate);
                 if (!canUse) return false; // No need to execute the native method as using is disallowed anyways
 
                 bool isEnter = !PlayerControl.LocalPlayer.inVent;

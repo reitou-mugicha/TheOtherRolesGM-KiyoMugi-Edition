@@ -302,7 +302,7 @@ namespace TheOtherRoles
                 player.myTasks.Insert(0, task);
             }
 
-            if (player.hasModifier(ModifierType.Madmate) || player.hasModifier(ModifierType.CreatedMadmate) || player.hasModifier(ModifierType.TaskHacker))
+            if (player.hasModifier(ModifierType.Madmate) || player.hasModifier(ModifierType.CreatedMadmate))
             {
                 var task = new GameObject("RoleTask").AddComponent<ImportantTextTask>();
                 task.transform.SetParent(player.transform, false);
@@ -366,7 +366,6 @@ namespace TheOtherRoles
         {
             return (player.isNeutral() && !player.neutralHasTasks()) ||
                    (player.hasModifier(ModifierType.CreatedMadmate) && !CreatedMadmate.hasTasks) ||
-                   (player.hasModifier(ModifierType.TaskHacker) && !TaskHacker.hasTasks) ||
                    (player.hasModifier(ModifierType.Madmate) && !Madmate.hasTasks) ||
                    (player.isLovers() && Lovers.separateTeam && !Lovers.tasksCount);
         }
@@ -412,14 +411,6 @@ namespace TheOtherRoles
 
             if (player.Data != null && player.Data.Tasks != null)
                 player.Data.Tasks.Clear();
-        }
-
-        public static void taskHackerAddCrewTasks(this PlayerControl player)
-        {
-            if (player.isCrew())
-            {
-                player.generateAndAssignTasks(0, TaskHacker.addCrewNumTask, 0);
-            }
         }
 
         public static void setSemiTransparent(this PoolablePlayer player, bool value)
@@ -569,8 +560,6 @@ namespace TheOtherRoles
                 roleCouldUse = true;
             else if (CreatedMadmate.canEnterVents && player.hasModifier(ModifierType.CreatedMadmate))
                 roleCouldUse = true;
-            else if (TaskHacker.canEnterVents && player.hasModifier(ModifierType.TaskHacker))
-                roleCouldUse = true;
             else if (Vulture.canUseVents && player.isRole(RoleType.Vulture))
                 roleCouldUse = true;
             else if (player.Data?.Role != null && player.Data.Role.CanVent)
@@ -595,8 +584,6 @@ namespace TheOtherRoles
             if (Madmate.canSabotage && player.hasModifier(ModifierType.Madmate))
                 roleCouldUse = true;
             else if (CreatedMadmate.canSabotage && player.hasModifier(ModifierType.CreatedMadmate))
-                roleCouldUse = true;
-            else if (TaskHacker.canSabotage && player.hasModifier(ModifierType.TaskHacker))
                 roleCouldUse = true;
             else if (Jester.canSabotage && player.isRole(RoleType.Jester))
                 roleCouldUse = true;

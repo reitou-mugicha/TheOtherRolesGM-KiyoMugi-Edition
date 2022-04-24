@@ -197,22 +197,6 @@ namespace TheOtherRoles.Patches {
                 }
             }
 
-            else if (PlayerControl.LocalPlayer.hasModifier(ModifierType.TaskHacker))
-            {
-                setPlayerNameColor(PlayerControl.LocalPlayer, Madmate.color);
-
-                if (Madmate.knowsImpostors(PlayerControl.LocalPlayer))
-                {
-                    foreach (var p in PlayerControl.AllPlayerControls)
-                    {
-                        if (p.isImpostor() || p.isRole(RoleType.Spy))
-                        {
-                            setPlayerNameColor(p, Palette.ImpostorRed);
-                        }
-                    }
-                }
-            }
-
             if (GM.gm != null) {
                 setPlayerNameColor(GM.gm, GM.color);
             }

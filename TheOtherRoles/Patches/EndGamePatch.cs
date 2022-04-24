@@ -838,7 +838,7 @@ namespace TheOtherRoles.Patches
                         {
                             foreach (var task in player.Data.Tasks)
                             {
-                                if (player.Data.IsDead && player.isCrew() && !player.hasModifier(ModifierType.Madmate) && !player.hasModifier(ModifierType.CreatedMadmate) && !player.hasModifier(ModifierType.TaskHacker))
+                                if (player.Data.IsDead && player.isCrew() && !player.hasModifier(ModifierType.Madmate) && !player.hasModifier(ModifierType.CreatedMadmate))
                                 {
                                     if (!task.Complete)
                                     {
