@@ -25,7 +25,7 @@ namespace TheOtherRoles.Patches
         LawyerSoloWin = 16,
         PlagueDoctorWin = 17,
         FoxWin = 18,
-        TeamKingdomWin = 19,
+        //TeamKingdomWin = 19,
     }
 
     enum WinCondition
@@ -45,6 +45,7 @@ namespace TheOtherRoles.Patches
         AdditionalAlivePursuerWin,
         PlagueDoctorWin,
         FoxWin,
+        //KingdomWin,
 
         EveryoneDied,
     }
@@ -182,8 +183,11 @@ namespace TheOtherRoles.Patches
             if (Vulture.vulture != null) notWinners.Add(Vulture.vulture);
             if (Lawyer.lawyer != null) notWinners.Add(Lawyer.lawyer);
             if (Pursuer.pursuer != null) notWinners.Add(Pursuer.pursuer);
+            //if (Minions.minions != null) notWinners.Add(Minions.minions);
+            //if (King.king != null) notWinners.Add(King.king);
 
             notWinners.AddRange(Jackal.formerJackals);
+            //notWinners.AddRange(King.formerKingdoms);
             notWinners.AddRange(Madmate.allPlayers);
             notWinners.AddRange(CreatedMadmate.allPlayers);
             notWinners.AddRange(Opportunist.allPlayers);
@@ -220,6 +224,7 @@ namespace TheOtherRoles.Patches
             bool miniLose = Mini.mini != null && gameOverReason == (GameOverReason)CustomGameOverReason.MiniLose;
             bool loversWin = Lovers.anyAlive() && !(Lovers.separateTeam && gameOverReason == GameOverReason.HumansByTask);
             bool teamJackalWin = gameOverReason == (GameOverReason)CustomGameOverReason.TeamJackalWin && ((Jackal.jackal != null && Jackal.jackal.isAlive()) || (Sidekick.sidekick != null && !Sidekick.sidekick.isAlive()));
+            //bool teamKingdomWin = gameOverReason == (GameOverReason)CustomGameOverReason.TeamKingdomWin && ((King.king != null && King.king.isAlive()) || (Minions.minions != null && !Minions.minions.isAlive()));
             bool vultureWin = Vulture.vulture != null && gameOverReason == (GameOverReason)CustomGameOverReason.VultureWin;
             bool lawyerSoloWin = Lawyer.lawyer != null && gameOverReason == (GameOverReason)CustomGameOverReason.LawyerSoloWin;
             bool plagueDoctorWin = PlagueDoctor.exists && gameOverReason == (GameOverReason)CustomGameOverReason.PlagueDoctorWin;
@@ -329,7 +334,30 @@ namespace TheOtherRoles.Patches
                     wpdFormerJackal.IsImpostor = false;
                     TempData.winners.Add(wpdFormerJackal);
                 }
-            }
+            }/*
+            // Kingdom win condition
+            else if (teamKingdomWin)
+            {
+                // Jackal wins if nobody except jackal is alive
+                AdditionalTempData.winCondition = WinCondition.KingdomWin;
+                TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
+                WinningPlayerData wpd = new WinningPlayerData(King.king.Data);
+                wpd.IsImpostor = false;
+                TempData.winners.Add(wpd);
+
+                if (Minions.minions != null)
+                {
+                    WinningPlayerData wpdMinions = new WinningPlayerData(Sidekick.sidekick.Data);
+                    wpdMinions.IsImpostor = false;
+                    TempData.winners.Add(wpdMinions);
+                }
+                foreach (var player in King.formerKingdoms)
+                {
+                    WinningPlayerData wpdFormerKing = new WinningPlayerData(player.Data);
+                    wpdFormerKing.IsImpostor = false;
+                    TempData.winners.Add(wpdFormerKing);
+                }
+            }*/
             // Lawyer solo win
             else if (lawyerSoloWin)
             {
@@ -571,7 +599,13 @@ namespace TheOtherRoles.Patches
                         bonusText = "jackalWin";
                         textRenderer.color = Jackal.color;
                         __instance.BackgroundBar.material.SetColor("_Color", Jackal.color);
-                    }
+                    }/*
+                    else if (AdditionalTempData.winCondition == WinCondition.KingdomWin)
+                    {
+                        bonusText = "kingdomWin";
+                        textRenderer.color = King.color;
+                        __instance.BackgroundBar.material.SetColor("_Color", King.color);
+                    }*/
                     else if (AdditionalTempData.winCondition == WinCondition.EveryoneDied)
                     {
                         bonusText = "everyoneDied";
@@ -722,6 +756,7 @@ namespace TheOtherRoles.Patches
                     if (CheckAndEndGameForTaskWin(__instance)) return false;
                     if (CheckAndEndGameForLoverWin(__instance, statistics)) return false;
                     if (CheckAndEndGameForJackalWin(__instance, statistics)) return false;
+                    //if (CheckAndEndGameForKingdomWin(__instance, statistics)) return false;
                     if (CheckAndEndGameForImpostorWin(__instance, statistics)) return false;
                     if (CheckAndEndGameForCrewmateWin(__instance, statistics)) return false;
                     return false;
@@ -855,7 +890,43 @@ namespace TheOtherRoles.Patches
                         }
                     }
                     return false;
-                }
+                }/*
+
+                private static bool CheckAndEndGameForKingdomWin(ShipStatus __instance, PlayerStatistics statistics)
+                {
+                    if (GameData.Instance.TotalTasks > 0 && GameData.Instance.TotalTasks <= GameData.Instance.CompletedTasks)
+                    {
+                        UncheckedEndGame(GameOverReason.HumansByTask);
+                        return true;
+                    }
+
+                    if (King.exists)
+                    {
+                        bool isKingAlive = King.isKingAlive();
+                        bool isKingCompletedtasks = King.isKingCompletedTasks();
+                        int numDeadPlayerUncompletedTasks = 0;
+                        foreach (var player in PlayerControl.AllPlayerControls)
+                        {
+                            foreach (var task in player.Data.Tasks)
+                            {
+                                if (player.Data.IsDead && player.isCrew() && !player.hasModifier(ModifierType.Madmate) && !player.hasModifier(ModifierType.CreatedMadmate))
+                                {
+                                    if (!task.Complete)
+                                    {
+                                        numDeadPlayerUncompletedTasks++;
+                                    }
+                                }
+                            }
+                        }
+
+                        if (isKingCompletedtasks && isKingAlive && GameData.Instance.TotalTasks > 0 && GameData.Instance.TotalTasks <= GameData.Instance.CompletedTasks + numDeadPlayerUncompletedTasks)
+                        {
+                            UncheckedEndGame(GameOverReason.HumansByTask);
+                            return true;
+                        }
+                    }
+                    return false;
+                }*/
 
                 private static bool CheckAndEndGameForLoverWin(ShipStatus __instance, PlayerStatistics statistics)
                 {
@@ -872,7 +943,7 @@ namespace TheOtherRoles.Patches
                     if (statistics.TeamJackalAlive >= statistics.TotalAlive - statistics.TeamJackalAlive - statistics.FoxAlive &&
                         statistics.TeamImpostorsAlive == 0 &&
                         (statistics.TeamJackalLovers == 0 || statistics.TeamJackalLovers >= statistics.CouplesAlive * 2)
-                       )
+                        )
                     {
                         UncheckedEndGame(CustomGameOverReason.TeamJackalWin);
                         return true;
@@ -937,6 +1008,7 @@ namespace TheOtherRoles.Patches
             {
                 public int TeamImpostorsAlive { get; set; }
                 public int TeamJackalAlive { get; set; }
+                public int TeamKingdomAlive { get; set; }
                 public int TeamLoversAlive { get; set; }
                 public int CouplesAlive { get; set; }
                 public int TeamCrew { get; set; }

@@ -283,6 +283,7 @@ namespace TheOtherRoles
         public static CustomOption enableDiePlayerZoomInOut;
         public static CustomOption onePlayerStart;
         public static CustomOption airshipReactorDuration;
+        public static CustomOption helloweenMode;
 
         public static CustomOption inversionSkeld;
         public static CustomOption inversionMira;
@@ -380,6 +381,9 @@ namespace TheOtherRoles
         public static CustomOption sprinterCooldown;
         public static CustomOption sprinterDuration;
         public static CustomOption sprinterSpeedBonus;
+
+        //public static CustomRoleOption kingdomSpawnRate;
+        //public static CustomTasksOption kingTasks;
 
         internal static Dictionary<byte, byte[]> blockedRolePairings = new Dictionary<byte, byte[]>();
 
@@ -584,6 +588,9 @@ namespace TheOtherRoles
             jackalCanCreateSidekickFromImpostor = CustomOption.Create(229, "jackalCanCreateSidekickFromImpostor", true, jackalCanCreateSidekick);
             jackalCanCreateSidekickFromFox = CustomOption.Create(431, "jackalCanCreateSidekickFromFox", true, jackalCanCreateSidekick);
 
+            //kingdomSpawnRate = new CustomRoleOption(5030, "kingdom", King.color, 1);
+            //kingTasks = new CustomTasksOption(5031, 5,3,7, kingdomSpawnRate);
+
             vultureSpawnRate = new CustomRoleOption(340, "vulture", Vulture.color, 1);
             vultureCooldown = CustomOption.Create(341, "vultureCooldown", 15f, 2.5f, 60f, 2.5f, vultureSpawnRate, format: "unitSeconds");
             vultureNumberToWin = CustomOption.Create(342, "vultureNumberToWin", 4f, 1f, 12f, 1f, vultureSpawnRate);
@@ -741,6 +748,7 @@ namespace TheOtherRoles
             enableDiePlayerZoomInOut = CustomOption.Create(542, "diePlayerCanZoomInOut", false, specialOptions);
             onePlayerStart = CustomOption.Create(543, "onePlayerStart", false, specialOptions);
             airshipReactorDuration = CustomOption.Create(9999, "airshipReactorDuration", 60f, 0f, 600f, 5f, specialOptions, format: "unitSeconds");
+            helloweenMode = CustomOption.Create(544, "helloweenMode", false, specialOptions);
 
             inversionSkeld = CustomOption.Create(3950, "inversionSkeld", false, specialOptions);
             inversionMira = CustomOption.Create(3951, "inversionMira", false, specialOptions);

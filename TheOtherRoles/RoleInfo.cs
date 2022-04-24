@@ -41,7 +41,6 @@ namespace TheOtherRoles
 
         public static RoleInfo jester = new RoleInfo("jester", Jester.color, CustomOptionHolder.jesterSpawnRate, RoleType.Jester);
         public static RoleInfo mayor = new RoleInfo("mayor", Mayor.color, CustomOptionHolder.mayorSpawnRate, RoleType.Mayor);
-        //public static RoleInfo evilMayor = new RoleInfo("evilMayor", Palette.ImpostorRed, CustomOptionHolder.mayorSpawnRate, RoleType.EvilMayor);
         public static RoleInfo engineer = new RoleInfo("engineer", Engineer.color, CustomOptionHolder.engineerSpawnRate, RoleType.Engineer);
         public static RoleInfo sheriff = new RoleInfo("sheriff", Sheriff.color, CustomOptionHolder.sheriffSpawnRate, RoleType.Sheriff);
         public static RoleInfo lighter = new RoleInfo("lighter", Lighter.color, CustomOptionHolder.lighterSpawnRate, RoleType.Lighter);
@@ -101,8 +100,6 @@ namespace TheOtherRoles
         public static RoleInfo hawkEye = new RoleInfo("hawkEye", HawkEye.color, CustomOptionHolder.hawkEyeSpawnRate, RoleType.HawkEye);
         //public static RoleInfo king = new RoleInfo("king", King.color, CustomOptionHolder.kingdomSpawnRate, RoleType.King);
         //public static RoleInfo minions = new RoleInfo("minions", Minions.color, CustomOptionHolder.kingdomSpawnRate, RoleType.Minions);
-        //public static RoleInfo chunibyo = new RoleInfo("chunibyo", Chunibyo.color, CustomOptionHolder.chunibyoSpawnRate, RoleType.Chunibyo);
-        //public static RoleInfo simpleKiller = new RoleInfo("simpleKiller", SimpleKiller.color, CustomOptionHolder.simpleKillerSpawnRate,RoleType.SimpleKiller);
 
         public static List<RoleInfo> allRoleInfos = new List<RoleInfo>() {
                 impostor,
@@ -125,7 +122,6 @@ namespace TheOtherRoles
                 niceGuesser,
                 evilGuesser,
                 mayor,
-                //evilMayor,
                 lovers,
                 jester,
                 arsonist,
@@ -164,7 +160,9 @@ namespace TheOtherRoles
                 fortuneTeller,
                 sprinter,
                 evilHacker,
-                hawkEye
+                hawkEye//,
+                //king,
+                //minions
             };
 
         public static string tl(string key)
@@ -180,7 +178,6 @@ namespace TheOtherRoles
             // Special roles
             if (p.isRole(RoleType.Jester)) infos.Add(jester);
             if (p.isRole(RoleType.Mayor)) infos.Add(mayor);
-            //if (p.isRole(RoleType.EvilMayor)) infos.Add(evilMayor);
             if (p.isRole(RoleType.Engineer)) infos.Add(engineer);
             if (p.isRole(RoleType.Sheriff)) infos.Add(sheriff);
             if (p.isRole(RoleType.Lighter)) infos.Add(lighter);
@@ -223,9 +220,8 @@ namespace TheOtherRoles
             if (p.isRole(RoleType.Pursuer)) infos.Add(pursuer);
             if (p.isRole(RoleType.Ninja)) infos.Add(ninja);
             if (p.isRole(RoleType.HawkEye)) infos.Add(hawkEye);
-            //if (p.isRole(RoleType.King)) infos.Add(king);
+            //if (p.isRole(RoleType.King) || (King.formerKingdoms != null && King.formerKingdoms.Any(x => x.PlayerId == p.PlayerId))) infos.Add(king);
             //if (p.isRole(RoleType.Minions)) infos.Add(minions);
-            //if (p.isRole(RoleType.Chunibyo)) infos.Add(chunibyo);
             if (p.isRole(RoleType.PlagueDoctor)) infos.Add(plagueDoctor);
             if (p.isRole(RoleType.NekoKabocha)) infos.Add(nekoKabocha);
             if (p.isRole(RoleType.SerialKiller)) infos.Add(serialKiller);

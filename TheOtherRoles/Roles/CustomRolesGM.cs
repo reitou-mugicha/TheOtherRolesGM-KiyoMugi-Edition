@@ -40,6 +40,8 @@ namespace TheOtherRoles
             Fox.Clear();
             FortuneTeller.Clear();
             HawkEye.Clear();
+            //King.Clear();
+            //Minions.Clear();
             Role.ClearAll();
         }
 

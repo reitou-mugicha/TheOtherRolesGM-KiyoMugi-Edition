@@ -295,6 +295,14 @@ namespace TheOtherRoles.Patches
                 setRoleToRandomPlayer((byte)RoleType.Mafioso, data.impostors);
                 data.maxImpostorRoles -= 3;
             }
+
+            /* Assign Kingdom
+            if (data.neutral.Count >= 2 && data.maxNeutralRoles >= 2 && (rnd.Next(1, 101) <= CustomOptionHolder.kingdomSpawnRate.getSelection() * 10))
+            {
+                setRoleToRandomPlayer((byte)RoleType.King, data.neutral);
+                setRoleToRandomPlayer((byte)RoleType.Minions, data.neutral);
+                data.maxNeutralRoles -= 2;
+            }*/
         }
 
         private static void selectFactionForFactionIndependentRoles(RoleAssignmentData data)

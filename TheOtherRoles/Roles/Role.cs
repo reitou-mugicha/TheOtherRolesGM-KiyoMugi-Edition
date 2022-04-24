@@ -80,6 +80,8 @@ namespace TheOtherRoles
         Fox,
         Immoralist,
         HawkEye,
+        //King,
+        //Minions,
 
 
         GM = 200,
@@ -111,6 +113,8 @@ namespace TheOtherRoles
             { RoleType.PlagueDoctor, typeof(RoleBase<PlagueDoctor>) },
             { RoleType.Fox, typeof(RoleBase<Fox>) },
             { RoleType.Immoralist, typeof(RoleBase<Immoralist>) },
+            //{ RoleType.King, typeof(RoleBase<King>) },
+            //{ RoleType.Minions, typeof(RoleBase<Minions>) },
 
             // Other
             { RoleType.Watcher, typeof(RoleBase<Watcher>) },
@@ -244,8 +248,6 @@ namespace TheOtherRoles
                     return Jester.jester == player;
                 case RoleType.Mayor:
                     return Mayor.mayor == player;
-                /*case RoleType.EvilMayor:
-                    return Mayor.evilMayor == player;*/
                 case RoleType.Engineer:
                     return Engineer.engineer == player;
                 case RoleType.Godfather:
@@ -347,9 +349,6 @@ namespace TheOtherRoles
                 case RoleType.Mayor:
                     Mayor.mayor = player;
                     break;
-                /*case RoleType.EvilMayor:
-                    Mayor.evilMayor = player;
-                    break;*/
                 case RoleType.Engineer:
                     Engineer.engineer = player;
                     break;
@@ -492,6 +491,7 @@ namespace TheOtherRoles
 
             // Crewmate roles
             if (player.isRole(RoleType.Engineer)) Engineer.clearAndReload();
+            if (player.isRole(RoleType.Mayor)) Mayor.clearAndReload();
             if (player.isRole(RoleType.Detective)) Detective.clearAndReload();
             if (player.isRole(RoleType.TimeMaster)) TimeMaster.clearAndReload();
             if (player.isRole(RoleType.Medic)) Medic.clearAndReload();
@@ -530,7 +530,6 @@ namespace TheOtherRoles
             if (player.isRole(RoleType.Lawyer)) Lawyer.clearAndReload();
             if (player.isRole(RoleType.Pursuer)) Pursuer.clearAndReload();
             if (Guesser.isGuesser(player.PlayerId)) Guesser.clear(player.PlayerId);
-            if (Mayor.isMayor(player.PlayerId)) Mayor.clear(player.PlayerId);
 
 
             if (player.isRole(RoleType.Jackal))
@@ -557,7 +556,6 @@ namespace TheOtherRoles
             }
 
             if (player.isRole(RoleType.Mayor)) Mayor.mayor = target;
-            // if (player.isRole(RoleType.EvilMayor)) Mayor.evilMayor = target;
             if (player.isRole(RoleType.Engineer)) Engineer.engineer = target;
             if (player.isRole(RoleType.Detective)) Detective.detective = target;
             if (player.isRole(RoleType.TimeMaster)) TimeMaster.timeMaster = target;

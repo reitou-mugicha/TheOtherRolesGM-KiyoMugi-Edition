@@ -340,6 +340,9 @@ namespace TheOtherRoles
                     (player.isRole(RoleType.Jackal) ||
                     player.isRole(RoleType.Sidekick) ||
                     Jackal.formerJackals.Contains(player) ||
+                    /*player.isRole(RoleType.King) ||
+                    player.isRole(RoleType.Minions) ||
+                    King.formerKingdoms.Contains(player) ||*/
                     player.isRole(RoleType.Arsonist) ||
                     player.isRole(RoleType.Jester) ||
                     player.isRole(RoleType.Opportunist) ||
