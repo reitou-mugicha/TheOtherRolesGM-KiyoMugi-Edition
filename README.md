@@ -56,14 +56,15 @@ Even more roles are coming soon :)
 | [Neko-Kabocha](#neko-kabocha) |  [Bait](#bait) |  |  |
 | [Evil Watcher](#Watcher) |  [Madmate](#madmate)  |  |  |
 | [Evil Hacker](#evil-hacker) |  [Medium](#medium) |  |  |
-|  |  [Fortune Teller](#fortune-teller) |  |  |
-| [Hawk Eye](#hawk-eye) |  [Nice Watcher](#Watcher) |  |  |
+| [Hawk Eye](#hawk-eye) |  [Fortune Teller](#fortune-teller) |  |  |
+|  |  [Nice Watcher](#Watcher) |  |  |
 
 The [Role Assignment](#role-assignment) sections explains how the roles are being distributed among the players.
 
 # Releases
 | Among Us - Version | GM Verrsion | Mod Version | Link |
 |----------|-------------|-----------------|-----------------|
+| 2022.3.29s | Ver.3.5.5.1 | Ver.1.0.5 | [Download](https://github.com/Dekokiyo/TheOtherRolesGM-KiyoMugi-Edition/releases/download/1.0.5/TheOtherRolesGMK1.0.5.zip) |
 | 2022.3.29s | Ver.3.5.5.1 | Ver.1.0.4.2 | [Download](https://github.com/Dekokiyo/TheOtherRolesGM-KiyoMugi-Edition/releases/download/1.0.4.2/TheOtherRolesGMK1.0.4.2.zip) |
 | 2022.3.29s | Ver.3.5.5.1 | Ver.1.0.4.1 | [Download](https://github.com/Dekokiyo/TheOtherRolesGM-KiyoMugi-Edition/releases/download/1.0.4.1/TheOtherRolesGMK1.0.4.1.zip) |
 | 2022.3.29s | Ver.3.5.5.1 | Ver.1.0.4 | [Download](https://github.com/Dekokiyo/TheOtherRolesGM-KiyoMugi-Edition/releases/download/1.0.4/TheOtherRolesGMK1.0.4.zip) |
