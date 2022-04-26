@@ -18,6 +18,7 @@ namespace TheOtherRoles
         private static bool enableZoomInOut { get { return CustomOptionHolder.enableDiePlayerZoomInOut.getBool(); } }
         public static Sprite zoomInIcon;
         public static Sprite zoomOutIcon;
+        public static GameObject normalEye;
         public static void resetZoom()
         {
             Camera.main.orthographicSize = 3.0f;
@@ -28,6 +29,7 @@ namespace TheOtherRoles
         public DiePlayer()
         {
             RoleType = roleId = RoleType.NoRole;
+            normalEye = GameObject.Find("ShadowQuad");
         }
 
         public override void OnMeetingStart()
@@ -35,7 +37,10 @@ namespace TheOtherRoles
             resetZoom();
         }
         public override void OnMeetingEnd() { }
-        public override void FixedUpdate() { }
+        public override void FixedUpdate()
+        {
+            normalEye.active = false;
+        }
         public override void OnKill(PlayerControl target) { }
         public override void OnDeath(PlayerControl killer = null) { }
         public override void HandleDisconnect(PlayerControl player, DisconnectReasons reason) { }

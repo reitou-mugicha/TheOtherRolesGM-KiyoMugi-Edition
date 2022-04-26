@@ -49,11 +49,11 @@ namespace TheOtherRoles.Patches
                     __instance.text.text = $"{baseCredentials}\n{__instance.text.text}";
                     if (PlayerControl.LocalPlayer.Data.IsDead || (!(PlayerControl.LocalPlayer == null) && PlayerControl.LocalPlayer.isLovers()))
                     {
-                        __instance.transform.localPosition = new Vector3(5f, 4f, -10f);
+                        __instance.gameObject.GetComponent<AspectPosition>().DistanceFromEdge = new Vector3(2.0f, 0.1f, 0.5f);
                     }
                     else
                     {
-                        __instance.transform.localPosition = new Vector3(4.2f, __instance.transform.localPosition.y, __instance.transform.localPosition.z);
+                        __instance.gameObject.GetComponent<AspectPosition>().DistanceFromEdge = new Vector3(1.2f, 0.1f, 0.5f);
                     }
                 }
                 else
@@ -73,6 +73,8 @@ namespace TheOtherRoles.Patches
             private static PingTracker instance;
             static void Postfix(PingTracker __instance)
             {
+                DestroyableSingleton<ModManager>.Instance.ShowModStamp();
+
                 var amongUsLogo = GameObject.Find("bannerLogo_AmongUs");
                 if (amongUsLogo != null)
                 {

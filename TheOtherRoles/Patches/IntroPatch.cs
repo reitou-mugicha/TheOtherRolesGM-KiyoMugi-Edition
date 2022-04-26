@@ -190,7 +190,7 @@ namespace TheOtherRoles.Patches
                     __instance.RoleBlurbText.color = Madmate.color;
                 }
 
-                if (infos.Any(info => info.roleType == RoleType.Lovers))
+                if (!(PlayerControl.LocalPlayer == null) && PlayerControl.LocalPlayer.isLovers())
                 {
                     PlayerControl otherLover = PlayerControl.LocalPlayer.getPartner();
                     __instance.RoleBlurbText.text += "\n" + Helpers.cs(Lovers.color, String.Format(ModTranslation.getString("loversFlavor"), otherLover?.Data?.PlayerName ?? ""));
