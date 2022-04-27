@@ -15,29 +15,29 @@
 
 - New Roles
   - [ゲームマスター(GM)](#gm) 製作者 : [Virtual_Dusk](https://twitter.com/Virtual_Dusk)
-  - [マッドメイト](#madmate) 製作者 : [tomarai](https://github.com/tomarai)
-  - [オポチュニスト](#opportunist) 製作者 : [libhalt](https://twitter.com/libhalt)
-  - [忍者](#ninja) 製作者 : [Virtual_Dusk](https://twitter.com/Virtual_Dusk)
-  - [イビルすわっぱー](#swapper) 製作者 : [Virtual_Dusk](https://twitter.com/Virtual_Dusk)
-  - [チェインシフター](#shifter) 製作者 : [Virtual_Dusk](https://twitter.com/Virtual_Dusk)
-  - [ペスト医師](#plague-doctor) 製作者 : [haoming37](https://github.com/haoming37)
-  - [シリアルキラー](#serial-killer) 製作者 : [haoming37](https://github.com/haoming37)
-  - [ネコカボチャ](#neko-kabocha) 製作者 : [Virtual_Dusk](https://twitter.com/Virtual_Dusk)
-  - [妖狐 & 背徳者](#fox) 製作者 : [haoming37](https://github.com/haoming37)
-  - [占い師](#serial-killer) 製作者 : [haoming37](https://github.com/haoming37)
-  - [ウォッチャー](#watcher) 製作者 : [Virtual_Dusk](https://twitter.com/Virtual_Dusk)
-  - [イビルハッカー](#evil-hacker) 製作者 : [tomarai](https://github.com/tomarai) ソース参考 : [haoming37](https://github.com/haoming37)
-  - [ホークアイ](#hawk-eye) 製作者 : [Kiyomori](https://twitter.com/kiyo_deko) アイデア : [libhalt](https://twitter.com/libhalt)
+  - [マッドメイト](#マッドメイト) 製作者 : [tomarai](https://github.com/tomarai)
+  - [オポチュニスト](#オポチュニスト) 製作者 : [libhalt](https://twitter.com/libhalt)
+  - [忍者](#ニンジャ) 製作者 : [Virtual_Dusk](https://twitter.com/Virtual_Dusk)
+  - [イビルすわっぱー](#スワッパー) 製作者 : [Virtual_Dusk](https://twitter.com/Virtual_Dusk)
+  - [チェインシフター](#シフター) 製作者 : [Virtual_Dusk](https://twitter.com/Virtual_Dusk)
+  - [ペスト医師](#ペスト医師) 製作者 : [haoming37](https://github.com/haoming37)
+  - [シリアルキラー](#シリアルキラー) 製作者 : [haoming37](https://github.com/haoming37)
+  - [ネコカボチャ](#ネコカボチャ) 製作者 : [Virtual_Dusk](https://twitter.com/Virtual_Dusk)
+  - [妖狐 & 背徳者](#妖狐) 製作者 : [haoming37](https://github.com/haoming37)
+  - [占い師](#シリアルキラー) 製作者 : [haoming37](https://github.com/haoming37)
+  - [ウォッチャー](#ウォッチャー) 製作者 : [Virtual_Dusk](https://twitter.com/Virtual_Dusk)
+  - [イビルハッカー](#イビルハッカー) 製作者 : [tomarai](https://github.com/tomarai) ソース参考 : [haoming37](https://github.com/haoming37)
+  - [ホークアイ](#ホークアイ) 製作者 : [Kiyomori](https://twitter.com/kiyo_deko) アイデア : [libhalt](https://twitter.com/libhalt)
     <br>
     <br>
-  - [反転マップ](#flip-map) 製作者 : [Mugicha](https://github.com/reitou-mugicha)
+  - [反転マップ](#反転マップ) 製作者 : [Mugicha](https://github.com/reitou-mugicha)
     <br>
     <br>
 - 複数割り当てができる役職
   - ラバーズ(上限 7 組)
   - シェリフ
   - 他多数...
-- [翻訳](#translation) AmongUs でサポートされている言語に翻訳できます。
+- [翻訳](#翻訳) AmongUs でサポートされている言語に翻訳できます。
 - カスタムハット
   - TheOtherRoles と GM Edition に付属しているものすべてを使用できます。
 
@@ -54,46 +54,46 @@ This mod is not affiliated with Among Us or Innersloth LLC, and the content cont
 **TheOtherRoles**は[Among Us](https://store.steampowered.com/app/945360/Among_Us)に、多くの役職、新しい[設定](#設定)、そして[カスタムハット](#custom-hats)を追加します。
 随時他にも役職を追加します。
 
-| インポスター陣営                     | クルーメイト陣営               | 第三陣営                       | その他                    |
-| ------------------------------------ | ------------------------------ | ------------------------------ | ------------------------- |
-| [イビルミニ](#mini)                  | [ナイスミニ](#mini)            | [アーソニスト](#arsonist)      | [ゲームマスター(GM)](#gm) |
-| [イビルゲッサー](#guesser)           | [ナイスゲッサー](#guesser)     | [ジェスター](#jester)          |
-| [バウンティハンター](#bounty-hunter) | [ディテクティブ](#detective)   | [ジャッカル](#jackal)          |                           |
-| [カモフラージャ](#camouflager)       | [エンジニア](#engineer)        | [サイドキック](#sidekick)      |                           |
-| [クリーナー](#cleaner)               | [ハッカー](#hacker)            | [ラバーズ](#lovers)            |                           |
-| [イレイサー](#eraser)                | [ライター](#lighter)           | [オポチュニスト](#opportunist) |                           |
-| [ゴッドファーザー(マフィア)](#mafia) | [メイヤー](#mayor)             | [ヴァルチャー](#vulture)       |                           |
-| [マフィオソ(マフィア)](#mafia)       | [メディック](#medic)           | [弁護士](#lawyer)              |                           |
-| [ジャニター](#mafia)                 | [警備員](#security-guard)      | [チェインシフター](#shifter)   |                           |
-| [モーフィング](#morphling)           | [シーア](#seer)                | [ペスト医師](#plague-doctor)   |                           |
-| [トリックスター](#trickster)         | [シェリフ](#sheriff)           | [妖狐 & 背徳者](#fox)          |                           |
-| [ヴァンパイア](#vampire)             | [シフター](#shifter)           |                                |                           |
-| [ウォーロック](#warlock)             | [スニッチ](#snitch)            |                                |                           |
-| [ウィッチ](#witch)                   | [スパイ](#spy)                 |                                |                           |
-| [ニンジャ](#ninja)                   | [ナイススワッパー](#swapper)   |                                |                           |
-| [イビルスワッパー](#swapper)         | [タイムマスター](#time-master) |                                |                           |
-| [シリアルキラー](#serial-killer)     | [トラッカー](#tracker)         |                                |                           |
-| [ネコカボチャ](#neko-kabocha)        | [ベイト](#bait)                |                                |                           |
-| [イビルウォッチャー](#Watcher)       | [マッドメイト](#madmate)       |                                |                           |
-| [イビルハッカー](#evil-hacker)       | [ミディアム](#medium)          |                                |                           |
-| [ホークアイ](#hawk-eye)              | [占い師](#fortune-teller)      |                                |                           |
-|                                      | [ナイスウォッチャー](#Watcher) |                                |                           |
+| インポスター陣営                            | クルーメイト陣営                    | 第三陣営                          | その他                    |
+| ------------------------------------------- | ----------------------------------- | --------------------------------- | ------------------------- |
+| [イビルミニ](#ミニ)                         | [ナイスミニ](#ミニ)                 | [アーソニスト](#アーソニスト)     | [ゲームマスター(GM)](#gm) |
+| [イビルゲッサー](#ゲッサー)                 | [ナイスゲッサー](#ゲッサー)         | [ジェスター](#ジェスター)         |
+| [バウンティハンター](#バウンティーハンター) | [ディテクティブ](#ディテクティブ)   | [ジャッカル](#ジャッカル)         |                           |
+| [カモフラージャ](#カモフラージャー)         | [エンジニア](#エンジニア)           | [サイドキック](#サイドキック)     |                           |
+| [クリーナー](#クリーナー)                   | [ハッカー](#ハッカー)               | [ラバーズ](#ラバーズ)             |                           |
+| [イレイサー](#イレイサー)                   | [ライター](#ライター)               | [オポチュニスト](#オポチュニスト) |                           |
+| [ゴッドファーザー(マフィア)](#マフィア)     | [メイヤー](#メイヤー)               | [ヴァルチャー](#ヴァルチャー)     |                           |
+| [マフィオソ(マフィア)](#マフィア)           | [メディック](#メディック)           | [弁護士](#弁護士)                 |                           |
+| [ジャニター](#マフィア)                     | [警備員](#警備員)                   | [チェインシフター](#シフター)     |                           |
+| [モーフィング](#モーフィング)               | [シーア](#シーア)                   | [ペスト医師](#ペスト医師)         |                           |
+| [トリックスター](#トリックスター)           | [シェリフ](#シェリフ)               | [妖狐 & 背徳者](#妖狐)            |                           |
+| [ヴァンパイア](#ヴァンパイア)               | [シフター](#シフター)               |                                   |                           |
+| [ウォーロック](#ウォーロック)               | [スニッチ](#スニッチ)               |                                   |                           |
+| [ウィッチ](#ウィッチ)                       | [スパイ](#スパイ)                   |                                   |                           |
+| [ニンジャ](#ニンジャ)                       | [ナイススワッパー](#スワッパー)     |                                   |                           |
+| [イビルスワッパー](#スワッパー)             | [タイムマスター](#タイムマスター)   |                                   |                           |
+| [シリアルキラー](#シリアルキラー)           | [トラッカー](#tracker)              |                                   |                           |
+| [ネコカボチャ](#ネコカボチャ)               | [ベイト](#ベイト)                   |                                   |                           |
+| [イビルウォッチャー](#ウォッチャー)         | [マッドメイト](#マッドメイト)       |                                   |                           |
+| [イビルハッカー](#イビルハッカー)           | [ミディアム](#ミディアム)           |                                   |                           |
+| [ホークアイ](#ホークアイ])                  | [占い師](#占い師)                   |                                   |                           |
+|                                             | [ナイスウォッチャー](#ウォッチャー) |                                   |                           |
 
 [役職説明](#role-assignment)で詳しい説明を確認できます。
 
 # リリース
 
-| AmongUs のバージョン | GM のバージョン | Mod のバージョン | ダウンロードリンク                                                                                                             |
-| -------------------- | --------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| 2022.3.29s           | Ver.3.5.5.1     | Ver.1.0.5        | [Download](https://github.com/Dekokiyo/TheOtherRolesGM-KiyoMugi-Edition/releases/download/1.0.5/TheOtherRolesGMK1.0.5.zip)     |
-| 2022.3.29s           | Ver.3.5.5.1     | Ver.1.0.4.2      | [Download](https://github.com/Dekokiyo/TheOtherRolesGM-KiyoMugi-Edition/releases/download/1.0.4.2/TheOtherRolesGMK1.0.4.2.zip) |
-| 2022.3.29s           | Ver.3.5.5.1     | Ver.1.0.4.1      | [Download](https://github.com/Dekokiyo/TheOtherRolesGM-KiyoMugi-Edition/releases/download/1.0.4.1/TheOtherRolesGMK1.0.4.1.zip) |
-| 2022.3.29s           | Ver.3.5.5.1     | Ver.1.0.4        | [Download](https://github.com/Dekokiyo/TheOtherRolesGM-KiyoMugi-Edition/releases/download/1.0.4/TheOtherRolesGMK1.0.4.zip)     |
-| 2022.3.29s           | Ver.3.5.5       | Ver.1.0.3        | [Download](https://github.com/Dekokiyo/TheOtherRolesGM-KiyoMugi-Edition/releases/download/1.0.3/TheOtherRolesGMK1.0.3.zip)     |
-| 2022.3.29s           | Ver.3.5.5       | Ver.1.0.2.4      | [Download](https://github.com/Dekokiyo/TheOtherRolesGM-KiyoMugi-Edition/releases/download/1.0.2.4/TheOtherRolesGMK1.0.2.4.zip) |
-| 2022.3.29s           | Ver.3.5.5       | Ver.1.0.2.3      | [Download](https://github.com/Dekokiyo/TheOtherRolesGM-KiyoMugi-Edition/releases/download/1.0.2.3/TheOtherRolesGMK1.0.2.3.zip) |
-| 2022.3.29s           | Ver.3.5.5       | Ver.1.0.2.2      | [Download](https://github.com/Dekokiyo/TheOtherRolesGM-KiyoMugi-Edition/releases/download/1.0.2.2/TheOtherRolesGMK1.0.2.2.zip) |
-| 2022.3.29s           | Ver.3.5.5       | Ver.1.0.2.1      | [Download](https://github.com/Dekokiyo/TheOtherRolesGM-KiyoMugi-Edition/releases/download/1.0.2.1/TheOtherRolesGMK1.0.2.1.zip) |
+| AmongUs のバージョン | GM のバージョン | Mod のバージョン | ダウンロードリンク                                                                                                                 |
+| -------------------- | --------------- | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| 2022.3.29s           | Ver.3.5.5.1     | Ver.1.0.5        | [ダウンロード](https://github.com/Dekokiyo/TheOtherRolesGM-KiyoMugi-Edition/releases/download/1.0.5/TheOtherRolesGMK1.0.5.zip)     |
+| 2022.3.29s           | Ver.3.5.5.1     | Ver.1.0.4.2      | [ダウンロード](https://github.com/Dekokiyo/TheOtherRolesGM-KiyoMugi-Edition/releases/download/1.0.4.2/TheOtherRolesGMK1.0.4.2.zip) |
+| 2022.3.29s           | Ver.3.5.5.1     | Ver.1.0.4.1      | [ダウンロード](https://github.com/Dekokiyo/TheOtherRolesGM-KiyoMugi-Edition/releases/download/1.0.4.1/TheOtherRolesGMK1.0.4.1.zip) |
+| 2022.3.29s           | Ver.3.5.5.1     | Ver.1.0.4        | [ダウンロード](https://github.com/Dekokiyo/TheOtherRolesGM-KiyoMugi-Edition/releases/download/1.0.4/TheOtherRolesGMK1.0.4.zip)     |
+| 2022.3.29s           | Ver.3.5.5       | Ver.1.0.3        | [ダウンロード](https://github.com/Dekokiyo/TheOtherRolesGM-KiyoMugi-Edition/releases/download/1.0.3/TheOtherRolesGMK1.0.3.zip)     |
+| 2022.3.29s           | Ver.3.5.5       | Ver.1.0.2.4      | [ダウンロード](https://github.com/Dekokiyo/TheOtherRolesGM-KiyoMugi-Edition/releases/download/1.0.2.4/TheOtherRolesGMK1.0.2.4.zip) |
+| 2022.3.29s           | Ver.3.5.5       | Ver.1.0.2.3      | [ダウンロード](https://github.com/Dekokiyo/TheOtherRolesGM-KiyoMugi-Edition/releases/download/1.0.2.3/TheOtherRolesGMK1.0.2.3.zip) |
+| 2022.3.29s           | Ver.3.5.5       | Ver.1.0.2.2      | [ダウンロード](https://github.com/Dekokiyo/TheOtherRolesGM-KiyoMugi-Edition/releases/download/1.0.2.2/TheOtherRolesGMK1.0.2.2.zip) |
+| 2022.3.29s           | Ver.3.5.5       | Ver.1.0.2.1      | [ダウンロード](https://github.com/Dekokiyo/TheOtherRolesGM-KiyoMugi-Edition/releases/download/1.0.2.1/TheOtherRolesGMK1.0.2.1.zip) |
 
 # クレジット
 
@@ -142,283 +142,234 @@ Ykundesu 様の[SuperNewRoles](https://github.com/ykundesu/SuperNewRoles/)
 - **幽霊が全員のタスク進行度を見れる**
 - **タスク数:** タスク数が最大値まで設定できます。
 - **最終結果:** ゲーム終了時に役職と完了したタスク数、終了時のステータスを表示します。
-- **Darker/Lighter:** Displays color type of each player in meetings
+- **色が濃いか淡いか:** 画面にプレイヤーの色が濃いか淡いかを表示します。
+- **タスクの矢印の非表示** 有効にするとタスクの矢印が出なくなります。
+- **馬モード** 有効にするとプレイヤーが馬になります。メインメニューの馬ボタンを押すと有効にできます。
 
-### Task Count Limits per map
+### マップごとのタスク数制限
 
-You can configure:
+タスク数は以下の数まで設定できます:
+| タスクの種類 | 上限数 |
+|-------------|--------|
+| 通常タスク | 4 |
+| ショートタスク | 23 |
+| ロングタスク | 15 |
 
-- Up to 4 common tasks
-- Up to 23 short tasks
-- Up to 15 long tasks
+ただし、設定した値がマップのタスクの数を越えていた場合、\
+タスクの出現量は上限でとどまりますのでご注意ください。
 
-Please note, that if the configured option exceeds the available number of tasks of a map, the tasks will be limited to that number of tasks. \
-Example: If you configure 4 common tasks on Airship crewmates will only receive 2 common tasks, as airship doesn't offer more than 2 common tasks.
-
-| Map           | Common Tasks | Short Tasks | Long Tasks |
-| ------------- | :----------: | :---------: | :--------: |
-| Skeld / Dleks |      2       |     19      |     8      |
-| Mira HQ       |      2       |     13      |     11     |
-| Polus         |      4       |     14      |     15     |
-| Airship       |      2       |     23      |     15     |
-
----
-
-# Custom Hats
-
-## Create and submit new hat designs
-
-We're awaiting your creative hat designs and we'll integrate all the good ones in our mod.
-Here are a few instructions, on how to create a custom hat:
-
-- **Creation:** A hat consists of up to three textures. The aspect ratio of the textures has to be `4:5`, we recommend `300px:375px`:
-  - `Main texture (required)`:
-    - This is the main texture of your hat. It will usually be rendered in front of the player, if you set the `behind` parameter it will be rendered behind the player.
-    - The name of the texture needs to follow the pattern _hatname.png_, but you can also set some additional parameters in the file name by adding `_parametername` to the file name (before the _.png_).
-    - Parameter `bounce`: This parameter determines whether the hat will bounce while you're walking or not.
-    - Parameter `adaptive`: If this parameter is set, the Among Us coloring shader will be applied (the shader that replaces some colors with the colors that your character is wearing in the game). The color red (#ff0000) will be replaced with the primary color of your player and the color blue (#0000ff) with the secondary color. Also other colors will be affected and changed, you can have a look at the texture of the [Crewmate Hat](https://static.wikia.nocookie.net/among-us-wiki/images/e/e0/Crewmate_hat.png) to see how this feature should be used.
-    - Parameter `behind`: If this parameter is set, the main texture will be rendered behind the player.
-  - `Flipped texture (optional)`:
-    - This texture will be rendered instead of the Main texture, when facing the left.
-    - The name of the texture needs to follow the pattern `hatname_flip.png`.
-  - `Back texture (optional)`:
-    - This texture will be rendered behind the player.
-    - The name of the texture needs to follow the pattern `hatname_back.png`.
-  - `Flipped Back texture (optional)`:
-    - This texture will be rendered instead of the Back texture, when facing the left.
-    - The name of the texture needs to follow the pattern `hatname_back_flip.png`.
-  - `Climb texture (optional)`:
-    - This texture will be rendered in front of the player, when they're climbing.
-    - The name of the texture needs to follow the pattern `hatname_climb.png`.
-- **Testing:** You can test your hat design by putting all the files in the `\TheOtherHats\Test` subfolder of your mod folder. Then whenever you start a Freeplay game, you and all the dummies will be wearing the new hat. You don't need to restart Among Us if you change the hat files, just exit and reenter the Freeplay mode.
-
-- **Submission:** If you got a hat design, you can submit it on our [Discord server](https://discord.gg/77RkMJHWsM). We'll look at all the hats and add all the good ones to the game.
-
-# Colors
-
-![TOR Colors](./Images/TOR_colors.jpg)
-
-# Roles
-
-## Role Assignment
-
-We are still improving the role assignment system. It's not that intuitive right now, but it's more flexible than the older one
-if you're using it right.
-
-First you need to choose how many special roles of each kind (Impostor/Neutral/Crewmate) you want in the game.
-The count you set will only be reached, if there are enough Crewmates/Impostors in the game and if enough roles are set to be in the game (i.e. they are set to > 0%). The roles are then being distributed as follows:
-
-- First all roles that are set to 100% are being assigned to arbitrary players.
-- After that each role that has 10%-90% selected adds 1-9 tickets to a ticket pool (there exists a ticket pool for Crewmates, Neutrals and Impostors). Then the roles will be selected randomly from the pools as long it's possible (until the selected number is reached, until there are no more Crewmates/Impostors or until there are no more tickets). If a role is selected from the pool, obviously all the tickets of that role are being removed.
-- The Mafia, Lovers and Mini are being selected independently (without using the ticket system) according to the spawn chance you selected. After that the Crewmate, Neutral and Impostor roles are selected and assigned in a random order.
-
-**Example:**\
-Settings: 2 special Crewmate roles, Snitch: 100%, Hacker: 10%, Tracker: 30%\
-Result: Snitch is assigned, then one role out of the pool [Hacker, Tracker, Tracker, Tracker] is being selected\
-Note: Changing the settings to Hacker: 20%, Tracker: 60% would statistically result in the same outcome.
-
-## Mafia
-
-### **Team: Impostors**
-
-The Mafia are a group of three Impostors.\
-The Godfather works like a normal Impostor.\
-The Mafioso is an Impostor who cannot kill until the Godfather is dead.\
-The Janitor is an Impostor who cannot kill, but they can hide dead bodies instead.\
-\
-**NOTE:**
-
-- There have to be 3 Impostors activated for the mafia to spawn.
-- If only the Janitor is left alive, the Mafia loses as there's no one left able to kill.
-
-### Game Options
-
-| Name               | Description |
-| ------------------ | :---------: |
-| Mafia Spawn Chance |      -      |
-| Janitor Cooldown   |      -      |
+| マップ               | 　通常タスク | ショートタスク | ロングタスク |
+| -------------------- | :----------: | :------------: | :----------: |
+| The Skeld・dlekS ehT |      2       |       19       |      8       |
+| Mira HQ・QH ariM     |      2       |       13       |      11      |
+| Polus・suloP         |      4       |       14       |      15      |
+| Airship              |      2       |       23       |      15      |
 
 ---
 
-## Morphling
+# 役職
 
-### **Team: Impostors**
+## 役職説明
 
-The Morphling is an Impostor which can additionally scan the appearance of a player. After an arbitrary time they can take on that appearance for 10s.
+役職は現在も改良が続けられています。\
+更新次第情報を追加していく予定です。
+
+最初に、インポスター陣営、クルーメイト陣営、第三陣営を何人ゲームに入れるかを設定する必要があります。\
+設定された数は以下の条件を満たしているときに稼働します。\
+1.設定した数だけのプレイヤーがいる。\
+2.設定した数だけのインポスターが出現するように設定されている。\
+3.設定した数だけの追加役職が出現(0%以上)にするようにされている。\
+<br>
+配役システムは以下の通りに動作します。
+
+- マフィア、ミニ、ラバーズが最優先で設定されます。条件を満たしていれば 10%~90%でも確実に出現します。
+- 100%に設定されている役職が配られます。
+- 10%~90%に設定されている役職は(パーセント ÷10)枚のチケットが作成され、そのチケットの中から役職が指定されます。役職の上限数に達するまでランダムに配られます。
+
+**例:**\
+設定: クルーメイト陣営が 2 つ出現するようにする, スニッチ: 100%, ハッカー: 10%, トラッカー: 30%\
+結果: スニッチがまず配役されます。(パーセント ÷10)枚のチケットが作成されるので[ハッカー、トラッカー、トラッカー、トラッカー]の中から一つがランダムに選ばれます。\
+メモ: ハッカー: 20%、トラッカー: 60%でも同じ結果になります。(出現比が 1:3 = 2:6 のため)
+
+## マフィア
+
+### **陣営: インポスター**
+
+マフィアは 3 人のインポスターで構成されます。\
+ゴッドファーザーは通常のインポスターと同じように動作します。\
+マフィオソはゴッドファーザーが死んだら通常のインポスターとして機能します。\
+ジャニターはインポスターですがキルができず、代わりに死体を削除することができます。\
+\
+**注意:**
+
+- マフィアはバニラの設定でインポスターを 3 人出現するように設定しているかつ、Mod の設定でインポスターが 3 人出現するように設定している必要があります。
+- ジャニターだけ生存している場合、キルする人がいなくなり、マフィアは敗北確定となります。
+
+---
+
+## モーフィング
+
+### **陣営: インポスター**
+
+The モーフィング is an Impostor which can additionally scan the appearance of a player. After an arbitrary time they can take on that appearance for 10s.
 \
 **NOTE:**
 
-- They shrink to the size of the Mini when they copy its look.
-- The Hacker sees the new color on the admin table.
+- They shrink to the size of the ミニ when they copy its look.
+- The ハッカー sees the new color on the admin table.
 - The color of the footprints changes accordingly (also the ones that were already on the ground).
 - The other Impostor still sees that they are an Impostor (the name remains red).
-- The shield indicator changes accordingly (the Morphling gains or loses the shield indicator).
-- Tracker and Snitch arrows keep working.
-
-### Game Options
-
-| Name                   |           Description            |
-| ---------------------- | :------------------------------: |
-| Morphling Spawn Chance |                -                 |
-| Morphling Cooldown     |                -                 |
-| Morph Duration         | Time the Morphling stays morphed |
+- The shield indicator changes accordingly (the モーフィング gains or loses the shield indicator).
+- Tracker and スニッチ arrows keep working.
 
 ---
 
-## Camouflager
+## カモフラージャー
 
-### **Team: Impostors**
+### **陣営: インポスター**
 
-The Camouflager is an Impostor which can additionally activate a camouflage mode.
+The カモフラージャー is an Impostor which can additionally activate a camouflage mode.
 The camouflage mode lasts for 10s and while it is active, all player names/pets/hats
 are hidden and all players have the same color.\
 \
 **NOTE:**
 
-- The Mini will look like all the other players
+- The ミニ will look like all the other players
 - The color of the footprints turns gray (also the ones that were already on the ground).
-- The Hacker sees gray icons on the admin table
+- The ハッカー sees gray icons on the admin table
 - The shield is not visible anymore
-- Tracker and Snitch arrows keep working
-
-### Game Options
-
-| Name                     |          Description          |
-| ------------------------ | :---------------------------: |
-| Camouflager Spawn Chance |               -               |
-| Camouflager Cooldown     |               -               |
-| Camo Duration            | Time players stay camouflaged |
+- Tracker and スニッチ arrows keep working
 
 ---
 
-## Vampire
+## ヴァンパイア
 
-### **Team: Impostors**
+### **陣営: インポスター**
 
-The Vampire is an Impostor, that can bite other player. Bitten players die after a configurable amount of time.\
-If the Vampire spawn chance is greater 0 (even if there is no Vampire in the game), all players can place one garlic.\
-If a victim is near a garlic, the "Bite Button" turns into the default "Kill Button" and the Vampire can only perform a normal kill.\
+The ヴァンパイア is an Impostor, that can bite other player. Bitten players die after a configurable amount of time.\
+If the ヴァンパイア spawn chance is greater 0 (even if there is no ヴァンパイア in the game), all players can place one garlic.\
+If a victim is near a garlic, the "Bite Button" turns into the default "Kill Button" and the ヴァンパイア can only perform a normal kill.\
 \
 **NOTE:**
 
 - If a bitten player is still alive when a meeting is being called, they die at the start of the meeting.
-- The cooldown is the same as the default kill cooldown (+ the kill delay if the Vampire bites the target).
-- If there is a Vampire in the game, there can't be a Warlock.
+- The cooldown is the same as the default kill cooldown (+ the kill delay if the ヴァンパイア bites the target).
+- If there is a ヴァンパイア in the game, there can't be a ウォーロック.
 
-### Game Options
+### ゲームの設定
 
-| Name                          |                                                                Description                                                                |
-| ----------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------: |
-| Vampire Spawn Chance          |                                                                     -                                                                     |
-| Vampire Kill Delay            |                                                                     -                                                                     |
-| Vampire Cooldown              |                                                        Sets the kill/bite cooldown                                                        |
-| Vampire Can Kill Near Garlics | The Vampire can never bite when their victim is near a garlic. If this option is set to true, they can still perform a normal kill there. |
+| Name                               |                                                                  Description                                                                   |
+| ---------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------: |
+| ヴァンパイア Spawn Chance          |                                                                       -                                                                        |
+| ヴァンパイア Kill Delay            |                                                                       -                                                                        |
+| ヴァンパイア Cooldown              |                                                          Sets the kill/bite cooldown                                                           |
+| ヴァンパイア Can Kill Near Garlics | The ヴァンパイア can never bite when their victim is near a garlic. If this option is set to true, they can still perform a normal kill there. |
 
 ---
 
-## Eraser
+## イレイサー
 
-### **Team: Impostors**
+### **陣営: インポスター**
 
-The Eraser is an Impostor that can erase the role of every player.\
+The イレイサー is an Impostor that can erase the role of every player.\
 The targeted players will lose their role after the meeting right before a player is exiled.\
 After every erase, the cooldown increases by 10 seconds.\
-The erase will be performed, even if the Eraser or their target die before the next meeting.\
-By default the Eraser can erase everyone but the Spy and other Impostors. Depending on the options
-they can also erase them (Impostors will lose their special Impostor ability).
+The erase will be performed, even if the イレイサー or their target die before the next meeting.\
+By default the イレイサー can erase everyone but the スパイ and other インポスター. Depending on the options
+they can also erase them (インポスター will lose their special Impostor ability).
 \
 **NOTE:**
 
-- The Shifter shift will always be triggered before the Erase (hence either the new role of the Shifter will be erased or the Shifter saves the role of their target, depending on whom the Eraser erased)
+- The シフター shift will always be triggered before the Erase (hence either the new role of the シフター will be erased or the シフター saves the role of their target, depending on whom the イレイサー erased)
 - Erasing a Lover automatically erases the other Lover as well (if the second Lover is an ImpLover, they will turn into an Impostor)
-- Erasing a Jackal that has a Sidekick, triggers the Sidekick promotion if it's activated in the settings
+- Erasing a ジャッカル that has a サイドキック, triggers the サイドキック promotion if it's activated in the settings
 - As the erasing is being triggered before the eject of a player, erasing and voting out a Lover in the same round, would result in the
-  ex Lover surviving as the partnership was erased before. Also a Jester win would not happen, as the erase will be triggered before.
+  ex Lover surviving as the partnership was erased before. Also a ジェスター win would not happen, as the erase will be triggered before.
 
-### Game Options
+### ゲームの設定
 
-| Name                    |                             Description                              |
-| ----------------------- | :------------------------------------------------------------------: |
-| Eraser Spawn Chance     |                                  -                                   |
-| Eraser Cooldown         | The Eraser's cooldown will increase by 10 seconds after every erase. |
-| Eraser Can Erase Anyone |    If set to false, they can't erase the Spy and other Impostors     |
+| Name                        |                               Description                                |
+| --------------------------- | :----------------------------------------------------------------------: |
+| イレイサー Spawn Chance     |                                    -                                     |
+| イレイサー Cooldown         | The イレイサー's cooldown will increase by 10 seconds after every erase. |
+| イレイサー Can Erase Anyone |   If set to false, they can't erase the スパイ and other インポスター    |
 
 ---
 
-## Trickster
+## イレイサー
 
-### **Team: Impostors**
+### **陣営: インポスター**
 
-The Trickster is an Impostor that can place 3 jack-in-the-boxes that are invisible at first to other players. \
-If the Trickster has placed all of their boxes they will be converted into a vent network usable only by the Trickster themself, but the boxes are revealed to the others. \
-If the boxes are converted to a vent network, the Trickster gains a new ability "Lights out" to limit the visibility of Non-Impostors, that cannot be fixed by other players. Lights are automatically restored after a while.\
+The イレイサー is an Impostor that can place 3 jack-in-the-boxes that are invisible at first to other players. \
+If the イレイサー has placed all of their boxes they will be converted into a vent network usable only by the イレイサー themself, but the boxes are revealed to the others. \
+If the boxes are converted to a vent network, the イレイサー gains a new ability "Lights out" to limit the visibility of Non-インポスター, that cannot be fixed by other players. Lights are automatically restored after a while.\
 
 \
 **NOTE:**
 
-- Impostors will get a text indicator at the bottom of the screen to notify them if the lights are out due to the Trickster ability, as there is no sabotage arrows or task to sabotage text to otherwise notify them about it.
+- インポスター will get a text indicator at the bottom of the screen to notify them if the lights are out due to the イレイサー ability, as there is no sabotage arrows or task to sabotage text to otherwise notify them about it.
 
-### Game Options
+### ゲームの設定
 
-| Name                          |                       Description                        |
-| ----------------------------- | :------------------------------------------------------: |
-| Trickster Spawn Chance        |                            -                             |
-| Trickster Box Cooldown        |          Cooldown for placing jack-in-the-boxes          |
-| Trickster Lights Out Cooldown |         Cooldown for their "lights out" ability          |
-| Trickster Lights Out Duration | Duration after which the light is automatically restored |
+| Name                           |                       Description                        |
+| ------------------------------ | :------------------------------------------------------: |
+| イレイサー Spawn Chance        |                            -                             |
+| イレイサー Box Cooldown        |          Cooldown for placing jack-in-the-boxes          |
+| イレイサー Lights Out Cooldown |         Cooldown for their "lights out" ability          |
+| イレイサー Lights Out Duration | Duration after which the light is automatically restored |
 
 ---
 
-## Cleaner
+## クリーナー
 
-### **Team: Impostors**
+### **陣営: インポスター**
 
-The Cleaner is an Impostor who has the ability to clean up dead bodies.\
+The クリーナー is an Impostor who has the ability to clean up dead bodies.\
 
 \
 **NOTE:**
 
 - The Kill and Clean cooldown are shared, preventing them from immediately cleaning their own kills.
-- If there is a Cleaner in the game, there can't be a Vulture.
+- If there is a クリーナー in the game, there can't be a ヴァルチャー.
 
-### Game Options
+### ゲームの設定
 
-| Name                 |            Description            |
-| -------------------- | :-------------------------------: |
-| Cleaner Spawn Chance |                 -                 |
-| Cleaner Cooldown     | Cooldown for cleaning dead bodies |
+| Name                    |            Description            |
+| ----------------------- | :-------------------------------: |
+| クリーナー Spawn Chance |                 -                 |
+| クリーナー Cooldown     | Cooldown for cleaning dead bodies |
 
 ---
 
-## Warlock
+## ウォーロック
 
-### **Team: Impostors**
+### **陣営: インポスター**
 
-The Warlock is an Impostor, that can curse another player (the cursed player doesn't get notified).\
-If the cursed person stands next to another player, the Warlock is able to kill that player (no matter how far away they are).\
-Performing a kill with the help of a cursed player, will lift the curse and it will result in the Warlock being unable to move for a configurable amount of time.\
-The Warlock can still perform normal kills, but the two buttons share the same cooldown.
+The ウォーロック is an Impostor, that can curse another player (the cursed player doesn't get notified).\
+If the cursed person stands next to another player, the ウォーロック is able to kill that player (no matter how far away they are).\
+Performing a kill with the help of a cursed player, will lift the curse and it will result in the ウォーロック being unable to move for a configurable amount of time.\
+The ウォーロック can still perform normal kills, but the two buttons share the same cooldown.
 
 \
 **NOTE:**
 
-- The Warlock can always kill their Impostor mates (and even themself) using the "cursed kill"
-- If there is a Warlock in the game, there can't be a Vampire
+- The ウォーロック can always kill their Impostor mates (and even themself) using the "cursed kill"
+- If there is a ウォーロック in the game, there can't be a ヴァンパイア
 - Performing a normal kill, doesn't lift the curse
 
-### Game Options
+### ゲームの設定
 
-| Name                 |                            Description                            |
-| -------------------- | :---------------------------------------------------------------: |
-| Warlock Spawn Chance |                                 -                                 |
-| Warlock Cooldown     |            Cooldown for using the Curse and curse Kill            |
-| Warlock Root Time    | Time the Warlock is rooted in place after killing using the curse |
+| Name                      |                              Description                               |
+| ------------------------- | :--------------------------------------------------------------------: |
+| ウォーロック Spawn Chance |                                   -                                    |
+| ウォーロック Cooldown     |              Cooldown for using the Curse and curse Kill               |
+| ウォーロック Root Time    | Time the ウォーロック is rooted in place after killing using the curse |
 
 ---
 
 ## Bounty Hunter
 
-### **Team: Impostors**
+### **陣営: インポスター**
 
 \
 The Bounty Hunter is an Impostor, that continuously get bounties (the targeted player doesn't get notified).\
@@ -429,10 +380,10 @@ Depending on the options, there'll be an arrow pointing towards the current targ
 \
 **NOTE:**
 
-- The target won't be an Impostor, a Spy or the Bounty Hunter's Lover.
+- The target won't be an Impostor, a スパイ or the Bounty Hunter's Lover.
 - Killing the target resets the timer and a new target will be selected.
 
-### Game Options
+### ゲームの設定
 
 | Name                                     |                                            Description                                            |
 | ---------------------------------------- | :-----------------------------------------------------------------------------------------------: |
@@ -445,42 +396,42 @@ Depending on the options, there'll be an arrow pointing towards the current targ
 
 ---
 
-## Madmate
+## マッドメイト
 
-### **Team: Impostor**
+### **陣営: Impostor**
 
 TheOtherRoles implementation by [tomarai](https://github.com/tomarai)
 
-The Madmate is a crewmate that works to support the impostors.
-The concepted originally comes from Are You a Werewolf?, and the name for this role is taken from [au.libhalt.net's mod](https://au.libhalt.net/#madmate) (Japanese only).
+The マッドメイト is a クルーメイト that works to support the インポスター.
+The concepted originally comes from Are You a Werewolf?, and the name for this role is taken from [au.libhalt.net's mod](https://au.libhalt.net/#マッドメイト) (Japanese only).
 
-1. Functionally, the Madmate is a crewmate role.
-2. If the Impostors win, the Madmate wins as well.
-3. The Madmate doesn't know who the Impostors are, and vice versa.
-4. The Madmate doesn't have tasks.
-5. The Madmate cannot fix lights.
+1. Functionally, the マッドメイト is a クルーメイト role.
+2. If the インポスター win, the マッドメイト wins as well.
+3. The マッドメイト doesn't know who the インポスター are, and vice versa.
+4. The マッドメイト doesn't have tasks.
+5. The マッドメイト cannot fix lights.
 
-### Game Options
+### ゲームの設定
 
-| Name                        |                      Description                       |
-| --------------------------- | :----------------------------------------------------: |
-| Madmate Spawn Chance        |                           -                            |
-| Madmate Can Die To Sheriff  |         Allows the Sheriff to kill the Madmate         |
-| Madmate Can Enter Vents     |         Allow the Madmate to enter/exit vents          |
-| Madmate Has Impostor Vision | Give the Madmate the same vision as the Impostors have |
-| Madmate Can Sabotage        |             Allow the Madmate to sabotage              |
-| Madmate Can Fix Comm        |             Allow the Madmate to fix comms             |
+| Name                             |                          Description                           |
+| -------------------------------- | :------------------------------------------------------------: |
+| マッドメイト Spawn Chance        |                               -                                |
+| マッドメイト Can Die To シェリフ |          Allows the シェリフ to kill the マッドメイト          |
+| マッドメイト Can Enter Vents     |           Allow the マッドメイト to enter/exit vents           |
+| マッドメイト Has Impostor Vision | Give the マッドメイト the same vision as the インポスター have |
+| マッドメイト Can Sabotage        |               Allow the マッドメイト to sabotage               |
+| マッドメイト Can Fix Comm        |              Allow the マッドメイト to fix comms               |
 
 ---
 
 ## Witch
 
-### **Team: Impostors**
+### **陣営: インポスター**
 
 The Witch is an Impostor who has the ability to cast a spell on other players.\
 During the next meeting, the spellbound player will be highlighted and they'll die right after the meeting.\
 There are multiple options listed down below with which you can configure to fit your taste.\
-Similar to the Vampire, shields and blanks will be checked twice (at the end of casting the spell on the player and at the end of the meeting, when the spell will be activated).\
+Similar to the ヴァンパイア, shields and blanks will be checked twice (at the end of casting the spell on the player and at the end of the meeting, when the spell will be activated).\
 This can result in players being marked as spelled during the meeting, but not dying in the end (when they get a shield or the Witch gets blanked after they were spelled by the Witch).\
 If the Witch dies before the meeting starts or if the Witch is being guessed during the meeting, the spellbound players will be highlighted but they'll survive in any case.\
 Depending on the options you can choose whether voting the Witch out will save all the spellbound players or not.\
@@ -490,398 +441,398 @@ Depending on the options you can choose whether voting the Witch out will save a
 
 - The spellbound players will die before the voted player dies (which might trigger e.g. trigger an Impostor win condition, even if the Witch is the one being voted)
 
-### Game Options
+### ゲームの設定
 
 | Name                                   |                                                          Description                                                          |
 | -------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------: |
 | Witch Spawn Chance                     |                                                               -                                                               |
 | Witch Spell Casting Cooldown           |                                                               -                                                               |
 | Witch Additional Cooldown              |                   The spell casting cooldown will be increased by the amount you set here after each spell                    |
-| Witch Can Spell Everyone               |                              If set to false, the witch can't spell the Spy and other Impostors                               |
+| Witch Can Spell Everyone               |                          If set to false, the ウィッチ can't spell the スパイ and other インポスター                          |
 | Witch Spell Casting Duration           |                       The time that you need to stay next to the target in order to cast a spell on it                        |
 | Trigger Both Cooldowns                 | If set to true, casting a spell will also trigger cooldown of the kill button and vice versa (but the two cooldowns may vary) |
 | Voting The Witch Saves All The Targets |                         If set to true, all the cursed targets will survive at the end of the meeting                         |
 
 ---
 
-## Ninja
+## ニンジャ
 
-### **Team: Impostors**
+### **陣営: インポスター**
 
 Created by [Virtual_Dusk](https://twitter.com/Virtual_Dusk)
 Original Idea by [うるさくてすみま船](https://twitter.com/nakanocchi2)
 
-The Ninja is an Impostor that can turn invisible. While stealthed, the Ninja moves faster than a normal Crewmate, and kills don't cause them to warp. However, using their stealth ability increases their kill cooldown--a penalty for killing while invisible, and a short penalty applied after unstealthing.
+The ニンジャ is an Impostor that can turn invisible. While stealthed, the ニンジャ moves faster than a normal クルーメイト, and kills don't cause them to warp. However, using their stealth ability increases their kill cooldown--a penalty for killing while invisible, and a short penalty applied after unstealthing.
 
 ## Serial Killer
 
-### **Team: Impostors**
+### **陣営: インポスター**
 
 Created by [haoming37](https://github.com/haoming37)
 
 The Serial Killer is an Impostor that has a reduced kill cooldown at the cost of their own life. Once the Serial Killer has their first taste of blood, they must kill again within a set time or be driven crazy by bloodlust and commit suicide.
 
-## Neko-Kabocha
+## ネコカボチャ
 
-### **Team: Impostors**
+### **陣営: インポスター**
 
 Created by [Virtual_Dusk](https://twitter.com/Virtual_Dusk)
 
-The Neko-Kabocha is an Impostor capable of taking revenge on their killer. If killed by a Sheriff, Jackal, or other player, the killer will die alongside the Neko-Kabocha.
+The ネコカボチャ is an Impostor capable of taking revenge on their killer. If killed by a シェリフ, ジャッカル, or other player, the killer will die alongside the ネコカボチャ.
 
-## Guesser
+## ゲッサー
 
-### **Team: Crewmates or Impostors**
+### **陣営: クルーメイト or インポスター**
 
-The Guesser can be a Crewmate or an Impostor (depending on the settings).\
-The Guesser can shoot players during the meeting, by guessing its role. If the guess is wrong, the Guesser dies instead.\
+The ゲッサー can be a クルーメイト or an Impostor (depending on the settings).\
+The ゲッサー can shoot players during the meeting, by guessing its role. If the guess is wrong, the ゲッサー dies instead.\
 You can select how many players can be shot per game and if multiple players can be shot during a single meeting.\
-The guesses Impostor and Crewmate are only right, if the player is part of the corresponding team and has no special role.\
+The guesses Impostor and クルーメイト are only right, if the player is part of the corresponding 陣営 and has no special role.\
 You can only shoot during the voting time.\
-Depending on the options, the Guesser can't guess the shielded player and depending on the Medic options the Medic/shielded player might be notified (no one will die, independently of what the Guesser guessed).\
+Depending on the options, the ゲッサー can't guess the shielded player and depending on the メディック options the メディック/shielded player might be notified (no one will die, independently of what the ゲッサー guessed).\
 \
 **NOTE:**
 
 - If a player gets shot, you'll get back your votes
-- You can't guess the role **Nice Mini** for obvious reasons
-- You can't guess the role **Lover**, you'll have to guess the primary role of one of the Lovers, to kill both of them
-- Jester wins won't be triggered, if the Guesser shoots the Jester before the Jester gets voted out
+- You can't guess the role **Nice ミニ** for obvious reasons
+- You can't guess the role **Lover**, you'll have to guess the primary role of one of the ラバーズ, to kill both of them
+- ジェスター wins won't be triggered, if the ゲッサー shoots the ジェスター before the ジェスター gets voted out
 
-### Game Options
+### ゲームの設定
 
-| Name                                            | Description |
-| ----------------------------------------------- | :---------: |
-| Guesser Spawn Chance                            |      -      |
-| Chance That The Guesser Is An Impostor          |      -      |
-| Guesser Number Of Shots Per Game                |      -      |
-| Guesser Can Shoot Multiple Times Per Meeting    |      -      |
-| Guesses Visible In Ghost Chat                   |      -      |
-| Guesses Ignore The Medic Shield                 |      -      |
-| Evil Guesser Can Guess The Spy                  |      -      |
-| Both Guesser Spawn Rate                         |      -      |
-| Guesser Can't Guess Snitch When Tasks Completed |      -      |
+| Name                                               | Description |
+| -------------------------------------------------- | :---------: |
+| ゲッサー Spawn Chance                              |      -      |
+| Chance That The ゲッサー Is An Impostor            |      -      |
+| ゲッサー Number Of Shots Per Game                  |      -      |
+| ゲッサー Can Shoot Multiple Times Per Meeting      |      -      |
+| Guesses Visible In Ghost Chat                      |      -      |
+| Guesses Ignore The メディック Shield               |      -      |
+| イビル ゲッサー Can Guess The スパイ               |      -      |
+| Both ゲッサー Spawn Rate                           |      -      |
+| ゲッサー Can't Guess スニッチ When Tasks Completed |      -      |
 
 ---
 
-## Lovers
+## ラバーズ
 
-### **Team: Lovers (and secondary team)**
+### **陣営: ラバーズ (and secondary 陣営)**
 
-There are always two Lovers which are linked together.\
+There are always two ラバーズ which are linked together.\
 Their primary goal is it to stay alive together until the end of the game.\
 If one Lover dies (and the option is activated), the other Lover suicides.\
-You can select if Lovers are able to have a second role (could be a Neutral, Crewmate or Impostor Role)\
+You can select if ラバーズ are able to have a second role (could be a 第三陣営, クルーメイト or Impostor Role)\
 You can specify the chance of one Lover being an Impostor.\
-The Lovers never know the role of their partner, they only see who their partner is.\
-The Lovers win if they are both alive when the game ends. \
-If there is no killer among the Lovers (e.g. an Arsonist Lover + Crewmate Lover) and they are both alive when the game ends, they can win together with the Crewmates.\
-If there's a team Impostor/Jackal Lover in the game, the tasks of a Crewmate Lover won't be counted (for a task win) as long as they're alive. If the Lover dies, their tasks will also be counted.\
-You can enable an exclusive chat only for Lovers\
+The ラバーズ never know the role of their partner, they only see who their partner is.\
+The ラバーズ win if they are both alive when the game ends. \
+If there is no killer among the ラバーズ (e.g. an アーソニスト Lover + クルーメイト Lover) and they are both alive when the game ends, they can win together with the クルーメイト.\
+If there's a 陣営 Impostor/ジャッカル Lover in the game, the tasks of a クルーメイト Lover won't be counted (for a task win) as long as they're alive. If the Lover dies, their tasks will also be counted.\
+You can enable an exclusive chat only for ラバーズ\
 \
 **NOTE:**
 
-- In a 2 Cremates vs 2 Impostors (or 2 members of team Jackal) and the Lovers are not in the same team, the game is not automatically over since the Lovers can still achieve a solo win. E.g. if there are the following roles Impostor + ImpLover + Lover + Crewmate left, the game will not end and the next kill will decide if the Impostors or Lovers win.
-- The Lovers can change if the Shifter takes the role of a Lovers
+- In a 2 Cremates vs 2 インポスター (or 2 members of 陣営 ジャッカル) and the ラバーズ are not in the same 陣営, the game is not automatically over since the ラバーズ can still achieve a solo win. E.g. if there are the following roles Impostor + ImpLover + Lover + クルーメイト left, the game will not end and the next kill will decide if the インポスター or ラバーズ win.
+- The ラバーズ can change if the シフター takes the role of a ラバーズ
 
-### Game Options
+### ゲームの設定
 
-| Name                              |                                           Description                                           |
-| --------------------------------- | :---------------------------------------------------------------------------------------------: |
-| Lovers Spawn Chance               |                                                -                                                |
-| Chance That One Lover Is Impostor |                                                -                                                |
-| Both Lovers Die                   |                    Whether the second Lover suicides when the first one dies                    |
-| Lovers Can Have Another Role      |                        If set to true, the Lovers can have a second role                        |
-| Lovers Can Win With Crew          | When false, the Lovers are treated as a separate team. (True: original TheOtherRoles behavior.) |
-| Lovers Tasks Are Counted          |                 Whether the Lovers' tasks count toward overall task completion.                 |
-| Enable Lover Chat                 |                                                -                                                |
+| Name                              |                                            Description                                            |
+| --------------------------------- | :-----------------------------------------------------------------------------------------------: |
+| ラバーズ Spawn Chance             |                                                 -                                                 |
+| Chance That One Lover Is Impostor |                                                 -                                                 |
+| Both ラバーズ Die                 |                     Whether the second Lover suicides when the first one dies                     |
+| ラバーズ Can Have Another Role    |                        If set to true, the ラバーズ can have a second role                        |
+| ラバーズ Can Win With Crew        | When false, the ラバーズ are treated as a separate 陣営. (True: original TheOtherRoles behavior.) |
+| ラバーズ Tasks Are Counted        |                 Whether the ラバーズ' tasks count toward overall task completion.                 |
+| Enable Lover Chat                 |                                                 -                                                 |
 
 ---
 
-## Sheriff
+## シェリフ
 
-### **Team: Crewmates**
+### **陣営: クルーメイト**
 
-The Sheriff has the ability to kill Impostors.
-If they try to kill a Crewmate, they die instead.
+The シェリフ has the ability to kill インポスター.
+If they try to kill a クルーメイト, they die instead.
 
 **NOTE:**
 
-- If the Sheriff shoots the person the Medic shielded, the Sheriff and the shielded person **both remain unharmed**.
-- If the Sheriff shoots a Mini Impostor, the Sheriff dies if the Mini is still growing up. If it's 18, the Mini Impostor dies.
+- If the シェリフ shoots the person the メディック shielded, the シェリフ and the shielded person **both remain unharmed**.
+- If the シェリフ shoots a ミニ Impostor, the シェリフ dies if the ミニ is still growing up. If it's 18, the ミニ Impostor dies.
 
-### Game Options
+### ゲームの設定
 
-| Name                        |                   Description                   |
-| --------------------------- | :---------------------------------------------: |
-| Sheriff Spawn Chance        |                        -                        |
-| Sheriff Number of Shots     | The number of times the Sheriff is able to kill |
-| Sheriff Cooldown            |                        -                        |
-| Neutrals Can Die To Sheriff |                        -                        |
-
----
-
-## Jester
-
-### **Team: Neutral**
-
-The Jester does not have any tasks. They win the game as a solo, if they get voted out during a meeting.
-
-### Game Options
-
-| Name                              |                      Description                      |
-| --------------------------------- | :---------------------------------------------------: |
-| Jester Spawn Chance               |                           -                           |
-| Jester Can Call Emergency Meeting | Option to disable the emergency button for the Jester |
+| Name                         |                   Description                    |
+| ---------------------------- | :----------------------------------------------: |
+| シェリフ Spawn Chance        |                        -                         |
+| シェリフ Number of Shots     | The number of times the シェリフ is able to kill |
+| シェリフ Cooldown            |                        -                         |
+| 第三陣営 Can Die To シェリフ |                        -                         |
 
 ---
 
-## Arsonist
+## ジェスター
 
-### **Team: Neutral**
+### **陣営: 第三陣営**
 
-The Arsonist does not have any tasks, they have to win the game as a solo.\
-The Arsonist can douse other players by pressing the douse button and remaining next to the player for a few seconds.\
-If the player that the Arsonist douses walks out of range, the cooldown will reset to 0.\
-After dousing everyone alive the Arsonist can ignite all the players which results in an Arsonist win.
+The ジェスター does not have any tasks. They win the game as a solo, if they get voted out during a meeting.
 
-### Game Options
+### ゲームの設定
 
-| Name                    |             Description             |
-| ----------------------- | :---------------------------------: |
-| Arsonist Spawn Chance   |                  -                  |
-| Arsonist Countdown      |                  -                  |
-| Arsonist Douse Duration | The time it takes to douse a player |
+| Name                                  |                        Description                        |
+| ------------------------------------- | :-------------------------------------------------------: |
+| ジェスター Spawn Chance               |                             -                             |
+| ジェスター Can Call Emergency Meeting | Option to disable the emergency button for the ジェスター |
 
 ---
 
-## Seer
+## アーソニスト
 
-### **Team: Crewmates**
+### **陣営: 第三陣営**
 
-The Seer has two abilities (one can activate one of them or both in the options).
-The Seer sees the souls of players that died a round earlier, the souls slowly fade away.
-The Seer gets a blue flash on their screen, if a player dies somewhere on the map.
+The アーソニスト does not have any tasks, they have to win the game as a solo.\
+The アーソニスト can douse other players by pressing the douse button and remaining next to the player for a few seconds.\
+If the player that the アーソニスト douses walks out of range, the cooldown will reset to 0.\
+After dousing everyone alive the アーソニスト can ignite all the players which results in an アーソニスト win.
 
-### Game Options
+### ゲームの設定
 
-| Name                     |                              Description                               |
-| ------------------------ | :--------------------------------------------------------------------: |
-| Seer Spawn Chance        |                                   -                                    |
-| Seer Mode                |   Options: Show death flash and souls, show death flash, show souls    |
-| Seer Limit Soul Duration |          Toggle if souls should turn invisible after a while           |
-| Seer Soul Duration       | Sets how long it will take the souls to turn invisible after a meeting |
+| Name                        |             Description             |
+| --------------------------- | :---------------------------------: |
+| アーソニスト Spawn Chance   |                  -                  |
+| アーソニスト Countdown      |                  -                  |
+| アーソニスト Douse Duration | The time it takes to douse a player |
 
 ---
 
-## Engineer
+## シーア
 
-### **Team: Crewmates**
+### **陣営: クルーメイト**
 
-The Engineer (if alive) can fix a certain amount of sabotages per game from anywhere on the map.\
-The Engineer can use vents.\
-If the Engineer is inside a vent, depending on the options the members of the team Jackal/Impostors will see a blue outline around all vents on the map (in order to warn them).
-Because of the vents the Engineer might not be able to start some tasks using the "Use" button, you can double-click on the tasks instead.\
+The シーア has two abilities (one can activate one of them or both in the options).
+The シーア sees the souls of players that died a round earlier, the souls slowly fade away.
+The シーア gets a blue flash on their screen, if a player dies somewhere on the map.
+
+### ゲームの設定
+
+| Name                       |                              Description                               |
+| -------------------------- | :--------------------------------------------------------------------: |
+| シーア Spawn Chance        |                                   -                                    |
+| シーア Mode                |   Options: Show death flash and souls, show death flash, show souls    |
+| シーア Limit Soul Duration |          Toggle if souls should turn invisible after a while           |
+| シーア Soul Duration       | Sets how long it will take the souls to turn invisible after a meeting |
+
+---
+
+## エンジニア
+
+### **陣営: クルーメイト**
+
+The エンジニア (if alive) can fix a certain amount of sabotages per game from anywhere on the map.\
+The エンジニア can use vents.\
+If the エンジニア is inside a vent, depending on the options the members of the 陣営 ジャッカル/インポスター will see a blue outline around all vents on the map (in order to warn them).
+Because of the vents the エンジニア might not be able to start some tasks using the "Use" button, you can double-click on the tasks instead.\
 \
 **NOTE:**
 
-- The kill button of Impostors activates if they stand next to a vent where the Engineer is. They can also kill them there. No other action (e.g. Morphling sample, Shifter shift, ...) can affect players inside vents.
+- The kill button of インポスター activates if they stand next to a vent where the エンジニア is. They can also kill them there. No other action (e.g. モーフィング sample, シフター shift, ...) can affect players inside vents.
 
-### Game Options
+### ゲームの設定
 
-| Name                                      | Description |
-| ----------------------------------------- | :---------: |
-| Engineer Spawn Chance                     |      -      |
-| Number Of Sabotage Fixes                  |      -      |
-| Impostors See Vents Highlighted           |      -      |
-| Jackal and Sidekick See Vents Highlighted |      -      |
+| Name                                              | Description |
+| ------------------------------------------------- | :---------: |
+| エンジニア Spawn Chance                           |      -      |
+| Number Of Sabotage Fixes                          |      -      |
+| インポスター See Vents Highlighted                |      -      |
+| ジャッカル and サイドキック See Vents Highlighted |      -      |
 
 ---
 
-## Detective
+## ディテクティブ
 
-### **Team: Crewmates**
+### **陣営: クルーメイト**
 
-The Detective can see footprints that other players leave behind.
-The Detective's other feature shows when they report a corpse: they receive clues about the killer's identity. The type of information they get is based on the time it took them to find the corpse.
+The ディテクティブ can see footprints that other players leave behind.
+The ディテクティブ's other feature shows when they report a corpse: they receive clues about the killer's identity. The type of information they get is based on the time it took them to find the corpse.
 \
 **NOTE:**
 
 - When people change their colors (because of a morph or camouflage), all the footprints also change their colors (also the ones that were already on the ground). If the effects are over, all footprints switch back to the original color.
-- The Detective does not see footprints of players that sit in vents
+- The ディテクティブ does not see footprints of players that sit in vents
 - More information about the [colors](#colors)
-- During the meetings you can see, whether a player wears a darker or a lighter color, represented by (D) or (L) in the names.
+- During the meetings you can see, whether a player wears a darker or a ライター color, represented by (D) or (L) in the names.
 
-### Game Options
+### ゲームの設定
 
-| Name                                              |                                                      Description                                                      |
-| ------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------: |
-| Detective Spawn Chance                            |                                                           -                                                           |
-| Anonymous Footprints                              | If set to true, all footprints will have the same color. Otherwise they will have the color of the respective player. |
-| Footprint Interval                                |                                          The interval between two footprints                                          |
-| Footprint Duration                                |                                     Sets how long the footprints remain visible.                                      |
-| Time Where Detective Reports Will Have Name       |       The amount of time that the Detective will have to report the body since death to get the killer's name.        |
-| Time Where Detective Reports Will Have Color Type |    The amount of time that the Detective will have to report the body since death to get the killer's color type.     |
-
----
-
-## Lighter
-
-### **Team: Crewmates**
-
-The Lighter can turn on their Lighter every now and then, which increases their vision by a customizable amount.
-
-### Game Options
-
-| Name                              |                                  Description                                   |
-| --------------------------------- | :----------------------------------------------------------------------------: |
-| Lighter Spawn Chance              |                                       -                                        |
-| Lighter Mode Vision On Lights On  |  The vision the Lighter has when the lights are on and the Lighter mode is on  |
-| Lighter Mode Vision On Lights Off | The vision the Lighter has when the lights are down and the Lighter mode is on |
-| Lighter Cooldown                  |                                       -                                        |
-| Lighter Duration                  |                                       -                                        |
+| Name                                                   |                                                      Description                                                      |
+| ------------------------------------------------------ | :-------------------------------------------------------------------------------------------------------------------: |
+| ディテクティブ Spawn Chance                            |                                                           -                                                           |
+| Anonymous Footprints                                   | If set to true, all footprints will have the same color. Otherwise they will have the color of the respective player. |
+| Footprint Interval                                     |                                          The interval between two footprints                                          |
+| Footprint Duration                                     |                                     Sets how long the footprints remain visible.                                      |
+| Time Where ディテクティブ Reports Will Have Name       |     The amount of time that the ディテクティブ will have to report the body since death to get the killer's name.     |
+| Time Where ディテクティブ Reports Will Have Color Type |  The amount of time that the ディテクティブ will have to report the body since death to get the killer's color type.  |
 
 ---
 
-## Mini
+## ライター
 
-### **Team: Crewmates or Impostors**
+### **陣営: クルーメイト**
 
-The Mini can be a Crewmate (67% chance) or an Impostor (33% chance).\
-The Mini's character is smaller and hence visible to everyone in the game.\
-The Mini cannot be killed until it turns 18 years old, however it can be voted out.\
-**Impostor Mini:**
+The ライター can turn on their ライター every now and then, which increases their vision by a customizable amount.
+
+### ゲームの設定
+
+| Name                               |                                   Description                                    |
+| ---------------------------------- | :------------------------------------------------------------------------------: |
+| ライター Spawn Chance              |                                        -                                         |
+| ライター Mode Vision On Lights On  |  The vision the ライター has when the lights are on and the ライター mode is on  |
+| ライター Mode Vision On Lights Off | The vision the ライター has when the lights are down and the ライター mode is on |
+| ライター Cooldown                  |                                        -                                         |
+| ライター Duration                  |                                        -                                         |
+
+---
+
+## ミニ
+
+### **陣営: クルーメイト or インポスター**
+
+The ミニ can be a クルーメイト (67% chance) or an Impostor (33% chance).\
+The ミニ's character is smaller and hence visible to everyone in the game.\
+The ミニ cannot be killed until it turns 18 years old, however it can be voted out.\
+**Impostor ミニ:**
 
 - While growing up the kill cooldown is doubled. When it's fully grown up its kill cooldown is 2/3 of the default one.
 - If it gets thrown out of the ship, everything is fine.
 
-**Crewmate Mini:**
+**クルーメイト ミニ:**
 
-- The Crewmate Mini aims to play out the strength its invincibility in the early game.
-- If it gets thrown out of the ship before it turns 18, everyone loses. So think twice before you vote out a Mini.
+- The クルーメイト ミニ aims to play out the strength its invincibility in the early game.
+- If it gets thrown out of the ship before it turns 18, everyone loses. So think twice before you vote out a ミニ.
 
 **NOTE:**
 
-- If the Sheriff tries to kill the Mini before it's fully grown, they die, no matter if the Mini is a Crewmate or Impostor
-- The Sheriff can kill the Impostor Mini, but only if it's fully grown up
+- If the シェリフ tries to kill the ミニ before it's fully grown, they die, no matter if the ミニ is a クルーメイト or Impostor
+- The シェリフ can kill the Impostor ミニ, but only if it's fully grown up
 
-### Game Options
+### ゲームの設定
 
 | Name              |       Description        |
 | ----------------- | :----------------------: |
-| Mini Spawn Chance |            -             |
-| Mini              | Mini Growing Up Duration |
+| ミニ Spawn Chance |            -             |
+| ミニ              | ミニ Growing Up Duration |
 
 ---
 
-## Medic
+## メディック
 
-### **Team: Crewmates**
+### **陣営: クルーメイト**
 
-The Medic can shield (highlighted by an outline around the player) one player per game, which makes the player unkillable.\
+The メディック can shield (highlighted by an outline around the player) one player per game, which makes the player unkillable.\
 The shielded player can still be voted out and might also be an Impostor.\
-If set in the options, the shielded player and/or the Medic will get a red flash on their screen if someone (Impostor, Sheriff, ...) tried to murder them.
-If the Medic dies, the shield disappears with them.\
-The Sheriff will not die if they try to kill a shielded Crewmate and won't perform a kill if they try to kill a shielded Impostor.\
-Depending on the options, guesses from the Guesser will be blocked by the shield and the shielded player/medic might be notified.\
-The Medic's other feature shows when they report a corpse: they will see how long ago the player died.
+If set in the options, the shielded player and/or the メディック will get a red flash on their screen if someone (Impostor, シェリフ, ...) tried to murder them.
+If the メディック dies, the shield disappears with them.\
+The シェリフ will not die if they try to kill a shielded クルーメイト and won't perform a kill if they try to kill a shielded Impostor.\
+Depending on the options, guesses from the ゲッサー will be blocked by the shield and the shielded player/メディック might be notified.\
+The メディック's other feature shows when they report a corpse: they will see how long ago the player died.
 \
 **NOTE:**
 
 - If the shielded player is a Lover and the other Lover dies, they nevertheless kill themselves.
-- If the Shifter has a shield or their target has a Shield, the shielded player switches.
+- If the シフター has a shield or their target has a Shield, the shielded player switches.
 - Shields set after the next meeting, will be set before a possible shift is being performed.
 
-### Game Options
+### ゲームの設定
 
-| Name                                         |                         Description                          |                                                    Options                                                    |
-| -------------------------------------------- | :----------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: |
-| Medic Spawn Chance                           |                              -                               |                                                       -                                                       |
-| Show Shielded Player                         |            Sets who sees if a player has a shield            |                                    "Everyone", "Shielded + Medic", "Medic"                                    |
-| Shielded Player Sees Murder Attempt          | Whether a shielded player sees if someone tries to kill them |                                                  True/false                                                   |
-| Shield Will Be Set After Next Meeting        |                              -                               |                                                  True/false                                                   |
-| Medic Sees Murder Attempt On Shielded Player |                              -                               | If anyone tries to harm the shielded player (Impostor, Sheriff, Guesser, ...), the Medic will see a red flash |
-
----
-
-## Mayor
-
-### **Team: Crewmates**
-
-The Mayor leads the Crewmates by having a vote that counts twice.\
-The Mayor can always use their meeting, even if the maximum number of meetings was reached.
-
-### Game Options
-
-| Name               | Description |
-| ------------------ | :---------: |
-| Mayor Spawn Chance |      -      |
+| Name                                              |                         Description                          |                                                       Options                                                        |
+| ------------------------------------------------- | :----------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: |
+| メディック Spawn Chance                           |                              -                               |                                                          -                                                           |
+| Show Shielded Player                              |            Sets who sees if a player has a shield            |                                  "Everyone", "Shielded + メディック", "メディック"                                   |
+| Shielded Player Sees Murder Attempt               | Whether a shielded player sees if someone tries to kill them |                                                      True/false                                                      |
+| Shield Will Be Set After Next Meeting             |                              -                               |                                                      True/false                                                      |
+| メディック Sees Murder Attempt On Shielded Player |                              -                               | If anyone tries to harm the shielded player (Impostor, シェリフ, ゲッサー, ...), the メディック will see a red flash |
 
 ---
 
-## Hacker
+## メイヤー
 
-### **Team: Crewmates**
+### **陣営: クルーメイト**
 
-If the Hacker activates the "Hacker mode", the Hacker gets more information than others from the admin table and vitals for a set duration.\
+The メイヤー leads the クルーメイト by having a vote that counts twice.\
+The メイヤー can always use their meeting, even if the maximum number of meetings was reached.
+
+### ゲームの設定
+
+| Name                  | Description |
+| --------------------- | :---------: |
+| メイヤー Spawn Chance |      -      |
+
+---
+
+## ハッカー
+
+### **陣営: クルーメイト**
+
+If the ハッカー activates the "ハッカー mode", the ハッカー gets more information than others from the admin table and vitals for a set duration.\
 Otherwise they see the same information as everyone else.
-**Admin table:** The Hacker can see the colors (or color types) of the players on the table.\
-**Vitals**: The Hacker can see how long dead players have been dead for.\
-The Hacker can access his mobile gadgets (vitals & admin table), with a maximum of charges (uses) and a configurable amount of tasks needed to recharge.\
-While accessing those mobile gadgets, the Hacker is not able to move.\
+**Admin table:** The ハッカー can see the colors (or color types) of the players on the table.\
+**Vitals**: The ハッカー can see how long dead players have been dead for.\
+The ハッカー can access his mobile gadgets (vitals & admin table), with a maximum of charges (uses) and a configurable amount of tasks needed to recharge.\
+While accessing those mobile gadgets, the ハッカー is not able to move.\
 \
 **NOTE:**
 
-- If the Morphling morphs or the Camouflager camouflages, the colors on the admin table change accordingly
+- If the モーフィング morphs or the カモフラージャー camouflages, the colors on the admin table change accordingly
 - More information about the [colors](#colors)
-- During the meetings you can see, whether a player wears a darker or a lighter color, represented by (D) or (L) in the names.
+- During the meetings you can see, whether a player wears a darker or a ライター color, represented by (D) or (L) in the names.
 
-### Game Options
+### ゲームの設定
 
-| Name                                  |                                                   Description                                                   |
-| ------------------------------------- | :-------------------------------------------------------------------------------------------------------------: |
-| Hacker Spawn Chance                   |                                                        -                                                        |
-| Hacker Cooldown                       |                                                        -                                                        |
-| Hacker Duration                       |                                 Sets how long the "Hacker mode" remains active                                  |
-| Hacker Only Sees Color Type           | Sets if the Hacker sees the player colors on the admin table or only white/gray (for Lighter and darker colors) |
-| Max Mobile Gadget Charges             |                                                        -                                                        |
-| Number Of Tasks Needed For Recharging |                                         Number of tasks to get a charge                                         |
-| Can't Move During Cam Duration        |                                                        -                                                        |
+| Name                                  |                                                    Description                                                     |
+| ------------------------------------- | :----------------------------------------------------------------------------------------------------------------: |
+| ハッカー Spawn Chance                 |                                                         -                                                          |
+| ハッカー Cooldown                     |                                                         -                                                          |
+| ハッカー Duration                     |                                  Sets how long the "ハッカー mode" remains active                                  |
+| ハッカー Only Sees Color Type         | Sets if the ハッカー sees the player colors on the admin table or only white/gray (for ライター and darker colors) |
+| Max Mobile Gadget Charges             |                                                         -                                                          |
+| Number Of Tasks Needed For Recharging |                                          Number of tasks to get a charge                                           |
+| Can't Move During Cam Duration        |                                                         -                                                          |
 
 ---
 
-## Shifter
+## シフター
 
-### **Team: Crewmates or Neutral**
+### **陣営: クルーメイト or 第三陣営**
 
-The Shifter can take over the role of another Crewmate, the other player will transform into a Crewmate.\
+The シフター can take over the role of another クルーメイト, the other player will transform into a クルーメイト.\
 The Shift will always be performed at the end of the next meeting right before a player is exiled. The target needs to be chosen during the round.\
-Even if the Shifter or the target dies before the meeting, the Shift will still be performed.\
-Swapping roles with an Impostor or Neutral fails and the Shifter commits suicide after the next meeting (there won't be any body).\
-The Shifter aims to save roles from leaving the game, by e.g. taking over a Sheriff or Medic that is known to the Impostors.\
-This works especially well against the Eraser, but also gives the Eraser the possibility to act like a Shifter.\
-The **special interactions** with the Shifter are noted in the chapters of the respective roles.\
+Even if the シフター or the target dies before the meeting, the Shift will still be performed.\
+Swapping roles with an Impostor or 第三陣営 fails and the シフター commits suicide after the next meeting (there won't be any body).\
+The シフター aims to save roles from leaving the game, by e.g. taking over a シェリフ or メディック that is known to the インポスター.\
+This works especially well against the イレイサー, but also gives the イレイサー the possibility to act like a シフター.\
+The **special interactions** with the シフター are noted in the chapters of the respective roles.\
 
-A Neutral version of the Shifter, known as the Chain-Shifter, is able to steal roles from any player, regardless of their team. The shifted player then inherits the role of Chain-Shifter, and must steal another player's role. The player who retains the Chain-Shifter role at the end of the game automatically loses.
+A 第三陣営 version of the シフター, known as the Chain-シフター, is able to steal roles from any player, regardless of their 陣営. The shifted player then inherits the role of Chain-シフター, and must steal another player's role. The player who retains the Chain-シフター role at the end of the game automatically loses.
 
 **NOTE:**
 
-- The Shifter shift will always be triggered before the Erase (hence either the new role of the Shifter will be erased or the Shifter saves the role of their target, depending on whom the Eraser erased)
-- If the Shifter takes over a role, their new cooldowns will start at the maximum cooldown of the ability
-- One time use abilities (e.g. shielding a player or Engineer sabotage fix) can only used by one player in the game (i.e. the Shifter
+- The シフター shift will always be triggered before the Erase (hence either the new role of the シフター will be erased or the シフター saves the role of their target, depending on whom the イレイサー erased)
+- If the シフター takes over a role, their new cooldowns will start at the maximum cooldown of the ability
+- One time use abilities (e.g. shielding a player or エンジニア sabotage fix) can only used by one player in the game (i.e. the シフター
   can only use them, if the previous player did not use them before)
 
-### Game Options
+### ゲームの設定
 
-| Name                     |                    Description                     |
-| ------------------------ | :------------------------------------------------: |
-| Shifter Spawn Chance     |                         -                          |
-| Shifter Shifts Modifiers | Sets if Lovers and/or Medic Shield will be shifted |
+| Name                      |                        Description                        |
+| ------------------------- | :-------------------------------------------------------: |
+| シフター Spawn Chance     |                             -                             |
+| シフター Shifts Modifiers | Sets if ラバーズ and/or メディック Shield will be shifted |
 
 ---
 
 ## Time Master
 
-### **Team: Crewmates**
+### **陣営: クルーメイト**
 
 The Time Master has a time shield which they can activate. The time shield remains active for a configurable amount of time.\
 If a player tries to kill the Time Master while the time shield is active, the kill won't happen and the
@@ -893,12 +844,12 @@ The Time Master won't be affected by the rewind.\
 **NOTE:**
 
 - Only the movement is affected by the rewind.
-- A Vampire bite will trigger the rewind. If the Time Master misses shielding the bite, they can still shield the kill which happens a few seconds later.
+- A ヴァンパイア bite will trigger the rewind. If the Time Master misses shielding the bite, they can still shield the kill which happens a few seconds later.
 - If the Time Master was bitten and has their shield active before when a meeting is called, they survive but the time won't be rewound.
-- If the Time Master has a Medic shield, they won't rewind.
+- If the Time Master has a メディック shield, they won't rewind.
 - The shield itself ends immediately when triggered. So the Time Master can be attacked again as soon as the rewind ends.
 
-### Game Options
+### ゲームの設定
 
 | Name                        |       Description       |
 | --------------------------- | :---------------------: |
@@ -909,35 +860,35 @@ The Time Master won't be affected by the rewind.\
 
 ---
 
-## Swapper
+## スワッパー
 
-### **Team: Crewmates or Impostor**
+### **陣営: クルーメイト or Impostor**
 
-During meetings the Swapper can exchange votes that two people get (i.e. all votes
+During meetings the スワッパー can exchange votes that two people get (i.e. all votes
 that player A got will be given to player B and vice versa).\
-Because of the Swapper's strength in meetings, they might not start emergency meetings
+Because of the スワッパー's strength in meetings, they might not start emergency meetings
 and can't fix lights and comms.
 
-### Game Options
+### ゲームの設定
 
-| Name                               |                      Description                       |
-| ---------------------------------- | :----------------------------------------------------: |
-| Swapper Spawn Chance               |                           -                            |
-| Swapper can call emergency meeting | Option to disable the emergency button for the Swapper |
-| Swapper can only swap others       |   Sets whether the Swapper can swap themself or not    |
+| Name                                  |                        Description                        |
+| ------------------------------------- | :-------------------------------------------------------: |
+| スワッパー Spawn Chance               |                             -                             |
+| スワッパー can call emergency meeting | Option to disable the emergency button for the スワッパー |
+| スワッパー can only swap others       |   Sets whether the スワッパー can swap themself or not    |
 
 ---
 
 ## Tracker
 
-### **Team: Crewmates**
+### **陣営: クルーメイト**
 
 The Tracker can select one player to track. Depending on the options the Tracker can track a different person after each meeting or the Tracker tracks the same person for the whole game.
 An arrow points to the last tracked position of the player.
 The arrow updates its position every few seconds (configurable).
-Depending on the options, the Tracker has another ability: They can track all corpses on the map for a set amount of time. They will keep tracking corpses, even if they were cleaned or eaten by the Vulture.
+Depending on the options, the Tracker has another ability: They can track all corpses on the map for a set amount of time. They will keep tracking corpses, even if they were cleaned or eaten by the ヴァルチャー.
 
-### Game Options
+### ゲームの設定
 
 | Name                               |                 Description                  |
 | ---------------------------------- | :------------------------------------------: |
@@ -950,129 +901,129 @@ Depending on the options, the Tracker has another ability: They can track all co
 
 ---
 
-## Snitch
+## スニッチ
 
-### **Team: Crewmates**
+### **陣営: クルーメイト**
 
-When the Snitch finishes all the tasks, arrows will appear (only visible to the Snitch) that point to the Impostors (depending on the options also to members of team Jackal).
-When the Snitch has one task left (configurable) the Snitch will be revealed to the Impostors (depending on the options also to members of team Jackal) with an arrow pointing to the Snitch.
+When the スニッチ finishes all the tasks, arrows will appear (only visible to the スニッチ) that point to the インポスター (depending on the options also to members of 陣営 ジャッカル).
+When the スニッチ has one task left (configurable) the スニッチ will be revealed to the インポスター (depending on the options also to members of 陣営 ジャッカル) with an arrow pointing to the スニッチ.
 
-### Game Options
+### ゲームの設定
 
-| Name                                                    | Description |
-| ------------------------------------------------------- | :---------: |
-| Snitch Spawn Chance                                     |      -      |
-| Task Count Where The Snitch Will Be Revealed            |      -      |
-| Include Team Jackal                                     |      -      |
-| Use Different Arrow Color For Team Jackal               |      -      |
-| Snitch can't be guessed after finishing all their tasks |      -      |
+| Name                                                      | Description |
+| --------------------------------------------------------- | :---------: |
+| スニッチ Spawn Chance                                     |      -      |
+| Task Count Where The スニッチ Will Be Revealed            |      -      |
+| Include 陣営 ジャッカル                                   |      -      |
+| Use Different Arrow Color For 陣営 ジャッカル             |      -      |
+| スニッチ can't be guessed after finishing all their tasks |      -      |
 
 ---
 
-## Jackal
+## ジャッカル
 
-### **Team: Jackal**
+### **陣営: ジャッカル**
 
-The Jackal is part of an extra team, that tries to eliminate all the other players.\
-The Jackal has no tasks and can kill Impostors, Crewmates and Neutrals.\
-The Jackal (if allowed by the options) can select another player to be their Sidekick.
-Creating a Sidekick removes all tasks of the Sidekick and adds them to the team Jackal. The Sidekick loses their current role (except if they're a Lover, then they play in two teams).
-The "Create Sidekick Action" may only be used once per Jackal or once per game (depending on the options).
-The Jackal can also promote Impostors to be their Sidekick but, depending on the options the Impostor will either really turn into the Sidekick and leave the team Impostors or they will just look like the Sidekick to the Jackal and remain as they were.\
+The ジャッカル is part of an extra 陣営, that tries to eliminate all the other players.\
+The ジャッカル has no tasks and can kill インポスター, クルーメイト and 第三陣営.\
+The ジャッカル (if allowed by the options) can select another player to be their サイドキック.
+Creating a サイドキック removes all tasks of the サイドキック and adds them to the 陣営 ジャッカル. The サイドキック loses their current role (except if they're a Lover, then they play in two teams).
+The "Create サイドキック Action" may only be used once per ジャッカル or once per game (depending on the options).
+The ジャッカル can also promote インポスター to be their サイドキック but, depending on the options the Impostor will either really turn into the サイドキック and leave the 陣営 インポスター or they will just look like the サイドキック to the ジャッカル and remain as they were.\
 \
-The team Jackal enables multiple new outcomes of the game, listing some examples here:
+The 陣営 ジャッカル enables multiple new outcomes of the game, listing some examples here:
 
-- The Impostors could be eliminated and then the crew plays against the team Jackal.
-- The Crew could be eliminated, then the Team Jackal fight against the Impostors (The Crew can still make a task win in this scenario)
+- The インポスター could be eliminated and then the crew plays against the 陣営 ジャッカル.
+- The Crew could be eliminated, then the 陣営 ジャッカル fight against the インポスター (The Crew can still make a task win in this scenario)
 
 The priority of the win conditions is the following:
 
-1. Crewmate Mini lose by vote
-2. Jester wins by vote
-3. Arsonist win
-4. Team Impostor wins by sabotage
-5. Team Crew wins by tasks (also possible if the whole Crew is dead)
-6. Lovers among the last three players win
-7. Team Jackal wins by outnumbering (When the team Jackal contains an equal or greater amount of players than the Crew and there are 0 Impostors left and team Jackal contains no Lover)
-8. Team Impostor wins by outnumbering (When the team Impostors contains an equal or greater amount of players than the Crew and there are 0 players of the team Jackal left and team Impostors contains no Lover)
-9. Team Crew wins by outnumbering (When there is no player of the team Jackal and the team Impostors left)
+1. クルーメイト ミニ lose by vote
+2. ジェスター wins by vote
+3. アーソニスト win
+4. 陣営 Impostor wins by sabotage
+5. 陣営 Crew wins by tasks (also possible if the whole Crew is dead)
+6. ラバーズ among the last three players win
+7. 陣営 ジャッカル wins by outnumbering (When the 陣営 ジャッカル contains an equal or greater amount of players than the Crew and there are 0 インポスター left and 陣営 ジャッカル contains no Lover)
+8. 陣営 Impostor wins by outnumbering (When the 陣営 インポスター contains an equal or greater amount of players than the Crew and there are 0 players of the 陣営 ジャッカル left and 陣営 インポスター contains no Lover)
+9. 陣営 Crew wins by outnumbering (When there is no player of the 陣営 ジャッカル and the 陣営 インポスター left)
 
 **NOTE:**
 
-- The Jackal (and their Sidekick) may be killed by a Sheriff.
-- A Jackal cannot target the Mini, while it's growing up. After that they can kill it or select it as its Sidekick.
-- The Crew can still win, even if all of their members are dead, if they finish their tasks fast enough (that's why converting the last Crewmate with tasks left into a Sidekick results in a task win for the crew)
+- The ジャッカル (and their サイドキック) may be killed by a シェリフ.
+- A ジャッカル cannot target the ミニ, while it's growing up. After that they can kill it or select it as its サイドキック.
+- The Crew can still win, even if all of their members are dead, if they finish their tasks fast enough (that's why converting the last クルーメイト with tasks left into a サイドキック results in a task win for the crew)
 
-If both Impostors and Jackals are in the game the game continues even if all Crewmates are dead. Crewmates may still win in this case by completing their tasks. Jackal and Impostor have to kill each other.
+If both インポスター and ジャッカル s are in the game the game continues even if all クルーメイト are dead. クルーメイト may still win in this case by completing their tasks. ジャッカル and Impostor have to kill each other.
 
-### Game Options
+### ゲームの設定
 
-| Name                                                 |                                                                                                                              Description                                                                                                                              |
-| ---------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| Jackal Spawn Chance                                  |                                                                                                                                   -                                                                                                                                   |
-| Jackal/Sidekick Kill Cooldown                        |                                                                                                                             Kill cooldown                                                                                                                             |
-| Jackal Create Sidekick Cooldown                      |                                                                                                               Cooldown before a Sidekick can be created                                                                                                               |
-| Jackal can use vents                                 |                                                                                                                                Yes/No                                                                                                                                 |
-| Jackal can create a Sidekick                         |                                                                                                                                Yes/No                                                                                                                                 |
-| Jackals promoted from Sidekick can create a Sidekick |                                                                                                           Yes/No (to prevent the Jackal team from growing)                                                                                                            |
-| Jackals can make an Impostor to their Sidekick       | Yes/No (to prevent a Jackal from turning an Impostor into a Sidekick, if they use the ability on an Impostor they see the Impostor as Sidekick, but the Impostor isn't converted to Sidekick. If this option is set to "No" Jackal and Sidekick can kill each other.) |
-| Jackal and Sidekick have Impostor vision             |                                                                                                                                   -                                                                                                                                   |
+| Name                                                              |                                                                                                                                          Description                                                                                                                                          |
+| ----------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| ジャッカル Spawn Chance                                           |                                                                                                                                               -                                                                                                                                               |
+| ジャッカル/サイドキック Kill Cooldown                             |                                                                                                                                         Kill cooldown                                                                                                                                         |
+| ジャッカル Create サイドキック Cooldown                           |                                                                                                                         Cooldown before a サイドキック can be created                                                                                                                         |
+| ジャッカル can use vents                                          |                                                                                                                                            Yes/No                                                                                                                                             |
+| ジャッカル can create a サイドキック                              |                                                                                                                                            Yes/No                                                                                                                                             |
+| ジャッカル s promoted from サイドキック can create a サイドキック |                                                                                                                     Yes/No (to prevent the ジャッカル 陣営 from growing)                                                                                                                      |
+| ジャッカル s can make an Impostor to their サイドキック           | Yes/No (to prevent a ジャッカル from turning an Impostor into a サイドキック, if they use the ability on an Impostor they see the Impostor as サイドキック, but the Impostor isn't converted to サイドキック. If this option is set to "No" ジャッカル and サイドキック can kill each other.) |
+| ジャッカル and サイドキック have Impostor vision                  |                                                                                                                                               -                                                                                                                                               |
 
 ---
 
-## Sidekick
+## サイドキック
 
-### **Team: Jackal**
+### **陣営: ジャッカル**
 
-Gets assigned to a player during the game by the "Create Sidekick Action" of the Jackal and joins the Jackal in their quest to eliminate all other players.\
-Upon the death of the Jackal (depending on the options), they might get promoted to Jackal themself and potentially even assign a Sidekick of their own.
+Gets assigned to a player during the game by the "Create サイドキック Action" of the ジャッカル and joins the ジャッカル in their quest to eliminate all other players.\
+Upon the death of the ジャッカル (depending on the options), they might get promoted to ジャッカル themself and potentially even assign a サイドキック of their own.
 \
 **NOTE:**
 
-- A player that converts into a Sidekick loses their previous role and tasks (if they had one), except the Lover role.
-- The Sidekick may be killed by a Sheriff.
-- The Sidekick cannot target the Mini, while it's growing up.
+- A player that converts into a サイドキック loses their previous role and tasks (if they had one), except the Lover role.
+- The サイドキック may be killed by a シェリフ.
+- The サイドキック cannot target the ミニ, while it's growing up.
 
-### Game Options
+### ゲームの設定
 
-| Name                                             |                    Description                    |
-| ------------------------------------------------ | :-----------------------------------------------: |
-| Jackal/Sidekick Kill Cooldown                    | Uses the same kill cooldown setting as the Jackal |
-| Sidekick gets promoted to Jackal on Jackal death |                      Yes/No                       |
-| Sidekick can kill                                |                      Yes/No                       |
-| Sidekick can use vents                           |                      Yes/No                       |
+| Name                                                         |                      Description                      |
+| ------------------------------------------------------------ | :---------------------------------------------------: |
+| ジャッカル/サイドキック Kill Cooldown                        | Uses the same kill cooldown setting as the ジャッカル |
+| サイドキック gets promoted to ジャッカル on ジャッカル death |                        Yes/No                         |
+| サイドキック can kill                                        |                        Yes/No                         |
+| サイドキック can use vents                                   |                        Yes/No                         |
 
 ---
 
-## Spy
+## スパイ
 
-### **Team: Crewmates**
+### **陣営: クルーメイト**
 
-The Spy is a Crewmate, which has no special abilities.\
-The Spy looks like an additional Impostor to the Impostors, they can't tell the difference.\
+The スパイ is a クルーメイト, which has no special abilities.\
+The スパイ looks like an additional Impostor to the インポスター, they can't tell the difference.\
 There are two possibilities (depending on the set options):
 
-- The Impostors can't kill the Spy (because otherwise their kill button would reveal, who the Spy is)
-- The Impostors can kill the Spy but they can also kill their Impostor partner (if they mistake another Impostor for the Spy)
-  You can set whether the Sheriff can kill the Spy or not (in order to keep the lie alive).
+- The インポスター can't kill the スパイ (because otherwise their kill button would reveal, who the スパイ is)
+- The インポスター can kill the スパイ but they can also kill their Impostor partner (if they mistake another Impostor for the スパイ)
+  You can set whether the シェリフ can kill the スパイ or not (in order to keep the lie alive).
 
-### Game Options
+### ゲームの設定
 
-| Name                                        |                                 Description                                  |
-| ------------------------------------------- | :--------------------------------------------------------------------------: |
-| Spy Spawn Chance                            |
-| Spy Can Die To Sheriff                      |
-| Impostors Can Kill Anyone If There Is A Spy |  This allows the Impostors to kill both the Spy and their Impostor partners  |
-| Spy Can Enter Vents                         | Allow the Spy to enter/exit vents (but not actually move to connected vents) |
-| Spy Has Impostor Vision                     |              Give the Spy the same vision as the Impostors have              |
+| Name                                              |                                   Description                                    |
+| ------------------------------------------------- | :------------------------------------------------------------------------------: |
+| スパイ Spawn Chance                               |
+| スパイ Can Die To シェリフ                        |
+| インポスター Can Kill Anyone If There Is A スパイ | This allows the インポスター to kill both the スパイ and their Impostor partners |
+| スパイ Can Enter Vents                            | Allow the スパイ to enter/exit vents (but not actually move to connected vents)  |
+| スパイ Has Impostor Vision                        |             Give the スパイ the same vision as the インポスター have             |
 
 ---
 
 ## Security Guard
 
-### **Team: Crewmates**
+### **陣営: クルーメイト**
 
-The Security Guard is a Crewmate that has a certain number of screws that they can use for either sealing vents or for placing new cameras.\
+The Security Guard is a クルーメイト that has a certain number of screws that they can use for either sealing vents or for placing new cameras.\
 Placing a new camera and sealing vents takes a configurable amount of screws. The total number of screws that a Security Guard has can also be configured.\
 The new camera will be visible after the next meeting and accessible by everyone.\
 The vents will be sealed after the next meeting, players can't enter or exit sealed vents, but they can still "move to them" underground.\
@@ -1086,7 +1037,7 @@ The vents will be sealed after the next meeting, players can't enter or exit sea
 - Security Guard can access mobile cameras after placing all screws
 - While accessing the mobile cameras, the Security Guard is not able to move
 
-### Game Options
+### ゲームの設定
 
 | Name                                  |                         Description                          |
 | ------------------------------------- | :----------------------------------------------------------: |
@@ -1102,34 +1053,34 @@ The vents will be sealed after the next meeting, players can't enter or exit sea
 
 ---
 
-## Bait
+## ベイト
 
-### **Team: Crewmates**
+### **陣営: クルーメイト**
 
-The Bait is a Crewmate that if killed, forces the killer to self report the body (you can configure a delay in the options).
-Additionally, the Bait can see if someone is inside a vent (depending on the options the exact vent gets
+The ベイト is a クルーメイト that if killed, forces the killer to self report the body (you can configure a delay in the options).
+Additionally, the ベイト can see if someone is inside a vent (depending on the options the exact vent gets
 an outline or all vents do).
 
-### Game Options
+### ゲームの設定
 
 | Name                         |                                                                             Description                                                                              |
 | ---------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| Bait Spawn Chance            |                                                                                  -                                                                                   |
-| Bait Highlight All Vents     | If set to true, all vents will be highlighted if a player is inside of one of them. If set to false, only the vents where players are siting in will be highlighted. |
-| Bait Report Delay            |                                                                                  -                                                                                   |
+| ベイト Spawn Chance          |                                                                                  -                                                                                   |
+| ベイト Highlight All Vents   | If set to true, all vents will be highlighted if a player is inside of one of them. If set to false, only the vents where players are siting in will be highlighted. |
+| ベイト Report Delay          |                                                                                  -                                                                                   |
 | Warn The Killer With A Flash |                                                                                  -                                                                                   |
 
-## Opportunist
+## オポチュニスト
 
-### **Team: N/A**
+### **陣営: N/A**
 
 Created by [libhalt](https://twitter.com/libhalt)
 
-The Opportunist is a outsider role. So long as they are alive at the end of the game, they win alongside the victorious team. They can choose to side with any team they wish to ensure their own survival.
+The オポチュニスト is a outsider role. So long as they are alive at the end of the game, they win alongside the victorious 陣営. They can choose to side with any 陣営 they wish to ensure their own survival.
 
 ## GM
 
-### **Team: N/A**
+### **陣営: N/A**
 
 Created by [Virtual_Dusk](https://twitter.com/Virtual_Dusk)
 
@@ -1137,7 +1088,7 @@ The GM (Game Master) is an observer role. Their presence has no effect on the ga
 
 The GM role is intended to allow groups to play with a wide variety of rules not supported by Among Us natively.
 
-### Game Options
+### ゲームの設定
 
 | Name                             |                          Description                           |
 | -------------------------------- | :------------------------------------------------------------: |
@@ -1147,80 +1098,80 @@ The GM role is intended to allow groups to play with a wide variety of rules not
 | Hide settings from other players | Hides mod-related settings from everyone except the lobby host |
 | GM dies at start of game         |                  The GM begins the game dead                   |
 
-## Medium
+## ミディアム
 
-### **Team: Crewmates**
+### **陣営: クルーメイト**
 
-The medium is a crewmate who can ask the souls of dead players for information. Like the Seer, it sees the places where the players have died (after the next meeting) and can question them. It then gets random information about the soul or the killer in the chat. The souls only stay for one round, i.e. until the next meeting. Depending on the options, the souls can only be questioned once and then disappear.
-During the meetings you can see, whether a player wears a darker or a lighter color, represented by (D) or (L) in the names.
+The ミディアム is a クルーメイト who can ask the souls of dead players for information. Like the シーア, it sees the places where the players have died (after the next meeting) and can question them. It then gets random information about the soul or the killer in the chat. The souls only stay for one round, i.e. until the next meeting. Depending on the options, the souls can only be questioned once and then disappear.
+During the meetings you can see, whether a player wears a darker or a ライター color, represented by (D) or (L) in the names.
 
 Questions:
 What is your Role?
 What is your killer's color type?
 When did you die?
-What is your killers role? (mini exluded)
+What is your killers role? (ミニ exluded)
 
-### Game Options
+### ゲームの設定
 
-| Name                                         |                             Description                              |
-| -------------------------------------------- | :------------------------------------------------------------------: |
-| Medium Spawn Chance                          |                                  -                                   |
-| Medium Cooldown                              |                                  -                                   |
-| Medium Duration                              |                 The time it takes to question a soul                 |
-| Medium Each Soul Can Only Be Questioned Once | If set to true, souls can only be questioned once and then disappear |
+| Name                                             |                             Description                              |
+| ------------------------------------------------ | :------------------------------------------------------------------: |
+| ミディアム Spawn Chance                          |                                  -                                   |
+| ミディアム Cooldown                              |                                  -                                   |
+| ミディアム Duration                              |                 The time it takes to question a soul                 |
+| ミディアム Each Soul Can Only Be Questioned Once | If set to true, souls can only be questioned once and then disappear |
 
 ---
 
-## Vulture
+## ヴァルチャー
 
-### **Team: Neutral**
+### **陣営: 第三陣営**
 
-The Vulture does not have any tasks, they have to win the game as a solo.\
-The Vulture is a neutral role that must eat a specified number of corpses (depending on the options) in order to win.\
-Depending on the options, when a player dies, the Vulture gets an arrow pointing to the corpse.
-If there is a Vulture in the game, there can't be a Cleaner.
+The ヴァルチャー does not have any tasks, they have to win the game as a solo.\
+The ヴァルチャー is a 第三陣営 role that must eat a specified number of corpses (depending on the options) in order to win.\
+Depending on the options, when a player dies, the ヴァルチャー gets an arrow pointing to the corpse.
+If there is a ヴァルチャー in the game, there can't be a クリーナー.
 
-### Game Options
+### ゲームの設定
 
 | Name                                     |                Description                 |
 | ---------------------------------------- | :----------------------------------------: |
-| Vulture Spawn Chance                     |                     -                      |
-| Vulture Countdown                        |                     -                      |
+| ヴァルチャー Spawn Chance                |                     -                      |
+| ヴァルチャー Countdown                   |                     -                      |
 | Number Of Corpses Needed To Be Eaten     | Corpses needed to be eaten to win the game |
-| Vulture Can Use Vents                    |                     -                      |
+| ヴァルチャー Can Use Vents               |                     -                      |
 | Show Arrows Pointing Towards The Corpses |                     -                      |
 
 ---
 
-## Lawyer
+## 弁護士
 
-### **Team: Neutral**
+### **陣営: 第三陣営**
 
-The Lawyer is a neutral role that has a client.
-The client might be an Impostor or Jackal which is no Lover.
-The Lawyer needs their client to win in order to win the game.
-If their client dies or gets voted out, the Lawyer changes their role and becomes the [Pursuer](#pursuer), which has a different goal to win the game.
-The main goal of the Lawyer is to win as Lawyer, as it is not allowed to betray their client.
+The 弁護士 is a 第三陣営 role that has a client.
+The client might be an Impostor or ジャッカル which is no Lover.
+The 弁護士 needs their client to win in order to win the game.
+If their client dies or gets voted out, the 弁護士 changes their role and becomes the [Pursuer](#pursuer), which has a different goal to win the game.
+The main goal of the 弁護士 is to win as 弁護士, as it is not allowed to betray their client.
 
-The Lawyer can win in multiple ways:
+The 弁護士 can win in multiple ways:
 
-- Lawyer dead, client alive and client team won: The Lawyer wins together with the team of the client
-- Lawyer and client alive and client team won: The Lawyer wins with the team of the client. The client **doesn't** win (even if their Impostor/Team Jackal mate wins), the Lawyer steals their win. Hence the client should keep the Lawyer alive for some time, to get some help during the meetings, but has to eliminate them soon enough to not get their win stolen.
+- 弁護士 dead, client alive and client 陣営 won: The 弁護士 wins together with the 陣営 of the client
+- 弁護士 and client alive and client 陣営 won: The 弁護士 wins with the 陣営 of the client. The client **doesn't** win (even if their Impostor/陣営 ジャッカル mate wins), the 弁護士 steals their win. Hence the client should keep the 弁護士 alive for some time, to get some help during the meetings, but has to eliminate them soon enough to not get their win stolen.
 
 **NOTE:**
 
-- If the client disconnects, the Lawyer will also turn into the Pursuer
-- If "Lawyer Target Knows" is set to true, the client will know that someone is their Lawyer, but won't know who.
+- If the client disconnects, the 弁護士 will also turn into the Pursuer
+- If "弁護士 Target Knows" is set to true, the client will know that someone is their 弁護士, but won't know who.
 
-### Game Options
+### ゲームの設定
 
 | Name                          |                                              Description                                               |
 | ----------------------------- | :----------------------------------------------------------------------------------------------------: |
-| Lawyer Target Knows           | The target knows that it is the target (marked with "§", if the Lawyer dies, the mark will disappear)  |
-| Lawyer Wins After Meetings    | If set to true, the Lawyer wins after a configurable amount of meetings (can't start meetings himself) |
-| Lawyer Needed Meetings To Win |                                                   -                                                    |
-| Lawyer Vision                 |                                       Pursuer has normal vision                                        |
-| Lawyer Knows Target Role      |                                                   -                                                    |
+| 弁護士 Target Knows           | The target knows that it is the target (marked with "§", if the 弁護士 dies, the mark will disappear)  |
+| 弁護士 Wins After Meetings    | If set to true, the 弁護士 wins after a configurable amount of meetings (can't start meetings himself) |
+| 弁護士 Needed Meetings To Win |                                                   -                                                    |
+| 弁護士 Vision                 |                                       Pursuer has normal vision                                        |
+| 弁護士 Knows Target Role      |                                                   -                                                    |
 | Pursuer Blank Cooldown        |                                                   -                                                    |
 | Pursuer Number Of Blanks      |                                                   -                                                    |
 
@@ -1228,83 +1179,85 @@ The Lawyer can win in multiple ways:
 
 ## Pursuer
 
-### **Team: Neutral**
+### **陣営: 第三陣営**
 
-The Pursuer is still a neutral role, but has a different goal to win the game; they have to be alive when the game ends (no matter who causes the win).
-In order to achieve this goal, the Pursuer has an ability called "Blank", where they can fill a killers (this also includes the Sheriff) weapon with a blank. So, if the killer attempts to kill someone, the killer will miss their target, and their cooldowns will be triggered as usual.
-If the killer fires the "Blank", shields (e.g. Medic shield or Time Master shield) will not be triggered.
-The Pursuer has tasks (which can already be done while being a Lawyer), that count towards the task win for the Crewmates. If the Pursuer dies, their tasks won't be counted anymore.
+The Pursuer is still a 第三陣営 role, but has a different goal to win the game; they have to be alive when the game ends (no matter who causes the win).
+In order to achieve this goal, the Pursuer has an ability called "Blank", where they can fill a killers (this also includes the シェリフ) weapon with a blank. So, if the killer attempts to kill someone, the killer will miss their target, and their cooldowns will be triggered as usual.
+If the killer fires the "Blank", shields (e.g. メディック shield or Time Master shield) will not be triggered.
+The Pursuer has tasks (which can already be done while being a 弁護士), that count towards the task win for the クルーメイト. If the Pursuer dies, their tasks won't be counted anymore.
 
 ## Plague Doctor
 
-### **Team: Neutral**
+### **陣営: 第三陣営**
 
 Created by [haoming37](https://github.com/haoming37)
 
-The Plague Doctor is a neutral role whose goal is to infect every living player. They start by choosing one player to infect, after which anyone who spends a set amount of time in range of the infected player becomes infected themselves. Infection progress is cumulative, and does not reset with distance or after meetings.
+The Plague Doctor is a 第三陣営 role whose goal is to infect every living player. They start by choosing one player to infect, after which anyone who spends a set amount of time in range of the infected player becomes infected themselves. Infection progress is cumulative, and does not reset with distance or after meetings.
 
 The Plague Doctor is still able to win even if dead. Furthermore, if killed, their killer is automatically infected.
 
 A set period of time after each meeting, players are immune from infection, letting them get safely away from potentially infected players.
 
-## Fox
+## 妖狐
 
-### **Team: Neutral**
+### **陣営: 第三陣営**
 
 Created by [haoming37](https://github.com/haoming37)
 
-The Fox is a Neutral role whose goal is to keep themselves hidden from both the Crew and Impostors while completing their own tasks. The Fox is always aware of where any threats are, and has numerous abilities to protect themselves.
+The 妖狐 is a 第三陣営 role whose goal is to keep themselves hidden from both the Crew and インポスター while completing their own tasks. The 妖狐 is always aware of where any threats are, and has numerous abilities to protect themselves.
 
 ## Immoralist
 
-### **Team: Neutral**
+### **陣営: 第三陣営**
 
 Created by [haoming37](https://github.com/haoming37)
 
-The Immoralist's objective is to support the Fox in any way they can, even if it means sacrificing their own life.
+The Immoralist's objective is to support the 妖狐 in any way they can, even if it means sacrificing their own life.
 
 ## Fortune Teller
 
-### **Team: Crewmate**
+### **陣営: クルーメイト**
 
 Created by [haoming37](https://github.com/haoming37)
 
-The Fortune Teller is a Crewmate with the power to divine a single player's role. They start out believing themselves to be an ordinary Crewmate, only awakening to their powers after completing a designated number of tasks.
+The Fortune Teller is a クルーメイト with the power to divine a single player's role. They start out believing themselves to be an ordinary クルーメイト, only awakening to their powers after completing a designated number of tasks.
 
-## Watcher
+## ウォッチャー
 
-### **Team: Crewmate or Impostors**
+### **陣営: クルーメイト or インポスター**
 
 Created by [Virtual_Dusk](https://twitter.com/Virtual_Dusk)
 
-The Watcher is a player capable of seeing everyone's votes during meetings.
+The ウォッチャー is a player capable of seeing everyone's votes during meetings.
 
-## Evil Hacker
+## イビル ハッカー
 
-### **Team: Impostors**
+### **陣営: インポスター**
 
 Created by [tomarai](https://github.com/tomarai) Source by [haoming37](https://github.com/haoming37)
 
-## Hawk Eye
+## ホークアイ
 
-### **Team: Impostors**
+### **陣営: インポスター**
 
 Created by [Kiyomori](https://twitter.com/kiyo_deko) Idea by [libhalt](https://twitter.com/libhalt)
 
-# Source code
+# ソースコード
 
-It's bad I know, this is a side project and my second week of modding. So there are no best practices around here.
-You can use parts of the code but don't copy paste the whole thing. Make sure you give credits to the other developers, because some parts of the code are based on theirs.
+ソースコードをすべてコピーして使用するのはやめましょう。\
+他の人のプロジェクトのソースも使用されています。必ずクレジットを表示してください。
 
-# Translation
+# 翻訳
 
-As of v2.9.0, The Other Roles GM now supports translation into other languages. To add a new language, add translations to [Strings.xlsx](/Strings.xlsx) and submit a pull request.
+Ver.2.9.0 より、TheOtherRolesGM では多言語のサポートを開始しました。\
+[Strings.xlsx](/Strings.xlsx)で管理されています。
 
-# Flip Map
+# 反転マップ
 
-Flip Map made from [Mugicha](https://github.com/reitou-mugicha)\
-Add three flip map.
-| Original Map | Flip Map Name |
+[Mugicha](https://github.com/reitou-mugicha)氏によって作られました。
+The Skeld、Mira HQ、Polus の 3 つを反転させることが出来ます。
+設定はオプションで変えれます。
+| マップ名 | 反転マップ名 |
 |--------------|---------------|
 | The Skeld | dlekS ehT |
 | MIRA HQ | QH ARIM |

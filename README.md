@@ -1,3 +1,6 @@
+# This Readme Language is English
+
+## このReadmeは英語です。日本語を読む方は[こちら](https://github.com/Dekokiyo/TheOtherRolesGM-KiyoMugi-Edition/blob/main/Readme_JP.md)を押してください。
 # The Other Roles: GM Edition
 
 This fork introduces a number of changes to [The Other Roles](https://github.com/Eisbison/TheOtherRoles).
@@ -34,10 +37,10 @@ This mod is not affiliated with Among Us or Innersloth LLC, and the content cont
 The **The Other Roles**, is a mod for [Among Us](https://store.steampowered.com/app/945360/Among_Us) which adds many new roles, new [Settings](#settings), and new [Custom Hats](#custom-hats) to the game.
 Even more roles are coming soon :)
 
-| Impostors | Crewmates | Neutral | Other | 
+| Impostors | Crewmates | Neutral | Other |
 |----------|-------------|-----------------|----------------|
 | [Evil Mini](#mini) | [Nice Mini](#mini) | [Arsonist](#arsonist) | [GM](#gm) |
-| [Evil Guesser](#guesser) | [Nice Guesser](#guesser) | [Jester](#jester) |  
+| [Evil Guesser](#guesser) | [Nice Guesser](#guesser) | [Jester](#jester) |
 | [Bounty Hunter](#bounty-hunter) | [Detective](#detective) | [Jackal](#jackal) |  |
 | [Camouflager](#camouflager) | [Engineer](#engineer) | [Sidekick](#sidekick) |  |
 | [Cleaner](#cleaner) | [Hacker](#hacker) | [Lover](#lovers) |  |
@@ -944,7 +947,7 @@ Created by [Virtual_Dusk](https://twitter.com/Virtual_Dusk)
 
 The GM (Game Master) is an observer role. Their presence has no effect on the game itself, and all players know who the GM is at all times. The GM cannot be targeted by other players, cannot fix sabotages, and cannot vote or be voted for. They are a completely external presence, provided with a range of tools at their disposal to efficiently observe the flow of the game.
 
-The GM role is intended to allow groups to play with a wide variety of rules not supported by Among Us natively. 
+The GM role is intended to allow groups to play with a wide variety of rules not supported by Among Us natively.
 
 ### Game Options
 | Name | Description
