@@ -549,7 +549,7 @@ namespace TheOtherRoles.Patches
                     }
 
                     var (tasksCompleted, tasksTotal) = TasksHandler.taskInfo(p.Data);
-                    string roleNames = RoleInfo.GetRolesString(p, true, new RoleType[] { RoleType.Lovers });
+                    string roleNames = RoleInfo.GetRolesString(p, true);
 
                     var completedStr = commsActive ? "?" : tasksCompleted.ToString();
                     string taskInfo = tasksTotal > 0 ? $"<color=#FAD934FF>({completedStr}/{tasksTotal})</color>" : "";

@@ -24,12 +24,14 @@ namespace TheOtherRoles
             Camera.main.orthographicSize = 3.0f;
             HudManager.Instance.UICamera.orthographicSize = 3.0f;
             HudManager.Instance.transform.localScale = Vector3.one;
+            normalEye.active = false;
         }
 
         public DiePlayer()
         {
             RoleType = roleId = RoleType.NoRole;
             normalEye = GameObject.Find("ShadowQuad");
+            normalEye.active = false;
         }
 
         public override void OnMeetingStart()
@@ -50,18 +52,16 @@ namespace TheOtherRoles
             zoomIn = new CustomButton(
                 () =>
                 {
-
                     if (Camera.main.orthographicSize > 3.0f)
                     {
-                        Camera.main.orthographicSize /= 1.5f;
-                        hm.UICamera.orthographicSize /= 1.5f;
+                        Camera.main.orthographicSize /= 1f;
+                        hm.UICamera.orthographicSize /= 1f;
                     }
 
                     if (hm.transform.localScale.x > 1.0f)
                     {
-                        hm.transform.localScale /= 1.5f;
+                        hm.transform.localScale /= 1f;
                     }
-
                 },
                 () => { return enableZoomInOut && PlayerControl.LocalPlayer.isDead() && !PlayerControl.LocalPlayer.isRole(RoleType.GM); },
                 () => { return PlayerControl.LocalPlayer.isDead(); },
@@ -81,18 +81,16 @@ namespace TheOtherRoles
             zoomOut = new CustomButton(
                 () =>
                 {
-
                     if (Camera.main.orthographicSize < 18.0f)
                     {
-                        Camera.main.orthographicSize *= 1.5f;
-                        hm.UICamera.orthographicSize *= 1.5f;
+                        Camera.main.orthographicSize *= 1f;
+                        hm.UICamera.orthographicSize *= 1f;
                     }
 
                     if (hm.transform.localScale.x < 6.0f)
                     {
-                        hm.transform.localScale *= 1.5f;
+                        hm.transform.localScale *= 1f;
                     }
-
                 },
                 () => { return enableZoomInOut && PlayerControl.LocalPlayer.isDead(); },
                 () => { return PlayerControl.LocalPlayer.isDead(); },
