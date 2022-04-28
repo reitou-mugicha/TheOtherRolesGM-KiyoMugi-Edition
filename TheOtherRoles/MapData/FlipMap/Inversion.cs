@@ -18,6 +18,8 @@ namespace TheOtherRoles.Mode.InversionMode
             {
                 skeld = GameObject.Find("SkeldShip(Clone)");
                 skeld.transform.localScale = new Vector3(-1.2f, 1.2f, 1.2f);
+                SkeldShipStatus.Instance.InitialSpawnCenter = new Vector2(0.8f, 0.6f);
+                SkeldShipStatus.Instance.MeetingSpawnCenter = new Vector2(0.8f, 0.6f);
             }
             else if (PlayerControl.GameOptions.MapId == 1 && CustomOptionHolder.inversionMira.getBool())
             {
@@ -27,7 +29,7 @@ namespace TheOtherRoles.Mode.InversionMode
                 MiraShipStatus.Instance.MeetingSpawnCenter = new Vector2(-25.3921f, 2.5626f);
                 MiraShipStatus.Instance.MeetingSpawnCenter2 = new Vector2(-25.3921f, 2.5626f);
             }
-            else if(PlayerControl.GameOptions.MapId == 2 && CustomOptionHolder.inversionPolus.getBool())
+            else if (PlayerControl.GameOptions.MapId == 2 && CustomOptionHolder.inversionPolus.getBool())
             {
                 polus = GameObject.Find("PolusShip(Clone)");
                 polus.transform.localScale = new Vector3(-1f, 1f, 1f);
