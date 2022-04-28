@@ -285,10 +285,7 @@ namespace TheOtherRoles
         public static CustomOption airshipReactorDuration;
         public static CustomOption helloweenMode;
 
-        public static CustomOption inversionSkeld;
-        public static CustomOption inversionMira;
-        public static CustomOption inversionPolus;
-        //public static CustomOption inversionAShip;
+        public static CustomOption enableMirrorMap;
 
         public static CustomOption dynamicMap;
         public static CustomOption dynamicMapEnableSkeld;
@@ -750,10 +747,7 @@ namespace TheOtherRoles
             airshipReactorDuration = CustomOption.Create(9999, "airShipReactorDuration", 60f, 0f, 600f, 5f, specialOptions, format: "unitSeconds");
             //helloweenMode = CustomOption.Create(544, "helloweenMode", false, specialOptions);
 
-            inversionSkeld = CustomOption.Create(3950, "inversionSkeld", false, specialOptions);
-            inversionMira = CustomOption.Create(3951, "inversionMira", false, specialOptions);
-            inversionPolus = CustomOption.Create(3952, "inversionPolus", false, specialOptions);
-            //inversionAShip = CustomOption.Create(3953, "inversionAirship", false, specialOptions);
+            enableMirrorMap = CustomOption.Create(3950, "enableMirror", false, specialOptions);
 
             hideSettings = CustomOption.Create(520, "hideSettings", false, specialOptions);
 
