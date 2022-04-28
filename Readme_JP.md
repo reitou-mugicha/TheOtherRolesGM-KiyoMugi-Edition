@@ -1,6 +1,6 @@
 # この Readme は日本語です。
 
-## This Readme Language is Japanese. If you want English Readme, Click [Here](https://github.com/Dekokiyo/TheOtherRolesGM-KiyoMugi-Edition/blob/main/README.md)
+## This Readme Language is Japanese. If you want English Readme, Click [Here](https://github.com/Dekokiyo/TheOtherRolesGM-KiyoMugi-Edition/blob/main/Readme_EN.md)
 
 <br>
 <br>
