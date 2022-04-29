@@ -14,15 +14,17 @@ namespace TheOtherRoles
         public static bool toggle = false;
         public static Sprite senriganIcon;
         public static void senrigan(){
+            var hm = DestroyableSingleton<HudManager>.Instance;
             if(toggle){
-                toggle = !toggle;
                 Camera.main.orthographicSize /= 6f;
-                DestroyableSingleton<HudManager>.Instance.UICamera.orthographicSize /= 6f;
+                hm.UICamera.orthographicSize /= 6f;
+                hm.transform.localScale /= 6f;
             }else{
-                toggle = !toggle;
                 Camera.main.orthographicSize *= 6f;
-                DestroyableSingleton<HudManager>.Instance.UICamera.orthographicSize *= 6f;
+                hm.UICamera.orthographicSize *= 6f;
+                hm.transform.localScale *= 6f;
             }
+            toggle = !toggle;
         }
 
         public SoulPlayer()
