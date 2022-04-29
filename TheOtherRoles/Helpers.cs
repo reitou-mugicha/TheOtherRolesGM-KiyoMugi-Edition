@@ -38,7 +38,7 @@ namespace TheOtherRoles {
         {
             get
             {
-                return AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started;
+                return AmongUsClient.Instance?.GameState == InnerNet.InnerNetClient.GameStates.Started;
             }
         }
 
