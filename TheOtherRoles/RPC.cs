@@ -391,23 +391,8 @@ namespace TheOtherRoles
 
             if ((isShieldedAndShow || isMedicAndShow) && HudManager.Instance?.FullScreen != null)
             {
-                HudManager.Instance.FullScreen.enabled = true;
-                HudManager.Instance.StartCoroutine(Effects.Lerp(0.5f, new Action<float>((p) =>
-                {
-                    var renderer = HudManager.Instance.FullScreen;
-                    Color c = Palette.ImpostorRed;
-                    if (p < 0.5)
-                    {
-                        if (renderer != null)
-                            renderer.color = new Color(c.r, c.g, c.b, Mathf.Clamp01(p * 2 * 0.75f));
-                    }
-                    else
-                    {
-                        if (renderer != null)
-                            renderer.color = new Color(c.r, c.g, c.b, Mathf.Clamp01((1 - p) * 2 * 0.75f));
-                    }
-                    if (p == 1f && renderer != null) renderer.enabled = false;
-                })));
+                Color c = Palette.ImpostorRed;
+                Helpers.showFlash(new Color(c.r,c.g,c.b));
             }
         }
 
