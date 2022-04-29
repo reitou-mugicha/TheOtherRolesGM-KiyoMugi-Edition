@@ -5,6 +5,7 @@
         <Description>TheOtherRoles: GM Haoming Edition</Description>
         <Authors>Haoming</Authors>
 		<Configurations>Debug;Release;Release_Dev</Configurations>
+		<LangVersion>latest</LangVersion>
     </PropertyGroup>
 
     <PropertyGroup>

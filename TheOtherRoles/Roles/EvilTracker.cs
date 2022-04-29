@@ -147,23 +147,7 @@ namespace TheOtherRoles
             {
                 PlayerControl player = PlayerControl.LocalPlayer;
                 if(__instance.isImpostor() && __instance != player && player.isRole(RoleType.EvilTracker) && player.isAlive() && canSeeDeathFlash){
-
-                    HudManager.Instance.FullScreen.enabled = true;
-                    HudManager.Instance.StartCoroutine(Effects.Lerp(1f, new Action<float>((p) =>
-                    {
-                        var renderer = HudManager.Instance.FullScreen;
-                        if (p < 0.5)
-                        {
-                            if (renderer != null)
-                                renderer.color = new Color(42f / 255f, 187f / 255f, 245f / 255f, Mathf.Clamp01(p * 2 * 0.75f));
-                        }
-                        else
-                        {
-                            if (renderer != null)
-                                renderer.color = new Color(42f / 255f, 187f / 255f, 245f / 255f, Mathf.Clamp01((1 - p) * 2 * 0.75f));
-                        }
-                        if (p == 1f && renderer != null) renderer.enabled = false;
-                    })));
+                    Helpers.showFlash(new Color(42f / 255f, 187f / 255f, 245f / 255f));
                 }
             }
         }
