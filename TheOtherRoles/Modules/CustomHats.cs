@@ -392,7 +392,8 @@ namespace TheOtherRoles.Modules
                 var orderedKeys = packages.Keys.OrderBy((string x) =>
                 {
                     if (x == innerslothPackageName) return 1000;
-                    if (x == "developerHats") return 200;
+                    if (x == "developerHats") return 300;
+                    if (x.Contains("kiyomugiEdition")) return 200;
                     if (x.Contains("gmEdition")) return 100;
                     if (x.Contains("shiune")) return 0;
                     return 500;
@@ -441,6 +442,7 @@ namespace TheOtherRoles.Modules
 
         public static string[] hatRepos = new string[]
         {
+            "https://raw.githubusercontent.com/Dekokiyo/TheOtherHatsGM-KiyoMugi-Edition/master/",
             "https://raw.githubusercontent.com/yukinogatari/TheOtherHats-GM/master",
             "https://raw.githubusercontent.com/Eisbison/TheOtherHats/master"
         };

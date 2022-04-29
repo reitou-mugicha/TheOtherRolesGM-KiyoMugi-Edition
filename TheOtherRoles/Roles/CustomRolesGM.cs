@@ -42,6 +42,7 @@ namespace TheOtherRoles
             HawkEye.Clear();
             //King.Clear();
             //Minions.Clear();
+            BattleRoyal.Clear();
             Role.ClearAll();
         }
 

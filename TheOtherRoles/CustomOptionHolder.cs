@@ -17,9 +17,11 @@ namespace TheOtherRoles
     {
         public static string[] rates = new string[] { "0%", "10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%" };
         public static string[] presets = new string[] { "preset1", "preset2", "preset3", "preset4", "preset5" };
+        public static string[] mode = new string[] { "TheOtherRolesGM", "BattleRoyal" };
 
         public static CustomOption presetSelection;
         public static CustomOption activateRoles;
+        public static CustomOption gameMode;
         public static CustomOption crewmateRolesCountMin;
         public static CustomOption crewmateRolesCountMax;
         public static CustomOption neutralRolesCountMin;
@@ -400,6 +402,8 @@ namespace TheOtherRoles
 
             // Role Options
             activateRoles = CustomOption.Create(7, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "blockOriginal"), true, null, true);
+
+            gameMode = CustomOption.Create(3951, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "selectModes"), mode, null, true);
 
             presetSelection = CustomOption.Create(0, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "presetSelection"), presets, null, true);
 

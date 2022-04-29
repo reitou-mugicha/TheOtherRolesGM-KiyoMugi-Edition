@@ -17,10 +17,9 @@ namespace TheOtherRoles.Patches
         {
             if (role == RoleTypes.Crewmate || role == RoleTypes.Impostor) return;
 
-            if (CustomOptionHolder.activateRoles.getBool()) __result = 0; // Deactivate Vanilla Roles if the mod roles are active
+            if (CustomOptionHolder.activateRoles.getBool() || (Mode)CustomOptionHolder.gameMode.getSelection() == Mode.TheOtherRolesGM) __result = 0; // Deactivate Vanilla Roles if the mod roles are active
         }
     }
-
 
     [HarmonyPatch(typeof(RoleManager), nameof(RoleManager.SelectRoles))]
     class RoleManagerSelectRolesPatch
@@ -35,7 +34,7 @@ namespace TheOtherRoles.Patches
             AmongUsClient.Instance.FinishRpcImmediately(writer);
             RPCProcedure.resetVariables();
 
-            if (!DestroyableSingleton<TutorialManager>.InstanceExists && CustomOptionHolder.activateRoles.getBool()) // Don't assign Roles in Tutorial or if deactivated
+            if (!DestroyableSingleton<TutorialManager>.InstanceExists && CustomOptionHolder.activateRoles.getBool() && (Mode)CustomOptionHolder.gameMode.getSelection() == Mode.TheOtherRolesGM) // Don't assign Roles in Tutorial or if deactivated
                 assignRoles();
         }
 
@@ -663,5 +662,10 @@ namespace TheOtherRoles.Patches
             Impostor = 2
         }
 
+    }
+    public enum Mode
+    {
+        TheOtherRolesGM = 0,
+        BattleRoyal = 1,
     }
 }

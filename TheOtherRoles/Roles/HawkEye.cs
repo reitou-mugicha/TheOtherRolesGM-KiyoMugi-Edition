@@ -85,7 +85,6 @@ namespace TheOtherRoles
                 () =>
                 {
                     hawkButton.Timer = hawkButton.MaxTimer = HawkEye.hawkCooldown;
-                    return;
                 },
                 HawkEye.getButtonSprite(),
                 new Vector3(-1.8f, -0.06f, 0),
