@@ -145,6 +145,14 @@ namespace TheOtherRoles
                     RPCProcedure.forceEnd();
                 }
             }
+            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.F1))
+            {
+                string t = DateTime.Now.ToString("yyyy-MM-dd_HH.mm.ss");
+                string filename = $"{System.Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory)}/TheOtherRoles_GM_H-v{TheOtherRolesPlugin.VersionString}-{t}.log";
+                FileInfo file = new FileInfo(@$"{System.Environment.CurrentDirectory}/BepInEx/LogOutput.log");
+                file.CopyTo(@filename);
+                System.Diagnostics.Process.Start(@$"{System.Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory)}");
+            }
 
             if (!TheOtherRolesPlugin.DebugMode.Value) return;
 
@@ -182,6 +190,12 @@ namespace TheOtherRoles
                 MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.ForceEnd, Hazel.SendOption.Reliable, -1);
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
                 RPCProcedure.forceEnd();
+            }
+
+            // ゲーム内ログ出力のトグル
+            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.F2)) {
+                Logger.isAlsoInGame = !Logger.isAlsoInGame;
+                Logger.SendInGame("isAlsoInGame: " + Logger.isAlsoInGame);
             }
         }
 
