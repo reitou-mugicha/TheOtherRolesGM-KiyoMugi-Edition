@@ -191,6 +191,12 @@ namespace TheOtherRoles
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
                 RPCProcedure.forceEnd();
             }
+
+            // ゲーム内ログ出力のトグル
+            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.F2)) {
+                Logger.isAlsoInGame = !Logger.isAlsoInGame;
+                Logger.SendInGame("isAlsoInGame: " + Logger.isAlsoInGame);
+            }
         }
 
         public static string RandomString(int length)
