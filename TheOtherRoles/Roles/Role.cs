@@ -82,7 +82,6 @@ namespace TheOtherRoles
         HawkEye,
         //King,
         //Minions,
-        BattleRoyal,
 
 
         GM = 200,
@@ -119,7 +118,6 @@ namespace TheOtherRoles
 
             // Other
             { RoleType.Watcher, typeof(RoleBase<Watcher>) },
-            { RoleType.BattleRoyal, typeof(RoleBase<BattleRoyal>) },
         };
     }
 

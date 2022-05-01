@@ -100,7 +100,6 @@ namespace TheOtherRoles
         public static RoleInfo hawkEye = new RoleInfo("hawkEye", HawkEye.color, CustomOptionHolder.hawkEyeSpawnRate, RoleType.HawkEye);
         //public static RoleInfo king = new RoleInfo("king", King.color, CustomOptionHolder.kingdomSpawnRate, RoleType.King);
         //public static RoleInfo minions = new RoleInfo("minions", Minions.color, CustomOptionHolder.kingdomSpawnRate, RoleType.Minions);
-        public static RoleInfo battleRoyal = new RoleInfo("battleRoyal", BattleRoyal.color, CustomOptionHolder.gameMode, RoleType.BattleRoyal);
 
         public static List<RoleInfo> allRoleInfos = new List<RoleInfo>() {
                 impostor,
@@ -161,10 +160,9 @@ namespace TheOtherRoles
                 fortuneTeller,
                 sprinter,
                 evilHacker,
-                hawkEye,
+                hawkEye//,
                 //king,
                 //minions,
-                battleRoyal
             };
 
         public static string tl(string key)
@@ -222,7 +220,6 @@ namespace TheOtherRoles
             if (p.isRole(RoleType.Pursuer)) infos.Add(pursuer);
             if (p.isRole(RoleType.Ninja)) infos.Add(ninja);
             if (p.isRole(RoleType.HawkEye)) infos.Add(hawkEye);
-            if (p.isRole(RoleType.BattleRoyal)) infos.Add(battleRoyal);
             //if (p.isRole(RoleType.King) || (King.formerKingdoms != null && King.formerKingdoms.Any(x => x.PlayerId == p.PlayerId))) infos.Add(king);
             //if (p.isRole(RoleType.Minions)) infos.Add(minions);
             if (p.isRole(RoleType.PlagueDoctor)) infos.Add(plagueDoctor);
