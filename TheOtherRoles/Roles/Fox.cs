@@ -235,6 +235,7 @@ namespace TheOtherRoles
                     RPCProcedure.foxStealth(PlayerControl.LocalPlayer.PlayerId, false);
                 }
             );
+            foxButton.Timer = foxButton.MaxTimer = Fox.stealthCooldown;
             foxButton.buttonText = ModTranslation.getString("FoxStealthText");
             foxButton.effectCancellable = true;
 
@@ -297,6 +298,7 @@ namespace TheOtherRoles
                 hm.AbilityButton,
                 KeyCode.G
             );
+            foxRepairButton.Timer = foxRepairButton.MaxTimer = 0f;
             foxRepairButton.buttonText = ModTranslation.getString("FoxRepairText"); ;
 
             foxImmoralistButton = new CustomButton(
@@ -316,6 +318,7 @@ namespace TheOtherRoles
                 hm.AbilityButton,
                 KeyCode.I
             );
+            foxImmoralistButton.Timer = foxImmoralistButton.MaxTimer =  20f;
             foxImmoralistButton.buttonText = ModTranslation.getString("FoxImmoralistText");
         }
 
