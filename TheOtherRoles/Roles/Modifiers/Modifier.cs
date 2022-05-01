@@ -25,6 +25,7 @@ namespace TheOtherRoles
         CreatedMadmate,
         LastImpostor,
         Munou,
+        AntiTeleport,
 
         // don't put anything below this
         NoModifier = int.MaxValue
@@ -39,6 +40,7 @@ namespace TheOtherRoles
             { ModifierType.CreatedMadmate, typeof(ModifierBase<CreatedMadmate>) },
             { ModifierType.LastImpostor, typeof(ModifierBase<LastImpostor>) },
             { ModifierType.Munou, typeof(ModifierBase<Munou>) },
+            { ModifierType.AntiTeleport, typeof(ModifierBase<AntiTeleport>) },
         };
     }
 

@@ -361,8 +361,8 @@
         "13": "\u7edd\u5883\u8005"
     },
     "lastImpostorPostfix": {
-        "0": "LI",
-        "13": "\u7edd\u5883\u8005"
+        "0": " LI",
+        "13": " \u7edd\u5883\u8005"
     },
     "lastImpostorEnable": {
         "0": "Enable Last impostor",
@@ -3722,6 +3722,14 @@
         "0": "<size=150%><color=#FC0303>TheOtherRoles GM-Haoming Edition</color> Version {0}:</size>\n\n{1}",
         "11": "<size=125%><color=#FC0303>TheOtherRoles GM-Haoming\u30a8\u30c7\u30a3\u30b7\u30e7\u30f3</color> v{0}:</size>\n\n{1}",
         "13": "<size=150%><color=#FC0303>\u8d85\u591a\u804c\u4e1a\u6a21\u7ec4GM-HaomingRebuild</color>v{0}:</size>\n\n{1}"
+    },
+    "antiTeleport": {
+        "0": "Anti Teleport",
+        "11": "\u30a2\u30f3\u30c1\u30c6\u30ec\u30dd\u30fc\u30c8"
+    },
+    "antiTeleportPostfix": {
+        "0": " AT",
+        "11": " AT"
     },
     "jesterFullDesc": {
         "0": "The Jester does not have any tasks.\nThey win the game as a solo if they get voted out during a meeting.",

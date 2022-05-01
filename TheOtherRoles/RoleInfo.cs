@@ -390,6 +390,14 @@ namespace TheOtherRoles
                     roleName = roleName + postfix;
                 }
             }
+
+            if(p.hasModifier(ModifierType.AntiTeleport))
+            {
+                string postfix = useColors ? Helpers.cs(AntiTeleport.color, AntiTeleport.postfix) : AntiTeleport.postfix;
+                // roleName = String.Join(" ", roleInfo.Select(x => useColors? Helpers.cs(x.color, x.name)  : x.name).ToArray());
+                roleName = roleName + postfix;
+            }
+
             return roleName;
         }
     }

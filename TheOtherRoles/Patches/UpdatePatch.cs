@@ -194,6 +194,11 @@ namespace TheOtherRoles.Patches {
                 setPlayerNameColor(PlayerControl.LocalPlayer, Munou.color);
             }
 
+            else if (PlayerControl.LocalPlayer.hasModifier(ModifierType.AntiTeleport) && PlayerControl.LocalPlayer.Data.IsDead)
+            {
+                setPlayerNameColor(PlayerControl.LocalPlayer, AntiTeleport.color);
+            }
+
             if (GM.gm != null) {
                 setPlayerNameColor(GM.gm, GM.color);
             }

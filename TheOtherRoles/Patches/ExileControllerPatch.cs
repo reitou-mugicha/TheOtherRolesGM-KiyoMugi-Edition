@@ -263,6 +263,9 @@ namespace TheOtherRoles.Patches {
 
             if (Lawyer.lawyer != null && PlayerControl.LocalPlayer == Lawyer.lawyer && !Lawyer.lawyer.Data.IsDead)
                 Lawyer.meetings++;
+
+            if (PlayerControl.LocalPlayer.hasModifier(ModifierType.AntiTeleport))
+                PlayerControl.LocalPlayer.transform.position = AntiTeleport.position;
             
             // Remove DeadBodys
             DeadBody[] array = UnityEngine.Object.FindObjectsOfType<DeadBody>();

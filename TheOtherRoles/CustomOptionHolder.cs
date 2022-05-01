@@ -81,6 +81,8 @@ namespace TheOtherRoles {
         public static CustomOption loversTasksCount;
         public static CustomOption loversEnableChat;
 
+        public static CustomRoleOption antiTeleportSpawnRate;
+
         public static CustomRoleOption guesserSpawnRate;
         public static CustomOption guesserIsImpGuesserRate;
         public static CustomOption guesserNumberOfShots;
@@ -619,6 +621,8 @@ namespace TheOtherRoles {
             loversSeparateTeam = CustomOption.Create(56, CustomOptionType.Modifier, "loversSeparateTeam", true, loversSpawnRate);
             loversTasksCount = CustomOption.Create(55, CustomOptionType.Modifier, "loversTasksCount", false, loversSpawnRate);
 			loversEnableChat = CustomOption.Create(54, CustomOptionType.Modifier, "loversEnableChat", true, loversSpawnRate);
+
+            antiTeleportSpawnRate = new CustomRoleOption(1090, CustomOptionType.Modifier, "antiTeleport", AntiTeleport.color, 15);
 
             guesserSpawnRate = new CustomRoleOption(310, CustomOptionType.Neutral, "guesser", Guesser.color, 1);
             guesserIsImpGuesserRate = CustomOption.Create(311, CustomOptionType.Neutral, "guesserIsImpGuesserRate", rates, guesserSpawnRate);

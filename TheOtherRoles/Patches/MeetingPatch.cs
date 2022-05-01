@@ -763,6 +763,8 @@ namespace TheOtherRoles.Patches {
             public static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)]GameData.PlayerInfo meetingTarget, ref Il2CppSystem.Collections.IEnumerator __result)
             {
                 startMeeting();
+                // Safe AntiTeleport positions
+                AntiTeleport.position = PlayerControl.LocalPlayer.transform.position;
                 // Medium meeting start time
                 Medium.meetingStartTime = DateTime.UtcNow;
                 // Reset vampire bitten
