@@ -613,6 +613,10 @@
         "11": "\u30b8\u30e3\u30c3\u30ab\u30eb\u3092\u30de\u30c3\u30c9\u30e1\u30a4\u30c8\u306b\u3059\u308b\u3053\u3068\u304c\u3067\u304d\u308b",
         "13": "\u90aa\u6076\u9ed1\u5ba2\u53ef\u4ee5\u5c06\u8c7a\u72fc\u53d8\u4e3a\u53db\u5f92"
     },
+    "evilHackerCanMoveEvenIfUsesAdmin": {
+        "0": "EvilHacker Can Move Even If Uses Admin",
+        "11": "\u30a2\u30c9\u30df\u30f3\u4f7f\u7528\u4e2d\u3067\u3082\u79fb\u52d5\u3067\u304d\u308b"
+    },
     "createdMadmateCanDieToSheriff": {
         "0": "Madmate Can Die To Sheriff",
         "11": "\u30b7\u30a7\u30ea\u30d5\u304c\u30de\u30c3\u30c9\u30e1\u30a4\u30c8\u3092\u6bba\u305b\u308b",
