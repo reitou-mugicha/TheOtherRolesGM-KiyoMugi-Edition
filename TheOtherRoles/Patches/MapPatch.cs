@@ -209,5 +209,18 @@ namespace TheOtherRoles.Patches
                 }
             }
         }
+        [HarmonyPatch(typeof(MapBehaviour), "get_IsOpenStopped")]
+        class MapBehaviorGetIsOpenStoppedPatch
+        {
+            static bool Prefix(ref bool __result, MapBehaviour __instance)
+            {
+                if(PlayerControl.LocalPlayer.isRole(RoleType.EvilHacker) && CustomOptionHolder.evilHackerCanMoveEvenIfUsesAdmin.getBool())
+                {
+                    __result = false;
+                    return false;
+                }
+                return true;
+            }
+        }
     }
 }

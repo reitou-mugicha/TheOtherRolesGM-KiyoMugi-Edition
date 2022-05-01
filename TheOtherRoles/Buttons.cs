@@ -379,15 +379,11 @@ namespace TheOtherRoles
                     PlayerControl.LocalPlayer.NetTransform.Halt();
                     Action<MapBehaviour> tmpAction = (MapBehaviour m) => { m.ShowCountOverlay(); };
                     DestroyableSingleton<HudManager>.Instance.ShowMap(tmpAction);
-                    if (PlayerControl.LocalPlayer.AmOwner) {
-                        PlayerControl.LocalPlayer.MyPhysics.inputHandler.enabled = true;
-                        ConsoleJoystick.SetMode_Task();
-                    }
                 },
                 () => {
                     return EvilHacker.evilHacker != null &&
-                      EvilHacker.evilHacker == PlayerControl.LocalPlayer &&
-                      PlayerControl.LocalPlayer.isAlive();
+                    EvilHacker.evilHacker == PlayerControl.LocalPlayer &&
+                    PlayerControl.LocalPlayer.isAlive();
                 },
                 () => { return PlayerControl.LocalPlayer.CanMove; },
                 () => {},

@@ -49,6 +49,7 @@ namespace TheOtherRoles {
         public static CustomOption evilHackerCanCreateMadmate;
         public static CustomOption evilHackerCanCreateMadmateFromFox;
         public static CustomOption evilHackerCanCreateMadmateFromJackal;
+        public static CustomOption evilHackerCanMoveEvenIfUsesAdmin;
         public static CustomOption createdMadmateCanDieToSheriff;
         public static CustomOption createdMadmateCanEnterVents;
         public static CustomOption createdMadmateHasImpostorVision;
@@ -493,9 +494,11 @@ namespace TheOtherRoles {
             camouflagerDuration = CustomOption.Create(32, CustomOptionType.Impostor, "camouflagerDuration", 10f, 1f, 20f, 0.5f, camouflagerSpawnRate, format: "unitSeconds");
             camouflagerRandomColors = CustomOption.Create(33, CustomOptionType.Impostor, "camouflagerRandomColors", false, camouflagerSpawnRate);
 
+
             evilHackerSpawnRate = new CustomRoleOption(1900, CustomOptionType.Impostor, "evilHacker", EvilHacker.color, 1);
             evilHackerCanHasBetterAdmin = CustomOption.Create(1912, CustomOptionType.Impostor, "evilHackerCanHasBetterAdmin", false, evilHackerSpawnRate);
             evilHackerCanCreateMadmate = CustomOption.Create(1901, CustomOptionType.Impostor, "evilHackerCanCreateMadmate", false, evilHackerSpawnRate);
+            evilHackerCanMoveEvenIfUsesAdmin = CustomOption.Create(1913, CustomOptionType.Impostor, "evilHackerCanMoveEvenIfUsesAdmin", true, evilHackerSpawnRate);
             createdMadmateCanDieToSheriff = CustomOption.Create(1902, CustomOptionType.Impostor, "createdMadmateCanDieToSheriff", false, evilHackerCanCreateMadmate);
             createdMadmateCanEnterVents = CustomOption.Create(1903, CustomOptionType.Impostor, "createdMadmateCanEnterVents", false, evilHackerCanCreateMadmate);
             evilHackerCanCreateMadmateFromFox = CustomOption.Create(1904, CustomOptionType.Impostor, "evilHackerCanCreateMadmateFromFox", false, evilHackerCanCreateMadmate);
