@@ -882,7 +882,7 @@ namespace TheOtherRoles
             }
 
             List<string> pages = new List<string>();
-            // pages.Add(__result);
+            pages.Add(__result);
 
             StringBuilder entry = new StringBuilder();
             List<string> entries = new List<string>();

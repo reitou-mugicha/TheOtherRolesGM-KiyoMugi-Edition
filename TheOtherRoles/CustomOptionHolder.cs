@@ -664,7 +664,7 @@ namespace TheOtherRoles {
             jackalCreateSidekickCooldown = CustomOption.Create(222, CustomOptionType.Neutral, "jackalCreateSidekickCooldown", 30f, 2.5f, 60f, 2.5f, jackalCanCreateSidekick, format: "unitSeconds");
             sidekickPromotesToJackal = CustomOption.Create(225, CustomOptionType.Neutral, "sidekickPromotesToJackal", false, jackalCanCreateSidekick);
             sidekickCanKill = CustomOption.Create(226, CustomOptionType.Neutral, "sidekickCanKill", false, jackalCanCreateSidekick);
-            sidekickCanUseVents = CustomOption.Create(227, CustomOptionType.Neutral, "sidekickCanUseVnts", true, jackalCanCreateSidekick);
+            sidekickCanUseVents = CustomOption.Create(227, CustomOptionType.Neutral, "sidekickCanUseVents", true, jackalCanCreateSidekick);
             jackalPromotedFromSidekickCanCreateSidekick = CustomOption.Create(228, CustomOptionType.Neutral, "jackalPromotedFromSidekickCanCreateSidekick", true, jackalCanCreateSidekick);
             jackalCanCreateSidekickFromImpostor = CustomOption.Create(229, CustomOptionType.Neutral, "jackalCanCreateSidekickFromImpostor", true, jackalCanCreateSidekick);
             jackalCanCreateSidekickFromFox = CustomOption.Create(431, CustomOptionType.Neutral, "jackalCanCreateSidekickFromFox", true, jackalCanCreateSidekick);
@@ -715,11 +715,11 @@ namespace TheOtherRoles {
             foxCanFixSabotageWhileStealth  = CustomOption.Create(921, CustomOptionType.Neutral, "foxCanFixSabotageWhileStealth", true, foxSpawnRate);
 
 
-            fortuneTellerSpawnRate = new CustomRoleOption(940, CustomOptionType.Neutral, "fortuneTeller", FortuneTeller.color, 15);
-            fortuneTellerNumTasks = CustomOption.Create(941, CustomOptionType.Neutral, "fortuneTellerNumTasks", 4f, 0f, 25f, 1f, fortuneTellerSpawnRate);
-            fortuneTellerResults = CustomOption.Create(942, CustomOptionType.Neutral, "fortuneTellerResults ", new string[] { "fortuneTellerResultCrew", "fortuneTellerResultTeam", "fortuneTellerResultRole" }, fortuneTellerSpawnRate);
-            fortuneTellerDuration = CustomOption.Create(943, CustomOptionType.Neutral, "fortuneTellerDuration ", 20f, 1f, 50f, 0.5f, fortuneTellerSpawnRate, format: "unitSeconds");
-            fortuneTellerDistance = CustomOption.Create(944, CustomOptionType.Neutral, "fortuneTellerDistance ", 2.5f, 1f, 10f, 0.5f, fortuneTellerSpawnRate, format: "unitMeters");
+            fortuneTellerSpawnRate = new CustomRoleOption(940, CustomOptionType.Crewmate, "fortuneTeller", FortuneTeller.color, 15);
+            fortuneTellerNumTasks = CustomOption.Create(941, CustomOptionType.Crewmate, "fortuneTellerNumTasks", 4f, 0f, 25f, 1f, fortuneTellerSpawnRate);
+            fortuneTellerResults = CustomOption.Create(942, CustomOptionType.Crewmate, "fortuneTellerResults ", new string[] { "fortuneTellerResultCrew", "fortuneTellerResultTeam", "fortuneTellerResultRole" }, fortuneTellerSpawnRate);
+            fortuneTellerDuration = CustomOption.Create(943, CustomOptionType.Crewmate, "fortuneTellerDuration ", 20f, 1f, 50f, 0.5f, fortuneTellerSpawnRate, format: "unitSeconds");
+            fortuneTellerDistance = CustomOption.Create(944, CustomOptionType.Crewmate, "fortuneTellerDistance ", 2.5f, 1f, 10f, 0.5f, fortuneTellerSpawnRate, format: "unitMeters");
 
             schrodingersCatSpawnRate = new CustomRoleOption(970, CustomOptionType.Neutral, "schrodingersCat", SchrodingersCat.color, 1);
             schrodingersCatKillCooldown = CustomOption.Create(971, CustomOptionType.Neutral, "schrodingersCatKillCooldown", 20f, 1f, 60f, 0.5f, schrodingersCatSpawnRate);
