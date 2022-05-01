@@ -290,7 +290,7 @@ namespace TheOtherRoles
                             sabotageActive = true;
                     return sabotageActive && numRepair > 0 && PlayerControl.LocalPlayer.CanMove;
                 },
-                () => { },
+                () => { foxRepairButton.Timer = foxRepairButton.MaxTimer = 0f; },
                 Fox.getRepairButtonSprite(),
                 new Vector3(-0.9f, 1f, 0),
                 hm,
@@ -309,7 +309,7 @@ namespace TheOtherRoles
                 },
                 () => { return !Immoralist.exists && canCreateImmoralist && PlayerControl.LocalPlayer.isRole(RoleType.Fox) && PlayerControl.LocalPlayer.isAlive(); },
                 () => { return canCreateImmoralist && Fox.currentTarget != null && PlayerControl.LocalPlayer.CanMove; },
-                () => { foxImmoralistButton.Timer = 20; },
+                () => { foxImmoralistButton.Timer = foxImmoralistButton.MaxTimer =  20f; },
                 getImmoralistButtonSprite(),
                 new Vector3(-1.8f, 1f, 0),
                 hm,
