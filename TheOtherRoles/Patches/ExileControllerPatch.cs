@@ -175,7 +175,7 @@ namespace TheOtherRoles.Patches {
         [HarmonyPatch(typeof(UnityEngine.Object), nameof(UnityEngine.Object.Destroy), new Type[] { typeof(GameObject) })]
         public static void Prefix(GameObject obj) {
             if (!SubmergedCompatibility.isSubmerged()) return;
-            if (obj.name.Contains("ExileCutscene")) { 
+            if (obj != null && obj.name.Contains("ExileCutscene")) { 
                 WrapUpPostfix(ExileControllerBeginPatch.lastExiled);
             }            
         }
@@ -193,7 +193,6 @@ namespace TheOtherRoles.Patches {
 
             if (SubmergedCompatibility.isSubmerged())
             {
-                Helpers.log("remove blackscreen");
                 var fullscreen = UnityEngine.GameObject.Find("FullScreen500(Clone)");
                 if (fullscreen) fullscreen.SetActive(false);
             }

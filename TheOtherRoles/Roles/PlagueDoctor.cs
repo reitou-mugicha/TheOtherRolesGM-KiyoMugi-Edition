@@ -176,8 +176,24 @@ namespace TheOtherRoles
             UpdateStatusText();
         }
 
+        private bool hasInfected()
+        {
+            bool flag = false;
+            foreach(var item in progress)
+            {
+                if(item.Value != 0f)
+                {
+                    flag =true;
+                    break;
+                }
+            }
+            return flag;
+        }
+
         public void UpdateStatusText()
         {
+            // ロード画面でstatusTextを生成すると上手く表示されないのでゲームが開始してから最初に感染させた時点から表示する
+            if(!hasInfected()) return;
             if (MeetingHud.Instance != null)
             {
                 if (statusText != null)
@@ -191,16 +207,18 @@ namespace TheOtherRoles
             {
                 if (statusText == null)
                 {
-                    var position = Camera.main.ViewportToWorldPoint(new Vector3(0f, 1f, Camera.main.nearClipPlane));
-                    var obj = UnityEngine.Object.Instantiate(HudManager._instance.GameSettings);
-                    statusText = obj.GetComponent<TMPro.TMP_Text>();
-                    statusText.transform.position = new Vector3(HudManager._instance.GameSettings.transform.position.x, position.y - 0.1f, -14f);
+                    GameObject gameObject = UnityEngine.Object.Instantiate(HudManager.Instance?.roomTracker.gameObject);
+                    gameObject.transform.SetParent(HudManager.Instance.transform);
+                    gameObject.SetActive(true);
+                    UnityEngine.Object.DestroyImmediate(gameObject.GetComponent<RoomTracker>());
+                    statusText = gameObject.GetComponent<TMPro.TMP_Text>();
+                    gameObject.transform.localPosition = new Vector3(-2.7f, -0.1f, gameObject.transform.localPosition.z);
+
                     statusText.transform.localScale = new Vector3(1f, 1f, 1f);
                     statusText.fontSize = 1.5f;
                     statusText.fontSizeMin = 1.5f;
                     statusText.fontSizeMax = 1.5f;
                     statusText.alignment = TMPro.TextAlignmentOptions.BottomLeft;
-                    statusText.transform.parent = HudManager._instance.GameSettings.transform.parent;
                 }
 
                 statusText.gameObject.SetActive(true);
