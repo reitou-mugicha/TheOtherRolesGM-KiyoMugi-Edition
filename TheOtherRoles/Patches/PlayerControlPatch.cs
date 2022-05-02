@@ -69,12 +69,9 @@ namespace TheOtherRoles.Patches
 
 
             Vector2 truePosition = targetingPlayer.GetTruePosition();
-            Il2CppSystem.Collections.Generic.List<GameData.PlayerInfo> allPlayers = GameData.Instance.AllPlayers;
-            for (int i = 0; i < allPlayers.Count; i++)
+            foreach (var playerInfo in GameData.Instance.AllPlayers)
             {
-                GameData.PlayerInfo playerInfo = allPlayers[i];
-                if (!playerInfo.Disconnected && playerInfo.PlayerId != targetingPlayer.PlayerId && !playerInfo.IsDead && (!onlyCrewmates || !playerInfo.Role.IsImpostor))
-                {
+                if (!playerInfo.Disconnected && playerInfo.PlayerId != targetingPlayer.PlayerId && !playerInfo.IsDead && (!onlyCrewmates || !playerInfo.Role.IsImpostor)) {
                     PlayerControl @object = playerInfo.Object;
                     if (untargetablePlayers.Any(x => x == @object))
                     {
@@ -165,6 +162,10 @@ namespace TheOtherRoles.Patches
                     else if (localPlayerPositions.Any(x => x.Item2 == true))
                     {
                         PlayerControl.LocalPlayer.transform.position = next.Item1;
+                    }
+                    if (SubmergedCompatibility.isSubmerged())
+                    {
+                        SubmergedCompatibility.ChangeFloor(next.Item1.y > -7);
                     }
 
                     localPlayerPositions.RemoveAt(0);

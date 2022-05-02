@@ -1,15 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
-        <Version>2.0.9</Version>
+        <Version>2022.5.2.1</Version>
         <Description>TheOtherRoles: GM Haoming Edition</Description>
         <Authors>Haoming</Authors>
-		<Configurations>Debug;Release;Release_Dev</Configurations>
+		<Configurations>Debug;Release;Release_Dev;Embedded</Configurations>
 		<LangVersion>latest</LangVersion>
     </PropertyGroup>
 
     <PropertyGroup>
-        <DefineConstants>$(DefineConstants);STEAM;</DefineConstants>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <ApplicationIcon />
         <Win32Resource />
@@ -31,17 +30,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <EmbeddedResource Include="Resources\CustomHats\*.png" />
-		<EmbeddedResource Include="Resources\*.png" />
-		<EmbeddedResource Include="Resources\*.json" />
-		<EmbeddedResource Include="Resources\*.wav" />
-		<EmbeddedResource Include="Resources\Locations\*.png" />
-        <EmbeddedResource Include="Resources\TricksterAnimation\*.png" />
+		<EmbeddedResource Include="Resources\**" />
     </ItemGroup>
 
     <ItemGroup>
-        <Reference Include="$(AmongUs)/BepInEx/core/*.dll" />
-        <Reference Include="$(AmongUs)/BepInEx/unhollowed/*.dll" />
+		<PackageReference Include="AmongUs.GameLibs.Steam" Version="2022.3.29" />
+        <PackageReference Include="BepInEx.IL2CPP" Version="6.0.0-be.553" />
+        <PackageReference Include="BepInEx.IL2CPP.MSBuild" Version="1.0.2" />
     </ItemGroup>
 
     <Target Name="CopyCustomContent" AfterTargets="AfterBuild">

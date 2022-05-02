@@ -73,9 +73,11 @@ namespace TheOtherRoles.Objects {
             // 罠を設置
             this.trap = new GameObject("Trap");
             var trapRenderer = trap.AddComponent<SpriteRenderer>();
+            trap.AddSubmergedComponent(SubmergedCompatibility.Classes.ElevatorMover);
             trapRenderer.sprite = trapSprite;
-            this.trap.transform.position = pos;
-            this.trap.transform.localPosition = pos;
+            Vector3 position = new Vector3(pos.x, pos.y, pos.y / 1000 + 0.001f);
+            this.trap.transform.position = position;
+            // this.trap.transform.localPosition = pos;
             this.trap.SetActive(true);
 
             // 音を鳴らす

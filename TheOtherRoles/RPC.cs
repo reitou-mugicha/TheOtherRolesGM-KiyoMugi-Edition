@@ -36,6 +36,7 @@ namespace TheOtherRoles
         // Role functionality
 
         EngineerFixLights = 91,
+        EngineerFixSubmergedOxygen,
         EngineerUsedRepair,
         CleanBody,
         SheriffKill,
@@ -43,7 +44,7 @@ namespace TheOtherRoles
         ShieldedMurderAttempt,
         TimeMasterShield,
         TimeMasterRewindTime,
-        ShifterShift,
+        ShifterShift = 100,
         SwapperSwap,
         MorphlingMorph,
         CamouflagerCamouflage,
@@ -53,7 +54,7 @@ namespace TheOtherRoles
         EvilHackerCreatesMadmate,
         JackalCreatesSidekick,
         SidekickPromotes,
-        ErasePlayerRoles,
+        ErasePlayerRoles = 110,
         SetFutureErased,
         SetFutureShifted,
         SetFutureShielded,
@@ -63,24 +64,24 @@ namespace TheOtherRoles
         LightsOut,
         PlaceCamera,
         SealVent,
-        ArsonistWin,
+        ArsonistWin = 120,
         GuesserShoot,
         VultureWin,
         LawyerWin,
         LawyerSetTarget,
         LawyerPromotesToPursuer,
-        SetBlanked,
+        SetBlanked, // 126
 
         // GM Edition functionality
-        AddModifier,
+        AddModifier = 127,
         NinjaStealth,
         SetShifterType,
-        GMKill,
-        GMRevive,
+        GMKill = 145, // 130-144をSubmergedが使用する
+        GMRevive, 
         UseAdminTime,
         UseCameraTime,
         UseVitalsTime,
-        ArsonistDouse,
+        ArsonistDouse = 150,
         VultureEat,
         PlagueDoctorWin,
         PlagueDoctorSetInfected,
@@ -90,7 +91,7 @@ namespace TheOtherRoles
         FortuneTellerUsedDivine,
         FoxStealth,
         FoxCreatesImmoralist,
-        SwapperAnimate,
+        SwapperAnimate = 160,
         ImpostorPromotesToLastImpostor,
         SchrodingersCatSuicide,
         PlaceTrap,
@@ -100,7 +101,7 @@ namespace TheOtherRoles
         TrapperKill,
         TrapperMeetingFlag,
         RandomSpawn,
-        PlantBomb,
+        PlantBomb = 170,
         ReleaseBomb,
         BomberKill,
         SpawnDummy,
@@ -110,7 +111,7 @@ namespace TheOtherRoles
         PuppeteerMorph,
         PuppeteerWin,
         PuppeteerKill,
-        PuppeteerClimbRadder,
+        PuppeteerClimbRadder = 180,
         mimicMorph,
         mimicResetMorph,
         Synchronize,
@@ -299,6 +300,10 @@ namespace TheOtherRoles
         {
             SwitchSystem switchSystem = ShipStatus.Instance.Systems[SystemTypes.Electrical].Cast<SwitchSystem>();
             switchSystem.ActualSwitches = switchSystem.ExpectedSwitches;
+        }
+
+        public static void engineerFixSubmergedOxygen() {
+            SubmergedCompatibility.RepairOxygen();
         }
 
         public static void engineerUsedRepair()
@@ -763,6 +768,8 @@ namespace TheOtherRoles
                 animator?.Stop();
                 vent.EnterVentAnim = vent.ExitVentAnim = null;
                 vent.myRend.sprite = animator == null ? SecurityGuard.getStaticVentSealedSprite() : SecurityGuard.getAnimatedVentSealedSprite();
+                if (SubmergedCompatibility.isSubmerged() && vent.Id == 0) vent.myRend.sprite = SecurityGuard.getSubmergedCentralUpperSealedSprite();
+                if (SubmergedCompatibility.isSubmerged() && vent.Id == 14) vent.myRend.sprite = SecurityGuard.getSubmergedCentralLowerSealedSprite();
                 vent.myRend.color = new Color(1f, 1f, 1f, 0.5f);
                 vent.name = "FutureSealedVent_" + vent.name;
             }
@@ -1370,6 +1377,9 @@ namespace TheOtherRoles
 
                     case (byte)CustomRPC.EngineerFixLights:
                         RPCProcedure.engineerFixLights();
+                        break;
+                    case (byte)CustomRPC.EngineerFixSubmergedOxygen:
+                        RPCProcedure.engineerFixSubmergedOxygen();
                         break;
                     case (byte)CustomRPC.EngineerUsedRepair:
                         RPCProcedure.engineerUsedRepair();

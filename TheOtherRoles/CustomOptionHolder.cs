@@ -289,6 +289,7 @@ namespace TheOtherRoles {
         public static CustomOption dynamicMapEnablePolus;
         public static CustomOption dynamicMapEnableDleks;
         public static CustomOption dynamicMapEnableAirShip;
+        public static CustomOption dynamicMapEnableSubmerged;
 
         // GM Edition options
         public static CustomRoleOption madmateSpawnRate;
@@ -890,7 +891,7 @@ namespace TheOtherRoles {
             dynamicMapEnableMira = CustomOption.Create(532, CustomOptionType.General, "dynamicMapEnableMira", true, dynamicMap, false);
             dynamicMapEnablePolus = CustomOption.Create(533, CustomOptionType.General, "dynamicMapEnablePolus", true, dynamicMap, false);
             dynamicMapEnableAirShip = CustomOption.Create(534, CustomOptionType.General, "dynamicMapEnableAirShip", true, dynamicMap, false);
-            dynamicMapEnableDleks = CustomOption.Create(535, CustomOptionType.General, "dynamicMapEnableDleks", false, dynamicMap, false);
+            dynamicMapEnableSubmerged = CustomOption.Create(535, CustomOptionType.General, "Enable Submerged Rotation", true, dynamicMap, false);
 			
             disableVents = CustomOption.Create(504, CustomOptionType.General, "disableVents", false, uselessOptions);
             hidePlayerNames = CustomOption.Create(6, CustomOptionType.General, "hidePlayerNames", false, uselessOptions);

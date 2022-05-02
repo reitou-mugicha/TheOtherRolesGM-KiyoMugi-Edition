@@ -16,8 +16,12 @@ using System.Reflection;
 
 namespace TheOtherRoles.Patches {
     [HarmonyPatch(typeof(ExileController), nameof(ExileController.Begin))]
+    [HarmonyPriority(Priority.First)]
     class ExileControllerBeginPatch {
+        public static GameData.PlayerInfo lastExiled;
         public static void Prefix(ExileController __instance, [HarmonyArgument(0)]ref GameData.PlayerInfo exiled, [HarmonyArgument(1)]bool tie) {
+            lastExiled = exiled;
+
             // Medic shield
             if (Medic.medic != null && AmongUsClient.Instance.AmHost && Medic.futureShielded != null && !Medic.medic.Data.IsDead) { // We need to send the RPC from the host here, to make sure that the order of shifting and setting the shield is correct(for that reason the futureShifted and futureShielded are being synced)
                 MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.MedicSetShielded, Hazel.SendOption.Reliable, -1);
@@ -107,6 +111,8 @@ namespace TheOtherRoles.Patches {
                 animator?.Stop();
                 vent.EnterVentAnim = vent.ExitVentAnim = null;
                 vent.myRend.sprite = animator == null ? SecurityGuard.getStaticVentSealedSprite() : SecurityGuard.getAnimatedVentSealedSprite();
+                if (SubmergedCompatibility.isSubmerged() && vent.Id == 0) vent.myRend.sprite = SecurityGuard.getSubmergedCentralUpperSealedSprite();
+                if (SubmergedCompatibility.isSubmerged() && vent.Id == 14) vent.myRend.sprite = SecurityGuard.getSubmergedCentralLowerSealedSprite();
                 vent.myRend.color = Color.white;
                 vent.name = "SealedVent_" + vent.name;
             }
@@ -165,6 +171,15 @@ namespace TheOtherRoles.Patches {
             }
         }
 
+        // Workaround to add a "postfix" to the destroying of the exile controller (i.e. cutscene) of submerged
+        [HarmonyPatch(typeof(UnityEngine.Object), nameof(UnityEngine.Object.Destroy), new Type[] { typeof(GameObject) })]
+        public static void Prefix(GameObject obj) {
+            if (!SubmergedCompatibility.isSubmerged()) return;
+            if (obj.name.Contains("ExileCutscene")) { 
+                WrapUpPostfix(ExileControllerBeginPatch.lastExiled);
+            }            
+        }
+
         static void WrapUpPostfix(GameData.PlayerInfo exiled) {
             // Mini exile lose condition
             if (exiled != null && Mini.mini != null && Mini.mini.PlayerId == exiled.PlayerId && !Mini.isGrownUp() && !Mini.mini.Data.Role.IsImpostor) {
@@ -175,6 +190,14 @@ namespace TheOtherRoles.Patches {
             else if (exiled != null && Jester.jester != null && Jester.jester.PlayerId == exiled.PlayerId) {
                 Jester.triggerJesterWin = true;
             }
+
+            if (SubmergedCompatibility.isSubmerged())
+            {
+                Helpers.log("remove blackscreen");
+                var fullscreen = UnityEngine.GameObject.Find("FullScreen500(Clone)");
+                if (fullscreen) fullscreen.SetActive(false);
+            }
+            
         }
     }
 
@@ -205,9 +228,11 @@ namespace TheOtherRoles.Patches {
                 foreach (Vector3 pos in Seer.deadBodyPositions)
                 {
                     GameObject soul = new GameObject();
-                    soul.transform.position = pos;
+                    // soul.transform.position = pos;
+                    soul.transform.position = new Vector3(pos.x, pos.y, pos.y / 1000 - 1f);
                     soul.layer = 5;
                     var rend = soul.AddComponent<SpriteRenderer>();
+                    soul.AddSubmergedComponent(SubmergedCompatibility.Classes.ElevatorMover);
                     rend.sprite = Seer.getSoulSprite();
 
                     if (Seer.limitSoulDuration)
@@ -250,9 +275,11 @@ namespace TheOtherRoles.Patches {
                     foreach ((DeadPlayer db, Vector3 ps) in Medium.featureDeadBodies)
                     {
                         GameObject s = new GameObject();
-                        s.transform.position = ps;
+                        // s.transform.position = ps;
+                        s.transform.position = new Vector3(ps.x, ps.y, ps.y / 1000 - 1f);
                         s.layer = 5;
                         var rend = s.AddComponent<SpriteRenderer>();
+                        s.AddSubmergedComponent(SubmergedCompatibility.Classes.ElevatorMover);
                         rend.sprite = Medium.getSoulSprite();
                         Medium.souls.Add(rend);
                     }
@@ -265,7 +292,15 @@ namespace TheOtherRoles.Patches {
                 Lawyer.meetings++;
 
             if (PlayerControl.LocalPlayer.hasModifier(ModifierType.AntiTeleport))
+            {
                 PlayerControl.LocalPlayer.transform.position = AntiTeleport.position;
+                if (SubmergedCompatibility.isSubmerged())
+                {
+                    SubmergedCompatibility.ChangeFloor(AntiTeleport.position.y > -7);
+                }
+
+
+            }
             
             // Remove DeadBodys
             DeadBody[] array = UnityEngine.Object.FindObjectsOfType<DeadBody>();

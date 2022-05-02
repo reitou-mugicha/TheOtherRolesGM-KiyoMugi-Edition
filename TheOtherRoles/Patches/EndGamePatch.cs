@@ -1037,9 +1037,8 @@ namespace TheOtherRoles.Patches
                     int jackalLovers = 0;
 
 
-                    for (int i = 0; i < GameData.Instance.PlayerCount; i++)
+                    foreach (var playerInfo in GameData.Instance.AllPlayers)
                     {
-                        GameData.PlayerInfo playerInfo = GameData.Instance.AllPlayers[i];
                         if (!playerInfo.Disconnected)
                         {
                             if (playerInfo.Object.isCrew()) numCrew++;

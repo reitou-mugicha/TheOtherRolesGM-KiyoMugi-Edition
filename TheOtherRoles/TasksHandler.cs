@@ -92,11 +92,10 @@ namespace TheOtherRoles {
                 !playerInfo.Object.hasFakeTasks()
                 ) {
 
-                for (int j = 0; j < playerInfo.Tasks.Count; j++) {
+                foreach (var playerInfoTask in playerInfo.Tasks)
+                {
                     TotalTasks++;
-                    if (playerInfo.Tasks[j].Complete) {
-                        CompletedTasks++;
-                    }
+                    if (playerInfoTask.Complete) CompletedTasks++;
                 }
             }
             return Tuple.Create(CompletedTasks, TotalTasks);
@@ -107,8 +106,7 @@ namespace TheOtherRoles {
             private static bool Prefix(GameData __instance) {
                 __instance.TotalTasks = 0;
                 __instance.CompletedTasks = 0;
-                for (int i = 0; i < __instance.AllPlayers.Count; i++) {
-                    GameData.PlayerInfo playerInfo = __instance.AllPlayers[i];
+                foreach (var playerInfo in  GameData.Instance.AllPlayers) {
                     if (playerInfo.Object &&
                         ((playerInfo.Object?.isLovers() == true && !Lovers.tasksCount) ||
                          (playerInfo.PlayerId == Shifter.shifter?.PlayerId && Shifter.isNeutral) || // Neutral shifter has tasks, but they don't count

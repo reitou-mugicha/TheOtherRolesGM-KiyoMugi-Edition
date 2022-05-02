@@ -1,5 +1,8 @@
+using System;
+using System.Linq;
 using HarmonyLib;
 using Hazel;
+using UnhollowerRuntimeLib;
 using static TheOtherRoles.TheOtherRoles;
 using static TheOtherRoles.TheOtherRolesGM;
 using UnityEngine;
@@ -15,44 +18,82 @@ using TheOtherRoles.Objects;
 namespace TheOtherRoles.Patches {
 
     [HarmonyPatch(typeof(ShipStatus))]
-    public class ShipStatusPatch {
-
-        [HarmonyPostfix]
+    public class ShipStatusPatch 
+    {
+        [HarmonyPrefix]
         [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.CalculateLightRadius))]
-        public static bool Prefix(ref float __result, ShipStatus __instance, [HarmonyArgument(0)] GameData.PlayerInfo player) {
-            ISystemType systemType = __instance.Systems.ContainsKey(SystemTypes.Electrical) ? __instance.Systems[SystemTypes.Electrical] : null;
-            if (systemType == null) return true;
-            SwitchSystem switchSystem = systemType.TryCast<SwitchSystem>();
-            if (switchSystem == null) return true;
+        public static bool Prefix(ref float __result, ShipStatus __instance, [HarmonyArgument(0)] GameData.PlayerInfo player)
+        {
+            if (!__instance.Systems.ContainsKey(SystemTypes.Electrical)) return true;
 
-            float num = (float)switchSystem.Value / 255f;
-            
-            if (player == null || player.IsDead || player.PlayerId == GM.gm?.PlayerId) // IsDead
-                __result = __instance.MaxLightRadius;
-            else if (player.Role.IsImpostor
+            // If player is a role which has Impostor vision
+            if (player.Role.IsImpostor
                 || (Jackal.jackal != null && Jackal.jackal.PlayerId == player.PlayerId && Jackal.hasImpostorVision)
                 || (Sidekick.sidekick != null && Sidekick.sidekick.PlayerId == player.PlayerId && Sidekick.hasImpostorVision)
                 || (Spy.spy != null && Spy.spy.PlayerId == player.PlayerId && Spy.hasImpostorVision)
+                || (Jester.jester != null && Jester.jester.PlayerId == player.PlayerId && Jester.hasImpostorVision)
                 || (player.Object.hasModifier(ModifierType.Madmate) && Madmate.hasImpostorVision) // Impostor, Jackal/Sidekick, Spy, or Madmate with Impostor vision
                 || (player.Object.hasModifier(ModifierType.CreatedMadmate) && CreatedMadmate.hasImpostorVision) // Impostor, Jackal/Sidekick, Spy, or Madmate with Impostor vision
                 || (player.Object.isRole(RoleType.Puppeteer))
                 || (Jester.jester != null && Jester.jester.PlayerId == player.PlayerId && Jester.hasImpostorVision) // Jester with Impostor vision
-                || (player.Object.isRole(RoleType.Fox))
-                )
-                __result = __instance.MaxLightRadius * PlayerControl.GameOptions.ImpostorLightMod;
-            else if (PlayerControl.LocalPlayer.isRole(RoleType.Lighter) && Lighter.isLightActive(PlayerControl.LocalPlayer)) // if player is Lighter and Lighter has his ability active
-                __result = Mathf.Lerp(__instance.MaxLightRadius * Lighter.lighterModeLightsOffVision, __instance.MaxLightRadius * Lighter.lighterModeLightsOnVision, num);
-            else if (Trickster.trickster != null && Trickster.lightsOutTimer > 0f) {
-                float lerpValue = 1f;
-                if (Trickster.lightsOutDuration - Trickster.lightsOutTimer < 0.5f) lerpValue = Mathf.Clamp01((Trickster.lightsOutDuration - Trickster.lightsOutTimer) * 2);
-                else if (Trickster.lightsOutTimer < 0.5) lerpValue = Mathf.Clamp01(Trickster.lightsOutTimer * 2);
-                __result = Mathf.Lerp(__instance.MinLightRadius, __instance.MaxLightRadius, 1 - lerpValue) * PlayerControl.GameOptions.CrewLightMod; // Instant lights out? Maybe add a smooth transition?
+                || (player.Object.isRole(RoleType.Fox)))
+            {
+                // __result = __instance.MaxLightRadius * PlayerControl.GameOptions.ImpostorLightMod;
+                __result = GetNeutralLightRadius(__instance, true);
+                return false;
             }
-            else if (Lawyer.lawyer != null && Lawyer.lawyer.PlayerId == player.PlayerId) // if player is Lighter and Lighter has his ability active
-                __result = Mathf.Lerp(__instance.MinLightRadius, __instance.MaxLightRadius * Lawyer.vision, num);
-            else
-                __result = Mathf.Lerp(__instance.MinLightRadius, __instance.MaxLightRadius, num) * PlayerControl.GameOptions.CrewLightMod;
+            
+            // If player is Lighter with ability active
+            if (PlayerControl.LocalPlayer.isRole(RoleType.Lighter) && Lighter.isLightActive(PlayerControl.LocalPlayer))
+            {
+                float unlerped = Mathf.InverseLerp(__instance.MinLightRadius, __instance.MaxLightRadius, GetNeutralLightRadius(__instance, true));
+                __result = Mathf.Lerp(__instance.MaxLightRadius * Lighter.lighterModeLightsOffVision, __instance.MaxLightRadius * Lighter.lighterModeLightsOnVision, unlerped);
+                return false;
+            }
+            
+            // If there is a Trickster with their ability active
+            if (Trickster.trickster != null && Trickster.lightsOutTimer > 0f) 
+            {
+                float lerpValue = 1f;
+                if (Trickster.lightsOutDuration - Trickster.lightsOutTimer < 0.5f)
+                {
+                    lerpValue = Mathf.Clamp01((Trickster.lightsOutDuration - Trickster.lightsOutTimer) * 2);
+                }
+                else if (Trickster.lightsOutTimer < 0.5)
+                {
+                    lerpValue = Mathf.Clamp01(Trickster.lightsOutTimer * 2);
+                }
+
+                __result = Mathf.Lerp(__instance.MinLightRadius, __instance.MaxLightRadius, 1 - lerpValue) * PlayerControl.GameOptions.CrewLightMod;
+                return false;
+            }
+
+            // If player is Lawyer, apply Lawyer vision modifier
+            if (Lawyer.lawyer != null && Lawyer.lawyer.PlayerId == player.PlayerId)
+            {
+                float unlerped = Mathf.InverseLerp(__instance.MinLightRadius, __instance.MaxLightRadius, GetNeutralLightRadius(__instance, false));
+                __result = Mathf.Lerp(__instance.MinLightRadius, __instance.MaxLightRadius * Lawyer.vision, unlerped);
+                return false;
+            }
+
+            // Default light radius
+            __result = GetNeutralLightRadius(__instance, false);
             return false;
+        }
+
+        public static float GetNeutralLightRadius(ShipStatus shipStatus, bool isImpostor)
+        {
+            if (SubmergedCompatibility.Loaded && shipStatus.Type == SubmergedCompatibility.SUBMERGED_MAP_TYPE)
+            {
+                return SubmergedCompatibility.GetSubmergedNeutralLightRadius(isImpostor);
+            }
+            
+            if (isImpostor) return shipStatus.MaxLightRadius * PlayerControl.GameOptions.ImpostorLightMod;
+
+            SwitchSystem switchSystem = shipStatus.Systems[SystemTypes.Electrical].TryCast<SwitchSystem>();
+            float lerpValue = switchSystem.Value / 255f;
+            
+            return Mathf.Lerp(shipStatus.MinLightRadius, shipStatus.MaxLightRadius, lerpValue) * PlayerControl.GameOptions.CrewLightMod;
         }
 
         [HarmonyPostfix]
