@@ -13,7 +13,9 @@ namespace TheOtherRoles
     public class Sheriff : RoleBase<Sheriff>
     {
         private static CustomButton sheriffKillButton;
+        //private static CustomButton studentCreateButton;
         public static TMPro.TMP_Text sheriffNumShotsText;
+        public static PlayerControl sheriff;
 
         public static Color color = new Color32(248, 205, 70, byte.MaxValue);
 
@@ -24,6 +26,7 @@ namespace TheOtherRoles
         public static bool spyCanDieToSheriff { get { return CustomOptionHolder.spyCanDieToSheriff.getBool(); } }
         public static bool madmateCanDieToSheriff { get { return CustomOptionHolder.madmateCanDieToSheriff.getBool(); } }
         public static bool createdMadmateCanDieToSheriff { get { return CustomOptionHolder.createdMadmateCanDieToSheriff.getBool(); } }
+        //public static bool canCreateStudent { get { return CustomOptionHolder.sheriffCreateStudent.getBool(); } }
 
         public int numShots = 2;
         public PlayerControl currentTarget;
@@ -43,7 +46,20 @@ namespace TheOtherRoles
             {
                 currentTarget = setTarget();
                 setPlayerOutline(currentTarget, Sheriff.color);
-            }
+            }/*
+            if (player.isAlive() && !(studentCreateButton.PositionOffset == new Vector3(1000, 1000, 0)))
+            {
+                List<PlayerControl> untargetablePlayers = new List<PlayerControl>();
+                foreach (var p in PlayerControl.AllPlayerControls)
+                {
+                    if (p.isRole(RoleType.Sheriff))
+                    {
+                        untargetablePlayers.Add(p);
+                    }
+                }
+                currentTarget = setTarget(untargetablePlayers: untargetablePlayers);
+                setPlayerOutline(currentTarget, Sheriff.color);
+            }*/
         }
 
         public override void OnKill(PlayerControl target) { }
@@ -126,7 +142,43 @@ namespace TheOtherRoles
             sheriffNumShotsText.enableWordWrapping = false;
             sheriffNumShotsText.transform.localScale = Vector3.one * 0.5f;
             sheriffNumShotsText.transform.localPosition += new Vector3(-0.05f, 0.7f, 0);
-        }
+/*
+            if (canCreateStudent)
+            {
+
+                studentCreateButton = new CustomButton(
+                () =>
+                {
+                    MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SheriffCreateStudent, Hazel.SendOption.Reliable, -1);
+                    writer.Write(local.currentTarget.PlayerId);
+                    AmongUsClient.Instance.FinishRpcImmediately(writer);
+                    RPCProcedure.SheriffCreateStudent(local.currentTarget.PlayerId);
+                    studentCreateButton.PositionOffset = new Vector3(1000, 1000, 0);
+                },
+                () => { return canCreateStudent && PlayerControl.LocalPlayer.isRole(RoleType.Sheriff) && PlayerControl.LocalPlayer.isAlive(); },
+                () => { return canCreateStudent && Sheriff.local.currentTarget != null && PlayerControl.LocalPlayer.CanMove; },
+                () => { studentCreateButton.Timer = 0; },
+                getButtonSprite(),
+                new Vector3(-1.8f, 1f, 0),
+                hm,
+                hm.AbilityButton,
+                KeyCode.I
+            );
+                studentCreateButton.buttonText = ModTranslation.getString("StudentCreateText");
+
+            }*/
+
+        }/*
+
+        private static Sprite buttonSprite;
+        public static Sprite getButtonSprite()
+        {
+
+            if (buttonSprite) return buttonSprite;
+            buttonSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.CreateStudentButton.png", 115f);
+            return buttonSprite;
+
+        }*/
 
         public static void SetButtonCooldowns()
         {

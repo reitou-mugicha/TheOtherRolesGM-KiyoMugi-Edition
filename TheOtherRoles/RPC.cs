@@ -93,7 +93,10 @@ namespace TheOtherRoles
         FoxStealth,
         FoxCreatesImmoralist,
         SwapperAnimate,
-        SprinterSprint,
+        SprinterSprint,/*
+        CreatorCreateSheriff,
+        StudentPromotion,
+        SheriffCreateStudent,*/
     }
 
     public static class RPCProcedure
@@ -1043,7 +1046,31 @@ namespace TheOtherRoles
             {
                 FortuneTeller.fortuneTellerMessage(ModTranslation.getString("fortuneTellerDivinedYou"), 5f, Color.white);
             }
+        }/*
+
+        public static void CreatorCreateSheriff(byte targetId)
+        {
+            PlayerControl player = Helpers.playerById(targetId);
+            DestroyableSingleton<RoleManager>.Instance.SetRole(player, RoleTypes.Crewmate);
+            erasePlayerRoles(player.PlayerId, true);
+            player.setRole(RoleType.Sheriff);
         }
+
+        public static void StudentPromotion()
+        {
+            PlayerControl player = PlayerControl.LocalPlayer;
+            DestroyableSingleton<RoleManager>.Instance.SetRole(player, RoleTypes.Crewmate);
+            erasePlayerRoles(player.PlayerId, true);
+            player.setRole(RoleType.Sheriff);
+        }
+
+        public static void SheriffCreateStudent(byte playerId)
+        {
+            PlayerControl player = Helpers.playerById(playerId);
+            DestroyableSingleton<RoleManager>.Instance.SetRole(player, RoleTypes.Crewmate);
+            erasePlayerRoles(player.PlayerId, true);
+            player.setRole(RoleType.Student);
+        }*/
 
         [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.HandleRpc))]
         class RPCHandlerPatch
@@ -1316,7 +1343,16 @@ namespace TheOtherRoles
                         break;
                     case (byte)CustomRPC.FoxCreatesImmoralist:
                         RPCProcedure.foxCreatesImmoralist(reader.ReadByte());
+                        break;/*
+                    case (byte)CustomRPC.CreatorCreateSheriff:
+                        RPCProcedure.CreatorCreateSheriff(reader.ReadByte());
                         break;
+                    case (byte)CustomRPC.StudentPromotion:
+                        RPCProcedure.StudentPromotion();
+                        break;
+                    case (byte)CustomRPC.SheriffCreateStudent:
+                        RPCProcedure.SheriffCreateStudent(reader.ReadByte());
+                        break;*/
                 }
             }
         }

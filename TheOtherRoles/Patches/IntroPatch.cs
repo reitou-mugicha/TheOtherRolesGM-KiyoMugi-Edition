@@ -146,18 +146,13 @@ namespace TheOtherRoles.Patches
             }
         }
 
-        public enum Mode
-        {
-            TheOtherRolesGM = 0,
-            BattleRoyal = 1,
-        }
         [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.ShowRole))]
 
         class SetUpRoleTextPatch
         {
             public static bool Prefix(IntroCutscene __instance, ref Il2CppSystem.Collections.IEnumerator __result)
             {
-                if (!CustomOptionHolder.activateRoles.getBool() || (Mode)CustomOptionHolder.gameMode.getSelection() == Mode.BattleRoyal) return true; // Don't override the intro of the vanilla roles
+                if (!CustomOptionHolder.activateRoles.getBool()) return true; // Don't override the intro of the vanilla roles
                 __result = setupRole(__instance).WrapToIl2Cpp();
                 return false;
             }

@@ -97,9 +97,11 @@ namespace TheOtherRoles
         public static RoleInfo fortuneTeller = new RoleInfo("fortuneTeller", FortuneTeller.color, CustomOptionHolder.fortuneTellerSpawnRate, RoleType.FortuneTeller);
         public static RoleInfo sprinter = new RoleInfo("sprinter", Sprinter.color, CustomOptionHolder.sprinterSpawnRate, RoleType.Sprinter);
         public static RoleInfo evilHacker = new RoleInfo("evilHacker", EvilHacker.color, CustomOptionHolder.evilHackerSpawnRate, RoleType.EvilHacker);
-        public static RoleInfo hawkEye = new RoleInfo("hawkEye", HawkEye.color, CustomOptionHolder.hawkEyeSpawnRate, RoleType.HawkEye);
-        //public static RoleInfo king = new RoleInfo("king", King.color, CustomOptionHolder.kingdomSpawnRate, RoleType.King);
-        //public static RoleInfo minions = new RoleInfo("minions", Minions.color, CustomOptionHolder.kingdomSpawnRate, RoleType.Minions);
+        public static RoleInfo hawkEye = new RoleInfo("hawkEye", HawkEye.color, CustomOptionHolder.hawkEyeSpawnRate, RoleType.HawkEye);/*
+        public static RoleInfo creator = new RoleInfo("creator", Creator.color, CustomOptionHolder.creatorSpawnRate, RoleType.Creator);
+        public static RoleInfo student = new RoleInfo("student", Student.color, CustomOptionHolder.sheriffSpawnRate, RoleType.Student);
+        public static RoleInfo king = new RoleInfo("king", King.color, CustomOptionHolder.kingdomSpawnRate, RoleType.King);
+        public static RoleInfo minions = new RoleInfo("minions", Minions.color, CustomOptionHolder.kingdomSpawnRate, RoleType.Minions);*/
 
         public static List<RoleInfo> allRoleInfos = new List<RoleInfo>() {
                 impostor,
@@ -163,6 +165,8 @@ namespace TheOtherRoles
                 hawkEye//,
                 //king,
                 //minions,
+                //student,
+                //creator
             };
 
         public static string tl(string key)
@@ -224,7 +228,9 @@ namespace TheOtherRoles
             //if (p.isRole(RoleType.Minions)) infos.Add(minions);
             if (p.isRole(RoleType.PlagueDoctor)) infos.Add(plagueDoctor);
             if (p.isRole(RoleType.NekoKabocha)) infos.Add(nekoKabocha);
-            if (p.isRole(RoleType.SerialKiller)) infos.Add(serialKiller);
+            if (p.isRole(RoleType.SerialKiller)) infos.Add(serialKiller);/*
+            if (p.isRole(RoleType.Student)) infos.Add(student);
+            if (p.isRole(RoleType.Creator)) infos.Add(creator);*/
             if (p.isRole(RoleType.Watcher))
             {
                 if (p.isImpostor()) infos.Add(evilWatcher);

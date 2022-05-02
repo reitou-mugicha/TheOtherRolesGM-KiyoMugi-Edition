@@ -17,7 +17,7 @@ namespace TheOtherRoles.Patches
         {
             if (role == RoleTypes.Crewmate || role == RoleTypes.Impostor) return;
 
-            if (CustomOptionHolder.activateRoles.getBool() || (Mode)CustomOptionHolder.gameMode.getSelection() == Mode.TheOtherRolesGM) __result = 0; // Deactivate Vanilla Roles if the mod roles are active
+            if (CustomOptionHolder.activateRoles.getBool()) __result = 0; // Deactivate Vanilla Roles if the mod roles are active
         }
     }
 
@@ -34,7 +34,7 @@ namespace TheOtherRoles.Patches
             AmongUsClient.Instance.FinishRpcImmediately(writer);
             RPCProcedure.resetVariables();
 
-            if (!DestroyableSingleton<TutorialManager>.InstanceExists && CustomOptionHolder.activateRoles.getBool() && (Mode)CustomOptionHolder.gameMode.getSelection() == Mode.TheOtherRolesGM) // Don't assign Roles in Tutorial or if deactivated
+            if (!DestroyableSingleton<TutorialManager>.InstanceExists && CustomOptionHolder.activateRoles.getBool()) // Don't assign Roles in Tutorial or if deactivated
                 assignRoles();
         }
 
@@ -177,7 +177,9 @@ namespace TheOtherRoles.Patches
             crewSettings.Add((byte)RoleType.Bait, CustomOptionHolder.baitSpawnRate.data);
             crewSettings.Add((byte)RoleType.Mayor, CustomOptionHolder.mayorSpawnRate.data);
             crewSettings.Add((byte)RoleType.SecurityGuard, CustomOptionHolder.securityGuardSpawnRate.data);
-            crewSettings.Add((byte)RoleType.Medium, CustomOptionHolder.mediumSpawnRate.data);
+            crewSettings.Add((byte)RoleType.Medium, CustomOptionHolder.mediumSpawnRate.data);/*
+            crewSettings.Add((byte)RoleType.Student, CustomOptionHolder.sheriffSpawnRate.data);
+            crewSettings.Add((byte)RoleType.Creator, CustomOptionHolder.creatorSpawnRate.data);*/
             if (impostors.Count > 1)
             {
                 // Only add Spy if more than 1 impostor as the spy role is otherwise useless
@@ -662,10 +664,5 @@ namespace TheOtherRoles.Patches
             Impostor = 2
         }
 
-    }
-    public enum Mode
-    {
-        TheOtherRolesGM = 0,
-        BattleRoyal = 1,
     }
 }

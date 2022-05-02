@@ -55,17 +55,11 @@ namespace TheOtherRoles
             }
         }
 
-        public enum Mode
-        {
-            TheOtherRolesGM = 0,
-            BattleRoyal = 1,
-        }
-
         public static bool RolesEnabled
         {
             get
             {
-                return CustomOptionHolder.activateRoles.getBool() && (Mode)CustomOptionHolder.gameMode.getSelection() == Mode.TheOtherRolesGM;
+                return CustomOptionHolder.activateRoles.getBool();
             }
         }
 

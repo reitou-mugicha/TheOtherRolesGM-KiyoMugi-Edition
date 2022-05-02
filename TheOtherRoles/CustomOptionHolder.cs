@@ -17,11 +17,9 @@ namespace TheOtherRoles
     {
         public static string[] rates = new string[] { "0%", "10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%" };
         public static string[] presets = new string[] { "preset1", "preset2", "preset3", "preset4", "preset5" };
-        public static string[] mode = new string[] { "TheOtherRolesGM", "BattleRoyal" };
 
         public static CustomOption presetSelection;
         public static CustomOption activateRoles;
-        public static CustomOption gameMode;
         public static CustomOption crewmateRolesCountMin;
         public static CustomOption crewmateRolesCountMax;
         public static CustomOption neutralRolesCountMin;
@@ -381,8 +379,14 @@ namespace TheOtherRoles
         public static CustomOption sprinterDuration;
         public static CustomOption sprinterSpeedBonus;
 
-        //public static CustomRoleOption kingdomSpawnRate;
-        //public static CustomTasksOption kingTasks;
+        /*public static CustomRoleOption kingdomSpawnRate;
+        public static CustomTasksOption kingTasks;
+
+        public static CustomRoleOption creatorSpawnRate;
+        public static CustomOption creatorCanCreateSheriff;
+        public static CustomOption creatorCreateCooldown;
+
+        public static CustomOption sheriffCreateStudent;*/
 
         internal static Dictionary<byte, byte[]> blockedRolePairings = new Dictionary<byte, byte[]>();
 
@@ -402,8 +406,6 @@ namespace TheOtherRoles
 
             // Role Options
             activateRoles = CustomOption.Create(7, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "blockOriginal"), true, null, true);
-
-            gameMode = CustomOption.Create(3951, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "selectModes"), mode, null, true);
 
             presetSelection = CustomOption.Create(0, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "presetSelection"), presets, null, true);
 
@@ -651,7 +653,12 @@ namespace TheOtherRoles
             sheriffCooldown = CustomOption.Create(101, "sheriffCooldown", 30f, 2.5f, 60f, 2.5f, sheriffSpawnRate, format: "unitSeconds");
             sheriffNumShots = CustomOption.Create(103, "sheriffNumShots", 2f, 1f, 15f, 1f, sheriffSpawnRate, format: "unitShots");
             sheriffMisfireKillsTarget = CustomOption.Create(104, "sheriffMisfireKillsTarget", false, sheriffSpawnRate);
-            sheriffCanKillNeutrals = CustomOption.Create(102, "sheriffCanKillNeutrals", false, sheriffSpawnRate);
+            sheriffCanKillNeutrals = CustomOption.Create(102, "sheriffCanKillNeutrals", false, sheriffSpawnRate);/*
+            sheriffCreateStudent = CustomOption.Create(105, "sheriffCreateStudent", false, sheriffSpawnRate);
+
+            creatorSpawnRate = new CustomRoleOption(106, "creator", Creator.color, 15);
+            creatorCanCreateSheriff = CustomOption.Create(107, "creatorCanCreateSheriff", true, creatorSpawnRate);
+            creatorCreateCooldown = CustomOption.Create(108, "creatorCooldown", 20f, 2.5f, 60f, 2.5f, creatorSpawnRate, format: "unitSeconds");*/
 
             mayorSpawnRate = new CustomRoleOption(80, "mayor", Mayor.color, 1);
             mayorNumVotes = CustomOption.Create(81, "mayorNumVotes", 2f, 2f, 10f, 1f, mayorSpawnRate, format: "unitVotes");
