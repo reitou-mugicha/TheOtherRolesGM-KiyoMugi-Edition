@@ -742,6 +742,14 @@
         "11": "\u30b5\u30a4\u30c9\u30ad\u30c3\u30af",
         "13": "\u8ddf\u73ed"
     },
+    "portalmaker": {
+        "0": "PortalMaker",
+        "11": "\u30dd\u30fc\u30bf\u30eb\u30e1\u30fc\u30ab\u30fc"
+    },
+    "assassin": {
+        "0": "Assassin",
+        "11": "\u30a2\u30b5\u30b7\u30f3"
+    },
     "gmIsHost": {
         "0": "Always The Host",
         "11": "\u5fc5\u305a\u30db\u30b9\u30c8\u306b\u5272\u308a\u632f\u3089\u308c\u308b",

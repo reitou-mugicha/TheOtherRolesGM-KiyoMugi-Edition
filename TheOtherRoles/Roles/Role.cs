@@ -40,6 +40,7 @@ namespace TheOtherRoles
         Medium,
         FortuneTeller,
         Sprinter,
+        Portalmaker,
 
 
         Impostor = 100,
@@ -60,6 +61,7 @@ namespace TheOtherRoles
         Madmate,
         SerialKiller,
         EvilHacker,
+        Assassin,
 
 
         Mini = 150,
@@ -326,6 +328,10 @@ namespace TheOtherRoles
                     return Lawyer.lawyer == player;
                 case RoleType.Pursuer:
                     return Pursuer.pursuer == player;
+                case RoleType.Portalmaker:
+                    return Portalmaker.portalmaker == player;
+                case RoleType.Assassin:
+                    return Assassin.assassin == player;
                 default:
                     TheOtherRolesPlugin.Logger.LogError("isRole: no method found for role type {role}");
                     break;
@@ -464,6 +470,12 @@ namespace TheOtherRoles
                 case RoleType.Pursuer:
                     Pursuer.pursuer = player;
                     break;
+                case RoleType.Portalmaker:
+                    Portalmaker.portalmaker = player;
+                    break;
+                case RoleType.Assassin:
+                    Assassin.assassin = player;
+                    break;
                 default:
                     TheOtherRolesPlugin.Logger.LogError("setRole: no method found for role type {role}");
                     return;
@@ -510,6 +522,7 @@ namespace TheOtherRoles
             if (player.isRole(RoleType.SecurityGuard)) SecurityGuard.clearAndReload();
             if (player.isRole(RoleType.Bait)) Bait.clearAndReload();
             if (player.isRole(RoleType.Medium)) Medium.clearAndReload();
+            if (player.isRole(RoleType.Portalmaker)) Portalmaker.clearAndReload();
 
             // Impostor roles
             if (player.isRole(RoleType.Morphling)) Morphling.clearAndReload();
@@ -524,6 +537,7 @@ namespace TheOtherRoles
             if (player.isRole(RoleType.Warlock)) Warlock.clearAndReload();
             if (player.isRole(RoleType.Witch)) Witch.clearAndReload();
             if (player.isRole(RoleType.EvilHacker)) EvilHacker.clearAndReload();
+            if (player.isRole(RoleType.Assassin)) Assassin.clearAndReload();
 
             // Other roles
             if (player.isRole(RoleType.Jester)) Jester.clearAndReload();

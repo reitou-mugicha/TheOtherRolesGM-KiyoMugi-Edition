@@ -74,19 +74,6 @@ namespace TheOtherRoles
         public static CustomOption hawkEyeTime;
         public static CustomOption hawkCanUseVents;
 
-        public static CustomRoleOption miniSpawnRate;
-        public static CustomOption miniGrowingUpDuration;
-        public static CustomOption miniIsImpRate;
-
-        public static CustomOption loversSpawnRate;
-        public static CustomOption loversNumCouples;
-        public static CustomOption loversImpLoverRate;
-        public static CustomOption loversBothDie;
-        public static CustomOption loversCanHaveAnotherRole;
-        public static CustomOption loversSeparateTeam;
-        public static CustomOption loversTasksCount;
-        public static CustomOption loversEnableChat;
-
         public static CustomRoleOption guesserSpawnRate;
         public static CustomOption guesserIsImpGuesserRate;
         public static CustomOption guesserNumberOfShots;
@@ -100,6 +87,8 @@ namespace TheOtherRoles
 
         public static CustomRoleOption mayorSpawnRate;
         public static CustomOption mayorNumVotes;
+        public static CustomOption mayorCanSeeVoteColors;
+        public static CustomOption mayorTasksNeededToSeeVoteColors;
 
         public static CustomRoleOption jesterSpawnRate;
         public static CustomOption jesterCanCallEmergency;
@@ -186,6 +175,7 @@ namespace TheOtherRoles
         public static CustomOption medicShowAttemptToShielded;
         public static CustomOption medicSetShieldAfterMeeting;
         public static CustomOption medicShowAttemptToMedic;
+        public static CustomOption medicSetOrShowShieldAfterMeeting;
 
         public static CustomRoleOption swapperSpawnRate;
         public static CustomOption swapperIsImpRate;
@@ -246,11 +236,6 @@ namespace TheOtherRoles
         public static CustomOption securityGuardCamRechargeTasksNumber;
         public static CustomOption securityGuardNoMove;
 
-        public static CustomRoleOption baitSpawnRate;
-        public static CustomOption baitHighlightAllVents;
-        public static CustomOption baitReportDelay;
-        public static CustomOption baitShowKillFlash;
-
         public static CustomRoleOption vultureSpawnRate;
         public static CustomOption vultureCooldown;
         public static CustomOption vultureNumberToWin;
@@ -263,7 +248,7 @@ namespace TheOtherRoles
         public static CustomOption mediumOneTimeUse;
 
         public static CustomRoleOption lawyerSpawnRate;
-        public static CustomOption lawyerTargetKnows;
+        public static CustomOption lawyerTargetCanBeJester;
         public static CustomOption lawyerWinsAfterMeetings;
         public static CustomOption lawyerNeededMeetings;
         public static CustomOption lawyerVision;
@@ -379,6 +364,18 @@ namespace TheOtherRoles
         public static CustomOption sprinterDuration;
         public static CustomOption sprinterSpeedBonus;
 
+        public static CustomRoleOption portalmakerSpawnRate;
+        public static CustomOption portalmakerCooldown;
+        public static CustomOption portalmakerUsePortalCooldown;
+        public static CustomOption portalmakerLogOnlyColorType;
+        public static CustomOption portalmakerLogHasTime;
+
+        public static CustomRoleOption assassinSpawnRate;
+        public static CustomOption assassinCooldown;
+        public static CustomOption assassinKnowsTargetLocation;
+        public static CustomOption assassinTraceTime;
+        public static CustomOption assassinTraceColorTime;
+
         /*public static CustomRoleOption kingdomSpawnRate;
         public static CustomTasksOption kingTasks;
 
@@ -387,6 +384,24 @@ namespace TheOtherRoles
         public static CustomOption creatorCreateCooldown;
 
         public static CustomOption sheriffCreateStudent;*/
+
+        public static CustomRoleOption miniSpawnRate;
+        public static CustomOption miniGrowingUpDuration;
+        public static CustomOption miniIsImpRate;
+
+        public static CustomOption loversSpawnRate;
+        public static CustomOption loversNumCouples;
+        public static CustomOption loversImpLoverRate;
+        public static CustomOption loversBothDie;
+        public static CustomOption loversCanHaveAnotherRole;
+        public static CustomOption loversSeparateTeam;
+        public static CustomOption loversTasksCount;
+        public static CustomOption loversEnableChat;
+
+        public static CustomRoleOption baitSpawnRate;
+        public static CustomOption baitHighlightAllVents;
+        public static CustomOption baitReportDelay;
+        public static CustomOption baitShowKillFlash;
 
         internal static Dictionary<byte, byte[]> blockedRolePairings = new Dictionary<byte, byte[]>();
 
@@ -495,7 +510,6 @@ namespace TheOtherRoles
             witchTriggerBothCooldowns = CustomOption.Create(395, "witchTriggerBoth", true, witchSpawnRate);
             witchVoteSavesTargets = CustomOption.Create(396, "witchSaveTargets", true, witchSpawnRate);
 
-
             ninjaSpawnRate = new CustomRoleOption(1000, "ninja", Ninja.color, 3);
             ninjaStealthCooldown = CustomOption.Create(1002, "ninjaStealthCooldown", 30f, 2.5f, 60f, 2.5f, ninjaSpawnRate, format: "unitSeconds");
             ninjaStealthDuration = CustomOption.Create(1003, "ninjaStealthDuration", 15f, 2.5f, 60f, 2.5f, ninjaSpawnRate, format: "unitSeconds");
@@ -504,6 +518,12 @@ namespace TheOtherRoles
             ninjaSpeedBonus = CustomOption.Create(1006, "ninjaSpeedBonus", 125f, 50f, 200f, 5f, ninjaSpawnRate, format: "unitPercent");
             ninjaCanBeTargeted = CustomOption.Create(1007, "ninjaCanBeTargeted", true, ninjaSpawnRate);
             ninjaCanVent = CustomOption.Create(1008, "ninjaCanVent", false, ninjaSpawnRate);
+
+            assassinSpawnRate = new CustomRoleOption(5050, "assassin", Assassin.color, 1);
+            assassinCooldown = CustomOption.Create(5051, "assassinCooldown", 30f, 10f, 120f, 5f, assassinSpawnRate, format: "unitSeconds");
+            assassinKnowsTargetLocation = CustomOption.Create(5052, "assassinKnowsTargetLocation", true, assassinSpawnRate);
+            assassinTraceTime = CustomOption.Create(5053, "assassinTraceTime", 5f, 1f, 20f, 0.5f, assassinSpawnRate, format: "unitSeconds");
+            assassinTraceColorTime = CustomOption.Create(5054, "assassinTraceColorTime", 2f, 0f, 20f, 0.5f, assassinSpawnRate, format: "unitSeconds");
 
             serialKillerSpawnRate = new CustomRoleOption(1010, "serialKiller", SerialKiller.color, 3);
             serialKillerKillCooldown = CustomOption.Create(1012, "serialKillerKillCooldown", 15f, 2.5f, 60f, 2.5f, serialKillerSpawnRate, format: "unitSeconds");
@@ -601,7 +621,7 @@ namespace TheOtherRoles
             vultureShowArrows = CustomOption.Create(344, "vultureShowArrows", true, vultureSpawnRate);
 
             lawyerSpawnRate = new CustomRoleOption(350, "lawyer", Lawyer.color, 1);
-            lawyerTargetKnows = CustomOption.Create(351, "lawyerTargetKnows", true, lawyerSpawnRate);
+            lawyerTargetCanBeJester = CustomOption.Create(351, "lawyerTargetCanBeJester", true, lawyerSpawnRate);
             lawyerWinsAfterMeetings = CustomOption.Create(352, "lawyerWinsMeeting", false, lawyerSpawnRate);
             lawyerNeededMeetings = CustomOption.Create(353, "lawyerMeetingsNeeded", 5f, 1f, 15f, 1f, lawyerWinsAfterMeetings);
             lawyerVision = CustomOption.Create(354, "lawyerVision", 1f, 0.25f, 3f, 0.25f, lawyerSpawnRate, format: "unitMultiplier");
@@ -662,6 +682,8 @@ namespace TheOtherRoles
 
             mayorSpawnRate = new CustomRoleOption(80, "mayor", Mayor.color, 1);
             mayorNumVotes = CustomOption.Create(81, "mayorNumVotes", 2f, 2f, 10f, 1f, mayorSpawnRate, format: "unitVotes");
+            mayorCanSeeVoteColors = CustomOption.Create(82, "mayorCanSeeVoteColors", false, mayorSpawnRate);
+            mayorTasksNeededToSeeVoteColors = CustomOption.Create(83, "mayorSeeVoteColorsNeededTasks", 5f, 0f, 20f, 1f, mayorCanSeeVoteColors);
 
             lighterSpawnRate = new CustomRoleOption(110, "lighter", Lighter.color, 15);
             lighterModeLightsOnVision = CustomOption.Create(111, "lighterModeLightsOnVision", 2f, 0.25f, 5f, 0.25f, lighterSpawnRate, format: "unitMultiplier");
@@ -683,10 +705,11 @@ namespace TheOtherRoles
             timeMasterShieldDuration = CustomOption.Create(133, "timeMasterShieldDuration", 3f, 1f, 20f, 1f, timeMasterSpawnRate, format: "unitSeconds");
 
             medicSpawnRate = new CustomRoleOption(140, "medic", Medic.color, 1);
-            medicShowShielded = CustomOption.Create(143, "medicShowShielded", new string[] { "medicShowShieldedAll", "medicShowShieldedBoth", "medicShowShieldedMedic" }, medicSpawnRate);
-            medicShowAttemptToShielded = CustomOption.Create(144, "medicShowAttemptToShielded", false, medicSpawnRate);
-            medicSetShieldAfterMeeting = CustomOption.Create(145, "medicSetShieldAfterMeeting", false, medicSpawnRate);
-            medicShowAttemptToMedic = CustomOption.Create(146, "medicSeesMurderAttempt", false, medicSpawnRate);
+            medicShowShielded = CustomOption.Create(141, "medicShowShielded", new string[] { "medicShowShieldedAll", "medicShowShieldedBoth", "medicShowShieldedMedic" }, medicSpawnRate);
+            medicShowAttemptToShielded = CustomOption.Create(142, "medicShowAttemptToShielded", false, medicSpawnRate);
+            medicSetShieldAfterMeeting = CustomOption.Create(143, "medicSetShieldAfterMeeting", false, medicSpawnRate);
+            medicShowAttemptToMedic = CustomOption.Create(144, "medicSeesMurderAttempt", false, medicSpawnRate);
+            medicSetOrShowShieldAfterMeeting = CustomOption.Create(145, "activateShield", new string[] { "medicInstantly", "medicInstantlyVisibleAfter", "medicAfter" }, medicSpawnRate);
 
             seerSpawnRate = new CustomRoleOption(160, "seer", Seer.color, 1);
             seerMode = CustomOption.Create(161, "seerMode", new string[] { "seerModeBoth", "seerModeFlash", "seerModeSouls" }, seerSpawnRate);
@@ -728,6 +751,12 @@ namespace TheOtherRoles
             securityGuardCamMaxCharges = CustomOption.Create(286, "securityGuardCamMaxCharges", 5f, 1f, 30f, 1f, securityGuardSpawnRate);
             securityGuardCamRechargeTasksNumber = CustomOption.Create(287, "securityGuardCamRechargeTasksNumber", 3f, 1f, 10f, 1f, securityGuardSpawnRate);
             securityGuardNoMove = CustomOption.Create(288, "securityGuardNoMove", true, securityGuardSpawnRate);
+
+            portalmakerSpawnRate = new CustomRoleOption(5040, "portalmaker", Portalmaker.color, 1);
+            portalmakerCooldown = CustomOption.Create(5041, "portalmakerCooldown", 30f, 10f, 60f, 2.5f, portalmakerSpawnRate, format: "unitSeconds");
+            portalmakerUsePortalCooldown = CustomOption.Create(5042, "usePortalCooldown", 30f, 10f, 60f, 2.5f, portalmakerSpawnRate, format: "unitSeconds");
+            portalmakerLogOnlyColorType = CustomOption.Create(5043, "portalLogOnlyColor", true, portalmakerSpawnRate);
+            portalmakerLogHasTime = CustomOption.Create(5044, "portalLogShowTime", true, portalmakerSpawnRate);
 
             baitSpawnRate = new CustomRoleOption(330, "bait", Bait.color, 1);
             baitHighlightAllVents = CustomOption.Create(331, "baitHighlightAllVents", false, baitSpawnRate);
