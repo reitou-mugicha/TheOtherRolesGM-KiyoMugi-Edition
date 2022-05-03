@@ -398,7 +398,11 @@ namespace TheOtherRoles.Patches {
         }
 
         static void updateImpostorKillButton(HudManager __instance) {
-            if (!PlayerControl.LocalPlayer.Data.Role.IsImpostor || MeetingHud.Instance) return;
+            if (!PlayerControl.LocalPlayer.Data.Role.IsImpostor) return;
+            if (MeetingHud.Instance) {
+                __instance.KillButton.Hide();
+                return;
+            }
             bool enabled = Helpers.ShowButtons;
             if (PlayerControl.LocalPlayer.isRole(RoleType.Vampire))
                 enabled &= false;
@@ -415,6 +419,20 @@ namespace TheOtherRoles.Patches {
             
             if (enabled) __instance.KillButton.Show();
             else __instance.KillButton.Hide();
+        }
+
+        static void updateUseButton(HudManager __instance) {
+            if (MeetingHud.Instance) __instance.UseButton.Hide();
+        }
+
+        static void updateSabotageButton(HudManager __instance) {
+            if (MeetingHud.Instance) __instance.SabotageButton.Hide();
+        }
+        static void updateVentButton(HudManager __instance) {
+            if (MeetingHud.Instance) __instance.ImpostorVentButton.Hide();
+        }
+        static void updateReportButton(HudManager __instance) {
+            if (MeetingHud.Instance) __instance.ReportButton.Hide();
         }
 
         static void camouflageAndMorphActions()
@@ -457,6 +475,11 @@ namespace TheOtherRoles.Patches {
             timerUpdate();
             // Mini
             miniUpdate();
+
+            updateSabotageButton(__instance);
+            updateUseButton(__instance);
+            updateReportButton(__instance);
+            updateVentButton(__instance);
         }
     }
 }
