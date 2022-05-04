@@ -23,7 +23,7 @@ namespace TheOtherRoles
     {
         public const string Id = "me.eisbison.theotherroles";
 
-        public const string VersionString = "2.0.12";
+        public const string VersionString = "0.0.0";
         
         public static System.Version Version = System.Version.Parse(VersionString);
         internal static BepInEx.Logging.ManualLogSource Logger;
@@ -98,8 +98,8 @@ namespace TheOtherRoles
             RandomGenerator.Initialize();
 
             Harmony.PatchAll();
+            Patches.SubmergedPatch.Patch();
             SubmergedCompatibility.Initialize();
-            // AddComponent<ModUpdateBehaviour>();
         }
 
         public static Sprite GetModStamp() {

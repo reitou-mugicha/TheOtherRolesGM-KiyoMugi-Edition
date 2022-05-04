@@ -168,6 +168,7 @@ namespace TheOtherRoles.Patches {
         class AirshipExileControllerPatch {
             public static void Postfix(AirshipExileController __instance) {
                 WrapUpPostfix(__instance.exiled);
+                if(SubmergedCompatibility.isSubmerged()) ExileControllerReEnableGameplayPatch.ReEnableGameplay();
             }
         }
 
@@ -204,6 +205,10 @@ namespace TheOtherRoles.Patches {
     class ExileControllerReEnableGameplayPatch
     {
         public static void Postfix(ExileController __instance)
+        {
+            ReEnableGameplay();
+        }
+        public static void ReEnableGameplay()
         {
             // Reset custom button timers where necessary
             CustomButton.MeetingEndedUpdate();
