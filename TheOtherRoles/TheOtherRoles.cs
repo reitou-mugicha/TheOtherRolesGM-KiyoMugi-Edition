@@ -1068,13 +1068,30 @@ namespace TheOtherRoles
                 else if (evilGuesser != null && evilGuesser.PlayerId == playerId) evilGuesser = null;
             }
 
-            public static int remainingShots(byte playerId, bool shoot = false) {
-                int remainingShots = remainingShotsEvilGuesser;
-                if (niceGuesser != null && niceGuesser.PlayerId == playerId) {
+            public static int remainingShots(PlayerControl player, bool shoot = false) {
+                int remainingShots = 0;
+                if (niceGuesser == player) {
                     remainingShots = remainingShotsNiceGuesser;
                     if (shoot) remainingShotsNiceGuesser = Mathf.Max(0, remainingShotsNiceGuesser - 1);
-                } else if (shoot) {
-                    remainingShotsEvilGuesser = Mathf.Max(0, remainingShotsEvilGuesser - 1);
+                } else if (evilGuesser == player) {
+                    remainingShots = remainingShotsEvilGuesser;
+                    if(player.hasModifier(ModifierType.LastImpostor) && LastImpostor.canGuess()) {
+		                remainingShots += LastImpostor.remainingShots;
+		            }
+                    if (shoot) {
+                        // ラストインポスターの弾数を優先的に消費させる
+			            if(player.hasModifier(ModifierType.LastImpostor) && LastImpostor.canGuess())
+			            {
+			                LastImpostor.remainingShots = Mathf.Max(0, LastImpostor.remainingShots - 1);
+			            }
+			            else
+			            {
+                    		remainingShotsEvilGuesser = Mathf.Max(0, remainingShotsEvilGuesser - 1);
+                    	}
+                    }
+                } else if(player.hasModifier(ModifierType.LastImpostor) && LastImpostor.canGuess()) {
+                    remainingShots = LastImpostor.remainingShots;
+                    if (shoot) LastImpostor.remainingShots = Mathf.Max(0, LastImpostor.remainingShots - 1);
                 }
                 return remainingShots;
             }

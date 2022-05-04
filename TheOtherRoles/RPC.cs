@@ -841,15 +841,7 @@ namespace TheOtherRoles
             dyingTarget.Exiled();
             PlayerControl dyingLoverPartner = Lovers.bothDie ? dyingTarget.getPartner() : null; // Lover check
 
-            // ラストインポスターの弾数を優先的に消費させる
-            if(killer.hasModifier(ModifierType.LastImpostor) && LastImpostor.remainingShots > 0)
-            {
-                LastImpostor.remainingShots = Mathf.Max(0, LastImpostor.remainingShots - 1);
-            }
-            else
-            {
-                Guesser.remainingShots(killerId, true);
-            }
+            Guesser.remainingShots(killer, true);
 
             if (Constants.ShouldPlaySfx()) SoundManager.Instance.PlaySound(dyingTarget.KillSfx, false, 0.8f);
 

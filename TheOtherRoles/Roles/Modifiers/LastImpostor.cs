@@ -218,6 +218,10 @@ namespace TheOtherRoles
             return false;
         }
 
+        public static bool canGuess(){
+            return remainingShots > 0 && selectedFunction == 1 && isCounterMax();
+        }
+
         public static void promoteToLastImpostor()
         {
             if(!isEnable) return;
