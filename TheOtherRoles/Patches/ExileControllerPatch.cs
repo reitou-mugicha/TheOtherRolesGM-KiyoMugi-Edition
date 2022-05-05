@@ -168,7 +168,6 @@ namespace TheOtherRoles.Patches {
         class AirshipExileControllerPatch {
             public static void Postfix(AirshipExileController __instance) {
                 WrapUpPostfix(__instance.exiled);
-                if(SubmergedCompatibility.isSubmerged()) ExileControllerReEnableGameplayPatch.ReEnableGameplay();
             }
         }
 
@@ -178,6 +177,7 @@ namespace TheOtherRoles.Patches {
             if (!SubmergedCompatibility.isSubmerged()) return;
             if (obj != null && obj.name.Contains("ExileCutscene")) { 
                 WrapUpPostfix(ExileControllerBeginPatch.lastExiled);
+                ExileControllerReEnableGameplayPatch.ReEnableGameplay();
             }            
         }
 
