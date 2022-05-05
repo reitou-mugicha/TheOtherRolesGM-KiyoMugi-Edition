@@ -1076,18 +1076,18 @@ namespace TheOtherRoles
                 } else if (evilGuesser == player) {
                     remainingShots = remainingShotsEvilGuesser;
                     if(player.hasModifier(ModifierType.LastImpostor) && LastImpostor.canGuess()) {
-		                remainingShots += LastImpostor.remainingShots;
-		            }
+                        remainingShots += LastImpostor.remainingShots;
+                    }
                     if (shoot) {
                         // ラストインポスターの弾数を優先的に消費させる
-			            if(player.hasModifier(ModifierType.LastImpostor) && LastImpostor.canGuess())
-			            {
-			                LastImpostor.remainingShots = Mathf.Max(0, LastImpostor.remainingShots - 1);
-			            }
-			            else
-			            {
-                    		remainingShotsEvilGuesser = Mathf.Max(0, remainingShotsEvilGuesser - 1);
-                    	}
+                        if(player.hasModifier(ModifierType.LastImpostor) && LastImpostor.canGuess())
+                        {
+                            LastImpostor.remainingShots = Mathf.Max(0, LastImpostor.remainingShots - 1);
+                        }
+                        else
+                        {
+                            remainingShotsEvilGuesser = Mathf.Max(0, remainingShotsEvilGuesser - 1);
+                        }
                     }
                 } else if(player.hasModifier(ModifierType.LastImpostor) && LastImpostor.canGuess()) {
                     remainingShots = LastImpostor.remainingShots;
