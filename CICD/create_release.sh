@@ -18,7 +18,7 @@ response=$(curl -X POST -H "Content-Type: $(file -b --mime-type $file_path)" \
 echo $response
 
 file_path="./TheOtherRoles-GM-Haoming.v${VERSION}.zip"
-response=$(curl -X POST -H "Content-Type: application/x-msdownload" \
+response=$(curl -X POST -H "Content-Type: $(file -b --mime-type $file_path)" \
 -H "Accept: application/vnd.github.v3+json" \
 -H "Authorization: token ${GitHub_TOKEN}" \
 --data-binary @$file_path \
