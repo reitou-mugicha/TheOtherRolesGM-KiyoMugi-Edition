@@ -495,39 +495,6 @@ namespace TheOtherRoles
             }
         }
 
-        // 投票画面にダミーを表示させない
-        [HarmonyPatch(typeof(MeetingHud), nameof(MeetingHud.PopulateButtons))]
-        public static class MeetingHudPopulateButtonsPatch
-        {
-            public static bool Prefix(MeetingHud __instance, byte reporter)
-            {
-                if(dummy == null) return true;
-                __instance.playerStates = new PlayerVoteArea[GameData.Instance.PlayerCount-1];
-                int counter = 0;
-                for (int i = 0; i < __instance.playerStates.Length + 1; i++)
-                {
-                    if(GameData.Instance.AllPlayers[i].PlayerId == dummy.PlayerId)
-                    {
-                        continue;
-                    }
-                    GameData.PlayerInfo playerInfo = GameData.Instance.AllPlayers[i];
-                    PlayerVoteArea playerVoteArea = __instance.playerStates[counter] = __instance.CreateButton(playerInfo);
-                    playerVoteArea.Parent = __instance;
-                    playerVoteArea.SetTargetPlayerId(playerInfo.PlayerId);
-                    playerVoteArea.SetDead(reporter == playerInfo.PlayerId, playerInfo.Disconnected || playerInfo.IsDead, playerInfo.Role.Role == RoleTypes.GuardianAngel);
-                    playerVoteArea.UpdateOverlay();
-                    counter++;
-                }
-                foreach (PlayerVoteArea playerVoteArea2 in __instance.playerStates)
-                {
-                    ControllerManager.Instance.AddSelectableUiElement(playerVoteArea2.PlayerButton, false);
-                }
-                __instance.SortButtons();
-                return false;
-            }
-
-        }
-
         public static void setOpacity(PlayerControl player, float opacity)
         {
             // Sometimes it just doesn't work?

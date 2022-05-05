@@ -705,15 +705,28 @@ namespace TheOtherRoles.Patches {
 
         public static void populateButtons(MeetingHud __instance, byte reporter)
         {
-            __instance.playerStates = new PlayerVoteArea[GameData.Instance.PlayerCount];
-            for (int i = 0; i < __instance.playerStates.Length; i++)
+            // 投票画面に人形遣いのダミーを表示させない
+            // 会議に参加しないPlayerControlを持つRoleが増えたらこのListに追加
+            // 特殊なplayerInfo.Role.Roleを設定することで自動的に無視できないか？もしくはフラグをplayerInfoのどこかに追加
+            var playerControlesToBeIgnored = new List<PlayerControl>() { Puppeteer.dummy };
+            playerControlesToBeIgnored.RemoveAll(x => x == null);
+            var playerIdsToBeIgnored = playerControlesToBeIgnored.Select(x => x.PlayerId);
+            // Generate PlayerVoteAreas
+            __instance.playerStates = new PlayerVoteArea[GameData.Instance.PlayerCount - playerIdsToBeIgnored.Count()];
+            int playerStatesCounter = 0;
+            for (int i = 0; i < __instance.playerStates.Length + playerIdsToBeIgnored.Count(); i++)
             {
+                if(playerIdsToBeIgnored.Contains(GameData.Instance.AllPlayers[i].PlayerId))
+                {
+                    continue;
+                }
                 GameData.PlayerInfo playerInfo = GameData.Instance.AllPlayers[i];
-                PlayerVoteArea playerVoteArea = __instance.playerStates[i] = __instance.CreateButton(playerInfo);
+                PlayerVoteArea playerVoteArea = __instance.playerStates[playerStatesCounter] = __instance.CreateButton(playerInfo);
                 playerVoteArea.Parent = __instance;
                 playerVoteArea.SetTargetPlayerId(playerInfo.PlayerId);
                 playerVoteArea.SetDead(reporter == playerInfo.PlayerId, playerInfo.Disconnected || playerInfo.IsDead, playerInfo.Role.Role == RoleTypes.GuardianAngel);
                 playerVoteArea.UpdateOverlay();
+                playerStatesCounter++;
             }
             foreach (PlayerVoteArea playerVoteArea2 in __instance.playerStates)
             {
