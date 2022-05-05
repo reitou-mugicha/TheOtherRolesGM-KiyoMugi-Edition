@@ -25,7 +25,7 @@ namespace TheOtherRoles.Patches {
             var assembly = plugin!.GetType().Assembly;
             var types = AccessTools.GetTypesFromAssembly(assembly);
             var SubmarineSelectSpawnType = types.First(t => t.Name == "SubmarineSelectSpawn");
-            var SubmarineSelectSpawnUpdateOriginal = AccessTools.Method(SubmarineSelectSpawnType, "Update");
+            var SubmarineSelectSpawnUpdateOriginal = AccessTools.Method(SubmarineSelectSpawnType, "OnDestroy");
             var SubmarineSelectSpawnUpdatePostfix = SymbolExtensions.GetMethodInfo(() => SubmarineSelectSpawnUpdatePatch.Postfix());
             var SubmarineSelectSpawnUpdatePrefix = SymbolExtensions.GetMethodInfo(() => SubmarineSelectSpawnUpdatePatch.Prefix());
             var harmony = new Harmony("Submerged");
@@ -37,12 +37,8 @@ namespace TheOtherRoles.Patches {
             public static void Postfix()
             {
                 PlayerControl.LocalPlayer.SetKillTimer(PlayerControl.GameOptions.KillCooldown);
-                CustomButton.ResetAllCooldowns();
-                if(PlayerControl.LocalPlayer.isRole(RoleType.SerialKiller))
-                {
-                    PlayerControl.LocalPlayer.SetKillTimer(SerialKiller.killCooldown);
-                }
-
+                ShipStatus.Instance.EmergencyCooldown = (float)PlayerControl.GameOptions.EmergencyCooldown;
+                ExileControllerReEnableGameplayPatch.ReEnableGameplay();
             }
         }
     }

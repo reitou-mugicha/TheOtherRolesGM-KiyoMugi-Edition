@@ -177,7 +177,6 @@ namespace TheOtherRoles.Patches {
             if (!SubmergedCompatibility.isSubmerged()) return;
             if (obj != null && obj.name.Contains("ExileCutscene")) { 
                 WrapUpPostfix(ExileControllerBeginPatch.lastExiled);
-                ExileControllerReEnableGameplayPatch.ReEnableGameplay();
             }            
         }
 
@@ -297,13 +296,14 @@ namespace TheOtherRoles.Patches {
 
             if (PlayerControl.LocalPlayer.hasModifier(ModifierType.AntiTeleport))
             {
-                PlayerControl.LocalPlayer.transform.position = AntiTeleport.position;
-                if (SubmergedCompatibility.isSubmerged())
+                if(AntiTeleport.position != new Vector3())
                 {
-                    SubmergedCompatibility.ChangeFloor(AntiTeleport.position.y > -7);
+                    PlayerControl.LocalPlayer.transform.position = AntiTeleport.position;
+                    if (SubmergedCompatibility.isSubmerged())
+                    {
+                        SubmergedCompatibility.ChangeFloor(AntiTeleport.position.y > -7);
+                    }
                 }
-
-
             }
             
             // Remove DeadBodys
