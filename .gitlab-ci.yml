@@ -73,9 +73,10 @@ deploy:
     - package
   stage: deploy
   script:
+    - git config checkout.defaultRemote origin
     - git remote add github https://haoming37:${GitHub_TOKEN}@github.com/haoming37/TheOtherRoles-GM-Haoming.git
     - git fetch github haoming-main
     - git fetch origin ${CI_COMMIT_REF_NAME}
-    - git checkout haoming-main && git reset --hard origin/${CI_COMMIT_REF_NAME}
+    - git checkout haoming-main origin/haoming-main && git reset --hard origin/${CI_COMMIT_REF_NAME}
     - git push github haoming-main
     - ./CICD/create_release.sh
