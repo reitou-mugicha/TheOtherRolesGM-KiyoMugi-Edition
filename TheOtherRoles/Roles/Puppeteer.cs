@@ -278,24 +278,30 @@ namespace TheOtherRoles
         }
         
         public static float originalZoom = 0f;
+        public static Vector3 originalScale = new Vector3();
         public static void senrigan(bool toggle)
         {
             // 初回呼び出し時にカメラのズーム率を保持しておく
-            if(originalZoom ==0) originalZoom = Camera.main.orthographicSize;
+            var hm = DestroyableSingleton<HudManager>.Instance;
+            if(originalZoom == 0) originalZoom = Camera.main.orthographicSize;
+            if(originalScale == new Vector3()) originalScale = hm.transform.localScale;
             if(!toggle)
             {
                 Camera.main.orthographicSize = originalZoom;
-                DestroyableSingleton<HudManager>.Instance.UICamera.orthographicSize = originalZoom;
+                hm.UICamera.orthographicSize = originalZoom;
+                hm.transform.localScale = originalScale;
+
                 if(PlayerControl.LocalPlayer.isAlive())
                 {
-                    DestroyableSingleton<HudManager>.Instance.ShadowQuad.gameObject.SetActive(true);
+                    hm.ShadowQuad.gameObject.SetActive(true);
                 }
             }
             else
             {
                 Camera.main.orthographicSize = originalZoom * 3;
-                DestroyableSingleton<HudManager>.Instance.UICamera.orthographicSize =originalZoom * 3;
-                DestroyableSingleton<HudManager>.Instance.ShadowQuad.gameObject.SetActive(false);
+                hm.UICamera.orthographicSize = originalZoom * 3;
+                hm.transform.localScale = originalScale * 3;
+                hm.ShadowQuad.gameObject.SetActive(false);
             }
         }
         public static void switchStealth(bool flag)
@@ -613,46 +619,86 @@ namespace TheOtherRoles
                         {
                             doors = DestroyableSingleton<MiraShipStatus>.Instance.GetComponentsInChildren<PlainDoor>();
                         }
+                        else if (SubmergedCompatibility.isSubmerged())
+                        {
+                            // 遅いかも
+                            doors = UnityEngine.GameObject.FindObjectsOfType<PlainDoor>();
+                        }
                         else
                         {
                             doors = DestroyableSingleton<SkeldShipStatus>.Instance.GetComponentsInChildren<PlainDoor>();
                         }
                         PlainDoor t = null;
+                        float minDistance = 9999;
                         foreach(var door in doors)
                         {
                             float distance = Vector2.Distance(door.transform.position, dummy.transform.position);
-                            if(distance < 1.5f)
+                            if(distance < 1.5f && distance < minDistance)
                             {
                                 t = door;
-                                break;
+                                minDistance = distance;
                             }
                         }
                         if(t != null)
                         {
-                            DestroyableSingleton<ShipStatus>.Instance.RpcRepairSystem(SystemTypes.Doors, t.Id | 64);
-                            t.SetDoorway(true);
-                        }
-
-
-                        Ladder[] ladders = DestroyableSingleton<AirshipStatus>.Instance.GetComponentsInChildren<Ladder>();
-                        Ladder target = null;
-                        foreach(var ladder in ladders)
-                        {
-                            float distance = Vector2.Distance(ladder.transform.position, dummy.transform.position);
-                            if(distance < 0.5f)
+                            var deconSystem = t.transform.parent.gameObject.GetComponent<DeconSystem>();
+                            if(deconSystem != null)
                             {
-                                target = ladder;
-                                break;
+                                bool flag = true;
+                                if (PlayerControl.GameOptions.MapId == 2)
+                                    flag = t.name.Contains("Inner");
+                                else if(SubmergedCompatibility.isSubmerged())
+                                    flag = t.name.Contains("Upper");
+                                var consoles = t.GetComponentsInChildren<DeconControl>();
+                                DeconControl inner = null;
+                                DeconControl outer = null;
+                                foreach(var console in consoles)
+                                {
+                                    if(console.name == "InnerConsole") inner = console;
+                                    if(console.name == "OuterConsole") outer = console;
+                                }
+                                float distOuter  = Vector2.Distance(outer.transform.position, dummy.transform.position);
+                                float distInner  = Vector2.Distance(inner.transform.position, dummy.transform.position);
+                                if(distInner < distOuter)
+                                {
+                                    deconSystem.OpenFromInside(flag);
+                                }
+                                else
+                                {
+                                    deconSystem.OpenDoor(flag);
+                                }
+                            }
+                            else
+                            {
+                                DestroyableSingleton<ShipStatus>.Instance.RpcRepairSystem(SystemTypes.Doors, t.Id | 64);
+                                t.SetDoorway(true);
                             }
                         }
-                        if (target != null)
+
+
+                        if(PlayerControl.GameOptions.MapId == 4)
                         {
-                            MessageWriter messageWriter = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.PuppeteerClimbRadder, Hazel.SendOption.Reliable, -1);
-                            messageWriter.Write(dummy.PlayerId);
-                            messageWriter.Write(target.Id);
-                            AmongUsClient.Instance.FinishRpcImmediately(messageWriter);
-                            RPCProcedure.puppeteerClimbRadder(dummy.PlayerId, target.Id);
+                            Ladder[] ladders = DestroyableSingleton<AirshipStatus>.Instance.GetComponentsInChildren<Ladder>();
+                            Ladder target = null;
+                            foreach(var ladder in ladders)
+                            {
+                                float distance = Vector2.Distance(ladder.transform.position, dummy.transform.position);
+                                if(distance < 0.5f)
+                                {
+                                    target = ladder;
+                                    break;
+                                }
+                            }
+                            if (target != null)
+                            {
+                                MessageWriter messageWriter = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.PuppeteerClimbRadder, Hazel.SendOption.Reliable, -1);
+                                messageWriter.Write(dummy.PlayerId);
+                                messageWriter.Write(target.Id);
+                                AmongUsClient.Instance.FinishRpcImmediately(messageWriter);
+                                RPCProcedure.puppeteerClimbRadder(dummy.PlayerId, target.Id);
+                            }
                         }
+
                     }
 
                     if (Input.GetKeyDown(KeyCode.D))
