@@ -75,13 +75,13 @@ Evil tracker can see arrows that point to other impostors and he can select one 
 Evil tracker can see kill flash if other impostor kills.  (option)
 
 ### Mimic
-Mimic is a 2 pair of impostor role.
-The Killer has ability to erase dead body and morph to killed player.
-If Killer kills player, dead body is erased and Killer morph to killed player.
-(Killer cant cancel morph until meeting is called)
-Killer can see arrow to Assistant. if color is white, assistant is morphing to you
+Mimic is a 2 pair of impostor role.  
+The Killer has ability to erase dead body and morph to killed player.  
+If Killer kills player, dead body is erased and Killer morph to killed player.  
+(Killer cant cancel morph until meeting is called)  
+Killer can see arrow to Assistant. if color is white, assistant is morphing to you  
 
-The Assistant  does not have ability to kill crewmate, but has ability to fake partner's alibi.
+The Assistant  does not have ability to kill crewmate, but has ability to fake partner's alibi.  
 1. The Assistant can see Flash if Killer kills.
 2. The Assistant has portable admin.
 3. The Assistant can see arrow to killer.
