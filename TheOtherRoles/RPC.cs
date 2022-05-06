@@ -115,7 +115,7 @@ namespace TheOtherRoles
         mimicMorph,
         mimicResetMorph,
         Synchronize,
-
+        PlaceAssasinTrace,
     }
 
     public static class RPCProcedure
@@ -140,6 +140,7 @@ namespace TheOtherRoles
             AdditionalVents.clearAndReload();
             BombEffect.clearBombEffects();
             Trap.clearAllTraps();
+            AssasinTrace.clearTraces();
 
             SpawnInMinigamePatch.reset();
 
@@ -655,6 +656,12 @@ namespace TheOtherRoles
             }
         }
 
+        public static void placeAssasinTrace(byte[] buff) {
+            Vector3 position = Vector3.zero;
+            position.x = BitConverter.ToSingle(buff, 0 * sizeof(float));
+            position.y = BitConverter.ToSingle(buff, 1 * sizeof(float));
+            new AssasinTrace(position, Assasin.traceTime);
+        }
 
         public static void placeJackInTheBox(byte[] buff)
         {
@@ -1481,6 +1488,9 @@ namespace TheOtherRoles
                         break;
                     case (byte)CustomRPC.WitchSpellCast:
                         RPCProcedure.witchSpellCast(reader.ReadByte());
+                        break;
+                    case (byte)CustomRPC.PlaceAssasinTrace:
+                        RPCProcedure.placeAssasinTrace(reader.ReadBytesAndSize());
                         break;
 
                     // GM functionality

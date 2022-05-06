@@ -73,6 +73,7 @@ namespace TheOtherRoles
             Lawyer.clearAndReload();
             Pursuer.clearAndReload();
             Witch.clearAndReload();
+            Assasin.clearAndReload();
             TheOtherRolesGM.clearAndReloadRoles();
         }
 
@@ -1357,6 +1358,44 @@ namespace TheOtherRoles
             spellCastingDuration = CustomOptionHolder.witchSpellCastingDuration.getFloat();
             triggerBothCooldowns = CustomOptionHolder.witchTriggerBothCooldowns.getBool();
             witchVoteSavesTargets = CustomOptionHolder.witchVoteSavesTargets.getBool();
+        }
+    }
+
+    public static class Assasin {
+        public static PlayerControl assasin;
+        public static Color color = Palette.ImpostorRed;
+
+        public static PlayerControl assasinMarked;
+        public static PlayerControl currentTarget;
+        public static float cooldown = 30f;
+        public static float traceTime = 1f;
+        public static bool knowsTargetLocation = false;
+
+        private static Sprite markButtonSprite;
+        private static Sprite killButtonSprite;
+        public static Arrow arrow = new Arrow(Color.black);
+        public static Sprite getMarkButtonSprite() {
+            if (markButtonSprite) return markButtonSprite;
+            markButtonSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.AssasinMarkButton.png", 115f);
+            return markButtonSprite;
+        }
+
+        public static Sprite getKillButtonSprite() {
+            if (killButtonSprite) return killButtonSprite;
+            killButtonSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.AssasinAssassinateButton.png", 115f);
+            return killButtonSprite;
+        }
+
+        public static void clearAndReload() {
+            assasin = null;
+            currentTarget = assasinMarked = null;
+            cooldown = CustomOptionHolder.assasinCooldown.getFloat();
+            knowsTargetLocation = CustomOptionHolder.assasinKnowsTargetLocation.getBool();
+            traceTime = CustomOptionHolder.assasinTraceTime.getFloat();
+
+            if (arrow?.arrow != null) UnityEngine.Object.Destroy(arrow.arrow);
+            arrow = new Arrow(Color.black);
+            if (arrow.arrow != null) arrow.arrow.SetActive(false);
         }
     }
 }

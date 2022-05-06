@@ -148,6 +148,7 @@ namespace TheOtherRoles.Patches
             impSettings.Add((byte)RoleType.Warlock, CustomOptionHolder.warlockSpawnRate.data);
             impSettings.Add((byte)RoleType.BountyHunter, CustomOptionHolder.bountyHunterSpawnRate.data);
             impSettings.Add((byte)RoleType.Witch, CustomOptionHolder.witchSpawnRate.data);
+            impSettings.Add((byte)RoleType.Assasin, CustomOptionHolder.assasinSpawnRate.data);
             impSettings.Add((byte)RoleType.Ninja, CustomOptionHolder.ninjaSpawnRate.data);
             impSettings.Add((byte)RoleType.NekoKabocha, CustomOptionHolder.nekoKabochaSpawnRate.data);
             impSettings.Add((byte)RoleType.SerialKiller, CustomOptionHolder.serialKillerSpawnRate.data);

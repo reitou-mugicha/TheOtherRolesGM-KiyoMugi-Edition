@@ -410,6 +410,35 @@ namespace TheOtherRoles.Patches
                 setPlayerOutline(Warlock.curseVictimTarget, Warlock.color);
             }
         }
+        static void assasinUpdate()
+        {
+            if (Assasin.arrow?.arrow != null)
+            {
+                if (Assasin.assasin == null || Assasin.assasin != PlayerControl.LocalPlayer || !Assasin.knowsTargetLocation) {
+                    Assasin.arrow.arrow.SetActive(false);
+                    return;
+                }
+                if (Assasin.assasinMarked != null && !PlayerControl.LocalPlayer.Data.IsDead)
+                {
+                    bool trackedOnMap = !Assasin.assasinMarked.Data.IsDead;
+                    Vector3 position = Assasin.assasinMarked.transform.position;
+                    if (!trackedOnMap)
+                    { // Check for dead body
+                        DeadBody body = UnityEngine.Object.FindObjectsOfType<DeadBody>().FirstOrDefault(b => b.ParentId == Assasin.assasinMarked.PlayerId);
+                        if (body != null)
+                        {
+                            trackedOnMap = true;
+                            position = body.transform.position;
+                        }
+                    }
+                    Assasin.arrow.Update(position);
+                    Assasin.arrow.arrow.SetActive(trackedOnMap);
+                } else
+                {
+                    Assasin.arrow.arrow.SetActive(false);
+                }
+            }
+        }
 
         static void trackerUpdate()
         {
@@ -767,6 +796,17 @@ namespace TheOtherRoles.Patches
                 BountyHunter.arrow.Update();
             }
         }
+        static void assasinSetTarget()
+        {
+            if (Assasin.assasin == null || Assasin.assasin != PlayerControl.LocalPlayer) return;
+            List<PlayerControl> untargetables = new List<PlayerControl>();
+            if (Spy.spy != null && !Spy.impostorsCanKillAnyone) untargetables.Add(Spy.spy);
+            if (Mini.mini != null) untargetables.Add(Mini.mini);
+            // if (Sidekick.wasTeamRed && !Spy.impostorsCanKillAnyone) untargetables.Add(Sidekick.sidekick);
+            // if (Jackal.wasTeamRed && !Spy.impostorsCanKillAnyone) untargetables.Add(Jackal.jackal);
+            Assasin.currentTarget = setTarget(onlyCrewmates: true, untargetablePlayers: untargetables);
+            setPlayerOutline(Assasin.currentTarget, Assasin.color);
+        }
 
         static void baitUpdate()
         {
@@ -1065,6 +1105,11 @@ namespace TheOtherRoles.Patches
                 pursuerSetTarget();
                 // Witch
                 witchSetTarget();
+                // Assasin
+                assasinSetTarget();
+                AssasinTrace.UpdateAll();
+                assasinUpdate();
+
                 hackerUpdate();
                 // Bomber
                 BombEffect.UpdateAll();

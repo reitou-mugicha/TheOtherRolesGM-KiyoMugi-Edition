@@ -47,6 +47,7 @@ namespace TheOtherRoles.Patches
                 {
                     return false;
                 }
+                
                 else if(isLights|| isComms)
                 {
                     return true;
@@ -346,6 +347,8 @@ namespace TheOtherRoles.Patches
                             Mini.mini.SetKillTimer(PlayerControl.GameOptions.KillCooldown * (Mini.isGrownUp() ? 0.66f : 2f));
                         else if (PlayerControl.LocalPlayer == Witch.witch)
                             Witch.witch.killTimer = HudManagerStartPatch.witchSpellButton.Timer = HudManagerStartPatch.witchSpellButton.MaxTimer;
+                        else if (PlayerControl.LocalPlayer == Assasin.assasin)
+                            Assasin.assasin.killTimer = HudManagerStartPatch.assasinButton.Timer = HudManagerStartPatch.assasinButton.MaxTimer;
                     }
 
                     __instance.SetTarget(null);

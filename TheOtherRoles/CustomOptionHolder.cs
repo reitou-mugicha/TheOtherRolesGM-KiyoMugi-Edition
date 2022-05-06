@@ -134,6 +134,12 @@ namespace TheOtherRoles {
         public static CustomOption witchTriggerBothCooldowns;
         public static CustomOption witchVoteSavesTargets;
 
+        public static CustomRoleOption assasinSpawnRate;
+        public static CustomOption assasinCooldown;
+        public static CustomOption assasinKnowsTargetLocation;
+        public static CustomOption assasinTraceTime;
+        public static CustomOption assasinTraceColorTime;
+
         public static CustomRoleOption shifterSpawnRate;
         public static CustomOption shifterIsNeutralRate;
         public static CustomOption shifterShiftsModifiers;
@@ -548,6 +554,11 @@ namespace TheOtherRoles {
             witchTriggerBothCooldowns = CustomOption.Create(395, CustomOptionType.Impostor, "witchTriggerBoth", true, witchSpawnRate);
             witchVoteSavesTargets = CustomOption.Create(396, CustomOptionType.Impostor, "witchSaveTargets", true, witchSpawnRate);
 
+            assasinSpawnRate = new CustomRoleOption(410, CustomOptionType.Impostor, "assasin", Assasin.color, 1);
+            assasinCooldown = CustomOption.Create(411, CustomOptionType.Impostor, "assasinMarkCooldown", 30f, 10f, 120f, 5f, assasinSpawnRate);
+            assasinKnowsTargetLocation = CustomOption.Create(412, CustomOptionType.Impostor, "assasinKnowsLocationOfTarget", true, assasinSpawnRate);
+            assasinTraceTime = CustomOption.Create(413, CustomOptionType.Impostor, "assasinTraceDuration", 5f, 1f, 20f, 0.5f, assasinSpawnRate);
+            assasinTraceColorTime = CustomOption.Create(414, CustomOptionType.Impostor, "assasinTimeTillTraceColorHasFaded", 2f, 0f, 20f, 0.5f, assasinSpawnRate);
 
             ninjaSpawnRate = new CustomRoleOption(1000, CustomOptionType.Impostor, "ninja", Ninja.color, 3);
             ninjaStealthCooldown = CustomOption.Create(1002, CustomOptionType.Impostor, "ninjaStealthCooldown", 30f, 2.5f, 60f, 2.5f, ninjaSpawnRate, format: "unitSeconds");
