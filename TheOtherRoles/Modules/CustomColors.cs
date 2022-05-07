@@ -60,7 +60,7 @@ namespace TheOtherRoles.Modules
 
             colors.Add(new CustomColor
             {
-                longname = "colorTurqoise",
+                longname = "colorTurquoise",
                 color = new Color32(22, 132, 176, byte.MaxValue),
                 shadow = new Color32(15, 89, 117, byte.MaxValue),
                 isLighterColor = false
