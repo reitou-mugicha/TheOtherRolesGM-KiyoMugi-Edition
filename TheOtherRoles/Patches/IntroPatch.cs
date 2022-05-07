@@ -111,6 +111,11 @@ namespace TheOtherRoles.Patches {
             {
                 LastImpostor.promoteToLastImpostor();
             }
+            
+            // タスクパネルの表示優先度を上げる
+            var taskPanel = DestroyableSingleton<HudManager>._instance.TaskStuff;
+            var pos = taskPanel.transform.position;
+            taskPanel.transform.position = new Vector3(pos.x, pos.y, -20);
         }
     }
 
