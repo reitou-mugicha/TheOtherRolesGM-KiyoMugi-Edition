@@ -408,32 +408,32 @@ namespace TheOtherRoles.Patches
                 setPlayerOutline(Warlock.curseVictimTarget, Warlock.color);
             }
         }
-        static void assasinUpdate()
+        static void assassinUpdate()
         {
-            if (Assasin.arrow?.arrow != null)
+            if (Assassin.arrow?.arrow != null)
             {
-                if (Assasin.assasin == null || Assasin.assasin != PlayerControl.LocalPlayer || !Assasin.knowsTargetLocation) {
-                    Assasin.arrow.arrow.SetActive(false);
+                if (Assassin.assassin == null || Assassin.assassin != PlayerControl.LocalPlayer || !Assassin.knowsTargetLocation) {
+                    Assassin.arrow.arrow.SetActive(false);
                     return;
                 }
-                if (Assasin.assasinMarked != null && !PlayerControl.LocalPlayer.Data.IsDead)
+                if (Assassin.assassinMarked != null && !PlayerControl.LocalPlayer.Data.IsDead)
                 {
-                    bool trackedOnMap = !Assasin.assasinMarked.Data.IsDead;
-                    Vector3 position = Assasin.assasinMarked.transform.position;
+                    bool trackedOnMap = !Assassin.assassinMarked.Data.IsDead;
+                    Vector3 position = Assassin.assassinMarked.transform.position;
                     if (!trackedOnMap)
                     { // Check for dead body
-                        DeadBody body = UnityEngine.Object.FindObjectsOfType<DeadBody>().FirstOrDefault(b => b.ParentId == Assasin.assasinMarked.PlayerId);
+                        DeadBody body = UnityEngine.Object.FindObjectsOfType<DeadBody>().FirstOrDefault(b => b.ParentId == Assassin.assassinMarked.PlayerId);
                         if (body != null)
                         {
                             trackedOnMap = true;
                             position = body.transform.position;
                         }
                     }
-                    Assasin.arrow.Update(position);
-                    Assasin.arrow.arrow.SetActive(trackedOnMap);
+                    Assassin.arrow.Update(position);
+                    Assassin.arrow.arrow.SetActive(trackedOnMap);
                 } else
                 {
-                    Assasin.arrow.arrow.SetActive(false);
+                    Assassin.arrow.arrow.SetActive(false);
                 }
             }
         }
@@ -794,16 +794,16 @@ namespace TheOtherRoles.Patches
                 BountyHunter.arrow.Update();
             }
         }
-        static void assasinSetTarget()
+        static void assassinSetTarget()
         {
-            if (Assasin.assasin == null || Assasin.assasin != PlayerControl.LocalPlayer) return;
+            if (Assassin.assassin == null || Assassin.assassin != PlayerControl.LocalPlayer) return;
             List<PlayerControl> untargetables = new List<PlayerControl>();
             if (Spy.spy != null && !Spy.impostorsCanKillAnyone) untargetables.Add(Spy.spy);
             if (Mini.mini != null) untargetables.Add(Mini.mini);
             // if (Sidekick.wasTeamRed && !Spy.impostorsCanKillAnyone) untargetables.Add(Sidekick.sidekick);
             // if (Jackal.wasTeamRed && !Spy.impostorsCanKillAnyone) untargetables.Add(Jackal.jackal);
-            Assasin.currentTarget = setTarget(onlyCrewmates: true, untargetablePlayers: untargetables);
-            setPlayerOutline(Assasin.currentTarget, Assasin.color);
+            Assassin.currentTarget = setTarget(onlyCrewmates: true, untargetablePlayers: untargetables);
+            setPlayerOutline(Assassin.currentTarget, Assassin.color);
         }
 
         static void baitUpdate()
@@ -1103,10 +1103,10 @@ namespace TheOtherRoles.Patches
                 pursuerSetTarget();
                 // Witch
                 witchSetTarget();
-                // Assasin
-                assasinSetTarget();
-                AssasinTrace.UpdateAll();
-                assasinUpdate();
+                // Assassin
+                assassinSetTarget();
+                AssassinTrace.UpdateAll();
+                assassinUpdate();
 
                 hackerUpdate();
                 // Bomber

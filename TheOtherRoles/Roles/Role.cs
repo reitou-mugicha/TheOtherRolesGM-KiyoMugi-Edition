@@ -44,7 +44,7 @@ namespace TheOtherRoles
         Warlock,
         BountyHunter,
         Witch,
-        Assasin,
+        Assassin,
         Ninja,
         NekoKabocha,
         Madmate,
@@ -315,8 +315,8 @@ namespace TheOtherRoles
                     return Medium.medium == player;
                 case RoleType.Witch:
                     return Witch.witch == player;
-                case RoleType.Assasin:
-                    return Assasin.assasin == player;
+                case RoleType.Assassin:
+                    return Assassin.assassin == player;
                 case RoleType.Lawyer:
                     return Lawyer.lawyer == player;
                 case RoleType.Pursuer:
@@ -453,8 +453,8 @@ namespace TheOtherRoles
                 case RoleType.Witch:
                     Witch.witch = player;
                     break;
-                case RoleType.Assasin:
-                    Assasin.assasin = player;
+                case RoleType.Assassin:
+                    Assassin.assassin = player;
                     break;
                 case RoleType.Lawyer:
                     Lawyer.lawyer = player;
@@ -521,7 +521,7 @@ namespace TheOtherRoles
             if (player.isRole(RoleType.Cleaner)) Cleaner.clearAndReload();
             if (player.isRole(RoleType.Warlock)) Warlock.clearAndReload();
             if (player.isRole(RoleType.Witch)) Witch.clearAndReload();
-            if (player.isRole(RoleType.Assasin)) Assasin.clearAndReload();
+            if (player.isRole(RoleType.Assassin)) Assassin.clearAndReload();
             if (player.isRole(RoleType.EvilHacker)) EvilHacker.clearAndReload();
 
             // Other roles
@@ -588,7 +588,7 @@ namespace TheOtherRoles
             if (player.isRole(RoleType.Warlock)) Warlock.warlock = target;
             if (player.isRole(RoleType.BountyHunter)) BountyHunter.bountyHunter = target;
             if (player.isRole(RoleType.Witch)) Witch.witch = target;
-            if (player.isRole(RoleType.Assasin)) Assasin.assasin = target;
+            if (player.isRole(RoleType.Assassin)) Assassin.assassin = target;
             if (player.isRole(RoleType.EvilHacker))  EvilHacker.evilHacker = target;
             if (player.isRole(RoleType.Mini)) Mini.mini = target;
             if (player.isRole(RoleType.EvilGuesser)) Guesser.evilGuesser = target;

@@ -45,7 +45,7 @@ namespace TheOtherRoles
         public static CustomButton mediumButton;
         public static CustomButton pursuerButton;
         public static CustomButton witchSpellButton;
-        public static CustomButton assasinButton;
+        public static CustomButton assassinButton;
 
         public static TMPro.TMP_Text vultureNumCorpsesText;
         public static TMPro.TMP_Text securityGuardButtonScrewsText;
@@ -87,7 +87,7 @@ namespace TheOtherRoles
             pursuerButton.MaxTimer = Pursuer.cooldown;
             trackerTrackCorpsesButton.MaxTimer = Tracker.corpsesTrackingCooldown;
             witchSpellButton.MaxTimer = Witch.cooldown;
-            assasinButton.MaxTimer = Assasin.cooldown;
+            assassinButton.MaxTimer = Assassin.cooldown;
 
             timeMasterShieldButton.EffectDuration = TimeMaster.shieldDuration;
             hackerButton.EffectDuration = Hacker.duration;
@@ -1460,12 +1460,12 @@ namespace TheOtherRoles
             );
             witchSpellButton.buttonText = ModTranslation.getString("WitchText");
 
-            // Assasin mark and assassinate button 
-            assasinButton = new CustomButton(
+            // Assassin mark and assassinate button 
+            assassinButton = new CustomButton(
                 () => {
-                    if (Assasin.assasinMarked != null) {
+                    if (Assassin.assassinMarked != null) {
                         // Murder attempt with teleport
-                        MurderAttemptResult attempt = Helpers.checkMuderAttempt(Assasin.assasin, Assasin.assasinMarked);
+                        MurderAttemptResult attempt = Helpers.checkMuderAttempt(Assassin.assassin, Assassin.assassinMarked);
                         if (attempt == MurderAttemptResult.PerformKill) {
                             // Create first trace before killing
                             var pos = PlayerControl.LocalPlayer.transform.position;
@@ -1473,66 +1473,66 @@ namespace TheOtherRoles
                             Buffer.BlockCopy(BitConverter.GetBytes(pos.x), 0, buff, 0 * sizeof(float), sizeof(float));
                             Buffer.BlockCopy(BitConverter.GetBytes(pos.y), 0, buff, 1 * sizeof(float), sizeof(float));
 
-                            MessageWriter writer = AmongUsClient.Instance.StartRpc(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.PlaceAssasinTrace, Hazel.SendOption.Reliable);
+                            MessageWriter writer = AmongUsClient.Instance.StartRpc(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.PlaceAssassinTrace, Hazel.SendOption.Reliable);
                             writer.WriteBytesAndSize(buff);
                             writer.EndMessage();
-                            RPCProcedure.placeAssasinTrace(buff);
+                            RPCProcedure.placeAssassinTrace(buff);
 
                             // Perform Kill
                             MessageWriter writer2 = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.UncheckedMurderPlayer, Hazel.SendOption.Reliable, -1);
                             writer2.Write(PlayerControl.LocalPlayer.PlayerId);
-                            writer2.Write(Assasin.assasinMarked.PlayerId);
+                            writer2.Write(Assassin.assassinMarked.PlayerId);
                             writer2.Write(byte.MaxValue);
                             AmongUsClient.Instance.FinishRpcImmediately(writer2);
                             if (SubmergedCompatibility.isSubmerged()) {
-                                    SubmergedCompatibility.ChangeFloor(Assasin.assasinMarked.transform.localPosition.y > -7);
+                                    SubmergedCompatibility.ChangeFloor(Assassin.assassinMarked.transform.localPosition.y > -7);
                             }
-                            RPCProcedure.uncheckedMurderPlayer(PlayerControl.LocalPlayer.PlayerId, Assasin.assasinMarked.PlayerId, byte.MaxValue);
+                            RPCProcedure.uncheckedMurderPlayer(PlayerControl.LocalPlayer.PlayerId, Assassin.assassinMarked.PlayerId, byte.MaxValue);
 
                             // Create Second trace after killing
-                            pos = Assasin.assasinMarked.transform.position;
+                            pos = Assassin.assassinMarked.transform.position;
                             buff = new byte[sizeof(float) * 2];
                             Buffer.BlockCopy(BitConverter.GetBytes(pos.x), 0, buff, 0 * sizeof(float), sizeof(float));
                             Buffer.BlockCopy(BitConverter.GetBytes(pos.y), 0, buff, 1 * sizeof(float), sizeof(float));
 
-                            MessageWriter writer3 = AmongUsClient.Instance.StartRpc(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.PlaceAssasinTrace, Hazel.SendOption.Reliable);
+                            MessageWriter writer3 = AmongUsClient.Instance.StartRpc(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.PlaceAssassinTrace, Hazel.SendOption.Reliable);
                             writer3.WriteBytesAndSize(buff);
                             writer3.EndMessage();
-                            RPCProcedure.placeAssasinTrace(buff);
+                            RPCProcedure.placeAssassinTrace(buff);
                         }
 
                         if (attempt == MurderAttemptResult.BlankKill || attempt == MurderAttemptResult.PerformKill) {
-                            assasinButton.Timer = assasinButton.MaxTimer;
-                            Assasin.assasin.killTimer = PlayerControl.GameOptions.KillCooldown;
+                            assassinButton.Timer = assassinButton.MaxTimer;
+                            Assassin.assassin.killTimer = PlayerControl.GameOptions.KillCooldown;
                         } else if (attempt == MurderAttemptResult.SuppressKill) {
-                            assasinButton.Timer = 0f;
+                            assassinButton.Timer = 0f;
                         }
-                        Assasin.assasinMarked = null;
+                        Assassin.assassinMarked = null;
                         return;
                     } 
-                    if (Assasin.currentTarget != null) {
-                        Assasin.assasinMarked = Assasin.currentTarget;
-                        assasinButton.Timer = 5f;
+                    if (Assassin.currentTarget != null) {
+                        Assassin.assassinMarked = Assassin.currentTarget;
+                        assassinButton.Timer = 5f;
                     }
                 },
-                () => { return Assasin.assasin != null && Assasin.assasin == PlayerControl.LocalPlayer && !PlayerControl.LocalPlayer.Data.IsDead; },
+                () => { return Assassin.assassin != null && Assassin.assassin == PlayerControl.LocalPlayer && !PlayerControl.LocalPlayer.Data.IsDead; },
                 () => {  // CouldUse
-                    assasinButton.Sprite = Assasin.assasinMarked != null ? Assasin.getKillButtonSprite() : Assasin.getMarkButtonSprite(); 
-                    return (Assasin.currentTarget != null || Assasin.assasinMarked != null) && PlayerControl.LocalPlayer.CanMove;
+                    assassinButton.Sprite = Assassin.assassinMarked != null ? Assassin.getKillButtonSprite() : Assassin.getMarkButtonSprite(); 
+                    return (Assassin.currentTarget != null || Assassin.assassinMarked != null) && PlayerControl.LocalPlayer.CanMove;
                 },
                 () => {  // on meeting ends
-                    assasinButton.Timer = assasinButton.MaxTimer;
-                    Assasin.assasinMarked = null;
+                    assassinButton.Timer = assassinButton.MaxTimer;
+                    Assassin.assassinMarked = null;
                 },
-                Assasin.getMarkButtonSprite(),
+                Assassin.getMarkButtonSprite(),
                 new Vector3(-1.8f, -0.06f, 0),
                 __instance,
                 __instance.UseButton,
                 KeyCode.F,
                 false
             );
-            // assasinButton.buttonText = ModTranslation.getString("assasinText");
-            assasinButton.buttonText = "";
+            // assassinButton.buttonText = ModTranslation.getString("assassinText");
+            assassinButton.buttonText = "";
 
             ButtonsGM.makeButtons(__instance);
 

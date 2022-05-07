@@ -64,7 +64,7 @@ namespace TheOtherRoles
             Lawyer.clearAndReload();
             Pursuer.clearAndReload();
             Witch.clearAndReload();
-            Assasin.clearAndReload();
+            Assassin.clearAndReload();
             TheOtherRolesGM.clearAndReloadRoles();
         }
 
@@ -1352,11 +1352,11 @@ namespace TheOtherRoles
         }
     }
 
-    public static class Assasin {
-        public static PlayerControl assasin;
+    public static class Assassin {
+        public static PlayerControl assassin;
         public static Color color = Palette.ImpostorRed;
 
-        public static PlayerControl assasinMarked;
+        public static PlayerControl assassinMarked;
         public static PlayerControl currentTarget;
         public static float cooldown = 30f;
         public static float traceTime = 1f;
@@ -1367,22 +1367,22 @@ namespace TheOtherRoles
         public static Arrow arrow = new Arrow(Color.black);
         public static Sprite getMarkButtonSprite() {
             if (markButtonSprite) return markButtonSprite;
-            markButtonSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.AssasinMarkButton.png", 115f);
+            markButtonSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.AssassinMarkButton.png", 115f);
             return markButtonSprite;
         }
 
         public static Sprite getKillButtonSprite() {
             if (killButtonSprite) return killButtonSprite;
-            killButtonSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.AssasinAssassinateButton.png", 115f);
+            killButtonSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.AssassinAssassinateButton.png", 115f);
             return killButtonSprite;
         }
 
         public static void clearAndReload() {
-            assasin = null;
-            currentTarget = assasinMarked = null;
-            cooldown = CustomOptionHolder.assasinCooldown.getFloat();
-            knowsTargetLocation = CustomOptionHolder.assasinKnowsTargetLocation.getBool();
-            traceTime = CustomOptionHolder.assasinTraceTime.getFloat();
+            assassin = null;
+            currentTarget = assassinMarked = null;
+            cooldown = CustomOptionHolder.assassinCooldown.getFloat();
+            knowsTargetLocation = CustomOptionHolder.assassinKnowsTargetLocation.getBool();
+            traceTime = CustomOptionHolder.assassinTraceTime.getFloat();
 
             if (arrow?.arrow != null) UnityEngine.Object.Destroy(arrow.arrow);
             arrow = new Arrow(Color.black);

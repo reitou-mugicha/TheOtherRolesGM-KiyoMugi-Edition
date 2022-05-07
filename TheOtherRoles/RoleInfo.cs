@@ -85,7 +85,7 @@ namespace TheOtherRoles
         public static RoleInfo gm;
         public static RoleInfo opportunist;
         public static RoleInfo witch;
-        public static RoleInfo assasin;
+        public static RoleInfo assassin;
         public static RoleInfo vulture;
         public static RoleInfo medium;
         public static RoleInfo ninja;
@@ -154,7 +154,7 @@ namespace TheOtherRoles
             gm = new RoleInfo("gm", GM.color, CustomOptionHolder.gmEnabled, RoleType.GM);
             opportunist = new RoleInfo("opportunist", Opportunist.color, CustomOptionHolder.opportunistSpawnRate, RoleType.Opportunist);
             witch = new RoleInfo("witch", Witch.color, CustomOptionHolder.witchSpawnRate, RoleType.Witch);
-            assasin = new RoleInfo("assasin", Assasin.color, CustomOptionHolder.ninjaSpawnRate, RoleType.Assasin);
+            assassin = new RoleInfo("assassin", Assassin.color, CustomOptionHolder.ninjaSpawnRate, RoleType.Assassin);
             vulture = new RoleInfo("vulture", Vulture.color, CustomOptionHolder.vultureSpawnRate, RoleType.Vulture);
             medium = new RoleInfo("medium", Medium.color, CustomOptionHolder.mediumSpawnRate, RoleType.Medium);
             ninja = new RoleInfo("ninja", Ninja.color, CustomOptionHolder.ninjaSpawnRate, RoleType.Ninja);
@@ -191,7 +191,7 @@ namespace TheOtherRoles
                 warlock,
                 bountyHunter,
                 witch,
-                assasin,
+                assassin,
                 ninja,
                 serialKiller,
                 niceMini,
@@ -274,7 +274,7 @@ namespace TheOtherRoles
             if (p.isRole(RoleType.Cleaner)) infos.Add(cleaner);
             if (p.isRole(RoleType.Warlock)) infos.Add(warlock);
             if (p.isRole(RoleType.Witch)) infos.Add(witch);
-            if (p.isRole(RoleType.Assasin)) infos.Add(assasin);
+            if (p.isRole(RoleType.Assassin)) infos.Add(assassin);
             if (p.isRole(RoleType.Detective)) infos.Add(detective);
             if (p.isRole(RoleType.TimeMaster)) infos.Add(timeMaster);
             if (p.isRole(RoleType.Medic)) infos.Add(medic);
