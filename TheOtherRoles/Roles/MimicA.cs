@@ -187,10 +187,10 @@ namespace TheOtherRoles
                     }
                 }
 
-                // Arrorw一覧
+                // Arrows一覧
                 arrows = new List<Arrow>();
 
-                // インポスターの位置を示すArrorwを描画
+                // インポスターの位置を示すArrowsを描画
                 foreach(PlayerControl p in PlayerControl.AllPlayerControls){
                     if(p.Data.IsDead) continue;
                     Arrow arrow;
