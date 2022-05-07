@@ -45,6 +45,31 @@ namespace TheOtherRoles.Modules
                 buttonSpriteDiscord.color = textDiscord.color = discordColor;
             });
 
+            var buttonGithub = UnityEngine.Object.Instantiate(template, null);
+            buttonGithub.transform.localPosition = new Vector3(buttonGithub.transform.localPosition.x, buttonGithub.transform.localPosition.y + 1.2f, buttonGithub.transform.localPosition.z);
+
+            var textGithub = buttonGithub.transform.GetChild(0).GetComponent<TMPro.TMP_Text>();
+            __instance.StartCoroutine(Effects.Lerp(0.1f, new System.Action<float>((p) =>
+            {
+                textGithub.SetText("Github");
+            })));
+
+            PassiveButton passiveButtonGithub = buttonGithub.GetComponent<PassiveButton>();
+            SpriteRenderer buttonSpriteGithub = buttonGithub.GetComponent<SpriteRenderer>();
+
+            passiveButtonGithub.OnClick = new Button.ButtonClickedEvent();
+            passiveButtonGithub.OnClick.AddListener((UnityEngine.Events.UnityAction)delegate
+            {
+                Application.OpenURL("https://github.com/Dekokiyo/TheOtherRolesGM-KiyoMugi-Edition");
+            });
+
+            Color githubColor = new Color32(186, 187, 189, byte.MaxValue);
+            buttonSpriteGithub.color = textGithub.color = githubColor;
+            passiveButtonGithub.OnMouseOut.AddListener((UnityEngine.Events.UnityAction)delegate
+            {
+                buttonSpriteGithub.color = textGithub.color = githubColor;
+            });
+
             // Horse mode stuff
             var horseModeSelectionBehavior = new ClientOptionsPatch.SelectionBehaviour("Enable Horse Mode", () => MapOptions.enableHorseMode = TheOtherRolesPlugin.EnableHorseMode.Value = !TheOtherRolesPlugin.EnableHorseMode.Value, TheOtherRolesPlugin.EnableHorseMode.Value);
 

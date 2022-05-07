@@ -422,7 +422,7 @@ namespace TheOtherRoles
 
             presetSelection = CustomOption.Create(2, CustomOptionType.General, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "presetSelection"), presets, null, true);
 
-            strongRandomGen = CustomOption.Create(3, CustomOptionType.General, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "betterGen"), true, null, true);
+            //strongRandomGen = CustomOption.Create(3, CustomOptionType.General, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "betterGen"), true, null, true);
 
             // Using new id's for the options to not break compatibilty with older versions
             crewmateRolesCountMin = CustomOption.Create(10, CustomOptionType.General, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "crewmateRolesCountMin"), 0f, 0f, 15f, 1f, null, true);
@@ -755,7 +755,7 @@ namespace TheOtherRoles
             portalmakerSpawnRate = new CustomRoleOption(610, CustomOptionType.Crewmate, "portalmaker", Portalmaker.color, 1);
             portalmakerCooldown = CustomOption.Create(611, CustomOptionType.Crewmate, "portalmakerCooldown", 30f, 2.5f, 60f, 2.5f, portalmakerSpawnRate, format: "unitSeconds");
             portalmakerUsePortalCooldown = CustomOption.Create(612, CustomOptionType.Crewmate, "usePortalCooldown", 30f, 2.5f, 60f, 2.5f, portalmakerSpawnRate, format: "unitSeconds");
-            enablePortalLog = CustomOption.Create(613,CustomOptionType.Crewmate,"enablePortalLog",true,portalmakerSpawnRate);
+            enablePortalLog = CustomOption.Create(613, CustomOptionType.Crewmate, "enablePortalLog", true, portalmakerSpawnRate);
             portalmakerLogOnlyColorType = CustomOption.Create(614, CustomOptionType.Crewmate, "logOnlyShowsColorType", true, enablePortalLog);
             portalmakerLogHasTime = CustomOption.Create(615, CustomOptionType.Crewmate, "logShowsTime", true, enablePortalLog);
 

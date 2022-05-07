@@ -39,7 +39,7 @@ namespace TheOtherRoles.Modules
             if (template == null) return;
 
             var button = UnityEngine.Object.Instantiate(template, null);
-            button.transform.localPosition = new Vector3(button.transform.localPosition.x, button.transform.localPosition.y + 1.2f, button.transform.localPosition.z);
+            button.transform.localPosition = new Vector3(button.transform.localPosition.x, button.transform.localPosition.y + 1.8f, button.transform.localPosition.z);
 
             PassiveButton passiveButton = button.GetComponent<PassiveButton>();
             SpriteRenderer buttonSprite = button.GetComponent<SpriteRenderer>();

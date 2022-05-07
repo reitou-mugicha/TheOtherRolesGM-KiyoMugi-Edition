@@ -197,6 +197,11 @@ namespace TheOtherRoles.Patches
                     __instance.RoleBlurbText.text += "\n" + Helpers.cs(Lovers.color, String.Format(ModTranslation.getString("loversFlavor"), otherLover?.Data?.PlayerName ?? ""));
                 }
 
+                if (PlayerControl.LocalPlayer.hasModifier(ModifierType.AntiTeleport))
+                {
+                    __instance.RoleBlurbText.text += "\n" + Helpers.cs(AntiTeleport.color, String.Format(ModTranslation.getString("atIntro")));
+                }
+
                 // 従来処理
                 SoundManager.Instance.PlaySound(PlayerControl.LocalPlayer.Data.Role.IntroSound, false, 1f);
                 __instance.YouAreText.gameObject.SetActive(true);
