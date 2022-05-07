@@ -178,14 +178,17 @@ namespace TheOtherRoles.Patches
 
         static void WrapUpPostfix(GameData.PlayerInfo exiled) {
             // Mini exile lose condition
-            var p = Helpers.playerById(exiled.PlayerId);
-            if (exiled != null && p.hasModifier(ModifierType.Mini) && !Mini.isGrownUp(p) && !p.Data.Role.IsImpostor && !p.isNeutral()) {
-                Mini.triggerMiniLose = true;
-            }
+            if(exiled != null)
+            {
+                var p = Helpers.playerById(exiled.PlayerId);
+                if (p.hasModifier(ModifierType.Mini) && !Mini.isGrownUp(p) && !p.Data.Role.IsImpostor && !p.isNeutral()) {
+                    Mini.triggerMiniLose = true;
+                }
 
-            // Jester win condition
-            else if (exiled != null && Jester.jester != null && Jester.jester.PlayerId == exiled.PlayerId) {
-                Jester.triggerJesterWin = true;
+                // Jester win condition
+                else if (p.isRole(RoleType.Jester)) {
+                    Jester.triggerJesterWin = true;
+                }
             }
 
             if (SubmergedCompatibility.isSubmerged())
