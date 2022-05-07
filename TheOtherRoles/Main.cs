@@ -17,11 +17,12 @@ using TheOtherRoles.Modules;
 namespace TheOtherRoles
 {
     [BepInPlugin(Id, "The Other Roles GM", VersionString)]
+    [BepInDependency(SubmergedCompatibility.SUBMERGED_GUID, BepInDependency.DependencyFlags.SoftDependency)]
     [BepInProcess("Among Us.exe")]
     public class TheOtherRolesPlugin : BasePlugin
     {
-        public const string Id = "me.eisbison.theotherroles";
-        public const string VersionString = "1.0.6";
+        public const string Id = "kiyomori.mugicha.theotherrolesgmkm";
+        public const string VersionString = "1.1.0";
         public static System.Version Version = System.Version.Parse(VersionString);
         internal static BepInEx.Logging.ManualLogSource Logger;
 
@@ -94,7 +95,10 @@ namespace TheOtherRoles
             CustomOptionHolder.Load();
             CustomColors.Load();
 
+            Patches.FreeNamePatch.Initialize();
             Harmony.PatchAll();
+            SubmergedCompatibility.Initialize();
+            Patches.SubmergedPatch.Patch();
         }
 
         public static Sprite GetModStamp()

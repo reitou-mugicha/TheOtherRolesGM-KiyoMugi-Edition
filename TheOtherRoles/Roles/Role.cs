@@ -40,7 +40,6 @@ namespace TheOtherRoles
         Medium,
         FortuneTeller,
         Sprinter,
-        Portalmaker,
 
 
         Impostor = 100,
@@ -82,10 +81,9 @@ namespace TheOtherRoles
         Fox,
         Immoralist,
         HawkEye,
+        Portalmaker,
         //King,
         //Minions,
-        //Creator,
-        //Student,
 
 
         GM = 200,
@@ -105,8 +103,6 @@ namespace TheOtherRoles
             { RoleType.Lighter, typeof(RoleBase<Lighter>) },
             { RoleType.FortuneTeller, typeof(RoleBase<FortuneTeller>) },
             { RoleType.Sprinter, typeof(RoleBase<Sprinter>) },
-            //{ RoleType.Creator, typeof(RoleBase<Creator>) },
-            //{ RoleType.Student, typeof(RoleBase<Student>) },
 
             // Impostor
             { RoleType.Ninja, typeof(RoleBase<Ninja>) },

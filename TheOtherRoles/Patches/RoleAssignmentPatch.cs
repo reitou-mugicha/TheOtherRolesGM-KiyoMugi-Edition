@@ -603,6 +603,20 @@ namespace TheOtherRoles.Patches
                     }
                 }
             }
+
+            // AntiTeleport
+            for (int i = 0; i < CustomOptionHolder.antiTeleportSpawnRate.count; i++)
+            {
+                if (rnd.Next(1, 100) <= CustomOptionHolder.antiTeleportSpawnRate.rate * 10)
+                {
+                    var candidates = AntiTeleport.candidates;
+                    if (candidates.Count <= 0)
+                    {
+                        break;
+                    }
+                    setModifierToRandomPlayer((byte)ModifierType.AntiTeleport, AntiTeleport.candidates);
+                }
+            }
         }
 
         private static byte setRoleToRandomPlayer(byte roleId, List<PlayerControl> playerList, byte flag = 0, bool removePlayer = true)

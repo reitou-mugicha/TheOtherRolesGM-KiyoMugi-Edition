@@ -51,6 +51,21 @@ namespace TheOtherRoles.Patches
             return false;
         }
 
+        public static float GetNeutralLightRadius(ShipStatus shipStatus, bool isImpostor)
+        {
+            if (SubmergedCompatibility.isSubmerged())
+            {
+                return SubmergedCompatibility.GetSubmergedNeutralLightRadius(isImpostor);
+            }
+
+            if (isImpostor) return shipStatus.MaxLightRadius * PlayerControl.GameOptions.ImpostorLightMod;
+
+            SwitchSystem switchSystem = shipStatus.Systems[SystemTypes.Electrical].TryCast<SwitchSystem>();
+            float lerpValue = switchSystem.Value / 255f;
+
+            return Mathf.Lerp(shipStatus.MinLightRadius, shipStatus.MaxLightRadius, lerpValue) * PlayerControl.GameOptions.CrewLightMod;
+        }
+
         [HarmonyPostfix]
         [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.IsGameOverDueToDeath))]
         public static void Postfix2(ShipStatus __instance, ref bool __result)
@@ -99,7 +114,5 @@ namespace TheOtherRoles.Patches
             PlayerControl.GameOptions.NumShortTasks = originalNumShortTasksOption;
             PlayerControl.GameOptions.NumLongTasks = originalNumLongTasksOption;
         }
-
     }
-
 }

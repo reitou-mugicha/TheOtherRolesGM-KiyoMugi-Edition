@@ -47,6 +47,9 @@ namespace TheOtherRoles
         public static CustomButton mediumButton;
         public static CustomButton pursuerButton;
         public static CustomButton witchSpellButton;
+        private static CustomButton portalmakerPlacePortalButton;
+        private static CustomButton usePortalButton;
+        public static CustomButton assassinButton;
 
         public static TMPro.TMP_Text vultureNumCorpsesText;
         public static TMPro.TMP_Text securityGuardButtonScrewsText;
@@ -88,6 +91,9 @@ namespace TheOtherRoles
             pursuerButton.MaxTimer = Pursuer.cooldown;
             trackerTrackCorpsesButton.MaxTimer = Tracker.corpsesTrackingCooldown;
             witchSpellButton.MaxTimer = Witch.cooldown;
+            portalmakerPlacePortalButton.MaxTimer = Portalmaker.cooldown;
+            usePortalButton.MaxTimer = Portalmaker.usePortalCooldown;
+            assassinButton.MaxTimer = Assassin.cooldown;
 
             timeMasterShieldButton.EffectDuration = TimeMaster.shieldDuration;
             hackerButton.EffectDuration = Hacker.duration;
@@ -161,6 +167,12 @@ namespace TheOtherRoles
                             ShipStatus.Instance.RpcRepairSystem(SystemTypes.Reactor, 0 | 16);
                             ShipStatus.Instance.RpcRepairSystem(SystemTypes.Reactor, 1 | 16);
                         }
+                        else if (SubmergedCompatibility.isSubmerged() && task.TaskType == SubmergedCompatibility.RetrieveOxygenMask)
+                        {
+                            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.EngineerFixSubmergedOxygen, Hazel.SendOption.Reliable, -1);
+                            AmongUsClient.Instance.FinishRpcImmediately(writer);
+                            RPCProcedure.engineerFixSubmergedOxygen();
+                        }
                     }
                 },
                 () => { return Engineer.engineer != null && Engineer.engineer == PlayerControl.LocalPlayer && Engineer.remainingFixes > 0 && PlayerControl.LocalPlayer.isAlive(); },
@@ -168,7 +180,8 @@ namespace TheOtherRoles
                 {
                     bool sabotageActive = false;
                     foreach (PlayerTask task in PlayerControl.LocalPlayer.myTasks)
-                        if (task.TaskType == TaskTypes.FixLights || task.TaskType == TaskTypes.RestoreOxy || task.TaskType == TaskTypes.ResetReactor || task.TaskType == TaskTypes.ResetSeismic || task.TaskType == TaskTypes.FixComms || task.TaskType == TaskTypes.StopCharles)
+                        if (task.TaskType == TaskTypes.FixLights || task.TaskType == TaskTypes.RestoreOxy || task.TaskType == TaskTypes.ResetReactor || task.TaskType == TaskTypes.ResetSeismic || task.TaskType == TaskTypes.FixComms || task.TaskType == TaskTypes.StopCharles
+                            || SubmergedCompatibility.isSubmerged() && task.TaskType == SubmergedCompatibility.RetrieveOxygenMask)
                             sabotageActive = true;
                     return sabotageActive && Engineer.remainingFixes > 0 && PlayerControl.LocalPlayer.CanMove;
                 },
@@ -987,8 +1000,8 @@ namespace TheOtherRoles
                         SecurityGuard.ventTarget = null;
 
                     }
-                    else if (PlayerControl.GameOptions.MapId != 1 && MapOptions.couldUseCameras)
-                    { // Place camera if there's no vent and it's not MiraHQ
+                    else if (PlayerControl.GameOptions.MapId != 1 && !SubmergedCompatibility.isSubmerged())
+                    { // Place camera if there's no vent and it's not MiraHQ or Submerged
                         var pos = PlayerControl.LocalPlayer.transform.position;
                         byte[] buff = new byte[sizeof(float) * 2];
                         Buffer.BlockCopy(BitConverter.GetBytes(pos.x), 0, buff, 0 * sizeof(float), sizeof(float));
@@ -1015,6 +1028,7 @@ namespace TheOtherRoles
                 () => { return SecurityGuard.securityGuard != null && SecurityGuard.securityGuard == PlayerControl.LocalPlayer && PlayerControl.LocalPlayer.isAlive() && SecurityGuard.remainingScrews >= Mathf.Min(SecurityGuard.ventPrice, SecurityGuard.camPrice); },
                 () =>
                 {
+                    securityGuardButton.actionButton.graphic.sprite = (SecurityGuard.ventTarget == null && PlayerControl.GameOptions.MapId != 1 && !SubmergedCompatibility.isSubmerged()) ? SecurityGuard.getPlaceCameraButtonSprite() : SecurityGuard.getCloseVentButtonSprite();
                     if (SecurityGuard.ventTarget == null && PlayerControl.GameOptions.MapId != 1)
                     {
                         securityGuardButton.buttonText = ModTranslation.getString("PlaceCameraText");
@@ -1032,7 +1046,7 @@ namespace TheOtherRoles
                         return SecurityGuard.remainingScrews >= SecurityGuard.ventPrice && PlayerControl.LocalPlayer.CanMove;
                     }
 
-                    return PlayerControl.GameOptions.MapId != 1 && MapOptions.couldUseCameras && SecurityGuard.remainingScrews >= SecurityGuard.camPrice && PlayerControl.LocalPlayer.CanMove;
+                    return PlayerControl.GameOptions.MapId != 1 && !SubmergedCompatibility.isSubmerged() && SecurityGuard.remainingScrews >= SecurityGuard.camPrice && PlayerControl.LocalPlayer.CanMove;
                 },
                 () => { securityGuardButton.Timer = securityGuardButton.MaxTimer; },
                 SecurityGuard.getPlaceCameraButtonSprite(),
@@ -1085,7 +1099,11 @@ namespace TheOtherRoles
                     if (SecurityGuard.cantMove) PlayerControl.LocalPlayer.moveable = false;
                     PlayerControl.LocalPlayer.NetTransform.Halt(); // Stop current movement
                 },
-                () => { return SecurityGuard.securityGuard != null && SecurityGuard.securityGuard == PlayerControl.LocalPlayer && !PlayerControl.LocalPlayer.Data.IsDead && SecurityGuard.remainingScrews < Mathf.Min(SecurityGuard.ventPrice, SecurityGuard.camPrice); },
+                () =>
+                {
+                    return SecurityGuard.securityGuard != null && SecurityGuard.securityGuard == PlayerControl.LocalPlayer && !PlayerControl.LocalPlayer.Data.IsDead && SecurityGuard.remainingScrews < Mathf.Min(SecurityGuard.ventPrice, SecurityGuard.camPrice)
+                            && !SubmergedCompatibility.isSubmerged();
+                },
                 () =>
                 {
                     if (securityGuardChargesText != null)
@@ -1469,6 +1487,164 @@ namespace TheOtherRoles
                 }
             );
             witchSpellButton.buttonText = ModTranslation.getString("WitchText");
+
+            portalmakerPlacePortalButton = new CustomButton(
+                () =>
+                {
+                    portalmakerPlacePortalButton.Timer = portalmakerPlacePortalButton.MaxTimer;
+
+                    var pos = PlayerControl.LocalPlayer.transform.position;
+                    byte[] buff = new byte[sizeof(float) * 2];
+                    Buffer.BlockCopy(BitConverter.GetBytes(pos.x), 0, buff, 0 * sizeof(float), sizeof(float));
+                    Buffer.BlockCopy(BitConverter.GetBytes(pos.y), 0, buff, 1 * sizeof(float), sizeof(float));
+
+                    MessageWriter writer = AmongUsClient.Instance.StartRpc(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.PlacePortal, Hazel.SendOption.Reliable);
+                    writer.WriteBytesAndSize(buff);
+                    writer.EndMessage();
+                    RPCProcedure.placePortal(buff);
+                },
+                () => { return Portalmaker.portalmaker != null && Portalmaker.portalmaker == PlayerControl.LocalPlayer && !PlayerControl.LocalPlayer.Data.IsDead && Portal.secondPortal == null; },
+                () => { return PlayerControl.LocalPlayer.CanMove && Portal.secondPortal == null; },
+                () => { portalmakerPlacePortalButton.Timer = portalmakerPlacePortalButton.MaxTimer; },
+                Portalmaker.getPlacePortalButtonSprite(),
+                new Vector3(-1.8f, -0.06f, 0),
+                __instance,
+                __instance.UseButton,
+                KeyCode.F
+            );
+            portalmakerPlacePortalButton.buttonText = ModTranslation.getString("PlacePortalText");
+
+            usePortalButton = new CustomButton(
+                () =>
+                {
+                    bool didTeleport = false;
+                    Vector3 exit = Portal.findExit(PlayerControl.LocalPlayer.transform.position);
+                    Vector3 entry = Portal.findEntry(PlayerControl.LocalPlayer.transform.position);
+                    PlayerControl.LocalPlayer.NetTransform.RpcSnapTo(entry);
+
+                    if (!PlayerControl.LocalPlayer.Data.IsDead)
+                    {  // Ghosts can portal too, but non-blocking and only with a local animation
+                        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.UsePortal, Hazel.SendOption.Reliable, -1);
+                        writer.Write((byte)PlayerControl.LocalPlayer.PlayerId);
+                        AmongUsClient.Instance.FinishRpcImmediately(writer);
+                    }
+                    RPCProcedure.usePortal(PlayerControl.LocalPlayer.PlayerId);
+                    usePortalButton.Timer = usePortalButton.MaxTimer;
+                    HudManager.Instance.StartCoroutine(Effects.Lerp(Portal.teleportDuration, new Action<float>((p) =>
+                    { // Delayed action
+                        PlayerControl.LocalPlayer.moveable = false;
+                        PlayerControl.LocalPlayer.NetTransform.Halt();
+                        if (p >= 0.5f && p <= 0.53f && !didTeleport && !MeetingHud.Instance)
+                        {
+                            if (SubmergedCompatibility.isSubmerged())
+                            {
+                                SubmergedCompatibility.ChangeFloor(exit.y > -7);
+                            }
+                            PlayerControl.LocalPlayer.NetTransform.RpcSnapTo(exit);
+                            didTeleport = true;
+                        }
+                        if (p == 1f)
+                        {
+                            PlayerControl.LocalPlayer.moveable = true;
+                        }
+                    })));
+                },
+                () => { return Portal.bothPlacedAndEnabled; },
+                () => { return PlayerControl.LocalPlayer.CanMove && Portal.locationNearEntry(PlayerControl.LocalPlayer.transform.position) && !Portal.isTeleporting; },
+                () => { usePortalButton.Timer = usePortalButton.MaxTimer; },
+                Portalmaker.getUsePortalButtonSprite(),
+                new Vector3(0.9f, -0.06f, 0),
+                __instance,
+                __instance.UseButton,
+                KeyCode.G,
+                mirror: true
+            );
+            usePortalButton.buttonText = ModTranslation.getString("UsePortalText");
+
+            // Assassin mark and assassinate button
+            assassinButton = new CustomButton(
+                () =>
+                {
+                    if (Assassin.assassinMarked != null)
+                    {
+                        // Murder attempt with teleport
+                        MurderAttemptResult attempt = Helpers.checkMuderAttempt(Assassin.assassin, Assassin.assassinMarked);
+                        if (attempt == MurderAttemptResult.PerformKill)
+                        {
+                            // Create first trace before killing
+                            var pos = PlayerControl.LocalPlayer.transform.position;
+                            byte[] buff = new byte[sizeof(float) * 2];
+                            Buffer.BlockCopy(BitConverter.GetBytes(pos.x), 0, buff, 0 * sizeof(float), sizeof(float));
+                            Buffer.BlockCopy(BitConverter.GetBytes(pos.y), 0, buff, 1 * sizeof(float), sizeof(float));
+
+                            MessageWriter writer = AmongUsClient.Instance.StartRpc(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.PlaceAssassinTrace, Hazel.SendOption.Reliable);
+                            writer.WriteBytesAndSize(buff);
+                            writer.EndMessage();
+                            RPCProcedure.placeAssassinTrace(buff);
+
+                            // Perform Kill
+                            MessageWriter writer2 = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.UncheckedMurderPlayer, Hazel.SendOption.Reliable, -1);
+                            writer2.Write(PlayerControl.LocalPlayer.PlayerId);
+                            writer2.Write(Assassin.assassinMarked.PlayerId);
+                            writer2.Write(byte.MaxValue);
+                            AmongUsClient.Instance.FinishRpcImmediately(writer2);
+                            if (SubmergedCompatibility.isSubmerged())
+                            {
+                                SubmergedCompatibility.ChangeFloor(Assassin.assassinMarked.transform.localPosition.y > -7);
+                            }
+                            RPCProcedure.uncheckedMurderPlayer(PlayerControl.LocalPlayer.PlayerId, Assassin.assassinMarked.PlayerId, byte.MaxValue);
+
+                            // Create Second trace after killing
+                            pos = Assassin.assassinMarked.transform.position;
+                            buff = new byte[sizeof(float) * 2];
+                            Buffer.BlockCopy(BitConverter.GetBytes(pos.x), 0, buff, 0 * sizeof(float), sizeof(float));
+                            Buffer.BlockCopy(BitConverter.GetBytes(pos.y), 0, buff, 1 * sizeof(float), sizeof(float));
+
+                            MessageWriter writer3 = AmongUsClient.Instance.StartRpc(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.PlaceAssassinTrace, Hazel.SendOption.Reliable);
+                            writer3.WriteBytesAndSize(buff);
+                            writer3.EndMessage();
+                            RPCProcedure.placeAssassinTrace(buff);
+                        }
+
+                        if (attempt == MurderAttemptResult.BlankKill || attempt == MurderAttemptResult.PerformKill)
+                        {
+                            assassinButton.Timer = assassinButton.MaxTimer;
+                            Assassin.assassin.killTimer = PlayerControl.GameOptions.KillCooldown;
+                        }
+                        else if (attempt == MurderAttemptResult.SuppressKill)
+                        {
+                            assassinButton.Timer = 0f;
+                        }
+                        Assassin.assassinMarked = null;
+
+                        assassinButton.buttonText = ModTranslation.getString("assassinText");
+                        return;
+                    }
+                    if (Assassin.currentTarget != null)
+                    {
+                        Assassin.assassinMarked = Assassin.currentTarget;
+                        assassinButton.Timer = Assassin.start;
+                        assassinButton.buttonText = ModTranslation.getString("assassinKillText");
+                    }
+                },
+                () => { return Assassin.assassin != null && Assassin.assassin == PlayerControl.LocalPlayer && !PlayerControl.LocalPlayer.Data.IsDead; },
+                () =>
+                {  // CouldUse
+                    assassinButton.Sprite = Assassin.assassinMarked != null ? Assassin.getKillButtonSprite() : Assassin.getMarkButtonSprite();
+                    return (Assassin.currentTarget != null || Assassin.assassinMarked != null) && PlayerControl.LocalPlayer.CanMove;
+                },
+                () =>
+                {  // on meeting ends
+                    assassinButton.Timer = assassinButton.MaxTimer;
+                    Assassin.assassinMarked = null;
+                },
+                Assassin.getMarkButtonSprite(),
+                new Vector3(-1.8f, -0.06f, 0),
+                __instance,
+                __instance.UseButton,
+                KeyCode.F
+            );
+            assassinButton.buttonText = ModTranslation.getString("assassinText");
 
             ButtonsGM.makeButtons(__instance);
 

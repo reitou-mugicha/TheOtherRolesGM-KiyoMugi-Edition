@@ -7,6 +7,7 @@ using static TheOtherRoles.TheOtherRoles;
 using static TheOtherRoles.TheOtherRolesGM;
 using static TheOtherRoles.MapOptions;
 using static TheOtherRoles.GameHistory;
+using TheOtherRoles.Objects;
 using System.Collections;
 using System;
 using System.Text;
@@ -733,6 +734,8 @@ namespace TheOtherRoles.Patches
             public static void Prefix(PlayerControl __instance, [HarmonyArgument(0)] GameData.PlayerInfo meetingTarget)
             {
                 startMeeting();
+                // Safe AntiTeleport positions
+                AntiTeleport.position = PlayerControl.LocalPlayer.transform.position;
                 // Medium meeting start time
                 Medium.meetingStartTime = DateTime.UtcNow;
                 // Reset vampire bitten
@@ -741,6 +744,17 @@ namespace TheOtherRoles.Patches
                 if (meetingTarget == null) meetingsCount++;
                 // Save the meeting target
                 target = meetingTarget;
+                // Add Portal info into Portalmaker Chat:
+                if (Portalmaker.portalmaker != null && PlayerControl.LocalPlayer == Portalmaker.portalmaker && !PlayerControl.LocalPlayer.Data.IsDead && CustomOptionHolder.enablePortalLog.getBool())
+                {
+                    foreach (var entry in Portal.teleportedPlayers)
+                    {
+                        float timeBeforeMeeting = ((float)(DateTime.UtcNow - entry.time).TotalMilliseconds) / 1000;
+                        string msg = Portalmaker.logShowsTime ? String.Format(ModTranslation.getString("portalLogTime"), (int)timeBeforeMeeting) : "";
+                        msg = msg + string.Format(ModTranslation.getString("portalLog"), entry.name);
+                        DestroyableSingleton<HudManager>.Instance.Chat.AddChat(PlayerControl.LocalPlayer, $"{msg}");
+                    }
+                }
             }
         }
     }

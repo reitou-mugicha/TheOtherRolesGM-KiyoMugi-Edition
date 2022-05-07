@@ -97,8 +97,8 @@ namespace TheOtherRoles
         public static RoleInfo fortuneTeller = new RoleInfo("fortuneTeller", FortuneTeller.color, CustomOptionHolder.fortuneTellerSpawnRate, RoleType.FortuneTeller);
         public static RoleInfo sprinter = new RoleInfo("sprinter", Sprinter.color, CustomOptionHolder.sprinterSpawnRate, RoleType.Sprinter);
         public static RoleInfo evilHacker = new RoleInfo("evilHacker", EvilHacker.color, CustomOptionHolder.evilHackerSpawnRate, RoleType.EvilHacker);
-        public static RoleInfo assassin = new RoleInfo("assassin", Assassin.color, CustomOptionHolder.assassinSpawnRate, RoleType.Assassin);
         public static RoleInfo portalmaker = new RoleInfo("portalmaker", Portalmaker.color, CustomOptionHolder.portalmakerSpawnRate, RoleType.Portalmaker);
+        public static RoleInfo assassin = new RoleInfo("assassin", Assassin.color, CustomOptionHolder.assassinSpawnRate, RoleType.Assassin);
         public static RoleInfo hawkEye = new RoleInfo("hawkEye", HawkEye.color, CustomOptionHolder.hawkEyeSpawnRate, RoleType.HawkEye);/*
         public static RoleInfo creator = new RoleInfo("creator", Creator.color, CustomOptionHolder.creatorSpawnRate, RoleType.Creator);
         public static RoleInfo student = new RoleInfo("student", Student.color, CustomOptionHolder.sheriffSpawnRate, RoleType.Student);
@@ -228,8 +228,8 @@ namespace TheOtherRoles
             if (p.isRole(RoleType.Pursuer)) infos.Add(pursuer);
             if (p.isRole(RoleType.Ninja)) infos.Add(ninja);
             if (p.isRole(RoleType.HawkEye)) infos.Add(hawkEye);
-            if (p.isRole(RoleType.Assassin)) infos.Add(assassin);
             if (p.isRole(RoleType.Portalmaker)) infos.Add(portalmaker);
+            if (p.isRole(RoleType.Assassin)) infos.Add(assassin);
             //if (p.isRole(RoleType.King) || (King.formerKingdoms != null && King.formerKingdoms.Any(x => x.PlayerId == p.PlayerId))) infos.Add(king);
             //if (p.isRole(RoleType.Minions)) infos.Add(minions);
             if (p.isRole(RoleType.PlagueDoctor)) infos.Add(plagueDoctor);
@@ -293,6 +293,12 @@ namespace TheOtherRoles
                     roleName = String.Join(" ", roleInfo.Select(x => useColors ? Helpers.cs(Madmate.color, x.name) : x.name).ToArray());
                     roleName = prefix + roleName;
                 }
+            }
+            if (p.hasModifier(ModifierType.AntiTeleport))
+            {
+                string postfix = useColors ? Helpers.cs(AntiTeleport.color, AntiTeleport.postfix) : AntiTeleport.postfix;
+                // roleName = String.Join(" ", roleInfo.Select(x => useColors? Helpers.cs(x.color, x.name)  : x.name).ToArray());
+                roleName = roleName + postfix;
             }
             return roleName;
         }

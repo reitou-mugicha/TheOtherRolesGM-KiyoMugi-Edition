@@ -23,6 +23,7 @@ namespace TheOtherRoles
     {
         Madmate = 0,
         CreatedMadmate,
+        AntiTeleport,
 
         // don't put anything below this
         NoModifier = int.MaxValue
@@ -34,8 +35,8 @@ namespace TheOtherRoles
         public static Dictionary<ModifierType, Type> allModTypes = new Dictionary<ModifierType, Type>
         {
             { ModifierType.Madmate, typeof(ModifierBase<Madmate>) },
-
             { ModifierType.CreatedMadmate, typeof(ModifierBase<CreatedMadmate>) },
+            { ModifierType.AntiTeleport, typeof(ModifierBase<AntiTeleport>) },
         };
     }
 

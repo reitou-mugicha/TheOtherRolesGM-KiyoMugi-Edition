@@ -27,6 +27,7 @@ namespace TheOtherRoles
             Camouflager.clearAndReload();
             Shifter.clearAndReload();
             Swapper.clearAndReload();
+            Portalmaker.clearAndReload();
             GM.clearAndReload();
 
             Lovers.Clear();
@@ -307,6 +308,45 @@ namespace TheOtherRoles
             }
         }
 
+        public static class Assassin
+        {
+            public static PlayerControl assassin;
+            public static Color color = Palette.ImpostorRed;
+
+            public static PlayerControl assassinMarked;
+            public static PlayerControl currentTarget;
+            public static float cooldown { get { return CustomOptionHolder.assassinCooldown.getFloat(); } }
+            public static float start { get { return CustomOptionHolder.assassinStartAssassin.getFloat(); } }
+            public static float traceTime { get { return CustomOptionHolder.assassinTraceTime.getFloat(); } }
+            public static bool knowsTargetLocation { get { return CustomOptionHolder.assassinKnowsTargetLocation.getBool(); } }
+
+            private static Sprite markButtonSprite;
+            private static Sprite killButtonSprite;
+            public static Arrow arrow = new Arrow(Color.black);
+            public static Sprite getMarkButtonSprite()
+            {
+                if (markButtonSprite) return markButtonSprite;
+                markButtonSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.AssassinMarkButton.png", 115f);
+                return markButtonSprite;
+            }
+
+            public static Sprite getKillButtonSprite()
+            {
+                if (killButtonSprite) return killButtonSprite;
+                killButtonSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.AssassinAssassinateButton.png", 115f);
+                return killButtonSprite;
+            }
+
+            public static void clearAndReload()
+            {
+                assassin = null;
+                currentTarget = assassinMarked = null;
+
+                if (arrow?.arrow != null) UnityEngine.Object.Destroy(arrow.arrow);
+                arrow = new Arrow(Color.black);
+                if (arrow.arrow != null) arrow.arrow.SetActive(false);
+            }
+        }
 
         public static class GM
         {

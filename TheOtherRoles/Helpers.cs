@@ -470,6 +470,7 @@ namespace TheOtherRoles
             if (source == null || target == null) return true;
             if (source.isDead()) return false;
             if (target.isDead()) return true;
+            else if (source.Data.Role.IsImpostor && (target.Data.Role.IsImpostor || target == Spy.spy || target == Sidekick.sidekick && Sidekick.wasTeamRed || target == Jackal.jackal && Jackal.wasTeamRed)) return false; // Members of team Impostors see the names of Impostors/Spies
             if (Camouflager.camouflageTimer > 0f) return true; // No names are visible
             if (!source.isImpostor() && Ninja.isStealthed(target)) return true; // Hide ninja nametags from non-impostors
             if (!source.isRole(RoleType.Fox) && !source.Data.IsDead && Fox.isStealthed(target)) return true;
@@ -712,6 +713,11 @@ namespace TheOtherRoles
                 self[i] = self[index];
                 self[index] = value;
             }
+        }
+
+        public static object TryCast(this Il2CppObjectBase self, Type type)
+        {
+            return AccessTools.Method(self.GetType(), nameof(Il2CppObjectBase.TryCast)).MakeGenericMethod(type).Invoke(self, Array.Empty<object>());
         }
     }
 }

@@ -4,9 +4,9 @@
 		<LangVersion>latest</LangVersion>
 		<DebugType>embedded</DebugType>
 
-		<Version>1.0.6</Version>
+		<Version>1.1.0</Version>
 		<Description>TheOtherRolesGM Kiyomori Edition</Description>
-		<Authors>Eisbison</Authors>
+		<Authors>DekoKiyo</Authors>
 
 		<DefineConstants>$(DefineConstants);STEAM</DefineConstants>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -20,6 +20,7 @@
 		<EmbeddedResource Include="Resources\*.png" />
 		<EmbeddedResource Include="Resources\*.json" />
 		<EmbeddedResource Include="Resources\TricksterAnimation\*.png" />
+		<EmbeddedResource Include="Resources\PortalAnimation\*.png" />
 		<EmbeddedResource Include="MapData\IcePlanet\Pictures\*.png" />
 	</ItemGroup>
 
@@ -44,7 +45,7 @@
 
 	<Target Name="CopyCustomContent" AfterTargets="AfterBuild">
 		<Message Text="Second occurrence" />
-		<Copy SourceFiles="$(ProjectDir)\bin\$(Configuration)\netstandard2.1\TheOtherRolesGM.dll" DestinationFolder="$(AmongUsLatest)/BepInEx/plugins/" />
+		<Copy SourceFiles="$(ProjectDir)\bin\$(Configuration)\netstandard2.1\$(AssemblyName).dll" DestinationFolder="$(AmongUsLatest)/BepInEx/plugins/" />
 	</Target>
 
 	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">

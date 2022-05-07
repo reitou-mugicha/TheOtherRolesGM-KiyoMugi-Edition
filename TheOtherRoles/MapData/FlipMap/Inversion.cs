@@ -1,5 +1,16 @@
+using System.Net;
+using System.Linq;
+using BepInEx;
+using BepInEx.Configuration;
+using BepInEx.IL2CPP;
 using HarmonyLib;
+using Hazel;
+using System;
+using System.Collections.Generic;
+using System.Collections;
+using System.IO;
 using UnityEngine;
+using AssemblyUnhollower;
 
 namespace TheOtherRoles.Mode.InversionMode
 {
@@ -11,6 +22,7 @@ namespace TheOtherRoles.Mode.InversionMode
         public static GameObject mira;
         public static GameObject polus;
         public static GameObject airship;
+        public static GameObject airshipsp;
         public static void Prefix()
         {
 
@@ -36,16 +48,24 @@ namespace TheOtherRoles.Mode.InversionMode
                 PolusShipStatus.Instance.InitialSpawnCenter = new Vector2(-16.7f, -2.1f);
                 PolusShipStatus.Instance.MeetingSpawnCenter = new Vector2(-19.5f, -17f);
                 PolusShipStatus.Instance.MeetingSpawnCenter2 = new Vector2(-19.5f, -17f);
-            }
-            /*else if(PlayerControl.GameOptions.MapId == 4 && CustomOptionHolder.InversionAShip.getBool())
+            }/*
+            else if (PlayerControl.GameOptions.MapId == 4 && CustomOptionHolder.enableMirrorMap.getBool())
             {
                 airship = GameObject.Find("Airship(Clone)");
+                airshipsp = GameObject.Find("SpawnInGame");
                 airship.transform.localScale = new Vector3(-0.7f, 0.7f, 1f);
-                airshipの選択スポーンシステムの対応ができてないため非表示
+
             }*/
-
         }
-
     }
-
 }
+
+/*めも
+反転AirShip湧き位置
+宿舎前 0.8 8.5
+エンジン 0.7 -0.5
+アーカイブ -19.8 10
+メインホール -12 0
+貨物室 -33 0
+キッチン 7 -11
+*/

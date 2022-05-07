@@ -17,10 +17,14 @@ using System.Reflection;
 namespace TheOtherRoles.Patches
 {
     [HarmonyPatch(typeof(ExileController), nameof(ExileController.Begin))]
+    [HarmonyPriority(Priority.First)]
     class ExileControllerBeginPatch
     {
+        public static GameData.PlayerInfo lastExiled;
         public static void Prefix(ExileController __instance, [HarmonyArgument(0)] ref GameData.PlayerInfo exiled, [HarmonyArgument(1)] bool tie)
         {
+            lastExiled = exiled;
+
             // Medic shield
             if (Medic.medic != null && AmongUsClient.Instance.AmHost && Medic.futureShielded != null && !Medic.medic.Data.IsDead)
             { // We need to send the RPC from the host here, to make sure that the order of shifting and setting the shield is correct(for that reason the futureShifted and futureShielded are being synced)
@@ -85,6 +89,9 @@ namespace TheOtherRoles.Patches
                 JackInTheBox.convertToVents();
             }
 
+            // Activate portals.
+            Portal.meetingEndsUpdate();
+
             // Witch execute casted spells
             if (Witch.witch != null && Witch.futureSpelled != null && AmongUsClient.Instance.AmHost)
             {
@@ -122,6 +129,8 @@ namespace TheOtherRoles.Patches
                 animator?.Stop();
                 vent.EnterVentAnim = vent.ExitVentAnim = null;
                 vent.myRend.sprite = animator == null ? SecurityGuard.getStaticVentSealedSprite() : SecurityGuard.getAnimatedVentSealedSprite();
+                if (SubmergedCompatibility.isSubmerged() && vent.Id == 0) vent.myRend.sprite = SecurityGuard.getSubmergedCentralUpperSealedSprite();
+                if (SubmergedCompatibility.isSubmerged() && vent.Id == 14) vent.myRend.sprite = SecurityGuard.getSubmergedCentralLowerSealedSprite();
                 vent.myRend.color = Color.white;
                 vent.name = "SealedVent_" + vent.name;
             }
@@ -185,6 +194,18 @@ namespace TheOtherRoles.Patches
             public static void Postfix(AirshipExileController __instance)
             {
                 WrapUpPostfix(__instance.exiled);
+                if (SubmergedCompatibility.isSubmerged()) ExileControllerReEnableGameplayPatch.ReEnableGameplay();
+            }
+        }
+
+        // Workaround to add a "postfix" to the destroying of the exile controller(i.e.cutscene) of submerged
+        [HarmonyPatch(typeof(UnityEngine.Object), nameof(UnityEngine.Object.Destroy), new Type[] { typeof(GameObject) })]
+        public static void Prefix(GameObject obj)
+        {
+            if (!SubmergedCompatibility.isSubmerged()) return;
+            if (obj.name.Contains("ExileCutscene"))
+            {
+                WrapUpPostfix(ExileControllerBeginPatch.lastExiled);
             }
         }
 
@@ -209,6 +230,10 @@ namespace TheOtherRoles.Patches
     {
         public static void Postfix(ExileController __instance)
         {
+            ReEnableGameplay();
+        }
+        public static void ReEnableGameplay()
+        {
             // Reset custom button timers where necessary
             CustomButton.MeetingEndedUpdate();
 
@@ -231,6 +256,7 @@ namespace TheOtherRoles.Patches
                     soul.transform.position = pos;
                     soul.layer = 5;
                     var rend = soul.AddComponent<SpriteRenderer>();
+                    soul.AddSubmergedComponent(SubmergedCompatibility.Classes.ElevatorMover);
                     rend.sprite = Seer.getSoulSprite();
 
                     if (Seer.limitSoulDuration)
@@ -277,6 +303,7 @@ namespace TheOtherRoles.Patches
                         s.transform.position = ps;
                         s.layer = 5;
                         var rend = s.AddComponent<SpriteRenderer>();
+                        s.AddSubmergedComponent(SubmergedCompatibility.Classes.ElevatorMover);
                         rend.sprite = Medium.getSoulSprite();
                         Medium.souls.Add(rend);
                     }
@@ -287,6 +314,16 @@ namespace TheOtherRoles.Patches
 
             if (Lawyer.lawyer != null && PlayerControl.LocalPlayer == Lawyer.lawyer && !Lawyer.lawyer.Data.IsDead)
                 Lawyer.meetings++;
+
+            if (PlayerControl.LocalPlayer.hasModifier(ModifierType.AntiTeleport))
+                if (AntiTeleport.position != new Vector3())
+                {
+                    PlayerControl.LocalPlayer.transform.position = AntiTeleport.position;
+                    if (SubmergedCompatibility.isSubmerged())
+                    {
+                        SubmergedCompatibility.ChangeFloor(AntiTeleport.position.y > -7);
+                    }
+                }
         }
     }
 

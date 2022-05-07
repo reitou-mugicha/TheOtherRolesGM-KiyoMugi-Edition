@@ -152,6 +152,10 @@ namespace TheOtherRoles.Patches
                     {
                         PlayerControl.LocalPlayer.transform.position = next.Item1;
                     }
+                    if (SubmergedCompatibility.isSubmerged())
+                    {
+                        SubmergedCompatibility.ChangeFloor(next.Item1.y > -7);
+                    }
 
                     localPlayerPositions.RemoveAt(0);
 
@@ -209,6 +213,48 @@ namespace TheOtherRoles.Patches
             setPlayerOutline(EvilHacker.currentTarget, EvilHacker.color);
         }
 
+        static void assassinUpdate()
+        {
+            if (Assassin.arrow?.arrow != null)
+            {
+                if (Assassin.assassin == null || Assassin.assassin != PlayerControl.LocalPlayer || !Assassin.knowsTargetLocation) {
+                    Assassin.arrow.arrow.SetActive(false);
+                    return;
+                }
+                if (Assassin.assassinMarked != null && !PlayerControl.LocalPlayer.Data.IsDead)
+                {
+                    bool trackedOnMap = !Assassin.assassinMarked.Data.IsDead;
+                    Vector3 position = Assassin.assassinMarked.transform.position;
+                    if (!trackedOnMap)
+                    { // Check for dead body
+                        DeadBody body = UnityEngine.Object.FindObjectsOfType<DeadBody>().FirstOrDefault(b => b.ParentId == Assassin.assassinMarked.PlayerId);
+                        if (body != null)
+                        {
+                            trackedOnMap = true;
+                            position = body.transform.position;
+                        }
+                    }
+                    Assassin.arrow.Update(position);
+                    Assassin.arrow.arrow.SetActive(trackedOnMap);
+                } else
+                {
+                    Assassin.arrow.arrow.SetActive(false);
+                }
+            }
+        }
+
+        static void assassinSetTarget()
+        {
+            if (Assassin.assassin == null || Assassin.assassin != PlayerControl.LocalPlayer) return;
+            List<PlayerControl> untargetables = new List<PlayerControl>();
+            if (Spy.spy != null && !Spy.impostorsCanKillAnyone) untargetables.Add(Spy.spy);
+            if (Mini.mini != null) untargetables.Add(Mini.mini);
+            if (Sidekick.wasTeamRed && !Spy.impostorsCanKillAnyone) untargetables.Add(Sidekick.sidekick);
+            if (Jackal.wasTeamRed && !Spy.impostorsCanKillAnyone) untargetables.Add(Jackal.jackal);
+            Assassin.currentTarget = setTarget(onlyCrewmates: true, untargetablePlayers: untargetables);
+            setPlayerOutline(Assassin.currentTarget, Assassin.color);
+        }
+
         static void trackerSetTarget()
         {
             if (Tracker.tracker == null || Tracker.tracker != PlayerControl.LocalPlayer) return;
@@ -247,12 +293,12 @@ namespace TheOtherRoles.Patches
                 }
                 else
                 {
-                    target = setTarget(true, true, new List<PlayerControl>() { Spy.spy });
+                    target = setTarget(true, true, new List<PlayerControl>() { Spy.spy, Sidekick.wasTeamRed ? Sidekick.sidekick : null, Jackal.wasTeamRed ? Jackal.jackal : null });
                 }
             }
             else
             {
-                target = setTarget(true, true);
+                target = setTarget(true, true, new List<PlayerControl>() { Sidekick.wasImpostor ? Sidekick.sidekick : null, Jackal.wasImpostor ? Jackal.jackal : null });
             }
 
             bool targetNearGarlic = false;
@@ -315,6 +361,8 @@ namespace TheOtherRoles.Patches
 
             List<PlayerControl> untargetables = new List<PlayerControl>();
             if (Spy.spy != null) untargetables.Add(Spy.spy);
+            if (Sidekick.wasTeamRed) untargetables.Add(Sidekick.sidekick);
+            if (Jackal.wasTeamRed) untargetables.Add(Jackal.jackal);
             Eraser.currentTarget = setTarget(onlyCrewmates: !Eraser.canEraseAnyone, untargetablePlayers: Eraser.canEraseAnyone ? new List<PlayerControl>() : untargetables);
             setPlayerOutline(Eraser.currentTarget, Eraser.color);
         }
@@ -366,12 +414,12 @@ namespace TheOtherRoles.Patches
                 }
                 else
                 {
-                    target = setTarget(true, true, new List<PlayerControl>() { Spy.spy });
+                    target = setTarget(true, true, new List<PlayerControl>() { Spy.spy, Sidekick.wasTeamRed ? Sidekick.sidekick : null, Jackal.wasTeamRed ? Jackal.jackal : null });
                 }
             }
             else
             {
-                target = setTarget(true, true);
+                target = setTarget(true, true, new List<PlayerControl>() { Sidekick.wasImpostor ? Sidekick.sidekick : null, Jackal.wasImpostor ? Jackal.jackal : null });
             }
 
             HudManager.Instance.KillButton.SetTarget(target); // Includes setPlayerOutline(target, Palette.ImpstorRed);
@@ -605,6 +653,7 @@ namespace TheOtherRoles.Patches
             {
                 Vent vent = ShipStatus.Instance.AllVents[i];
                 if (vent.gameObject.name.StartsWith("JackInTheBoxVent_") || vent.gameObject.name.StartsWith("SealedVent_") || vent.gameObject.name.StartsWith("FutureSealedVent_")) continue;
+                if (SubmergedCompatibility.isSubmerged() && vent.Id == 9) continue; // cannot seal submergeds exit only vent!
                 float distance = Vector2.Distance(vent.transform.position, truePosition);
                 if (distance <= vent.UsableDistance && distance < closestDistance)
                 {
@@ -726,7 +775,7 @@ namespace TheOtherRoles.Patches
                 var possibleTargets = new List<PlayerControl>();
                 foreach (PlayerControl p in PlayerControl.AllPlayerControls)
                 {
-                    if (!p.Data.IsDead && !p.Data.Disconnected && !p.Data.Role.IsImpostor && p != Spy.spy && (p != Mini.mini || Mini.isGrownUp()) && !p.isGM() && BountyHunter.bountyHunter.getPartner() != p) possibleTargets.Add(p);
+                    if (!p.Data.IsDead && !p.Data.Disconnected && p != p.Data.Role.IsImpostor && p != Spy.spy && (p != Sidekick.sidekick || !Sidekick.wasTeamRed) && (p != Jackal.jackal || !Jackal.wasTeamRed) && (p != Mini.mini || Mini.isGrownUp()) && (Lovers.getPartner(BountyHunter.bountyHunter) == null || p != Lovers.getPartner(BountyHunter.bountyHunter))) possibleTargets.Add(p);
                 }
                 BountyHunter.bounty = possibleTargets[TheOtherRoles.rnd.Next(0, possibleTargets.Count)];
                 if (BountyHunter.bounty == null) return;
@@ -965,6 +1014,8 @@ namespace TheOtherRoles.Patches
             {
                 untargetables = new List<PlayerControl>(); // Also target players that have already been spelled, to hide spells that were blanks/blocked by shields
                 if (Spy.spy != null && !Witch.canSpellAnyone) untargetables.Add(Spy.spy);
+                if (Sidekick.wasTeamRed && !Witch.canSpellAnyone) untargetables.Add(Sidekick.sidekick);
+                if (Jackal.wasTeamRed && !Witch.canSpellAnyone) untargetables.Add(Jackal.jackal);
             }
             Witch.currentTarget = setTarget(onlyCrewmates: !Witch.canSpellAnyone, untargetablePlayers: untargetables);
             setPlayerOutline(Witch.currentTarget, Witch.color);
@@ -1046,6 +1097,10 @@ namespace TheOtherRoles.Patches
                 // Witch
                 witchSetTarget();
                 hackerUpdate();
+                // Assassin
+                assassinSetTarget();
+                AssassinTrace.UpdateAll();
+                assassinUpdate();
             }
 
             TheOtherRolesGM.FixedUpdate(__instance);
@@ -1251,6 +1306,10 @@ namespace TheOtherRoles.Patches
             {
                 Helpers.showFlash(new Color(204f / 255f, 102f / 255f, 0f / 255f));
             }
+
+            // Assassin Button Sync
+            if (Assassin.assassin != null && PlayerControl.LocalPlayer == Assassin.assassin && __instance == Assassin.assassin && HudManagerStartPatch.assassinButton != null)
+                HudManagerStartPatch.assassinButton.Timer = HudManagerStartPatch.assassinButton.MaxTimer;
 
             __instance.OnKill(target);
             target.OnDeath(__instance);

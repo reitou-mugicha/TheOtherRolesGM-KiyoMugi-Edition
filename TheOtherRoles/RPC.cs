@@ -39,13 +39,14 @@ namespace TheOtherRoles
 
         EngineerFixLights = 91,
         EngineerUsedRepair,
+        EngineerFixSubmergedOxygen,
         CleanBody,
         SheriffKill,
         MedicSetShielded,
         ShieldedMurderAttempt,
         TimeMasterShield,
         TimeMasterRewindTime,
-        ShifterShift,
+        ShifterShift = 100,
         SwapperSwap,
         MorphlingMorph,
         CamouflagerCamouflage,
@@ -55,7 +56,7 @@ namespace TheOtherRoles
         EvilHackerCreatesMadmate,
         JackalCreatesSidekick,
         SidekickPromotes,
-        ErasePlayerRoles,
+        ErasePlayerRoles = 110,
         SetFutureErased,
         SetFutureShifted,
         SetFutureShielded,
@@ -65,21 +66,24 @@ namespace TheOtherRoles
         LightsOut,
         PlaceCamera,
         SealVent,
-        ArsonistWin,
+        ArsonistWin = 120,
         GuesserShoot,
         VultureWin,
         LawyerWin,
         LawyerSetTarget,
         LawyerPromotesToPursuer,
         SetBlanked,
+        PlacePortal,
+        UsePortal,
+        PlaceAssassinTrace, // 129
 
         // GM Edition functionality
-        AddModifier,
+        AddModifier = 145, // 130~144をSubmergedが使用するらしい
         NinjaStealth,
         SetShifterType,
         GMKill,
         GMRevive,
-        UseAdminTime,
+        UseAdminTime = 150,
         UseCameraTime,
         UseVitalsTime,
         ArsonistDouse,
@@ -89,7 +93,7 @@ namespace TheOtherRoles
         PlagueDoctorUpdateProgress,
         NekoKabochaExile,
         SerialKillerSuicide,
-        FortuneTellerUsedDivine,
+        FortuneTellerUsedDivine = 160,
         FoxStealth,
         FoxCreatesImmoralist,
         SwapperAnimate,
@@ -101,7 +105,6 @@ namespace TheOtherRoles
 
     public static class RPCProcedure
     {
-
         // Main Controls
 
         public static void resetVariables()
@@ -112,6 +115,8 @@ namespace TheOtherRoles
             TheOtherRoles.clearAndReloadRoles();
             GameHistory.clearGameHistory();
             setCustomButtonCooldowns();
+            AssassinTrace.clearTraces();
+            Portal.clearPortals();
             AdminPatch.ResetData();
             CameraPatch.ResetData();
             VitalsPatch.ResetData();
@@ -286,6 +291,11 @@ namespace TheOtherRoles
         public static void engineerUsedRepair()
         {
             Engineer.remainingFixes--;
+        }
+
+        public static void engineerFixSubmergedOxygen()
+        {
+            SubmergedCompatibility.RepairOxygen();
         }
 
         public static void cleanBody(byte playerId)
@@ -553,10 +563,15 @@ namespace TheOtherRoles
             }
             else
             {
+                bool wasSpy = Spy.spy != null && player == Spy.spy;
+                bool wasImpostor = player.Data.Role.IsImpostor;  // This can only be reached if impostors can be sidekicked.
                 DestroyableSingleton<RoleManager>.Instance.SetRole(player, RoleTypes.Crewmate);
                 erasePlayerRoles(player.PlayerId, true);
                 Sidekick.sidekick = player;
                 if (player.PlayerId == PlayerControl.LocalPlayer.PlayerId) PlayerControl.LocalPlayer.moveable = true;
+                if (wasSpy || wasImpostor) Sidekick.wasTeamRed = true;
+                Sidekick.wasSpy = wasSpy;
+                Sidekick.wasImpostor = wasImpostor;
                 if (Fox.exists && !Fox.isFoxAlive())
                 {
                     foreach (var immoralist in Immoralist.allPlayers)
@@ -573,6 +588,9 @@ namespace TheOtherRoles
             Jackal.removeCurrentJackal();
             Jackal.jackal = Sidekick.sidekick;
             Jackal.canCreateSidekick = Jackal.jackalPromotedFromSidekickCanCreateSidekick;
+            Jackal.wasTeamRed = Sidekick.wasTeamRed;
+            Jackal.wasSpy = Sidekick.wasSpy;
+            Jackal.wasImpostor = Sidekick.wasImpostor;
             Sidekick.clearAndReload();
             return;
         }
@@ -630,6 +648,26 @@ namespace TheOtherRoles
             }
         }
 
+        public static void placePortal(byte[] buff)
+        {
+            Vector3 position = Vector2.zero;
+            position.x = BitConverter.ToSingle(buff, 0 * sizeof(float));
+            position.y = BitConverter.ToSingle(buff, 1 * sizeof(float));
+            new Portal(position);
+        }
+
+        public static void usePortal(byte playerId)
+        {
+            Portal.startTeleport(playerId);
+        }
+
+        public static void placeAssassinTrace(byte[] buff)
+        {
+            Vector3 position = Vector3.zero;
+            position.x = BitConverter.ToSingle(buff, 0 * sizeof(float));
+            position.y = BitConverter.ToSingle(buff, 1 * sizeof(float));
+            new AssassinTrace(position, Assassin.traceTime);
+        }
 
         public static void placeJackInTheBox(byte[] buff)
         {
@@ -719,6 +757,17 @@ namespace TheOtherRoles
 
             if (PlayerControl.GameOptions.MapId == 2 || PlayerControl.GameOptions.MapId == 4) camera.transform.localRotation = new Quaternion(0, 0, 1, 1); // Polus and Airship
 
+            if (SubmergedCompatibility.isSubmerged())
+            {
+                // remove 2d box collider of console, so that no barrier can be created. (irrelevant for now, but who knows... maybe we need it later)
+                var fixConsole = camera.transform.FindChild("FixConsole");
+                if (fixConsole != null)
+                {
+                    var boxCollider = fixConsole.GetComponent<BoxCollider2D>();
+                    if (boxCollider != null) UnityEngine.Object.Destroy(boxCollider);
+                }
+            }
+
             if (PlayerControl.LocalPlayer == SecurityGuard.securityGuard)
             {
                 camera.gameObject.SetActive(true);
@@ -743,6 +792,8 @@ namespace TheOtherRoles
                 animator?.Stop();
                 vent.EnterVentAnim = vent.ExitVentAnim = null;
                 vent.myRend.sprite = animator == null ? SecurityGuard.getStaticVentSealedSprite() : SecurityGuard.getAnimatedVentSealedSprite();
+                if (SubmergedCompatibility.isSubmerged() && vent.Id == 0) vent.myRend.sprite = SecurityGuard.getSubmergedCentralUpperSealedSprite();
+                if (SubmergedCompatibility.isSubmerged() && vent.Id == 14) vent.myRend.sprite = SecurityGuard.getSubmergedCentralLowerSealedSprite();
                 vent.myRend.color = new Color(1f, 1f, 1f, 0.5f);
                 vent.name = "FutureSealedVent_" + vent.name;
             }
@@ -1167,6 +1218,9 @@ namespace TheOtherRoles
                     case (byte)CustomRPC.EngineerUsedRepair:
                         RPCProcedure.engineerUsedRepair();
                         break;
+                    case (byte)CustomRPC.EngineerFixSubmergedOxygen:
+                        RPCProcedure.engineerFixSubmergedOxygen();
+                        break;
                     case (byte)CustomRPC.CleanBody:
                         RPCProcedure.cleanBody(reader.ReadByte());
                         break;
@@ -1230,6 +1284,15 @@ namespace TheOtherRoles
                         break;
                     case (byte)CustomRPC.SetFutureShielded:
                         RPCProcedure.setFutureShielded(reader.ReadByte());
+                        break;
+                    case (byte)CustomRPC.PlacePortal:
+                        RPCProcedure.placePortal(reader.ReadBytesAndSize());
+                        break;
+                    case (byte)CustomRPC.UsePortal:
+                        RPCProcedure.usePortal(reader.ReadByte());
+                        break;
+                    case (byte)CustomRPC.PlaceAssassinTrace:
+                        RPCProcedure.placeAssassinTrace(reader.ReadBytesAndSize());
                         break;
                     case (byte)CustomRPC.PlaceJackInTheBox:
                         RPCProcedure.placeJackInTheBox(reader.ReadBytesAndSize());

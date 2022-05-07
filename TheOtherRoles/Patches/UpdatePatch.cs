@@ -104,6 +104,8 @@ namespace TheOtherRoles.Patches
                 setPlayerNameColor(PlayerControl.LocalPlayer, Tracker.color);
             else if (PlayerControl.LocalPlayer.isRole(RoleType.Snitch))
                 setPlayerNameColor(PlayerControl.LocalPlayer, Snitch.color);
+            else if (Portalmaker.portalmaker != null && Portalmaker.portalmaker == PlayerControl.LocalPlayer)
+                setPlayerNameColor(Portalmaker.portalmaker, Portalmaker.color);
             else if (PlayerControl.LocalPlayer.isRole(RoleType.Jackal))
             {
                 // Jackal can see his sidekick
@@ -213,6 +215,11 @@ namespace TheOtherRoles.Patches
                 }
             }
 
+            else if (PlayerControl.LocalPlayer.hasModifier(ModifierType.AntiTeleport) && PlayerControl.LocalPlayer.Data.IsDead)
+            {
+                setPlayerNameColor(PlayerControl.LocalPlayer, AntiTeleport.color);
+            }
+
             if (GM.gm != null)
             {
                 setPlayerNameColor(GM.gm, GM.color);
@@ -233,6 +240,14 @@ namespace TheOtherRoles.Patches
             if (Spy.spy != null && PlayerControl.LocalPlayer.Data.Role.IsImpostor)
             {
                 setPlayerNameColor(Spy.spy, Spy.color);
+            }
+            if (Sidekick.sidekick != null && Sidekick.wasTeamRed && PlayerControl.LocalPlayer.Data.Role.IsImpostor)
+            {
+                setPlayerNameColor(Sidekick.sidekick, Spy.color);
+            }
+            if (Jackal.jackal != null && Jackal.wasTeamRed && PlayerControl.LocalPlayer.Data.Role.IsImpostor)
+            {
+                setPlayerNameColor(Jackal.jackal, Spy.color);
             }
 
             if (Immoralist.exists && PlayerControl.LocalPlayer.isRole(RoleType.Fox))

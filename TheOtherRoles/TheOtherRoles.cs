@@ -51,6 +51,7 @@ namespace TheOtherRoles
             Seer.clearAndReload();
             EvilHacker.clearAndReload();
             Hacker.clearAndReload();
+            Mini.clearAndReload();
             Tracker.clearAndReload();
             Vampire.clearAndReload();
             Snitch.clearAndReload();
@@ -65,17 +66,12 @@ namespace TheOtherRoles
             Arsonist.clearAndReload();
             Guesser.clearAndReload();
             BountyHunter.clearAndReload();
+            Bait.clearAndReload();
             Vulture.clearAndReload();
             Medium.clearAndReload();
             Lawyer.clearAndReload();
             Pursuer.clearAndReload();
             Witch.clearAndReload();
-            Portalmaker.clearAndReload();
-            Assassin.clearAndReload();
-
-            Mini.clearAndReload();
-            Bait.clearAndReload();
-
             TheOtherRolesGM.clearAndReloadRoles();
         }
 
@@ -99,64 +95,16 @@ namespace TheOtherRoles
             }
         }
 
-        public static class Portalmaker
-        {
-            public static PlayerControl portalmaker;
-            public static Color color = new Color32(69, 69, 169, byte.MaxValue);
-
-            public static float cooldown;
-            public static float usePortalCooldown;
-            public static bool logOnlyHasColors;
-            public static bool logShowsTime;
-
-            private static Sprite placePortalButtonSprite;
-            private static Sprite usePortalButtonSprite;
-            private static Sprite logSprite;
-
-            public static Sprite getPlacePortalButtonSprite()
-            {
-                if (placePortalButtonSprite) return placePortalButtonSprite;
-                placePortalButtonSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.PlacePortalButton.png", 115f);
-                return placePortalButtonSprite;
-            }
-
-            public static Sprite getUsePortalButtonSprite()
-            {
-                if (usePortalButtonSprite) return usePortalButtonSprite;
-                usePortalButtonSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.UsePortalButton.png", 115f);
-                return usePortalButtonSprite;
-            }
-
-            public static Sprite getLogSprite()
-            {
-                if (logSprite) return logSprite;
-                logSprite = HudManager.Instance.UseButton.fastUseSettings[ImageNames.DoorLogsButton].Image;
-                return logSprite;
-            }
-
-            public static void clearAndReload()
-            {
-                portalmaker = null;
-                cooldown = CustomOptionHolder.portalmakerCooldown.getFloat();
-                usePortalCooldown = CustomOptionHolder.portalmakerUsePortalCooldown.getFloat();
-                logOnlyHasColors = CustomOptionHolder.portalmakerLogOnlyColorType.getBool();
-                logShowsTime = CustomOptionHolder.portalmakerLogHasTime.getBool();
-            }
-
-
-        }
-
         public static class Mayor
         {
             public static PlayerControl mayor;
             public static Color color = new Color32(32, 77, 66, byte.MaxValue);
             public static int numVotes = 2;
-            public static bool canSeeVoteColors = false;
-            public static int tasksNeededToSeeVoteColors;
+            public static int evilNumVotes = 2;
 
             public static bool isMayor(byte playerId)
             {
-                if ((mayor != null && mayor.PlayerId == playerId)) return true;
+                if ((mayor != null && mayor.PlayerId == playerId)/* || (evilMayor != null && evilMayor.PlayerId == playerId)*/) return true;
                 return false;
             }
 
@@ -169,8 +117,6 @@ namespace TheOtherRoles
             {
                 mayor = null;
                 numVotes = (int)CustomOptionHolder.mayorNumVotes.getFloat();
-                canSeeVoteColors = CustomOptionHolder.mayorCanSeeVoteColors.getBool();
-                tasksNeededToSeeVoteColors = (int)CustomOptionHolder.mayorTasksNeededToSeeVoteColors.getFloat();
             }
         }
 
@@ -319,8 +265,6 @@ namespace TheOtherRoles
             public static bool showAttemptToShielded = false;
             public static bool showAttemptToMedic = false;
             public static bool setShieldAfterMeeting = false;
-            public static bool showShieldAfterMeeting = false;
-            public static bool meetingAfterShielding = false;
 
             public static Color shieldedColor = new Color32(0, 221, 255, byte.MaxValue);
             public static PlayerControl currentTarget;
@@ -343,9 +287,7 @@ namespace TheOtherRoles
                 showShielded = CustomOptionHolder.medicShowShielded.getSelection();
                 showAttemptToShielded = CustomOptionHolder.medicShowAttemptToShielded.getBool();
                 showAttemptToMedic = CustomOptionHolder.medicShowAttemptToMedic.getBool();
-                setShieldAfterMeeting = CustomOptionHolder.medicSetOrShowShieldAfterMeeting.getSelection() == 2;
-                showShieldAfterMeeting = CustomOptionHolder.medicSetOrShowShieldAfterMeeting.getSelection() == 1;
-                meetingAfterShielding = false;
+                setShieldAfterMeeting = CustomOptionHolder.medicSetShieldAfterMeeting.getBool();
             }
         }
 
@@ -956,10 +898,18 @@ namespace TheOtherRoles
             }
 
             private static Sprite animatedVentSealedSprite;
+            private static float lastPPU;
             public static Sprite getAnimatedVentSealedSprite()
             {
+                float ppu = 185f;
+                if (SubmergedCompatibility.isSubmerged()) ppu = 120f;
+                if (lastPPU != ppu)
+                {
+                    animatedVentSealedSprite = null;
+                    lastPPU = ppu;
+                }
                 if (animatedVentSealedSprite) return animatedVentSealedSprite;
-                animatedVentSealedSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.AnimatedVentSealed.png", 185f);
+                animatedVentSealedSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.AnimatedVentSealed.png", ppu);
                 return animatedVentSealedSprite;
             }
 
@@ -969,6 +919,22 @@ namespace TheOtherRoles
                 if (staticVentSealedSprite) return staticVentSealedSprite;
                 staticVentSealedSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.StaticVentSealed.png", 160f);
                 return staticVentSealedSprite;
+            }
+
+            private static Sprite submergedCentralUpperVentSealedSprite;
+            public static Sprite getSubmergedCentralUpperSealedSprite()
+            {
+                if (submergedCentralUpperVentSealedSprite) return submergedCentralUpperVentSealedSprite;
+                submergedCentralUpperVentSealedSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.CentralUpperBlocked.png", 145f);
+                return submergedCentralUpperVentSealedSprite;
+            }
+
+            private static Sprite submergedCentralLowerVentSealedSprite;
+            public static Sprite getSubmergedCentralLowerSealedSprite()
+            {
+                if (submergedCentralLowerVentSealedSprite) return submergedCentralLowerVentSealedSprite;
+                submergedCentralLowerVentSealedSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.CentralLowerBlocked.png", 145f);
+                return submergedCentralLowerVentSealedSprite;
             }
 
             private static Sprite camSprite;
@@ -1228,6 +1194,53 @@ namespace TheOtherRoles
                 showKillFlash = CustomOptionHolder.baitShowKillFlash.getBool();
             }
         }
+
+
+
+        public static class Portalmaker
+        {
+            public static PlayerControl portalmaker;
+            public static Color color = new Color32(69, 69, 169, byte.MaxValue);
+
+            public static float cooldown;
+            public static float usePortalCooldown;
+            public static bool logOnlyHasColors;
+            public static bool logShowsTime;
+
+            private static Sprite placePortalButtonSprite;
+            private static Sprite usePortalButtonSprite;
+            private static Sprite logSprite;
+
+            public static Sprite getPlacePortalButtonSprite()
+            {
+                if (placePortalButtonSprite) return placePortalButtonSprite;
+                placePortalButtonSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.PlacePortalButton.png", 115f);
+                return placePortalButtonSprite;
+            }
+
+            public static Sprite getUsePortalButtonSprite()
+            {
+                if (usePortalButtonSprite) return usePortalButtonSprite;
+                usePortalButtonSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.UsePortalButton.png", 115f);
+                return usePortalButtonSprite;
+            }
+
+            public static Sprite getLogSprite()
+            {
+                if (logSprite) return logSprite;
+                logSprite = HudManager.Instance.UseButton.fastUseSettings[ImageNames.DoorLogsButton].Image;
+                return logSprite;
+            }
+
+            public static void clearAndReload()
+            {
+                portalmaker = null;
+                cooldown = CustomOptionHolder.portalmakerCooldown.getFloat();
+                usePortalCooldown = CustomOptionHolder.portalmakerUsePortalCooldown.getFloat();
+                logOnlyHasColors = CustomOptionHolder.portalmakerLogOnlyColorType.getBool();
+                logShowsTime = CustomOptionHolder.portalmakerLogHasTime.getBool();
+            }
+        }
     }
 
     public static class Vulture
@@ -1344,7 +1357,7 @@ namespace TheOtherRoles
             triggerLawyerWin = false;
             meetings = 0;
 
-            targetKnows = CustomOptionHolder.lawyerTargetCanBeJester.getBool();
+            targetKnows = CustomOptionHolder.lawyerTargetKnows.getBool();
             winsAfterMeetings = CustomOptionHolder.lawyerWinsAfterMeetings.getBool();
             neededMeetings = Mathf.RoundToInt(CustomOptionHolder.lawyerNeededMeetings.getFloat());
             vision = CustomOptionHolder.lawyerVision.getFloat();
@@ -1425,53 +1438,11 @@ namespace TheOtherRoles
             currentTarget = spellCastingTarget = null;
             cooldown = CustomOptionHolder.witchCooldown.getFloat();
             cooldownAddition = CustomOptionHolder.witchAdditionalCooldown.getFloat();
-            currentCooldownAddition = 0f;
+            currentCooldownAddition = CustomOptionHolder.witchCooldown.getFloat();
             canSpellAnyone = CustomOptionHolder.witchCanSpellAnyone.getBool();
             spellCastingDuration = CustomOptionHolder.witchSpellCastingDuration.getFloat();
             triggerBothCooldowns = CustomOptionHolder.witchTriggerBothCooldowns.getBool();
             witchVoteSavesTargets = CustomOptionHolder.witchVoteSavesTargets.getBool();
-        }
-    }
-
-    public static class Assassin
-    {
-        public static PlayerControl assassin;
-        public static Color color = Palette.ImpostorRed;
-
-        public static PlayerControl assassinMarked;
-        public static PlayerControl currentTarget;
-        public static float cooldown = 30f;
-        public static float traceTime = 1f;
-        public static bool knowsTargetLocation = false;
-
-        private static Sprite markButtonSprite;
-        private static Sprite killButtonSprite;
-        public static Arrow arrow = new Arrow(Color.black);
-        public static Sprite getMarkButtonSprite()
-        {
-            if (markButtonSprite) return markButtonSprite;
-            markButtonSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.AssassinMarkButton.png", 115f);
-            return markButtonSprite;
-        }
-
-        public static Sprite getKillButtonSprite()
-        {
-            if (killButtonSprite) return killButtonSprite;
-            killButtonSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.AssassinAssassinateButton.png", 115f);
-            return killButtonSprite;
-        }
-
-        public static void clearAndReload()
-        {
-            assassin = null;
-            currentTarget = assassinMarked = null;
-            cooldown = CustomOptionHolder.assassinCooldown.getFloat();
-            knowsTargetLocation = CustomOptionHolder.assassinKnowsTargetLocation.getBool();
-            traceTime = CustomOptionHolder.assassinTraceTime.getFloat();
-
-            if (arrow?.arrow != null) UnityEngine.Object.Destroy(arrow.arrow);
-            arrow = new Arrow(Color.black);
-            if (arrow.arrow != null) arrow.arrow.SetActive(false);
         }
     }
 }
