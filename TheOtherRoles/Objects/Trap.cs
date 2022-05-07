@@ -88,7 +88,7 @@ namespace TheOtherRoles.Objects
             this.audioSource.loop = false;
             this.audioSource.playOnAwake = false;
             this.audioSource.maxDistance = 2 * Trapper.maxDistance/3;
-            this.audioSource.minDistance = Trapper.minDsitance;
+            this.audioSource.minDistance = Trapper.minDistance;
             this.audioSource.rolloffMode = rollOffMode;
             this.audioSource.PlayOneShot(place);
 
