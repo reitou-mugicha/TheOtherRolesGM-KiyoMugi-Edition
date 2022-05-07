@@ -5,16 +5,12 @@ using System.Linq;
 using UnhollowerBaseLib;
 using static TheOtherRoles.TheOtherRoles;
 using static TheOtherRoles.TheOtherRolesGM;
-using static TheOtherRoles.GameHistory;
 using TheOtherRoles.Objects;
-using static TheOtherRoles.MapOptions;
-using System.Collections;
 using System;
-using System.Text;
 using UnityEngine;
-using System.Reflection;
 
-namespace TheOtherRoles.Patches {
+namespace TheOtherRoles.Patches
+{
     [HarmonyPatch(typeof(ExileController), nameof(ExileController.Begin))]
     [HarmonyPriority(Priority.First)]
     class ExileControllerBeginPatch {

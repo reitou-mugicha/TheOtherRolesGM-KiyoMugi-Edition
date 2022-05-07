@@ -1,19 +1,13 @@
-using System;
 using System.Linq;
 using HarmonyLib;
 using Hazel;
-using UnhollowerRuntimeLib;
 using static TheOtherRoles.TheOtherRoles;
-using static TheOtherRoles.TheOtherRolesGM;
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
-using PowerTools;
-using TMPro;
-using UnhollowerBaseLib;
 using TheOtherRoles.Objects;
 
-namespace TheOtherRoles.Patches {
+namespace TheOtherRoles.Patches
+{
 
     [HarmonyPatch(typeof(ShipStatus))]
     public class ShipStatusPatch 

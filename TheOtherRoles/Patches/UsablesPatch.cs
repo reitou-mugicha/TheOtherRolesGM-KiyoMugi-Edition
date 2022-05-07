@@ -3,7 +3,6 @@ using Hazel;
 using System;
 using UnityEngine;
 using static TheOtherRoles.MapOptions;
-using static TheOtherRoles.GameHistory;
 using static TheOtherRoles.TheOtherRoles;
 using static TheOtherRoles.TheOtherRolesGM;
 

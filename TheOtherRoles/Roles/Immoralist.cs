@@ -1,6 +1,5 @@
 using HarmonyLib;
 using Hazel;
-using System;
 using System.Collections.Generic;
 using TheOtherRoles.Objects;
 using UnityEngine;

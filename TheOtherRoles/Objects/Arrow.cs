@@ -1,9 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Collections;
 using UnityEngine;
 
-namespace TheOtherRoles.Objects {
+namespace TheOtherRoles.Objects
+{
     public class Arrow {
         public float perc = 0.925f;
         public SpriteRenderer image;

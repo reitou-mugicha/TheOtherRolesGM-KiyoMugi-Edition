@@ -1,12 +1,9 @@
 using HarmonyLib;
-using static TheOtherRoles.TheOtherRoles;
 using static TheOtherRoles.TheOtherRolesGM;
-using System.Collections;
-using System.Collections.Generic;
 using System;
-using UnhollowerBaseLib;
 
-namespace TheOtherRoles {
+namespace TheOtherRoles
+{
     [HarmonyPatch]
     public static class TasksHandler {
 

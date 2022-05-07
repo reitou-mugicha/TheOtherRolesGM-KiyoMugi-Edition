@@ -1,31 +1,17 @@
-using System;
-using BepInEx;
-using BepInEx.Configuration;
-using BepInEx.IL2CPP;
-using Il2CppSystem;
-using Hazel;
 using HarmonyLib;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Events;
-using UnhollowerBaseLib;
 using System.IO;
 using System.Reflection;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using System.Security.Cryptography;
 using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
 using Twitch;
 
-namespace TheOtherRoles.Modules {
+namespace TheOtherRoles.Modules
+{
     [HarmonyPatch(typeof(MainMenuManager), nameof(MainMenuManager.Start))]
     public class ModUpdaterButton {
         private static void Prefix(MainMenuManager __instance) {

@@ -1,17 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
-using BepInEx.Configuration;
-using System;
-using System.Linq;
-using HarmonyLib;
-using Hazel;
-using System.Reflection;
-using System.Text;
 using static TheOtherRoles.TheOtherRoles;
 using static TheOtherRoles.TheOtherRolesGM;
 using static TheOtherRoles.CustomOption;
 
-namespace TheOtherRoles {
+namespace TheOtherRoles
+{
 
     public class CustomOptionHolder {
         public static string[] rates = new string[]{"0%", "10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%"};

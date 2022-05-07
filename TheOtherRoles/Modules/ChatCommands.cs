@@ -1,16 +1,10 @@
 using System;
-using System.Security.Cryptography;
-using System.Text;
-using BepInEx;
-using BepInEx.Configuration;
-using BepInEx.IL2CPP;
 using HarmonyLib;
-using UnityEngine;
 using System.Linq;
-using UnhollowerBaseLib;
 using static TheOtherRoles.TheOtherRoles;
 
-namespace TheOtherRoles.Modules {
+namespace TheOtherRoles.Modules
+{
     [HarmonyPatch]
     public static class ChatCommands {
 

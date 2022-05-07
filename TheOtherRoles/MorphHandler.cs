@@ -1,8 +1,4 @@
-﻿using HarmonyLib;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace TheOtherRoles
+﻿namespace TheOtherRoles
 {
     public static class MorphHandler
     {

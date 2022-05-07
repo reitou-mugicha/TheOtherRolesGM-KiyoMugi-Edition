@@ -5,7 +5,6 @@ using System.Linq;
 using System.Collections.Generic;
 using TheOtherRoles.Objects;
 using UnityEngine;
-using static TheOtherRoles.TheOtherRoles;
 using static TheOtherRoles.Patches.PlayerControlFixedUpdatePatch;
 
 namespace TheOtherRoles

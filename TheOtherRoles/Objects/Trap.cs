@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.Collections;
 using HarmonyLib;
 using Hazel;
 using UnityEngine;
 using TheOtherRoles.Patches;
 
-namespace TheOtherRoles.Objects {
+namespace TheOtherRoles.Objects
+{
     public class Trap{
         public GameObject trap;
         public static Sprite trapSprite;

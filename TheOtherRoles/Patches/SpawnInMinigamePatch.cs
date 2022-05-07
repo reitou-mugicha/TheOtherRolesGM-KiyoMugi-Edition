@@ -1,10 +1,7 @@
 using HarmonyLib;
 using Hazel;
-using static TheOtherRoles.TheOtherRoles;
-using static TheOtherRoles.TheOtherRolesGM;
 using UnityEngine;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using PowerTools;
@@ -12,7 +9,8 @@ using TMPro;
 using UnhollowerBaseLib;
 using TheOtherRoles.Objects;
 
-namespace TheOtherRoles.Patches {
+namespace TheOtherRoles.Patches
+{
 
     [HarmonyPatch]
     public class SpawnInMinigamePatch {

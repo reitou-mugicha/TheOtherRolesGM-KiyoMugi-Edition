@@ -1,14 +1,11 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using UnityEngine;
-using Il2CppSystem;
 using HarmonyLib;
 using UnhollowerBaseLib;
-using Assets.CoreScripts;
 
-namespace TheOtherRoles.Modules {
+namespace TheOtherRoles.Modules
+{
     public class CustomColors {
         protected static Dictionary<int, string> ColorStrings = new Dictionary<int, string>();
         public static List<int> lighterColors = new List<int>(){ 3, 4, 5, 7, 10, 11, 13, 14, 17 };
