@@ -566,6 +566,9 @@ namespace TheOtherRoles
             public static bool canCreateSidekickFromImpostor = true;
             public static bool canCreateSidekickFromFox = true;
             public static bool hasImpostorVision = false;
+            public static bool wasTeamRed;
+            public static bool wasImpostor;
+            public static bool wasSpy;
 
             public static Sprite getSidekickButtonSprite()
             {
@@ -598,6 +601,7 @@ namespace TheOtherRoles
                 canCreateSidekickFromFox = CustomOptionHolder.jackalCanCreateSidekickFromFox.getBool();
                 formerJackals.Clear();
                 hasImpostorVision = CustomOptionHolder.jackalAndSidekickHaveImpostorVision.getBool();
+                wasTeamRed = wasImpostor = wasSpy = false;
             }
 
         }
@@ -614,7 +618,10 @@ namespace TheOtherRoles
             public static bool canKill = true;
             public static bool promotesToJackal = true;
             public static bool hasImpostorVision = false;
-
+            public static bool wasTeamRed;
+            public static bool wasImpostor;
+            public static bool wasSpy;
+            
             public static void clearAndReload()
             {
                 sidekick = null;
@@ -624,6 +631,7 @@ namespace TheOtherRoles
                 canKill = CustomOptionHolder.sidekickCanKill.getBool();
                 promotesToJackal = CustomOptionHolder.sidekickPromotesToJackal.getBool();
                 hasImpostorVision = CustomOptionHolder.jackalAndSidekickHaveImpostorVision.getBool();
+                wasTeamRed = wasImpostor = wasSpy = false;
             }
         }
 

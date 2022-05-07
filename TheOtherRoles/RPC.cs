@@ -569,25 +569,23 @@ namespace TheOtherRoles
             }else if (!Jackal.canCreateSidekickFromFox && player.isRole(RoleType.Fox)){
                 Jackal.fakeSidekick = player;
             }else {
+                bool wasSpy = Spy.spy != null && player == Spy.spy;
+                bool wasImpostor = player.Data.Role.IsImpostor;  // This can only be reached if impostors can be sidekicked.
                 DestroyableSingleton<RoleManager>.Instance.SetRole(player, RoleTypes.Crewmate);
                 erasePlayerRoles(player.PlayerId, true, false);
                 Sidekick.sidekick = player;
+                if (player.PlayerId == PlayerControl.LocalPlayer.PlayerId) PlayerControl.LocalPlayer.moveable = true; 
+                if (wasSpy || wasImpostor) Sidekick.wasTeamRed = true;
+                Sidekick.wasSpy = wasSpy;
+                Sidekick.wasImpostor = wasImpostor;
                 // 狐が一人もいなくなったら背徳者は死亡する
-                if(!Fox.isFoxAlive())
+                if(Fox.exists && !Fox.isFoxAlive())
                 {
                     foreach(var immoralist in Immoralist.allPlayers)
                     {
                         if(immoralist.isAlive()){
                             immoralist.MurderPlayer(immoralist);
                         }
-                    }
-                }
-                if (player.PlayerId == PlayerControl.LocalPlayer.PlayerId) PlayerControl.LocalPlayer.moveable = true; 
-                if(Fox.exists && !Fox.isFoxAlive())
-                {
-                    foreach(var immoralist in Immoralist.allPlayers)
-                    {
-                        immoralist.MurderPlayer(immoralist);
                     }
                 }
             }

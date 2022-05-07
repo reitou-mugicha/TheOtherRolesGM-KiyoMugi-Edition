@@ -156,7 +156,7 @@ namespace TheOtherRoles.Patches
                 {
                     foreach (var p in PlayerControl.AllPlayerControls)
                     {
-                        if (p.isImpostor() || p.isRole(RoleType.Spy))
+                        if (p.isImpostor() || p.isRole(RoleType.Spy) || (p.isRole(RoleType.Jackal) && Jackal.wasTeamRed) || (p.isRole(RoleType.Sidekick) && Sidekick.wasTeamRed))
                         {
                             setPlayerNameColor(p, Palette.ImpostorRed);
                         }
@@ -172,7 +172,7 @@ namespace TheOtherRoles.Patches
                 {
                     foreach (var p in PlayerControl.AllPlayerControls)
                     {
-                        if (p.isImpostor() || p.isRole(RoleType.Spy))
+                        if (p.isImpostor() || p.isRole(RoleType.Spy) || (p.isRole(RoleType.Jackal) && Jackal.wasTeamRed) || (p.isRole(RoleType.Sidekick) && Sidekick.wasTeamRed))
                         {
                             setPlayerNameColor(p, Palette.ImpostorRed);
                         }
@@ -212,6 +212,12 @@ namespace TheOtherRoles.Patches
             // No else if here, as the Impostors need the Spy name to be colored
             if (Spy.spy != null && PlayerControl.LocalPlayer.Data.Role.IsImpostor) {
                 setPlayerNameColor(Spy.spy, Spy.color);
+            }
+            if (Sidekick.sidekick != null && Sidekick.wasTeamRed && PlayerControl.LocalPlayer.Data.Role.IsImpostor) {
+                setPlayerNameColor(Sidekick.sidekick, Spy.color);
+            }
+            if (Jackal.jackal != null && Jackal.wasTeamRed && PlayerControl.LocalPlayer.Data.Role.IsImpostor) {
+                setPlayerNameColor(Jackal.jackal, Spy.color);
             }
 
             if (Immoralist.exists && PlayerControl.LocalPlayer.isRole(RoleType.Fox))

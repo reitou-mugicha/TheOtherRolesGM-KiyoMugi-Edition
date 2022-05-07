@@ -259,7 +259,11 @@ namespace TheOtherRoles.Patches
                 }
                 else
                 {
-                    target = setTarget(true, true, new List<PlayerControl>() { Spy.spy });
+                    var listp = new List<PlayerControl>();
+                    listp.Add(Spy.spy);
+                    if(Sidekick.wasTeamRed) listp.Add(Sidekick.sidekick);
+                    if(Jackal.wasTeamRed) listp.Add(Jackal.jackal);
+                    target = setTarget(true, true, listp);
                 }
             }
             else
@@ -339,6 +343,8 @@ namespace TheOtherRoles.Patches
 
             List<PlayerControl> untargetables = new List<PlayerControl>();
             if (Spy.spy != null) untargetables.Add(Spy.spy);
+            if (Sidekick.wasTeamRed) untargetables.Add(Sidekick.sidekick);
+            if (Jackal.wasTeamRed) untargetables.Add(Jackal.jackal);
             Eraser.currentTarget = setTarget(onlyCrewmates: !Eraser.canEraseAnyone, untargetablePlayers: Eraser.canEraseAnyone ? new List<PlayerControl>() : untargetables);
             setPlayerOutline(Eraser.currentTarget, Eraser.color);
         }
@@ -382,7 +388,7 @@ namespace TheOtherRoles.Patches
             }
 
             PlayerControl target = null;
-            if (Spy.spy != null)
+            if (Spy.spy != null || Sidekick.wasSpy || Jackal.wasSpy)
             {
                 if (Spy.impostorsCanKillAnyone)
                 {
@@ -390,7 +396,11 @@ namespace TheOtherRoles.Patches
                 }
                 else
                 {
-                    target = setTarget(true, true, new List<PlayerControl>() { Spy.spy });
+                    var listp = new List<PlayerControl>();
+                    listp.Add(Spy.spy);
+                    if(Sidekick.wasTeamRed) listp.Add(Sidekick.sidekick);
+                    if(Jackal.wasTeamRed) listp.Add(Jackal.jackal);
+                    target = setTarget(true, true, listp);
                 }
             }
             else
@@ -777,7 +787,7 @@ namespace TheOtherRoles.Patches
                 var possibleTargets = new List<PlayerControl>();
                 foreach (PlayerControl p in PlayerControl.AllPlayerControls)
                 {
-                    if (!p.Data.IsDead && !p.Data.Disconnected && !p.Data.Role.IsImpostor && p != Spy.spy && (p.hasModifier(ModifierType.Mini) || Mini.isGrownUp(p)) && !p.isGM() && BountyHunter.bountyHunter.getPartner() != p) possibleTargets.Add(p);
+                    if (!p.Data.IsDead && !p.Data.Disconnected && !p.Data.Role.IsImpostor && p != Spy.spy && (p != Sidekick.sidekick || !Sidekick.wasTeamRed) && (p != Jackal.jackal || !Jackal.wasTeamRed) && (p.hasModifier(ModifierType.Mini) || Mini.isGrownUp(p)) && !p.isGM() && BountyHunter.bountyHunter.getPartner() != p) possibleTargets.Add(p);
                 }
                 BountyHunter.bounty = possibleTargets[TheOtherRoles.rnd.Next(0, possibleTargets.Count)];
                 if (BountyHunter.bounty == null) return;
@@ -818,8 +828,8 @@ namespace TheOtherRoles.Patches
             {
                 untargetables.Add(mini.player);
             }
-            // if (Sidekick.wasTeamRed && !Spy.impostorsCanKillAnyone) untargetables.Add(Sidekick.sidekick);
-            // if (Jackal.wasTeamRed && !Spy.impostorsCanKillAnyone) untargetables.Add(Jackal.jackal);
+            if (Sidekick.wasTeamRed && !Spy.impostorsCanKillAnyone) untargetables.Add(Sidekick.sidekick);
+            if (Jackal.wasTeamRed && !Spy.impostorsCanKillAnyone) untargetables.Add(Jackal.jackal);
             Assassin.currentTarget = setTarget(onlyCrewmates: true, untargetablePlayers: untargetables);
             setPlayerOutline(Assassin.currentTarget, Assassin.color);
         }
@@ -1028,6 +1038,8 @@ namespace TheOtherRoles.Patches
             {
                 untargetables = new List<PlayerControl>(); // Also target players that have already been spelled, to hide spells that were blanks/blocked by shields
                 if (Spy.spy != null && !Witch.canSpellAnyone) untargetables.Add(Spy.spy);
+                if (Sidekick.wasTeamRed && !Witch.canSpellAnyone) untargetables.Add(Sidekick.sidekick);
+                if (Jackal.wasTeamRed && !Witch.canSpellAnyone) untargetables.Add(Jackal.jackal);
             }
             Witch.currentTarget = setTarget(onlyCrewmates: !Witch.canSpellAnyone, untargetablePlayers: untargetables);
             setPlayerOutline(Witch.currentTarget, Witch.color);
