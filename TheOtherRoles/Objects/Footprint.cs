@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Collections;
 using UnityEngine;
-using static TheOtherRoles.TheOtherRoles;
 using static TheOtherRoles.TheOtherRolesGM;
 
-namespace TheOtherRoles.Objects {
+namespace TheOtherRoles.Objects
+{
     class Footprint {
         private static List<Footprint> footprints = new List<Footprint>();
         private static Sprite sprite;

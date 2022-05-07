@@ -18,7 +18,7 @@ namespace TheOtherRoles
     {
         // Main Controls
 
-        ResetVaribles = 60,
+        ResetVariables = 60,
         ShareOptions,
         ForceEnd,
         SetRole,
@@ -115,7 +115,7 @@ namespace TheOtherRoles
         mimicMorph,
         mimicResetMorph,
         Synchronize,
-        PlaceAssasinTrace,
+        PlaceAssassinTrace,
     }
 
     public static class RPCProcedure
@@ -140,7 +140,7 @@ namespace TheOtherRoles
             AdditionalVents.clearAndReload();
             BombEffect.clearBombEffects();
             Trap.clearAllTraps();
-            AssasinTrace.clearTraces();
+            AssassinTrace.clearTraces();
 
             SpawnInMinigamePatch.reset();
 
@@ -656,11 +656,11 @@ namespace TheOtherRoles
             }
         }
 
-        public static void placeAssasinTrace(byte[] buff) {
+        public static void placeAssassinTrace(byte[] buff) {
             Vector3 position = Vector3.zero;
             position.x = BitConverter.ToSingle(buff, 0 * sizeof(float));
             position.y = BitConverter.ToSingle(buff, 1 * sizeof(float));
-            new AssasinTrace(position, Assasin.traceTime);
+            new AssassinTrace(position, Assassin.traceTime);
         }
 
         public static void placeJackInTheBox(byte[] buff)
@@ -1299,7 +1299,7 @@ namespace TheOtherRoles
 
                     // Main Controls
 
-                    case (byte)CustomRPC.ResetVaribles:
+                    case (byte)CustomRPC.ResetVariables:
                         RPCProcedure.resetVariables();
                         break;
                     case (byte)CustomRPC.ShareOptions:
@@ -1489,8 +1489,8 @@ namespace TheOtherRoles
                     case (byte)CustomRPC.WitchSpellCast:
                         RPCProcedure.witchSpellCast(reader.ReadByte());
                         break;
-                    case (byte)CustomRPC.PlaceAssasinTrace:
-                        RPCProcedure.placeAssasinTrace(reader.ReadBytesAndSize());
+                    case (byte)CustomRPC.PlaceAssassinTrace:
+                        RPCProcedure.placeAssassinTrace(reader.ReadBytesAndSize());
                         break;
 
                     // GM functionality

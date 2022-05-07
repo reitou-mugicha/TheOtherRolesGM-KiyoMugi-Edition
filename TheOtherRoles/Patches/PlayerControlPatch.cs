@@ -3,8 +3,6 @@ using Hazel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static TheOtherRoles.TheOtherRoles;
 using static TheOtherRoles.TheOtherRolesGM;
 using static TheOtherRoles.GameHistory;
@@ -237,7 +235,7 @@ namespace TheOtherRoles.Patches
             Detective.timer -= Time.fixedDeltaTime;
             if (Detective.timer <= 0f)
             {
-                Detective.timer = Detective.footprintIntervall;
+                Detective.timer = Detective.footprintInterval;
                 foreach (PlayerControl player in PlayerControl.AllPlayerControls)
                 {
                     if (player != null && player != PlayerControl.LocalPlayer && !player.Data.IsDead && !player.inVent && !player.isGM())
@@ -422,32 +420,32 @@ namespace TheOtherRoles.Patches
                 setPlayerOutline(Warlock.curseVictimTarget, Warlock.color);
             }
         }
-        static void assasinUpdate()
+        static void assassinUpdate()
         {
-            if (Assasin.arrow?.arrow != null)
+            if (Assassin.arrow?.arrow != null)
             {
-                if (Assasin.assasin == null || Assasin.assasin != PlayerControl.LocalPlayer || !Assasin.knowsTargetLocation) {
-                    Assasin.arrow.arrow.SetActive(false);
+                if (Assassin.assassin == null || Assassin.assassin != PlayerControl.LocalPlayer || !Assassin.knowsTargetLocation) {
+                    Assassin.arrow.arrow.SetActive(false);
                     return;
                 }
-                if (Assasin.assasinMarked != null && !PlayerControl.LocalPlayer.Data.IsDead)
+                if (Assassin.assassinMarked != null && !PlayerControl.LocalPlayer.Data.IsDead)
                 {
-                    bool trackedOnMap = !Assasin.assasinMarked.Data.IsDead;
-                    Vector3 position = Assasin.assasinMarked.transform.position;
+                    bool trackedOnMap = !Assassin.assassinMarked.Data.IsDead;
+                    Vector3 position = Assassin.assassinMarked.transform.position;
                     if (!trackedOnMap)
                     { // Check for dead body
-                        DeadBody body = UnityEngine.Object.FindObjectsOfType<DeadBody>().FirstOrDefault(b => b.ParentId == Assasin.assasinMarked.PlayerId);
+                        DeadBody body = UnityEngine.Object.FindObjectsOfType<DeadBody>().FirstOrDefault(b => b.ParentId == Assassin.assassinMarked.PlayerId);
                         if (body != null)
                         {
                             trackedOnMap = true;
                             position = body.transform.position;
                         }
                     }
-                    Assasin.arrow.Update(position);
-                    Assasin.arrow.arrow.SetActive(trackedOnMap);
+                    Assassin.arrow.Update(position);
+                    Assassin.arrow.arrow.SetActive(trackedOnMap);
                 } else
                 {
-                    Assasin.arrow.arrow.SetActive(false);
+                    Assassin.arrow.arrow.SetActive(false);
                 }
             }
         }
@@ -483,7 +481,7 @@ namespace TheOtherRoles.Patches
 
                         Tracker.arrow.Update(position);
                         Tracker.arrow.arrow.SetActive(trackedOnMap);
-                        Tracker.timeUntilUpdate = Tracker.updateIntervall;
+                        Tracker.timeUntilUpdate = Tracker.updateInterval;
                     }
                     else
                     {
@@ -806,14 +804,14 @@ namespace TheOtherRoles.Patches
                 if (BountyHunter.arrowUpdateTimer <= 0f)
                 {
                     BountyHunter.arrow.Update(BountyHunter.bounty.transform.position);
-                    BountyHunter.arrowUpdateTimer = BountyHunter.arrowUpdateIntervall;
+                    BountyHunter.arrowUpdateTimer = BountyHunter.arrowUpdateInterval;
                 }
                 BountyHunter.arrow.Update();
             }
         }
-        static void assasinSetTarget()
+        static void assassinSetTarget()
         {
-            if (Assasin.assasin == null || Assasin.assasin != PlayerControl.LocalPlayer) return;
+            if (Assassin.assassin == null || Assassin.assassin != PlayerControl.LocalPlayer) return;
             List<PlayerControl> untargetables = new List<PlayerControl>();
             if (Spy.spy != null && !Spy.impostorsCanKillAnyone) untargetables.Add(Spy.spy);
             foreach(var mini in Mini.players)
@@ -822,8 +820,8 @@ namespace TheOtherRoles.Patches
             }
             // if (Sidekick.wasTeamRed && !Spy.impostorsCanKillAnyone) untargetables.Add(Sidekick.sidekick);
             // if (Jackal.wasTeamRed && !Spy.impostorsCanKillAnyone) untargetables.Add(Jackal.jackal);
-            Assasin.currentTarget = setTarget(onlyCrewmates: true, untargetablePlayers: untargetables);
-            setPlayerOutline(Assasin.currentTarget, Assasin.color);
+            Assassin.currentTarget = setTarget(onlyCrewmates: true, untargetablePlayers: untargetables);
+            setPlayerOutline(Assassin.currentTarget, Assassin.color);
         }
 
         static void baitUpdate()
@@ -1123,10 +1121,10 @@ namespace TheOtherRoles.Patches
                 pursuerSetTarget();
                 // Witch
                 witchSetTarget();
-                // Assasin
-                assasinSetTarget();
-                AssasinTrace.UpdateAll();
-                assasinUpdate();
+                // Assassin
+                assassinSetTarget();
+                AssassinTrace.UpdateAll();
+                assassinUpdate();
 
                 hackerUpdate();
                 // Bomber
@@ -1272,7 +1270,7 @@ namespace TheOtherRoles.Patches
                 RPCProcedure.sidekickPromotes();
             }
 
-            // Pursuer promotion trigger on murder (the host sends the call such that everyone recieves the update before a possible game End)
+            // Pursuer promotion trigger on murder (the host sends the call such that everyone receives the update before a possible game End)
             if (target == Lawyer.target && AmongUsClient.Instance.AmHost)
             {
                 MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.LawyerPromotesToPursuer, Hazel.SendOption.Reliable, -1);
@@ -1444,7 +1442,7 @@ namespace TheOtherRoles.Patches
                 RPCProcedure.sidekickPromotes();
             }
 
-            // Pursuer promotion trigger on exile (the host sends the call such that everyone recieves the update before a possible game End)
+            // Pursuer promotion trigger on exile (the host sends the call such that everyone receives the update before a possible game End)
             if (__instance == Lawyer.target && AmongUsClient.Instance.AmHost)
             {
                 MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.LawyerPromotesToPursuer, Hazel.SendOption.Reliable, -1);

@@ -1,17 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
-using BepInEx.Configuration;
-using System;
-using System.Linq;
-using HarmonyLib;
-using Hazel;
-using System.Reflection;
-using System.Text;
 using static TheOtherRoles.TheOtherRoles;
 using static TheOtherRoles.TheOtherRolesGM;
 using static TheOtherRoles.CustomOption;
 
-namespace TheOtherRoles {
+namespace TheOtherRoles
+{
 
     public class CustomOptionHolder {
         public static string[] rates = new string[]{"0%", "10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%"};
@@ -93,7 +87,7 @@ namespace TheOtherRoles {
         public static CustomOption guesserKillsThroughShield;
         public static CustomOption guesserEvilCanKillSpy;
         public static CustomOption guesserSpawnBothRate;
-        public static CustomOption guesserCantGuessSnitchIfTaksDone;
+        public static CustomOption guesserCantGuessSnitchIfTaskDone;
 
         public static CustomRoleOption jesterSpawnRate;
         public static CustomOption jesterCanCallEmergency;
@@ -124,7 +118,7 @@ namespace TheOtherRoles {
         public static CustomOption bountyHunterReducedCooldown;
         public static CustomOption bountyHunterPunishmentTime;
         public static CustomOption bountyHunterShowArrow;
-        public static CustomOption bountyHunterArrowUpdateIntervall;
+        public static CustomOption bountyHunterArrowUpdateInterval;
 
         public static CustomRoleOption witchSpawnRate;
         public static CustomOption witchCooldown;
@@ -134,11 +128,11 @@ namespace TheOtherRoles {
         public static CustomOption witchTriggerBothCooldowns;
         public static CustomOption witchVoteSavesTargets;
 
-        public static CustomRoleOption assasinSpawnRate;
-        public static CustomOption assasinCooldown;
-        public static CustomOption assasinKnowsTargetLocation;
-        public static CustomOption assasinTraceTime;
-        public static CustomOption assasinTraceColorTime;
+        public static CustomRoleOption assassinSpawnRate;
+        public static CustomOption assassinCooldown;
+        public static CustomOption assassinKnowsTargetLocation;
+        public static CustomOption assassinTraceTime;
+        public static CustomOption assassinTraceColorTime;
 
         public static CustomRoleOption shifterSpawnRate;
         public static CustomOption shifterIsNeutralRate;
@@ -174,7 +168,7 @@ namespace TheOtherRoles {
 
         public static CustomRoleOption detectiveSpawnRate;
         public static CustomOption detectiveAnonymousFootprints;
-        public static CustomOption detectiveFootprintIntervall;
+        public static CustomOption detectiveFootprintInterval;
         public static CustomOption detectiveFootprintDuration;
         public static CustomOption detectiveReportNameDuration;
         public static CustomOption detectiveReportColorDuration;
@@ -210,7 +204,7 @@ namespace TheOtherRoles {
         public static CustomOption hackerNoMove;
 
         public static CustomRoleOption trackerSpawnRate;
-        public static CustomOption trackerUpdateIntervall;
+        public static CustomOption trackerUpdateInterval;
         public static CustomOption trackerResetTargetAfterMeeting;
         public static CustomOption trackerCanTrackCorpses;
         public static CustomOption trackerCorpsesTrackingCooldown;
@@ -466,7 +460,7 @@ namespace TheOtherRoles {
 
             presetSelection = CustomOption.Create(0, CustomOptionType.General, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "presetSelection"), presets, null, true);
 
-            // Using new id's for the options to not break compatibilty with older versions
+            // Using new id's for the options to not break compatibility with older versions
             crewmateRolesCountMin = CustomOption.Create(300, CustomOptionType.General, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "crewmateRolesCountMin"), 0f, 0f, 15f, 1f, null, true);
             crewmateRolesCountMax = CustomOption.Create(301, CustomOptionType.General, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "crewmateRolesCountMax"), 0f, 0f, 15f, 1f);
             neutralRolesCountMin = CustomOption.Create(302, CustomOptionType.General, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "neutralRolesCountMin"), 0f, 0f, 15f, 1f);
@@ -544,7 +538,7 @@ namespace TheOtherRoles {
             bountyHunterReducedCooldown = CustomOption.Create(322, CustomOptionType.Impostor, "bountyHunterReducedCooldown", 2.5f, 2.5f, 30f, 2.5f, bountyHunterSpawnRate, format: "unitSeconds");
             bountyHunterPunishmentTime = CustomOption.Create(323, CustomOptionType.Impostor, "bountyHunterPunishmentTime", 20f, 0f, 60f, 2.5f, bountyHunterSpawnRate, format: "unitSeconds");
             bountyHunterShowArrow = CustomOption.Create(324, CustomOptionType.Impostor, "bountyHunterShowArrow", true, bountyHunterSpawnRate);
-            bountyHunterArrowUpdateIntervall = CustomOption.Create(325, CustomOptionType.Impostor, "bountyHunterArrowUpdateIntervall", 15f, 2.5f, 60f, 2.5f, bountyHunterShowArrow, format: "unitSeconds");
+            bountyHunterArrowUpdateInterval = CustomOption.Create(325, CustomOptionType.Impostor, "bountyHunterArrowUpdateInterval", 15f, 2.5f, 60f, 2.5f, bountyHunterShowArrow, format: "unitSeconds");
 
             witchSpawnRate = new CustomRoleOption(390, CustomOptionType.Impostor, "witch", Witch.color, 1);
             witchCooldown = CustomOption.Create(391, CustomOptionType.Impostor, "witchSpellCooldown", 30f, 2.5f, 120f, 2.5f, witchSpawnRate, format: "unitSeconds");
@@ -554,11 +548,11 @@ namespace TheOtherRoles {
             witchTriggerBothCooldowns = CustomOption.Create(395, CustomOptionType.Impostor, "witchTriggerBoth", true, witchSpawnRate);
             witchVoteSavesTargets = CustomOption.Create(396, CustomOptionType.Impostor, "witchSaveTargets", true, witchSpawnRate);
 
-            assasinSpawnRate = new CustomRoleOption(410, CustomOptionType.Impostor, "assasin", Assasin.color, 1);
-            assasinCooldown = CustomOption.Create(411, CustomOptionType.Impostor, "assasinMarkCooldown", 30f, 10f, 120f, 5f, assasinSpawnRate);
-            assasinKnowsTargetLocation = CustomOption.Create(412, CustomOptionType.Impostor, "assasinKnowsLocationOfTarget", true, assasinSpawnRate);
-            assasinTraceTime = CustomOption.Create(413, CustomOptionType.Impostor, "assasinTraceDuration", 5f, 1f, 20f, 0.5f, assasinSpawnRate);
-            assasinTraceColorTime = CustomOption.Create(414, CustomOptionType.Impostor, "assasinTimeTillTraceColorHasFaded", 2f, 0f, 20f, 0.5f, assasinSpawnRate);
+            assassinSpawnRate = new CustomRoleOption(410, CustomOptionType.Impostor, "assassin", Assassin.color, 1);
+            assassinCooldown = CustomOption.Create(411, CustomOptionType.Impostor, "assassinMarkCooldown", 30f, 10f, 120f, 5f, assassinSpawnRate);
+            assassinKnowsTargetLocation = CustomOption.Create(412, CustomOptionType.Impostor, "assassinKnowsLocationOfTarget", true, assassinSpawnRate);
+            assassinTraceTime = CustomOption.Create(413, CustomOptionType.Impostor, "assassinTraceDuration", 5f, 1f, 20f, 0.5f, assassinSpawnRate);
+            assassinTraceColorTime = CustomOption.Create(414, CustomOptionType.Impostor, "assassinTimeTillTraceColorHasFaded", 2f, 0f, 20f, 0.5f, assassinSpawnRate);
 
             ninjaSpawnRate = new CustomRoleOption(1000, CustomOptionType.Impostor, "ninja", Ninja.color, 3);
             ninjaStealthCooldown = CustomOption.Create(1002, CustomOptionType.Impostor, "ninjaStealthCooldown", 30f, 2.5f, 60f, 2.5f, ninjaSpawnRate, format: "unitSeconds");
@@ -647,7 +641,7 @@ namespace TheOtherRoles {
             guesserShowInfoInGhostChat = CustomOption.Create(315, CustomOptionType.Neutral, "guesserToGhostChat", true, guesserSpawnRate);
             guesserKillsThroughShield = CustomOption.Create(316, CustomOptionType.Neutral, "guesserPierceShield", true, guesserSpawnRate);
             guesserEvilCanKillSpy = CustomOption.Create(318, CustomOptionType.Neutral, "guesserEvilCanKillSpy", true, guesserSpawnRate);
-			guesserCantGuessSnitchIfTaksDone = CustomOption.Create(319, CustomOptionType.Neutral, "guesserCantGuessSnitchIfTaksDone", true, guesserSpawnRate);
+			guesserCantGuessSnitchIfTaskDone = CustomOption.Create(319, CustomOptionType.Neutral, "guesserCantGuessSnitchIfTaskDone", true, guesserSpawnRate);
 
             swapperSpawnRate = new CustomRoleOption(150, CustomOptionType.Neutral, "swapper", Swapper.color, 1);
             swapperIsImpRate = CustomOption.Create(153, CustomOptionType.Neutral, "swapperIsImpRate", rates, swapperSpawnRate);
@@ -775,7 +769,7 @@ namespace TheOtherRoles {
 
             detectiveSpawnRate = new CustomRoleOption(120, CustomOptionType.Crewmate, "detective", Detective.color, 1);
             detectiveAnonymousFootprints = CustomOption.Create(121, CustomOptionType.Crewmate, "detectiveAnonymousFootprints", false, detectiveSpawnRate);
-            detectiveFootprintIntervall = CustomOption.Create(122, CustomOptionType.Crewmate, "detectiveFootprintIntervall", 0.5f, 0.25f, 10f, 0.25f, detectiveSpawnRate, format: "unitSeconds");
+            detectiveFootprintInterval = CustomOption.Create(122, CustomOptionType.Crewmate, "detectiveFootprintInterval", 0.5f, 0.25f, 10f, 0.25f, detectiveSpawnRate, format: "unitSeconds");
             detectiveFootprintDuration = CustomOption.Create(123, CustomOptionType.Crewmate, "detectiveFootprintDuration", 5f, 0.25f, 10f, 0.25f, detectiveSpawnRate, format: "unitSeconds");
             detectiveReportNameDuration = CustomOption.Create(124, CustomOptionType.Crewmate, "detectiveReportNameDuration", 0, 0, 60, 2.5f, detectiveSpawnRate, format: "unitSeconds");
             detectiveReportColorDuration = CustomOption.Create(125, CustomOptionType.Crewmate, "detectiveReportColorDuration", 20, 0, 120, 2.5f, detectiveSpawnRate, format: "unitSeconds");
@@ -805,7 +799,7 @@ namespace TheOtherRoles {
             hackerNoMove = CustomOption.Create(176, CustomOptionType.Crewmate, "hackerNoMove", true, hackerSpawnRate);
 
             trackerSpawnRate = new CustomRoleOption(200, CustomOptionType.Crewmate, "tracker", Tracker.color, 1);
-            trackerUpdateIntervall = CustomOption.Create(201, CustomOptionType.Crewmate, "Tracker Update Intervall", 5f, 1f, 30f, 1f, trackerSpawnRate);
+            trackerUpdateInterval = CustomOption.Create(201, CustomOptionType.Crewmate, "Tracker Update Interval", 5f, 1f, 30f, 1f, trackerSpawnRate);
             trackerResetTargetAfterMeeting = CustomOption.Create(202, CustomOptionType.Crewmate, "trackerResetTargetAfterMeeting", false, trackerSpawnRate);
             trackerCanTrackCorpses = CustomOption.Create(203, CustomOptionType.Crewmate, "trackerTrackCorpses", true, trackerSpawnRate);
             trackerCorpsesTrackingCooldown = CustomOption.Create(204, CustomOptionType.Crewmate, "trackerCorpseCooldown", 30f, 0f, 120f, 5f, trackerCanTrackCorpses, format: "unitSeconds");

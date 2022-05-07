@@ -1,15 +1,12 @@
 using HarmonyLib;
-using System;
-using System.IO;
-using System.Net.Http;
 using UnityEngine;
 using static TheOtherRoles.TheOtherRoles;
 using static TheOtherRoles.TheOtherRolesGM;
 using TheOtherRoles.Objects;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace TheOtherRoles.Patches {
+namespace TheOtherRoles.Patches
+{
     [HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]
     class HudManagerUpdatePatch
     {

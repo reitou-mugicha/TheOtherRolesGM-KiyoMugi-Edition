@@ -9,15 +9,12 @@ using static TheOtherRoles.MapOptions;
 using static TheOtherRoles.GameHistory;
 using System.Collections;
 using System;
-using System.Text;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.Analytics;
-using System.Reflection;
 using BepInEx.IL2CPP.Utils.Collections;
 using Assets.CoreScripts;
 
-namespace TheOtherRoles.Patches {
+namespace TheOtherRoles.Patches
+{
     [HarmonyPatch]
     class MeetingHudPatch {
         static bool[] selections;

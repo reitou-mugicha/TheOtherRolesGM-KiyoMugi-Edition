@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Collections;
 using UnityEngine;
 
-namespace TheOtherRoles.Objects {
-    class AssasinTrace {
-        public static List<AssasinTrace> traces = new List<AssasinTrace>();
+namespace TheOtherRoles.Objects
+{
+    class AssassinTrace {
+        public static List<AssassinTrace> traces = new List<AssassinTrace>();
 
         private GameObject trace;
         private float timeRemaining;
@@ -13,12 +13,12 @@ namespace TheOtherRoles.Objects {
         private static Sprite TraceSprite;
         public static Sprite getTraceSprite() {
             if (TraceSprite) return TraceSprite;
-            TraceSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.AssasinTraceW.png", 225f);
+            TraceSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.AssassinTraceW.png", 225f);
             return TraceSprite;
         }
 
-        public AssasinTrace(Vector2 p, float duration=1f) {
-            trace = new GameObject("AssasinTrace") { layer = 11 };
+        public AssassinTrace(Vector2 p, float duration=1f) {
+            trace = new GameObject("AssassinTrace") { layer = 11 };
             trace.AddSubmergedComponent(SubmergedCompatibility.Classes.ElevatorMover);
             //Vector3 position = new Vector3(p.x, p.y, PlayerControl.LocalPlayer.transform.localPosition.z + 0.001f); // just behind player
             Vector3 position = new Vector3(p.x, p.y, p.y / 1000f + 0.01f);
@@ -30,11 +30,11 @@ namespace TheOtherRoles.Objects {
 
             timeRemaining = duration;
 
-            // display the assasins color in the trace
-            float colorDuration = CustomOptionHolder.assasinTraceColorTime.getFloat();
+            // display the assassins color in the trace
+            float colorDuration = CustomOptionHolder.assassinTraceColorTime.getFloat();
             HudManager.Instance.StartCoroutine(Effects.Lerp(colorDuration, new Action<float>((p) => {
-                Color c = Palette.PlayerColors[(int)Assasin.assasin.Data.DefaultOutfit.ColorId];
-                if (Helpers.isLighterColor(Assasin.assasin.Data.DefaultOutfit.ColorId)) c = Color.white;
+                Color c = Palette.PlayerColors[(int)Assassin.assassin.Data.DefaultOutfit.ColorId];
+                if (Helpers.isLighterColor(Assassin.assassin.Data.DefaultOutfit.ColorId)) c = Color.white;
                 else c = Palette.PlayerColors[6];
                 //if (Camouflager.camouflageTimer > 0) {
                 //    c = Palette.PlayerColors[6];
@@ -63,11 +63,11 @@ namespace TheOtherRoles.Objects {
         }
 
         public static void clearTraces() {
-            traces = new List<AssasinTrace>();
+            traces = new List<AssassinTrace>();
         }
 
         public static void UpdateAll() {
-            foreach (AssasinTrace traceCurrent in new List<AssasinTrace>(traces))
+            foreach (AssassinTrace traceCurrent in new List<AssassinTrace>(traces))
             {
                 traceCurrent.timeRemaining -= Time.fixedDeltaTime;
                 if (traceCurrent.timeRemaining < 0)

@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Collections;
 using UnityEngine;
 using System.Linq;
 using static TheOtherRoles.TheOtherRoles;
 
-namespace TheOtherRoles.Objects {
+namespace TheOtherRoles.Objects
+{
 
     public class JackInTheBox {
         public static System.Collections.Generic.List<JackInTheBox> AllJackInTheBoxes = new System.Collections.Generic.List<JackInTheBox>();

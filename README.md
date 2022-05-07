@@ -521,7 +521,7 @@ The [Role Assignment](#role-assignment) sections explains how the roles are bein
 - Fixed a bug where the Guesser & Sheriff were not assigned properly (fingers crossed)
 - Fixed a bug where Hacker buttons didn't work as intended with "random map" option
 - Fixed a bug where the Security Guard could not access cams on Skeld, dlekS & Airship
-- Changed Tracker update intervall to a minimum of 1 thanks [LaicosVK](https://github.com/LaicosVK)
+- Changed Tracker update interval to a minimum of 1 thanks [LaicosVK](https://github.com/LaicosVK)
 
 **Version 3.4.0**
 - Added new Role [Deputy](#deputy) thanks [gendelo3](https://github.com/gendelo3)
@@ -640,7 +640,7 @@ The [Role Assignment](#role-assignment) sections explains how the roles are bein
 - **New Role:** [Vulture](#vulture)
 - Added Jackal Option: "Jackal Can See If Engineer Is In A Vent"
 - Added Guesser Option: "Guesser Can Shoot Multiple Times Per Meeting"
-- Fixed a bug that occured when the Shifter shifted the Bait
+- Fixed a bug that occurred when the Shifter shifted the Bait
 - Fixed a bug where [Medium](#medium) did not exlude the Evil [Mini](#mini)
 - [Vulture](#vulture) "Number Of Corpses Needed To Be Eaten" max value extended to 12
 - Added Vulture Option: "Show Arrows Pointing Towards The Corpses"

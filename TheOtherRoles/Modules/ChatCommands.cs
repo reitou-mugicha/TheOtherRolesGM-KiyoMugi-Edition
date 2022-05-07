@@ -1,16 +1,10 @@
 using System;
-using System.Security.Cryptography;
-using System.Text;
-using BepInEx;
-using BepInEx.Configuration;
-using BepInEx.IL2CPP;
 using HarmonyLib;
-using UnityEngine;
 using System.Linq;
-using UnhollowerBaseLib;
 using static TheOtherRoles.TheOtherRoles;
 
-namespace TheOtherRoles.Modules {
+namespace TheOtherRoles.Modules
+{
     [HarmonyPatch]
     public static class ChatCommands {
 
@@ -56,7 +50,7 @@ namespace TheOtherRoles.Modules {
                         }
                         col = Math.Clamp(col, 0, Palette.PlayerColors.Length - 1);
                         PlayerControl.LocalPlayer.SetColor(col);
-                        __instance.AddChat(PlayerControl.LocalPlayer, "Changed color succesfully");;
+                        __instance.AddChat(PlayerControl.LocalPlayer, "Changed color successfully");;
                     } 
                 }
 

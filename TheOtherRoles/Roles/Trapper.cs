@@ -2,14 +2,8 @@ using HarmonyLib;
 using Hazel;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.IO;
 using UnityEngine;
 using TheOtherRoles.Objects;
-using TheOtherRoles.Patches;
-using static TheOtherRoles.TheOtherRoles;
-using static TheOtherRoles.GameHistory;
 
 namespace TheOtherRoles
 {
@@ -28,7 +22,7 @@ namespace TheOtherRoles
         public static float extensionTime {get {return CustomOptionHolder.trapperExtensionTime.getFloat();}}
         public static float killTimer {get {return CustomOptionHolder.trapperKillTimer.getFloat();}}
         public static float cooldown {get {return CustomOptionHolder.trapperCooldown.getFloat();}}
-        public static float minDsitance = 0f;
+        public static float minDistance = 0f;
         public static float maxDistance {get {return CustomOptionHolder.trapperMaxDistance.getFloat();}}
         public static float trapRange {get {return CustomOptionHolder.trapperTrapRange.getFloat();}}
         public static float penaltyTime {get {return CustomOptionHolder.trapperPenaltyTime.getFloat();}}

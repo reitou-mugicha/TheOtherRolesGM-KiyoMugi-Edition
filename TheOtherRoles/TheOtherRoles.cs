@@ -1,18 +1,9 @@
-using System.Net;
 using System.Linq;
-using BepInEx;
-using BepInEx.Configuration;
-using BepInEx.IL2CPP;
 using HarmonyLib;
-using Hazel;
 using System;
 using System.Collections.Generic;
-using System.Collections;
-using System.IO;
 using UnityEngine;
 using TheOtherRoles.Objects;
-using static TheOtherRoles.GameHistory;
-using TheOtherRoles.Patches;
 
 namespace TheOtherRoles
 {
@@ -72,7 +63,7 @@ namespace TheOtherRoles
             Lawyer.clearAndReload();
             Pursuer.clearAndReload();
             Witch.clearAndReload();
-            Assasin.clearAndReload();
+            Assassin.clearAndReload();
             TheOtherRolesGM.clearAndReloadRoles();
         }
 
@@ -191,7 +182,7 @@ namespace TheOtherRoles
             public static PlayerControl detective;
             public static Color color = new Color32(45, 106, 165, byte.MaxValue);
 
-            public static float footprintIntervall = 1f;
+            public static float footprintInterval = 1f;
             public static float footprintDuration = 1f;
             public static bool anonymousFootprints = false;
             public static float reportNameDuration = 0f;
@@ -202,7 +193,7 @@ namespace TheOtherRoles
             {
                 detective = null;
                 anonymousFootprints = CustomOptionHolder.detectiveAnonymousFootprints.getBool();
-                footprintIntervall = CustomOptionHolder.detectiveFootprintIntervall.getFloat();
+                footprintInterval = CustomOptionHolder.detectiveFootprintInterval.getFloat();
                 footprintDuration = CustomOptionHolder.detectiveFootprintDuration.getFloat();
                 reportNameDuration = CustomOptionHolder.detectiveReportNameDuration.getFloat();
                 reportColorDuration = CustomOptionHolder.detectiveReportColorDuration.getFloat();
@@ -427,7 +418,7 @@ namespace TheOtherRoles
             public static Color color = new Color32(100, 58, 220, byte.MaxValue);
         public static List<Arrow> localArrows = new List<Arrow>();
 
-            public static float updateIntervall = 5f;
+            public static float updateInterval = 5f;
             public static bool resetTargetAfterMeeting = false;
         public static bool canTrackCorpses = false;
         public static float corpsesTrackingCooldown = 30f;
@@ -471,7 +462,7 @@ namespace TheOtherRoles
                 tracker = null;
                 resetTracked();
                 timeUntilUpdate = 0f;
-                updateIntervall = CustomOptionHolder.trackerUpdateIntervall.getFloat();
+                updateInterval = CustomOptionHolder.trackerUpdateInterval.getFloat();
                 resetTargetAfterMeeting = CustomOptionHolder.trackerResetTargetAfterMeeting.getBool();
             if (localArrows != null) {
                 foreach (Arrow arrow in localArrows)
@@ -1067,7 +1058,7 @@ namespace TheOtherRoles
             {
                 niceGuesser = null;
                 evilGuesser = null;
-            guesserCantGuessSnitch = CustomOptionHolder.guesserCantGuessSnitchIfTaksDone.getBool();
+            guesserCantGuessSnitch = CustomOptionHolder.guesserCantGuessSnitchIfTaskDone.getBool();
                 remainingShotsEvilGuesser = Mathf.RoundToInt(CustomOptionHolder.guesserNumberOfShots.getFloat());
                 remainingShotsNiceGuesser = Mathf.RoundToInt(CustomOptionHolder.guesserNumberOfShots.getFloat());
                 onlyAvailableRoles = CustomOptionHolder.guesserOnlyAvailableRoles.getBool();
@@ -1088,7 +1079,7 @@ namespace TheOtherRoles
             public static bool showArrow = true;
             public static float bountyKillCooldown = 0f;
             public static float punishmentTime = 15f;
-            public static float arrowUpdateIntervall = 10f;
+            public static float arrowUpdateInterval = 10f;
 
             public static float arrowUpdateTimer = 0f;
             public static float bountyUpdateTimer = 0f;
@@ -1116,7 +1107,7 @@ namespace TheOtherRoles
                 bountyKillCooldown = CustomOptionHolder.bountyHunterReducedCooldown.getFloat();
                 punishmentTime = CustomOptionHolder.bountyHunterPunishmentTime.getFloat();
                 showArrow = CustomOptionHolder.bountyHunterShowArrow.getBool();
-                arrowUpdateIntervall = CustomOptionHolder.bountyHunterArrowUpdateIntervall.getFloat();
+                arrowUpdateInterval = CustomOptionHolder.bountyHunterArrowUpdateInterval.getFloat();
             }
         }
 
@@ -1327,11 +1318,11 @@ namespace TheOtherRoles
         }
     }
 
-    public static class Assasin {
-        public static PlayerControl assasin;
+    public static class Assassin {
+        public static PlayerControl assassin;
         public static Color color = Palette.ImpostorRed;
 
-        public static PlayerControl assasinMarked;
+        public static PlayerControl assassinMarked;
         public static PlayerControl currentTarget;
         public static float cooldown = 30f;
         public static float traceTime = 1f;
@@ -1342,22 +1333,22 @@ namespace TheOtherRoles
         public static Arrow arrow = new Arrow(Color.black);
         public static Sprite getMarkButtonSprite() {
             if (markButtonSprite) return markButtonSprite;
-            markButtonSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.AssasinMarkButton.png", 115f);
+            markButtonSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.AssassinMarkButton.png", 115f);
             return markButtonSprite;
         }
 
         public static Sprite getKillButtonSprite() {
             if (killButtonSprite) return killButtonSprite;
-            killButtonSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.AssasinAssassinateButton.png", 115f);
+            killButtonSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.AssassinAssassinateButton.png", 115f);
             return killButtonSprite;
         }
 
         public static void clearAndReload() {
-            assasin = null;
-            currentTarget = assasinMarked = null;
-            cooldown = CustomOptionHolder.assasinCooldown.getFloat();
-            knowsTargetLocation = CustomOptionHolder.assasinKnowsTargetLocation.getBool();
-            traceTime = CustomOptionHolder.assasinTraceTime.getFloat();
+            assassin = null;
+            currentTarget = assassinMarked = null;
+            cooldown = CustomOptionHolder.assassinCooldown.getFloat();
+            knowsTargetLocation = CustomOptionHolder.assassinKnowsTargetLocation.getBool();
+            traceTime = CustomOptionHolder.assassinTraceTime.getFloat();
 
             if (arrow?.arrow != null) UnityEngine.Object.Destroy(arrow.arrow);
             arrow = new Arrow(Color.black);

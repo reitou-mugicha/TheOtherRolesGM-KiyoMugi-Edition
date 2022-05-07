@@ -2,11 +2,9 @@
 using Hazel;
 using System.Collections.Generic;
 using System.Linq;
-using UnhollowerBaseLib;
 using UnityEngine;
 using System;
 using static TheOtherRoles.TheOtherRoles;
-using static TheOtherRoles.TheOtherRolesGM;
 
 namespace TheOtherRoles.Patches
 {
@@ -31,7 +29,7 @@ namespace TheOtherRoles.Patches
 
         public static void Postfix()
         {
-            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.ResetVaribles, Hazel.SendOption.Reliable, -1);
+            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.ResetVariables, Hazel.SendOption.Reliable, -1);
             AmongUsClient.Instance.FinishRpcImmediately(writer);
             RPCProcedure.resetVariables();
 
@@ -148,7 +146,7 @@ namespace TheOtherRoles.Patches
             impSettings.Add((byte)RoleType.Warlock, CustomOptionHolder.warlockSpawnRate.data);
             impSettings.Add((byte)RoleType.BountyHunter, CustomOptionHolder.bountyHunterSpawnRate.data);
             impSettings.Add((byte)RoleType.Witch, CustomOptionHolder.witchSpawnRate.data);
-            impSettings.Add((byte)RoleType.Assasin, CustomOptionHolder.assasinSpawnRate.data);
+            impSettings.Add((byte)RoleType.Assassin, CustomOptionHolder.assassinSpawnRate.data);
             impSettings.Add((byte)RoleType.Ninja, CustomOptionHolder.ninjaSpawnRate.data);
             impSettings.Add((byte)RoleType.NekoKabocha, CustomOptionHolder.nekoKabochaSpawnRate.data);
             impSettings.Add((byte)RoleType.SerialKiller, CustomOptionHolder.serialKillerSpawnRate.data);

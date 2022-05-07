@@ -3,7 +3,6 @@ using Hazel;
 using System;
 using UnityEngine;
 using static TheOtherRoles.MapOptions;
-using static TheOtherRoles.GameHistory;
 using static TheOtherRoles.TheOtherRoles;
 using static TheOtherRoles.TheOtherRolesGM;
 
@@ -347,8 +346,8 @@ namespace TheOtherRoles.Patches
                             PlayerControl.LocalPlayer.SetKillTimer(PlayerControl.GameOptions.KillCooldown * (Mini.isGrownUp(PlayerControl.LocalPlayer) ? 0.66f : 2f));
                         else if (PlayerControl.LocalPlayer == Witch.witch)
                             Witch.witch.killTimer = HudManagerStartPatch.witchSpellButton.Timer = HudManagerStartPatch.witchSpellButton.MaxTimer;
-                        else if (PlayerControl.LocalPlayer == Assasin.assasin)
-                            Assasin.assasin.killTimer = HudManagerStartPatch.assasinButton.Timer = HudManagerStartPatch.assasinButton.MaxTimer;
+                        else if (PlayerControl.LocalPlayer == Assassin.assassin)
+                            Assassin.assassin.killTimer = HudManagerStartPatch.assassinButton.Timer = HudManagerStartPatch.assassinButton.MaxTimer;
                     }
 
                     __instance.SetTarget(null);

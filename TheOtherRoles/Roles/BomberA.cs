@@ -5,7 +5,6 @@ using System.Linq;
 using UnityEngine;
 using TheOtherRoles.Objects;
 using TheOtherRoles.Patches;
-using static TheOtherRoles.TheOtherRoles;
 using static TheOtherRoles.GameHistory;
 using static TheOtherRoles.Patches.PlayerControlFixedUpdatePatch;
 
@@ -283,10 +282,10 @@ namespace TheOtherRoles
                     }
                 }
 
-                // Arrorw一覧
+                // Arrows一覧
                 arrows = new List<Arrow>();
 
-                // 相方の位置を示すArrorwを描画
+                // 相方の位置を示すArrowsを描画
                 foreach(PlayerControl p in PlayerControl.AllPlayerControls){
                     if(p.Data.IsDead) continue;
                     if(p.isRole(RoleType.BomberB))

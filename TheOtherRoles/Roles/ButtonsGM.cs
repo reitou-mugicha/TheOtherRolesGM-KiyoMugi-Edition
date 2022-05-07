@@ -2,14 +2,9 @@ using HarmonyLib;
 using Hazel;
 using System;
 using UnityEngine;
-using static TheOtherRoles.TheOtherRoles;
 using static TheOtherRoles.TheOtherRolesGM;
-using TheOtherRoles.Modules;
 using TheOtherRoles.Objects;
 using System.Collections.Generic;
-using System.Linq;
-using TheOtherRoles.Patches;
-using System.Reflection;
 
 namespace TheOtherRoles
 {

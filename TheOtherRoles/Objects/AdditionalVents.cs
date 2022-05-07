@@ -1,11 +1,9 @@
-
-using System;
 using System.Collections.Generic;
-using System.Collections;
 using UnityEngine;
 using System.Linq;
 
-namespace TheOtherRoles {
+namespace TheOtherRoles
+{
 
     public class AdditionalVents {
         public Vent vent;

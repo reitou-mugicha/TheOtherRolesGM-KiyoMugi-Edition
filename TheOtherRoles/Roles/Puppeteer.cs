@@ -2,12 +2,9 @@ using System;
 using Hazel;
 using HarmonyLib;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using TheOtherRoles.Objects;
-using TheOtherRoles.Patches;
 using static TheOtherRoles.TheOtherRoles;
-using static TheOtherRoles.GameHistory;
 using static TheOtherRoles.Patches.PlayerControlFixedUpdatePatch;
 
 namespace TheOtherRoles
@@ -449,10 +446,10 @@ namespace TheOtherRoles
                     }
                 }
 
-                // Arrorw一覧
+                // Arrows一覧
                 arrows = new List<Arrow>();
 
-                // インポスターの位置を示すArrorwを描画
+                // インポスターの位置を示すArrowsを描画
                 foreach(PlayerControl p in PlayerControl.AllPlayerControls){
                     if(p.Data.IsDead) continue;
                     Arrow arrow;

@@ -4,11 +4,9 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
-using System.Collections;
-using static TheOtherRoles.TheOtherRoles;
-using static TheOtherRoles.TheOtherRolesGM;
 
-namespace TheOtherRoles {
+namespace TheOtherRoles
+{
     [Harmony]
     public class CustomOverlays {
 

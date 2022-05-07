@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.Collections;
 using HarmonyLib;
 using Hazel;
 using UnityEngine;
 using TheOtherRoles.Patches;
 
-namespace TheOtherRoles.Objects {
+namespace TheOtherRoles.Objects
+{
     public class Trap{
         public GameObject trap;
         public static Sprite trapSprite;
@@ -88,7 +88,7 @@ namespace TheOtherRoles.Objects {
             this.audioSource.loop = false;
             this.audioSource.playOnAwake = false;
             this.audioSource.maxDistance = 2 * Trapper.maxDistance/3;
-            this.audioSource.minDistance = Trapper.minDsitance;
+            this.audioSource.minDistance = Trapper.minDistance;
             this.audioSource.rolloffMode = rollOffMode;
             this.audioSource.PlayOneShot(place);
 

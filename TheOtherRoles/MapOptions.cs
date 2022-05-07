@@ -1,10 +1,9 @@
 using System.Collections.Generic;
-using System.Collections;
 using System;
 using UnityEngine;
-using static TheOtherRoles.TheOtherRoles;
 
-namespace TheOtherRoles{
+namespace TheOtherRoles
+{
     static class MapOptions {
         // Set values
         public static int maxNumberOfMeetings = 10;
