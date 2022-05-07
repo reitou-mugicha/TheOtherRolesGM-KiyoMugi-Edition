@@ -541,7 +541,7 @@ namespace TheOtherRoles {
             }
 
             // Block impostor not fully grown mini kill
-            else if (Mini.mini != null && target.isRole(RoleType.Mini) && !Mini.isGrownUp()) {
+            else if (target.hasModifier(ModifierType.Mini) && !Mini.isGrownUp(target)) {
                 return MurderAttemptResult.SuppressKill;
             }
 

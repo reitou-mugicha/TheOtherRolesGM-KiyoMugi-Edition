@@ -624,8 +624,7 @@ namespace TheOtherRoles {
             madmateCanFixComm = CustomOption.Create(365, CustomOptionType.Modifier, "madmateCanFixComm", true, madmateSpawnRate);
             madmateExilePlayer = CustomOption.Create(10370, CustomOptionType.Modifier, "madmateExileCrewmate", false, madmateSpawnRate);
 
-            miniSpawnRate = new CustomRoleOption(180, CustomOptionType.Neutral, "mini", Mini.color, 1);
-            miniIsImpRate = CustomOption.Create(182, CustomOptionType.Neutral, "miniIsImpRate", rates, miniSpawnRate);
+            miniSpawnRate = new CustomRoleOption(180, CustomOptionType.Modifier, "mini", Mini.color, 15);
             miniGrowingUpDuration = CustomOption.Create(181, CustomOptionType.Neutral, "miniGrowingUpDuration", 400f, 100f, 1500f, 100f, miniSpawnRate, format: "unitSeconds");
 
             loversSpawnRate = new CustomRoleOption(50, CustomOptionType.Modifier, "lovers", Lovers.color, 1);
@@ -911,8 +910,6 @@ namespace TheOtherRoles {
 
             blockedRolePairings.Add((byte)RoleType.Vampire, new [] { (byte)RoleType.Warlock});
             blockedRolePairings.Add((byte)RoleType.Warlock, new [] { (byte)RoleType.Vampire});
-            blockedRolePairings.Add((byte)RoleType.Spy, new [] { (byte)RoleType.Mini});
-            blockedRolePairings.Add((byte)RoleType.Mini, new [] { (byte)RoleType.Spy});
             blockedRolePairings.Add((byte)RoleType.Vulture, new [] { (byte)RoleType.Cleaner});
             blockedRolePairings.Add((byte)RoleType.Cleaner, new [] { (byte)RoleType.Vulture});
         }

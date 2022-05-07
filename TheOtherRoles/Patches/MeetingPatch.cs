@@ -432,7 +432,6 @@ namespace TheOtherRoles.Patches {
                 if (roleInfo == null || 
                     roleInfo.roleType == RoleType.Lovers || 
                     roleInfo.roleType == guesserRole || 
-                    roleInfo == RoleInfo.niceMini || 
 					(!Guesser.evilGuesserCanGuessSpy && guesserRole == RoleType.EvilGuesser && roleInfo.roleType == RoleType.Spy) ||
                     roleInfo == RoleInfo.gm ||
                     (Guesser.onlyAvailableRoles && !roleInfo.enabled) ||

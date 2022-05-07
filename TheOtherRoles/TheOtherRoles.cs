@@ -52,7 +52,6 @@ namespace TheOtherRoles
             Seer.clearAndReload();
             EvilHacker.clearAndReload();
             Hacker.clearAndReload();
-            Mini.clearAndReload();
             Tracker.clearAndReload();
             Vampire.clearAndReload();
             Snitch.clearAndReload();
@@ -419,39 +418,6 @@ namespace TheOtherRoles
                 chargesVitals = Mathf.RoundToInt(CustomOptionHolder.hackerToolsNumber.getFloat()) / 2;
                 chargesAdminTable = Mathf.RoundToInt(CustomOptionHolder.hackerToolsNumber.getFloat()) / 2;
             cantMove = CustomOptionHolder.hackerNoMove.getBool();
-            }
-        }
-
-        public static class Mini
-        {
-            public static PlayerControl mini;
-            public static Color color = Color.white;
-            public const float defaultColliderRadius = 0.2233912f;
-            public const float defaultColliderOffset = 0.3636057f;
-
-            public static float growingUpDuration = 400f;
-            public static DateTime timeOfGrowthStart = DateTime.UtcNow;
-            public static bool triggerMiniLose = false;
-
-            public static void clearAndReload()
-            {
-                mini = null;
-                triggerMiniLose = false;
-                growingUpDuration = CustomOptionHolder.miniGrowingUpDuration.getFloat();
-                timeOfGrowthStart = DateTime.UtcNow;
-            }
-
-            public static float growingProgress()
-            {
-                if (timeOfGrowthStart == null) return 0f;
-
-                float timeSinceStart = (float)(DateTime.UtcNow - timeOfGrowthStart).TotalMilliseconds;
-                return Mathf.Clamp(timeSinceStart / (growingUpDuration * 1000), 0f, 1f);
-            }
-
-            public static bool isGrownUp()
-            {
-                return growingProgress() == 1f;
             }
         }
 

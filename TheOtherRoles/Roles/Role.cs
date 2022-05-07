@@ -62,8 +62,7 @@ namespace TheOtherRoles
         SerialKiller,
 
 
-        Mini = 150,
-        Lovers,
+        Lovers = 150,
         EvilGuesser,
         NiceGuesser,
         Jester,
@@ -284,8 +283,6 @@ namespace TheOtherRoles
                     return EvilHacker.evilHacker == player;
                 case RoleType.Hacker:
                     return Hacker.hacker == player;
-                case RoleType.Mini:
-                    return Mini.mini == player;
                 case RoleType.Tracker:
                     return Tracker.tracker == player;
                 case RoleType.Vampire:
@@ -401,9 +398,6 @@ namespace TheOtherRoles
                 case RoleType.Hacker:
                     Hacker.hacker = player;
                     break;
-                case RoleType.Mini:
-                    Mini.mini = player;
-                    break;
                 case RoleType.Tracker:
                     Tracker.tracker = player;
                     break;
@@ -511,7 +505,6 @@ namespace TheOtherRoles
             if (player.isRole(RoleType.Shifter)) Shifter.clearAndReload();
             if (player.isRole(RoleType.Seer)) Seer.clearAndReload();
             if (player.isRole(RoleType.Hacker)) Hacker.clearAndReload();
-            if (player.isRole(RoleType.Mini)) Mini.clearAndReload();
             if (player.isRole(RoleType.Tracker)) Tracker.clearAndReload();
             if (player.isRole(RoleType.Snitch)) Snitch.clearAndReload();
             if (player.isRole(RoleType.Swapper)) Swapper.clearAndReload();
@@ -601,7 +594,6 @@ namespace TheOtherRoles
             if (player.isRole(RoleType.Witch)) Witch.witch = target;
             if (player.isRole(RoleType.Assasin)) Assasin.assasin = target;
             if (player.isRole(RoleType.EvilHacker))  EvilHacker.evilHacker = target;
-            if (player.isRole(RoleType.Mini)) Mini.mini = target;
             if (player.isRole(RoleType.EvilGuesser)) Guesser.evilGuesser = target;
             if (player.isRole(RoleType.NiceGuesser)) Guesser.niceGuesser = target;
             if (player.isRole(RoleType.Jester)) Jester.jester = target;

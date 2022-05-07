@@ -65,8 +65,6 @@ namespace TheOtherRoles
         public static RoleInfo evilSwapper;
         public static RoleInfo seer;
         public static RoleInfo hacker;
-        public static RoleInfo niceMini;
-        public static RoleInfo evilMini;
         public static RoleInfo tracker;
         public static RoleInfo snitch;
         public static RoleInfo jackal;
@@ -134,8 +132,6 @@ namespace TheOtherRoles
             evilSwapper = new RoleInfo("evilSwapper", Palette.ImpostorRed, CustomOptionHolder.swapperSpawnRate, RoleType.Swapper);
             seer = new RoleInfo("seer", Seer.color, CustomOptionHolder.seerSpawnRate, RoleType.Seer);
             hacker = new RoleInfo("hacker", Hacker.color, CustomOptionHolder.hackerSpawnRate, RoleType.Hacker);
-            niceMini = new RoleInfo("niceMini", Mini.color, CustomOptionHolder.miniSpawnRate, RoleType.Mini);
-            evilMini = new RoleInfo("evilMini", Palette.ImpostorRed, CustomOptionHolder.miniSpawnRate, RoleType.Mini);
             tracker = new RoleInfo("tracker", Tracker.color, CustomOptionHolder.trackerSpawnRate, RoleType.Tracker);
             snitch = new RoleInfo("snitch", Snitch.color, CustomOptionHolder.snitchSpawnRate, RoleType.Snitch);
             jackal = new RoleInfo("jackal", Jackal.color, CustomOptionHolder.jackalSpawnRate, RoleType.Jackal);
@@ -194,8 +190,6 @@ namespace TheOtherRoles
                 assasin,
                 ninja,
                 serialKiller,
-                niceMini,
-                evilMini,
                 niceGuesser,
                 evilGuesser,
                 lovers,
@@ -282,7 +276,6 @@ namespace TheOtherRoles
             if (p.isRole(RoleType.Swapper)) infos.Add(p.Data.Role.IsImpostor ? evilSwapper : niceSwapper);
             if (p.isRole(RoleType.Seer)) infos.Add(seer);
             if (p.isRole(RoleType.Hacker)) infos.Add(hacker);
-            if (p.isRole(RoleType.Mini)) infos.Add(p.Data.Role.IsImpostor ? evilMini : niceMini);
             if (p.isRole(RoleType.Tracker)) infos.Add(tracker);
             if (p.isRole(RoleType.Snitch)) infos.Add(snitch);
             if (p.isRole(RoleType.Jackal) || (Jackal.formerJackals != null && Jackal.formerJackals.Any(x => x.PlayerId == p.PlayerId))) infos.Add(jackal);

@@ -67,7 +67,7 @@ namespace TheOtherRoles
                     {
                         bool misfire = false;
                         byte targetId = local.currentTarget.PlayerId; ;
-                        if ((local.currentTarget.Data.Role.IsImpostor && (local.currentTarget != Mini.mini || Mini.isGrownUp())) ||
+                        if ((local.currentTarget.Data.Role.IsImpostor && (!local.currentTarget.hasModifier(ModifierType.Mini) || Mini.isGrownUp(local.currentTarget))) ||
                             (Sheriff.spyCanDieToSheriff && Spy.spy == local.currentTarget) ||
                             (Sheriff.madmateCanDieToSheriff && local.currentTarget.hasModifier(ModifierType.Madmate)) ||
                             (Sheriff.createdMadmateCanDieToSheriff && local.currentTarget.hasModifier(ModifierType.CreatedMadmate)) ||

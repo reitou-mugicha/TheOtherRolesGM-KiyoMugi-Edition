@@ -182,7 +182,8 @@ namespace TheOtherRoles.Patches {
 
         static void WrapUpPostfix(GameData.PlayerInfo exiled) {
             // Mini exile lose condition
-            if (exiled != null && Mini.mini != null && Mini.mini.PlayerId == exiled.PlayerId && !Mini.isGrownUp() && !Mini.mini.Data.Role.IsImpostor) {
+            var p = Helpers.playerById(exiled.PlayerId);
+            if (exiled != null && p.hasModifier(ModifierType.Mini) && !Mini.isGrownUp(p) && !p.Data.Role.IsImpostor) {
                 Mini.triggerMiniLose = true;
             }
 
@@ -219,10 +220,10 @@ namespace TheOtherRoles.Patches {
             TheOtherRolesGM.OnMeetingEnd();
 
             // Mini set adapted cooldown
-            if (Mini.mini != null && PlayerControl.LocalPlayer == Mini.mini && Mini.mini.Data.Role.IsImpostor)
+            if (PlayerControl.LocalPlayer.hasModifier(ModifierType.Mini) && PlayerControl.LocalPlayer.Data.Role.IsImpostor)
             {
-                var multiplier = Mini.isGrownUp() ? 0.66f : 2f;
-                Mini.mini.SetKillTimer(PlayerControl.GameOptions.KillCooldown * multiplier);
+                var multiplier = Mini.isGrownUp(PlayerControl.LocalPlayer) ? 0.66f : 2f;
+                PlayerControl.LocalPlayer.SetKillTimer(PlayerControl.GameOptions.KillCooldown * multiplier);
             }
 
             // Seer spawn souls

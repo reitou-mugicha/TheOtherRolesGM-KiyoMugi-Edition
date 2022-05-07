@@ -53,7 +53,6 @@ namespace TheOtherRoles
             RoleType.Bait,
             RoleType.Medium,
             RoleType.FortuneTeller,
-            RoleType.Mini,
             RoleType.NiceGuesser,
             RoleType.Watcher,
         };

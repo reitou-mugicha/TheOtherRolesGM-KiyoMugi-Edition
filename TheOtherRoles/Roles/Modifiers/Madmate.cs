@@ -77,7 +77,6 @@ namespace TheOtherRoles
             RoleType.SecurityGuard,
             RoleType.Bait,
             RoleType.Medium,
-            RoleType.Mini,
             RoleType.NiceGuesser,
             RoleType.Watcher,
         };

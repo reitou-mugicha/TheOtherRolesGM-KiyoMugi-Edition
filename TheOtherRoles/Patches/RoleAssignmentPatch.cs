@@ -318,15 +318,6 @@ namespace TheOtherRoles.Patches
 
         private static void selectFactionForFactionIndependentRoles(RoleAssignmentData data)
         {
-            // Assign Mini (33% chance impostor / 67% chance crewmate)
-            if (data.impostors.Count > 0 && data.maxImpostorRoles > 0 && rnd.Next(1, 101) <= CustomOptionHolder.miniIsImpRate.getSelection() * 10)
-            {
-                data.impSettings.Add((byte)RoleType.Mini, (CustomOptionHolder.miniSpawnRate.getSelection(), 1));
-            }
-            else if (data.crewmates.Count > 0 && data.maxCrewmateRoles > 0)
-            {
-                data.crewSettings.Add((byte)RoleType.Mini, (CustomOptionHolder.miniSpawnRate.getSelection(), 1));
-            }
 
             // Assign Guesser (chance to be impostor based on setting)
             bool isEvilGuesser = (rnd.Next(1, 101) <= CustomOptionHolder.guesserIsImpGuesserRate.getSelection() * 10);
@@ -638,6 +629,19 @@ namespace TheOtherRoles.Patches
                         break;
                     }
                     setModifierToRandomPlayer((byte)ModifierType.AntiTeleport, AntiTeleport.candidates);
+                }
+            }
+            // Mini
+            for (int i = 0; i < CustomOptionHolder.miniSpawnRate.count; i++)
+            {
+                if (rnd.Next(1, 100) <= CustomOptionHolder.miniSpawnRate.rate * 10)
+                {
+                    var candidates = Mini.candidates;
+                    if (candidates.Count <= 0)
+                    {
+                        break;
+                    }
+                    setModifierToRandomPlayer((byte)ModifierType.Mini, Mini.candidates);
                 }
             }
         }

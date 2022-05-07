@@ -51,6 +51,7 @@ namespace TheOtherRoles
             Puppeteer.Clear();
             MimicK.Clear();
             MimicA.Clear();
+            Mini.Clear();
             Role.ClearAll();
         }
 

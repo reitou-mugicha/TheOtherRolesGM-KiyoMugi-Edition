@@ -226,7 +226,7 @@ namespace TheOtherRoles.Patches
 
             bool jesterWin = Jester.jester != null && gameOverReason == (GameOverReason)CustomGameOverReason.JesterWin;
             bool arsonistWin = Arsonist.arsonist != null && gameOverReason == (GameOverReason)CustomGameOverReason.ArsonistWin;
-            bool miniLose = Mini.mini != null && gameOverReason == (GameOverReason)CustomGameOverReason.MiniLose;
+            bool miniLose = Mini.exists && gameOverReason == (GameOverReason)CustomGameOverReason.MiniLose;
             bool loversWin = Lovers.anyAlive() && !(Lovers.separateTeam && gameOverReason == GameOverReason.HumansByTask);
             bool teamJackalWin = gameOverReason == (GameOverReason)CustomGameOverReason.TeamJackalWin;
             bool vultureWin = Vulture.vulture != null && gameOverReason == (GameOverReason)CustomGameOverReason.VultureWin;
@@ -241,9 +241,9 @@ namespace TheOtherRoles.Patches
             if (miniLose)
             {
                 TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
-                WinningPlayerData wpd = new WinningPlayerData(Mini.mini.Data);
-                wpd.IsYou = false; // If "no one is the Mini", it will display the Mini, but also show defeat to everyone
-                TempData.winners.Add(wpd);
+                // WinningPlayerData wpd = new WinningPlayerData(Mini.mini.Data);
+                //wpd.IsYou = false; // If "no one is the Mini", it will display the Mini, but also show defeat to everyone
+                // TempData.winners.Add(wpd);
                 AdditionalTempData.winCondition = WinCondition.MiniLose;
             }
 

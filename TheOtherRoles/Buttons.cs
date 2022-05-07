@@ -1299,7 +1299,14 @@ namespace TheOtherRoles
                     if (Medium.target == null || Medium.target.player == null) return;
                     string msg = "";
 
-                    int randomNumber = Medium.target.killerIfExisting?.PlayerId == Mini.mini?.PlayerId ? TheOtherRoles.rnd.Next(3) : TheOtherRoles.rnd.Next(4);
+                    int randomNumber = TheOtherRoles.rnd.Next(4);
+                    if(Medium.target.killerIfExisting != null)
+                    {
+                        if(Helpers.playerById(Medium.target.killerIfExisting.PlayerId).hasModifier(ModifierType.Mini))
+                        {
+                            randomNumber = TheOtherRoles.rnd.Next(3);
+                        }
+                    }
                     string typeOfColor = Helpers.isLighterColor(Medium.target.killerIfExisting.Data.DefaultOutfit.ColorId) ?
                         ModTranslation.getString("detectiveColorLight") :
                         ModTranslation.getString("detectiveColorDark");

@@ -375,25 +375,33 @@ namespace TheOtherRoles.Patches {
             Tracker.corpsesTrackingTimer -= Time.deltaTime;
         }
 
-        public static void miniUpdate() {
-            if (Mini.mini == null || Camouflager.camouflageTimer > 0f) return;
+        public static void miniUpdate()
+        {
+            foreach(var mini in Mini.players)
+            {
+                _miniUpdate(mini);
+            }
+
+        }
+        public static void _miniUpdate(Mini mini) {
+            if (Camouflager.camouflageTimer > 0f) return;
                 
-            float growingProgress = Mini.growingProgress();
+            float growingProgress = mini.growingProgress();
             float scale = growingProgress * 0.35f + 0.35f;
             string suffix = "";
             if (growingProgress != 1f)
                 suffix = " <color=#FAD934FF>(" + Mathf.FloorToInt(growingProgress * 18) + ")</color>"; 
 
-            if (!Helpers.hidePlayerName(Mini.mini))
-                Mini.mini.nameText.text += suffix;
+            if (!Helpers.hidePlayerName(mini.player))
+                mini.player.nameText.text += suffix;
 
             if (MeetingHud.Instance != null) {
                 foreach (PlayerVoteArea player in MeetingHud.Instance.playerStates)
-                    if (player.NameText != null && Mini.mini.PlayerId == player.TargetPlayerId)
+                    if (player.NameText != null && mini.player.PlayerId == player.TargetPlayerId)
                         player.NameText.text += suffix;
             }
 
-            if (Morphling.morphling != null && Morphling.morphTarget == Mini.mini && Morphling.morphTimer > 0f && !Helpers.hidePlayerName(Morphling.morphling))
+            if (Morphling.morphling != null && Morphling.morphTarget == mini.player && Morphling.morphTimer > 0f && !Helpers.hidePlayerName(Morphling.morphling))
                 Morphling.morphling.nameText.text += suffix;
         }
 

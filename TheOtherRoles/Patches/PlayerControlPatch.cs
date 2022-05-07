@@ -294,7 +294,13 @@ namespace TheOtherRoles.Patches
                 // Only exclude sidekick from beeing targeted if the jackal can create sidekicks from impostors
                 if (Sidekick.sidekick != null) untargetablePlayers.Add(Sidekick.sidekick);
             }
-            if (Mini.mini != null && !Mini.isGrownUp()) untargetablePlayers.Add(Mini.mini); // Exclude Jackal from targeting the Mini unless it has grown up
+            foreach(var mini in Mini.players)
+            {
+                if(!Mini.isGrownUp(mini.player))
+                {
+                    untargetablePlayers.Add(mini.player);
+                }
+            }
             Jackal.currentTarget = setTarget(untargetablePlayers: untargetablePlayers);
             setPlayerOutline(Jackal.currentTarget, Palette.ImpostorRed);
         }
@@ -304,7 +310,13 @@ namespace TheOtherRoles.Patches
             if (Sidekick.sidekick == null || Sidekick.sidekick != PlayerControl.LocalPlayer) return;
             var untargetablePlayers = new List<PlayerControl>();
             if (Jackal.jackal != null) untargetablePlayers.Add(Jackal.jackal);
-            if (Mini.mini != null && !Mini.isGrownUp()) untargetablePlayers.Add(Mini.mini); // Exclude Sidekick from targeting the Mini unless it has grown up
+            foreach(var mini in Mini.players)
+            {
+                if(!Mini.isGrownUp(mini.player))
+                {
+                    untargetablePlayers.Add(mini.player);
+                }
+            }
             Sidekick.currentTarget = setTarget(untargetablePlayers: untargetablePlayers);
             if (Sidekick.canKill) setPlayerOutline(Sidekick.currentTarget, Palette.ImpostorRed);
         }
@@ -519,21 +531,24 @@ namespace TheOtherRoles.Patches
             collider.offset = Mini.defaultColliderOffset * Vector2.down;
 
             // Set adapted player size to Mini and Morphling
-            if (Mini.mini == null || Camouflager.camouflageTimer > 0f) return;
+            if (Camouflager.camouflageTimer > 0f) return;
 
-            float growingProgress = Mini.growingProgress();
-            float scale = growingProgress * 0.35f + 0.35f;
-            float correctedColliderRadius = Mini.defaultColliderRadius * 0.7f / scale; // scale / 0.7f is the factor by which we decrease the player size, hence we need to increase the collider size by 0.7f / scale
+            foreach(var mini in Mini.players)
+            {
+                float growingProgress = mini.growingProgress();
+                float scale = growingProgress * 0.35f + 0.35f;
+                float correctedColliderRadius = Mini.defaultColliderRadius * 0.7f / scale; // scale / 0.7f is the factor by which we decrease the player size, hence we need to increase the collider size by 0.7f / scale
 
-            if (p == Mini.mini)
-            {
-                p.transform.localScale = new Vector3(scale, scale, 1f);
-                collider.radius = correctedColliderRadius;
-            }
-            if (Morphling.morphling != null && p == Morphling.morphling && Morphling.morphTarget == Mini.mini && Morphling.morphTimer > 0f)
-            {
-                p.transform.localScale = new Vector3(scale, scale, 1f);
-                collider.radius = correctedColliderRadius;
+                if (p.hasModifier(ModifierType.Mini))
+                {
+                    p.transform.localScale = new Vector3(scale, scale, 1f);
+                    collider.radius = correctedColliderRadius;
+                }
+                if (Morphling.morphling != null && p == Morphling.morphling && Morphling.morphTarget.hasModifier(ModifierType.Mini) && Morphling.morphTimer > 0f)
+                {
+                    p.transform.localScale = new Vector3(scale, scale, 1f);
+                    collider.radius = correctedColliderRadius;
+                }
             }
         }
 
@@ -764,7 +779,7 @@ namespace TheOtherRoles.Patches
                 var possibleTargets = new List<PlayerControl>();
                 foreach (PlayerControl p in PlayerControl.AllPlayerControls)
                 {
-                    if (!p.Data.IsDead && !p.Data.Disconnected && !p.Data.Role.IsImpostor && p != Spy.spy && (p != Mini.mini || Mini.isGrownUp()) && !p.isGM() && BountyHunter.bountyHunter.getPartner() != p) possibleTargets.Add(p);
+                    if (!p.Data.IsDead && !p.Data.Disconnected && !p.Data.Role.IsImpostor && p != Spy.spy && (p.hasModifier(ModifierType.Mini) || Mini.isGrownUp(p)) && !p.isGM() && BountyHunter.bountyHunter.getPartner() != p) possibleTargets.Add(p);
                 }
                 BountyHunter.bounty = possibleTargets[TheOtherRoles.rnd.Next(0, possibleTargets.Count)];
                 if (BountyHunter.bounty == null) return;
@@ -801,7 +816,10 @@ namespace TheOtherRoles.Patches
             if (Assasin.assasin == null || Assasin.assasin != PlayerControl.LocalPlayer) return;
             List<PlayerControl> untargetables = new List<PlayerControl>();
             if (Spy.spy != null && !Spy.impostorsCanKillAnyone) untargetables.Add(Spy.spy);
-            if (Mini.mini != null) untargetables.Add(Mini.mini);
+            foreach(var mini in Mini.players)
+            {
+                untargetables.Add(mini.player);
+            }
             // if (Sidekick.wasTeamRed && !Spy.impostorsCanKillAnyone) untargetables.Add(Sidekick.sidekick);
             // if (Jackal.wasTeamRed && !Spy.impostorsCanKillAnyone) untargetables.Add(Jackal.jackal);
             Assasin.currentTarget = setTarget(onlyCrewmates: true, untargetablePlayers: untargetables);
@@ -1128,10 +1146,12 @@ namespace TheOtherRoles.Patches
         private static Vector2 offset = Vector2.zero;
         public static void Prefix(PlayerPhysics __instance)
         {
-            bool correctOffset = Camouflager.camouflageTimer <= 0f && (__instance.myPlayer == Mini.mini || (Morphling.morphling != null && __instance.myPlayer == Morphling.morphling && Morphling.morphTarget == Mini.mini && Morphling.morphTimer > 0f));
+            bool correctOffset = Camouflager.camouflageTimer <= 0f && (__instance.myPlayer.hasModifier(ModifierType.Mini)  || (Morphling.morphling != null && __instance.myPlayer == Morphling.morphling && Morphling.morphTarget.hasModifier(ModifierType.Mini) && Morphling.morphTimer > 0f));
             if (correctOffset)
             {
-                float currentScaling = (Mini.growingProgress() + 1) * 0.5f;
+                Mini mini = Mini.players.First(x=> x.player == __instance.myPlayer);
+                if(mini == null) return;
+                float currentScaling = (mini.growingProgress() + 1) * 0.5f;
                 __instance.myPlayer.Collider.offset = currentScaling * Mini.defaultColliderOffset * Vector2.down;
             }
         }
@@ -1295,10 +1315,10 @@ namespace TheOtherRoles.Patches
             }
 
             // Mini set adapted kill cooldown
-            if (Mini.mini != null && PlayerControl.LocalPlayer == Mini.mini && Mini.mini.Data.Role.IsImpostor && Mini.mini == __instance)
+            if (PlayerControl.LocalPlayer.hasModifier(ModifierType.Mini) && PlayerControl.LocalPlayer.Data.Role.IsImpostor && PlayerControl.LocalPlayer == __instance)
             {
-                var multiplier = Mini.isGrownUp() ? 0.66f : 2f;
-                Mini.mini.SetKillTimer(PlayerControl.GameOptions.KillCooldown * multiplier);
+                var multiplier = Mini.isGrownUp(PlayerControl.LocalPlayer) ? 0.66f : 2f;
+                PlayerControl.LocalPlayer.SetKillTimer(PlayerControl.GameOptions.KillCooldown * multiplier);
             }
 
             // Set bountyHunter cooldown
@@ -1355,7 +1375,7 @@ namespace TheOtherRoles.Patches
             if (PlayerControl.GameOptions.KillCooldown <= 0f) return false;
             float multiplier = 1f;
             float addition = 0f;
-            if (PlayerControl.LocalPlayer.isRole(RoleType.Mini) && PlayerControl.LocalPlayer.isImpostor()) multiplier = Mini.isGrownUp() ? 0.66f : 2f;
+            if (PlayerControl.LocalPlayer.hasModifier(ModifierType.Mini) && PlayerControl.LocalPlayer.isImpostor()) multiplier = Mini.isGrownUp(PlayerControl.LocalPlayer) ? 0.66f : 2f;
             if (PlayerControl.LocalPlayer.isRole(RoleType.BountyHunter)) addition = BountyHunter.punishmentTime;
             if (PlayerControl.LocalPlayer.isRole(RoleType.Ninja) && Ninja.isPenalized(PlayerControl.LocalPlayer)) addition = Ninja.killPenalty;
 
