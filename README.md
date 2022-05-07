@@ -521,7 +521,7 @@ The [Role Assignment](#role-assignment) sections explains how the roles are bein
 - Fixed a bug where the Guesser & Sheriff were not assigned properly (fingers crossed)
 - Fixed a bug where Hacker buttons didn't work as intended with "random map" option
 - Fixed a bug where the Security Guard could not access cams on Skeld, dlekS & Airship
-- Changed Tracker update intervall to a minimum of 1 thanks [LaicosVK](https://github.com/LaicosVK)
+- Changed Tracker update interval to a minimum of 1 thanks [LaicosVK](https://github.com/LaicosVK)
 
 **Version 3.4.0**
 - Added new Role [Deputy](#deputy) thanks [gendelo3](https://github.com/gendelo3)

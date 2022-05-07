@@ -183,7 +183,7 @@ namespace TheOtherRoles
             public static PlayerControl detective;
             public static Color color = new Color32(45, 106, 165, byte.MaxValue);
 
-            public static float footprintIntervall = 1f;
+            public static float footprintInterval = 1f;
             public static float footprintDuration = 1f;
             public static bool anonymousFootprints = false;
             public static float reportNameDuration = 0f;
@@ -194,7 +194,7 @@ namespace TheOtherRoles
             {
                 detective = null;
                 anonymousFootprints = CustomOptionHolder.detectiveAnonymousFootprints.getBool();
-                footprintIntervall = CustomOptionHolder.detectiveFootprintIntervall.getFloat();
+                footprintInterval = CustomOptionHolder.detectiveFootprintInterval.getFloat();
                 footprintDuration = CustomOptionHolder.detectiveFootprintDuration.getFloat();
                 reportNameDuration = CustomOptionHolder.detectiveReportNameDuration.getFloat();
                 reportColorDuration = CustomOptionHolder.detectiveReportColorDuration.getFloat();
@@ -452,7 +452,7 @@ namespace TheOtherRoles
             public static Color color = new Color32(100, 58, 220, byte.MaxValue);
         public static List<Arrow> localArrows = new List<Arrow>();
 
-            public static float updateIntervall = 5f;
+            public static float updateInterval = 5f;
             public static bool resetTargetAfterMeeting = false;
         public static bool canTrackCorpses = false;
         public static float corpsesTrackingCooldown = 30f;
@@ -496,7 +496,7 @@ namespace TheOtherRoles
                 tracker = null;
                 resetTracked();
                 timeUntilUpdate = 0f;
-                updateIntervall = CustomOptionHolder.trackerUpdateIntervall.getFloat();
+                updateInterval = CustomOptionHolder.trackerUpdateInterval.getFloat();
                 resetTargetAfterMeeting = CustomOptionHolder.trackerResetTargetAfterMeeting.getBool();
             if (localArrows != null) {
                 foreach (Arrow arrow in localArrows)
@@ -1113,7 +1113,7 @@ namespace TheOtherRoles
             public static bool showArrow = true;
             public static float bountyKillCooldown = 0f;
             public static float punishmentTime = 15f;
-            public static float arrowUpdateIntervall = 10f;
+            public static float arrowUpdateInterval = 10f;
 
             public static float arrowUpdateTimer = 0f;
             public static float bountyUpdateTimer = 0f;
@@ -1141,7 +1141,7 @@ namespace TheOtherRoles
                 bountyKillCooldown = CustomOptionHolder.bountyHunterReducedCooldown.getFloat();
                 punishmentTime = CustomOptionHolder.bountyHunterPunishmentTime.getFloat();
                 showArrow = CustomOptionHolder.bountyHunterShowArrow.getBool();
-                arrowUpdateIntervall = CustomOptionHolder.bountyHunterArrowUpdateIntervall.getFloat();
+                arrowUpdateInterval = CustomOptionHolder.bountyHunterArrowUpdateInterval.getFloat();
             }
         }
 

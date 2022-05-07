@@ -235,7 +235,7 @@ namespace TheOtherRoles.Patches
             Detective.timer -= Time.fixedDeltaTime;
             if (Detective.timer <= 0f)
             {
-                Detective.timer = Detective.footprintIntervall;
+                Detective.timer = Detective.footprintInterval;
                 foreach (PlayerControl player in PlayerControl.AllPlayerControls)
                 {
                     if (player != null && player != PlayerControl.LocalPlayer && !player.Data.IsDead && !player.inVent && !player.isGM())
@@ -469,7 +469,7 @@ namespace TheOtherRoles.Patches
 
                         Tracker.arrow.Update(position);
                         Tracker.arrow.arrow.SetActive(trackedOnMap);
-                        Tracker.timeUntilUpdate = Tracker.updateIntervall;
+                        Tracker.timeUntilUpdate = Tracker.updateInterval;
                     }
                     else
                     {
@@ -789,7 +789,7 @@ namespace TheOtherRoles.Patches
                 if (BountyHunter.arrowUpdateTimer <= 0f)
                 {
                     BountyHunter.arrow.Update(BountyHunter.bounty.transform.position);
-                    BountyHunter.arrowUpdateTimer = BountyHunter.arrowUpdateIntervall;
+                    BountyHunter.arrowUpdateTimer = BountyHunter.arrowUpdateInterval;
                 }
                 BountyHunter.arrow.Update();
             }
