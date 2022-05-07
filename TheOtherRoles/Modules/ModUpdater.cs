@@ -95,7 +95,7 @@ namespace TheOtherRoles.Modules
                 foreach (string f in files)
                     File.Delete(f);
             } catch (System.Exception e) {
-                System.Console.WriteLine("Exception occured when clearing old versions:\n" + e);
+                System.Console.WriteLine("Exception occurred when clearing old versions:\n" + e);
             }
         }
 

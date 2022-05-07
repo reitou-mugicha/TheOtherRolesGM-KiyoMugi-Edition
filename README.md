@@ -640,7 +640,7 @@ The [Role Assignment](#role-assignment) sections explains how the roles are bein
 - **New Role:** [Vulture](#vulture)
 - Added Jackal Option: "Jackal Can See If Engineer Is In A Vent"
 - Added Guesser Option: "Guesser Can Shoot Multiple Times Per Meeting"
-- Fixed a bug that occured when the Shifter shifted the Bait
+- Fixed a bug that occurred when the Shifter shifted the Bait
 - Fixed a bug where [Medium](#medium) did not exlude the Evil [Mini](#mini)
 - [Vulture](#vulture) "Number Of Corpses Needed To Be Eaten" max value extended to 12
 - Added Vulture Option: "Show Arrows Pointing Towards The Corpses"
