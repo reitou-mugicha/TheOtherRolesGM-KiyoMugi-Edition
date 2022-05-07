@@ -1092,7 +1092,7 @@ namespace TheOtherRoles
             {
                 niceGuesser = null;
                 evilGuesser = null;
-            guesserCantGuessSnitch = CustomOptionHolder.guesserCantGuessSnitchIfTaksDone.getBool();
+            guesserCantGuessSnitch = CustomOptionHolder.guesserCantGuessSnitchIfTaskDone.getBool();
                 remainingShotsEvilGuesser = Mathf.RoundToInt(CustomOptionHolder.guesserNumberOfShots.getFloat());
                 remainingShotsNiceGuesser = Mathf.RoundToInt(CustomOptionHolder.guesserNumberOfShots.getFloat());
                 onlyAvailableRoles = CustomOptionHolder.guesserOnlyAvailableRoles.getBool();

@@ -87,7 +87,7 @@ namespace TheOtherRoles
         public static CustomOption guesserKillsThroughShield;
         public static CustomOption guesserEvilCanKillSpy;
         public static CustomOption guesserSpawnBothRate;
-        public static CustomOption guesserCantGuessSnitchIfTaksDone;
+        public static CustomOption guesserCantGuessSnitchIfTaskDone;
 
         public static CustomRoleOption jesterSpawnRate;
         public static CustomOption jesterCanCallEmergency;
@@ -642,7 +642,7 @@ namespace TheOtherRoles
             guesserShowInfoInGhostChat = CustomOption.Create(315, CustomOptionType.Neutral, "guesserToGhostChat", true, guesserSpawnRate);
             guesserKillsThroughShield = CustomOption.Create(316, CustomOptionType.Neutral, "guesserPierceShield", true, guesserSpawnRate);
             guesserEvilCanKillSpy = CustomOption.Create(318, CustomOptionType.Neutral, "guesserEvilCanKillSpy", true, guesserSpawnRate);
-			guesserCantGuessSnitchIfTaksDone = CustomOption.Create(319, CustomOptionType.Neutral, "guesserCantGuessSnitchIfTaksDone", true, guesserSpawnRate);
+			guesserCantGuessSnitchIfTaskDone = CustomOption.Create(319, CustomOptionType.Neutral, "guesserCantGuessSnitchIfTaskDone", true, guesserSpawnRate);
 
             swapperSpawnRate = new CustomRoleOption(150, CustomOptionType.Neutral, "swapper", Swapper.color, 1);
             swapperIsImpRate = CustomOption.Create(153, CustomOptionType.Neutral, "swapperIsImpRate", rates, swapperSpawnRate);
