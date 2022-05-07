@@ -18,7 +18,7 @@ namespace TheOtherRoles
     {
         // Main Controls
 
-        ResetVaribles = 60,
+        ResetVariables = 60,
         ShareOptions,
         ForceEnd,
         SetRole,
@@ -1299,7 +1299,7 @@ namespace TheOtherRoles
 
                     // Main Controls
 
-                    case (byte)CustomRPC.ResetVaribles:
+                    case (byte)CustomRPC.ResetVariables:
                         RPCProcedure.resetVariables();
                         break;
                     case (byte)CustomRPC.ShareOptions:
