@@ -179,7 +179,7 @@ namespace TheOtherRoles.Patches
         static void WrapUpPostfix(GameData.PlayerInfo exiled) {
             // Mini exile lose condition
             var p = Helpers.playerById(exiled.PlayerId);
-            if (exiled != null && p.hasModifier(ModifierType.Mini) && !Mini.isGrownUp(p) && !p.Data.Role.IsImpostor) {
+            if (exiled != null && p.hasModifier(ModifierType.Mini) && !Mini.isGrownUp(p) && !p.Data.Role.IsImpostor && !p.isNeutral()) {
                 Mini.triggerMiniLose = true;
             }
 
