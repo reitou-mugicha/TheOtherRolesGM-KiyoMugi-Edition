@@ -460,7 +460,7 @@ namespace TheOtherRoles
 
             presetSelection = CustomOption.Create(0, CustomOptionType.General, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "presetSelection"), presets, null, true);
 
-            // Using new id's for the options to not break compatibilty with older versions
+            // Using new id's for the options to not break compatibility with older versions
             crewmateRolesCountMin = CustomOption.Create(300, CustomOptionType.General, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "crewmateRolesCountMin"), 0f, 0f, 15f, 1f, null, true);
             crewmateRolesCountMax = CustomOption.Create(301, CustomOptionType.General, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "crewmateRolesCountMax"), 0f, 0f, 15f, 1f);
             neutralRolesCountMin = CustomOption.Create(302, CustomOptionType.General, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "neutralRolesCountMin"), 0f, 0f, 15f, 1f);
