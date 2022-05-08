@@ -10,8 +10,11 @@ namespace TheOtherRoles.Modules
     public static class AssetLoader
     {
         private static readonly Assembly allaudio = Assembly.GetExecutingAssembly();
+        private static bool flag = false;
         public static void LoadAssets() 
         {
+            if(flag) return;
+            flag = true;
             var resourceAudioAssetBundleStream = allaudio.GetManifestResourceStream("TheOtherRoles.Resources.AssetBundle.audiobundle");
             var assetBundleBundle = AssetBundle.LoadFromMemory(resourceAudioAssetBundleStream.ReadFully());
             Trap.activate = assetBundleBundle.LoadAsset<AudioClip>("TrapperActivate.mp3").DontUnload();
