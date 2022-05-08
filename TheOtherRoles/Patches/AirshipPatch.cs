@@ -88,6 +88,11 @@ namespace TheOtherRoles.Patches
         protected static Console ActivateConsole(string objectName)
         {
             GameObject obj = UnityEngine.GameObject.Find(objectName);
+            if (obj == null)
+            {
+                Logger.error($"Object \"{objectName}\" was not found!", "ActivateConsole");
+                return null;
+            }
             obj.layer = LayerMask.NameToLayer("ShortObjects");
             Console console = obj.GetComponent<Console>();
             PassiveButton button = obj.GetComponent<PassiveButton>();
