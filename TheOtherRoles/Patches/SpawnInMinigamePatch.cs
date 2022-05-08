@@ -291,12 +291,12 @@ namespace TheOtherRoles.Patches
                         {
                             true
                         });
-                        doorSystem.timers[SystemTypes.Brig] = 15f;
-                        doorSystem.timers[SystemTypes.Comms] = 15f;
-                        doorSystem.timers[SystemTypes.Medical] = 15f;
-                        doorSystem.timers[SystemTypes.Engine] = 15f;
-                        doorSystem.timers[SystemTypes.Records] = 15f;
-                        doorSystem.timers[SystemTypes.Kitchen] = 15f;
+                        doorSystem.timers[SystemTypes.Brig] = 0f;
+                        doorSystem.timers[SystemTypes.Comms] = 0f;
+                        doorSystem.timers[SystemTypes.Medical] = 0f;
+                        doorSystem.timers[SystemTypes.Engine] = 0f;
+                        doorSystem.timers[SystemTypes.Records] = 0f;
+                        doorSystem.timers[SystemTypes.Kitchen] = 0f;
 
                         if(isFirstSpawn) resetButtons();
                     }
