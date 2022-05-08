@@ -24,21 +24,6 @@ namespace TheOtherRoles.Objects
         public PlayerControl target;
         public DateTime placedTime;
 
-        public static void loadAudioClips()
-        {
-            // 音声ファイル読み込み 
-            if(place== null)
-                place = FileImporter.ImportWAVAudio("TheOtherRoles.Resources.TrapperPlace.wav", false);
-            if(activate == null)
-                activate = FileImporter.ImportWAVAudio("TheOtherRoles.Resources.TrapperActivate.wav", false);
-            if(disable == null)
-                disable = FileImporter.ImportWAVAudio("TheOtherRoles.Resources.TrapperDisable.wav", false);
-            if(kill == null )
-                kill = FileImporter.ImportWAVAudio("TheOtherRoles.Resources.TrapperKill.wav", false);
-            if(countdown == null)
-                countdown = FileImporter.ImportWAVAudio("TheOtherRoles.Resources.TrapperCountdown.wav", false);
-        }
-
         public static void loadSprite()
         {
             if (trapSprite == null)
@@ -101,7 +86,6 @@ namespace TheOtherRoles.Objects
 
         public static void clearAllTraps()
         {
-            loadAudioClips();
             loadSprite();
             foreach(var trap in traps.Values)
             {

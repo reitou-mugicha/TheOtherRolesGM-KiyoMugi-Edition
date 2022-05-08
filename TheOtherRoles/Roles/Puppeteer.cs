@@ -215,7 +215,6 @@ namespace TheOtherRoles
 
         public static void Clear()
         {
-            laugh = FileImporter.ImportWAVAudio("TheOtherRoles.Resources.PuppeteerLaugh.wav", false);
             soundFlag = false;
             players = new List<Puppeteer>();
             if(dummy != null) GameData.Instance.RemovePlayer(dummy.PlayerId);
