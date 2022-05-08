@@ -76,6 +76,12 @@ namespace TheOtherRoles.Patches
         {
             Console console = ActivateConsole(consoleName);
 
+            if (console == null)
+            {
+                Logger.error($"consoleName \"{consoleName}\" is null", "ActivateWiring");
+                return null;
+            }
+
             if (!console.TaskTypes.Contains(TaskTypes.FixWiring))
             {
                 var list=console.TaskTypes.ToList();
