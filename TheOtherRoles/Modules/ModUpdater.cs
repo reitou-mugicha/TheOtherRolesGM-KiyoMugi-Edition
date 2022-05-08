@@ -16,9 +16,53 @@ namespace TheOtherRoles.Modules
     public class ModUpdaterButton {
         private static void Prefix(MainMenuManager __instance) {
             CustomHatLoader.LaunchHatFetcher();
+            var template = GameObject.Find("ExitGameButton");
+
+            // Discrodボタン
+            var buttonDiscord = UnityEngine.Object.Instantiate(template, null);
+            buttonDiscord.transform.localPosition = new Vector3(buttonDiscord.transform.localPosition.x, buttonDiscord.transform.localPosition.y + 0.6f, buttonDiscord.transform.localPosition.z);
+
+            var textDiscord = buttonDiscord.transform.GetChild(0).GetComponent<TMPro.TMP_Text>();
+            __instance.StartCoroutine(Effects.Lerp(0.1f, new System.Action<float>((p) => {
+                textDiscord.SetText("Discord");
+            })));
+
+            PassiveButton passiveButtonDiscord = buttonDiscord.GetComponent<PassiveButton>();
+            SpriteRenderer buttonSpriteDiscord = buttonDiscord.GetComponent<SpriteRenderer>();
+
+            passiveButtonDiscord.OnClick = new Button.ButtonClickedEvent();
+            passiveButtonDiscord.OnClick.AddListener((System.Action)(() => Application.OpenURL("https://discord.gg/sTt8EzEpHP")));
+
+            Color discordColor = new Color32(88, 101, 242, byte.MaxValue);
+            buttonSpriteDiscord.color = textDiscord.color = discordColor;
+            passiveButtonDiscord.OnMouseOut.AddListener((System.Action)delegate {
+                buttonSpriteDiscord.color = textDiscord.color = discordColor;
+            });
+
+            // Twitterボタン
+            var buttonTwitter = UnityEngine.Object.Instantiate(template, null);
+            buttonTwitter.transform.localPosition = new Vector3(buttonTwitter.transform.localPosition.x, buttonTwitter.transform.localPosition.y + 1.2f, buttonTwitter.transform.localPosition.z);
+
+            var textTwitter = buttonTwitter.transform.GetChild(0).GetComponent<TMPro.TMP_Text>();
+            __instance.StartCoroutine(Effects.Lerp(0.1f, new System.Action<float>((p) => {
+                textTwitter.SetText("Twitter");
+            })));
+
+            PassiveButton passiveButtonTwitter = buttonTwitter.GetComponent<PassiveButton>();
+            SpriteRenderer buttonSpriteTwitter = buttonTwitter.GetComponent<SpriteRenderer>();
+
+            passiveButtonTwitter.OnClick = new Button.ButtonClickedEvent();
+            passiveButtonTwitter.OnClick.AddListener((System.Action)(() => Application.OpenURL("https://twitter.com/haoming_dev")));
+
+            Color twitterColor = new Color32(29, 161, 242, byte.MaxValue);
+            buttonSpriteTwitter.color = textTwitter.color = twitterColor;
+            passiveButtonTwitter.OnMouseOut.AddListener((System.Action)delegate {
+                buttonSpriteTwitter.color = textTwitter.color = twitterColor;
+            });
+
+            // アップデートボタン
             ModUpdater.LaunchUpdater();
             if (!ModUpdater.hasUpdate) return;
-            var template = GameObject.Find("ExitGameButton");
             if (template == null) return;
 
             var button = UnityEngine.Object.Instantiate(template, null);
@@ -37,6 +81,10 @@ namespace TheOtherRoles.Modules
             ModUpdater.InfoPopup = UnityEngine.Object.Instantiate<GenericPopup>(man.TwitchPopup);
             ModUpdater.InfoPopup.TextAreaTMP.fontSize *= 0.7f;
             ModUpdater.InfoPopup.TextAreaTMP.enableAutoSizing = false;
+
+            // Discordボタンを上にずらす
+            buttonDiscord.transform.localPosition = new Vector3(buttonDiscord.transform.localPosition.x, buttonDiscord.transform.localPosition.y + 0.6f, buttonDiscord.transform.localPosition.z);
+            buttonTwitter.transform.localPosition = new Vector3(buttonTwitter.transform.localPosition.x, buttonTwitter.transform.localPosition.y + 0.6f, buttonTwitter.transform.localPosition.z);
 
             void onClick() {
                 ModUpdater.ExecuteUpdate();
