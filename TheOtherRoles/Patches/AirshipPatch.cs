@@ -65,7 +65,7 @@ namespace TheOtherRoles.Patches
                 ActivateWiring("task_wiresHallway2", 2);
                 ActivateWiring("task_electricalside2", 3).Room = SystemTypes.Armory;
                 ActivateWiring("task_wireShower", 4);
-                ActivateWiring("task_wiresLounge", 5);
+                ActivateWiring("taks_wiresLounge", 5);
                 ActivateWiring("panel_wireHallwayL", 6);
                 ActivateWiring("task_wiresStorage", 7);
                 ActivateWiring("task_electricalSide", 8).Room = SystemTypes.VaultRoom;
@@ -75,6 +75,12 @@ namespace TheOtherRoles.Patches
         protected static Console ActivateWiring(string consoleName, int consoleId)
         {
             Console console = ActivateConsole(consoleName);
+
+            if (console == null)
+            {
+                Logger.error($"consoleName \"{consoleName}\" is null", "ActivateWiring");
+                return null;
+            }
 
             if (!console.TaskTypes.Contains(TaskTypes.FixWiring))
             {
@@ -88,6 +94,11 @@ namespace TheOtherRoles.Patches
         protected static Console ActivateConsole(string objectName)
         {
             GameObject obj = UnityEngine.GameObject.Find(objectName);
+            if (obj == null)
+            {
+                Logger.error($"Object \"{objectName}\" was not found!", "ActivateConsole");
+                return null;
+            }
             obj.layer = LayerMask.NameToLayer("ShortObjects");
             Console console = obj.GetComponent<Console>();
             PassiveButton button = obj.GetComponent<PassiveButton>();
