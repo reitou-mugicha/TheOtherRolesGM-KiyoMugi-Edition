@@ -22,7 +22,7 @@ namespace TheOtherRoles
     public class TheOtherRolesPlugin : BasePlugin
     {
         public const string Id = "kiyomori.mugicha.theotherrolesgmkm";
-        public const string VersionString = "1.1.0";
+        public const string VersionString = "1.1.0.1";
         public static System.Version Version = System.Version.Parse(VersionString);
         internal static BepInEx.Logging.ManualLogSource Logger;
 
