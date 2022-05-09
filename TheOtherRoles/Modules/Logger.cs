@@ -31,5 +31,10 @@ namespace TheOtherRoles
         public static void error(string text, string tag = "") => SendToFile(text, LogLevel.Error, tag);
         public static void fatal(string text, string tag = "") => SendToFile(text, LogLevel.Fatal, tag);
         public static void msg(string text, string tag = "") => SendToFile(text, LogLevel.Message, tag);
+        public static void currentMethod()
+        {
+            StackFrame stack = new StackFrame(1);
+            Logger.msg($"Called in \"{stack.GetMethod().ReflectedType.Name}.{stack.GetMethod().Name}\"", "Method");
+        }
     }
 }
