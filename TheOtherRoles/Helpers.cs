@@ -657,5 +657,23 @@ namespace TheOtherRoles {
         {
             return PlayerControl.AllPlayerControls.ToArray().Where(p => p.PlayerId == playerId).FirstOrDefault();
         }
+
+        public static System.Collections.IEnumerable FindObjectsOfType(Type type)
+        {
+            var methods= typeof(UnityEngine.Object).GetMethods(BindingFlags.Static | BindingFlags.Public);
+            var method = methods.First(m=> m.Name == "FindObjectsOfType" && m.GetParameters().Length==0).MakeGenericMethod(type);
+            object returned = method.Invoke(null, new object[0]);
+            return  returned as System.Collections.IEnumerable;
+        }
+
+        public static List<T> ToSystemList<T>(this Il2CppSystem.Collections.Generic.List<T> iList)
+        {
+            List<T> systemList = new List<T>();
+            foreach (T item in iList)
+            {
+                systemList.Add(item);
+            }
+            return systemList;
+        }
     }
 }

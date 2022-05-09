@@ -2,10 +2,12 @@ using System;
 using Hazel;
 using HarmonyLib;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using TheOtherRoles.Objects;
 using static TheOtherRoles.TheOtherRoles;
 using static TheOtherRoles.Patches.PlayerControlFixedUpdatePatch;
+using static TheOtherRoles.Patches.SubmergedPatch;
 
 namespace TheOtherRoles
 {
@@ -693,6 +695,36 @@ namespace TheOtherRoles
                                 AmongUsClient.Instance.FinishRpcImmediately(messageWriter);
                                 RPCProcedure.puppeteerClimbRadder(dummy.PlayerId, target.Id);
                             }
+                        }
+
+                        // エレベーター(サブマージド)
+                        if(SubmergedCompatibility.isSubmerged())
+                        {
+                            var elevators = Helpers.FindObjectsOfType(SubmarineElevatorType);
+                            object elevator = null;
+                            minDistance = 9999;
+                            foreach(var e in elevators)
+                            {
+                                var pos = (e as UnityEngine.MonoBehaviour).transform.position;
+                                FieldInfo lowerInnerDoorInfo = SubmarineElevatorType.GetField("LowerInnerDoor");
+                                FieldInfo upperInnerDoorInfo = SubmarineElevatorType.GetField("UpperInnerDoor");
+                                var lowerInnerDoor = lowerInnerDoorInfo.GetValue(e) as PlainDoor;
+                                var upperInnerDoor = upperInnerDoorInfo.GetValue(e) as PlainDoor;
+                                float lowerDistance = Vector2.Distance(dummy.transform.position, lowerInnerDoor.transform.position);
+                                float upperDistance = Vector2.Distance(dummy.transform.position, upperInnerDoor.transform.position);
+                                float distance = lowerDistance < upperDistance ? lowerDistance : upperDistance;
+                                if(distance < 1.5 &&  distance < minDistance)
+                                {
+                                    minDistance = distance;
+                                    elevator = e;
+                                }
+                            }
+                            if(elevator != null)
+                            {
+                                var use = SubmarineElevatorType.GetMethod("Use");
+                                use.Invoke(elevator, new object[0]);
+                            }
+                            
                         }
 
                     }

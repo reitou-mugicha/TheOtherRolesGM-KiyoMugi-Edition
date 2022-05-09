@@ -1222,6 +1222,14 @@ namespace TheOtherRoles
         {
             if(Puppeteer.dummy == null) return;
             var dummy = Puppeteer.dummy;
+            if (SubmergedCompatibility.isSubmerged())
+            {
+                bool toUpper = pos.y > -7;
+                SubmergedPatch.ChangePlayerFloorState(dummy.PlayerId, toUpper);
+                // bool toUpper = pos.y > -7;
+                // MonoBehaviour _floorHandler = ((Component)SubmergedPatch.GetFloorHandlerMethod.Invoke(null, new object[] { dummy })).TryCast(SubmergedPatch.FloorHandlerType) as MonoBehaviour;
+                // SubmergedPatch.RpcRequestChangeFloorMethod.Invoke(_floorHandler, new object[] { toUpper });
+            }
             dummy.transform.position = pos;
             dummy.NetTransform.Halt();
             dummy.Visible = true;

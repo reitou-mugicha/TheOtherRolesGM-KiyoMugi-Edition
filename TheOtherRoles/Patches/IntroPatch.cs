@@ -1,4 +1,5 @@
 using HarmonyLib;
+using Hazel;
 using System;
 using static TheOtherRoles.TheOtherRoles;
 using static TheOtherRoles.TheOtherRolesGM;
@@ -115,6 +116,19 @@ namespace TheOtherRoles.Patches {
             var taskPanel = DestroyableSingleton<HudManager>._instance.TaskStuff;
             var pos = taskPanel.transform.position;
             taskPanel.transform.position = new Vector3(pos.x, pos.y, -20);
+
+            // ダミー人形をスポーンさせておく
+            if(PlayerControl.LocalPlayer.isRole(RoleType.Puppeteer) && SubmergedCompatibility.isSubmerged())
+            {
+                var playerId = (byte) GameData.Instance.GetAvailableId();
+                MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SpawnDummy, Hazel.SendOption.Reliable, -1);
+                writer.Write(playerId);
+                writer.Write(PlayerControl.LocalPlayer.transform.position.x);
+                writer.Write(PlayerControl.LocalPlayer.transform.position.y);
+                writer.Write(PlayerControl.LocalPlayer.transform.position.z);
+                AmongUsClient.Instance.FinishRpcImmediately(writer);
+                RPCProcedure.spawnDummy(playerId, PlayerControl.LocalPlayer.transform.position);
+            }
         }
     }
 
