@@ -101,6 +101,8 @@ namespace TheOtherRoles
 
         public static CustomRoleOption mayorSpawnRate;
         public static CustomOption mayorNumVotes;
+        public static CustomOption mayorMeetingButton;
+        public static CustomOption mayorNumMeetingButton;
 
         public static CustomRoleOption jesterSpawnRate;
         public static CustomOption jesterCanCallEmergency;
@@ -675,6 +677,8 @@ namespace TheOtherRoles
 
             mayorSpawnRate = new CustomRoleOption(480, CustomOptionType.Crewmate, "mayor", Mayor.color, 1);
             mayorNumVotes = CustomOption.Create(481, CustomOptionType.Crewmate, "mayorNumVotes", 2f, 2f, 10f, 1f, mayorSpawnRate, format: "unitVotes");
+            mayorMeetingButton = CustomOption.Create(482, CustomOptionType.Crewmate, "mayorMeetingButton", true, mayorSpawnRate);
+            //mayorNumMeetingButton = CustomOption.Create(483, CustomOptionType.Crewmate, "mayorNumMeetingButton", 1f, 1f, 10f, 1f, mayorMeetingButton, format: "unitTimes");
 
             lighterSpawnRate = new CustomRoleOption(490, CustomOptionType.Crewmate, "lighter", Lighter.color, 15);
             lighterModeLightsOnVision = CustomOption.Create(491, CustomOptionType.Crewmate, "lighterModeLightsOnVision", 2f, 0.25f, 5f, 0.25f, lighterSpawnRate, format: "unitMultiplier");

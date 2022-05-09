@@ -626,8 +626,8 @@ namespace TheOtherRoles
             otherMenu.Children = otherOptions.ToArray();
             otherSettings.gameObject.SetActive(false);
 
-            var numImpostorsOption = __instance.Children.FirstOrDefault(x => x.name == "NumImpostors").TryCast<NumberOption>();
-            if (numImpostorsOption != null) numImpostorsOption.ValidRange = new FloatRange(0f, 15f);
+            /*var numImpostorsOption = __instance.Children.FirstOrDefault(x => x.name == "NumImpostors").TryCast<NumberOption>();
+            if (numImpostorsOption != null) numImpostorsOption.ValidRange = new FloatRange(0f, 15f);*/
 
             var killCoolOption = __instance.Children.FirstOrDefault(x => x.name == "KillCooldown").TryCast<NumberOption>();
             if (killCoolOption != null) killCoolOption.ValidRange = new FloatRange(2.5f, 60f);

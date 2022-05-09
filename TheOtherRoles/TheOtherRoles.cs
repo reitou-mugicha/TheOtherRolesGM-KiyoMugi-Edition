@@ -38,7 +38,6 @@ namespace TheOtherRoles
         public static void clearAndReloadRoles()
         {
             Jester.clearAndReload();
-            Mayor.clearAndReload();
             Engineer.clearAndReload();
             Sheriff.Clear();
             Lighter.Clear();
@@ -92,31 +91,6 @@ namespace TheOtherRoles
                 canCallEmergency = CustomOptionHolder.jesterCanCallEmergency.getBool();
                 canSabotage = CustomOptionHolder.jesterCanSabotage.getBool();
                 hasImpostorVision = CustomOptionHolder.jesterHasImpostorVision.getBool();
-            }
-        }
-
-        public static class Mayor
-        {
-            public static PlayerControl mayor;
-            public static Color color = new Color32(32, 77, 66, byte.MaxValue);
-            public static int numVotes = 2;
-            public static int evilNumVotes = 2;
-
-            public static bool isMayor(byte playerId)
-            {
-                if ((mayor != null && mayor.PlayerId == playerId)/* || (evilMayor != null && evilMayor.PlayerId == playerId)*/) return true;
-                return false;
-            }
-
-            public static void clear(byte playerId)
-            {
-                if (mayor != null && mayor.PlayerId == playerId) mayor = null;
-            }
-
-            public static void clearAndReload()
-            {
-                mayor = null;
-                numVotes = (int)CustomOptionHolder.mayorNumVotes.getFloat();
             }
         }
 
@@ -1194,8 +1168,6 @@ namespace TheOtherRoles
                 showKillFlash = CustomOptionHolder.baitShowKillFlash.getBool();
             }
         }
-
-
 
         public static class Portalmaker
         {

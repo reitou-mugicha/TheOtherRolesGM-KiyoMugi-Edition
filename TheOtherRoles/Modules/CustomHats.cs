@@ -393,7 +393,6 @@ namespace TheOtherRoles.Modules
                 {
                     if (x == innerslothPackageName) return 1000;
                     if (x == "developerHats") return 300;
-                    if (x.Contains("kiyomugiEdition")) return 200;
                     if (x.Contains("gmEdition")) return 100;
                     if (x.Contains("shiune")) return 0;
                     return 500;
