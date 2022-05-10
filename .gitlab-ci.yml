@@ -56,7 +56,7 @@ package:
     - cp CICD/TestHat.png TheOtherRoles-GM-Haoming/TheOtherHats/Test/
     - cp CICD/steam_appid.txt TheOtherRoles-GM-Haoming/
     - mv TheOtherRolesGM.dll TheOtherRoles-GM-Haoming/BepinEx/plugins
-    - curl -L https://github.com/SubmergedAmongUs/Submerged/releases/download/v2022.5.2/Submerged.dll -o TheOtherRoles-GM-Haoming/BepinEx/plugins/Submerged.dll
+    - curl -L https://github.com/SubmergedAmongUs/Submerged/releases/download/v2022.5.8/Submerged.dll -o TheOtherRoles-GM-Haoming/BepinEx/plugins/Submerged.dll
     - cd TheOtherRoles-GM-Haoming
     - zip -r ../TheOtherRoles-GM-Haoming.v${VERSION}.zip *
   artifacts:
