@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Hazel;
 using System;
 using UnhollowerBaseLib;
+using InnerNet;
 
 namespace TheOtherRoles.Patches {
     public class GameStartManagerPatch  {
@@ -14,12 +15,27 @@ namespace TheOtherRoles.Patches {
         private static bool versionSent = false;
         private static string lobbyCodeText = "";
 
+        [HarmonyPatch(typeof(AmongUsClient), nameof(AmongUsClient.OnGameJoined))]
+        public class AmongUsClientOnGameJoinedPatch {
+            public static void Postfix(AmongUsClient __instance) {
+                Logger.info($"My Player ID:{__instance.ClientId} Joined", "Session");
+            }
+        }
+
         [HarmonyPatch(typeof(AmongUsClient), nameof(AmongUsClient.OnPlayerJoined))]
         public class AmongUsClientOnPlayerJoinedPatch {
-            public static void Postfix() {
+            public static void Postfix(AmongUsClient __instance, [HarmonyArgument(0)] ClientData client) {
                 if (PlayerControl.LocalPlayer != null) {
                     Helpers.shareGameVersion();
                 }
+                Logger.info($"Player \"{client.PlayerName}(ID:{client.Id})\" Joined", "Session");
+            }
+        }
+
+        [HarmonyPatch(typeof(AmongUsClient), nameof(AmongUsClient.OnPlayerLeft))]
+        public class AmongUsClientOnPlayerLeftPatch {
+            public static void Postfix(AmongUsClient __instance, [HarmonyArgument(0)] ClientData client, [HarmonyArgument(1)] DisconnectReasons reason) {
+                Logger.info($"Player \"{client.PlayerName}(ID:{client.Id})\" Left (Reason: {reason.ToString()})", "Session");
             }
         }
 

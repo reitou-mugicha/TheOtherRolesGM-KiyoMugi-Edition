@@ -136,6 +136,14 @@ namespace TheOtherRoles.Patches
             PlayerControl.GameOptions.NumShortTasks = originalNumShortTasksOption;
             PlayerControl.GameOptions.NumLongTasks = originalNumLongTasksOption;
         }
+        [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.Start))]
+        class ShipStatusStartPatch
+        {
+            public static void Postfix()
+            {
+                Logger.info("Game Started", "Phase");
+            }
+        }
             
         [HarmonyPostfix]
         [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.SpawnPlayer))]

@@ -929,5 +929,21 @@ namespace TheOtherRoles.Patches
                 }
             }
         }
+        [HarmonyPatch(typeof(MeetingHud), nameof(MeetingHud.Start))]
+        class MeetingHudStartPatch
+        {
+            public static void Prefix(MeetingHud __instance)
+            {
+                Logger.info("---------Meeting Start----------", "Phase");
+            }
+        }
+        [HarmonyPatch(typeof(MeetingHud), nameof(MeetingHud.OnDestroy))]
+        class MeetingHudOnDestroyPatch
+        {
+            public static void Postfix(MeetingHud __instance)
+            {
+                Logger.info("----------Meeting End-----------", "Phase");
+            }
+        }
     }
 }

@@ -169,6 +169,7 @@ namespace TheOtherRoles
         {
             foreach (PlayerControl player in PlayerControl.AllPlayerControls)
             {
+                Logger.info("ForceEnd", "Debug");
                 if (!player.Data.Role.IsImpostor)
                 {
                     player.RemoveInfected();
@@ -180,6 +181,7 @@ namespace TheOtherRoles
 
         public static void setRole(byte roleId, byte playerId, byte flag)
         {
+            Logger.info($"{GameData.Instance.GetPlayerById(playerId).PlayerName}({playerId}): {Enum.GetName(typeof(RoleType), roleId)}", "setRole");
             PlayerControl.AllPlayerControls.ToArray().DoIf(
                 x => x.PlayerId == playerId,
                 x => x.setRole((RoleType)roleId)
@@ -563,6 +565,7 @@ namespace TheOtherRoles
         {
             PlayerControl player = Helpers.playerById(targetId);
             if (player == null) return;
+            Logger.info($"SideKick {player.Data.PlayerName}({RoleInfo.GetRolesString(player, false, joinSeparator:" + ")})", "Jackal");
 
             if (!Jackal.canCreateSidekickFromImpostor && player.Data.Role.IsImpostor) {
                 Jackal.fakeSidekick = player;

@@ -111,6 +111,7 @@ namespace TheOtherRoles.Patches
 
         public static void Postfix(AmongUsClient __instance, [HarmonyArgument(0)] ref EndGameResult endGameResult)
         {
+            Logger.info("-----------Game Ended-----------", "Phase");
             var gameOverReason = AdditionalTempData.gameOverReason;
             // 狐の勝利条件を満たしたか確認する
             Boolean isFoxAlive = Fox.isFoxAlive();
@@ -708,6 +709,7 @@ namespace TheOtherRoles.Patches
                         });
 
                         bool plagueExists = AdditionalTempData.playerRoles.Any(x => x.Roles.Contains(RoleInfo.plagueDoctor));
+                        Logger.info("----------Game Result-----------", "Result");
                         foreach (var data in AdditionalTempData.playerRoles)
                         {
                             if (data.PlayerName == "") continue;
@@ -728,7 +730,9 @@ namespace TheOtherRoles.Patches
                                 }
                             }
                             roleSummaryText.AppendLine(result);
+                            Logger.info(result, "Result");
                         }
+                        Logger.info("--------------------------------", "Result");
 
                         TMPro.TMP_Text roleSummaryTextMesh = roleSummary.GetComponent<TMPro.TMP_Text>();
                         roleSummaryTextMesh.alignment = TMPro.TextAlignmentOptions.TopLeft;
