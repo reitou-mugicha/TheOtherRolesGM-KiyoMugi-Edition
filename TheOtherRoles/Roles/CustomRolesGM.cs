@@ -42,6 +42,7 @@ namespace TheOtherRoles
             MimicK.Clear();
             MimicA.Clear();
             Mini.Clear();
+            AntiTeleport.Clear();
             Role.ClearAll();
         }
 
