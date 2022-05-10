@@ -341,11 +341,11 @@ namespace TheOtherRoles
             return infos;
         }
 
-        public static String GetRolesString(PlayerControl p, bool useColors, RoleType[] excludeRoles = null, bool includeHidden = false) {
+        public static String GetRolesString(PlayerControl p, bool useColors, RoleType[] excludeRoles = null, bool includeHidden = false, string joinSeparator = " ") {
             if (p?.Data?.Disconnected != false) return "";
 
             var roleInfo = getRoleInfoForPlayer(p, excludeRoles, includeHidden);
-            string roleName = String.Join(" ", roleInfo.Select(x => useColors ? Helpers.cs(x.color, x.name) : x.name).ToArray());
+            string roleName = String.Join(joinSeparator, roleInfo.Select(x => useColors ? Helpers.cs(x.color, x.name) : x.name).ToArray());
             if (Lawyer.target != null && p?.PlayerId == Lawyer.target.PlayerId && PlayerControl.LocalPlayer != Lawyer.target) roleName += (useColors ? Helpers.cs(Pursuer.color, " §") : " §");
 
             if (p.hasModifier(ModifierType.Madmate) || p.hasModifier(ModifierType.CreatedMadmate))
@@ -358,7 +358,7 @@ namespace TheOtherRoles
                 else
                 {
                     string prefix = useColors ? Helpers.cs(Madmate.color, Madmate.prefix) : Madmate.prefix;
-                    roleName = String.Join(" ", roleInfo.Select(x => useColors ? Helpers.cs(Madmate.color, x.name) : x.name).ToArray());
+                    roleName = String.Join(joinSeparator, roleInfo.Select(x => useColors ? Helpers.cs(Madmate.color, x.name) : x.name).ToArray());
                     roleName = prefix + roleName;
                 }
             }
@@ -372,7 +372,7 @@ namespace TheOtherRoles
                 else
                 {
                     string postfix = useColors ? Helpers.cs(LastImpostor.color, LastImpostor.postfix) : LastImpostor.postfix;
-                    roleName = String.Join(" ", roleInfo.Select(x => useColors? Helpers.cs(x.color, x.name)  : x.name).ToArray());
+                    roleName = String.Join(joinSeparator, roleInfo.Select(x => useColors? Helpers.cs(x.color, x.name)  : x.name).ToArray());
                     roleName = roleName + postfix;
                 }
             }
@@ -383,7 +383,7 @@ namespace TheOtherRoles
                 if(PlayerControl.LocalPlayer.Data.IsDead || Munou.endGameFlag)
                 {
                     string postfix = useColors ? Helpers.cs(Munou.color, Munou.postfix) : Munou.postfix;
-                    // roleName = String.Join(" ", roleInfo.Select(x => useColors? Helpers.cs(x.color, x.name)  : x.name).ToArray());
+                    // roleName = String.Join(joinSeparator, roleInfo.Select(x => useColors? Helpers.cs(x.color, x.name)  : x.name).ToArray());
                     roleName = roleName + postfix;
                 }
             }
@@ -391,7 +391,7 @@ namespace TheOtherRoles
             if(p.hasModifier(ModifierType.AntiTeleport))
             {
                 string postfix = useColors ? Helpers.cs(AntiTeleport.color, AntiTeleport.postfix) : AntiTeleport.postfix;
-                // roleName = String.Join(" ", roleInfo.Select(x => useColors? Helpers.cs(x.color, x.name)  : x.name).ToArray());
+                // roleName = String.Join(joinSeparator, roleInfo.Select(x => useColors? Helpers.cs(x.color, x.name)  : x.name).ToArray());
                 roleName = roleName + postfix;
             }
 

@@ -184,8 +184,26 @@ namespace TheOtherRoles.Patches {
                     roleInfo = RoleInfo.crewmate;
                 }
 
-                Helpers.log($"{roleInfo.name}");
-                Helpers.log($"{roleInfo.introDescription}");
+                Logger.info("----------Role Assign-----------", "Settings");
+                foreach (var pc in PlayerControl.AllPlayerControls)
+                {
+                    var text = pc.AmOwner ? "[*]" : "";
+                    text += $"{pc.Data.PlayerName}({pc.PlayerId}):{RoleInfo.GetRolesString(pc, false, joinSeparator:" + ")}";
+                    Logger.info(text, "Settings");
+                }
+                Logger.info("-----------Platforms------------", "Settings");
+                foreach (var pc in PlayerControl.AllPlayerControls)
+                {
+                    var text = pc.AmOwner ? "[*]" : "";
+                    text += $"{pc.Data.PlayerName}({pc.PlayerId}):{pc.getPlatform().Replace("Standalone", "")}";
+                    Logger.info(text, "Settings");
+                }
+                Logger.info("---------Game Settings----------", "Settings");
+                TheOtherRolesPlugin.optionsPage = 0;
+                var tmp = PlayerControl.GameOptions.ToHudString(GameData.Instance ? GameData.Instance.PlayerCount : 10).Split("\r\n");
+                foreach(var t in tmp[1..(tmp.Length-2)])
+                    Logger.info(t, "Settings");
+                Logger.info("--------------------------------", "Settings");
 
                 __instance.YouAreText.color = roleInfo.color;
                 __instance.RoleText.text = roleInfo.name;
@@ -211,8 +229,8 @@ namespace TheOtherRoles.Patches {
 
                 if (infos.Any(info => info.roleType == RoleType.Lovers)) {
                     PlayerControl otherLover = PlayerControl.LocalPlayer.getPartner();
-                	__instance.RoleBlurbText.text += "\n" + Helpers.cs(Lovers.color, String.Format(ModTranslation.getString("loversFlavor"), otherLover?.Data?.PlayerName ?? ""));
-                } 
+                    __instance.RoleBlurbText.text += "\n" + Helpers.cs(Lovers.color, String.Format(ModTranslation.getString("loversFlavor"), otherLover?.Data?.PlayerName ?? ""));
+                }
 
                 // 従来処理
                 SoundManager.Instance.PlaySound(PlayerControl.LocalPlayer.Data.Role.IntroSound, false, 1f);

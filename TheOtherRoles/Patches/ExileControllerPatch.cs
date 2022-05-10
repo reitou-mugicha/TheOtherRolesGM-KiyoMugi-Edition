@@ -196,7 +196,7 @@ namespace TheOtherRoles.Patches
                 var fullscreen = UnityEngine.GameObject.Find("FullScreen500(Clone)");
                 if (fullscreen) fullscreen.SetActive(false);
             }
-            
+            Logger.info("-----------Task Start-----------", "Phase");
         }
     }
 

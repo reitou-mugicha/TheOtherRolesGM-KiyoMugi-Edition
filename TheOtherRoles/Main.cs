@@ -155,7 +155,7 @@ namespace TheOtherRoles
             if (!TheOtherRolesPlugin.DebugMode.Value) return;
 
             // Spawn dummys
-            if (Input.GetKeyDown(KeyCode.F)) {
+            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.F)) {
                 var playerControl = UnityEngine.Object.Instantiate(AmongUsClient.Instance.PlayerPrefab);
                 var i = playerControl.PlayerId = (byte) GameData.Instance.GetAvailableId();
 
@@ -181,13 +181,6 @@ namespace TheOtherRoles
                 // playerControl.SetSkin(HatManager.Instance.AllSkins[skin].ProductId);
                 // playerControl.SetNamePlate(HatManager.Instance.AllNamePlates[nameplate].ProductId);
                 GameData.Instance.RpcSetTasks(playerControl.PlayerId, new byte[0]);
-            }
-
-            // Terminate round
-            if(Input.GetKeyDown(KeyCode.L) && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started) {
-                MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.ForceEnd, Hazel.SendOption.Reliable, -1);
-                AmongUsClient.Instance.FinishRpcImmediately(writer);
-                RPCProcedure.forceEnd();
             }
 
             // ゲーム内ログ出力のトグル

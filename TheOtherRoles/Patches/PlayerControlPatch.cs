@@ -1195,6 +1195,7 @@ namespace TheOtherRoles.Patches
     {
         static void Postfix(PlayerControl __instance, [HarmonyArgument(0)] GameData.PlayerInfo target)
         {
+            Logger.info($"{__instance.Data.PlayerName} => {target?.PlayerName ?? "null"}", "ReportDeadBody");
             // Medic or Detective report
             bool isMedicReport = Medic.medic != null && Medic.medic == PlayerControl.LocalPlayer && __instance.PlayerId == Medic.medic.PlayerId;
             bool isDetectiveReport = Detective.detective != null && Detective.detective == PlayerControl.LocalPlayer && __instance.PlayerId == Detective.detective.PlayerId;
@@ -1270,6 +1271,8 @@ namespace TheOtherRoles.Patches
 
         public static void Postfix(PlayerControl __instance, [HarmonyArgument(0)] PlayerControl target)
         {
+            Logger.info($"{__instance.Data.PlayerName}({RoleInfo.GetRolesString(__instance, false, joinSeparator:" + ")}) => " +
+                        $"{target.Data.PlayerName}({RoleInfo.GetRolesString(target, false, joinSeparator:" + ")})", "MurderPlayer");
             // Collect dead player info
             DeadPlayer deadPlayer = new DeadPlayer(target, DateTime.UtcNow, DeathReason.Kill, __instance);
             GameHistory.deadPlayers.Add(deadPlayer);
