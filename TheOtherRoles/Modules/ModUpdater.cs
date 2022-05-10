@@ -12,9 +12,11 @@ using Twitch;
 
 namespace TheOtherRoles.Modules
 {
+
     [HarmonyPatch(typeof(MainMenuManager), nameof(MainMenuManager.Start))]
     public class ModUpdaterButton {
         private static void Prefix(MainMenuManager __instance) {
+            if (TheOtherRolesPlugin.DebugMode.Value) DestroyableSingleton<EOSManager>.Instance.PlayOffline();
             AssetLoader.LoadAssets();
             CustomHatLoader.LaunchHatFetcher();
             var template = GameObject.Find("ExitGameButton");
