@@ -642,5 +642,20 @@ namespace TheOtherRoles {
         {
             return AccessTools.Method(self.GetType(), nameof(Il2CppObjectBase.TryCast)).MakeGenericMethod(type).Invoke(self, Array.Empty<object>());
         }
+        
+        public static InnerNet.ClientData getClient(this PlayerControl player)
+        {
+            return AmongUsClient.Instance.allClients.ToArray().Where(cd => cd.Character.PlayerId == player.PlayerId).FirstOrDefault();
+        }
+        
+        public static string getPlatform(this PlayerControl player)
+        {
+            return player?.getClient()?.PlatformData?.Platform.ToString();
+        }
+        
+        public static PlayerControl getPlayerById(byte playerId)
+        {
+            return PlayerControl.AllPlayerControls.ToArray().Where(p => p.PlayerId == playerId).FirstOrDefault();
+        }
     }
 }
