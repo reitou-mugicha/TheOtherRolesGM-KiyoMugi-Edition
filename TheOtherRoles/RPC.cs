@@ -1218,11 +1218,11 @@ namespace TheOtherRoles
             dummy.NetTransform.targetSyncPosition = dummy.transform.position + direction;
         }
 
-        public static void moveDummy(Vector3 pos)
+        public static void moveDummy(Vector3 pos, bool spawn=false)
         {
             if(Puppeteer.dummy == null) return;
             var dummy = Puppeteer.dummy;
-            if (SubmergedCompatibility.isSubmerged())
+            if (SubmergedCompatibility.isSubmerged() && spawn)
             {
                 bool toUpper = pos.y > -7;
                 SubmergedPatch.ChangePlayerFloorState(dummy.PlayerId, toUpper);
@@ -1624,7 +1624,8 @@ namespace TheOtherRoles
                         float moveY = System.BitConverter.ToSingle(moveTmp, 0);
                         moveTmp = reader.ReadBytes(4);
                         float moveZ = System.BitConverter.ToSingle(moveTmp, 0);
-                        RPCProcedure.moveDummy(new Vector3(moveX, moveY, moveZ));
+                        bool spawn = reader.ReadBoolean();
+                        RPCProcedure.moveDummy(new Vector3(moveX, moveY, moveZ), spawn);
                         break;
                     case (byte)CustomRPC.WalkDummy:
                         byte[] walkTmp = reader.ReadBytes(4);

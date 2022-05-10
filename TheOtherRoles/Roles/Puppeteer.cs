@@ -256,6 +256,7 @@ namespace TheOtherRoles
             writer.Write(PlayerControl.LocalPlayer.transform.position.x);
             writer.Write(PlayerControl.LocalPlayer.transform.position.y);
             writer.Write(PlayerControl.LocalPlayer.transform.position.z);
+            writer.Write(true);
             AmongUsClient.Instance.FinishRpcImmediately(writer);
             // 暫定遅延実行　何故か透明化が解除されないため
             DestroyableSingleton<HudManager>.Instance.StartCoroutine(Effects.Lerp(0.25f, new Action<float>( p =>{
@@ -326,6 +327,7 @@ namespace TheOtherRoles
                 writer.Write(PlayerControl.LocalPlayer.transform.position.x);
                 writer.Write(PlayerControl.LocalPlayer.transform.position.y);
                 writer.Write(PlayerControl.LocalPlayer.transform.position.z);
+                writer.Write(true);
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
                 RPCProcedure.moveDummy(PlayerControl.LocalPlayer.transform.position);
 
@@ -491,6 +493,7 @@ namespace TheOtherRoles
                     writer.Write(Puppeteer.dummy.transform.position.x);
                     writer.Write(Puppeteer.dummy.transform.position.y);
                     writer.Write(Puppeteer.dummy.transform.position.z);
+                    writer.Write(false);
                     AmongUsClient.Instance.FinishRpcImmediately(writer);
                 }
 
@@ -765,6 +768,7 @@ namespace TheOtherRoles
                             writer.Write(Puppeteer.dummy.transform.position.x);
                             writer.Write(Puppeteer.dummy.transform.position.y);
                             writer.Write(Puppeteer.dummy.transform.position.z);
+                            writer.Write(false);
                             AmongUsClient.Instance.FinishRpcImmediately(writer);
                             // RPCProcedure.moveDummy(Puppeteer.dummy.transform.position);
                         } 
