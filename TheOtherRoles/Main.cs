@@ -197,4 +197,12 @@ namespace TheOtherRoles
                 .Select(s => s[random.Next(s.Length)]).ToArray());
         }
     }
+    [HarmonyPatch(typeof(SignInGuestOfflineChoice), nameof(SignInGuestOfflineChoice.Open))]
+    public class SignInGuestOfflineChoiceOpenPatch
+    {
+        private static void Postfix(SignInGuestOfflineChoice __instance)
+        {
+            if (TheOtherRolesPlugin.DebugMode.Value) __instance.continueOfflineButton.OnClick.Invoke();
+        }
+    }
 }
