@@ -18,6 +18,8 @@ namespace TheOtherRoles.Patches
         public static List<SpawnCandidate> SpawnCandidates;
         public static SynchronizeData synchronizeData = new SynchronizeData();
         public static bool isFirstSpawn = true;
+        public static float initialDoorCooldown{get {return CustomOptionHolder.airshipInitialDoorCooldown.getFloat();}}
+        public static float initialSabotageCooldown{get {return CustomOptionHolder.airshipInitialSabotageCooldown.getFloat();}}
         public enum SynchronizeTag
         {
             PreSpawnMinigame,
@@ -285,18 +287,19 @@ namespace TheOtherRoles.Patches
                             true
                         });
                         saboSystem.ForceSabTime(0f);
-                        saboSystem.Timer = 15f;
+                        saboSystem.Timer = initialSabotageCooldown;
                         DoorsSystemType doorSystem = ShipStatus.Instance.Systems[SystemTypes.Doors].Cast<DoorsSystemType>();
                         AccessTools.PropertySetter(typeof(DoorsSystemType), "IsDirty").Invoke(doorSystem, new object[]
                         {
                             true
                         });
-                        doorSystem.timers[SystemTypes.Brig] = 0f;
-                        doorSystem.timers[SystemTypes.Comms] = 0f;
-                        doorSystem.timers[SystemTypes.Medical] = 0f;
-                        doorSystem.timers[SystemTypes.Engine] = 0f;
-                        doorSystem.timers[SystemTypes.Records] = 0f;
-                        doorSystem.timers[SystemTypes.Kitchen] = 0f;
+                        doorSystem.timers[SystemTypes.MainHall] = initialDoorCooldown;
+                        doorSystem.timers[SystemTypes.Brig] = initialDoorCooldown;
+                        doorSystem.timers[SystemTypes.Comms] = initialDoorCooldown;
+                        doorSystem.timers[SystemTypes.Medical] = initialDoorCooldown;
+                        doorSystem.timers[SystemTypes.Engine] = initialDoorCooldown;
+                        doorSystem.timers[SystemTypes.Records] = initialDoorCooldown;
+                        doorSystem.timers[SystemTypes.Kitchen] = initialDoorCooldown;
 
                         if(isFirstSpawn) resetButtons();
                     }

@@ -269,6 +269,7 @@ namespace TheOtherRoles
         public static CustomOption pursuerBlanksNumber;
 
         public static CustomOption specialOptions;
+        public static CustomOption mapOptions;
         public static CustomOption airshipOptimizeMap;
         public static CustomOption airshipEnableWallCheck;
         public static CustomOption airshipReactorDuration;
@@ -276,6 +277,8 @@ namespace TheOtherRoles
         public static CustomOption airshipAdditionalSpawn;
         public static CustomOption airshipSynchronizedSpawning;
         public static CustomOption airshipSetOriginalCooldown;
+        public static CustomOption airshipInitialDoorCooldown;
+        public static CustomOption airshipInitialSabotageCooldown;
         public static CustomOption maxNumberOfMeetings;
         public static CustomOption blockSkippingInEmergencyMeetings;
         public static CustomOption noVoteIsSelfVote;
@@ -837,8 +840,34 @@ namespace TheOtherRoles
             mediumOneTimeUse = CustomOption.Create(373, CustomOptionType.Crewmate, "mediumOneTimeUse", false, mediumSpawnRate);
 
             // Other options
-            specialOptions = new CustomOptionBlank(null);
 
+            mapOptions = new CustomOptionBlank(null);
+            
+            randomWireTask = CustomOption.Create(9909, CustomOptionType.General, "randomWireTask", false, mapOptions, true);
+            additionalWireTask = CustomOption.Create(9914, CustomOptionType.General, "additionalWireTask", false, randomWireTask);
+            numWireTask = CustomOption.Create(9913, CustomOptionType.General, "numWireTask", 3f, 1f, 10f, 1f, randomWireTask);
+            enableSenrigan = CustomOption.Create(9920, CustomOptionType.General, "enableSenrigan", true, mapOptions, true);
+            disableVentAnimation = CustomOption.Create(9910, CustomOptionType.General, "disableVentAnimation", false, mapOptions);
+            alwaysReduceCooldown = CustomOption.Create(9911, CustomOptionType.General, "alwaysReduceCooldown", false, mapOptions);
+            exceptInVent = CustomOption.Create(9912, CustomOptionType.General, "exceptInVent", false, alwaysReduceCooldown);
+
+            delayBeforeMeeting = CustomOption.Create(9921, CustomOptionType.General, "delayBeforeMeeting", 0f, 0f, 10f, 0.25f, specialOptions, true);
+            additionalVents = CustomOption.Create(9905, CustomOptionType.General, "additionalVents", false, specialOptions);
+
+            specimenVital = CustomOption.Create(9906, CustomOptionType.General, "specimenVital", false, mapOptions);
+            polusRandomSpawn = CustomOption.Create(9907, CustomOptionType.General, "polusRandomSpawn", false, mapOptions);
+
+            airshipOptimizeMap = CustomOption.Create(9922, CustomOptionType.General, "airshipOptimizeMap", true, mapOptions, true);
+            airshipEnableWallCheck = CustomOption.Create(9908, CustomOptionType.General, "airshipEnableWallCheck", true, mapOptions);
+            airshipReactorDuration = CustomOption.Create(9999, CustomOptionType.General, "airshipReactorDuration", 60f, 0f, 600f, 1f, mapOptions, format: "unitSeconds");
+            airshipRandomSpawn = CustomOption.Create(9916, CustomOptionType.General, "airshipRandomSpawn", false, mapOptions);
+            airshipAdditionalSpawn = CustomOption.Create(9917, CustomOptionType.General, "airshipAdditionalSpawn", false, mapOptions);
+            airshipSynchronizedSpawning = CustomOption.Create(9918, CustomOptionType.General, "airshipSynchronizedSpawning", false, mapOptions);
+            airshipSetOriginalCooldown = CustomOption.Create(9919, CustomOptionType.General, "airshipSetOriginalCooldown", false, mapOptions);
+            airshipInitialDoorCooldown = CustomOption.Create(9923, CustomOptionType.General, "airshipInitialDoorCooldown", 0f, 0f, 60f, 1f, mapOptions);
+            airshipInitialSabotageCooldown = CustomOption.Create(9924, CustomOptionType.General, "airshipInitialSabotageCooldown", 15f, 0f, 60f, 1f, mapOptions);
+
+            specialOptions = new CustomOptionBlank(null);
             enabledHorseMode = CustomOption.Create(552, CustomOptionType.General, "enableHorseMode", false, specialOptions, true);
 
             lastImpostorEnable = CustomOption.Create(9900, CustomOptionType.General, "lastImpostorEnable", true, specialOptions, true);
@@ -846,27 +875,6 @@ namespace TheOtherRoles
             lastImpostorNumKills = CustomOption.Create(9902, CustomOptionType.General, "lastImpostorNumKills", 3f, 0f, 10f, 1f, lastImpostorEnable);
             lastImpostorResults = CustomOption.Create(9903, CustomOptionType.General, "fortuneTellerResults ", new string[] { "fortuneTellerResultCrew", "fortuneTellerResultTeam", "fortuneTellerResultRole" }, lastImpostorEnable);
             lastImpostorNumShots = CustomOption.Create(9904, CustomOptionType.General, "lastImpostorNumShots", 1f, 1f, 15f, 1f, lastImpostorEnable );
-            
-            randomWireTask = CustomOption.Create(9909, CustomOptionType.General, "randomWireTask", false, specialOptions, true);
-            additionalWireTask = CustomOption.Create(9914, CustomOptionType.General, "additionalWireTask", false, randomWireTask);
-            numWireTask = CustomOption.Create(9913, CustomOptionType.General, "numWireTask", 3f, 1f, 10f, 1f, randomWireTask);
-            enableSenrigan = CustomOption.Create(9920, CustomOptionType.General, "enableSenrigan", true, specialOptions, true);
-            disableVentAnimation = CustomOption.Create(9910, CustomOptionType.General, "disableVentAnimation", false, specialOptions);
-            alwaysReduceCooldown = CustomOption.Create(9911, CustomOptionType.General, "alwaysReduceCooldown", false, specialOptions);
-            exceptInVent = CustomOption.Create(9912, CustomOptionType.General, "exceptInVent", false, alwaysReduceCooldown);
-
-            delayBeforeMeeting = CustomOption.Create(9921, CustomOptionType.General, "delayBeforeMeeting", 0f, 0f, 10f, 0.25f, specialOptions, true);
-            additionalVents = CustomOption.Create(9905, CustomOptionType.General, "additionalVents", false, specialOptions);
-            specimenVital = CustomOption.Create(9906, CustomOptionType.General, "specimenVital", false, specialOptions);
-            polusRandomSpawn = CustomOption.Create(9907, CustomOptionType.General, "polusRandomSpawn", false, specialOptions);
-
-            airshipOptimizeMap = CustomOption.Create(9922, CustomOptionType.General, "airshipOptimizeMap", true, specialOptions, true);
-            airshipEnableWallCheck = CustomOption.Create(9908, CustomOptionType.General, "airshipEnableWallCheck", true, specialOptions);
-            airshipReactorDuration = CustomOption.Create(9999, CustomOptionType.General, "airshipReactorDuration", 60f, 0f, 600f, 1f, specialOptions, format: "unitSeconds");
-            airshipRandomSpawn = CustomOption.Create(9916, CustomOptionType.General, "airshipRandomSpawn", false, specialOptions);
-            airshipAdditionalSpawn = CustomOption.Create(9917, CustomOptionType.General, "airshipAdditionalSpawn", false, specialOptions);
-            airshipSynchronizedSpawning = CustomOption.Create(9918, CustomOptionType.General, "airshipSynchronizedSpawning", false, specialOptions);
-            airshipSetOriginalCooldown = CustomOption.Create(9919, CustomOptionType.General, "airshipSetOriginalCooldown", false, specialOptions);
 
             strongRandomGen = CustomOption.Create(9915, CustomOptionType.General, "strongRandomGen", true, specialOptions, true);
 
