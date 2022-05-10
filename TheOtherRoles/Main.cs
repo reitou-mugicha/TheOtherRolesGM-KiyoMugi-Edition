@@ -214,7 +214,7 @@ namespace TheOtherRoles
     {
         private static void Postfix(SignInGuestOfflineChoice __instance)
         {
-            if (TheOtherRolesPlugin.DebugMode.Value) __instance.continueOfflineButton.OnClick.Invoke();
+            if (TheOtherRolesPlugin.DebugMode.Value) __instance?.continueOfflineButton?.OnClick?.Invoke();
         }
     }
 }
