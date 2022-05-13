@@ -1,3 +1,4 @@
+using System;
 using HarmonyLib;
 using UnityEngine;
 using System.IO;
@@ -199,11 +200,12 @@ namespace TheOtherRoles.Modules
                     }
                     while (CustomHatLoader.hatDetails.Count > 0) {
                         __instance.allHats.Add(CreateHatData(CustomHatLoader.hatDetails[0]));
+                        Logger.info(String.Format("Add CustomHat Author:{0,-20}Name:{1}", CustomHatLoader.hatDetails[0].author, CustomHatLoader.hatDetails[0].name), "CustomHats");
                         CustomHatLoader.hatDetails.RemoveAt(0);
                     }
                 } catch (System.Exception e) {
                     if (!LOADED)
-                        System.Console.WriteLine("Unable to add Custom Hats\n" + e);
+                        Logger.error("Unable to add Custom Hats\n" + e, "CustomHats");
                 }
                 LOADED = true;
             }

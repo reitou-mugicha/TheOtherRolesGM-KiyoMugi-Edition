@@ -100,7 +100,9 @@ namespace TheOtherRoles.Patches
                 Dictionary<byte, int> dictionary = new Dictionary<byte, int>();
                 for (int i = 0; i < __instance.playerStates.Length; i++) {
                     PlayerVoteArea playerVoteArea = __instance.playerStates[i];
+                    byte votedTarget = playerVoteArea.TargetPlayerId;
                     byte votedFor = playerVoteArea.VotedFor;
+                    Logger.info(String.Format("{0,-2}({1,-32}):{2,-3}({3})", votedTarget, Helpers.getVoteName(votedTarget), votedFor, Helpers.getVoteName(votedFor)), "Vote");
                     if (votedFor != 252 && votedFor != 255 && votedFor != 254) {
                         PlayerControl player = Helpers.playerById((byte)playerVoteArea.TargetPlayerId);
                         if (player == null || player.Data == null || player.Data.IsDead || player.Data.Disconnected || player.isGM()) continue;
@@ -299,6 +301,7 @@ namespace TheOtherRoles.Patches
 
                     if (isLovers)
                         finalStatuses[exiled.Object.getPartner().PlayerId] = FinalStatus.Suicide;
+                    Logger.info($"Exiled: {exiled.PlayerId}({Helpers.getVoteName(exiled.PlayerId)})", "Vote");
                 }
             }
         }

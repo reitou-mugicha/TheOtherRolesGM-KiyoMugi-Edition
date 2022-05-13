@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -674,6 +675,20 @@ namespace TheOtherRoles {
                 systemList.Add(item);
             }
             return systemList;
+        }
+        public static string removeHtml(this string text) => Regex.Replace(text, "<[^>]*?>", "");
+        public static string getRoleName(this PlayerControl player) => RoleInfo.GetRolesString(player, false, joinSeparator:" + ");
+        public static string getNameWithRole(this PlayerControl player) => $"{player?.Data?.PlayerName}({player?.getRoleName()})";
+        public static string getNameWithRole(this GameData.PlayerInfo player) => $"{player?.PlayerName}({getPlayerById(player.PlayerId).getRoleName()})";
+        public static string getVoteName(byte num)
+        {
+            string name = "invalid";
+            var player = getPlayerById(num);
+            if (num < 15 && player != null) name = player?.getNameWithRole();
+            if (num == 253) name = "Skip";
+            if (num == 254) name = "None";
+            if (num == 255) name = "Dead";
+            return name;
         }
     }
 }
