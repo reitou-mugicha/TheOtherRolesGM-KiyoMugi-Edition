@@ -200,18 +200,10 @@ namespace TheOtherRoles.Patches {
 
                 Logger.info("----------Role Assign-----------", "Settings");
                 foreach (var pc in PlayerControl.AllPlayerControls)
-                {
-                    var text = pc.AmOwner ? "[*]" : "";
-                    text += $"{pc.Data.PlayerName}({pc.PlayerId}):{RoleInfo.GetRolesString(pc, false, joinSeparator:" + ")}";
-                    Logger.info(text, "Settings");
-                }
+                    Logger.info(String.Format("{0,-3}{1,-2}:{2,-16}:{3}", pc.AmOwner ? "[*]" : "", pc.PlayerId, pc.Data.PlayerName, RoleInfo.GetRolesString(pc, false, joinSeparator:" + ")), "Settings");
                 Logger.info("-----------Platforms------------", "Settings");
                 foreach (var pc in PlayerControl.AllPlayerControls)
-                {
-                    var text = pc.AmOwner ? "[*]" : "";
-                    text += $"{pc.Data.PlayerName}({pc.PlayerId}):{pc.getPlatform().Replace("Standalone", "")}";
-                    Logger.info(text, "Settings");
-                }
+                    Logger.info(String.Format("{0,-3}{1,-2}:{2,-16}:{3}", pc.AmOwner ? "[*]" : "", pc.PlayerId, pc.Data.PlayerName, pc.getPlatform().Replace("Standalone", "")), "Settings");
                 Logger.info("---------Game Settings----------", "Settings");
                 TheOtherRolesPlugin.optionsPage = 0;
                 var tmp = PlayerControl.GameOptions.ToHudString(GameData.Instance ? GameData.Instance.PlayerCount : 10).Split("\r\n");
