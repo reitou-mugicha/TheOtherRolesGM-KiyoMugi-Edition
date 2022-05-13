@@ -212,7 +212,7 @@ namespace TheOtherRoles.Patches {
                 Logger.info("--------Advance Settings--------", "Settings");
                 foreach (var o in CustomOption.options)
                     if (o.parent == null ? !o.getString().Equals("0%") : o.parent.enabled)
-                        Logger.info(String.Format("{0}{1,-36}:{2}", o.parent == null ? "" : "┗ ", o.name.removeHtml(), o.getString().removeHtml()), "Info");
+                        Logger.info(String.Format("{0}{1,-36}:{2}", o.parent == null ? "" : "┗ ", o.name.removeHtml(), o.getString().removeHtml()), "Settings");
                 Logger.info("--------------------------------", "Settings");
 
                 __instance.YouAreText.color = roleInfo.color;
