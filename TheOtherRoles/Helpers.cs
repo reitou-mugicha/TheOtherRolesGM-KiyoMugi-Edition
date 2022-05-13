@@ -345,7 +345,6 @@ namespace TheOtherRoles
                     King.formerKingdoms.Contains(player) ||*/
                     player.isRole(RoleType.Arsonist) ||
                     player.isRole(RoleType.Jester) ||
-                    player.isRole(RoleType.Opportunist) ||
                     player.isRole(RoleType.PlagueDoctor) ||
                     player.isRole(RoleType.Fox) ||
                     player.isRole(RoleType.Immoralist) ||

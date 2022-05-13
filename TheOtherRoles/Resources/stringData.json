@@ -44,11 +44,6 @@
         "11": "\u30b8\u30e3\u30c3\u30ab\u30eb\u52dd\u5229",
         "13": "\u8c7a\u72fc\u9635\u8425\u80dc\u5229"
     },
-    "miniDied": {
-        "0": "Mini Died",
-        "11": "\u30df\u30cb\u304c\u6bba\u3055\u308c\u305f",
-        "13": "\u4ed6\u8fd8\u53ea\u662f\u4e2a\u5b69\u5b50\u554a"
-    },
     "vultureWin": {
         "0": "Vulture Wins",
         "11": "\u30f4\u30a1\u30eb\u30c1\u30e3\u30fc\u52dd\u5229",
@@ -103,11 +98,6 @@
         "0": "Team Jackal {0} Win",
         "11": "\u30b8\u30e3\u30c3\u30ab\u30eb{0}\u52dd\u5229",
         "13": "\u8c7a\u72fc\u56e2\u961f {0} \u80dc\u5229"
-    },
-    "miniDiedExtra": {
-        "0": "Mini Died {0} Win",
-        "11": "\u30df\u30cb\u304c\u6bba\u3055\u308c\u305f{0}\u52dd\u5229",
-        "13": "\u8ff7\u4f60\u8239\u5458\u6b7b\u4ea1 {0} \u80dc\u5229"
     },
     "vultureWinExtra": {
         "0": "Vulture {0} Win",
@@ -703,16 +693,6 @@
         "11": "\u30a6\u30a9\u30c3\u30c1\u30e3\u30fc",
         "13": "\u7aa5\u89c6\u8005"
     },
-    "niceWatcher": {
-        "0": "Nice Watcher",
-        "11": "\u30ca\u30a4\u30b9\u30a6\u30a9\u30c3\u30c1\u30e3\u30fc",
-        "13": "\u6b63\u4e49\u7684\u7aa5\u89c6\u8005"
-    },
-    "evilWatcher": {
-        "0": "Evil Watcher",
-        "11": "\u30a4\u30d3\u30eb\u30a6\u30a9\u30c3\u30c1\u30e3\u30fc",
-        "13": "\u90aa\u6076\u7684\u7aa5\u89c6\u8005"
-    },
     "hawkEye": {
         "0": "Hawk Eye",
         "11": "\u30db\u30fc\u30af\u30a2\u30a4"
@@ -753,6 +733,10 @@
     "antiTeleport": {
         "0": "Anti Teleport",
         "11": "\u30a2\u30f3\u30c1\u30c6\u30ec\u30dd\u30fc\u30c8"
+    },
+    "sunglasses": {
+        "0": "Sunglasses",
+        "11": "\u30b5\u30f3\u30b0\u30e9\u30b9"
     },
     "gmIsHost": {
         "0": "Always The Host",
@@ -1061,18 +1045,18 @@
         "0": "Chance Mayor is Impostor",
         "11": "\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc\u306b\u306a\u308b\u78ba\u7387"
     },
-    "mayorSpawnBothRate": {
-        "0": "Both Mayor Spawn Rate",
-        "11": "\u30ca\u30a4\u30b9\u30fb\u30a4\u30d3\u30eb\u4e21\u65b9\u51fa\u73fe\u7387"
-    },
     "mayorNumVotes": {
         "0": "Mayor Number of Votes",
         "11": "\u30e1\u30a4\u30e4\u30fc\u306e\u6295\u7968\u6570",
         "13": "\u5e02\u957f\u7968\u7684\u7b49\u4ef7\u7968\u6570"
     },
-    "evilMayorNumVotes": {
-        "0": "Evil Mayor Number of Votes",
-        "11": "\u30a4\u30d3\u30eb\u30e1\u30a4\u30e4\u30fc\u306e\u6295\u7968\u6570"
+    "mayorMeetingButton": {
+        "0": "Has Meeting Button",
+        "11": "\u7dca\u6025\u4f1a\u8b70\u307c\u305f\u3093\u3092\u6301\u3064"
+    },
+    "mayorNumMeetingButton": {
+        "0": "Num Meeting Button",
+        "11": "\u7dca\u6025\u4f1a\u8b70\u30dc\u30bf\u30f3\u306e\u56de\u6570"
     },
     "guesserIsImpGuesserRate": {
         "0": "Chance Guesser Is Impostor",
@@ -2016,6 +2000,10 @@
         "0": "Portal Log Shows Time",
         "11": "\u30ed\u30b0\u306b\u6642\u9593\u3092\u8868\u793a\u3059\u308b"
     },
+    "sunglassesEye": {
+        "0": "Vision With Sunglasses",
+        "11": "\u30b5\u30f3\u30b0\u30e9\u30b9\u3067\u306e\u8996\u754c\u6e1b\u5c11\u5ea6"
+    },
     "torSettings": {
         "0": "The Other Roles Settings",
         "11": "The Other Roles\u306e\u8a2d\u5b9a",
@@ -2080,6 +2068,14 @@
         "0": "Maximum Impostor Roles",
         "11": "\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc\u5f79\u8077\u6700\u5927\u51fa\u73fe\u6570",
         "13": "\u5185\u9b3c\u804c\u4e1a\u6570\u6700\u5927\u503c"
+    },
+    "modifierCountMin": {
+        "0": "Minimum Modifier Roles",
+        "11": "\u5c5e\u6027\u6700\u5c0f\u51fa\u73fe\u6570"
+    },
+    "modifierCountMax": {
+        "0": "Maximum Modifier Roles",
+        "11": "\u5c5e\u6027\u6700\u5927\u51fa\u73fe\u6570"
     },
     "blockOriginal": {
         "0": "Enable Mod Roles And Block Vanilla Roles",
@@ -2271,6 +2267,10 @@
         "11": "\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc\u5f79\u8077\u6570",
         "13": "\u5185\u9b3c\u804c\u4e1a\u6570"
     },
+    "modifier": {
+        "0": "Modifier",
+        "11": "\u5c5e\u6027\u5f79\u8077\u6570"
+    },
     "pressTabForMore": {
         "0": "Press tab for more...",
         "11": "Tab\u30ad\u30fc\u3067\u6b21\u306e\u30da\u30fc\u30b8\u3078\u2026",
@@ -2354,14 +2354,6 @@
     "airShipReactorDuration": {
         "0": "AirShip Reactor Duration",
         "11": "AirShip \u6607\u964d\u6a5f\u5236\u9650\u6642\u9593"
-    },
-    "betterGen": {
-        "0": "Better Random Number Generator",
-        "11": "\u3088\u308a\u826f\u3044\u5f79\u8077\u4ed8\u4e0e"
-    },
-    "antiTeleportPostfix": {
-        "0": " AT",
-        "11": " AT"
     },
     "loversFlavor": {
         "0": "\u2665 You are in love with {0} \u2665",
@@ -2555,10 +2547,6 @@
         "0": "{0} used the teleporter",
         "11": "{0}\u304c\u4f7f\u7528\u3057\u307e\u3057\u305f\u3002"
     },
-    "atIntro": {
-        "0": "You have the ability to stay in place.",
-        "11": "\u305d\u306e\u5834\u306b\u3068\u3069\u307e\u308b\u80fd\u529b\u3092\u624b\u306b\u5165\u308c\u305f\u3002"
-    },
     "gmIntroDesc": {
         "0": "You're the Game Master",
         "11": "\u30b2\u30fc\u30e0\u30de\u30b9\u30bf\u30fc\u3060",
@@ -2624,16 +2612,6 @@
         "11": "\u6a19\u7684\u3092\u78ba\u5b9f\u306b\u4ed5\u7559\u3081\u3088\u3046",
         "13": "\u730e\u6740\u4f60\u7684\u60ac\u8d4f\u76ee\u6807"
     },
-    "niceMiniIntroDesc": {
-        "0": "No one will harm you until you grow up",
-        "11": "\u5927\u4eba\u306b\u306a\u308b\u307e\u3067\u8ab0\u306b\u3082\u653b\u6483\u3055\u308c\u306a\u3044",
-        "13": "\u957f\u5927\u524d\u6ca1\u4eba\u80fd\u4f24\u5bb3\u4f60"
-    },
-    "evilMiniIntroDesc": {
-        "0": "No one will harm you until you grow up",
-        "11": "\u5927\u4eba\u306b\u306a\u308b\u307e\u3067\u8ab0\u306b\u3082\u653b\u6483\u3055\u308c\u306a\u3044",
-        "13": "\u957f\u5927\u524d\u6ca1\u4eba\u80fd\u4f24\u5bb3\u4f60"
-    },
     "loversIntroDesc": {
         "0": "You are in love",
         "11": "\u604b\u306b\u843d\u3061\u3066\u3057\u307e\u3063\u305f",
@@ -2653,10 +2631,6 @@
         "0": "Your vote counts multiple times",
         "11": "\u81ea\u5206\u306e\u7968\u304c\u4f55\u500d\u3082\u306e\u529b\u3092\u6301\u3063\u3066\u3044\u308b",
         "13": "\u4f60\u7684\u6295\u7968\u66f4\u6709\u5206\u91cf"
-    },
-    "evilMayorIntroDesc": {
-        "0": "Let's get more votes than the others.",
-        "11": "\u3057\u308c\u3063\u3068\u5468\u308a\u3088\u308a\u591a\u304f\u306e\u7968\u3092\u5165\u308c\u3088\u3046"
     },
     "jesterIntroDesc": {
         "0": "Get voted out",
@@ -2833,16 +2807,6 @@
         "11": "\u5360\u3044\u306e\u529b\u3092\u4f7f\u7528\u3057\u3066\u4eba\u5916\u3092\u7099\u308a\u51fa\u305d\u3046",
         "13": "\u901a\u8fc7\u5360\u535c\u63ed\u793a\u654c\u4eba"
     },
-    "niceWatcherIntroDesc": {
-        "0": "Pay close attention to the crew's votes",
-        "11": "\u307f\u3093\u306a\u306e\u6295\u7968\u306b\u76ee\u3092\u5149\u3089\u305b\u3088\u3046",
-        "13": "\u7aa5\u63a2\u4ed6\u4eba\u6295\u7968"
-    },
-    "evilWatcherIntroDesc": {
-        "0": "Pay close attention to the crew's votes",
-        "11": "\u307f\u3093\u306a\u306e\u6295\u7968\u306b\u76ee\u3092\u5149\u3089\u305b\u3088\u3046",
-        "13": "\u7aa5\u63a2\u4ed6\u4eba\u6295\u7968"
-    },
     "hawkEyeIntroDesc": {
         "0": "Look down on everyone",
         "11": "\u307f\u3093\u306a\u3092\u898b\u4e0b\u305b"
@@ -2934,16 +2898,6 @@
         "0": "Hunt your Bounty down",
         "11": "\u6a19\u7684\u3092\u78ba\u5b9f\u306b\u4ed5\u7559\u3081\u3088\u3046",
         "13": "\u730e\u6740\u4f60\u7684\u60ac\u8d4f\u76ee\u6807"
-    },
-    "niceMiniShortDesc": {
-        "0": "No one will harm you",
-        "11": "\u8ab0\u306b\u3082\u653b\u6483\u3055\u308c\u306a\u3044",
-        "13": "\u6ca1\u4eba\u80fd\u4f24\u5bb3\u4f60"
-    },
-    "evilMiniShortDesc": {
-        "0": "No one will harm you",
-        "11": "\u8ab0\u306b\u3082\u653b\u6483\u3055\u308c\u306a\u3044",
-        "13": "\u6ca1\u4eba\u80fd\u4f24\u5bb3\u4f60"
     },
     "loversShortDesc": {
         "0": "You are in love",
@@ -3144,16 +3098,6 @@
         "11": "\u5360\u3044\u306e\u529b\u3092\u4f7f\u7528\u3057\u3066\u4eba\u5916\u3092\u7099\u308a\u51fa\u305d\u3046",
         "13": "\u901a\u8fc7\u5360\u535c\u63ed\u793a\u654c\u4eba"
     },
-    "niceWatcherShortDesc": {
-        "0": "Pay close attention to the crew's votes",
-        "11": "\u307f\u3093\u306a\u306e\u6295\u7968\u306b\u76ee\u3092\u5149\u3089\u305b\u3088\u3046",
-        "13": "\u7aa5\u63a2\u4ed6\u4eba\u6295\u7968"
-    },
-    "evilWatcherShortDesc": {
-        "0": "Pay close attention to the crew's votes",
-        "11": "\u307f\u3093\u306a\u306e\u6295\u7968\u306b\u76ee\u3092\u5149\u3089\u305b\u3088\u3046",
-        "13": "\u7aa5\u63a2\u4ed6\u4eba\u6295\u7968"
-    },
     "hawkEyeShortDesc": {
         "0": "Look down on everyone",
         "11": "\u307f\u3093\u306a\u3092\u898b\u4e0b\u305b"
@@ -3296,16 +3240,6 @@
         "11": "\u30fb\u80fd\u529b\u3092\u4f7f\u3046\u3068\u3001\u30a2\u30c9\u30df\u30f3\u3068\u30d0\u30a4\u30bf\u30eb\u3067\u306e\u60c5\u5831\u304c\u3055\u3089\u306b\u591a\u304f\u624b\u306b\u5165\u308b\n\u30fb\u30a2\u30c9\u30df\u30f3\u3067\u306f\u4e00\u5b9a\u6642\u9593\u8272\u307e\u3067\u898b\u3048\u308b\u3088\u3046\u306b\u306a\u308b\n\u30fb\u30d0\u30a4\u30bf\u30eb\u3067\u306f\u6b7b\u3093\u3067\u304b\u3089\u306e\u79d2\u6570\u304c\u308f\u304b\u308b",
         "13": "\u5982\u679c\u9ed1\u5ba2\u9ed1\u5165\u98de\u8239\u7cfb\u7edf\uff0c\u9ed1\u5ba2\u80fd\u591f\u5728\u4e00\u6bb5\u65f6\u95f4\u5185\u4ece\u7ba1\u7406\u5ba4\u7684\u5730\u56fe\u548c\u751f\u547d\u76d1\u6d4b\u88c5\u7f6e\u4e0a\u5f97\u5230\u66f4\u591a\u4fe1\u606f\uff1a\n\u53ef\u4ee5\u5728\u7ba1\u7406\u5ba4\u5730\u56fe\u4e0a\u770b\u5230\u73a9\u5bb6\u7684\u5177\u4f53\u989c\u8272\u6216\u8005\u989c\u8272\u7c7b\u578b\uff1b\n\u53ef\u4ee5\u5728\u751f\u547d\u76d1\u6d4b\u88c5\u7f6e\u4e0a\u770b\u5230\u5df2\u6b7b\u4ea1\u7684\u73a9\u5bb6\u7684\u6b7b\u4ea1\u65f6\u95f4\u3002\n\u4e0d\u5904\u5728\u9ed1\u5165\u72b6\u6001\u7684\u9ed1\u5ba2\u53ea\u80fd\u770b\u5230\u666e\u901a\u4fe1\u606f\uff0c\u4e0e\u5176\u4ed6\u4eba\u76f8\u540c\u3002"
     },
-    "niceMiniFullDesc": {
-        "0": "The Mini can be a Crewmate (67% chance) or an Impostor (33% chance).\nThe Mini's character is smaller and hence visible to everyone in the game.\nThe Mini cannot be killed until it turns 18 years old, however it can be voted out.\nThe Crewmate Mini aims to play out the strength its invincibility in the early game.\nIf it gets thrown out of the ship before it turns 18, everyone loses.\nSo think twice before you vote out a Mini.",
-        "11": "\u30fb\u898b\u305f\u76ee\u304c\u5c0f\u3055\u3044<color=#8cffffff>\u30af\u30eb\u30fc\u30e1\u30a4\u30c8</color>or<color=#ff1919ff>\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc</color>\n\u30fb67%\u306e\u78ba\u7387\u3067<color=#8cffffff>\u30af\u30eb\u30fc\u30e1\u30a4\u30c8</color>\u9663\u55b6\u306b\u306a\u308b\n\u30fb33%\u306e\u78ba\u7387\u3067<color=#ff1919ff>\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc</color>\u9663\u55b6\u306b\u306a\u308b\n\u30fb18\u6b73\u306b\u306a\u308b\u307e\u3067\u306f\u30ad\u30eb\u3055\u308c\u306a\u3044\n\u30fb18\u6b73\u306b\u6210\u9577\u3057\u304d\u308b\u307e\u3067\u306b\u8ffd\u653e\u3055\u308c\u305f\u3089\u5373\u5ea7\u306b\u6557\u5317\u3057\u3066\u3057\u307e\u3046\u306e\u3067\u6ce8\u610f",
-        "13": "\u8ff7\u4f60\u8239\u5458\u6839\u636e\u623f\u95f4\u8bbe\u7f6e\u7684\u6982\u7387\u53ef\u80fd\u52a0\u5165\u8239\u5458\u9635\u8425\u6216\u5185\u9b3c\u9635\u8425\u3002\n\u8ff7\u4f60\u8239\u5458\u8eab\u5f62\u5f88\u5c0f\uff0c\u56e0\u6b64\u6240\u6709\u8239\u5458\u90fd\u80fd\u770b\u5230\u4ed6\u662f\u8ff7\u4f60\u8239\u5458\u3002\n\u8ff7\u4f60\u8239\u5458\u5728\u957f\u5927\u523018\u5c81\u4e4b\u524d\u4e0d\u80fd\u88ab\u51fb\u6740\uff0c\u4f46\u662f\u53ef\u4ee5\u88ab\u653e\u9010\u3002\n\u597d\u4f60\u8239\u5458\u53ef\u4ee5\u5229\u7528\u5176\u5728\u6e38\u620f\u524d\u671f\u7684\u65e0\u654c\u7279\u6027\u6765\u63a8\u8fdb\u6e38\u620f\u3002\n\u5982\u679c\u597d\u8ff7\u4f60\u8239\u5458\u572818\u5c81\u4e4b\u524d\u88ab\u653e\u9010\uff0c\u6240\u6709\u73a9\u5bb6\u8f93\u6389\u6e38\u620f\u3002\n\u56e0\u6b64\uff0c\u82e5\u8981\u6295\u51fa\u8ff7\u4f60\u8239\u5458\uff0c\u8bf7\u52a1\u5fc5\u4e09\u601d\u3002"
-    },
-    "evilMiniFullDesc": {
-        "0": "The Mini can be a Crewmate (67% chance) or an Impostor (33% chance).\nThe Mini's character is smaller and hence visible to everyone in the game.\nThe Mini cannot be killed until it turns 18 years old, however it can be voted out.\nWhile growing up the kill cooldown is doubled. When it's fully grown up its kill\ncooldown is 2/3 of the default one.\nIf it gets thrown out of the ship, everything is fine.",
-        "11": "\u30fb\u898b\u305f\u76ee\u304c\u5c0f\u3055\u3044<color=#8cffffff>\u30af\u30eb\u30fc\u30e1\u30a4\u30c8</color>or<color=#ff1919ff>\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc</color>\n\u30fb67%\u306e\u78ba\u7387\u3067<color=#8cffffff>\u30af\u30eb\u30fc\u30e1\u30a4\u30c8</color>\u9663\u55b6\u306b\u306a\u308b\n\u30fb33%\u306e\u78ba\u7387\u3067<color=#ff1919ff>\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc</color>\u9663\u55b6\u306b\u306a\u308b\n\u30fb18\u6b73\u306b\u6210\u9577\u3057\u304d\u308b\u307e\u3067\u306f\u30ad\u30eb\u30af\u30fc\u30eb\u304c\u30c7\u30d5\u30a9\u30eb\u30c8\u8a2d\u5b9a\u306e2/3\u3068\u306a\u308b\n\u30fb18\u6b73\u306b\u6210\u9577\u3057\u304d\u308b\u307e\u3067\u306b\u8ffd\u653e\u3055\u308c\u3066\u3082\u6557\u5317\u306b\u306f\u306a\u3089\u306a\u3044\n\u30fb<color=#f8cd46ff>\u30b7\u30a7\u30ea\u30d5</color>\u306b\u306f\u6210\u9577\u3057\u304d\u308b\u307e\u3067\u30ad\u30eb\u3055\u308c\u306a\u3044",
-        "13": "\u8ff7\u4f60\u8239\u5458\u6839\u636e\u623f\u95f4\u8bbe\u7f6e\u7684\u6982\u7387\u53ef\u80fd\u52a0\u5165\u8239\u5458\u9635\u8425\u6216\u5185\u9b3c\u9635\u8425\u3002\n\u8ff7\u4f60\u8239\u5458\u8eab\u5f62\u5f88\u5c0f\uff0c\u56e0\u6b64\u6240\u6709\u8239\u5458\u90fd\u80fd\u770b\u5230\u4ed6\u662f\u8ff7\u4f60\u8239\u5458\u3002\n\u8ff7\u4f60\u8239\u5458\u5728\u957f\u5927\u523018\u5c81\u4e4b\u524d\u4e0d\u80fd\u88ab\u6740\uff0c\u4f46\u662f\u53ef\u4ee5\u88ab\u653e\u9010\u3002\n\u574f\u8ff7\u4f60\u8239\u5458\u957f\u5927\u524d\uff0c\u5176\u51fb\u6740\u51b7\u5374\u7ffb\u500d\u3002\u574f\u8ff7\u4f60\u8239\u5458\u957f\u5927\u540e\uff0c\u5176\u51fb\u6740\u51b7\u5374\u51cf\u5c11\u4e3a\u539f\u6765\u76842/3\u3002\n\u574f\u8ff7\u4f60\u8239\u5458\u88ab\u653e\u9010\uff0c\u5176\u4ed6\u8239\u5458\u8eab\u4e0a\u65e0\u4e8b\u53d1\u751f\u3002"
-    },
     "trackerFullDesc": {
         "0": "The Tracker can select one player to track.\nDepending on the options the Tracker can track a different person after each meeting\nor the Tracker tracks the same person for the whole game.\nAn arrow points to the last tracked position of the player.\nThe arrow updates it's position every few seconds (configurable).",
         "11": "\u30fb\u8ab0\u304b\u306b\u767a\u4fe1\u6a5f\u306e\u3088\u3046\u306a\u3082\u306e\u3092\u3064\u3051\u3001\u4f4d\u7f6e\u60c5\u5831\u304c\u308f\u304b\u308b",
@@ -3416,10 +3350,6 @@
         "11": "\u30fb\u3069\u3053\u3067\u3082\u30a2\u30c9\u30df\u30f3\u304c\u898b\u3089\u308c\u308b\n\u30fb<color=#ff1919ff>\u30de\u30c3\u30c9\u30e1\u30a4\u30c8</color>\u3092\u4f5c\u308a\u51fa\u3059\u3053\u3068\u304c\u3067\u304d\u308b",
         "13": "\u90aa\u6076\u9ed1\u5ba2\u662f\u4e00\u4e2a\u62e5\u6709\u4e24\u79cd\u80fd\u529b\u7684\u5185\u9b3c\u3002\n\u4ed6\u53ef\u4ee5\u5728\u4efb\u4f55\u5730\u65b9\u770b\u5230\u70ed\u6210\u50cf\u3002\n\u4ed6\u53ef\u4ee5\u4ece\u8239\u5458\u4e2d\u521b\u9020\u75af\u5b50\u3002\n\u521b\u9020\u7684\u75af\u5b50\u53ef\u4ee5\u548c\u75af\u5b50\u7684\u8bbe\u7f6e\u6709\u6240\u4e0d\u540c\uff0c\u5177\u4f53\u53ef\u4ee5\u5728\u6e38\u620f\u8bbe\u7f6e\u4e2d\u67e5\u770b"
     },
-    "evilMayorFullDesc": {
-        "0": "Let's get more votes than the others.",
-        "11": "\u30fb\u3057\u308c\u3063\u3068\u5468\u308a\u3088\u308a\u591a\u304f\u306e\u7968\u3092\u5165\u308c\u3088\u3046"
-    },
     "lawyerFullDesc": {
         "0": "The Lawyer is a neutral role that has a client.\nThe client might be an Impostor or Jackal which is no Lover.\nThe Lawyer needs their client to win in order to win the game.\nIf their client dies or gets voted out, the Lawyer changes their role and becomes the\nPursuer, which has a different goal to win the game. The main goal of the Lawyer is to\nwin as Lawyer, as it is not allowed to betray their client.",
         "11": "\u30fb<color=#ff1919ff>\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc</color>or<color=#00b4ebff>\u30b8\u30e3\u30c3\u30ab\u30eb</color>\u304c\u8ab0\u304b\u308f\u304b\u308a\u3001\n\u3000\u305d\u306e\u4eba\u306e\u52dd\u5229\u6761\u4ef6\u304c\u52dd\u5229\u6761\u4ef6\u3068\u306a\u308b\u3002\n\u30fb<color=#ff1919ff>\u4eba\u5916</color>\u306f<color=#869919>\u5f01\u8b77\u58eb</color>\u304c\u751f\u5b58\u3057\u305f\u72b6\u614b\u3067\u52dd\u5229\u3059\u308b\u3068\u3001\n\u3000<color=#869919>\u5f01\u8b77\u58eb</color>\u306e\u52dd\u5229\u3068\u306a\u308a\u4f9d\u983c\u4eba\u306f\u6557\u5317\u6271\u3044\u3068\u306a\u308b\u3002\n\u30fb\u4f9d\u983c\u4eba\u304c\u6b7b\u4ea1\u3057\u305f\u5834\u5408\u306f\u3010<color=#869919>\u8ffd\u8de1\u8005</color>\u3011\u3068\u306a\u308b\u3002",
@@ -3468,16 +3398,6 @@
         "0": "The Fortune Teller is a Crewmate with the power to divine a single player's role.\nThey start out believing themselves to be an ordinary Crewmate, only awakening\nto their powers after completing a designated number of tasks.",
         "11": "\u30fb\u6700\u521d\u306f\u30af\u30eb\u30fc\u3068\u8868\u793a\u3055\u308c\u3066\u304a\u308a\u30bf\u30b9\u30af\u3092\u4e00\u5b9a\u6570\u3053\u306a\u3059\u3068\n\u3000\u5360\u3044\u5e2b\u3068\u8868\u793a\u3055\u308c\u3066\u5360\u3044\u304c\u884c\u3048\u308b\u3088\u3046\u306b\u306a\u308b\n\u30fb\u5360\u3044\u5e2b\u3068\u8868\u793a\u3055\u308c\u308b\u3088\u3046\u306b\u306a\u308b\u3068\u30df\u30fc\u30c6\u30a3\u30f3\u30b0\u30dc\u30bf\u30f3\u3092\n\u3000\u62bc\u305b\u306a\u304f\u306a\u308b\n\u30fb\u5360\u3044\u306f\uff11\u56de\u3057\u304b\u3067\u304d\u306a\u3044\n\u30fb\u30bf\u30b9\u30af\u30d5\u30a7\u30a4\u30ba\u4e2d\u306b\u5360\u3046\u3053\u3068\u304c\u3067\u304d\u7d50\u679c\u3082\u5373\u6642\u308f\u304b\u308b\n\u30fb\u5360\u3044\u3092\u884c\u3046\u3068\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc\u304b\u3089\u5360\u3044\u5e2b\u306b\u5bfe\u3057\u3066\n\u3000\u77e2\u5370\u304c\u8868\u793a\u3055\u308c\u308b\n\u30fb\u5360\u3048\u308b\u5bfe\u8c61\u306f\u4e00\u5b9a\u6642\u9593\u4e00\u5b9a\u8ddd\u96e2\u4ee5\u5185\u306b\u3044\u305f\u76f8\u624b or \n\u3000\u65e2\u306b\u6b7b\u4ea1\u3057\u3066\u3044\u308b\u30d7\u30ec\u30a4\u30e4\u30fc\u306e\u307f\n\u30fb\u80cc\u5fb3\u8005\u3092\u5360\u3046\u3068\u80cc\u5fb3\u8005\u306b\u901a\u77e5\u304c\u3044\u304f\n\u30fb\u5996\u72d0\u3092\u5360\u3046\u3068\u546a\u6bba\u3067\u304d\u308b\n\u30fb\u5360\u3044\u7d50\u679c\u306f\u9663\u55b6\u3067\u8868\u793a\u3055\u308c\u308b",
         "13": "\u5360\u535c\u5e08\u5c5e\u4e8e\u8239\u5458\u9635\u8425\uff0c\u62e5\u6709\u67e5\u9a8c\u4e00\u540d\u73a9\u5bb6\u804c\u4e1a\u7684\u529b\u91cf\u3002\n\u4ed6\u4eec\u5728\u5f00\u5c40\u65f6\u8eab\u4efd\u663e\u793a\u4e3a\u666e\u901a\u8239\u5458\uff0c\u5728\u5b8c\u6210\u4e00\u5b9a\u91cf\u4efb\u52a1\u4e4b\u540e\u8eab\u4efd\u624d\u4f1a\u53d8\u4e3a\u5360\u535c\u5e08\uff0c\u89c9\u9192\u5360\u535c\u7684\u80fd\u529b\u3002\n\u89c9\u9192\u5360\u535c\u80fd\u529b\u540e\uff0c\u5360\u535c\u5e08\u5c06\u65e0\u6cd5\u53ec\u5f00\u7d27\u6025\u4f1a\u8bae\u3002\n\u5360\u535c\u80fd\u529b\u5728\u884c\u52a8\u9636\u6bb5\u4ec5\u9650\u4e00\u6b21\uff0c\u9009\u62e9\u4e00\u540d\u73a9\u5bb6\uff0c\u7acb\u523b\u67e5\u9a8c\u4ed6\u7684\u8eab\u4efd\u3002\n\u5360\u535c\u7684\u76ee\u6807\u5fc5\u987b\u4e0e\u5360\u535c\u5e08\u5728\u4e00\u5b9a\u65f6\u95f4\u5185\u4fdd\u6301\u4e00\u5b9a\u7684\u8ddd\u79bb\u6216\u5df2\u7ecf\u6b7b\u4ea1\u3002\n\u5f53\u5360\u535c\u5e08\u5360\u535c\u65f6\uff0c\u6240\u6709\u5185\u9b3c\u5c06\u770b\u5230\u6307\u5411\u5360\u535c\u5e08\u7684\u7bad\u5934\u3002\n\u82e5\u5360\u535c\u5e08\u7684\u5360\u535c\u76ee\u6807\u662f\u80cc\u5fb7\u8005\uff0c\u80cc\u5fb7\u8005\u5c06\u5f97\u77e5\u81ea\u5df1\u88ab\u5360\u535c\uff1b\u82e5\u5360\u535c\u5e08\u7684\u5360\u535c\u76ee\u6807\u662f\u72d0\u5996\uff0c\u72d0\u5996\u7acb\u523b\u6b7b\u4ea1\u3002"
-    },
-    "niceWatcherFullDesc": {
-        "0": "The Watcher is a player capable of seeing everyone's votes during meetings.",
-        "11": "\u30fb\u4f1a\u8b70\u4e2d\u3001\u5168\u54e1\u306e\u6295\u7968\u5148\u304c\u898b\u3048\u308b",
-        "13": "\u7aa5\u89c6\u8005\u53ef\u4ee5\u770b\u5230\u4f1a\u8bae\u4e2d\u6240\u6709\u4eba\u7684\u6295\u7968\u60c5\u51b5\u3002"
-    },
-    "evilWatcherFullDesc": {
-        "0": "The Watcher is a player capable of seeing everyone's votes during meetings.",
-        "11": "\u30fb\u4f1a\u8b70\u4e2d\u3001\u5168\u54e1\u306e\u6295\u7968\u5148\u304c\u898b\u3048\u308b",
-        "13": "\u7aa5\u89c6\u8005\u53ef\u4ee5\u770b\u5230\u4f1a\u8bae\u4e2d\u6240\u6709\u4eba\u7684\u6295\u7968\u60c5\u51b5\u3002"
     },
     "hawkEyeFullDesc": {
         "0": "You can have a very wide field of vision.\n\n<color=#ffff00>\u3010Caution\u3011Please read carefully.</color>\nIf you use Admin while using Hawk Eye\nAll buttons will disappear.\nIf this happens, wait for Hawk Eye to exit and open the map, or\nUse shortcut keys.",
@@ -3931,6 +3851,46 @@
         "11": "GM\u30a8\u30c7\u30a3\u30b7\u30e7\u30f3\u9650\u5b9a",
         "13": "GM\u7248\u9650\u5b9a"
     },
+    "antiTeleportPostfix": {
+        "0": " AT",
+        "11": " AT"
+    },
+    "opportunistPostfix": {
+        "0": " OP",
+        "11": " OP"
+    },
+    "watcherPostfix": {
+        "0": " WT",
+        "11": " WT"
+    },
+    "miniPostfix": {
+        "0": "Mini",
+        "11": "\u30df\u30cb"
+    },
+    "sunglassesPostfix": {
+        "0": " SG",
+        "11": " SG"
+    },
+    "atIntro": {
+        "0": "You have the ability to stay in place.",
+        "11": "\u305d\u306e\u5834\u306b\u3068\u3069\u307e\u308b\u80fd\u529b\u3092\u624b\u306b\u5165\u308c\u305f\u3002"
+    },
+    "opIntro": {
+        "0": "Do whatever it takes to survive",
+        "11": "\u3068\u306b\u304b\u304f\u751f\u304d\u6b8b\u308a\u307e\u3057\u3087\u3046"
+    },
+    "wtIntro": {
+        "0": "Pay close attention to the crew's votes",
+        "11": "\u307f\u3093\u306a\u306e\u6295\u7968\u306b\u76ee\u3092\u5149\u3089\u305b\u3088\u3046"
+    },
+    "miniIntro": {
+        "0": "No one will harm you until you grow up",
+        "11": "\u5927\u4eba\u306b\u306a\u308b\u307e\u3067\u8ab0\u306b\u3082\u653b\u6483\u3055\u308c\u306a\u3044"
+    },
+    "sgIntro": {
+        "0": "You got the sunglasses",
+        "11": "\u30b5\u30f3\u30b0\u30e9\u30b9\u3092\u624b\u306b\u5165\u308c\u305f"
+    },
     "Ver.1.0.1": {
         "0": "<size=110%><color=#FC0303>TOR GMK Release!</color>Ver1.0.1</size><size=75%>\nHi! I'm Kiyomori!\nThis Update Contents is...\n1.Added HorseMode\n2.Added NewRole, Hawk Eye(ImpostorRoles)\n3.Some Bugs Fixed!\nYou can change to Horse Mode in MainMenu Only!\n(System by SuperNewRoles! Thanks!)\nThat's All? Oh, Hawk Eye has some bugs. Please check Github page yourself.\nSee you next Update~~~!                        DekoKiyo</size>",
         "11": "<size=110%><color=#FC0303>TOR GMK\u66f4\u65b0\u60c5\u5831</color>Ver1.0.1</size>\n<size=80%>\u3084\u3063\u307b\u30fc\u3002\u6e05\u76db\u3060\u3088\uff5e\n\u4eca\u56de\u306e\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u306e\u5185\u5bb9\u306f\u3053\u3093\u306a\u611f\u3058\u3055\uff01\n\u30fb\u99ac\u30e2\u30fc\u30c9\u642d\u8f09\n\u30fb\u65b0\u5f79\u8077 : \u30db\u30fc\u30af\u30a2\u30a4(\u9663\u55b6:\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc) \u642d\u8f09!\n\u30fb\u8272\u3005\u30d0\u30b0\u4fee\u6b63\n\u99ac\u30e2\u30fc\u30c9\u306f\u30e1\u30a4\u30f3\u30e1\u30cb\u30e5\u30fc\u3060\u3051\u3067\u3057\u304b\u5909\u3048\u3089\u308c\u306a\u3044\u3088(SNR\u3092\u53c2\u8003\u306b\u3057\u307e\u3057\u305f\uff01Thanks!)\n\u3053\u308c\u304f\u3089\u3044\u304b\u306a\n\u30db\u30fc\u30af\u30a2\u30a4\u306f\u7d50\u69cb\u4f7f\u3044\u52dd\u624b\u304c\u60aa\u3044\u304b\u3089Github\u306e\u30da\u30fc\u30b8\u3067\u8a73\u7d30\u3092\u78ba\u8a8d\u3057\u3066\u306d(\u3054\u3081\u3093\u306d)\n\n\u305d\u308c\u3058\u3083\u30fc\u306d\uff5e\uff5e\uff5e                       \u3067\u3053\u307c\u3053\u306e\u6e05\u76db</size>"
@@ -3987,8 +3947,12 @@
         "0": "<size=110%><color=#FC0303>TOR GM KM Update!</color>Ver1.1.0</size>\n<size=70%>Please Read Github</size>",
         "11": "<size=110%><color=#FC0303>TOR GM KM Update!</color>Ver1.1.0</size>\n<size=70%>Github\u306e\u30da\u30fc\u30b8\u3092\u8aad\u3093\u3067\u304f\u3060\u3055\u3044</size>"
     },
-    "release": {
+    "Ver.1.1.1": {
         "0": "<size=110%><color=#FC0303>TOR GM KM Update!</color>Ver1.1.0</size>\n<size=70%>Fixed Some Bugs.</size>",
         "11": "<size=110%><color=#FC0303>TOR GM KM Update!</color>Ver1.1.0</size>\n<size=70%>\u30d0\u30b0\u3092\u4fee\u6b63\u3057\u307e\u3057\u305f\u3002</size>"
+    },
+    "release": {
+        "0": "<size=110%><color=#FC0303>TOR GM KM Update!</color>Ver1.1.2</size><size=70%>\nHi! I'm Kiyomori!\nThis Update Contents is...\n1.Fixed Some Bugs\n2.Change to Modifiers\n  Opportunist\n  Watcher\n3.Add Modifier\n  Sunglasses\n\nSee you next Update~~~!                        DekoKiyo&Mugicha</size>",
+        "11": "<size=110%><color=#FC0303>TOR GM KM Update!</color>Ver1.1.2</size><size=70%>\n\u3084\u3063\u3075\u3049\u30fc\u3002\u6e05\u76db\u3060\u3088\uff5e\n\u4eca\u56de\u306e\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u306e\u5185\u5bb9\u306f\u3053\u3093\u306a\u611f\u3058\u3055\uff01\n1.\u30d0\u30b0\u4fee\u6b63\n2.\u4ee5\u4e0b\u306e\u5f79\u8077\u3092\u5c5e\u6027\u6271\u3044\u306b\u5909\u66f4\u3057\u307e\u3057\u305f\n  \u30aa\u30dd\u30c1\u30e5\u30cb\u30b9\u30c8\n  \u30a6\u30a9\u30c3\u30c1\u30e3\u30fc\n3.\u5c5e\u6027\u8ffd\u52a0\n  \u30b5\u30f3\u30b0\u30e9\u30b9\n\n\u305d\u308c\u3058\u3083\u30fc\u306d\uff5e\uff5e\uff5e                       \u3067\u3053\u307c\u3053\u306e\u6e05\u76db&\u9ea6\u8336</size>"
     }
 }

@@ -116,7 +116,6 @@ namespace TheOtherRoles.Patches
             var neutralMax = CustomOptionHolder.neutralRolesCountMax.getSelection();
             var impostorMin = CustomOptionHolder.impostorRolesCountMin.getSelection();
             var impostorMax = CustomOptionHolder.impostorRolesCountMax.getSelection();
-
             // Make sure min is less or equal to max
             if (crewmateMin > crewmateMax) crewmateMin = crewmateMax;
             if (neutralMin > neutralMax) neutralMin = neutralMax;
@@ -157,7 +156,6 @@ namespace TheOtherRoles.Patches
             neutralSettings.Add((byte)RoleType.Jester, CustomOptionHolder.jesterSpawnRate.data);
             neutralSettings.Add((byte)RoleType.Arsonist, CustomOptionHolder.arsonistSpawnRate.data);
             neutralSettings.Add((byte)RoleType.Jackal, CustomOptionHolder.jackalSpawnRate.data);
-            neutralSettings.Add((byte)RoleType.Opportunist, CustomOptionHolder.opportunistSpawnRate.data);
             neutralSettings.Add((byte)RoleType.Vulture, CustomOptionHolder.vultureSpawnRate.data);
             neutralSettings.Add((byte)RoleType.Lawyer, CustomOptionHolder.lawyerSpawnRate.data);
             neutralSettings.Add((byte)RoleType.PlagueDoctor, CustomOptionHolder.plagueDoctorSpawnRate.data);
@@ -187,7 +185,6 @@ namespace TheOtherRoles.Patches
                 // Only add Spy if more than 1 impostor as the spy role is otherwise useless
                 crewSettings.Add((byte)RoleType.Spy, CustomOptionHolder.spySpawnRate.data);
             }
-
 
             return new RoleAssignmentData
             {
@@ -617,6 +614,48 @@ namespace TheOtherRoles.Patches
                     setModifierToRandomPlayer((byte)ModifierType.AntiTeleport, AntiTeleport.candidates);
                 }
             }
+
+            // Opportunist
+            for (int i = 0; i < CustomOptionHolder.opportunistSpawnRate.count; i++)
+            {
+                if (rnd.Next(1, 100) <= CustomOptionHolder.opportunistSpawnRate.rate * 10)
+                {
+                    var candidates = Opportunist.candidates;
+                    if (candidates.Count <= 0)
+                    {
+                        break;
+                    }
+                    setModifierToRandomPlayer((byte)ModifierType.Opportunist, Opportunist.candidates);
+                }
+            }
+
+            // Watcher
+            for (int i = 0; i < CustomOptionHolder.watcherSpawnRate.count; i++)
+            {
+                if (rnd.Next(1, 100) <= CustomOptionHolder.watcherSpawnRate.rate * 10)
+                {
+                    var candidates = Watcher.candidates;
+                    if (candidates.Count <= 0)
+                    {
+                        break;
+                    }
+                    setModifierToRandomPlayer((byte)ModifierType.Watcher, Watcher.candidates);
+                }
+            }
+
+            // Sunglasses
+            for (int i = 0; i < CustomOptionHolder.sunglassesSpawnRate.count; i++)
+            {
+                if (rnd.Next(1, 100) <= CustomOptionHolder.sunglassesSpawnRate.rate * 10)
+                {
+                    var candidates = Sunglasses.candidates;
+                    if (candidates.Count <= 0)
+                    {
+                        break;
+                    }
+                    setModifierToRandomPlayer((byte)ModifierType.Sunglasses, Sunglasses.candidates);
+                }
+            }
         }
 
         private static byte setRoleToRandomPlayer(byte roleId, List<PlayerControl> playerList, byte flag = 0, bool removePlayer = true)
@@ -667,9 +706,11 @@ namespace TheOtherRoles.Patches
             public Dictionary<byte, (int rate, int count)> impSettings = new Dictionary<byte, (int, int)>();
             public Dictionary<byte, (int rate, int count)> neutralSettings = new Dictionary<byte, (int, int)>();
             public Dictionary<byte, (int rate, int count)> crewSettings = new Dictionary<byte, (int, int)>();
+            public Dictionary<byte, (int rate, int count)> modSettings = new Dictionary<byte, (int, int)>();
             public int maxCrewmateRoles { get; set; }
             public int maxNeutralRoles { get; set; }
             public int maxImpostorRoles { get; set; }
+            public int maxModifierRoles { get; set; }
             public PlayerControl host { get; set; }
         }
 
@@ -677,8 +718,8 @@ namespace TheOtherRoles.Patches
         {
             Crewmate = 0,
             Neutral = 1,
-            Impostor = 2
+            Impostor = 2,
+            Modifier = 3,
         }
-
     }
 }

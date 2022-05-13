@@ -205,7 +205,7 @@ namespace TheOtherRoles.Patches
             public static bool Prefix(MeetingHud __instance, [HarmonyArgument(0)] GameData.PlayerInfo voterPlayer, [HarmonyArgument(1)] int index, [HarmonyArgument(2)] Transform parent)
             {
                 SpriteRenderer spriteRenderer = UnityEngine.Object.Instantiate<SpriteRenderer>(__instance.PlayerVotePrefab);
-                if (!PlayerControl.GameOptions.AnonymousVotes || (PlayerControl.LocalPlayer.Data.IsDead && MapOptions.ghostsSeeVotes) || PlayerControl.LocalPlayer.isRole(RoleType.Watcher))
+                if (!PlayerControl.GameOptions.AnonymousVotes || (PlayerControl.LocalPlayer.Data.IsDead && MapOptions.ghostsSeeVotes) || PlayerControl.LocalPlayer.hasModifier(ModifierType.Watcher))
                     PlayerControl.SetPlayerMaterialColors(voterPlayer.DefaultOutfit.ColorId, spriteRenderer);
                 else
                     PlayerControl.SetPlayerMaterialColors(Palette.DisabledGrey, spriteRenderer);
@@ -453,7 +453,6 @@ namespace TheOtherRoles.Patches
                 if (roleInfo == null ||
                     roleInfo.roleType == RoleType.Lovers ||
                     roleInfo.roleType == guesserRole ||
-                    roleInfo == RoleInfo.niceMini ||
                     (!Guesser.evilGuesserCanGuessSpy && guesserRole == RoleType.EvilGuesser && roleInfo.roleType == RoleType.Spy) ||
                     roleInfo == RoleInfo.gm ||
                     (Guesser.onlyAvailableRoles && !roleInfo.enabled && !MapOptions.hideSettings))

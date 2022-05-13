@@ -202,6 +202,21 @@ namespace TheOtherRoles.Patches
                     __instance.RoleBlurbText.text += "\n" + Helpers.cs(AntiTeleport.color, String.Format(ModTranslation.getString("atIntro")));
                 }
 
+                if (PlayerControl.LocalPlayer.hasModifier(ModifierType.Opportunist))
+                {
+                    __instance.RoleBlurbText.text += "\n" + Helpers.cs(Opportunist.color, String.Format(ModTranslation.getString("opIntro")));
+                }
+
+                if (PlayerControl.LocalPlayer.hasModifier(ModifierType.Watcher))
+                {
+                    __instance.RoleBlurbText.text += "\n" + Helpers.cs(Watcher.color, String.Format(ModTranslation.getString("wtIntro")));
+                }
+
+                if (PlayerControl.LocalPlayer.hasModifier(ModifierType.Sunglasses))
+                {
+                    __instance.RoleBlurbText.text += "\n" + Helpers.cs(Sunglasses.color, String.Format(ModTranslation.getString("sgIntro")));
+                }
+
                 // 従来処理
                 SoundManager.Instance.PlaySound(PlayerControl.LocalPlayer.Data.Role.IntroSound, false, 1f);
                 __instance.YouAreText.gameObject.SetActive(true);

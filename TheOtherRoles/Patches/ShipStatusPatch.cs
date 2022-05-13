@@ -48,6 +48,8 @@ namespace TheOtherRoles.Patches
                 __result = Mathf.Lerp(__instance.MinLightRadius, __instance.MaxLightRadius * Lawyer.vision, num);
             else
                 __result = Mathf.Lerp(__instance.MinLightRadius, __instance.MaxLightRadius, num) * PlayerControl.GameOptions.CrewLightMod;
+            if (PlayerControl.LocalPlayer.hasModifier(ModifierType.Sunglasses))
+                __result *= 1f - Sunglasses.vision * 0.01f;
             return false;
         }
 

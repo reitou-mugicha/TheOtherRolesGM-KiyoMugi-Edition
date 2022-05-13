@@ -79,7 +79,6 @@ namespace TheOtherRoles
             RoleType.Medium,
             RoleType.Mini,
             RoleType.NiceGuesser,
-            RoleType.Watcher,
             RoleType.Sprinter,
         };
 

@@ -24,6 +24,9 @@ namespace TheOtherRoles
         Madmate = 0,
         CreatedMadmate,
         AntiTeleport,
+        Opportunist,
+        Watcher,
+        Sunglasses,
 
         // don't put anything below this
         NoModifier = int.MaxValue
@@ -37,6 +40,9 @@ namespace TheOtherRoles
             { ModifierType.Madmate, typeof(ModifierBase<Madmate>) },
             { ModifierType.CreatedMadmate, typeof(ModifierBase<CreatedMadmate>) },
             { ModifierType.AntiTeleport, typeof(ModifierBase<AntiTeleport>) },
+            { ModifierType.Opportunist, typeof(ModifierBase<Opportunist>) },
+            { ModifierType.Watcher, typeof(ModifierBase<Watcher>) },
+            { ModifierType.Sunglasses, typeof(ModifierBase<Sunglasses>) },
         };
     }
 

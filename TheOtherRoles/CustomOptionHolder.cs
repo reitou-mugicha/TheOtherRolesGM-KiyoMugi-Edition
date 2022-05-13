@@ -349,7 +349,7 @@ namespace TheOtherRoles
         public static CustomOption nekoKabochaRevengeImpostor;
         public static CustomOption nekoKabochaRevengeExile;
 
-        public static CustomDualRoleOption watcherSpawnRate;
+        public static CustomRoleOption watcherSpawnRate;
 
         public static CustomOption hideSettings;
         public static CustomOption restrictDevices;
@@ -402,6 +402,9 @@ namespace TheOtherRoles
         public static CustomOption assassinTraceColorTime;
 
         public static CustomRoleOption antiTeleportSpawnRate;
+
+        public static CustomRoleOption sunglassesSpawnRate;
+        public static CustomOption sunglass;
 
         internal static Dictionary<byte, byte[]> blockedRolePairings = new Dictionary<byte, byte[]>();
 
@@ -597,7 +600,7 @@ namespace TheOtherRoles
             arsonistDuration = CustomOption.Create(352, CustomOptionType.Neutral, "arsonistDuration", 3f, 0f, 10f, 1f, arsonistSpawnRate, format: "unitSeconds");
             arsonistCanBeLovers = CustomOption.Create(353, CustomOptionType.Neutral, "arsonistCanBeLovers", false, arsonistSpawnRate);
 
-            opportunistSpawnRate = new CustomRoleOption(360, CustomOptionType.Neutral, "opportunist", Opportunist.color);
+            opportunistSpawnRate = new CustomRoleOption(360, CustomOptionType.Modifier, "opportunist", Opportunist.color);
 
             jackalSpawnRate = new CustomRoleOption(365, CustomOptionType.Neutral, "jackal", Jackal.color, 1);
             jackalKillCooldown = CustomOption.Create(366, CustomOptionType.Neutral, "jackalKillCooldown", 30f, 2.5f, 60f, 2.5f, jackalSpawnRate, format: "unitSeconds");
@@ -613,6 +616,9 @@ namespace TheOtherRoles
             jackalCanCreateSidekickFromFox = CustomOption.Create(376, CustomOptionType.Neutral, "jackalCanCreateSidekickFromFox", true, jackalCanCreateSidekick);
 
             antiTeleportSpawnRate = new CustomRoleOption(630, CustomOptionType.Modifier, "antiTeleport", AntiTeleport.color, 15);
+
+            sunglassesSpawnRate = new CustomRoleOption(640, CustomOptionType.Modifier, "sunglasses", Sunglasses.color, 15);
+            sunglass = CustomOption.Create(641, CustomOptionType.Modifier, "sunglassesEye", 50f, 10f, 90f, 10f, sunglassesSpawnRate, format: "unitPercent");
 
             //kingdomSpawnRate = new CustomRoleOption(380, CustomOptionType.Neutral, "kingdom", King.color, 1);
             //kingTasks = new CustomTasksOption(381, CustomOptionType.Neutral, 5,3,7, kingdomSpawnRate);
@@ -647,7 +653,7 @@ namespace TheOtherRoles
             plagueDoctorInfectKiller = CustomOption.Create(427, CustomOptionType.Neutral, "plagueDoctorInfectKiller", true, plagueDoctorSpawnRate);
             plagueDoctorWinDead = CustomOption.Create(428, CustomOptionType.Neutral, "plagueDoctorWinDead", true, plagueDoctorSpawnRate);
 
-            watcherSpawnRate = new CustomDualRoleOption(430, CustomOptionType.Other, "watcher", Watcher.color, RoleType.Watcher, 15);
+            watcherSpawnRate = new CustomRoleOption(430, CustomOptionType.Modifier, "watcher", Watcher.color, 15);
 
             foxSpawnRate = new CustomRoleOption(440, CustomOptionType.Neutral, "fox", Fox.color, 1);
             foxCanFixReactorAndO2 = CustomOption.Create(441, CustomOptionType.Neutral, "foxCanFixReactorAndO2", false, foxSpawnRate);
@@ -678,7 +684,7 @@ namespace TheOtherRoles
             mayorSpawnRate = new CustomRoleOption(480, CustomOptionType.Crewmate, "mayor", Mayor.color, 1);
             mayorNumVotes = CustomOption.Create(481, CustomOptionType.Crewmate, "mayorNumVotes", 2f, 2f, 10f, 1f, mayorSpawnRate, format: "unitVotes");
             mayorMeetingButton = CustomOption.Create(482, CustomOptionType.Crewmate, "mayorMeetingButton", true, mayorSpawnRate);
-            //mayorNumMeetingButton = CustomOption.Create(483, CustomOptionType.Crewmate, "mayorNumMeetingButton", 1f, 1f, 10f, 1f, mayorMeetingButton, format: "unitTimes");
+            mayorNumMeetingButton = CustomOption.Create(483, CustomOptionType.Crewmate, "mayorNumMeetingButton", 1f, 1f, 10f, 1f, mayorMeetingButton, format: "unitTimes");
 
             lighterSpawnRate = new CustomRoleOption(490, CustomOptionType.Crewmate, "lighter", Lighter.color, 15);
             lighterModeLightsOnVision = CustomOption.Create(491, CustomOptionType.Crewmate, "lighterModeLightsOnVision", 2f, 0.25f, 5f, 0.25f, lighterSpawnRate, format: "unitMultiplier");
@@ -813,5 +819,4 @@ namespace TheOtherRoles
             blockedRolePairings.Add((byte)RoleType.Cleaner, new[] { (byte)RoleType.Vulture });
         }
     }
-
 }

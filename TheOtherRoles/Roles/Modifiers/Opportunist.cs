@@ -1,22 +1,14 @@
 using HarmonyLib;
-using Hazel;
-using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using System.Linq;
 using UnityEngine;
-using TheOtherRoles.Objects;
-using TheOtherRoles.Patches;
-using static TheOtherRoles.TheOtherRoles;
-using static TheOtherRoles.GameHistory;
 
 namespace TheOtherRoles
 {
     [HarmonyPatch]
-    public class AntiTeleport : ModifierBase<AntiTeleport>
+    public class Opportunist : ModifierBase<Opportunist>
     {
-        public static Color color = Palette.Orange;
-        public static Vector3 position = new Vector3();
+        public static Color color = new Color32(0, 255, 00, byte.MaxValue);
+
         public static List<PlayerControl> candidates
         {
             get
@@ -25,31 +17,37 @@ namespace TheOtherRoles
 
                 foreach (var player in PlayerControl.AllPlayerControls)
                 {
-                    if (!player.hasModifier(ModifierType.AntiTeleport))
+                    if (!player.hasModifier(ModifierType.Opportunist))
                         validPlayers.Add(player);
                 }
 
                 return validPlayers;
             }
         }
+
+        public Opportunist()
+        {
+            ModType = modId = ModifierType.Opportunist;
+        }
+
+        public static void Clear()
+        {
+            players = new List<Opportunist>();
+        }
+
         public static string postfix
         {
             get
             {
-                return ModTranslation.getString("antiTeleportPostfix");
+                return ModTranslation.getString("opportunistPostfix");
             }
         }
         public static string fullName
         {
             get
             {
-                return ModTranslation.getString("antiTeleport");
+                return ModTranslation.getString("opportunist");
             }
-        }
-
-        public AntiTeleport()
-        {
-            ModType = modId = ModifierType.AntiTeleport;
         }
 
         public override void OnMeetingStart() { }
@@ -58,12 +56,5 @@ namespace TheOtherRoles
         public override void OnKill(PlayerControl target) { }
         public override void OnDeath(PlayerControl killer = null) { }
         public override void HandleDisconnect(PlayerControl player, DisconnectReasons reason) { }
-        public static void MakeButtons(HudManager hm) { }
-        public static void SetButtonCooldowns() { }
-
-        public static void Clear()
-        {
-            players = new List<AntiTeleport>();
-        }
     }
 }

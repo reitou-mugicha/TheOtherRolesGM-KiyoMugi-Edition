@@ -22,14 +22,14 @@ namespace TheOtherRoles
     public class TheOtherRolesPlugin : BasePlugin
     {
         public const string Id = "kiyomori.mugicha.theotherrolesgmkm";
-        public const string VersionString = "1.1.1";
+        public const string VersionString = "1.1.2";
         public static System.Version Version = System.Version.Parse(VersionString);
         internal static BepInEx.Logging.ManualLogSource Logger;
 
         public Harmony Harmony { get; } = new Harmony(Id);
         public static TheOtherRolesPlugin Instance;
 
-        public static int optionsPage = 0;
+        public static int optionsPage = 1;
 
         public static ConfigEntry<bool> DebugMode { get; private set; }
         public static ConfigEntry<bool> StreamerMode { get; set; }

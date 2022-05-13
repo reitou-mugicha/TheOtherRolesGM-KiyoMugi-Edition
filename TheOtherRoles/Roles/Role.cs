@@ -72,12 +72,10 @@ namespace TheOtherRoles
         Arsonist,
         Jackal,
         Sidekick,
-        Opportunist,
         Vulture,
         Lawyer,
         Pursuer,
         PlagueDoctor,
-        Watcher,
         Fox,
         Immoralist,
         HawkEye,
@@ -103,6 +101,7 @@ namespace TheOtherRoles
             { RoleType.Lighter, typeof(RoleBase<Lighter>) },
             { RoleType.FortuneTeller, typeof(RoleBase<FortuneTeller>) },
             { RoleType.Sprinter, typeof(RoleBase<Sprinter>) },
+            { RoleType.Mayor, typeof(RoleBase<Mayor>) },
 
             // Impostor
             { RoleType.Ninja, typeof(RoleBase<Ninja>) },
@@ -111,15 +110,11 @@ namespace TheOtherRoles
             { RoleType.HawkEye, typeof(RoleBase<HawkEye>) },
 
             // Neutral
-            { RoleType.Opportunist, typeof(RoleBase<Opportunist>) },
             { RoleType.PlagueDoctor, typeof(RoleBase<PlagueDoctor>) },
             { RoleType.Fox, typeof(RoleBase<Fox>) },
             { RoleType.Immoralist, typeof(RoleBase<Immoralist>) },
             //{ RoleType.King, typeof(RoleBase<King>) },
             //{ RoleType.Minions, typeof(RoleBase<Minions>) },
-
-            // Other
-            { RoleType.Watcher, typeof(RoleBase<Watcher>) },
         };
     }
 
@@ -248,8 +243,6 @@ namespace TheOtherRoles
             {
                 case RoleType.Jester:
                     return Jester.jester == player;
-                case RoleType.Mayor:
-                    return Mayor.mayor == player;
                 case RoleType.Engineer:
                     return Engineer.engineer == player;
                 case RoleType.Godfather:
@@ -351,9 +344,6 @@ namespace TheOtherRoles
             {
                 case RoleType.Jester:
                     Jester.jester = player;
-                    break;
-                case RoleType.Mayor:
-                    Mayor.mayor = player;
                     break;
                 case RoleType.Engineer:
                     Engineer.engineer = player;
@@ -503,7 +493,6 @@ namespace TheOtherRoles
 
             // Crewmate roles
             if (player.isRole(RoleType.Engineer)) Engineer.clearAndReload();
-            if (player.isRole(RoleType.Mayor)) Mayor.clearAndReload();
             if (player.isRole(RoleType.Detective)) Detective.clearAndReload();
             if (player.isRole(RoleType.TimeMaster)) TimeMaster.clearAndReload();
             if (player.isRole(RoleType.Medic)) Medic.clearAndReload();

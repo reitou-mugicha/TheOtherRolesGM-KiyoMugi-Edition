@@ -19,10 +19,11 @@ namespace TheOtherRoles
         public static Color color = new Color32(32, 77, 66, byte.MaxValue);
         public static Minigame emergency = null;
         public static Sprite emergencySprite = null;
-        public static int numVotes = 2;
-        public static int numButton = 2;
+        public static int numVotes { get { return Mathf.RoundToInt(CustomOptionHolder.mayorNumVotes.getFloat()); } }
         public static bool meetingButton { get { return CustomOptionHolder.mayorMeetingButton.getBool(); } }
         public static int maxButton { get { return Mathf.RoundToInt(CustomOptionHolder.mayorNumMeetingButton.getFloat()); } }
+
+        public int numButton = 2;
 
         public static Sprite getMeetingSprite()
         {
@@ -40,15 +41,6 @@ namespace TheOtherRoles
         public static void clear(byte playerId)
         {
             if (mayor != null && mayor.PlayerId == playerId) mayor = null;
-        }
-
-        public static void clearAndReload()
-        {
-            mayor = null;
-            emergency = null;
-            emergencySprite = null;
-
-            numVotes = (int)CustomOptionHolder.mayorNumVotes.getFloat();
         }
 
         public Mayor()
@@ -69,11 +61,11 @@ namespace TheOtherRoles
             mayorMeetingButton = new CustomButton(
                 () =>
                 {
-                    if (Mayor.numButton < 0)
+                    if (local.numButton <= 0)
                     {
                         return;
                     }
-                    Mayor.numButton--;
+                    local.numButton--;
 
                     PlayerControl.LocalPlayer.NetTransform.Halt(); // Stop current movement
                     Helpers.handleVampireBiteOnBodyReport(); // Manually call Vampire handling, since the CmdReportDeadBody Prefix won't be called
@@ -85,7 +77,7 @@ namespace TheOtherRoles
                     AmongUsClient.Instance.FinishRpcImmediately(writer);
                     mayorMeetingButton.Timer = mayorMeetingButton.MaxTimer;
                 },
-                () => { return Mayor.mayor != null && Mayor.mayor == PlayerControl.LocalPlayer && !PlayerControl.LocalPlayer.Data.IsDead && Mayor.numButton > 0 && Mayor.meetingButton == true; },
+                () => { return PlayerControl.LocalPlayer.isRole(RoleType.Mayor) && !PlayerControl.LocalPlayer.Data.IsDead && local.numButton > 0; },
                 () =>
                 {
                     mayorMeetingButton.actionButton.OverrideText(ModTranslation.getString("mayorMeetingText"));

@@ -10,13 +10,44 @@ using static TheOtherRoles.GameHistory;
 namespace TheOtherRoles
 {
     [HarmonyPatch]
-    public class Watcher : RoleBase<Watcher>
+    public class Watcher : ModifierBase<Watcher>
     {
         public static Color color = Palette.Purple;
 
+        public static List<PlayerControl> candidates
+        {
+            get
+            {
+                List<PlayerControl> validPlayers = new List<PlayerControl>();
+
+                foreach (var player in PlayerControl.AllPlayerControls)
+                {
+                    if (!player.hasModifier(ModifierType.Watcher))
+                        validPlayers.Add(player);
+                }
+
+                return validPlayers;
+            }
+        }
+
+        public static string postfix
+        {
+            get
+            {
+                return ModTranslation.getString("watcherPostfix");
+            }
+        }
+        public static string fullName
+        {
+            get
+            {
+                return ModTranslation.getString("watcher");
+            }
+        }
+
         public Watcher()
         {
-            RoleType = roleId = RoleType.Watcher;
+            ModType = modId = ModifierType.Watcher;
         }
 
         public override void OnMeetingStart() { }

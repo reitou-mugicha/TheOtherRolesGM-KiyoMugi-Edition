@@ -28,7 +28,7 @@ namespace TheOtherRoles
             Shifter.clearAndReload();
             Swapper.clearAndReload();
             Portalmaker.clearAndReload();
-            Mayor.clearAndReload();
+            Mayor.Clear();
             GM.clearAndReload();
 
             Lovers.Clear();

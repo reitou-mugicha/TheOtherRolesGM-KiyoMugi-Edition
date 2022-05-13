@@ -82,15 +82,12 @@ namespace TheOtherRoles
         public static RoleInfo crewmate = new RoleInfo("crewmate", Palette.CrewmateBlue, null, RoleType.Crewmate);
         public static RoleInfo lovers = new RoleInfo("lovers", Lovers.color, CustomOptionHolder.loversSpawnRate, RoleType.Lovers);
         public static RoleInfo gm = new RoleInfo("gm", GM.color, CustomOptionHolder.gmEnabled, RoleType.GM);
-        public static RoleInfo opportunist = new RoleInfo("opportunist", Opportunist.color, CustomOptionHolder.opportunistSpawnRate, RoleType.Opportunist);
         public static RoleInfo witch = new RoleInfo("witch", Witch.color, CustomOptionHolder.witchSpawnRate, RoleType.Witch);
         public static RoleInfo vulture = new RoleInfo("vulture", Vulture.color, CustomOptionHolder.vultureSpawnRate, RoleType.Vulture);
         public static RoleInfo medium = new RoleInfo("medium", Medium.color, CustomOptionHolder.mediumSpawnRate, RoleType.Medium);
         public static RoleInfo ninja = new RoleInfo("ninja", Ninja.color, CustomOptionHolder.ninjaSpawnRate, RoleType.Ninja);
         public static RoleInfo plagueDoctor = new RoleInfo("plagueDoctor", PlagueDoctor.color, CustomOptionHolder.plagueDoctorSpawnRate, RoleType.PlagueDoctor);
         public static RoleInfo nekoKabocha = new RoleInfo("nekoKabocha", NekoKabocha.color, CustomOptionHolder.nekoKabochaSpawnRate, RoleType.NekoKabocha);
-        public static RoleInfo niceWatcher = new RoleInfo("niceWatcher", Watcher.color, CustomOptionHolder.watcherSpawnRate, RoleType.Watcher);
-        public static RoleInfo evilWatcher = new RoleInfo("evilWatcher", Palette.ImpostorRed, CustomOptionHolder.watcherSpawnRate, RoleType.Watcher);
         public static RoleInfo serialKiller = new RoleInfo("serialKiller", SerialKiller.color, CustomOptionHolder.serialKillerSpawnRate, RoleType.SerialKiller);
         public static RoleInfo fox = new RoleInfo("fox", Fox.color, CustomOptionHolder.foxSpawnRate, RoleType.Fox);
         public static RoleInfo immoralist = new RoleInfo("immoralist", Immoralist.color, CustomOptionHolder.foxSpawnRate, RoleType.Immoralist);
@@ -153,12 +150,9 @@ namespace TheOtherRoles
                 securityGuard,
                 bait,
                 gm,
-                opportunist,
                 medium,
                 plagueDoctor,
                 nekoKabocha,
-                niceWatcher,
-                evilWatcher,
                 fox,
                 immoralist,
                 fortuneTeller,
@@ -221,7 +215,6 @@ namespace TheOtherRoles
             if (p.isRole(RoleType.BountyHunter)) infos.Add(bountyHunter);
             if (p.isRole(RoleType.Bait)) infos.Add(bait);
             if (p.isRole(RoleType.GM)) infos.Add(gm);
-            if (p.isRole(RoleType.Opportunist)) infos.Add(opportunist);
             if (p.isRole(RoleType.Vulture)) infos.Add(vulture);
             if (p.isRole(RoleType.Medium)) infos.Add(medium);
             if (p.isRole(RoleType.Lawyer)) infos.Add(lawyer);
@@ -237,11 +230,6 @@ namespace TheOtherRoles
             if (p.isRole(RoleType.SerialKiller)) infos.Add(serialKiller);/*
             if (p.isRole(RoleType.Student)) infos.Add(student);
             if (p.isRole(RoleType.Creator)) infos.Add(creator);*/
-            if (p.isRole(RoleType.Watcher))
-            {
-                if (p.isImpostor()) infos.Add(evilWatcher);
-                else infos.Add(niceWatcher);
-            }
             if (p.isRole(RoleType.Fox)) infos.Add(fox);
             if (p.isRole(RoleType.Immoralist)) infos.Add(immoralist);
             if (p.isRole(RoleType.FortuneTeller))
@@ -297,6 +285,24 @@ namespace TheOtherRoles
             if (p.hasModifier(ModifierType.AntiTeleport))
             {
                 string postfix = useColors ? Helpers.cs(AntiTeleport.color, AntiTeleport.postfix) : AntiTeleport.postfix;
+                // roleName = String.Join(" ", roleInfo.Select(x => useColors? Helpers.cs(x.color, x.name)  : x.name).ToArray());
+                roleName = roleName + postfix;
+            }
+            if (p.hasModifier(ModifierType.Opportunist))
+            {
+                string postfix = useColors ? Helpers.cs(Opportunist.color, Opportunist.postfix) : Opportunist.postfix;
+                // roleName = String.Join(" ", roleInfo.Select(x => useColors? Helpers.cs(x.color, x.name)  : x.name).ToArray());
+                roleName = roleName + postfix;
+            }
+            if (p.hasModifier(ModifierType.Watcher))
+            {
+                string postfix = useColors ? Helpers.cs(Watcher.color, Watcher.postfix) : Watcher.postfix;
+                // roleName = String.Join(" ", roleInfo.Select(x => useColors? Helpers.cs(x.color, x.name)  : x.name).ToArray());
+                roleName = roleName + postfix;
+            }
+            if (p.hasModifier(ModifierType.Sunglasses))
+            {
+                string postfix = useColors ? Helpers.cs(Sunglasses.color, Sunglasses.postfix) : Sunglasses.postfix;
                 // roleName = String.Join(" ", roleInfo.Select(x => useColors? Helpers.cs(x.color, x.name)  : x.name).ToArray());
                 roleName = roleName + postfix;
             }

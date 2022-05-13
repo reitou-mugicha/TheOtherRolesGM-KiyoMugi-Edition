@@ -147,10 +147,6 @@ namespace TheOtherRoles.Patches
             {
                 setPlayerNameColor(PlayerControl.LocalPlayer, Bait.color);
             }
-            else if (PlayerControl.LocalPlayer.isRole(RoleType.Opportunist))
-            {
-                setPlayerNameColor(PlayerControl.LocalPlayer, Opportunist.color);
-            }
             else if (PlayerControl.LocalPlayer.isRole(RoleType.Vulture))
             {
                 setPlayerNameColor(PlayerControl.LocalPlayer, Vulture.color);
@@ -196,6 +192,10 @@ namespace TheOtherRoles.Patches
                             setPlayerNameColor(p, Palette.ImpostorRed);
                         }
                     }
+                }
+                else if (PlayerControl.LocalPlayer.hasModifier(ModifierType.Opportunist))
+                {
+                    setPlayerNameColor(PlayerControl.LocalPlayer, Opportunist.color);
                 }
             }
 
