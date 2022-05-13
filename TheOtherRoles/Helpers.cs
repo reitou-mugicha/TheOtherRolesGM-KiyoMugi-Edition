@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -675,5 +676,6 @@ namespace TheOtherRoles {
             }
             return systemList;
         }
+        public static string removeHtml(this string text) => Regex.Replace(text, "<[^>]*?>", "");
     }
 }
