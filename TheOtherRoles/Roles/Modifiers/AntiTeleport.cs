@@ -64,6 +64,7 @@ namespace TheOtherRoles
         public static void Clear()
         {
             players = new List<AntiTeleport>();
+            position = new Vector3();
         }
     }
 }
