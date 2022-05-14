@@ -61,6 +61,8 @@ namespace TheOtherRoles
         SerialKiller,
         EvilHacker,
         Assassin,
+        //Undertaker,
+        HawkEye,
 
 
         Mini = 150,
@@ -78,7 +80,6 @@ namespace TheOtherRoles
         PlagueDoctor,
         Fox,
         Immoralist,
-        HawkEye,
         Portalmaker,
         //King,
         //Minions,
@@ -108,6 +109,7 @@ namespace TheOtherRoles
             { RoleType.NekoKabocha, typeof(RoleBase<NekoKabocha>) },
             { RoleType.SerialKiller, typeof(RoleBase<SerialKiller>) },
             { RoleType.HawkEye, typeof(RoleBase<HawkEye>) },
+            //{ RoleType.Undertaker, typeof(RoleBase<Undertaker>) },
 
             // Neutral
             { RoleType.PlagueDoctor, typeof(RoleBase<PlagueDoctor>) },

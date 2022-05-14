@@ -2267,8 +2267,8 @@
         "11": "\u5c5e\u6027\u5f79\u8077\u6570"
     },
     "pressTabForMore": {
-        "0": "Press < or > to change page",
-        "11": "< \u3068 > \u3067\u30da\u30fc\u30b8\u3092\u5909\u66f4\u3057\u307e\u3059",
+        "0": "Press Tab to change page",
+        "11": "Tab \u3067\u30da\u30fc\u30b8\u3092\u5909\u66f4\u3057\u307e\u3059",
         "13": "\u6309Tab\u67e5\u770b\u66f4\u591a\u4fe1\u606f"
     },
     "roleNoSettings": {
