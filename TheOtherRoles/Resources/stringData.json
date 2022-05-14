@@ -3870,6 +3870,18 @@
         "11": "GM\u30a8\u30c7\u30a3\u30b7\u30e7\u30f3\u9650\u5b9a",
         "13": "GM\u7248\u9650\u5b9a"
     },
+    "YJWhite": {
+        "0": "YJ*Visors",
+        "11": "YJ*Visors/\u767d\u685c\u30b3\u30ec\u30af\u30b7\u30e7\u30f3"
+    },
+    "YJBlack": {
+        "0": "YJ*Visors",
+        "11": "YJ*Visors/\u9ed2\u685c\u30b3\u30ec\u30af\u30b7\u30e7\u30f3"
+    },
+    "DekoKiyo": {
+        "0": "Kiyomori's Bad Picture",
+        "11": "\u6e05\u76db\u306e\u4e0b\u624b\u304f\u305d\u306a\u7d75"
+    },
     "antiTeleportPostfix": {
         "0": " AT",
         "11": " AT"

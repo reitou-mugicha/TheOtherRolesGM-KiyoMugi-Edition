@@ -226,7 +226,7 @@ namespace TheOtherRoles
         {
             public static void Postfix(KeyboardJoystick __instance)
             {
-                if (Input.GetKeyDown(KeyCode.H) && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started)
+                if (Input.GetKeyDown(KeyCode.Tab) && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started)
                 {
                     toggleInfoOverlay();
                 }

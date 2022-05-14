@@ -706,11 +706,9 @@ namespace TheOtherRoles.Patches
             public Dictionary<byte, (int rate, int count)> impSettings = new Dictionary<byte, (int, int)>();
             public Dictionary<byte, (int rate, int count)> neutralSettings = new Dictionary<byte, (int, int)>();
             public Dictionary<byte, (int rate, int count)> crewSettings = new Dictionary<byte, (int, int)>();
-            public Dictionary<byte, (int rate, int count)> modSettings = new Dictionary<byte, (int, int)>();
             public int maxCrewmateRoles { get; set; }
             public int maxNeutralRoles { get; set; }
             public int maxImpostorRoles { get; set; }
-            public int maxModifierRoles { get; set; }
             public PlayerControl host { get; set; }
         }
 
@@ -718,8 +716,7 @@ namespace TheOtherRoles.Patches
         {
             Crewmate = 0,
             Neutral = 1,
-            Impostor = 2,
-            Modifier = 3,
+            Impostor = 2
         }
     }
 }

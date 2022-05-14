@@ -392,10 +392,13 @@ namespace TheOtherRoles.Modules
                 var orderedKeys = packages.Keys.OrderBy((string x) =>
                 {
                     if (x == innerslothPackageName) return 1000;
-                    if (x == "developerHats") return 300;
-                    if (x.Contains("gmEdition")) return 100;
-                    if (x.Contains("shiune")) return 0;
-                    return 500;
+                    if (x == "developerHats") return 500;
+                    if (x.Contains("gmEdition")) return 400;
+                    if (x.Contains("shiune")) return 300;
+                    if (x.Contains("YJBlack")) return 200;
+                    if (x.Contains("YJWhite")) return 100;
+                    if (x.Contains("mememura")) return 0;
+                    return 600;
                 });
 
                 foreach (string key in orderedKeys)
@@ -442,7 +445,9 @@ namespace TheOtherRoles.Modules
         public static string[] hatRepos = new string[]
         {
             "https://raw.githubusercontent.com/yukinogatari/TheOtherHats-GM/master",
-            "https://raw.githubusercontent.com/Eisbison/TheOtherHats/master"
+            "https://raw.githubusercontent.com/Eisbison/TheOtherHats/master",
+            "https://raw.githubusercontent.com/Dekokiyo/TheOtherHatsGM-KiyoMugi-Edition/master",
+            "https://raw.githubusercontent.com/hinakkyu/TheOtherHats/master"
         };
 
         public static List<CustomHatOnline> hatDetails = new List<CustomHatOnline>();

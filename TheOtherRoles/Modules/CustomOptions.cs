@@ -1067,13 +1067,6 @@ namespace TheOtherRoles
         public static void Postfix(KeyboardJoystick __instance)
         {
             int page = TheOtherRolesPlugin.optionsPage;
-            /*if (Input.GetKeyDown(KeyCode.LeftShift))
-            {
-                if (TheOtherRolesPlugin.optionsPage < 1)
-                    TheOtherRolesPlugin.optionsPage = 6 % 7;
-                else
-                    TheOtherRolesPlugin.optionsPage = (TheOtherRolesPlugin.optionsPage + 1) % 7;
-            }*/
             if (Input.GetKeyDown(KeyCode.Tab))
             {
                 TheOtherRolesPlugin.optionsPage = (TheOtherRolesPlugin.optionsPage + 1) % 7;

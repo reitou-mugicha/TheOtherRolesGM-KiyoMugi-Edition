@@ -719,4 +719,38 @@ namespace TheOtherRoles
             return AccessTools.Method(self.GetType(), nameof(Il2CppObjectBase.TryCast)).MakeGenericMethod(type).Invoke(self, Array.Empty<object>());
         }
     }
+    class LateTask
+    {
+        public float timer;
+        public Action action;
+        public static List<LateTask> Timers = new List<LateTask>();
+        public bool run(float deltaTime)
+        {
+            timer -= deltaTime;
+            if (timer <= 0)
+            {
+                action();
+                return true;
+            }
+            return false;
+        }
+        public LateTask(Action action, float time)
+        {
+            this.action = action;
+            this.timer = time;
+            Timers.Add(this);
+        }
+        public static void Update(float deltaTime)
+        {
+            var TimersToRemove = new List<LateTask>();
+            Timers.ForEach((Timer) =>
+            {
+                if (Timer.run(deltaTime))
+                {
+                    TimersToRemove.Add(Timer);
+                }
+            });
+            TimersToRemove.ForEach(Timer => Timers.Remove(Timer));
+        }
+    }
 }
