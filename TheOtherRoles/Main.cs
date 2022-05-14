@@ -76,7 +76,7 @@ namespace TheOtherRoles
             HideTaskArrows = Config.Bind("Custom", "Hide Task Arrows", false);
             EnableHorseMode = Config.Bind("Custom", "Enable Horse Mode", false);
             ShowPopUpVersion = Config.Bind("Custom", "Show PopUp", "0");
-            StreamerModeReplacementText = Config.Bind("Custom", "Streamer Mode Replacement Text", "\n\nTheOtherRolesGM KM");
+            StreamerModeReplacementText = Config.Bind("Custom", "Streamer Mode Replacement Text", "\nTheOtherRolesGM KM");
             StreamerModeReplacementColor = Config.Bind("Custom", "Streamer Mode Replacement Text Hex Color", "#87AAF5FF");
             DebugRepo = Config.Bind("Custom", "Debug Hat Repo", "");
 

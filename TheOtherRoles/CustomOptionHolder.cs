@@ -286,8 +286,7 @@ namespace TheOtherRoles
         public static CustomOption enableDiePlayerZoomInOut;
         public static CustomOption onePlayerStart;
         public static CustomOption airshipReactorDuration;
-        public static CustomOption helloweenMode;
-        public static CustomOption strongRandomGen;
+        public static CustomOption halloweenMode;
 
         public static CustomOption enableMirrorMap;
 
@@ -786,7 +785,7 @@ namespace TheOtherRoles
             enableDiePlayerZoomInOut = CustomOption.Create(23, CustomOptionType.General, "diePlayerCanZoomInOut", false, specialOptions);
             onePlayerStart = CustomOption.Create(24, CustomOptionType.General, "onePlayerStart", false, specialOptions);
             airshipReactorDuration = CustomOption.Create(25, CustomOptionType.General, "airShipReactorDuration", 60f, 0f, 600f, 5f, specialOptions, format: "unitSeconds");
-            //helloweenMode = CustomOption.Create(26, CustomOptionType.General, "helloweenMode", false, specialOptions);
+            //halloweenMode = CustomOption.Create(26, CustomOptionType.General, "halloweenMode", false, specialOptions);
 
             enableMirrorMap = CustomOption.Create(27, CustomOptionType.General, "enableMirror", false, specialOptions);
 

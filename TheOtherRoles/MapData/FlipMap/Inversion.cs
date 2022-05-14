@@ -17,7 +17,6 @@ namespace TheOtherRoles.Mode.InversionMode
     [HarmonyPatch(typeof(ShipStatus), nameof(GameStartManager.Start))]
     public class inversion
     {
-
         public static GameObject skeld;
         public static GameObject mira;
         public static GameObject polus;
