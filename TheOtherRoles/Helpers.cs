@@ -575,6 +575,8 @@ namespace TheOtherRoles
                     roleCouldUse = false;
                 else if (!HawkEye.canUseVents && player.isRole(RoleType.HawkEye))
                     roleCouldUse = false;
+                else if (!CustomImpostor.canUseVents && player.isRole(RoleType.CustomImpostor))
+                    roleCouldUse = false;
                 else
                     roleCouldUse = true;
             }
@@ -594,11 +596,22 @@ namespace TheOtherRoles
                 roleCouldUse = false;
             else if (!Janitor.canSabotage && player.isRole(RoleType.Janitor))
                 roleCouldUse = false;
+            else if (!CustomImpostor.canSabotage && player.isRole(RoleType.CustomImpostor))
+                roleCouldUse = false;
             else if (player.Data?.Role != null && player.Data.Role.IsImpostor)
                 roleCouldUse = true;
 
             return roleCouldUse;
         }
+
+        /*public static bool roleCanReport(this PlayerControl player)
+        {
+            bool roleCouldUse = true;
+            if (CustomImpostor.canReport && player.isRole(RoleType.CustomImpostor))
+                roleCouldUse = false;
+
+            return roleCouldUse;
+        }*/
 
         public static MurderAttemptResult checkMuderAttempt(PlayerControl killer, PlayerControl target, bool blockRewind = false)
         {

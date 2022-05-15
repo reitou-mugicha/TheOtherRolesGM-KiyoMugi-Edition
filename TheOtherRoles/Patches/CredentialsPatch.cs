@@ -96,7 +96,7 @@ namespace TheOtherRoles.Patches
             public static void loadSprites()
             {
                 if (bannerSprite == null) bannerSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.Banner.png", 300f);
-                if (horseBannerSprite == null) horseBannerSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.bannerTheHorseRoles.png", 300f);
+                if (horseBannerSprite == null) horseBannerSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.TheHorseRoles.png", 300f);
             }
 
             public static void updateSprite()

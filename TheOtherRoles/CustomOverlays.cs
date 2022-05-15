@@ -68,7 +68,7 @@ namespace TheOtherRoles
             if (infoOverlayRules == null)
             {
                 infoOverlayRules = UnityEngine.Object.Instantiate(hudManager.TaskText, hudManager.transform);
-                infoOverlayRules.fontSize = infoOverlayRules.fontSizeMin = infoOverlayRules.fontSizeMax = 1.15f;
+                infoOverlayRules.fontSize = infoOverlayRules.fontSizeMin = infoOverlayRules.fontSizeMax = 1f;
                 infoOverlayRules.autoSizeTextContainer = false;
                 infoOverlayRules.enableWordWrapping = false;
                 infoOverlayRules.alignment = TMPro.TextAlignmentOptions.TopLeft;
@@ -83,7 +83,7 @@ namespace TheOtherRoles
             {
                 infoOverlayRoles = UnityEngine.Object.Instantiate(infoOverlayRules, hudManager.transform);
                 infoOverlayRoles.maxVisibleLines = 28;
-                infoOverlayRoles.fontSize = infoOverlayRoles.fontSizeMin = infoOverlayRoles.fontSizeMax = 1.15f;
+                infoOverlayRoles.fontSize = infoOverlayRoles.fontSizeMin = infoOverlayRoles.fontSizeMax = 1f;
                 infoOverlayRoles.outlineWidth += 0.02f;
                 infoOverlayRoles.autoSizeTextContainer = false;
                 infoOverlayRoles.enableWordWrapping = false;
@@ -226,7 +226,7 @@ namespace TheOtherRoles
         {
             public static void Postfix(KeyboardJoystick __instance)
             {
-                if (Input.GetKeyDown(KeyCode.Tab) && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started)
+                if (Input.GetKeyDown(KeyCode.LeftControl) && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started)
                 {
                     toggleInfoOverlay();
                 }

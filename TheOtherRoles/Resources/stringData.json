@@ -379,6 +379,40 @@
         "11": "<size=125%><color=#FC0303>TheOtherRoles GM\u30a8\u30c7\u30a3\u30b7\u30e7\u30f3</color> Ver.{0}\u306e\u66f4\u65b0\u304c\u3042\u308a\u307e\u3059:</size>\n\n{1}",
         "13": "<size=150%><color=#FC0303>\u8d85\u591a\u804c\u4e1a\u6a21\u7ec4GM\u7248</color>\u5df2\u7ecf\u53ef\u4ee5\u66f4\u65b0\u81f3v{ver}:</size>\n\n{1}"
     },
+    "submergedUpdateButton": {
+        "0": "Submerged\nUpdate",
+        "11": "\u30b5\u30d6\u30de\u30fc\u30b8\u30c9\n\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8",
+        "13": "\u66f4\u65b0\n\u8d85\u591a\u804c\u4e1a\u6a21\u7ec4GM\u7248"
+    },
+    "submergedUpdatePleaseWait": {
+        "0": "Updating Submerged\nPlease wait...",
+        "11": "\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u4e2d\n\u5c11\u3005\u304a\u5f85\u3061\u304f\u3060\u3055\u3044\u2026",
+        "13": "\u6b63\u5728\u66f4\u65b0\u8d85\u591a\u804c\u4e1a\u6a21\u7ec4GM\u7248\n\u8bf7\u7a0d\u5019..."
+    },
+    "submergedUpdateManually": {
+        "0": "Unable to auto-update.\nPlease update manually.",
+        "11": "\u81ea\u52d5\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u304c\n\u3067\u304d\u307e\u305b\u3093\u3067\u3057\u305f\n\u624b\u52d5\u3067\u66f4\u65b0\u3057\u3066\u304f\u3060\u3055\u3044",
+        "13": "\u65e0\u6cd5\u8fdb\u884c\u81ea\u52a8\u66f4\u65b0\u3002\n\u8bf7\u5c1d\u8bd5\u624b\u52a8\u66f4\u65b0\u3002"
+    },
+    "submergedUpdateInProgress": {
+        "0": "Update might already\nbe in progress.",
+        "11": "\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u5b9f\u884c\u4e2d",
+        "13": "\u5df2\u7ecf\u5f00\u59cb\u66f4\u65b0\u3002"
+    },
+    "submergedUpdateRestart": {
+        "0": "Submerged\nupdated successfully.\nPlease restart the game.",
+        "11": "\u30b5\u30d6\u30de\u30fc\u30b8\u30c9\u306e\n\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u304c\u5b8c\u4e86\u3057\u307e\u3057\u305f\n\u30b2\u30fc\u30e0\u3092\u518d\u8d77\u52d5\u3057\u3066\u304f\u3060\u3055\u3044",
+        "13": "\u8d85\u591a\u804c\u4e1a\u6a21\u7ec4GM\u7248\u5df2\u7ecf\u66f4\u65b0\u5b8c\u6bd5\u3002\n\u8bf7\u91cd\u542f\u6e38\u620f\u3002"
+    },
+    "submergedUpdateFailed": {
+        "0": "Update failed.\nTry again later,\nor update manually.",
+        "11": "\u81ea\u52d5\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u304c\n\u3067\u304d\u307e\u305b\u3093\u3067\u3057\u305f\n\u624b\u52d5\u3067\u66f4\u65b0\u3057\u3066\u304f\u3060\u3055\u3044",
+        "13": "\u66f4\u65b0\u5931\u8d25\u3002\n\u8bf7\u7a0d\u540e\u518d\u8bd5\uff0c\u6216\u8fdb\u884c\u624b\u52a8\u66f4\u65b0\u3002"
+    },
+    "forceEndText": {
+        "0": "Force End",
+        "11": "\u5ec3\u6751"
+    },
     "gm": {
         "0": "GM",
         "11": "GM",
@@ -737,6 +771,10 @@
     "sunglasses": {
         "0": "Sunglasses",
         "11": "\u30b5\u30f3\u30b0\u30e9\u30b9"
+    },
+    "customImpostor": {
+        "0": "Custom Impostor",
+        "11": "\u30ab\u30b9\u30bf\u30e0\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc"
     },
     "gmIsHost": {
         "0": "Always The Host",
@@ -2004,6 +2042,23 @@
         "0": "Vision With Sunglasses",
         "11": "\u30b5\u30f3\u30b0\u30e9\u30b9\u3067\u306e\u8996\u754c\u6e1b\u5c11\u5ea6"
     },
+    "customImpostorKillCooldown": {
+        "0": "Kill Cooldown",
+        "11": "\u30ad\u30eb\u30af\u30fc\u30eb"
+    },
+    "customImpostorCanUseVents": {
+        "0": "Can Use Vents",
+        "11": "\u30d9\u30f3\u30c8\u3092\u4f7f\u7528\u3067\u304d\u308b"
+    },
+    "customImpostorCanSabotage": {
+        "0": "Can Sabotage",
+        "11": "\u30b5\u30dc\u30bf\u30fc\u30b8\u30e5\u304c\u3067\u304d\u308b"
+    },
+    "torSettings": {
+        "0": "The Other Roles Settings",
+        "11": "The Other Roles\u306e\u8a2d\u5b9a",
+        "13": "\u8d85\u591a\u804c\u4e1a\u6a21\u7ec4\u8bbe\u5b9a"
+    },
     "preset1": {
         "0": "Preset 1",
         "11": "\u30d7\u30ea\u30bb\u30c3\u30c8\uff11",
@@ -2267,8 +2322,8 @@
         "11": "\u5c5e\u6027\u5f79\u8077\u6570"
     },
     "pressTabForMore": {
-        "0": "Press Tab to change page",
-        "11": "Tab \u3067\u30da\u30fc\u30b8\u3092\u5909\u66f4\u3057\u307e\u3059",
+        "0": "Press tab for more...",
+        "11": "Tab\u30ad\u30fc\u3067\u6b21\u306e\u30da\u30fc\u30b8\u3078\u2026",
         "13": "\u6309Tab\u67e5\u770b\u66f4\u591a\u4fe1\u606f"
     },
     "roleNoSettings": {
@@ -2350,29 +2405,13 @@
         "0": "AirShip Reactor Duration",
         "11": "AirShip \u6607\u964d\u6a5f\u5236\u9650\u6642\u9593"
     },
-    "impostorSettings": {
-        "0": "Impostor Settings",
-        "11": "\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc\u9663\u55b6\u306e\u8a2d\u5b9a"
+    "randomGen": {
+        "0": "Better Role Generator",
+        "11": "\u5f37\u5316\u7248\u5f79\u8077\u4ed8\u4e0e\u30b7\u30b9\u30c6\u30e0"
     },
-    "neutralSettings": {
-        "0": "Neutral Settings",
-        "11": "\u7b2c\u4e09\u9663\u55b6\u306e\u8a2d\u5b9a"
-    },
-    "crewmateSettings": {
-        "0": "Crewmate Settings",
-        "11": "\u30af\u30eb\u30fc\u9663\u55b6\u306e\u8a2d\u5b9a"
-    },
-    "modifierSettings": {
-        "0": "Modifier Settings",
-        "11": "\u5c5e\u6027\u5f79\u8077\u306e\u8a2d\u5b9a"
-    },
-    "otherSettings": {
-        "0": "Other Settings",
-        "11": "\u305d\u306e\u4ed6\u306e\u5f79\u8077\u306e\u8a2d\u5b9a"
-    },
-    "generalSettings": {
-        "0": "TheOtherRoles Settings",
-        "11": "TheOtherRoles\u306e\u8a2d\u5b9a"
+    "betterStart": {
+        "0": "better Start Buttons",
+        "11": "\u5f37\u5316\u7248\u958b\u59cb\u30dc\u30bf\u30f3"
     },
     "loversFlavor": {
         "0": "\u2665 You are in love with {0} \u2665",
@@ -2852,6 +2891,10 @@
     "portalmakerIntroDesc": {
         "0": "Set Portal And Do Teleport",
         "11": "\u30dd\u30fc\u30bf\u30eb\u3092\u7f6e\u3044\u3066\u30c6\u30ec\u30dd\u30fc\u30c8\u3057\u3088\u3046"
+    },
+    "customImpostorIntroDesc": {
+        "0": "You were Customized!",
+        "11": "\u30ab\u30b9\u30bf\u30de\u30a4\u30ba\u3055\u308c\u3066\u3057\u307e\u3063\u305f\uff01"
     },
     "gmShortDesc": {
         "0": "You're the Game Master",
@@ -3870,18 +3913,6 @@
         "11": "GM\u30a8\u30c7\u30a3\u30b7\u30e7\u30f3\u9650\u5b9a",
         "13": "GM\u7248\u9650\u5b9a"
     },
-    "YJWhite": {
-        "0": "YJ*Visors",
-        "11": "YJ*Visors/\u767d\u685c\u30b3\u30ec\u30af\u30b7\u30e7\u30f3"
-    },
-    "YJBlack": {
-        "0": "YJ*Visors",
-        "11": "YJ*Visors/\u9ed2\u685c\u30b3\u30ec\u30af\u30b7\u30e7\u30f3"
-    },
-    "DekoKiyo": {
-        "0": "Kiyomori's Bad Picture",
-        "11": "\u6e05\u76db\u306e\u4e0b\u624b\u304f\u305d\u306a\u7d75"
-    },
     "antiTeleportPostfix": {
         "0": " AT",
         "11": " AT"
@@ -3922,76 +3953,8 @@
         "0": "You got the sunglasses",
         "11": "\u30b5\u30f3\u30b0\u30e9\u30b9\u3092\u624b\u306b\u5165\u308c\u305f"
     },
-    "Ver.1.0.1": {
-        "0": "<size=110%><color=#FC0303>TOR GMK Release!</color>Ver1.0.1</size><size=75%>\nHi! I'm Kiyomori!\nThis Update Contents is...\n1.Added HorseMode\n2.Added NewRole, Hawk Eye(ImpostorRoles)\n3.Some Bugs Fixed!\nYou can change to Horse Mode in MainMenu Only!\n(System by SuperNewRoles! Thanks!)\nThat's All? Oh, Hawk Eye has some bugs. Please check Github page yourself.\nSee you next Update~~~!                        DekoKiyo</size>",
-        "11": "<size=110%><color=#FC0303>TOR GMK\u66f4\u65b0\u60c5\u5831</color>Ver1.0.1</size>\n<size=80%>\u3084\u3063\u307b\u30fc\u3002\u6e05\u76db\u3060\u3088\uff5e\n\u4eca\u56de\u306e\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u306e\u5185\u5bb9\u306f\u3053\u3093\u306a\u611f\u3058\u3055\uff01\n\u30fb\u99ac\u30e2\u30fc\u30c9\u642d\u8f09\n\u30fb\u65b0\u5f79\u8077 : \u30db\u30fc\u30af\u30a2\u30a4(\u9663\u55b6:\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc) \u642d\u8f09!\n\u30fb\u8272\u3005\u30d0\u30b0\u4fee\u6b63\n\u99ac\u30e2\u30fc\u30c9\u306f\u30e1\u30a4\u30f3\u30e1\u30cb\u30e5\u30fc\u3060\u3051\u3067\u3057\u304b\u5909\u3048\u3089\u308c\u306a\u3044\u3088(SNR\u3092\u53c2\u8003\u306b\u3057\u307e\u3057\u305f\uff01Thanks!)\n\u3053\u308c\u304f\u3089\u3044\u304b\u306a\n\u30db\u30fc\u30af\u30a2\u30a4\u306f\u7d50\u69cb\u4f7f\u3044\u52dd\u624b\u304c\u60aa\u3044\u304b\u3089Github\u306e\u30da\u30fc\u30b8\u3067\u8a73\u7d30\u3092\u78ba\u8a8d\u3057\u3066\u306d(\u3054\u3081\u3093\u306d)\n\n\u305d\u308c\u3058\u3083\u30fc\u306d\uff5e\uff5e\uff5e                       \u3067\u3053\u307c\u3053\u306e\u6e05\u76db</size>"
-    },
-    "Ver.1.0.2": {
-        "0": "<size=110%><color=#FC0303>TOR GM KM Update!</color>Ver1.0.2</size><size=75%>\nHi! I'm Kiyomori!\nThis Update Contents is...\n1.Bug Fixed!\n2.Added NewRole, <color=#ff0000>SimpleKiller</color>(<color=#ff0000>ImpostorRoles</color>)\n3.Normal crew color changed to light blue.\nThe TOR GM Mugicha Edition has been merged with the TOR GM Mugicha Edition to become the KiyoMugi Edition! (^v^)\nSee you next Update~~~!                        DekoKiyo&Mugicha</size>",
-        "11": "<size=110%><color=#FC0303>TOR GM KM\u66f4\u65b0\u60c5\u5831</color>Ver1.0.2</size>\n<size=80%>\u3084\u3063\u307b\u30fc\u3002\u6e05\u76db\u3060\u3088\uff5e\n\u4eca\u56de\u306e\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u306e\u5185\u5bb9\u306f\u3053\u3093\u306a\u611f\u3058\u3055\uff01\n\u30fb\u8272\u3005\u30d0\u30b0\u4fee\u6b63\n\u30fb\u65b0\u5f79\u8077 : <color=#ff0000>\u30b7\u30f3\u30d7\u30eb\u30ad\u30e9\u30fc</color>(\u9663\u55b6:<color=#ff0000>\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc</color>) \u642d\u8f09!\n\u30fb\u30ce\u30fc\u30de\u30eb\u30af\u30eb\u30fc\u306e\u8272\u3092\u6c34\u8272\u306b\u5909\u66f4\n\u3053\u308c\u304f\u3089\u3044\u304b\u306a?\n\u305d\u3046\u3044\u3048\u3070TOR GM Mugicha Edition\u3068\u5408\u4f75\u3057\u3066\u3001\nKiyoMugi Edition\u306b\u306a\u308a\u307e\u3057\u305f!(\u3044\u3048\uff5e\u3044)\n\n\u305d\u308c\u3058\u3083\u30fc\u306d\uff5e\uff5e\uff5e                       \u3067\u3053\u307c\u3053\u306e\u6e05\u76db&\u9ea6\u8336</size>"
-    },
-    "Ver.1.0.2.1": {
-        "0": "<size=110%><color=#FC0303>TOR GM KM Update!</color>Ver1.0.2.1</size><size=75%>\nHi! I'm Kiyomori!\nThis Update Contents is...\n1.Removed <color=#ff0000>SimpleKiller</color>\nSimple Killer has many bugs, so we will repair bugs and removed it. Sorry\nSee you next Update~~~!                        DekoKiyo&Mugicha</size>",
-        "11": "<size=110%><color=#FC0303>TOR GM KM\u66f4\u65b0\u60c5\u5831</color>Ver1.0.2.1</size>\n<size=80%>\u3084\u3063\u307b\u30fc\u3002\u6e05\u76db\u3060\u3088\uff5e\n\u4eca\u56de\u306e\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u306e\u5185\u5bb9\u306f\u3053\u3093\u306a\u611f\u3058\u3055\uff01\n\u30fb<color=#ff0000>\u30b7\u30f3\u30d7\u30eb\u30ad\u30e9\u30fc</color>\u524a\u9664\n\u30b7\u30f3\u30d7\u30eb\u30ad\u30e9\u30fc\u95a2\u4fc2\u3067\u975e\u5e38\u306b\u591a\u304f\u306e\u30d0\u30b0\u304c\u898b\u3064\u304b\u3063\u305f\u306e\u3067\u4fee\u6b63\u306b\u6642\u9593\u304c\u304b\u304b\u308b\u305f\u3081\u3001\n\u3068\u308a\u3042\u3048\u305a\u30b7\u30f3\u30d7\u30eb\u30ad\u30e9\u30fc\u3092\u4f7f\u3048\u306a\u3044\u3088\u3046\u306b\u3057\u307e\u3057\u305f\u3002\u3054\u3081\u3093\u306d\n\n\u305d\u308c\u3058\u3083\u30fc\u306d\uff5e\uff5e\uff5e                       \u3067\u3053\u307c\u3053\u306e\u6e05\u76db&\u9ea6\u8336</size>"
-    },
-    "Ver.1.0.2.3": {
-        "0": "<size=110%><color=#FC0303>TOR GM KM Update!</color>Ver1.0.2.3</size><size=75%>\nHi! I'm Kiyomori!\nThis Update Contents is...\n1.Fixed Bugs\n2.Add Custom Option \"Disable Vent Animation\"\nThe Vent Animation Settings by tomarai's TOR. Thankyou!\nSee you next Update~~~!                        DekoKiyo&Mugicha</size>",
-        "11": "<size=110%><color=#FC0303>TOR GM KM\u66f4\u65b0\u60c5\u5831</color>Ver1.0.2.3</size>\n<size=80%>\u3084\u3063\u307b\u30fc\u3002\u6e05\u76db\u3060\u3088\uff5e\n\u4eca\u56de\u306e\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u306e\u5185\u5bb9\u306f\u3053\u3093\u306a\u611f\u3058\u3055\uff01\n\u30fb\u30d0\u30b0\u4fee\u6b63\n\u30fb\u30ab\u30b9\u30bf\u30e0\u30aa\u30d7\u30b7\u30e7\u30f3\u300c\u30d9\u30f3\u30c8\u30a2\u30cb\u30e1\u30fc\u30b7\u30e7\u30f3\u7121\u52b9\u5316\u300d\u3092\u8ffd\u52a0\n\u30d9\u30f3\u30c8\u30a2\u30cb\u30e1\u30fc\u30b7\u30e7\u30f3\u306e\u30bd\u30fc\u30b9\u306ftomarai\u7248\u304b\u3089\u79fb\u690d\u3055\u305b\u3066\u3044\u305f\u3060\u304d\u307e\u3057\u305f\u3002\u3042\u308a\u304c\u3068\u3046\u3054\u3056\u3044\u307e\u3059\uff01\n\n\u305d\u308c\u3058\u3083\u30fc\u306d\uff5e\uff5e\uff5e                       \u3067\u3053\u307c\u3053\u306e\u6e05\u76db&\u9ea6\u8336</size>"
-    },
-    "Ver.1.0.2.4": {
-        "0": "<size=110%><color=#FC0303>TOR GM KM Update!</color>Ver1.0.2.3</size><size=75%>\nHi! I'm Kiyomori!\nThis Update Contents is...\n1.Fixed Bugs\n2.Add Custom Option \"Disable Vent Animation\"\nThe Vent Animation Settings by tomarai's TOR. Thankyou!\nSee you next Update~~~!                        DekoKiyo&Mugicha</size>",
-        "11": "<size=110%><color=#FC0303>TOR GM KM\u66f4\u65b0\u60c5\u5831</color>Ver1.0.2.3</size>\n<size=80%>\u3084\u3063\u307b\u30fc\u3002\u6e05\u76db\u3060\u3088\uff5e\n\u4eca\u56de\u306e\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u306e\u5185\u5bb9\u306f\u3053\u3093\u306a\u611f\u3058\u3055\uff01\n\u30fb\u30d0\u30b0\u4fee\u6b63\n\u30fb\u30ab\u30b9\u30bf\u30e0\u30aa\u30d7\u30b7\u30e7\u30f3\u300c\u30d9\u30f3\u30c8\u30a2\u30cb\u30e1\u30fc\u30b7\u30e7\u30f3\u7121\u52b9\u5316\u300d\u3092\u8ffd\u52a0\n\u30d9\u30f3\u30c8\u30a2\u30cb\u30e1\u30fc\u30b7\u30e7\u30f3\u306e\u30bd\u30fc\u30b9\u306ftomarai\u7248\u304b\u3089\u79fb\u690d\u3055\u305b\u3066\u3044\u305f\u3060\u304d\u307e\u3057\u305f\u3002\u3042\u308a\u304c\u3068\u3046\u3054\u3056\u3044\u307e\u3059\uff01\n\n\u305d\u308c\u3058\u3083\u30fc\u306d\uff5e\uff5e\uff5e                       \u3067\u3053\u307c\u3053\u306e\u6e05\u76db&\u9ea6\u8336</size>"
-    },
-    "Ver.1.0.3": {
-        "0": "<size=110%><color=#FC0303>TOR GM KM Update!</color>Ver1.0.3</size><size=75%>\nHi! I'm Kiyomori!\nThis Update Contents is...\n1.Fixed Bugs\n2.Add Custom Option \"Die Player Can Zoom In & Out\"\nThe Zoom In & Out Button are under the map button.\nYou can change on & off.\n\nSee you next Update~~~!                        DekoKiyo&Mugicha</size>",
-        "11": "<size=110%><color=#FC0303>TOR GM KM\u66f4\u65b0\u60c5\u5831</color>Ver1.0.3</size>\n<size=80%>\u3084\u3063\u307b\u30fc\u3002\u6e05\u76db\u3060\u3088\uff5e\n\u4eca\u56de\u306e\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u306e\u5185\u5bb9\u306f\u3053\u3093\u306a\u611f\u3058\u3055\uff01\n\u30fb\u30d0\u30b0\u4fee\u6b63\n\u30fb\u30ab\u30b9\u30bf\u30e0\u30aa\u30d7\u30b7\u30e7\u30f3\u300c\u6b7b\u3093\u3060\u3089\u30ba\u30fc\u30e0\u30a4\u30f3&\u30a2\u30a6\u30c8\u304c\u3067\u304d\u308b\u300d\u3092\u8ffd\u52a0\n\u30ba\u30fc\u30e0\u30a4\u30f3 & \u30a2\u30a6\u30c8\u30dc\u30bf\u30f3\u306f\u30de\u30c3\u30d7\u30dc\u30bf\u30f3\u306e\u4e0b\u306b\u3042\u308b\u3088\uff5e\u3002\n\u30aa\u30f3\u3068\u30aa\u30d5\u3092\u5207\u308a\u66ff\u3048\u308c\u308b\u304b\u3089\u3001\u597d\u307f\u3067\u8a2d\u5b9a\u3057\u3066\u306d\uff5e\n\n\u305d\u308c\u3058\u3083\u30fc\u306d\uff5e\uff5e\uff5e                       \u3067\u3053\u307c\u3053\u306e\u6e05\u76db&\u9ea6\u8336</size>"
-    },
-    "Ver.1.0.4": {
-        "0": "<size=110%><color=#FC0303>TOR GM KM Update!</color>Ver1.0.4</size><size=70%>\nHi! I'm Kiyomori!\nThis Update Contents is...\n1.Fixed Gusser, Mayor\n\n2.Add Flip Maps\n\u30fbdlekS ehT\n\u30fbQH ARIM\n\u30fbsuloP\n\n3.Change Original GM Mod version of this mod to 3.5.5.1\n\n4.Add control of DiePlayer, change field of vision if you use Mouse wheel\n\nSee you next Update~~~!                        DekoKiyo&Mugicha</size>",
-        "11": "<size=110%><color=#FC0303>TOR GM KM\u66f4\u65b0\u60c5\u5831</color>Ver1.0.4</size>\n<size=70%>\u3084\u3063\u307b\u30fc\u3002\u6e05\u76db\u3060\u3088\uff5e\n\u4eca\u56de\u306e\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u306e\u5185\u5bb9\u306f\u3053\u3093\u306a\u611f\u3058\u3055\uff01\n1.\u30b2\u30c3\u30b5\u30fc\u3068\u30e1\u30a4\u30e4\u30fc\u306e\u4fee\u6b63\n\n2.\u53cd\u8ee2\u30de\u30c3\u30d7\u8ffd\u52a0\n\u30fbdlekS ehT\n\u30fbQH ARIM\n\u30fbsuloP\n\n3.\u57fa\u790e\u3068\u306a\u308b\u30aa\u30ea\u30b8\u30ca\u30ebGM Mod\u306e\u30d0\u30fc\u30b8\u30e7\u30f3\u30923.5.5.1\u306b\u5909\u66f4\n\n4.\u6b7b\u4ea1\u6642\u306b\u8996\u91ce\u306e\u30ba\u30fc\u30e0\u30a4\u30f3\u30a2\u30a6\u30c8\u304c\u3067\u304d\u308b\u969b\u3001\u30de\u30a6\u30b9\u30db\u30a4\u30fc\u30eb\u3067\u3082\u64cd\u4f5c\u304c\u3067\u304d\u308b\u3088\u3046\u306b\u5909\u66f4\n\n\u305d\u308c\u3058\u3083\u30fc\u306d\uff5e\uff5e\uff5e                       \u3067\u3053\u307c\u3053\u306e\u6e05\u76db&\u9ea6\u8336</size>"
-    },
-    "Ver.1.0.4.1": {
-        "0": "<size=110%><color=#FC0303>TOR GM KM Update!</color>Ver1.0.4.1</size><size=70%>\nHi! I'm Kiyomori!\nThis Update Contents is...\n1.Fixed Morphing\n\n2.Add New Custom Option \"One Player Start\"\n\nSee you next Update~~~!                        DekoKiyo&Mugicha</size>",
-        "11": "<size=110%><color=#FC0303>TOR GM KM Update!</color>Ver1.0.4.1</size><size=70%>\n<size=70%>\u3084\u3063\u307b\u30fc\u3002\u6e05\u76db\u3060\u3088\uff5e\n\u4eca\u56de\u306e\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u306e\u5185\u5bb9\u306f\u3053\u3093\u306a\u611f\u3058\u3055\uff01\n1.\u30e2\u30fc\u30d5\u30a3\u30f3\u30b0\u306e\u4fee\u6b63\n\n2.\u30ab\u30b9\u30bf\u30e0\u30aa\u30d7\u30b7\u30e7\u30f3\u300c\u4e00\u4eba\u3067\u958b\u59cb(\u6b21\u56de\u9069\u7528)\u300d\u8ffd\u52a0\n\n\u305d\u308c\u3058\u3083\u30fc\u306d\uff5e\uff5e\uff5e                       \u3067\u3053\u307c\u3053\u306e\u6e05\u76db&\u9ea6\u8336</size>"
-    },
-    "Ver.1.0.4.2": {
-        "0": "<size=110%><color=#FC0303>TOR GM KM Update!</color>Ver1.0.4.1</size><size=70%>\nHi! I'm Kiyomori!\nThis Update Contents is...\n1.Fixed Some Bug\n2.Add CustomOption \"AirShip Reactor Duration\"\n\n\nSee you next Update~~~!                        DekoKiyo&Mugicha</size>",
-        "11": "<size=110%><color=#FC0303>TOR GM KM Update!</color>Ver1.0.4.1</size><size=70%>\n<size=70%>\u3084\u3063\u307b\u30fc\u3002\u6e05\u76db\u3060\u3088\uff5e\n\u4eca\u56de\u306e\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u306e\u5185\u5bb9\u306f\u3053\u3093\u306a\u611f\u3058\u3055\uff01\n1.\u30d0\u30b0\u4fee\u6b63\n\n2.\u30ab\u30b9\u30bf\u30e0\u30aa\u30d7\u30b7\u30e7\u30f3\u300cAirShip\u6607\u964d\u6a5f\u5236\u9650\u6642\u9593\u300d\u8ffd\u52a0\n\n\u305d\u308c\u3058\u3083\u30fc\u306d\uff5e\uff5e\uff5e                       \u3067\u3053\u307c\u3053\u306e\u6e05\u76db&\u9ea6\u8336</size>"
-    },
-    "Ver.1.0.5": {
-        "0": "<size=110%><color=#FC0303>TOR GM KM Update!</color>Ver1.0.5</size><size=70%>\nHi! I'm Kiyomori!\nThis Update Contents is...\n1.Fixed Translate Bugs\n2.Fixed \"Hide Task Arrow\" Setting. (But Book Shelf Task at AirShip, It's First Book is always Hide Arrow.)\n3.Change \"Streamer Mode\" Text to \"TheOtherRolesGM KM\" (Until now => \"TheOtherRolesGMK\")\n4.Add Ability to Hawk Eye, Stop Halfway, Remove the View.\n\n\nSee you next Update~~~!                        DekoKiyo&Mugicha</size>",
-        "11": "<size=110%><color=#FC0303>TOR GM KM Update!</color>Ver1.0.5</size><size=70%>\n<size=70%>\u3084\u3063\u307b\u30fc\u3002\u6e05\u76db\u3060\u3088\uff5e\n\u4eca\u56de\u306e\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u306e\u5185\u5bb9\u306f\u3053\u3093\u306a\u611f\u3058\u3084\u3067\uff01\n1.\u7ffb\u8a33\u30df\u30b9\u4fee\u6b63\n\n2.\u30bf\u30b9\u30af\u77e2\u5370\u8a2d\u5b9a\u5fa9\u6d3b(AirShip\u30a2\u30fc\u30ab\u30a4\u30d6\u30bf\u30b9\u30af\u306e\u6700\u521d\u306e\u672c\u4ee5\u5916)\n\n3.\u30b9\u30c8\u30ea\u30fc\u30de\u30fc\u30e2\u30fc\u30c9\u306e\u6587\u5b57\u3092TheOtherRolesGM KM\u306b\u5909\u66f4(\u5f93\u6765:TheOtherRolesGMK)\n\n4.\u30db\u30fc\u30af\u30a2\u30a4\u4fee\u6b63(\u9014\u4e2d\u3067\u7d42\u4e86\u3067\u304d\u308b&\u8996\u754c\u5236\u9650\u6392\u9664)\n\n\u305d\u308c\u3058\u3083\u30fc\u306d\uff5e\uff5e\uff5e                       \u3067\u3053\u307c\u3053\u306e\u6e05\u76db&\u9ea6\u8336</size>"
-    },
-    "Ver.1.0.5.1": {
-        "0": "<size=110%><color=#FC0303>TOR GM KM Update!</color>Ver1.0.5.1</size><size=70%>\nHi! I'm Kiyomori!\nThis Update Contents is...\n1.Fixed Some Bugs\n2.Fixed Lovers Couple Text\n3.Fixed Credit Text Position\n4.Fixed Mod Stamp\n\nSee you next Update~~~!                        DekoKiyo&Mugicha</size>",
-        "11": "<size=110%><color=#FC0303>TOR GM KM Update!</color>Ver1.0.5.1</size><size=70%>\n<size=70%>\u3084\u3063\u307b\u30fc\u3002\u6e05\u76db\u3060\u3088\uff5e\n\u4eca\u56de\u306e\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u306e\u5185\u5bb9\u306f\u3053\u3093\u306a\u611f\u3058\u3055\uff01\n1.\u30d0\u30b0\u4fee\u6b63\n\n2.\u30a4\u30f3\u30c8\u30ed\u3067\u30e9\u30d0\u30fc\u30ba\u306e\u8a73\u7d30\u304c\u8868\u793a\u3055\u308c\u3066\u3044\u306a\u304b\u3063\u305f\u30d0\u30b0\u3092\u4fee\u6b63\n\n3.\u30af\u30ec\u30b8\u30c3\u30c8\u306e\u6587\u5b57\u306e\u4f4d\u7f6e\u3092\u4fee\u6b63\n\n4.Mod\u30b9\u30bf\u30f3\u30d7\u5fa9\u5e30\n\n\u305d\u308c\u3058\u3083\u30fc\u306d\uff5e\uff5e\uff5e                       \u3067\u3053\u307c\u3053\u306e\u6e05\u76db&\u9ea6\u8336</size>"
-    },
-    "Ver.1.0.5.2": {
-        "0": "<size=110%><color=#FC0303>TOR GM KM Update!</color>Ver1.0.5.2</size><size=70%>\nHi! I'm Kiyomori!\nThis Update Contents is...\n1.Fixed Lovers Couple Text\n\nSee you next Update~~~!                        DekoKiyo&Mugicha</size>",
-        "11": "<size=110%><color=#FC0303>TOR GM KM Update!</color>Ver1.0.5.2</size><size=70%>\n<size=70%>\u3084\u3063\u307b\u30fc\u3002\u6e05\u76db\u3060\u3088\uff5e\n\u4eca\u56de\u306e\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u306e\u5185\u5bb9\u306f\u3053\u3093\u306a\u611f\u3058\u3055\uff01\n1.\u8ab0\u304c\u30e9\u30d0\u30fc\u30ba\u304b\u304c\u306f\u3063\u304d\u308a\u308f\u304b\u3089\u306a\u304b\u3063\u305f\u30d0\u30b0\u3092\u4fee\u6b63\n\n\u305d\u308c\u3058\u3083\u30fc\u306d\uff5e\uff5e\uff5e                       \u3067\u3053\u307c\u3053\u306e\u6e05\u76db&\u9ea6\u8336</size>"
-    },
-    "Ver.1.0.5.3": {
-        "0": "<size=110%><color=#FC0303>TOR GM KM Update!</color>Ver1.0.5.3</size><size=70%>\nHi! I'm Kiyomori!\nThis Update Contents is...\n1.Fixed dlekS ehT Spawn Point\n2.Unification Mirror Map Setting\n\nSee you next Update~~~!                        DekoKiyo&Mugicha</size>",
-        "11": "<size=110%><color=#FC0303>TOR GM KM Update!</color>Ver1.0.5.3</size><size=70%>\n<size=70%>\u3084\u3063\u307b\u30fc\u3002\u6e05\u76db\u3060\u3088\uff5e\n\u4eca\u56de\u306e\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u306e\u5185\u5bb9\u306f\u3053\u3093\u306a\u611f\u3058\u3055\uff01\n1.dlekS ehT\u306e\u30b9\u30dd\u30fc\u30f3\u30dd\u30a4\u30f3\u30c8\u3092\u4fee\u6b63\n\n2.\u53cd\u8ee2\u30de\u30c3\u30d7\u306e\u8a2d\u5b9a\u3092\u7d71\u4e00\n\n\u305d\u308c\u3058\u3083\u30fc\u306d\uff5e\uff5e\uff5e                       \u3067\u3053\u307c\u3053\u306e\u6e05\u76db&\u9ea6\u8336</size>"
-    },
-    "Ver.1.1.0": {
-        "0": "<size=110%><color=#FC0303>TOR GM KM Update!</color>Ver1.1.0</size>\n<size=70%>Please Read Github</size>",
-        "11": "<size=110%><color=#FC0303>TOR GM KM Update!</color>Ver1.1.0</size>\n<size=70%>Github\u306e\u30da\u30fc\u30b8\u3092\u8aad\u3093\u3067\u304f\u3060\u3055\u3044</size>"
-    },
-    "Ver.1.1.1": {
-        "0": "<size=110%><color=#FC0303>TOR GM KM Update!</color>Ver1.1.0</size>\n<size=70%>Fixed Some Bugs.</size>",
-        "11": "<size=110%><color=#FC0303>TOR GM KM Update!</color>Ver1.1.0</size>\n<size=70%>\u30d0\u30b0\u3092\u4fee\u6b63\u3057\u307e\u3057\u305f\u3002</size>"
-    },
-    "Ver.1.1.2": {
-        "0": "<size=110%><color=#FC0303>TOR GM KM Update!</color>Ver1.1.2</size><size=70%>\nHi! I'm Kiyomori!\nThis Update Contents is...\n1.Fixed Some Bugs\n2.Change to Modifiers\n  Opportunist\n  Watcher\n3.Add Modifier\n  Sunglasses\n\nSee you next Update~~~!                        DekoKiyo&Mugicha</size>",
-        "11": "<size=110%><color=#FC0303>TOR GM KM Update!</color>Ver1.1.2</size><size=70%>\n\u3084\u3063\u3075\u3049\u30fc\u3002\u6e05\u76db\u3060\u3088\uff5e\n\u4eca\u56de\u306e\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u306e\u5185\u5bb9\u306f\u3053\u3093\u306a\u611f\u3058\u3055\uff01\n1.\u30d0\u30b0\u4fee\u6b63\n2.\u4ee5\u4e0b\u306e\u5f79\u8077\u3092\u5c5e\u6027\u6271\u3044\u306b\u5909\u66f4\u3057\u307e\u3057\u305f\n  \u30aa\u30dd\u30c1\u30e5\u30cb\u30b9\u30c8\n  \u30a6\u30a9\u30c3\u30c1\u30e3\u30fc\n3.\u5c5e\u6027\u8ffd\u52a0\n  \u30b5\u30f3\u30b0\u30e9\u30b9\n\n\u305d\u308c\u3058\u3083\u30fc\u306d\uff5e\uff5e\uff5e                       \u3067\u3053\u307c\u3053\u306e\u6e05\u76db&\u9ea6\u8336</size>"
-    },
-    "Ver.1.1.2.1": {
-        "0": "<size=110%><color=#FC0303>TOR GM KM Update!</color>Ver1.1.2</size><size=70%>\nHi! I'm Kiyomori!\nThis Update Contents is...\n1.Fixed Some Bugs\n\nSee you next Update~~~!                        DekoKiyo&Mugicha</size>",
-        "11": "<size=110%><color=#FC0303>TOR GM KM Update!</color>Ver1.1.2</size><size=70%>\n\u3084\u3063\u3075\u3049\u30fc\u3002\u6e05\u76db\u3060\u3088\uff5e\n\u4eca\u56de\u306e\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u306e\u5185\u5bb9\u306f\u3053\u3093\u306a\u611f\u3058\u3055\uff01\n1.\u30d0\u30b0\u4fee\u6b63\n\n\n\u305d\u308c\u3058\u3083\u30fc\u306d\uff5e\uff5e\uff5e                       \u3067\u3053\u307c\u3053\u306e\u6e05\u76db&\u9ea6\u8336</size>"
-    },
     "release": {
-        "0": "<size=110%><color=#FC0303>TOR GM KM Update!</color>Ver1.1.2</size><size=70%>\nHi! I'm Kiyomori!\nThis Update Contents is...\n1.Add YJ Hats!\n2.Add mememura Hats!\n\nSee you next Update~~~!                        DekoKiyo&Mugicha</size>",
-        "11": "<size=110%><color=#FC0303>TOR GM KM Update!</color>Ver1.1.2</size><size=70%>\n\u3084\u3063\u3075\u3049\u30fc\u3002\u6e05\u76db\u3060\u3088\uff5e\n\u4eca\u56de\u306e\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u306e\u5185\u5bb9\u306f\u3053\u3093\u306a\u611f\u3058\u3055\uff01\n1.YJ\u69d8\u306e\u30ab\u30b9\u30bf\u30e0\u30cf\u30c3\u30c8\u3092\u8ffd\u52a0!\n2.\u3081\u3081\u6751\u3067\u5b9f\u969b\u306b\u4f7f\u7528\u3055\u308c\u3066\u3044\u308b\u30ab\u30b9\u30bf\u30e0\u30cf\u30c3\u30c8\u3092\u8ffd\u52a0!\n\n\u305d\u308c\u3058\u3083\u30fc\u306d\uff5e\uff5e\uff5e                       \u3067\u3053\u307c\u3053\u306e\u6e05\u76db&\u9ea6\u8336</size>"
+        "0": "<size=110%><color=#FC0303>TOR GM KM Update!</color>Ver1.2.0</size><size=70%>\nHi! I'm Kiyomori!\nThis Update Contents is...\n1.Fixed Some Bugs\n2.Fixed Chat Bugs (You need Push F1)\n3.Fixed Die Player Zoom In&Out\n4.Fixed HawkEye Cooldown\n5.Change key in description overlay from H to left control\n6.Reduced the text size of the description overlay so that the full description is displayed\n7.Add Submerged update Button(Test)\n8.Remove unnecessary source code\n9.Fixed TheHorseRoles Logo\n10.Add New Role\n<color=#FC0303>Custom Impostor</color>\n  You Can Customize Kill Cooldown, Can Sabotage, Can Use Vents\n11.Added option to enhance the position assignment system\n\nSee you next Update~~~!                        DekoKiyo&Mugicha</size>",
+        "11": "<size=110%><color=#FC0303>TOR GM KM \u30a2\u30c3\u30d7\u30c7\u30fc\u30c8!</color>Ver1.2.0</size><size=70%>\n\u3046\u3048\u30fc\u3044\u3002\u6e05\u76db\u3060\u3088\uff5e\n\u4eca\u56de\u306e\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u306e\u5185\u5bb9\u306f\u3053\u3093\u306a\u611f\u3058\u306a\u3093\u3067\u3059\u308f\n1.\u30d0\u30b0\u96c6\u82f1\n2.\u30c1\u30e3\u30c3\u30c8\u30d0\u30b0\u4fee\u6b63(F1\u3092\u62bc\u3057\u3066\u304f\u3060\u3055\u3044)\n3.\u6b7b\u4ea1\u6642\u306e\u30ba\u30fc\u30e0\u30a4\u30f3\u30fb\u30a2\u30a6\u30c8\u3092\u4fee\u6b63\n4.\u30db\u30fc\u30af\u30a2\u30a4\u306e\u30af\u30fc\u30eb\u30c0\u30a6\u30f3\u3092\u4fee\u6b63\n5.\u8aac\u660e\u30aa\u30fc\u30d0\u30fc\u30ec\u30a4\u306e\u30ad\u30fc\u3092H\u304b\u3089\u5de6\u30b3\u30f3\u30c8\u30ed\u30fc\u30eb\u306b\u5909\u66f4\n6.\u8aac\u660e\u30aa\u30fc\u30d0\u30fc\u30ec\u30a4\u306e\u6587\u5b57\u30b5\u30a4\u30ba\u3092\u5c0f\u3055\u304f\u3057\u3066\u3001\u8aac\u660e\u304c\u5168\u90e8\u8868\u793a\u3055\u308c\u308b\u3088\u3046\u306b\u5909\u66f4\n7.\u8a66\u9a13\u7684\u306b\u30b5\u30d6\u30de\u30fc\u30b8\u30c9\u7528\u306e\u30a2\u30d7\u30c7\u30dc\u30bf\u30f3\u3092\u8ffd\u52a0\n8.\u4e0d\u8981\u306a\u30bd\u30fc\u30b9\u30b3\u30fc\u30c9\u3092\u524a\u9664\n9.TheHorseRoles\u306e\u30ed\u30b4\u304c\u8868\u793a\u3055\u308c\u306a\u3044\u554f\u984c\u3092\u4fee\u6b63\n10.\u65b0\u5f79\u8077\u3092\u8ffd\u52a0\n<color=#FC0303>\u30ab\u30b9\u30bf\u30e0\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc</color>\n  \u30ad\u30eb\u30af\u30fc\u30eb\u3001\u30d9\u30f3\u30c8\u4f7f\u7528\u3001\u30b5\u30dc\u30bf\u30fc\u30b8\u30e5\u304c\u3067\u304d\u308b\u304b\u8a2d\u5b9a\u3067\u304d\u307e\u3059\u3002\n11.\u5f79\u8077\u4ed8\u4e0e\u30b7\u30b9\u30c6\u30e0\u3092\u5f37\u5316\u3059\u308b\u30aa\u30d7\u30b7\u30e7\u30f3\u3092\u8ffd\u52a0\n\nSee you next Update~~~!                        DekoKiyo&Mugicha</size>"
     }
 }

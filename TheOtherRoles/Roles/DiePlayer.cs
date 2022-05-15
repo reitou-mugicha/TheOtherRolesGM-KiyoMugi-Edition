@@ -54,13 +54,13 @@ namespace TheOtherRoles
                 {
                     if (Camera.main.orthographicSize > 3.0f)
                     {
-                        Camera.main.orthographicSize /= 1f;
-                        hm.UICamera.orthographicSize /= 1f;
+                        Camera.main.orthographicSize /= 1.5f;
+                        hm.UICamera.orthographicSize /= 1.5f;
                     }
 
                     if (hm.transform.localScale.x > 1.0f)
                     {
-                        hm.transform.localScale /= 1f;
+                        hm.transform.localScale /= 1.5f;
                     }
                 },
                 () => { return enableZoomInOut && PlayerControl.LocalPlayer.isDead() && !PlayerControl.LocalPlayer.isRole(RoleType.GM); },
@@ -83,13 +83,13 @@ namespace TheOtherRoles
                 {
                     if (Camera.main.orthographicSize < 18.0f)
                     {
-                        Camera.main.orthographicSize *= 1f;
-                        hm.UICamera.orthographicSize *= 1f;
+                        Camera.main.orthographicSize *= 1.5f;
+                        hm.UICamera.orthographicSize *= 1.5f;
                     }
 
                     if (hm.transform.localScale.x < 6.0f)
                     {
-                        hm.transform.localScale *= 1f;
+                        hm.transform.localScale *= 1.5f;
                     }
                 },
                 () => { return enableZoomInOut && PlayerControl.LocalPlayer.isDead(); },
@@ -146,18 +146,18 @@ namespace TheOtherRoles
                         {
                             if (Camera.main.orthographicSize < 18.0f)
                             {
-                                Camera.main.orthographicSize *= 1f;
-                                __instance.transform.localScale *= 1f;
-                                __instance.UICamera.orthographicSize *= 1f;
+                                Camera.main.orthographicSize *= 1.5f;
+                                __instance.transform.localScale *= 1.5f;
+                                __instance.UICamera.orthographicSize *= 1.5f;
                             }
                         }
                         if (Input.GetAxis("Mouse ScrollWheel") > 0)
                         {
                             if (Camera.main.orthographicSize > 3.0f)
                             {
-                                Camera.main.orthographicSize /= 1f;
-                                __instance.transform.localScale /= 1f;
-                                __instance.UICamera.orthographicSize /= 1f;
+                                Camera.main.orthographicSize /= 1.5f;
+                                __instance.transform.localScale /= 1.5f;
+                                __instance.UICamera.orthographicSize /= 1.5f;
                             }
                         }
                     }

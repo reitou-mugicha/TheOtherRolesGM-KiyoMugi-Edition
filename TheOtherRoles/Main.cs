@@ -1,4 +1,4 @@
-using BepInEx;
+﻿using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.IL2CPP;
 using HarmonyLib;
@@ -22,7 +22,7 @@ namespace TheOtherRoles
     public class TheOtherRolesPlugin : BasePlugin
     {
         public const string Id = "kiyomori.mugicha.theotherrolesgmkm";
-        public const string VersionString = "1.1.2.2";
+        public const string VersionString = "1.2.0";
         public static System.Version Version = System.Version.Parse(VersionString);
         internal static BepInEx.Logging.ManualLogSource Logger;
 
@@ -40,6 +40,7 @@ namespace TheOtherRoles
         public static ConfigEntry<bool> HideNameplates { get; set; }
         public static ConfigEntry<bool> ShowLighterDarker { get; set; }
         public static ConfigEntry<bool> HideTaskArrows { get; set; }
+        //public static ConfigEntry<bool> ShowDebugData { get; set; }
         public static ConfigEntry<bool> EnableHorseMode { get; set; }
         public static ConfigEntry<string> StreamerModeReplacementText { get; set; }
         public static ConfigEntry<string> StreamerModeReplacementColor { get; set; }
@@ -74,9 +75,10 @@ namespace TheOtherRoles
             HideNameplates = Config.Bind("Custom", "Hide Nameplates", false);
             ShowLighterDarker = Config.Bind("Custom", "Show Lighter / Darker", false);
             HideTaskArrows = Config.Bind("Custom", "Hide Task Arrows", false);
+            //ShowDebugData = Config.Bind("Custom", "Show Debug Data", false);
             EnableHorseMode = Config.Bind("Custom", "Enable Horse Mode", false);
             ShowPopUpVersion = Config.Bind("Custom", "Show PopUp", "0");
-            StreamerModeReplacementText = Config.Bind("Custom", "Streamer Mode Replacement Text", "\nTheOtherRolesGM KM");
+            StreamerModeReplacementText = Config.Bind("Custom", "Streamer Mode Replacement Text", "\n\nTheOtherRolesGM KM");
             StreamerModeReplacementColor = Config.Bind("Custom", "Streamer Mode Replacement Text Hex Color", "#87AAF5FF");
             DebugRepo = Config.Bind("Custom", "Debug Hat Repo", "");
 

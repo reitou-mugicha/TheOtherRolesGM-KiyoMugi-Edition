@@ -152,6 +152,7 @@ namespace TheOtherRoles.Patches
             impSettings.Add((byte)RoleType.SerialKiller, CustomOptionHolder.serialKillerSpawnRate.data);
             impSettings.Add((byte)RoleType.HawkEye, CustomOptionHolder.hawkEyeSpawnRate.data);
             impSettings.Add((byte)RoleType.Assassin, CustomOptionHolder.assassinSpawnRate.data);
+            impSettings.Add((byte)RoleType.CustomImpostor, CustomOptionHolder.customImpostorSpawnRate.data);
 
             neutralSettings.Add((byte)RoleType.Jester, CustomOptionHolder.jesterSpawnRate.data);
             neutralSettings.Add((byte)RoleType.Arsonist, CustomOptionHolder.arsonistSpawnRate.data);
@@ -706,9 +707,11 @@ namespace TheOtherRoles.Patches
             public Dictionary<byte, (int rate, int count)> impSettings = new Dictionary<byte, (int, int)>();
             public Dictionary<byte, (int rate, int count)> neutralSettings = new Dictionary<byte, (int, int)>();
             public Dictionary<byte, (int rate, int count)> crewSettings = new Dictionary<byte, (int, int)>();
+            public Dictionary<byte, (int rate, int count)> modSettings = new Dictionary<byte, (int, int)>();
             public int maxCrewmateRoles { get; set; }
             public int maxNeutralRoles { get; set; }
             public int maxImpostorRoles { get; set; }
+            public int maxModifierRoles { get; set; }
             public PlayerControl host { get; set; }
         }
 
@@ -716,7 +719,8 @@ namespace TheOtherRoles.Patches
         {
             Crewmate = 0,
             Neutral = 1,
-            Impostor = 2
+            Impostor = 2,
+            Modifier = 3,
         }
     }
 }

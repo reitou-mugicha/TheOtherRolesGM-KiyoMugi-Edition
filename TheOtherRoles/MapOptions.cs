@@ -37,6 +37,7 @@ namespace TheOtherRoles
         public static bool allowParallelMedBayScans = false;
         public static bool showLighterDarker = false;
         public static bool hideTaskArrows = false;
+        //public static bool showDebugData = false;
         public static bool enableHorseMode = false;
 
         // Updating values
@@ -81,6 +82,7 @@ namespace TheOtherRoles
             hideNameplates = TheOtherRolesPlugin.HideNameplates.Value;
             showLighterDarker = TheOtherRolesPlugin.ShowLighterDarker.Value;
             hideTaskArrows = TheOtherRolesPlugin.HideTaskArrows.Value;
+            //showDebugData = TheOtherRolesPlugin.ShowDebugData.Value;
             enableHorseMode = TheOtherRolesPlugin.EnableHorseMode.Value;
             IntroPatch.ShouldAlwaysHorseAround.isHorseMode = TheOtherRolesPlugin.EnableHorseMode.Value;
         }

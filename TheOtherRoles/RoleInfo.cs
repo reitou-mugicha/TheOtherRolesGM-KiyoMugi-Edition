@@ -96,6 +96,7 @@ namespace TheOtherRoles
         public static RoleInfo evilHacker = new RoleInfo("evilHacker", EvilHacker.color, CustomOptionHolder.evilHackerSpawnRate, RoleType.EvilHacker);
         public static RoleInfo portalmaker = new RoleInfo("portalmaker", Portalmaker.color, CustomOptionHolder.portalmakerSpawnRate, RoleType.Portalmaker);
         public static RoleInfo assassin = new RoleInfo("assassin", Assassin.color, CustomOptionHolder.assassinSpawnRate, RoleType.Assassin);
+        public static RoleInfo customImpostor = new RoleInfo("customImpostor", CustomImpostor.color, CustomOptionHolder.customImpostorSpawnRate, RoleType.CustomImpostor);
         public static RoleInfo hawkEye = new RoleInfo("hawkEye", HawkEye.color, CustomOptionHolder.hawkEyeSpawnRate, RoleType.HawkEye);/*
         public static RoleInfo creator = new RoleInfo("creator", Creator.color, CustomOptionHolder.creatorSpawnRate, RoleType.Creator);
         public static RoleInfo student = new RoleInfo("student", Student.color, CustomOptionHolder.sheriffSpawnRate, RoleType.Student);
@@ -160,6 +161,7 @@ namespace TheOtherRoles
                 evilHacker,
                 portalmaker,
                 assassin,
+                customImpostor,
                 hawkEye//,
                 //king,
                 //minions,
@@ -222,6 +224,7 @@ namespace TheOtherRoles
             if (p.isRole(RoleType.Ninja)) infos.Add(ninja);
             if (p.isRole(RoleType.HawkEye)) infos.Add(hawkEye);
             if (p.isRole(RoleType.Portalmaker)) infos.Add(portalmaker);
+            if (p.isRole(RoleType.CustomImpostor)) infos.Add(customImpostor);
             if (p.isRole(RoleType.Assassin)) infos.Add(assassin);
             //if (p.isRole(RoleType.King) || (King.formerKingdoms != null && King.formerKingdoms.Any(x => x.PlayerId == p.PlayerId))) infos.Add(king);
             //if (p.isRole(RoleType.Minions)) infos.Add(minions);

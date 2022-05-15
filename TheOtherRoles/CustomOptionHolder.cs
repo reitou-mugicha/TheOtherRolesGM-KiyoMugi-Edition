@@ -21,6 +21,7 @@ namespace TheOtherRoles
 
         public static CustomOption presetSelection;
         public static CustomOption activateRoles;
+        public static CustomOption randomGen;
         public static CustomOption crewmateRolesCountMin;
         public static CustomOption crewmateRolesCountMax;
         public static CustomOption neutralRolesCountMin;
@@ -286,7 +287,9 @@ namespace TheOtherRoles
         public static CustomOption enableDiePlayerZoomInOut;
         public static CustomOption onePlayerStart;
         public static CustomOption airshipReactorDuration;
-        public static CustomOption halloweenMode;
+        public static CustomOption helloweenMode;
+
+        public static CustomOption betterStartButtons;
 
         public static CustomOption enableMirrorMap;
 
@@ -405,6 +408,18 @@ namespace TheOtherRoles
         public static CustomRoleOption sunglassesSpawnRate;
         public static CustomOption sunglass;
 
+        public static CustomRoleOption customImpostorSpawnRate;
+        public static CustomOption customImpostorKillCooldown;
+        public static CustomOption customImpostorCanUseVents;
+        public static CustomOption customImpostorCanSabotage;
+        public static CustomOption customImpostorCanReport;
+
+        public static CustomRoleOption underTakerSpawnRate;
+        public static CustomOption underTakerDragCooldown;
+        public static CustomOption underTakerDragSpeed;
+
+        public static CustomRoleOption coolSpawnRate;
+
         internal static Dictionary<byte, byte[]> blockedRolePairings = new Dictionary<byte, byte[]>();
 
         public static string cs(Color c, string s)
@@ -426,7 +441,7 @@ namespace TheOtherRoles
 
             presetSelection = CustomOption.Create(2, CustomOptionType.General, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "presetSelection"), presets, null, true);
 
-            //strongRandomGen = CustomOption.Create(3, CustomOptionType.General, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "betterGen"), true, null, true);
+            randomGen = CustomOption.Create(3, CustomOptionType.General, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "randomGen"), true, null, true);
 
             // Using new id's for the options to not break compatibilty with older versions
             crewmateRolesCountMin = CustomOption.Create(10, CustomOptionType.General, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "crewmateRolesCountMin"), 0f, 0f, 15f, 1f, null, true);
@@ -543,6 +558,16 @@ namespace TheOtherRoles
             assassinStartAssassin = CustomOption.Create(273, CustomOptionType.Impostor, "startAssassin", 5f, 2.5f, 30f, 2.5f, assassinSpawnRate, format: "unitSeconds");
             assassinTraceTime = CustomOption.Create(274, CustomOptionType.Impostor, "traceDuration", 5f, 1f, 20f, 0.5f, assassinSpawnRate, format: "unitSeconds");
             assassinTraceColorTime = CustomOption.Create(275, CustomOptionType.Impostor, "timeTillTraceColorHasFaded", 2f, 0f, 20f, 0.5f, assassinSpawnRate, format: "unitSeconds");
+
+            customImpostorSpawnRate = new CustomRoleOption(650, CustomOptionType.Impostor, "customImpostor", CustomImpostor.color, 15);
+            customImpostorKillCooldown = CustomOption.Create(651, CustomOptionType.Impostor, "customImpostorKillCooldown", 20f, 2.5f, 60f, 2.5f, customImpostorSpawnRate, format: "unitSeconds");
+            customImpostorCanUseVents = CustomOption.Create(652, CustomOptionType.Impostor, "customImpostorCanUseVents", false, customImpostorSpawnRate);
+            customImpostorCanSabotage = CustomOption.Create(653, CustomOptionType.Impostor, "customImpostorCanSabotage", false, customImpostorSpawnRate);
+            //customImpostorCanReport = CustomOption.Create(654, CustomOptionType.Impostor, "customImpostorCanReport", true, customImpostorSpawnRate);
+
+            /*underTakerSpawnRate = new CustomRoleOption(660, CustomOptionType.Impostor, "underTaker", UnderTaker.color, 1);
+            underTakerDragCooldown = CustomOption(661, CustomOptionType.Impostor, "underTakerDragCooldown", 30f, 2.5f, 60f, 2.5, underTakerDragTime, format: "unitSeconds");
+            underTakerDragSpeed = CustomOption.Create(662, CustomOptionType.Crewmate, "underTakerDragSpeed", 150f, 100f, 250f, 10f, underTakerSpawnRate, format: "unitPercent");*/
 
             madmateSpawnRate = new CustomRoleOption(280, CustomOptionType.Modifier, "madmate", Madmate.color);
             madmateType = CustomOption.Create(281, CustomOptionType.Modifier, "madmateType", new string[] { "madmateDefault", "madmateWithRole", "madmateRandom" }, madmateSpawnRate);
@@ -773,8 +798,11 @@ namespace TheOtherRoles
             sprinterDuration = CustomOption.Create(622, CustomOptionType.Crewmate, "sprinterDuration", 15f, 2.5f, 60f, 2.5f, sprinterSpawnRate, format: "unitSeconds");
             sprinterSpeedBonus = CustomOption.Create(623, CustomOptionType.Crewmate, "sprinterSpeedBonus", 125f, 50f, 200f, 5f, sprinterSpawnRate, format: "unitPercent");
 
+            //coolSpawnRate = new CustomRoleOption(629, CustomOptionType.Modifier, "cool", Cool.color, 15);
+
             // Other options
             specialOptions = new CustomOptionBlank(null);
+            //betterStartButtons = CustomOption.Create(45, CustomOptionType.General, "betterStart", true, specialOptions);
             maxNumberOfMeetings = CustomOption.Create(16, CustomOptionType.General, "maxNumberOfMeetings", 10, 0, 15, 1, specialOptions, true);
             blockSkippingInEmergencyMeetings = CustomOption.Create(17, CustomOptionType.General, "blockSkippingInEmergencyMeetings", false, specialOptions);
             noVoteIsSelfVote = CustomOption.Create(18, CustomOptionType.General, "noVoteIsSelfVote", false, specialOptions);
@@ -785,7 +813,7 @@ namespace TheOtherRoles
             enableDiePlayerZoomInOut = CustomOption.Create(23, CustomOptionType.General, "diePlayerCanZoomInOut", false, specialOptions);
             onePlayerStart = CustomOption.Create(24, CustomOptionType.General, "onePlayerStart", false, specialOptions);
             airshipReactorDuration = CustomOption.Create(25, CustomOptionType.General, "airShipReactorDuration", 60f, 0f, 600f, 5f, specialOptions, format: "unitSeconds");
-            //halloweenMode = CustomOption.Create(26, CustomOptionType.General, "halloweenMode", false, specialOptions);
+            //helloweenMode = CustomOption.Create(26, CustomOptionType.General, "helloweenMode", false, specialOptions);
 
             enableMirrorMap = CustomOption.Create(27, CustomOptionType.General, "enableMirror", false, specialOptions);
 

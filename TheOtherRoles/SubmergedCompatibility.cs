@@ -85,7 +85,7 @@ namespace TheOtherRoles
         private static FieldInfo RetrieveOxigenMaskField;
         public static TaskTypes RetrieveOxygenMask;
         private static Type SubmarineOxygenSystemType;
-        private static PropertyInfo SubmarineOxygenSystemInstanceProperty;
+        private static FieldInfo SubmarineOxygenSystemInstanceField;
         private static MethodInfo RepairDamageMethod;
 
 
@@ -121,7 +121,7 @@ namespace TheOtherRoles
             RetrieveOxygenMask = (TaskTypes)RetrieveOxigenMaskField.GetValue(null);
 
             SubmarineOxygenSystemType = Types.First(t => t.Name == "SubmarineOxygenSystem");
-            SubmarineOxygenSystemInstanceProperty = AccessTools.Property(SubmarineOxygenSystemType, "Instance");
+            SubmarineOxygenSystemInstanceField = AccessTools.Field(SubmarineOxygenSystemType, "Instance");
             RepairDamageMethod = AccessTools.Method(SubmarineOxygenSystemType, "RepairDamage");
         }
 
@@ -157,7 +157,7 @@ namespace TheOtherRoles
             try
             {
                 ShipStatus.Instance.RpcRepairSystem((SystemTypes)130, 64);
-                RepairDamageMethod.Invoke(SubmarineOxygenSystemInstanceProperty.GetValue(null), new object[] { PlayerControl.LocalPlayer, (byte)64 });
+                RepairDamageMethod.Invoke(SubmarineOxygenSystemInstanceField.GetValue(null), new object[] { PlayerControl.LocalPlayer, 64 });
             }
             catch (System.NullReferenceException)
             {

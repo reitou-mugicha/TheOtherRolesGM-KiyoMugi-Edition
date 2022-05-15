@@ -936,6 +936,8 @@ namespace TheOtherRoles
             // First add the presets and the role counts
             entries.Add(optionToString(CustomOptionHolder.presetSelection));
 
+            entries.Add(optionToString(CustomOptionHolder.randomGen));
+
             var optionName = CustomOptionHolder.cs(new Color(204f / 255f, 204f / 255f, 0, 1f), tl("crewmateRoles"));
             var min = CustomOptionHolder.crewmateRolesCountMin.getSelection();
             var max = CustomOptionHolder.crewmateRolesCountMax.getSelection();
@@ -974,6 +976,7 @@ namespace TheOtherRoles
             foreach (CustomOption option in CustomOption.options)
             {
                 if ((option == CustomOptionHolder.presetSelection) ||
+                    (option == CustomOptionHolder.randomGen) ||
                     (option == CustomOptionHolder.crewmateRolesCountMin) ||
                     (option == CustomOptionHolder.crewmateRolesCountMax) ||
                     (option == CustomOptionHolder.neutralRolesCountMin) ||

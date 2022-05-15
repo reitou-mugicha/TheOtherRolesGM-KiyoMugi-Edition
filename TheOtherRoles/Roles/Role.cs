@@ -40,6 +40,7 @@ namespace TheOtherRoles
         Medium,
         FortuneTeller,
         Sprinter,
+        Portalmaker,
 
 
         Impostor = 100,
@@ -61,7 +62,7 @@ namespace TheOtherRoles
         SerialKiller,
         EvilHacker,
         Assassin,
-        //Undertaker,
+        CustomImpostor,
         HawkEye,
 
 
@@ -80,7 +81,6 @@ namespace TheOtherRoles
         PlagueDoctor,
         Fox,
         Immoralist,
-        Portalmaker,
         //King,
         //Minions,
 
@@ -109,7 +109,7 @@ namespace TheOtherRoles
             { RoleType.NekoKabocha, typeof(RoleBase<NekoKabocha>) },
             { RoleType.SerialKiller, typeof(RoleBase<SerialKiller>) },
             { RoleType.HawkEye, typeof(RoleBase<HawkEye>) },
-            //{ RoleType.Undertaker, typeof(RoleBase<Undertaker>) },
+            { RoleType.CustomImpostor, typeof(RoleBase<CustomImpostor>) },
 
             // Neutral
             { RoleType.PlagueDoctor, typeof(RoleBase<PlagueDoctor>) },
