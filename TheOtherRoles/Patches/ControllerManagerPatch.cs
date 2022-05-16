@@ -1,4 +1,7 @@
+using System;
+using System.IO;
 using HarmonyLib;
+using TheOtherRoles;
 using UnityEngine;
 
 namespace TownOfHost
@@ -16,6 +19,14 @@ namespace TownOfHost
                 resolutionIndex++;
                 if (resolutionIndex >= resolutions.Length) resolutionIndex = 0;
                 ResolutionManager.SetResolution(resolutions[resolutionIndex].Item1, resolutions[resolutionIndex].Item2, false);
+            }
+            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.F1))
+            {
+                string t = DateTime.Now.ToString("yyyy-MM-dd_HH.mm.ss");
+                string filename = $"{System.Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory)}/TheOtherRoles_GM_H-v{TheOtherRolesPlugin.VersionString}-{t}.log";
+                FileInfo file = new FileInfo(@$"{System.Environment.CurrentDirectory}/BepInEx/LogOutput.log");
+                file.CopyTo(@filename);
+                System.Diagnostics.Process.Start(@$"{System.Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory)}");
             }
         }
     }
