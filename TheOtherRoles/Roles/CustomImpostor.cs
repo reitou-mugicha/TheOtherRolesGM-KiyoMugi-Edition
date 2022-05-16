@@ -17,7 +17,6 @@ namespace TheOtherRoles
         public static float killCooldown { get { return CustomOptionHolder.customImpostorKillCooldown.getFloat(); } }
         public static bool canUseVents { get { return CustomOptionHolder.customImpostorCanUseVents.getBool(); } }
         public static bool canSabotage { get { return CustomOptionHolder.customImpostorCanSabotage.getBool(); } }
-        //public static bool canReport { get { return CustomOptionHolder.customImpostorCanReport.getBool(); } }
 
         public CustomImpostor()
         {

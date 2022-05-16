@@ -412,7 +412,6 @@ namespace TheOtherRoles
         public static CustomOption customImpostorKillCooldown;
         public static CustomOption customImpostorCanUseVents;
         public static CustomOption customImpostorCanSabotage;
-        public static CustomOption customImpostorCanReport;
 
         public static CustomRoleOption underTakerSpawnRate;
         public static CustomOption underTakerDragCooldown;
@@ -563,7 +562,6 @@ namespace TheOtherRoles
             customImpostorKillCooldown = CustomOption.Create(651, CustomOptionType.Impostor, "customImpostorKillCooldown", 20f, 2.5f, 60f, 2.5f, customImpostorSpawnRate, format: "unitSeconds");
             customImpostorCanUseVents = CustomOption.Create(652, CustomOptionType.Impostor, "customImpostorCanUseVents", false, customImpostorSpawnRate);
             customImpostorCanSabotage = CustomOption.Create(653, CustomOptionType.Impostor, "customImpostorCanSabotage", false, customImpostorSpawnRate);
-            //customImpostorCanReport = CustomOption.Create(654, CustomOptionType.Impostor, "customImpostorCanReport", true, customImpostorSpawnRate);
 
             /*underTakerSpawnRate = new CustomRoleOption(660, CustomOptionType.Impostor, "underTaker", UnderTaker.color, 1);
             underTakerDragCooldown = CustomOption(661, CustomOptionType.Impostor, "underTakerDragCooldown", 30f, 2.5f, 60f, 2.5, underTakerDragTime, format: "unitSeconds");

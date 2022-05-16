@@ -1,4 +1,4 @@
-/*using BepInEx;
+using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.IL2CPP;
 using System;
@@ -25,24 +25,24 @@ namespace TheOtherRoles.Patch
     {
         [HarmonyPatch(typeof(GameStartManager), nameof(GameStartManager.Update))]
         public static class LobbyCountDownTimer
-        {
+        {/*
             public static GameObject startButton;
-            public static GameObject startButtonText;
+            public static GameObject startButtonText;*/
 
             public static void Postfix(GameStartManager __instance)
             {
                 if (CustomOptionHolder.betterStartButtons.getBool())
                 {
-                    GameStartManager.Instance.countDownTimer = 0;
+                    GameStartManager.Instance.countDownTimer = 0;/*
                     startButton = GameObject.Find("StartButton");
                     startButton.transform.localScale = new Vector3(-0.8f, 0.8f, 0.8f);
                     startButton.transform.localPosition = new Vector3(-1f, 0f, -10f);
 
                     startButtonText = GameObject.Find("Text_TMP");
-                    startButtonText.transform.localScale = new Vector3(-1f, 1f, -1f);
+                    startButtonText.transform.localScale = new Vector3(-1f, 1f, -1f);*/
                 }
             }
-        }
+        }/*
 
         [HarmonyPatch(typeof(GameStartManager), nameof(GameStartManager.Start))]
         public static class ForceEnd
@@ -65,7 +65,7 @@ namespace TheOtherRoles.Patch
                 PassiveButton passiveButtonDiscord = buttonForceEnd.GetComponent<PassiveButton>();
                 SpriteRenderer buttonSpriteDiscord = buttonForceEnd.GetComponent<SpriteRenderer>();
             }
-        }
+        }*/
     }
-}*/
+}
 // 3.5 4

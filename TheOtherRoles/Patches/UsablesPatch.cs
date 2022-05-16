@@ -278,7 +278,6 @@ namespace TheOtherRoles.Patches
                 {
                     HudManager.Instance.ImpostorVentButton.Hide();
                     HudManager.Instance.SabotageButton.Hide();
-                    HudManager.Instance.ReportButton.Hide();
 
                     if (Helpers.ShowButtons)
                     {
@@ -289,12 +288,6 @@ namespace TheOtherRoles.Patches
                         {
                             HudManager.Instance.SabotageButton.Show();
                             HudManager.Instance.SabotageButton.gameObject.SetActive(true);
-                        }
-
-                        if (__instance.roleCanSabotage())
-                        {
-                            HudManager.Instance.ReportButton.Show();
-                            HudManager.Instance.ReportButton.gameObject.SetActive(true);
                         }
                     }
                 }
