@@ -800,7 +800,7 @@ namespace TheOtherRoles
 
             // Other options
             specialOptions = new CustomOptionBlank(null);
-            //betterStartButtons = CustomOption.Create(45, CustomOptionType.General, "betterStart", true, specialOptions);
+            betterStartButtons = CustomOption.Create(45, CustomOptionType.General, "betterStart", true, specialOptions);
             maxNumberOfMeetings = CustomOption.Create(16, CustomOptionType.General, "maxNumberOfMeetings", 10, 0, 15, 1, specialOptions, true);
             blockSkippingInEmergencyMeetings = CustomOption.Create(17, CustomOptionType.General, "blockSkippingInEmergencyMeetings", false, specialOptions);
             noVoteIsSelfVote = CustomOption.Create(18, CustomOptionType.General, "noVoteIsSelfVote", false, specialOptions);
