@@ -1,3 +1,4 @@
+using System.Linq;
 using HarmonyLib;
 using Hazel;
 using System;
@@ -24,18 +25,24 @@ namespace TheOtherRoles
         public static bool spyCanDieToSheriff { get { return CustomOptionHolder.spyCanDieToSheriff.getBool(); } }
         public static bool madmateCanDieToSheriff { get { return CustomOptionHolder.madmateCanDieToSheriff.getBool(); } }
         public static bool createdMadmateCanDieToSheriff { get { return CustomOptionHolder.createdMadmateCanDieToSheriff.getBool(); } }
+        public static bool sheriffCanKillNoDeadBody { get { return CustomOptionHolder.sheriffCanKillNoDeadBody.getBool(); } }
 
         public int numShots = 2;
+        public bool canKill = sheriffCanKillNoDeadBody;
         public PlayerControl currentTarget;
 
         public Sheriff()
         {
             RoleType = roleId = RoleType.Sheriff;
             numShots = maxShots;
+            canKill = sheriffCanKillNoDeadBody;
         }
 
         public override void OnMeetingStart() { }
-        public override void OnMeetingEnd() { }
+        public override void OnMeetingEnd()
+        {
+            canKill = sheriffCanKillNoDeadBody || PlayerControl.AllPlayerControls.ToArray().Any(p => p.Data.IsDead);
+        }
 
         public override void FixedUpdate() {
             if (player == PlayerControl.LocalPlayer && numShots > 0)
@@ -99,7 +106,7 @@ namespace TheOtherRoles
                     sheriffKillButton.Timer = sheriffKillButton.MaxTimer;
                     local.currentTarget = null;
                 },
-                () => { return PlayerControl.LocalPlayer.isRole(RoleType.Sheriff) && local.numShots > 0 && !PlayerControl.LocalPlayer.Data.IsDead; },
+                () => { return PlayerControl.LocalPlayer.isRole(RoleType.Sheriff) && local.numShots > 0 && !PlayerControl.LocalPlayer.Data.IsDead && local.canKill; },
                 () =>
                 {
                     if (sheriffNumShotsText != null)
