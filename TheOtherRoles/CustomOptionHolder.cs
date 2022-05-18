@@ -158,6 +158,7 @@ namespace TheOtherRoles
         public static CustomOption sheriffNumShots;
         public static CustomOption sheriffCanKillNeutrals;
         public static CustomOption sheriffMisfireKillsTarget;
+        public static CustomOption sheriffCanKillNoDeadBody;
 
         public static CustomRoleOption lighterSpawnRate;
         public static CustomOption lighterModeLightsOnVision;
@@ -761,6 +762,7 @@ namespace TheOtherRoles
             sheriffCooldown = CustomOption.Create(101, CustomOptionType.Crewmate, "sheriffCooldown", 30f, 2.5f, 60f, 2.5f, sheriffSpawnRate, format: "unitSeconds");
             sheriffNumShots = CustomOption.Create(103, CustomOptionType.Crewmate, "sheriffNumShots", 2f, 1f, 15f, 1f, sheriffSpawnRate, format: "unitShots");
             sheriffMisfireKillsTarget = CustomOption.Create(104, CustomOptionType.Crewmate, "sheriffMisfireKillsTarget", false, sheriffSpawnRate);
+            sheriffCanKillNoDeadBody = CustomOption.Create(105, CustomOptionType.Crewmate, "sheriffCanKillNoDeadBody", true, sheriffSpawnRate);
             sheriffCanKillNeutrals = CustomOption.Create(102, CustomOptionType.Crewmate, "sheriffCanKillNeutrals", false, sheriffSpawnRate);
 
             lighterSpawnRate = new CustomRoleOption(110, CustomOptionType.Crewmate, "lighter", Lighter.color, 15);
