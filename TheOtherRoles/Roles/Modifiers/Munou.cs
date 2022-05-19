@@ -168,11 +168,8 @@ namespace TheOtherRoles
         
         public static void reMorph(byte playerId)
         {
-            Helpers.log("reMorph1");
-            Helpers.log($"{colorPairs.ToArray().Count()}");
             if(colorPairs.ContainsKey(playerId))
             {
-                Helpers.log("reMorph2");
                 MorphHandler.morphToPlayer(Helpers.playerById(playerId), Helpers.playerById(colorPairs[playerId]));
             }
         }
