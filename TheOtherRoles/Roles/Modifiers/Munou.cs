@@ -121,10 +121,13 @@ namespace TheOtherRoles
             players = new List<Munou>();
             randomPlayers = new Dictionary<byte, byte>();
             endGameFlag = false;
+            colorPairs = new Dictionary<byte, byte>();
             resetColors();
         }
 
+        public static Dictionary<byte, byte> colorPairs = new Dictionary<byte, byte>();
         public static void randomColors(){
+            colorPairs = new Dictionary<byte, byte>();
             // 発生確率
             int random = rnd.Next(100);
             if(random > probability) return;
@@ -156,12 +159,26 @@ namespace TheOtherRoles
                     }
                     coutner++;
                 }
-                var to =Helpers.playerById((byte)shuffleTargets[rnd]);
+                var to = Helpers.playerById((byte)shuffleTargets[rnd]);
                 MorphHandler.morphToPlayer(p, to);
+                colorPairs[p.PlayerId] = to.PlayerId;
             }
             randomColorFlag = true;
         }
+        
+        public static void reMorph(byte playerId)
+        {
+            Helpers.log("reMorph1");
+            Helpers.log($"{colorPairs.ToArray().Count()}");
+            if(colorPairs.ContainsKey(playerId))
+            {
+                Helpers.log("reMorph2");
+                MorphHandler.morphToPlayer(Helpers.playerById(playerId), Helpers.playerById(colorPairs[playerId]));
+            }
+        }
+
         public static void resetColors(){
+            colorPairs = new Dictionary<byte, byte>();
             var allPlayers = PlayerControl.AllPlayerControls;
             foreach(var p in allPlayers)
             {

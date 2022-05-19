@@ -32,6 +32,7 @@
         public static void resetMorph(this PlayerControl pc)
         {
             morphToPlayer(pc, pc);
+            Munou.reMorph(pc.PlayerId);
             pc.CurrentOutfitType = PlayerOutfitType.Default;
         }
     }
