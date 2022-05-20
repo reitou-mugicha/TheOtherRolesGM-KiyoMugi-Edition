@@ -200,10 +200,10 @@ namespace TheOtherRoles.Patches {
 
                 Logger.info("----------Role Assign-----------", "Settings");
                 foreach (var pc in PlayerControl.AllPlayerControls)
-                    Logger.info(String.Format("{0,-3}{1,-2}:{2,-16}:{3}", pc.AmOwner ? "[*]" : "", pc.PlayerId, pc.Data.PlayerName, RoleInfo.GetRolesString(pc, false, joinSeparator:" + ")), "Settings");
+                    Logger.info(String.Format("{0,-3}{1,-2}:{2}:{3}", pc.AmOwner ? "[*]" : "", pc.PlayerId, pc.Data.PlayerName.PadRightV2(20), RoleInfo.GetRolesString(pc, false, joinSeparator:" + ")), "Settings");
                 Logger.info("-----------Platforms------------", "Settings");
                 foreach (var pc in PlayerControl.AllPlayerControls)
-                    Logger.info(String.Format("{0,-3}{1,-2}:{2,-16}:{3}", pc.AmOwner ? "[*]" : "", pc.PlayerId, pc.Data.PlayerName, pc.getPlatform().Replace("Standalone", "")), "Settings");
+                    Logger.info(String.Format("{0,-3}{1,-2}:{2}:{3}", pc.AmOwner ? "[*]" : "", pc.PlayerId, pc.Data.PlayerName.PadRightV2(20), pc.getPlatform().Replace("Standalone", "")), "Settings");
                 Logger.info("---------Game Settings----------", "Settings");
                 TheOtherRolesPlugin.optionsPage = 0;
                 var tmp = PlayerControl.GameOptions.ToHudString(GameData.Instance ? GameData.Instance.PlayerCount : 10).Split("\r\n");
@@ -212,7 +212,7 @@ namespace TheOtherRoles.Patches {
                 Logger.info("--------Advance Settings--------", "Settings");
                 foreach (var o in CustomOption.options)
                     if (o.parent == null ? !o.getString().Equals("0%") : o.parent.enabled)
-                        Logger.info(String.Format("{0}{1,-36}:{2}", o.parent == null ? "" : "┗ ", o.name.removeHtml(), o.getString().removeHtml()), "Settings");
+                        Logger.info(String.Format("{0}:{1}", o.parent == null ? o.name.removeHtml().PadRightV2(43) : $"┗ {o.name.removeHtml().PadRightV2(41)}", o.getString().removeHtml()), "Settings");
                 Logger.info("--------------------------------", "Settings");
 
                 __instance.YouAreText.color = roleInfo.color;
