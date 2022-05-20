@@ -72,6 +72,7 @@ namespace TheOtherRoles.Objects {
             if ((this.HasEffect && this.isEffectActive && this.effectCancellable) || this.Timer < 0f && HasButton() && CouldUse())
             {
                 actionButton.graphic.color = new Color(1f, 1f, 1f, 0.3f);
+                Logger.info($"Click \"{((this.buttonText is null or "") && hotkey is not null ? Enum.GetName(typeof(KeyCode), hotkey) : this.buttonText)}\"", "Button");
                 this.OnClick();
 
                 if (this.HasEffect && !this.isEffectActive) {
