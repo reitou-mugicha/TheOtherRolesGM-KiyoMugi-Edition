@@ -57,7 +57,7 @@ namespace TheOtherRoles
                 SoundManager._Instance.PlaySound(laugh, false, 1f);
             }
             soundFlag = false;
-            if(!isAlive && (PlayerControl.LocalPlayer.isImpostor() || PlayerControl.LocalPlayer.isRole(RoleType.Jackal)))
+            if(!isAlive && (PlayerControl.LocalPlayer.isImpostor() || PlayerControl.LocalPlayer.isRole(RoleType.Jackal) || PlayerControl.LocalPlayer.isRole(RoleType.JekyllAndHyde)))
             {
                 string msg = $"人形遣いのカウント数 {counter}/{numKills}";
                 if (AmongUsClient.Instance.AmClient && DestroyableSingleton<HudManager>.Instance)
@@ -374,7 +374,7 @@ namespace TheOtherRoles
         public static void OnTargetExiled()
         {
             bool isAlive = Puppeteer.allPlayers.FindAll(x=> x.isAlive()).Count >= 1;
-            if(!target.isImpostor() && !target.isRole(RoleType.Jackal) && isAlive)
+            if(!target.isImpostor() && !target.isRole(RoleType.Jackal) && !target.isRole(RoleType.JekyllAndHyde) && isAlive)
             {
                 counter += 1;
             }
@@ -460,13 +460,21 @@ namespace TheOtherRoles
                 foreach(PlayerControl p in PlayerControl.AllPlayerControls){
                     if(p.Data.IsDead) continue;
                     Arrow arrow;
-                    if(p.Data.Role.IsImpostor || p.isRole(RoleType.Jackal) || p == target){
-                        if(p.Data.Role.IsImpostor){
+                    if(p.Data.Role.IsImpostor || p.isRole(RoleType.Jackal) || p.isRole(RoleType.JekyllAndHyde) || p == target)
+                    {
+                        if(p.Data.Role.IsImpostor)
+                        {
                             arrow = new Arrow(Color.red);
                         }
-                        else if(p.isRole(RoleType.Jackal) || (p.isRole(RoleType.SchrodingersCat) && SchrodingersCat.team == SchrodingersCat.Team.Jackal)){
+                        else if(p.isRole(RoleType.Jackal) || (p.isRole(RoleType.SchrodingersCat) && SchrodingersCat.team == SchrodingersCat.Team.Jackal))
+                        {
                             arrow = new Arrow(Jackal.color);
-                        }else if(p==target)
+                        }
+                        else if(p.isRole(RoleType.JekyllAndHyde))
+                        {
+                            arrow = new Arrow(JekyllAndHyde.color);
+                        }
+                        else if(p==target)
                         {
                             arrow = new Arrow(Puppeteer.color);
                         }else{
