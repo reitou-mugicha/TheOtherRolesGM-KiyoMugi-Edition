@@ -47,7 +47,7 @@
         <PackageReference Include="BepInEx.IL2CPP.MSBuild" Version="1.0.2" />
     </ItemGroup>
 
-    <Target Name="CopyCustomContent" AfterTargets="AfterBuild" Condition="'$(Configuration)|$(Platform)'=='Release_Local|AnyCPU'">
+    <Target Name="CopyCustomContent" AfterTargets="AfterBuild">
         <Message Text="Second occurrence" />
         <Copy SourceFiles="$(ProjectDir)\bin\$(Configuration)\netstandard2.1\$(AssemblyName).dll" DestinationFolder="$(AmongUs)/BepInEx/plugins/" />
     </Target>

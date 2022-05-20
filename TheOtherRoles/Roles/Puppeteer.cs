@@ -1,6 +1,7 @@
 using System;
 using Hazel;
 using HarmonyLib;
+using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
@@ -8,6 +9,7 @@ using TheOtherRoles.Objects;
 using static TheOtherRoles.TheOtherRoles;
 using static TheOtherRoles.Patches.PlayerControlFixedUpdatePatch;
 using static TheOtherRoles.Patches.SubmergedPatch;
+using BepInEx.IL2CPP.Utils.Collections;
 
 namespace TheOtherRoles
 {
@@ -236,6 +238,7 @@ namespace TheOtherRoles
             }
             arrows = new List<Arrow>();
             originalZoom = 0;
+            KeyboardJoystickUpdatePatch.stop = false;
         }
 
         public static void spawnDummy()
@@ -429,6 +432,7 @@ namespace TheOtherRoles
 
             isActive = false;
             canSpawn = false;
+            target = null;
             switchStealth(false);
         }
 
@@ -460,7 +464,7 @@ namespace TheOtherRoles
                         if(p.Data.Role.IsImpostor){
                             arrow = new Arrow(Color.red);
                         }
-                        else if(p.isRole(RoleType.Jackal) || (p.isRole(RoleType.SchrodingersCat) && SchrodingersCat.jackalFlag)){
+                        else if(p.isRole(RoleType.Jackal) || (p.isRole(RoleType.SchrodingersCat) && SchrodingersCat.team == SchrodingersCat.Team.Jackal)){
                             arrow = new Arrow(Jackal.color);
                         }else if(p==target)
                         {
@@ -602,12 +606,21 @@ namespace TheOtherRoles
             public static bool down = false;
             public static bool right = false;
             public static bool left = false;
+            public static bool stop = false;
+            private static IEnumerator DontMove(float n)
+            {
+                stop = true;
+                yield return new WaitForSeconds(n);
+                stop = false;
+                yield break;
+            }
             public static void Postfix(KeyboardJoystick __instance)
             {
                 if(!PlayerControl.LocalPlayer.isRole(RoleType.Puppeteer)) return;
 
                 if (stealthed)
                 {
+                    if(stop) return;
                     // 梯子を使う/ドアを開ける
                     if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Space))
                     {
@@ -701,6 +714,37 @@ namespace TheOtherRoles
                                 messageWriter.Write(target.Id);
                                 AmongUsClient.Instance.FinishRpcImmediately(messageWriter);
                                 RPCProcedure.puppeteerClimbRadder(dummy.PlayerId, target.Id);
+                                return;
+                            }
+
+                            AirshipStatus shipstatus =  DestroyableSingleton<AirshipStatus>.Instance;
+                            if(shipstatus != null)
+                            {
+                                var consoles = shipstatus.GetComponentsInChildren<PlatformConsole>().ToList();
+                                PlatformConsole leftPlatform = consoles.Find(x=> x.name == "PlatformLeft");
+                                PlatformConsole rightPlatform = consoles.Find(x=> x.name == "PlatformRight");
+                                float distanceRight = Vector2.Distance(leftPlatform.transform.position, dummy.transform.position);
+                                float distanceLeft = Vector2.Distance(rightPlatform.transform.position, dummy.transform.position);
+                                if(distanceRight < 0.8f || distanceLeft < 0.8f)
+                                {
+                                    MessageWriter messageWriter = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.PuppeteerUsePlatform, Hazel.SendOption.Reliable, -1);
+                                    messageWriter.Write(dummy.PlayerId);
+                                    AmongUsClient.Instance.FinishRpcImmediately(messageWriter);
+                                    RPCProcedure.puppeteerUsePlatform(dummy.PlayerId);
+                                    // TODO 2回やらないと何故か乗れないので2回実行させておく
+                                    DestroyableSingleton<HudManager>._instance.StartCoroutine(DontMove(1).WrapToIl2Cpp());
+                                    DestroyableSingleton<HudManager>.Instance.StartCoroutine(Effects.Lerp(1f, new Action<float>(t =>
+                                    {
+                                        if(t >= 1.0f)
+                                        {
+                                            messageWriter = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.PuppeteerUsePlatform, Hazel.SendOption.Reliable, -1);
+                                            messageWriter.Write(dummy.PlayerId);
+                                            AmongUsClient.Instance.FinishRpcImmediately(messageWriter);
+                                            RPCProcedure.puppeteerUsePlatform(dummy.PlayerId);
+                                        }
+                                    })));
+                                    return;
+                                }
                             }
                         }
 

@@ -74,6 +74,7 @@ namespace TheOtherRoles
         EvilTracker,
         MimicK,
         MimicA,
+        JekyllAndHyde,
         EvilHacker,
 
 
@@ -113,6 +114,7 @@ namespace TheOtherRoles
             { RoleType.Immoralist, typeof(RoleBase<Immoralist>)},
             { RoleType.SchrodingersCat, typeof(RoleBase<SchrodingersCat>)},
             { RoleType.Puppeteer, typeof(RoleBase<Puppeteer>)},
+            { RoleType.JekyllAndHyde, typeof(RoleBase<JekyllAndHyde>)},
 
             // Other
             { RoleType.Watcher, typeof(RoleBase<Watcher>) },

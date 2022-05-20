@@ -19,10 +19,18 @@ namespace TheOtherRoles
             Crew = 1,
             Random = 2,
         }
+
+        public enum Team
+        {
+            None = 0,
+            Crew,
+            Impostor,
+            Jackal,
+            JekyllAndHyde
+        }
+
         public static Color color = Color.grey;
-        public static bool impostorFlag = false;
-        public static bool jackalFlag = false;
-        public static bool crewFlag = false;
+        public static Team team = Team.None;
         public static float killCooldown {get {return CustomOptionHolder.schrodingersCatKillCooldown.getFloat();}}
         public static bool becomesImpostor {get {return CustomOptionHolder.schrodingersCatBecomesImpostor.getBool();}}
         public static exileType becomesWhichTeamsOnExiled {get {return (exileType)CustomOptionHolder.schrodingersCatBecomesWhichTeamsOnExiled.getSelection();}}
@@ -44,7 +52,7 @@ namespace TheOtherRoles
         }
         public override void FixedUpdate()
         {
-            if (player == PlayerControl.LocalPlayer && jackalFlag)
+            if (player == PlayerControl.LocalPlayer && team == Team.Jackal)
             {
                 if(!isTeamJackalAlive() || !cantKillUntilLastOne)
                 {
@@ -52,7 +60,15 @@ namespace TheOtherRoles
                     setPlayerOutline(currentTarget, Sheriff.color);
                 }
             }
-            if (player == PlayerControl.LocalPlayer && impostorFlag && !isLastImpostor() && cantKillUntilLastOne)
+            if (player == PlayerControl.LocalPlayer && team == Team.JekyllAndHyde)
+            {
+                if(JekyllAndHyde.livingPlayers.Count == 0 || !cantKillUntilLastOne)
+                {
+                    currentTarget = setTarget();
+                    setPlayerOutline(currentTarget, Sheriff.color);
+                }
+            }
+            if (player == PlayerControl.LocalPlayer && team == Team.Impostor && !isLastImpostor() && cantKillUntilLastOne)
             {
                 HudManager.Instance.KillButton.SetTarget(null);
             }
@@ -60,18 +76,19 @@ namespace TheOtherRoles
 
         public override void OnKill(PlayerControl target) 
         {
-            if (PlayerControl.LocalPlayer == player && impostorFlag)
+            if (PlayerControl.LocalPlayer == player && team == Team.Impostor)
                 player.SetKillTimerUnchecked(killCooldown);
         }
         public override void OnDeath(PlayerControl killer = null)
         { 
             // 占い師の画面では呪殺したことを分からなくするために自殺処理させているので注意すること
-            if(impostorFlag|| jackalFlag|| crewFlag) return;
+            if(team != Team.None) return;
             if(((killer != null && killer.isCrew()) || killer.isRole(RoleType.SchrodingersCat)) && justDieOnKilledByCrew) return;
             if(killer == null)
             {
                 if(becomesWhichTeamsOnExiled == exileType.Random)
                 {
+                    // TODO JekyllAndHyde対応
                     int rndVal = Jackal.jackal != null ? rnd.Next(0, 2): rnd.Next(0, 1);
                     switch(rndVal)
                     {
@@ -97,7 +114,7 @@ namespace TheOtherRoles
             }
             else
             {
-                bool isCrewOrSchrodingersCat = killer.isCrew() || killer.isRole(RoleType.SchrodingersCat);
+                bool isCrewOrSchrodingersCat = (!killer.isRole(RoleType.JekyllAndHyde) &&  killer.isCrew()) || killer.isRole(RoleType.SchrodingersCat);
                 if(killer.isImpostor())
                 {
                     setImpostorFlag();
@@ -107,6 +124,10 @@ namespace TheOtherRoles
                 else if(killer.isRole(RoleType.Jackal))
                 {
                     setJackalFlag();
+                }
+                else if(killer.isRole(RoleType.JekyllAndHyde))
+                {
+                    setJekyllAndHydeFlag();
                 }
                 else if(isCrewOrSchrodingersCat)
                 {
@@ -163,66 +184,83 @@ namespace TheOtherRoles
 
         public override void HandleDisconnect(PlayerControl player, DisconnectReasons reason) { }
 
-        private static CustomButton jackalKillButton;
+        private static CustomButton killButton;
         public static PlayerControl currentTarget;
         public static void MakeButtons(HudManager hm)
         {
-                jackalKillButton = new CustomButton(
+            killButton = new CustomButton(
                 () =>
                 {
                     if (Helpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer, SchrodingersCat.currentTarget) == MurderAttemptResult.SuppressKill) return;
 
-                    jackalKillButton.Timer = jackalKillButton.MaxTimer;
+                    killButton.Timer = killButton.MaxTimer;
                     Jackal.currentTarget = null;
                 },
-                () => { return isJackalButtonEnable(); },
+                () => { return isJackalButtonEnable() || isJekyllAndHydeButtonEnable(); },
                 () => { return SchrodingersCat.currentTarget && PlayerControl.LocalPlayer.CanMove; },
-                () => { jackalKillButton.Timer = jackalKillButton.MaxTimer; },
+                () => { killButton.Timer = killButton.MaxTimer; },
                 hm.KillButton.graphic.sprite,
                 new Vector3(0, 1f, 0),
                 hm,
                 hm.KillButton,
                 KeyCode.Q
             );
+            killButton.Timer = killButton.MaxTimer = killCooldown;
         }
         public static void SetButtonCooldowns()
         {
-            jackalKillButton.MaxTimer = killCooldown;
+            killButton.MaxTimer = killCooldown;
         }
 
         public static void Clear()
         {
             players = new List<SchrodingersCat>();
-            impostorFlag = false;
-            crewFlag = false;
-            jackalFlag = false;
+            team = Team.None;
             RoleInfo.schrodingersCat.color = color;
             killer = null;
         }
 
         public static void setImpostorFlag()
         {
-            impostorFlag = true;
+            team = Team.Impostor;
             RoleInfo.schrodingersCat.color = Palette.ImpostorRed;
         }
 
         public static void setCrewFlag()
         {
-            crewFlag = true;
+            team = Team.Crew;
             RoleInfo.schrodingersCat.color = Color.white;
         }
 
         public static void setJackalFlag()
         {
-            jackalFlag = true;
+            team = Team.Jackal;
             RoleInfo.schrodingersCat.color = Jackal.color;
+        }
+
+        public static void setJekyllAndHydeFlag()
+        {
+            team = Team.JekyllAndHyde;
+            RoleInfo.jekyllAndHyde.color = JekyllAndHyde.color;
         }
 
         public static bool isJackalButtonEnable()
         {
-            if(jackalFlag && PlayerControl.LocalPlayer.isRole(RoleType.SchrodingersCat) && PlayerControl.LocalPlayer.isAlive())
+            if(team == Team.Jackal && PlayerControl.LocalPlayer.isRole(RoleType.SchrodingersCat) && PlayerControl.LocalPlayer.isAlive())
             {
                 if(!isTeamJackalAlive() || !cantKillUntilLastOne )
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static bool isJekyllAndHydeButtonEnable()
+        {
+            if(team == Team.JekyllAndHyde && PlayerControl.LocalPlayer.isRole(RoleType.SchrodingersCat) && PlayerControl.LocalPlayer.isAlive())
+            {
+                if(JekyllAndHyde.livingPlayers.Count == 0 || !cantKillUntilLastOne)
                 {
                     return true;
                 }

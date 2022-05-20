@@ -43,6 +43,7 @@ namespace TheOtherRoles
             MimicA.Clear();
             Mini.Clear();
             AntiTeleport.Clear();
+            JekyllAndHyde.Clear();
             Role.ClearAll();
         }
 

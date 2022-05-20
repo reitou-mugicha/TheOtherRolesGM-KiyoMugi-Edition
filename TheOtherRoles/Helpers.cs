@@ -316,6 +316,7 @@ namespace TheOtherRoles {
                     player.isRole(RoleType.Immoralist) ||
                     player.isRole(RoleType.SchrodingersCat) ||
                     player.isRole(RoleType.Puppeteer) ||
+                    (player.isRole(RoleType.JekyllAndHyde) && !JekyllAndHyde.isJekyll() ) ||
                     player == Puppeteer.dummy ||
                     player.isRole(RoleType.Vulture) ||
                     player.isRole(RoleType.Lawyer) ||
@@ -342,6 +343,7 @@ namespace TheOtherRoles {
 
         public static bool neutralHasTasks(this PlayerControl player)
         {
+            if(player.isRole(RoleType.JekyllAndHyde)) return true;
             return player.isNeutral() && (player.isRole(RoleType.Lawyer) || player.isRole(RoleType.Pursuer) || player.isRole(RoleType.Shifter) || player.isRole(RoleType.Fox));
         }
 
@@ -482,6 +484,8 @@ namespace TheOtherRoles {
             else if (CreatedMadmate.canEnterVents && player.hasModifier(ModifierType.CreatedMadmate))
                 roleCouldUse = true;
             else if (Vulture.canUseVents && player.isRole(RoleType.Vulture))
+                roleCouldUse = true;
+            else if (player.isRole(RoleType.JekyllAndHyde) && !JekyllAndHyde.isJekyll())
                 roleCouldUse = true;
             else if (player.Data?.Role != null && player.Data.Role.CanVent)
             {
@@ -697,6 +701,15 @@ namespace TheOtherRoles {
             var t = text.ToString();
             foreach (char c in t) bc += Encoding.GetEncoding("UTF-8").GetByteCount(c.ToString()) == 1 ? 1 : 2;
             return t?.PadRight(num - (bc - t.Length));
+        }
+        public static List<T> ToList<T>(this UnhollowerBaseLib.Il2CppArrayBase<T> array)
+        {
+            List<T> list = new List<T>();
+            foreach(var item in array)
+            {
+                list.Add(item);
+            }
+            return list;
         }
     }
 }

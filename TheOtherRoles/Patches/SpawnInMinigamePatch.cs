@@ -112,6 +112,7 @@ namespace TheOtherRoles.Patches
             {
                 PlayerControl.LocalPlayer.SetKillTimerUnchecked(10f);
                 CustomButton.buttons.ForEach(x => x.Timer = 10f);
+                JekyllAndHyde.SetButtonCooldowns();
             }
         }
 

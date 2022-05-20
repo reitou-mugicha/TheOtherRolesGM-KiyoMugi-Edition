@@ -351,7 +351,7 @@ namespace TheOtherRoles
                     if (p.isDead()) continue;
                     Arrow arrow;
                     // float distance = Vector2.Distance(p.transform.position, PlayerControl.LocalPlayer.transform.position);
-                    if (p.Data.Role.IsImpostor || p.isRole(RoleType.Jackal) || p.isRole(RoleType.Sheriff))
+                    if (p.Data.Role.IsImpostor || p.isRole(RoleType.Jackal) || p.isRole(RoleType.Sheriff) || p.isRole(RoleType.JekyllAndHyde))
                     {
                         if (p.Data.Role.IsImpostor)
                         {
@@ -364,6 +364,10 @@ namespace TheOtherRoles
                         else if (p.isRole(RoleType.Sheriff))
                         {
                             arrow = new Arrow(Palette.White);
+                        }
+                        else if (p.isRole(RoleType.JekyllAndHyde))
+                        {
+                            arrow = new Arrow(JekyllAndHyde.color);
                         }
                         else
                         {

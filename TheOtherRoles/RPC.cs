@@ -6,6 +6,7 @@ using static TheOtherRoles.HudManagerStartPatch;
 using static TheOtherRoles.GameHistory;
 using static TheOtherRoles.MapOptions;
 using TheOtherRoles.Objects;
+using TheOtherRoles.Modules;
 using TheOtherRoles.Patches;
 using System.Collections.Generic;
 using System.Linq;
@@ -112,10 +113,12 @@ namespace TheOtherRoles
         PuppeteerWin,
         PuppeteerKill,
         PuppeteerClimbRadder = 180,
+        PuppeteerUsePlatform,
         mimicMorph,
         mimicResetMorph,
         Synchronize,
         PlaceAssassinTrace,
+        SetOddIsJekyll,
     }
 
     public static class RPCProcedure
@@ -141,7 +144,6 @@ namespace TheOtherRoles
             BombEffect.clearBombEffects();
             Trap.clearAllTraps();
             AssassinTrace.clearTraces();
-
             SpawnInMinigamePatch.reset();
 
             KillAnimationCoPerformKillPatch.hideNextAnimation = false;
@@ -1274,6 +1276,14 @@ namespace TheOtherRoles
             if(target == null) return;
             dummy.MyPhysics.ClimbLadder(target, (byte)(dummy.MyPhysics.lastClimbLadderSid + 1));
         }
+        public static void puppeteerUsePlatform(byte dummyId)
+        {
+            PlayerControl dummy = Helpers.playerById(dummyId);
+            MovingPlatformBehaviour target = DestroyableSingleton<AirshipStatus>.Instance.GapPlatform;
+            if(target == null) return;
+            dummy.NetTransform.Halt();
+            target.Use(dummy);
+        }
 
         public static void mimicMorph(byte mimicAId, byte mimicBId)
         {
@@ -1294,8 +1304,11 @@ namespace TheOtherRoles
         {
             SpawnInMinigamePatch.synchronizeData.Synchronize((SpawnInMinigamePatch.SynchronizeTag)tag, playerId);
         }
-       
 
+        public static void setOddIsJekyll(bool b)
+        {
+            JekyllAndHyde.oddIsJekyll = b;
+        }
 
         [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.HandleRpc))]
         class RPCHandlerPatch
@@ -1663,6 +1676,9 @@ namespace TheOtherRoles
                         case (byte)CustomRPC.PuppeteerClimbRadder:
                             RPCProcedure.puppeteerClimbRadder(reader.ReadByte(), reader.ReadByte());
                             break;
+                        case (byte)CustomRPC.PuppeteerUsePlatform:
+                            RPCProcedure.puppeteerUsePlatform(reader.ReadByte());
+                            break;
                         case (byte)CustomRPC.mimicMorph:
                             RPCProcedure.mimicMorph(reader.ReadByte(), reader.ReadByte());
                             break;
@@ -1672,6 +1688,9 @@ namespace TheOtherRoles
                         case (byte)CustomRPC.Synchronize:
                             RPCProcedure.synchronize(reader.ReadByte(),reader.ReadInt32());
                             break;
+                    case (byte)CustomRPC.SetOddIsJekyll:
+                        RPCProcedure.setOddIsJekyll(reader.ReadBoolean());
+                        break;
                     }
                 } catch(Exception ex) {
                     Logger.error($"CallID:{callId} {ex}", "CustomRPC");

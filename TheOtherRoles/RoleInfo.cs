@@ -104,6 +104,7 @@ namespace TheOtherRoles
         public static RoleInfo evilHacker;
         public static RoleInfo mimicK;
         public static RoleInfo mimicA;
+        public static RoleInfo jekyllAndHyde;
         public static List<RoleInfo> allRoleInfos;
         public static void Load() 
         {
@@ -171,6 +172,7 @@ namespace TheOtherRoles
             evilHacker = new RoleInfo("evilHacker", EvilHacker.color, CustomOptionHolder.evilHackerSpawnRate, RoleType.EvilHacker);
             mimicK = new RoleInfo("mimicK", MimicK.color, CustomOptionHolder.mimicSpawnRate, RoleType.MimicK);
             mimicA = new RoleInfo("mimicA", MimicA.color, CustomOptionHolder.mimicSpawnRate, RoleType.MimicA);
+            jekyllAndHyde = new RoleInfo("jekyllAndHyde", JekyllAndHyde.color, CustomOptionHolder.jekyllAndHydeSpawnRate, RoleType.JekyllAndHyde);
             allRoleInfos = new List<RoleInfo>()
             {
                 impostor,
@@ -221,7 +223,7 @@ namespace TheOtherRoles
                 bait,
                 gm,
                 opportunist,
-	            medium,
+                medium,
                 plagueDoctor,
                 nekoKabocha,
                 niceWatcher,
@@ -236,7 +238,8 @@ namespace TheOtherRoles
                 evilTracker,
                 puppeteer,
                 mimicK,
-                mimicA
+                mimicA,
+                jekyllAndHyde,
             };
         }
 
@@ -326,6 +329,7 @@ namespace TheOtherRoles
             if(p.isRole(RoleType.Puppeteer)) infos.Add(puppeteer);
             if(p.isRole(RoleType.MimicK)) infos.Add(mimicK);
             if(p.isRole(RoleType.MimicA)) infos.Add(mimicA);
+            if(p.isRole(RoleType.JekyllAndHyde)) infos.Add(jekyllAndHyde);
 
 
             // Default roles

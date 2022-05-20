@@ -430,6 +430,14 @@ namespace TheOtherRoles
         public static CustomOption mimicIfOneDiesBothDie;
         public static CustomOption mimicHasOneVote;
 
+        public static CustomRoleOption jekyllAndHydeSpawnRate;
+        public static CustomOption jekyllAndHydeNumberToWin;
+        public static CustomOption jekyllAndHydeCooldown;
+        public static CustomOption jekyllAndHydeSuicideTimer;
+        public static CustomOption jekyyllAndHydeResetAfterMeeting;
+        public static CustomTasksOption jekyllAndHydeTasks;
+        public static CustomOption jekyllAndHydeNumTasks;
+
         public static CustomOption enabledHorseMode;
         public static CustomOption delayBeforeMeeting;
         public static CustomOption randomWireTask;
@@ -744,6 +752,14 @@ namespace TheOtherRoles
             puppeteerCanControlDummyEvenIfDead = CustomOption.Create(1063, CustomOptionType.Neutral, "puppeteerCanControlDummyEvenIfDead", true, puppeteerSpawnRate);
             puppeteerPenaltyOnDeath= CustomOption.Create(1064, CustomOptionType.Neutral, "puppeteerPenaltyOnDeath", 1f, 0f, 5f, 1f, puppeteerCanControlDummyEvenIfDead);
             puppeteerLosesSenriganOnDeath = CustomOption.Create(1065, CustomOptionType.Neutral, "puppeteerLosesSenriganOnDeath", true,puppeteerCanControlDummyEvenIfDead);
+
+            jekyllAndHydeSpawnRate = new CustomRoleOption(1100, CustomOptionType.Neutral, "jekyllAndHyde", JekyllAndHyde.color, 1);
+            jekyllAndHydeNumberToWin = CustomOption.Create(1101, CustomOptionType.Neutral, "jekyllAndHydeNumberToWin", 3f, 1f, 10f, 1f, jekyllAndHydeSpawnRate);
+            jekyllAndHydeCooldown = CustomOption.Create(1103, CustomOptionType.Neutral, "jekyllAndHydeCooldown", 0f, 0f, 20f, 1f, jekyllAndHydeSpawnRate);
+            jekyllAndHydeSuicideTimer = CustomOption.Create(1104, CustomOptionType.Neutral, "jekyllAndHydeSuicideTimer", 40f, 10f, 90f, 2.5f, jekyllAndHydeSpawnRate);
+            jekyyllAndHydeResetAfterMeeting = CustomOption.Create(1105, CustomOptionType.Neutral, "jekyllAndHydeResetAfterMeeting", true, jekyllAndHydeSpawnRate);
+            jekyllAndHydeTasks = new CustomTasksOption(1106, CustomOptionType.Neutral, 0, 0, 6, jekyllAndHydeSpawnRate);
+            jekyllAndHydeNumTasks = CustomOption.Create(1107, CustomOptionType.Neutral, "jekyllAndHydeNumTasks", 2f, 1f, 10f, 1f, jekyllAndHydeSpawnRate);
             
             munouSpawnRate = new CustomRoleOption(960, CustomOptionType.Modifier, "incompetent", Munou.color, 15);
             munouType = CustomOption.Create(963, CustomOptionType.Modifier, "incompetentType", new string[] { "incompetentSimple", "incompetentRandom" }, munouSpawnRate);

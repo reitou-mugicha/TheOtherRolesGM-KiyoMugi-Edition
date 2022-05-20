@@ -116,6 +116,25 @@ namespace TheOtherRoles.Patches
             Console targetConsole = target.TryCast<Console>();
             SystemConsole targetSysConsole = target.TryCast<SystemConsole>();
             MapConsole targetMapConsole = target.TryCast<MapConsole>();
+
+            // Hydeの時にはタスクができない
+            if (PlayerControl.LocalPlayer.isRole(RoleType.JekyllAndHyde) && !JekyllAndHyde.isJekyll())
+            {
+                string name = targetSysConsole == null ? "":targetSysConsole.name;
+                bool isSecurity = name == "task_cams" || name == "Surv_Panel" || name == "SurvLogConsole" || name == "SurvConsole";
+                bool isVitals = name == "panel_vitals";
+                bool isButton = name == "EmergencyButton" || name == "EmergencyConsole" || name == "task_emergency";
+                PlayerTask task = targetConsole.FindTask(pc);
+                bool isLights = task?.TaskType == TaskTypes.FixLights;
+                bool isComms = task?.TaskType == TaskTypes.FixComms;
+                bool isReactor = task?.TaskType == TaskTypes.StopCharles || task?.TaskType == TaskTypes.ResetSeismic || task?.TaskType == TaskTypes.ResetReactor;
+                bool isO2 = task?.TaskType == TaskTypes.RestoreOxy;
+                if( !isSecurity || !isVitals || !isButton || ! isLights || !isComms || !isReactor || !isO2)
+                {
+                    return true;
+                }
+            }
+
             if ((targetConsole != null && IsBlocked(targetConsole, pc)) ||
                 (targetSysConsole != null && IsBlocked(targetSysConsole, pc)) ||
                 (targetMapConsole != null && !MapOptions.canUseAdmin))

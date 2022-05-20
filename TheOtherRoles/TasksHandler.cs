@@ -110,6 +110,7 @@ namespace TheOtherRoles
                           playerInfo.PlayerId == Lawyer.lawyer?.PlayerId || // Tasks of the Lawyer do not count
                          (playerInfo.PlayerId == Pursuer.pursuer?.PlayerId && Pursuer.pursuer.Data.IsDead) || // Tasks of the Pursuer only count, if he's alive
                           playerInfo.Object?.isRole(RoleType.Fox) == true ||
+                          playerInfo.Object?.isRole(RoleType.JekyllAndHyde) == true ||
                          (Madmate.hasTasks && playerInfo.Object?.hasModifier(ModifierType.Madmate) == true) ||
                          (CreatedMadmate.hasTasks && playerInfo.Object?.hasModifier(ModifierType.CreatedMadmate) == true) 
                         )

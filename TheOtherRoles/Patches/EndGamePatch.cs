@@ -22,6 +22,7 @@ namespace TheOtherRoles.Patches
         PlagueDoctorWin = 17,
         FoxWin = 18,
         PuppeteerWin = 19,
+        JekyllAndHydeWin = 20,
     }
 
     enum WinCondition
@@ -43,6 +44,7 @@ namespace TheOtherRoles.Patches
         FoxWin,
         EveryoneDied,
         PuppeteerWin,
+        JekyllAndHydeWin,
     }
 
     enum FinalStatus
@@ -134,6 +136,7 @@ namespace TheOtherRoles.Patches
                 gameOverReason != (GameOverReason)CustomGameOverReason.JesterWin &&
                 gameOverReason != (GameOverReason)CustomGameOverReason.VultureWin &&
                 gameOverReason != (GameOverReason)CustomGameOverReason.PuppeteerWin &&
+                gameOverReason != (GameOverReason)CustomGameOverReason.JekyllAndHydeWin &&
                 gameOverReason != (GameOverReason)GameOverReason.HumansByTask &&
                 gameOverReason != (GameOverReason)GameOverReason.ImpostorBySabotage)
                 {
@@ -194,8 +197,9 @@ namespace TheOtherRoles.Patches
             notWinners.AddRange(Fox.allPlayers);
             notWinners.AddRange(Immoralist.allPlayers);
             notWinners.AddRange(Puppeteer.allPlayers);
+            notWinners.AddRange(JekyllAndHyde.allPlayers);
             if(Puppeteer.dummy != null) notWinners.Add(Puppeteer.dummy);
-            if (!SchrodingersCat.crewFlag) notWinners.AddRange(SchrodingersCat.allPlayers);
+            if (SchrodingersCat.team != SchrodingersCat.Team.Crew) notWinners.AddRange(SchrodingersCat.allPlayers);
 
             // Neutral shifter can't win
             if (Shifter.shifter != null && Shifter.isNeutral) notWinners.Add(Shifter.shifter);
@@ -231,6 +235,7 @@ namespace TheOtherRoles.Patches
             bool plagueDoctorWin = PlagueDoctor.exists && gameOverReason == (GameOverReason)CustomGameOverReason.PlagueDoctorWin;
             bool foxWin = Fox.exists && gameOverReason == (GameOverReason)CustomGameOverReason.FoxWin;
             bool puppeteerWin = Puppeteer.exists && gameOverReason == (GameOverReason)CustomGameOverReason.PuppeteerWin;
+            bool jekyllAndHydeWin = JekyllAndHyde.exists && gameOverReason == (GameOverReason)CustomGameOverReason.JekyllAndHydeWin;
             bool everyoneDead = AdditionalTempData.playerRoles.All(x => x.Status != FinalStatus.Alive);
 
             
@@ -282,6 +287,25 @@ namespace TheOtherRoles.Patches
                     TempData.winners.Add(wpd);
                 }
                 AdditionalTempData.winCondition = WinCondition.PuppeteerWin;
+            }
+
+            else if (jekyllAndHydeWin)
+            {
+                TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
+                foreach (var jekyllAndHyde in JekyllAndHyde.players)
+                {
+                    WinningPlayerData wpd = new WinningPlayerData(jekyllAndHyde.player.Data);
+                    TempData.winners.Add(wpd);
+                }
+                if(SchrodingersCat.team == SchrodingersCat.Team.JekyllAndHyde)
+                {
+                    foreach (var schrodingersCat in SchrodingersCat.allPlayers)
+                    {
+                        WinningPlayerData wpd = new WinningPlayerData(schrodingersCat.Data);
+                        TempData.winners.Add(wpd);
+                    }
+                }
+                AdditionalTempData.winCondition = WinCondition.JekyllAndHydeWin;
             }
 
             else if (everyoneDead)
@@ -347,7 +371,7 @@ namespace TheOtherRoles.Patches
                     wpdFormerJackal.IsImpostor = false;
                     TempData.winners.Add(wpdFormerJackal);
                 }
-                if (SchrodingersCat.jackalFlag)
+                if (SchrodingersCat.team == SchrodingersCat.Team.Jackal)
                 {
                     foreach (var player in SchrodingersCat.allPlayers)
                     {
@@ -403,7 +427,7 @@ namespace TheOtherRoles.Patches
                 }
             }
 
-            if (SchrodingersCat.impostorFlag && TempData.winners.ToArray().Any(x=> x.IsImpostor))
+            if (SchrodingersCat.team == SchrodingersCat.Team.Impostor && TempData.winners.ToArray().Any(x=> x.IsImpostor))
             {
                 foreach ( var p in SchrodingersCat.allPlayers)
                 {
@@ -598,6 +622,12 @@ namespace TheOtherRoles.Patches
                         textRenderer.color = Puppeteer.color;
                         __instance.BackgroundBar.material.SetColor("_Color", Puppeteer.color);
                     }
+                    else if (AdditionalTempData.winCondition == WinCondition.JekyllAndHydeWin)
+                    {
+                        bonusText = "jekyllAndHydeWin";
+                        textRenderer.color = JekyllAndHyde.color;
+                        __instance.BackgroundBar.material.SetColor("_Color", JekyllAndHyde.color);
+                    }
                     else if (AdditionalTempData.winCondition == WinCondition.LoversTeamWin)
                     {
                         bonusText = "crewWin";
@@ -767,6 +797,7 @@ namespace TheOtherRoles.Patches
                     if (CheckAndEndGameForVultureWin(__instance)) return false;
                     if (CheckAndEndGameForPlagueDoctorWin(__instance)) return false;
                     if (CheckAndEndGameForPuppeteerWin(__instance)) return false;
+                    if (CheckAndEndGameForJekyllAndHydeWin(__instance, statistics)) return false;
                     if (CheckAndEndGameForSabotageWin(__instance)) return false;
                     if (CheckAndEndGameForTaskWin(__instance)) return false;
                     if (CheckAndEndGameForLoverWin(__instance, statistics)) return false;
@@ -844,6 +875,26 @@ namespace TheOtherRoles.Patches
                     }
                     return false;
                 }
+                private static bool CheckAndEndGameForJekyllAndHydeWin(ShipStatus __instance, PlayerStatistics statistics)
+                {
+                    if (JekyllAndHyde.triggerWin)
+                    {
+                        UncheckedEndGame(CustomGameOverReason.JekyllAndHydeWin);
+                        return true;
+                    }
+
+                    if (statistics.JekyllAndHydeAlive >= statistics.TotalAlive - statistics.JekyllAndHydeAlive - statistics.FoxAlive &&
+                        statistics.TeamImpostorsAlive == 0 &&  statistics.TeamJackalAlive == 0 &&
+                        (statistics.JekyllAndHydeLovers == 0 || statistics.JekyllAndHydeLovers >= statistics.CouplesAlive * 2)
+                       )
+                    {
+                        UncheckedEndGame(CustomGameOverReason.JekyllAndHydeWin);
+                        return true;
+                    }
+                    
+                    return false;
+                }
+
 
                 private static bool CheckAndEndGameForSabotageWin(ShipStatus __instance)
                 {
@@ -929,7 +980,7 @@ namespace TheOtherRoles.Patches
                 private static bool CheckAndEndGameForJackalWin(ShipStatus __instance, PlayerStatistics statistics)
                 {
                     if (statistics.TeamJackalAlive >= statistics.TotalAlive - statistics.TeamJackalAlive - statistics.FoxAlive &&
-                        statistics.TeamImpostorsAlive == 0 && 
+                        statistics.TeamImpostorsAlive == 0 &&  statistics.JekyllAndHydeAlive == 0 &&
                         (statistics.TeamJackalLovers == 0 || statistics.TeamJackalLovers >= statistics.CouplesAlive * 2)
                        )
                     {
@@ -942,7 +993,7 @@ namespace TheOtherRoles.Patches
                 private static bool CheckAndEndGameForImpostorWin(ShipStatus __instance, PlayerStatistics statistics)
                 {
                     if (statistics.TeamImpostorsAlive >= statistics.TotalAlive - statistics.TeamImpostorsAlive - statistics.FoxAlive &&
-                        statistics.TeamJackalAlive == 0 &&
+                        statistics.TeamJackalAlive == 0 && statistics.JekyllAndHydeAlive == 0 &&
                         (statistics.TeamImpostorLovers == 0 || statistics.TeamImpostorLovers >= statistics.CouplesAlive * 2)
                        )
                     {
@@ -967,7 +1018,7 @@ namespace TheOtherRoles.Patches
 
                 private static bool CheckAndEndGameForCrewmateWin(ShipStatus __instance, PlayerStatistics statistics)
                 {
-                    if (statistics.TeamCrew > 0 && statistics.TeamImpostorsAlive == 0 && statistics.TeamJackalAlive == 0)
+                    if (statistics.TeamCrew > 0 && statistics.TeamImpostorsAlive == 0 && statistics.TeamJackalAlive == 0 && statistics.JekyllAndHydeAlive == 0)
                     {
                         UncheckedEndGame(GameOverReason.HumansByVote);
                         return true;
@@ -1007,7 +1058,9 @@ namespace TheOtherRoles.Patches
                 public int TotalAlive { get; set; }
                 public int TeamImpostorLovers { get; set; }
                 public int TeamJackalLovers { get; set; }
+                public int JekyllAndHydeLovers { get; set; }
                 public int FoxAlive { get; set; }
+                public int JekyllAndHydeAlive { get; set; }
 
                 public PlayerStatistics(ShipStatus __instance)
                 {
@@ -1030,6 +1083,7 @@ namespace TheOtherRoles.Patches
                     int numTotalAlive = 0;
                     int numNeutralAlive = 0;
                     int numCrew = 0;
+                    int numJekyllAndHydeAlive = JekyllAndHyde.livingPlayers.Count;
 
                     int numLoversAlive = 0;
                     int numCouplesAlive = 0;
@@ -1065,7 +1119,7 @@ namespace TheOtherRoles.Patches
                                     if (lover) jackalLovers++;
                                 }
 
-                                if (SchrodingersCat.jackalFlag)
+                                if (SchrodingersCat.team == SchrodingersCat.Team.Jackal)
                                 {
                                     if(Helpers.playerById(playerInfo.PlayerId).isRole(RoleType.SchrodingersCat))
                                     {
@@ -1092,7 +1146,7 @@ namespace TheOtherRoles.Patches
 
                     // 爆弾魔を一人としてカウントする、猫の自爆中はインポスターのカウントを一人減らす
                     // PlayerControl.isAlive()を使うと会議での追放時にカウントバグが発生するので使用禁止
-                    if(SchrodingersCat.killer != null && !(SchrodingersCat.killer.Data.IsDead || SchrodingersCat.killer.Data.Disconnected) && SchrodingersCat.impostorFlag)
+                    if(SchrodingersCat.killer != null && !(SchrodingersCat.killer.Data.IsDead || SchrodingersCat.killer.Data.Disconnected) && SchrodingersCat.team == SchrodingersCat.Team.Impostor)
                     {
                         numImpostorsAlive--;
                     }
@@ -1109,9 +1163,19 @@ namespace TheOtherRoles.Patches
 
 
                     // 猫の自爆中はジャッカルのカウントを一人減らす
-                    if(SchrodingersCat.killer != null && !(SchrodingersCat.killer.Data.IsDead || SchrodingersCat.killer.Data.Disconnected) && SchrodingersCat.jackalFlag)
+                    if(SchrodingersCat.killer != null && !(SchrodingersCat.killer.Data.IsDead || SchrodingersCat.killer.Data.Disconnected) && SchrodingersCat.team == SchrodingersCat.Team.Jackal)
                     {
                         numJackalAlive--;
+                    }
+                    if(SchrodingersCat.livingPlayers.Count > 0 && SchrodingersCat.team == SchrodingersCat.Team.JekyllAndHyde)
+                    {
+                        numJekyllAndHydeAlive = JekyllAndHyde.livingPlayers.Count + SchrodingersCat.livingPlayers.Count;
+                    }
+
+                    // 猫の自爆中はジキルとハイドのカウントを一人減らす
+                    if(SchrodingersCat.killer != null && !(SchrodingersCat.killer.Data.IsDead || SchrodingersCat.killer.Data.Disconnected) && SchrodingersCat.team == SchrodingersCat.Team.JekyllAndHyde)
+                    {
+                        --numJekyllAndHydeAlive;
                     }
 
                     // 人形使いのダミーはカウントしない
@@ -1130,6 +1194,8 @@ namespace TheOtherRoles.Patches
                     TeamImpostorLovers = impLovers;
                     TeamJackalLovers = jackalLovers;
                     FoxAlive = Fox.livingPlayers.Count;
+                    JekyllAndHydeAlive = numJekyllAndHydeAlive;
+                    JekyllAndHydeLovers = JekyllAndHyde.countLovers();
                 }
             }
         }

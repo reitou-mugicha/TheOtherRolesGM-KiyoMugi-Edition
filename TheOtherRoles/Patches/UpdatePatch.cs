@@ -239,14 +239,15 @@ namespace TheOtherRoles.Patches
             PlayerControl player = PlayerControl.LocalPlayer;
             bool impostorFlag = player.isRole(RoleType.SchrodingersCat) ||  player.isImpostor();
             bool jackalFlag = player.isRole(RoleType.SchrodingersCat) ||  player.isRole(RoleType.Jackal) || player.isRole(RoleType.Sidekick);
-            if(SchrodingersCat.crewFlag)
+            bool jekyllAndHydeFlag = player.isRole(RoleType.SchrodingersCat) || player.isRole(RoleType.JekyllAndHyde);
+            if(SchrodingersCat.team == SchrodingersCat.Team.Crew)
             {
                 foreach (var p in SchrodingersCat.allPlayers)
                 {
                     setPlayerNameColor(p, Color.white);
                 }
             }
-            else if(SchrodingersCat.impostorFlag && impostorFlag)
+            else if(SchrodingersCat.team == SchrodingersCat.Team.Impostor && impostorFlag)
             {
                 foreach (var p in SchrodingersCat.allPlayers)
                 {
@@ -260,7 +261,7 @@ namespace TheOtherRoles.Patches
                     }
                 }
             }
-            else if(SchrodingersCat.jackalFlag && jackalFlag)
+            else if(SchrodingersCat.team == SchrodingersCat.Team.Jackal && jackalFlag)
             {
                 foreach (var p in SchrodingersCat.allPlayers)
                 {
@@ -270,6 +271,20 @@ namespace TheOtherRoles.Patches
                 {
                     setPlayerNameColor(Jackal.jackal, Jackal.color);
                     if(Sidekick.sidekick != null) setPlayerNameColor(Sidekick.sidekick, Sidekick.color);
+                }
+            }
+            else if(SchrodingersCat.team == SchrodingersCat.Team.JekyllAndHyde && jekyllAndHydeFlag)
+            {
+                foreach (var p in SchrodingersCat.allPlayers)
+                {
+                    setPlayerNameColor(p, JekyllAndHyde.color);
+                }
+                if(player.isRole(RoleType.SchrodingersCat))
+                {
+                    foreach(var p in JekyllAndHyde.allPlayers)
+                    {
+                        setPlayerNameColor(p, JekyllAndHyde.color);
+                    }
                 }
             }
             else if(player.isRole(RoleType.SchrodingersCat))

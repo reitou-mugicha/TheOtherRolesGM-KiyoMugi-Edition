@@ -57,8 +57,7 @@ namespace TheOtherRoles
                 () => { return PlayerControl.LocalPlayer.CanMove; },
                 () =>
                 {
-                    local.lightActive = false;
-
+                    if(local != null) local.lightActive = false;
                     lighterButton.Timer = lighterButton.MaxTimer;
                     lighterButton.isEffectActive = false;
                     lighterButton.actionButton.graphic.color = Palette.EnabledColor;
