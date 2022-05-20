@@ -333,8 +333,8 @@ namespace TheOtherRoles
 
 
             // Default roles
-            if (infos.Count == 0 && p.Data.Role.IsImpostor) infos.Add(impostor); // Just Impostor
-            if (infos.Count == 0 && !p.Data.Role.IsImpostor) infos.Add(crewmate); // Just Crewmate
+            if (infos.Count == 0 && p.Data.Role != null && p.Data.Role.IsImpostor) infos.Add(impostor); // Just Impostor
+            if (infos.Count == 0 && p.Data.Role != null && !p.Data.Role.IsImpostor) infos.Add(crewmate); // Just Crewmate
 
             // Modifier
             if (p.isLovers()) infos.Add(lovers);
