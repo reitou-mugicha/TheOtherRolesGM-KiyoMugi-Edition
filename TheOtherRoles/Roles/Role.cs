@@ -328,6 +328,7 @@ namespace TheOtherRoles
 
         public static void setRole(this PlayerControl player, RoleType role)
         {
+            Logger.info($"{player?.Data?.PlayerName}({player?.PlayerId}): {Enum.GetName(typeof(RoleType), role)}", "Player.setRole");
             foreach (var t in RoleData.allRoleTypes)
             {
                 if (role == t.Key)
