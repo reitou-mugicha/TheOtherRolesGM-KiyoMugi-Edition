@@ -1300,6 +1300,19 @@ namespace TheOtherRoles
         [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.HandleRpc))]
         class RPCHandlerPatch
         {
+            public static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)] byte callId, [HarmonyArgument(1)] MessageReader reader)
+            {
+                var rpcType = (RpcCalls)callId;
+                MessageReader subReader = MessageReader.Get(reader);
+                switch (rpcType)
+                {
+                    case RpcCalls.StartMeeting:
+                        var p = Helpers.getPlayerById(subReader.ReadByte());
+                        Logger.info($"{__instance.getNameWithRole()} => {p?.getNameWithRole() ?? "null"}", "StartMeeting");
+                        break;
+                }
+                return true;
+            }
             static void Postfix([HarmonyArgument(0)] byte callId, [HarmonyArgument(1)] MessageReader reader)
             {
                 byte packetId = callId;
