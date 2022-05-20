@@ -509,7 +509,11 @@ namespace TheOtherRoles
             try
             {
                 if (player.MyPhysics?.rend != null)
+                {
+                    if (player.MyPhysics.rend.color != color)
+                        Logger.info($"ChangeOpacity {player.MyPhysics.rend.color.a} to {opacity} of {player.getNameWithRole()}", "setOpacity");
                     player.MyPhysics.rend.color = color;
+                }
 
                 if (player.MyPhysics?.Skin?.layer != null)
                     player.MyPhysics.Skin.layer.color = color;

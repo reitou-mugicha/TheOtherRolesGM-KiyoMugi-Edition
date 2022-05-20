@@ -200,7 +200,7 @@ namespace TheOtherRoles.Modules
                     }
                     while (CustomHatLoader.hatDetails.Count > 0) {
                         __instance.allHats.Add(CreateHatData(CustomHatLoader.hatDetails[0]));
-                        Logger.info(String.Format("Add CustomHat Author:{0,-20}Name:{1}", CustomHatLoader.hatDetails[0].author, CustomHatLoader.hatDetails[0].name), "CustomHats");
+                        Logger.info(String.Format("Add CustomHat Author:{0} Name:{1}", CustomHatLoader.hatDetails[0].author.PadRightV2(20), CustomHatLoader.hatDetails[0].name), "CustomHats");
                         CustomHatLoader.hatDetails.RemoveAt(0);
                     }
                 } catch (System.Exception e) {

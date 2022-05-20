@@ -14,6 +14,7 @@ namespace TheOtherRoles.Patches
     [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.FixedUpdate))]
     public static class PlayerControlFixedUpdatePatch
     {
+        private static Dictionary<byte, bool> lastVisible = new();
         // Helpers
 
         public static PlayerControl setTarget(bool onlyCrewmates = false, bool targetPlayersInVents = false, List<PlayerControl> untargetablePlayers = null, PlayerControl targetingPlayer = null)
@@ -1069,6 +1070,9 @@ namespace TheOtherRoles.Patches
 
         public static void Postfix(PlayerControl __instance)
         {
+            if (lastVisible.TryGetValue(__instance.PlayerId, out bool visible) && __instance.Visible != visible)
+                Logger.info($"Visible Status Change to {__instance.Visible} for {__instance.getNameWithRole()}", "BodySprite");
+            lastVisible[__instance.PlayerId] = __instance.Visible;
             if (AmongUsClient.Instance.GameState != InnerNet.InnerNetClient.GameStates.Started) return;
 
             // Mini and Morphling shrink

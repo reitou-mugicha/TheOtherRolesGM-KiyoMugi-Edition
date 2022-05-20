@@ -15,10 +15,22 @@ namespace TheOtherRoles.Patches {
         private static bool versionSent = false;
         private static string lobbyCodeText = "";
 
+        [HarmonyPatch(typeof(AmongUsClient), nameof(AmongUsClient.OnBecomeHost))]
+        public class AmongUsClientOnBecomeHostPatch {
+            public static void Postfix(AmongUsClient __instance) {
+                Logger.info($"My Player ID:{__instance.ClientId} Now Become Host", "Session");
+            }
+        }
         [HarmonyPatch(typeof(AmongUsClient), nameof(AmongUsClient.OnGameJoined))]
         public class AmongUsClientOnGameJoinedPatch {
             public static void Postfix(AmongUsClient __instance) {
                 Logger.info($"My Player ID:{__instance.ClientId} Joined", "Session");
+            }
+        }
+        [HarmonyPatch(typeof(AmongUsClient), nameof(AmongUsClient.ExitGame))]
+        public class AmongUsClientOnDisconnectedPatch {
+            public static void Prefix(AmongUsClient __instance) {
+                Logger.info($"My Player ID:{__instance.ClientId} Exit", "Session");
             }
         }
 

@@ -1,5 +1,6 @@
 using System.Text.RegularExpressions;
 using System;
+using System.Text;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -689,6 +690,13 @@ namespace TheOtherRoles {
             if (num == 254) name = "None";
             if (num == 255) name = "Dead";
             return name;
+        }
+        public static string PadRightV2(this object text, int num)
+        {
+            int bc = 0;
+            var t = text.ToString();
+            foreach (char c in t) bc += Encoding.GetEncoding("UTF-8").GetByteCount(c.ToString()) == 1 ? 1 : 2;
+            return t?.PadRight(num - (bc - t.Length));
         }
     }
 }

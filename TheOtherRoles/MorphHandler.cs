@@ -1,4 +1,5 @@
-﻿namespace TheOtherRoles
+﻿using System.Diagnostics;
+namespace TheOtherRoles
 {
     public static class MorphHandler
     {
@@ -9,6 +10,9 @@
 
         public static void setOutfit(this PlayerControl pc, GameData.PlayerOutfit outfit, bool visible = true)
         {
+            StackFrame stack1 = new(1);
+            StackFrame stack2 = new(2);
+            Logger.info($"{pc?.getNameWithRole()} => {outfit?.PlayerName} at {stack1.GetMethod().Name} at {stack2.GetMethod().Name}", "setOutfit");
             pc.Data.Outfits[PlayerOutfitType.Shapeshifted] = outfit;
             pc.CurrentOutfitType = PlayerOutfitType.Shapeshifted;
 
