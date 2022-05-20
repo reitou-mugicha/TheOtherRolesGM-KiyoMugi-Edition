@@ -306,7 +306,7 @@ namespace TheOtherRoles
             if (p.isRole(RoleType.Immoralist)) infos.Add(immoralist);
             if (p.isRole(RoleType.FortuneTeller))
             {
-                if (includeHidden || PlayerControl.LocalPlayer.Data.IsDead)
+                if (includeHidden || PlayerControl.LocalPlayer ? PlayerControl.LocalPlayer.Data.IsDead : false)
                 {
                     infos.Add(fortuneTeller);
                 }
