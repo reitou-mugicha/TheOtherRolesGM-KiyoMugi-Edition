@@ -707,7 +707,7 @@ namespace TheOtherRoles.Patches
                             return x.Status.CompareTo(y.Status);
 
                         });
-
+                        Logger.info(textRenderer.text, "Result");
                         bool plagueExists = AdditionalTempData.playerRoles.Any(x => x.Roles.Contains(RoleInfo.plagueDoctor));
                         Logger.info("----------Game Result-----------", "Result");
                         foreach (var data in AdditionalTempData.playerRoles)
