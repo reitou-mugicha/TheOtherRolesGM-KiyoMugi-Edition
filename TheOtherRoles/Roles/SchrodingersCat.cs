@@ -23,10 +23,10 @@ namespace TheOtherRoles
         public enum Team
         {
             None = 0,
-            Crew,
-            Impostor,
-            Jackal,
-            JekyllAndHyde
+            Crew = 1,
+            Impostor = 2,
+            Jackal = 3,
+            JekyllAndHyde = 4,
         }
 
         public static Color color = Color.grey;
@@ -86,25 +86,18 @@ namespace TheOtherRoles
             if(((killer != null && killer.isCrew()) || killer.isRole(RoleType.SchrodingersCat)) && justDieOnKilledByCrew) return;
             if(killer == null)
             {
-                if(becomesWhichTeamsOnExiled == exileType.Random)
+                if(becomesWhichTeamsOnExiled == exileType.Random && player == PlayerControl.LocalPlayer)
                 {
-                    // TODO JekyllAndHyde対応
-                    int rndVal = Jackal.jackal != null ? rnd.Next(0, 2): rnd.Next(0, 1);
-                    switch(rndVal)
-                    {
-                        case 0:
-                            setCrewFlag();
-                            break;
-                        case 1:
-                            setImpostorFlag();
-                            break;
-                        case 2:
-                            setJackalFlag();
-                            break;
-                        default:
-                            setCrewFlag();
-                            break;
-                    }
+                    List<Team> candidates = new List<Team>();
+                    candidates.Add(Team.Crew);
+                    candidates.Add(Team.Impostor);
+                    if(JekyllAndHyde.exists) candidates.Add(Team.JekyllAndHyde);
+                    if(Jackal.jackal != null) candidates.Add(Team.Jackal);
+                    int rndVal = rnd.Next(0, candidates.Count);
+                    MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SchrodingersCatSetTeam, Hazel.SendOption.Reliable, -1);
+                    writer.Write((byte)candidates[rndVal]);
+                    AmongUsClient.Instance.FinishRpcImmediately(writer);
+                    RPCProcedure.schrodingersCatSetTeam((byte)candidates[rndVal]);
                 }
                 else if(becomesWhichTeamsOnExiled == exileType.Crew)
                 {

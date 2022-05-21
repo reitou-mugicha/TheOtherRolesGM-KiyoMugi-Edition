@@ -95,14 +95,15 @@ namespace TheOtherRoles
         SwapperAnimate = 160,
         ImpostorPromotesToLastImpostor,
         SchrodingersCatSuicide,
+        SchrodingersCatSetTeam,
         PlaceTrap,
         ClearTrap,
         ActivateTrap,
         DisableTrap,
         TrapperKill,
         TrapperMeetingFlag,
-        RandomSpawn,
-        PlantBomb = 170,
+        RandomSpawn = 170,
+        PlantBomb ,
         ReleaseBomb,
         BomberKill,
         SpawnDummy,
@@ -111,8 +112,8 @@ namespace TheOtherRoles
         PuppeteerStealth,
         PuppeteerMorph,
         PuppeteerWin,
-        PuppeteerKill,
-        PuppeteerClimbRadder = 180,
+        PuppeteerKill = 180,
+        PuppeteerClimbRadder,
         PuppeteerUsePlatform,
         mimicMorph,
         mimicResetMorph,
@@ -1082,6 +1083,28 @@ namespace TheOtherRoles
             SchrodingersCat.killer.MurderPlayer(SchrodingersCat.killer);
             SchrodingersCat.killer = null;
         }
+
+        public static void schrodingersCatSetTeam(byte team)
+        {
+            switch((SchrodingersCat.Team)team)
+            {
+                case SchrodingersCat.Team.Crew:
+                    SchrodingersCat.setCrewFlag();
+                    break;
+                case SchrodingersCat.Team.Impostor:
+                    SchrodingersCat.setImpostorFlag();
+                    break;
+                case SchrodingersCat.Team.Jackal:
+                    SchrodingersCat.setJackalFlag();
+                    break;
+                case SchrodingersCat.Team.JekyllAndHyde:
+                    SchrodingersCat.setJekyllAndHydeFlag();
+                    break;
+                default:
+                    SchrodingersCat.setCrewFlag();
+                    break;
+            }
+        }
         public static void placeTrap(byte[] buff)
         {
             Vector3 pos = Vector3.zero;
@@ -1601,6 +1624,9 @@ namespace TheOtherRoles
                             break;
                         case (byte)CustomRPC.SchrodingersCatSuicide:
                             RPCProcedure.schrodingersCatSuicide();
+                            break;
+                        case (byte)CustomRPC.SchrodingersCatSetTeam:
+                            RPCProcedure.schrodingersCatSetTeam(reader.ReadByte());
                             break;
                         case (byte)CustomRPC.PlaceTrap:
                             RPCProcedure.placeTrap(reader.ReadBytesAndSize());
