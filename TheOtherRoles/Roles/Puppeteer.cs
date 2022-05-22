@@ -92,6 +92,7 @@ namespace TheOtherRoles
         public override void OnDeath(PlayerControl killer = null)
         {
             counter -= penaltyOnDeath;
+            setOpacity(player, 1f);
         } 
         public override void HandleDisconnect(PlayerControl player, DisconnectReasons reason) { }
 
