@@ -806,7 +806,7 @@ namespace TheOtherRoles
                     if (Input.GetKeyUp(KeyCode.S))
                         down = false;
 
-                    if(Puppeteer.dummy != null)
+                    if(Puppeteer.dummy != null && !MeetingHud.Instance)
                     {
                         Vector2 pos = Puppeteer.dummy.transform.position;
                         Vector2 offset = Vector2.zero;
