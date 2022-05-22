@@ -459,7 +459,7 @@ namespace TheOtherRoles
 
                 // インポスターの位置を示すArrowsを描画
                 foreach(PlayerControl p in PlayerControl.AllPlayerControls){
-                    if(p.Data.IsDead) continue;
+                    if(p.Data.IsDead || p.Data.Role) continue;
                     Arrow arrow;
                     if(p.Data.Role.IsImpostor || p.isRole(RoleType.Jackal) || p.isRole(RoleType.JekyllAndHyde) || p == target)
                     {
