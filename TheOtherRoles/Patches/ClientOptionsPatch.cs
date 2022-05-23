@@ -25,6 +25,7 @@ namespace TheOtherRoles.Patches
             }, TheOtherRolesPlugin.HideNameplates.Value),
             new SelectionBehaviour("showLighterDarker", () => MapOptions.showLighterDarker = TheOtherRolesPlugin.ShowLighterDarker.Value = !TheOtherRolesPlugin.ShowLighterDarker.Value, TheOtherRolesPlugin.ShowLighterDarker.Value),
             new SelectionBehaviour("hideTaskArrows", () => MapOptions.hideTaskArrows = TheOtherRolesPlugin.HideTaskArrows.Value = !TheOtherRolesPlugin.HideTaskArrows.Value, TheOtherRolesPlugin.HideTaskArrows.Value),
+            new SelectionBehaviour("offlineHats", () => MapOptions.offlineHats = TheOtherRolesPlugin.OfflineHats.Value = !TheOtherRolesPlugin.OfflineHats.Value, TheOtherRolesPlugin.OfflineHats.Value),
         };
         
         private static GameObject popUp;

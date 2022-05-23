@@ -39,6 +39,7 @@ namespace TheOtherRoles
         public static bool allowParallelMedBayScans = false;
         public static bool showLighterDarker = false;
         public static bool hideTaskArrows = false;
+        public static bool offlineHats = false;
 
         // Updating values
         public static int meetingsCount = 0;

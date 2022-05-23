@@ -429,7 +429,19 @@ namespace TheOtherRoles.Modules
             if (running)
                 return;
             running = true;
-            hatFetchTask = LaunchHatFetcherAsync();
+            if(!TheOtherRolesPlugin.OfflineHats.Value)
+            {
+                hatFetchTask = LaunchHatFetcherAsync();
+            }
+            else
+            {
+                // オフラインハット用
+                try {
+                    FetchHats();
+                } catch (System.Exception e) {
+                    System.Console.WriteLine("Unable to fetch hats\n" + e.Message);
+                }
+            }
         }
 
         private static async Task LaunchHatFetcherAsync() {
@@ -464,6 +476,86 @@ namespace TheOtherRoles.Modules
                      .Replace("*", "")
                      .Replace("..", "");   
             return res;
+        }
+
+        // オフラインハット用
+        public static void FetchHats() {
+            HttpClient http = new HttpClient();
+            http.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue{ NoCache = true };
+            try {
+                string jsonPath = Path.GetDirectoryName(Application.dataPath) + @"\CustomHats.json";
+                string json = File.ReadAllText(jsonPath);
+                JToken jobj = JObject.Parse(json)["hats"];
+                if (!jobj.HasValues) return;
+
+                List<CustomHatOnline> hatdatas = new List<CustomHatOnline>();
+
+                for (JToken current = jobj.First; current != null; current = current.Next) {
+                    if (current.HasValues) {
+                        CustomHatOnline info = new CustomHatOnline();
+
+                        info.name = current["name"]?.ToString();
+                        info.resource = sanitizeResourcePath(current["resource"]?.ToString());
+                        if (info.resource == null || info.name == null) // required
+                            continue;
+                        info.backresource = sanitizeResourcePath(current["backresource"]?.ToString());
+                        info.climbresource = sanitizeResourcePath(current["climbresource"]?.ToString());
+                        info.flipresource = sanitizeResourcePath(current["flipresource"]?.ToString());
+                        info.backflipresource = sanitizeResourcePath(current["backflipresource"]?.ToString());
+
+                        info.author = current["author"]?.ToString();
+                        info.package = current["package"]?.ToString();
+                        info.condition = current["condition"]?.ToString();
+                        info.bounce = current["bounce"] != null;
+                        info.adaptive = current["adaptive"] != null;
+                        info.behind = current["behind"] != null;
+
+                        if (info.package == "Developer Hats")
+                            info.package = "developerHats";
+
+                        if (info.package == "Community Hats")
+                            info.package = "communityHats";
+
+                        hatdatas.Add(info);
+                    }
+                }
+
+                List<string> markedNotExist = new List<string>();
+
+                string filePath = Path.GetDirectoryName(Application.dataPath) + @"\TheOtherHats\";
+                for (int i = 0; i < hatdatas.Count; i++)
+                {
+                    CustomHatOnline data = hatdatas[i];
+                    markedNotExist.Clear();
+                    
+                    if (!doesResourceExist(filePath + data.resource))
+                        markedNotExist.Add(data.resource);
+                    if (data.backresource != null && !doesResourceExist(filePath + data.backresource))
+                        markedNotExist.Add(data.backresource);
+                    if (data.climbresource != null && !doesResourceExist(filePath + data.climbresource))
+                        markedNotExist.Add(data.climbresource);
+                    if (data.flipresource != null && !doesResourceExist(filePath + data.flipresource))
+                        markedNotExist.Add(data.flipresource);
+                    if (data.backflipresource != null && !doesResourceExist(filePath + data.backflipresource))
+                        markedNotExist.Add(data.backflipresource);
+
+                    if (markedNotExist.Count != 0)
+                    {
+                        TheOtherRolesPlugin.Logger.LogMessage(data.name + " Removed!");
+                        hatdatas.RemoveAt(i);
+                    }
+                }
+                hatDetails = hatdatas;
+            } catch (System.Exception ex) {
+                TheOtherRolesPlugin.Instance.Log.LogError(ex.ToString());
+                System.Console.WriteLine(ex);
+            }
+        }
+
+        private static bool doesResourceExist(string respath) {
+            if (!File.Exists(respath)) 
+                return false;
+            return true;
         }
 
         public static async Task<HttpStatusCode> FetchHats(string repo) {

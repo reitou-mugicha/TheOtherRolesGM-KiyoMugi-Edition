@@ -37,6 +37,7 @@ namespace TheOtherRoles
         public static ConfigEntry<bool> HideNameplates { get; set; }
         public static ConfigEntry<bool> ShowLighterDarker { get; set; }
         public static ConfigEntry<bool> HideTaskArrows { get; set; }
+        public static ConfigEntry<bool> OfflineHats { get; set; }
         public static ConfigEntry<string> StreamerModeReplacementText { get; set; }
         public static ConfigEntry<string> StreamerModeReplacementColor { get; set; }
         public static ConfigEntry<string> Ip { get; set; }
@@ -70,6 +71,7 @@ namespace TheOtherRoles
             HideNameplates = Config.Bind("Custom", "Hide Nameplates", false);
             ShowLighterDarker = Config.Bind("Custom", "Show Lighter / Darker", false);
             HideTaskArrows = Config.Bind("Custom", "Hide Task Arrows", false);
+            OfflineHats = Config.Bind("Custom", "Offline Hats", false);
             ShowPopUpVersion = Config.Bind("Custom", "Show PopUp", "0");
             StreamerModeReplacementText = Config.Bind("Custom", "Streamer Mode Replacement Text", "\n\nThe Other Roles GM");
             StreamerModeReplacementColor = Config.Bind("Custom", "Streamer Mode Replacement Text Hex Color", "#87AAF5FF");
