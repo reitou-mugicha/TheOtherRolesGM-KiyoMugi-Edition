@@ -814,24 +814,23 @@ namespace TheOtherRoles
                         if(down) offset += new Vector2(0f, -0.5f);
                         if(left) offset += new Vector2(-0.5f, 0.0f);
                         if(right) offset += new Vector2(0.5f, 0.0f);
-                        MessageWriter writer;
-                        if(up || down || right || left) //入力があれば動かす
+                        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.WalkDummy, Hazel.SendOption.Reliable, -1);
+                        writer.Write(offset.x);
+                        writer.Write(offset.y);
+                        AmongUsClient.Instance.FinishRpcImmediately(writer);
+                        RPCProcedure.walkDummy(offset);
+                        if(!(up||down||right||left))
                         {
-                            writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.WalkDummy, Hazel.SendOption.Reliable, -1);
-                            writer.Write(offset.x);
-                            writer.Write(offset.y);
-                            AmongUsClient.Instance.FinishRpcImmediately(writer);
-                            RPCProcedure.walkDummy(offset);
-                        } else if (pos != dummy.NetTransform.targetSyncPosition) { //入力がない&ダミーと現在地と目標にずれがある
                             writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.MoveDummy, Hazel.SendOption.Reliable, -1);
                             writer.Write(Puppeteer.dummy.transform.position.x);
                             writer.Write(Puppeteer.dummy.transform.position.y);
                             writer.Write(Puppeteer.dummy.transform.position.z);
                             writer.Write(false);
                             AmongUsClient.Instance.FinishRpcImmediately(writer);
-                            RPCProcedure.moveDummy(Puppeteer.dummy.transform.position);
-                        }
+                            // RPCProcedure.moveDummy(Puppeteer.dummy.transform.position);
+                        } 
                     }
+
                 }
             }
         }
