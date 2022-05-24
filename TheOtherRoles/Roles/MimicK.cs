@@ -1,10 +1,10 @@
-using HarmonyLib;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
+using HarmonyLib;
 using TheOtherRoles.Objects;
 using TheOtherRoles.Patches;
+using UnityEngine;
 using static TheOtherRoles.GameHistory;
 
 namespace TheOtherRoles
@@ -13,9 +13,9 @@ namespace TheOtherRoles
     public class MimicK : RoleBase<MimicK>
     {
         public static Color color = Palette.ImpostorRed;
-        public static bool ifOneDiesBothDie {get {return CustomOptionHolder.mimicIfOneDiesBothDie.getBool();}}
-        public static bool hasOneVote {get {return CustomOptionHolder.mimicHasOneVote.getBool();}}
-        public static bool countAsOne {get {return CustomOptionHolder.mimicCountAsOne.getBool();}}
+        public static bool ifOneDiesBothDie { get { return CustomOptionHolder.mimicIfOneDiesBothDie.getBool(); } }
+        public static bool hasOneVote { get { return CustomOptionHolder.mimicHasOneVote.getBool(); } }
+        public static bool countAsOne { get { return CustomOptionHolder.mimicCountAsOne.getBool(); } }
 
         public MimicK()
         {
@@ -35,23 +35,25 @@ namespace TheOtherRoles
         public override void OnMeetingEnd() { }
         public override void FixedUpdate()
         {
-            if(PlayerControl.LocalPlayer == player)
+            if (PlayerControl.LocalPlayer == player)
                 arrowUpdate();
         }
         public override void OnKill(PlayerControl target)
         {
             // 死体を消す
             DeadBody[] array = UnityEngine.Object.FindObjectsOfType<DeadBody>();
-            for (int i = 0; i < array.Length; i++) {
-                if (GameData.Instance.GetPlayerById(array[i].ParentId).PlayerId == target.PlayerId) {
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (GameData.Instance.GetPlayerById(array[i].ParentId).PlayerId == target.PlayerId)
+                {
                     array[i].gameObject.active = false;
-                }     
+                }
             }
             MorphHandler.morphToPlayer(player, target);
         }
         public override void OnDeath(PlayerControl killer = null)
         {
-            if(ifOneDiesBothDie)
+            if (ifOneDiesBothDie)
             {
                 var partner = MimicA.players.FirstOrDefault().player;
                 if (!partner.Data.IsDead)
@@ -79,27 +81,30 @@ namespace TheOtherRoles
         }
         public static bool isAlive()
         {
-            foreach(var p in players)
+            foreach (var p in players)
             {
-                if(!(p.player.Data.IsDead || p.player.Data.Disconnected))
+                if (!(p.player.Data.IsDead || p.player.Data.Disconnected))
                     return true;
             }
             return false;
         }
-        public static List<Arrow> arrows = new List<Arrow>();
+        public static List<Arrow> arrows = new();
         public static float updateTimer = 0f;
         public static float arrowUpdateInterval = 0.5f;
-        static void arrowUpdate(){
+        static void arrowUpdate()
+        {
 
             // 前フレームからの経過時間をマイナスする
             updateTimer -= Time.fixedDeltaTime;
 
             // 1秒経過したらArrowを更新
-            if(updateTimer <= 0.0f){
+            if (updateTimer <= 0.0f)
+            {
 
                 // 前回のArrowをすべて破棄する
-                foreach(Arrow arrow in arrows){
-                    if(arrow != null && arrow.arrow != null)
+                foreach (Arrow arrow in arrows)
+                {
+                    if (arrow != null && arrow.arrow != null)
                     {
                         arrow.arrow.SetActive(false);
                         UnityEngine.Object.Destroy(arrow.arrow);
@@ -110,11 +115,13 @@ namespace TheOtherRoles
                 arrows = new List<Arrow>();
 
                 // インポスターの位置を示すArrowsを描画
-                foreach(PlayerControl p in PlayerControl.AllPlayerControls){
-                    if(p.Data.IsDead) continue;
+                foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+                {
+                    if (p.Data.IsDead) continue;
                     Arrow arrow;
-                    if(p.isRole(RoleType.MimicA)){
-                        arrow = MimicA.isMorph ? new Arrow(Palette.White) :new Arrow(Palette.ImpostorRed);
+                    if (p.isRole(RoleType.MimicA))
+                    {
+                        arrow = MimicA.isMorph ? new Arrow(Palette.White) : new Arrow(Palette.ImpostorRed);
                         arrow.arrow.SetActive(true);
                         arrow.Update(p.transform.position);
                         arrows.Add(arrow);

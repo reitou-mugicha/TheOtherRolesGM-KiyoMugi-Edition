@@ -1,21 +1,21 @@
-using System.Net;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Reflection;
 using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.IL2CPP;
 using HarmonyLib;
 using Hazel;
-using System;
-using System.Collections.Generic;
-using System.Collections;
-using System.IO;
-using UnityEngine;
 using TheOtherRoles.Objects;
+using TheOtherRoles.Patches;
+using UnityEngine;
 using static TheOtherRoles.GameHistory;
 using static TheOtherRoles.TheOtherRoles;
 using static TheOtherRoles.TheOtherRolesGM;
-using TheOtherRoles.Patches;
-using System.Reflection;
 
 namespace TheOtherRoles
 {
@@ -35,7 +35,7 @@ namespace TheOtherRoles
     [HarmonyPatch]
     public static class ModifierData
     {
-        public static Dictionary<ModifierType, Type> allModTypes = new Dictionary<ModifierType, Type>
+        public static Dictionary<ModifierType, Type> allModTypes = new()
         {
             { ModifierType.Madmate, typeof(ModifierBase<Madmate>) },
             { ModifierType.CreatedMadmate, typeof(ModifierBase<CreatedMadmate>) },
@@ -48,7 +48,7 @@ namespace TheOtherRoles
 
     public abstract class Modifier
     {
-        public static List<Modifier> allModifiers = new List<Modifier>();
+        public static List<Modifier> allModifiers = new();
         public PlayerControl player;
         public ModifierType modId;
 
@@ -69,7 +69,7 @@ namespace TheOtherRoles
     [HarmonyPatch]
     public abstract class ModifierBase<T> : Modifier where T : ModifierBase<T>, new()
     {
-        public static List<T> players = new List<T>();
+        public static List<T> players = new();
         public static ModifierType ModType;
 
         public void Init(PlayerControl player)
@@ -129,7 +129,7 @@ namespace TheOtherRoles
 
         public static void addModifier(PlayerControl player)
         {
-            T mod = new T();
+            T mod = new();
             mod.Init(player);
         }
 

@@ -23,13 +23,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using System;
 using HarmonyLib;
 using UnityEngine;
-using UnityEngine.UI;
-using System;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
-namespace TheOtherRoles.Patches {
+namespace TheOtherRoles.Patches
+{
     [HarmonyPatch(typeof(RegionMenu), nameof(RegionMenu.Open))]
     public static class RegionMenuOpenPatch
     {
@@ -39,7 +40,7 @@ namespace TheOtherRoles.Patches {
         public static void Postfix(RegionMenu __instance)
         {
             var template = GameObject.Find("NormalMenu/JoinGameButton/JoinGameMenu/GameIdText");
-            if (template == null ) return;
+            if (template == null) return;
 
             if (ipField == null || ipField.gameObject == null)
             {
@@ -56,12 +57,13 @@ namespace TheOtherRoles.Patches {
                 ipTextBox.AllowSymbols = true;
                 ipTextBox.ForceUppercase = false;
                 ipTextBox.SetText(TheOtherRolesPlugin.Ip.Value);
-                __instance.StartCoroutine(Effects.Lerp(0.1f, new Action<float>((p) => {
+                __instance.StartCoroutine(Effects.Lerp(0.1f, new Action<float>((p) =>
+                {
                     ipTextBox.outputText.SetText(TheOtherRolesPlugin.Ip.Value);
                     ipTextBox.SetText(TheOtherRolesPlugin.Ip.Value);
                 })));
 
-                ipTextBox.ClearOnFocus = false; 
+                ipTextBox.ClearOnFocus = false;
                 ipTextBox.OnEnter = ipTextBox.OnChange = new Button.ButtonClickedEvent();
                 ipTextBox.OnFocusLost = new Button.ButtonClickedEvent();
                 ipTextBox.OnChange.AddListener((UnityAction)onEnterOrIpChange);
@@ -82,9 +84,10 @@ namespace TheOtherRoles.Patches {
                 var portTextBox = portField.GetComponent<TextBoxTMP>();
                 portTextBox.characterLimit = 5;
                 portTextBox.SetText(TheOtherRolesPlugin.Port.Value.ToString());
-                __instance.StartCoroutine(Effects.Lerp(0.1f, new Action<float>((p) => {
+                __instance.StartCoroutine(Effects.Lerp(0.1f, new Action<float>((p) =>
+                {
                     portTextBox.outputText.SetText(TheOtherRolesPlugin.Port.Value.ToString());
-                    portTextBox.SetText(TheOtherRolesPlugin.Port.Value.ToString()); 
+                    portTextBox.SetText(TheOtherRolesPlugin.Port.Value.ToString());
                 })));
 
 
@@ -99,10 +102,13 @@ namespace TheOtherRoles.Patches {
             {
                 var portTextBox = portField.GetComponent<TextBoxTMP>();
                 ushort port = 0;
-                if (ushort.TryParse(portTextBox.text, out port)) {
+                if (ushort.TryParse(portTextBox.text, out port))
+                {
                     TheOtherRolesPlugin.Port.Value = port;
                     portTextBox.outputText.color = Color.white;
-                } else {
+                }
+                else
+                {
                     portTextBox.outputText.color = Color.red;
                 }
             }

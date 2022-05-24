@@ -1,14 +1,15 @@
-using HarmonyLib;
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using HarmonyLib;
 using UnityEngine;
 
 namespace TheOtherRoles
 {
     [Harmony]
-    public class CustomOverlays {
+    public class CustomOverlays
+    {
 
         public static Sprite helpButton;
         private static Sprite colorBG;
@@ -35,7 +36,7 @@ namespace TheOtherRoles
             UnityEngine.Object.Destroy(roleUnderlay);
             if (roleOverlayList != null)
             {
-                foreach( var roleOverlay in roleOverlayList )
+                foreach (var roleOverlay in roleOverlayList)
                 {
                     UnityEngine.Object.Destroy(roleOverlay);
                 }
@@ -95,7 +96,8 @@ namespace TheOtherRoles
                 infoOverlayRules.enabled = false;
             }
 
-            if (infoOverlayRoles == null) { 
+            if (infoOverlayRoles == null)
+            {
                 infoOverlayRoles = UnityEngine.Object.Instantiate(infoOverlayRules, hudManager.transform);
                 infoOverlayRoles.maxVisibleLines = 28;
                 infoOverlayRoles.fontSize = infoOverlayRoles.fontSizeMin = infoOverlayRoles.fontSizeMax = 1.15f;
@@ -123,7 +125,7 @@ namespace TheOtherRoles
                 roleOverlayList = new TMPro.TextMeshPro[3];
             }
 
-            for( var i = 0; i < roleOverlayList.Length; i++ )
+            for (var i = 0; i < roleOverlayList.Length; i++)
             {
                 if (roleOverlayList[i] == null)
                 {
@@ -137,21 +139,21 @@ namespace TheOtherRoles
                     }
                     else
                     {
-                        roleOverlayList[i] = UnityEngine.Object.Instantiate(roleOverlayList[i-1], hudManager.transform);
+                        roleOverlayList[i] = UnityEngine.Object.Instantiate(roleOverlayList[i - 1], hudManager.transform);
 
                         initializeRoleOverlay(roleOverlayList[i]);
 
-                        roleOverlayList[i].transform.localPosition = roleOverlayList[i-1].transform.localPosition + new Vector3(3.1f, 0.0f, 0.0f);
+                        roleOverlayList[i].transform.localPosition = roleOverlayList[i - 1].transform.localPosition + new Vector3(3.1f, 0.0f, 0.0f);
                     }
                 }
             }
 
-            if ( roleDatas == null )
+            if (roleDatas == null)
             {
                 roleDatas = new List<string>();
 
-                StringBuilder entry = new StringBuilder();
-                List<string> entries = new List<string>();
+                StringBuilder entry = new();
+                List<string> entries = new();
 
                 // First add the presets and the role counts
                 entries.Add(GameOptionsDataPatch.optionToString(CustomOptionHolder.presetSelection));
@@ -209,17 +211,17 @@ namespace TheOtherRoles
 
                         // 1つのオプションが最大行を越えていた場合、最大行までで分割する
                         int lines = entry.ToString().Trim('\r', '\n').Count(c => c == '\n') + 1;
-                        while ( lines > maxLines )
+                        while (lines > maxLines)
                         {
                             var line = 0;
                             var newEntry = new StringBuilder();
-                            var entryLines = entry.ToString().Trim('\r', '\n').Split(new[]{"\r\n","\n","\r"},StringSplitOptions.None);
-                            foreach( var entryLine in entryLines )
+                            var entryLines = entry.ToString().Trim('\r', '\n').Split(new[] { "\r\n", "\n", "\r" }, StringSplitOptions.None);
+                            foreach (var entryLine in entryLines)
                             {
-                                newEntry.AppendLine( entryLine );
-                                entry.Remove( 0, entryLine.Length + Environment.NewLine.Length );
+                                newEntry.AppendLine(entryLine);
+                                entry.Remove(0, entryLine.Length + Environment.NewLine.Length);
                                 line++;
-                                if ( maxLines <= line )
+                                if (maxLines <= line)
                                 {
                                     break;
                                 }
@@ -324,7 +326,7 @@ namespace TheOtherRoles
                 MapBehaviour.Instance.Close();
 
             hudManager.SetHudActive(false);
-            
+
             overlayShown = true;
 
             Transform parent;
@@ -427,7 +429,7 @@ namespace TheOtherRoles
                 MapBehaviour.Instance.Close();
 
             hudManager.SetHudActive(false);
-            
+
             rolePage = 1;
 
             Transform parent;
@@ -437,7 +439,7 @@ namespace TheOtherRoles
                 parent = hudManager.transform;
 
             roleUnderlay.transform.parent = parent;
-            foreach( var roleOverlay in roleOverlayList )
+            foreach (var roleOverlay in roleOverlayList)
             {
                 roleOverlay.transform.parent = parent;
             }
@@ -449,7 +451,7 @@ namespace TheOtherRoles
 
             setRoleOverlayText();
 
-            foreach( var roleOverlay in roleOverlayList )
+            foreach (var roleOverlay in roleOverlayList)
             {
                 roleOverlay.enabled = true;
             }
@@ -459,7 +461,7 @@ namespace TheOtherRoles
             HudManager.Instance.StartCoroutine(Effects.Lerp(0.2f, new Action<float>(t =>
             {
                 roleUnderlay.color = Color.Lerp(underlayTransparent, underlayOpaque, t);
-                foreach( var roleOverlay in roleOverlayList )
+                foreach (var roleOverlay in roleOverlayList)
                 {
                     roleOverlay.color = Color.Lerp(Palette.ClearWhite, Palette.White, t);
                 }
@@ -470,9 +472,9 @@ namespace TheOtherRoles
         {
             var i = (rolePage - 1) * 3;
             var pageText = $" ({rolePage}/{maxRolePage})" + "\n";
-            foreach( var roleOverlay in roleOverlayList )
+            foreach (var roleOverlay in roleOverlayList)
             {
-                if ( i < roleDatas.Count )
+                if (i < roleDatas.Count)
                 {
                     roleOverlay.text = pageText + roleDatas[i].Trim('\r', '\n');
                 }
@@ -505,7 +507,7 @@ namespace TheOtherRoles
 
                 if (roleOverlayList != null)
                 {
-                    foreach(var roleOverlay in roleOverlayList)
+                    foreach (var roleOverlay in roleOverlayList)
                     {
                         if (roleOverlay != null)
                         {

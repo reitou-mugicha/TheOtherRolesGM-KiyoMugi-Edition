@@ -1,15 +1,16 @@
-using HarmonyLib;
-using Hazel;
 using System;
 using System.Collections.Generic;
+using HarmonyLib;
+using Hazel;
 using UnityEngine;
 using static TheOtherRoles.TheOtherRoles;
 
-namespace TheOtherRoles.Patches {
+namespace TheOtherRoles.Patches
+{
     [Harmony]
     public class AdminPatch
     {
-        static Dictionary<SystemTypes, List<Color>> playerColors = new Dictionary<SystemTypes, List<Color>>();
+        static Dictionary<SystemTypes, List<Color>> playerColors = new();
         static float adminTimer = 0f;
         static TMPro.TextMeshPro OutOfTime;
         static TMPro.TextMeshPro TimeRemaining;
@@ -173,7 +174,7 @@ namespace TheOtherRoles.Patches {
                 for (int i = 0; i < __instance.CountAreas.Length; i++)
                 {
                     CounterArea counterArea = __instance.CountAreas[i];
-                    List<Color> roomColors = new List<Color>();
+                    List<Color> roomColors = new();
                     playerColors.Add(counterArea.RoomType, roomColors);
 
                     if (!commsActive)
@@ -258,22 +259,22 @@ namespace TheOtherRoles.Patches {
                 if (playerColors.ContainsKey(__instance.RoomType))
                 {
                     List<Color> colors = playerColors[__instance.RoomType];
-                    List<Color> impostorColors = new List<Color>();
-                    List<Color> mimicKColors = new List<Color>();
-                    List<Color> deadBodyColors = new List<Color>();
-                    foreach(var p in PlayerControl.AllPlayerControls)
+                    List<Color> impostorColors = new();
+                    List<Color> mimicKColors = new();
+                    List<Color> deadBodyColors = new();
+                    foreach (var p in PlayerControl.AllPlayerControls)
                     {
                         // var color = p.myRend.material.GetColor("_BodyColor");
                         var color = Palette.PlayerColors[p.Data.DefaultOutfit.ColorId];
-                        if(p.isImpostor())
+                        if (p.isImpostor())
                         {
                             impostorColors.Add(color);
-                            if(p.isRole(RoleType.MimicK))
+                            if (p.isRole(RoleType.MimicK))
                             {
                                 mimicKColors.Add(color);
                             }
                         }
-                        else if(p.isDead())
+                        else if (p.isDead())
                         {
                             deadBodyColors.Add(color);
                         }
@@ -310,7 +311,7 @@ namespace TheOtherRoles.Patches {
                                 var color = colors[i];
                                 if (impostorColors.Contains(color))
                                 {
-                                    if(mimicKColors.Contains(color))
+                                    if (mimicKColors.Contains(color))
                                     {
                                         color = Palette.PlayerColors[3];
                                     }

@@ -1,9 +1,9 @@
-using HarmonyLib;
 using System;
 using System.Collections.Generic;
+using HarmonyLib;
+using TheOtherRoles.Patches;
 using UnityEngine;
 using static TheOtherRoles.GameHistory;
-using TheOtherRoles.Patches;
 
 namespace TheOtherRoles
 {
@@ -59,9 +59,10 @@ namespace TheOtherRoles
             Modifier.allModifiers.Do(x => x.OnMeetingStart());
 
             GM.resetZoom();
-            DestroyableSingleton<HudManager>._instance.StartCoroutine(Effects.Lerp(3f, new Action<float>((p)=>
+            DestroyableSingleton<HudManager>._instance.StartCoroutine(Effects.Lerp(3f, new Action<float>((p) =>
             {
-                if (p == 1){
+                if (p == 1)
+                {
                     Camouflager.resetCamouflage();
                     Morphling.resetMorph();
                 }
@@ -234,21 +235,23 @@ namespace TheOtherRoles
                 duration = CustomOptionHolder.camouflagerDuration.getFloat();
                 randomColors = CustomOptionHolder.camouflagerRandomColors.getBool();
 
-                camoData = new GameData.PlayerOutfit();
-                camoData.PlayerName = "";
-                camoData.HatId = "";
-                camoData.ColorId = 6;
-                camoData.SkinId = "";
-                camoData.PetId = "";
-                camoData.VisorId = "";
-                camoData.NamePlateId = "";
+                camoData = new GameData.PlayerOutfit
+                {
+                    PlayerName = "",
+                    HatId = "",
+                    ColorId = 6,
+                    SkinId = "",
+                    PetId = "",
+                    VisorId = "",
+                    NamePlateId = ""
+                };
             }
         }
 
         public static class Shifter
         {
             public static PlayerControl shifter;
-            public static List<int> pastShifters = new List<int>();
+            public static List<int> pastShifters = new();
             public static Color color = new Color32(102, 102, 102, byte.MaxValue);
 
             public static PlayerControl futureShift;

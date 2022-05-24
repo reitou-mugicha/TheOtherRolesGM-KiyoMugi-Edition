@@ -1,25 +1,26 @@
-using HarmonyLib;
-using Hazel;
-using UnityEngine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using HarmonyLib;
+using Hazel;
 using PowerTools;
+using TheOtherRoles.Objects;
 using TMPro;
 using UnhollowerBaseLib;
-using TheOtherRoles.Objects;
+using UnityEngine;
 
 namespace TheOtherRoles.Patches
 {
 
     [HarmonyPatch]
-    public class SpawnInMinigamePatch {
+    public class SpawnInMinigamePatch
+    {
         private static PassiveButton selected = null;
         public static List<SpawnCandidate> SpawnCandidates;
-        public static SynchronizeData synchronizeData = new SynchronizeData();
+        public static SynchronizeData synchronizeData = new();
         public static bool isFirstSpawn = true;
-        public static float initialDoorCooldown{get {return CustomOptionHolder.airshipInitialDoorCooldown.getFloat();}}
-        public static float initialSabotageCooldown{get {return CustomOptionHolder.airshipInitialSabotageCooldown.getFloat();}}
+        public static float initialDoorCooldown { get { return CustomOptionHolder.airshipInitialDoorCooldown.getFloat(); } }
+        public static float initialSabotageCooldown { get { return CustomOptionHolder.airshipInitialSabotageCooldown.getFloat(); } }
         public enum SynchronizeTag
         {
             PreSpawnMinigame,
@@ -33,7 +34,7 @@ namespace TheOtherRoles.Patches
                 dic = new Dictionary<SynchronizeTag, ulong>();
             }
 
-            public void Synchronize(SynchronizeTag tag,byte playerId)
+            public void Synchronize(SynchronizeTag tag, byte playerId)
             {
                 if (!dic.ContainsKey(tag)) dic[tag] = 0;
 
@@ -47,7 +48,7 @@ namespace TheOtherRoles.Patches
                 ulong value = 0;
                 dic.TryGetValue(tag, out value);
 
-                foreach(PlayerControl pc in PlayerControl.AllPlayerControls)
+                foreach (PlayerControl pc in PlayerControl.AllPlayerControls)
                 {
                     if (pc.Data.IsDead ? withGhost : withSurvivor)
                         result &= ((value & ((ulong)1 << pc.PlayerId)) != 0);
@@ -65,7 +66,7 @@ namespace TheOtherRoles.Patches
             {
                 dic.Clear();
             }
-            
+
         }
         public static void reset()
         {
@@ -74,26 +75,26 @@ namespace TheOtherRoles.Patches
         }
         public static void resetSpawnCandidates()
         {
-                SpawnCandidates = new List<SpawnCandidate>();
-                if (CustomOptionHolder.airshipAdditionalSpawn.getBool())
+            SpawnCandidates = new List<SpawnCandidate>();
+            if (CustomOptionHolder.airshipAdditionalSpawn.getBool())
+            {
+                SpawnCandidates.Add(new SpawnCandidate(StringNames.VaultRoom, new Vector2(-8.8f, 8.6f), "TheOtherRoles.Resources.Locations.VaultButton.png", "rollover_brig"));
+                SpawnCandidates.Add(new SpawnCandidate(StringNames.MeetingRoom, new Vector2(11.0f, 14.7f), "TheOtherRoles.Resources.Locations.MeetingButton.png", "rollover_brig"));
+                SpawnCandidates.Add(new SpawnCandidate(StringNames.Cockpit, new Vector2(-22.0f, -1.2f), "TheOtherRoles.Resources.Locations.CockpitButton.png", "rollover_brig"));
+                SpawnCandidates.Add(new SpawnCandidate(StringNames.Electrical, new Vector2(16.4f, -8.5f), "TheOtherRoles.Resources.Locations.ElectricalButton.png", "rollover_brig"));
+                SpawnCandidates.Add(new SpawnCandidate(StringNames.Lounge, new Vector2(30.9f, 7.5f), "TheOtherRoles.Resources.Locations.LoungeButton.png", "rollover_brig"));
+                SpawnCandidates.Add(new SpawnCandidate(StringNames.Medical, new Vector2(25.5f, -5.0f), "TheOtherRoles.Resources.Locations.MedicalButton.png", "rollover_brig"));
+                SpawnCandidates.Add(new SpawnCandidate(StringNames.Security, new Vector2(10.3f, -16.2f), "TheOtherRoles.Resources.Locations.SecurityButton.png", "rollover_brig"));
+                SpawnCandidates.Add(new SpawnCandidate(StringNames.ViewingDeck, new Vector2(-14.1f, -16.2f), "TheOtherRoles.Resources.Locations.ViewingButton.png", "rollover_brig"));
+                SpawnCandidates.Add(new SpawnCandidate(StringNames.Armory, new Vector2(-10.7f, -6.3f), "TheOtherRoles.Resources.Locations.ArmoryButton.png", "rollover_brig"));
+                SpawnCandidates.Add(new SpawnCandidate(StringNames.Comms, new Vector2(-11.8f, 3.2f), "TheOtherRoles.Resources.Locations.CommunicationsButton.png", "rollover_brig"));
+                SpawnCandidates.Add(new SpawnCandidate(StringNames.Showers, new Vector2(20.8f, 2.8f), "TheOtherRoles.Resources.Locations.ShowersButton.png", "rollover_brig"));
+                SpawnCandidates.Add(new SpawnCandidate(StringNames.GapRoom, new Vector2(13.8f, 6.4f), "TheOtherRoles.Resources.Locations.GapButton.png", "rollover_brig"));
+                foreach (var spawnCandidate in SpawnCandidates)
                 {
-                    SpawnCandidates.Add(new SpawnCandidate(StringNames.VaultRoom, new Vector2(-8.8f, 8.6f), "TheOtherRoles.Resources.Locations.VaultButton.png", "rollover_brig"));
-                    SpawnCandidates.Add(new SpawnCandidate(StringNames.MeetingRoom, new Vector2(11.0f, 14.7f), "TheOtherRoles.Resources.Locations.MeetingButton.png", "rollover_brig"));
-                    SpawnCandidates.Add(new SpawnCandidate(StringNames.Cockpit, new Vector2(-22.0f, -1.2f), "TheOtherRoles.Resources.Locations.CockpitButton.png", "rollover_brig"));
-                    SpawnCandidates.Add(new SpawnCandidate(StringNames.Electrical, new Vector2(16.4f, -8.5f), "TheOtherRoles.Resources.Locations.ElectricalButton.png", "rollover_brig"));
-                    SpawnCandidates.Add(new SpawnCandidate(StringNames.Lounge, new Vector2(30.9f, 7.5f), "TheOtherRoles.Resources.Locations.LoungeButton.png", "rollover_brig"));
-                    SpawnCandidates.Add(new SpawnCandidate(StringNames.Medical, new Vector2(25.5f, -5.0f), "TheOtherRoles.Resources.Locations.MedicalButton.png", "rollover_brig"));
-                    SpawnCandidates.Add(new SpawnCandidate(StringNames.Security, new Vector2(10.3f, -16.2f), "TheOtherRoles.Resources.Locations.SecurityButton.png", "rollover_brig"));
-                    SpawnCandidates.Add(new SpawnCandidate(StringNames.ViewingDeck, new Vector2(-14.1f, -16.2f), "TheOtherRoles.Resources.Locations.ViewingButton.png", "rollover_brig"));
-                    SpawnCandidates.Add(new SpawnCandidate(StringNames.Armory, new Vector2(-10.7f, -6.3f), "TheOtherRoles.Resources.Locations.ArmoryButton.png", "rollover_brig"));
-                    SpawnCandidates.Add(new SpawnCandidate(StringNames.Comms, new Vector2(-11.8f, 3.2f), "TheOtherRoles.Resources.Locations.CommunicationsButton.png", "rollover_brig"));
-                    SpawnCandidates.Add(new SpawnCandidate(StringNames.Showers, new Vector2(20.8f, 2.8f), "TheOtherRoles.Resources.Locations.ShowersButton.png", "rollover_brig"));
-                    SpawnCandidates.Add(new SpawnCandidate(StringNames.GapRoom, new Vector2(13.8f, 6.4f), "TheOtherRoles.Resources.Locations.GapButton.png", "rollover_brig"));
-                    foreach(var spawnCandidate in SpawnCandidates)
-                    {
-                        spawnCandidate.ReloadTexture();
-                    }
+                    spawnCandidate.ReloadTexture();
                 }
+            }
         }
 
         private static void resetButtons()
@@ -103,7 +104,7 @@ namespace TheOtherRoles.Patches
             if (CustomOptionHolder.airshipSetOriginalCooldown.getBool())
             {
                 PlayerControl.LocalPlayer.SetKillTimerUnchecked(PlayerControl.GameOptions.killCooldown);
-                foreach(var b in CustomButton.buttons)
+                foreach (var b in CustomButton.buttons)
                 {
                     b.Timer = b.MaxTimer;
                 }
@@ -136,22 +137,24 @@ namespace TheOtherRoles.Patches
 
 
             List<SpawnInMinigame.SpawnLocation> list = __instance.Locations.ToList<SpawnInMinigame.SpawnLocation>();
-            foreach(var spawnCandidate in SpawnCandidates)
+            foreach (var spawnCandidate in SpawnCandidates)
             {
-                SpawnInMinigame.SpawnLocation spawnlocation = new SpawnInMinigame.SpawnLocation();
-                spawnlocation.Location = spawnCandidate.SpawnLocation;
-                spawnlocation.Image = spawnCandidate.GetSprite();
-                spawnlocation.Name = spawnCandidate.LocationKey;
-                spawnlocation.Rollover = new AnimationClip();
-                spawnlocation.RolloverSfx = __instance.DefaultRolloverSound;
+                SpawnInMinigame.SpawnLocation spawnlocation = new()
+                {
+                    Location = spawnCandidate.SpawnLocation,
+                    Image = spawnCandidate.GetSprite(),
+                    Name = spawnCandidate.LocationKey,
+                    Rollover = new AnimationClip(),
+                    RolloverSfx = __instance.DefaultRolloverSound
+                };
                 list.Add(spawnlocation);
             }
 
             SpawnInMinigame.SpawnLocation[] array = list.ToArray<SpawnInMinigame.SpawnLocation>();
             array.Shuffle(0);
             array = (from s in array.Take(__instance.LocationButtons.Length)
-            orderby s.Location.x, s.Location.y descending
-            select s).ToArray<SpawnInMinigame.SpawnLocation>();
+                     orderby s.Location.x, s.Location.y descending
+                     select s).ToArray<SpawnInMinigame.SpawnLocation>();
             PlayerControl.LocalPlayer.NetTransform.RpcSnapTo(new Vector2(-25f, 40f));
 
             for (int i = 0; i < __instance.LocationButtons.Length; i++)
@@ -187,14 +190,14 @@ namespace TheOtherRoles.Patches
         }
 
         [HarmonyPostfix]
-		[HarmonyPatch(typeof(SpawnInMinigame), nameof(SpawnInMinigame.Begin))]
+        [HarmonyPatch(typeof(SpawnInMinigame), nameof(SpawnInMinigame.Begin))]
         public static void Postfix(SpawnInMinigame __instance)
         {
-            selected = null;				
+            selected = null;
 
             if (!CustomOptionHolder.airshipSynchronizedSpawning.getBool() || CustomOptionHolder.airshipRandomSpawn.getBool()) return;
 
-            foreach(var button in __instance.LocationButtons)
+            foreach (var button in __instance.LocationButtons)
             {
                 button.OnClick.AddListener((UnityEngine.Events.UnityAction)(() =>
                 {
@@ -209,7 +212,7 @@ namespace TheOtherRoles.Patches
         [HarmonyPatch(typeof(SpawnInMinigame._RunTimer_d__10), nameof(SpawnInMinigame._RunTimer_d__10.MoveNext))]
         public static void Postfix(SpawnInMinigame._RunTimer_d__10 __instance)
         {
-            if (!CustomOptionHolder.airshipSynchronizedSpawning.getBool() || CustomOptionHolder.airshipRandomSpawn.getBool()) return; 
+            if (!CustomOptionHolder.airshipSynchronizedSpawning.getBool() || CustomOptionHolder.airshipRandomSpawn.getBool()) return;
             if (selected != null)
                 __instance.__4__this.Text.text = ModTranslation.getString("airshipWait");
 
@@ -222,9 +225,9 @@ namespace TheOtherRoles.Patches
         {
             if (!CustomOptionHolder.airshipSynchronizedSpawning.getBool() || CustomOptionHolder.airshipRandomSpawn.getBool())
             {
-                if(isFirstSpawn)resetButtons();
+                if (isFirstSpawn) resetButtons();
                 CustomButton.stopCountdown = false;
-                return true; 
+                return true;
             }
 
             Synchronize(SynchronizeTag.PreSpawnMinigame, PlayerControl.LocalPlayer.PlayerId);
@@ -245,7 +248,7 @@ namespace TheOtherRoles.Patches
             __instance.StartCoroutine(Effects.Lerp(10f, new Action<float>((p) =>
             {
                 float time = p * 10f;
-                
+
 
                 foreach (var button in __instance.LocationButtons)
                 {
@@ -272,7 +275,7 @@ namespace TheOtherRoles.Patches
 
                     if (__instance.amClosing != Minigame.CloseState.None) return;
 
-                    if (synchronizeData.Align(SynchronizeTag.PreSpawnMinigame, false) || p==1f)
+                    if (synchronizeData.Align(SynchronizeTag.PreSpawnMinigame, false) || p == 1f)
                     {
                         PlayerControl.LocalPlayer.gameObject.SetActive(true);
                         __instance.StopAllCoroutines();
@@ -302,11 +305,11 @@ namespace TheOtherRoles.Patches
                         doorSystem.timers[SystemTypes.Records] = initialDoorCooldown;
                         doorSystem.timers[SystemTypes.Kitchen] = initialDoorCooldown;
 
-                        if(isFirstSpawn) resetButtons();
+                        if (isFirstSpawn) resetButtons();
                     }
                 }
 
-				})));
+            })));
 
             return false;
         }
@@ -318,6 +321,6 @@ namespace TheOtherRoles.Patches
             AmongUsClient.Instance.FinishRpcImmediately(writer);
             RPCProcedure.synchronize(playerId, (int)tag);
         }
-        
+
     }
 }

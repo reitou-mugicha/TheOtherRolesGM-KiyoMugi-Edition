@@ -1,10 +1,10 @@
-using System.Linq;
-using HarmonyLib;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using HarmonyLib;
 using static TheOtherRoles.TheOtherRoles;
 using static TheOtherRoles.TheOtherRolesGM;
-using System.Reflection;
 
 namespace TheOtherRoles
 {
@@ -89,7 +89,7 @@ namespace TheOtherRoles
     [HarmonyPatch]
     public static class RoleData
     {
-        public static Dictionary<RoleType, Type> allRoleTypes = new Dictionary<RoleType, Type>
+        public static Dictionary<RoleType, Type> allRoleTypes = new()
         {
             // Crew
             { RoleType.Sheriff, typeof(RoleBase<Sheriff>) },
@@ -123,7 +123,7 @@ namespace TheOtherRoles
 
     public abstract class Role
     {
-        public static List<Role> allRoles = new List<Role>();
+        public static List<Role> allRoles = new();
         public PlayerControl player;
         public RoleType roleId;
 
@@ -144,7 +144,7 @@ namespace TheOtherRoles
     [HarmonyPatch]
     public abstract class RoleBase<T> : Role where T : RoleBase<T>, new()
     {
-        public static List<T> players = new List<T>();
+        public static List<T> players = new();
         public static RoleType RoleType;
 
         public void Init(PlayerControl player)
@@ -206,7 +206,7 @@ namespace TheOtherRoles
         {
             if (!isRole(player))
             {
-                T role = new T();
+                T role = new();
                 role.Init(player);
             }
         }
@@ -585,7 +585,7 @@ namespace TheOtherRoles
             if (player.isRole(RoleType.BountyHunter)) BountyHunter.bountyHunter = target;
             if (player.isRole(RoleType.Witch)) Witch.witch = target;
             if (player.isRole(RoleType.Assassin)) Assassin.assassin = target;
-            if (player.isRole(RoleType.EvilHacker))  EvilHacker.evilHacker = target;
+            if (player.isRole(RoleType.EvilHacker)) EvilHacker.evilHacker = target;
             if (player.isRole(RoleType.EvilGuesser)) Guesser.evilGuesser = target;
             if (player.isRole(RoleType.NiceGuesser)) Guesser.niceGuesser = target;
             if (player.isRole(RoleType.Jester)) Jester.jester = target;
@@ -612,7 +612,7 @@ namespace TheOtherRoles
             if (player.isLovers())
                 Lovers.killLovers(player, killer);
 
-            if(MeetingHud.Instance?.state != MeetingHud.VoteStates.Animating)
+            if (MeetingHud.Instance?.state != MeetingHud.VoteStates.Animating)
                 RPCProcedure.updateMeeting(player.PlayerId, true);
         }
     }

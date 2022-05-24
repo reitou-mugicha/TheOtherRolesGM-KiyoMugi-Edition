@@ -24,7 +24,7 @@ namespace TheOtherRoles
         // Token: 0x060002E0 RID: 736 RVA: 0x00012E88 File Offset: 0x00011088
         public static string RemoveAll(this string self, params char[] chars)
         {
-            StringBuilder stringBuilder = new StringBuilder(self.Length);
+            StringBuilder stringBuilder = new(self.Length);
             foreach (char value in self)
             {
                 if (!chars.Contains(value))
@@ -172,7 +172,7 @@ namespace TheOtherRoles
         public static KeyValuePair<byte, int> MaxPair(this Dictionary<byte, int> self, out bool tie)
         {
             tie = true;
-            KeyValuePair<byte, int> result = new KeyValuePair<byte, int>(byte.MaxValue, int.MinValue);
+            KeyValuePair<byte, int> result = new(byte.MaxValue, int.MinValue);
             foreach (KeyValuePair<byte, int> keyValuePair in self)
             {
                 if (keyValuePair.Value > result.Value)
@@ -274,7 +274,7 @@ namespace TheOtherRoles
         // Token: 0x060002F6 RID: 758 RVA: 0x00013370 File Offset: 0x00011570
         public static void RandomFill<T>(this IList<T> self, T[] target)
         {
-            HashSet<int> hashSet = new HashSet<int>();
+            HashSet<int> hashSet = new();
             for (int i = 0; i < target.Length; i++)
             {
                 int num;
@@ -549,6 +549,6 @@ namespace TheOtherRoles
 
         // Token: 0x04000383 RID: 899
         private static string[] ByteHex = (from x in Enumerable.Range(0, 256)
-        select x.ToString("X2")).ToArray<string>();
+                                           select x.ToString("X2")).ToArray<string>();
     }
 }

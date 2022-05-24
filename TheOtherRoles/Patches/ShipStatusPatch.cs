@@ -1,16 +1,16 @@
+using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
 using Hazel;
-using static TheOtherRoles.TheOtherRoles;
-using UnityEngine;
-using System.Collections.Generic;
 using TheOtherRoles.Objects;
+using UnityEngine;
+using static TheOtherRoles.TheOtherRoles;
 
 namespace TheOtherRoles.Patches
 {
 
     [HarmonyPatch(typeof(ShipStatus))]
-    public class ShipStatusPatch 
+    public class ShipStatusPatch
     {
         [HarmonyPrefix]
         [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.CalculateLightRadius))]
@@ -35,7 +35,7 @@ namespace TheOtherRoles.Patches
                 __result = GetNeutralLightRadius(__instance, true);
                 return false;
             }
-            
+
             // If player is Lighter with ability active
             if (PlayerControl.LocalPlayer.isRole(RoleType.Lighter) && Lighter.isLightActive(PlayerControl.LocalPlayer))
             {
@@ -43,9 +43,9 @@ namespace TheOtherRoles.Patches
                 __result = Mathf.Lerp(__instance.MaxLightRadius * Lighter.lighterModeLightsOffVision, __instance.MaxLightRadius * Lighter.lighterModeLightsOnVision, unlerped);
                 return false;
             }
-            
+
             // If there is a Trickster with their ability active
-            if (Trickster.trickster != null && Trickster.lightsOutTimer > 0f) 
+            if (Trickster.trickster != null && Trickster.lightsOutTimer > 0f)
             {
                 float lerpValue = 1f;
                 if (Trickster.lightsOutDuration - Trickster.lightsOutTimer < 0.5f)
@@ -80,12 +80,12 @@ namespace TheOtherRoles.Patches
             {
                 return SubmergedCompatibility.GetSubmergedNeutralLightRadius(isImpostor);
             }
-            
+
             if (isImpostor) return shipStatus.MaxLightRadius * PlayerControl.GameOptions.ImpostorLightMod;
 
             SwitchSystem switchSystem = shipStatus.Systems[SystemTypes.Electrical].TryCast<SwitchSystem>();
             float lerpValue = switchSystem.Value / 255f;
-            
+
             return Mathf.Lerp(shipStatus.MinLightRadius, shipStatus.MaxLightRadius, lerpValue) * PlayerControl.GameOptions.CrewLightMod;
         }
 
@@ -122,9 +122,9 @@ namespace TheOtherRoles.Patches
             originalNumCommonTasksOption = PlayerControl.GameOptions.NumCommonTasks;
             originalNumShortTasksOption = PlayerControl.GameOptions.NumShortTasks;
             originalNumLongTasksOption = PlayerControl.GameOptions.NumLongTasks;
-            if(PlayerControl.GameOptions.NumCommonTasks > commonTaskCount) PlayerControl.GameOptions.NumCommonTasks = commonTaskCount;
-            if(PlayerControl.GameOptions.NumShortTasks > normalTaskCount) PlayerControl.GameOptions.NumShortTasks = normalTaskCount;
-            if(PlayerControl.GameOptions.NumLongTasks > longTaskCount) PlayerControl.GameOptions.NumLongTasks = longTaskCount;
+            if (PlayerControl.GameOptions.NumCommonTasks > commonTaskCount) PlayerControl.GameOptions.NumCommonTasks = commonTaskCount;
+            if (PlayerControl.GameOptions.NumShortTasks > normalTaskCount) PlayerControl.GameOptions.NumShortTasks = normalTaskCount;
+            if (PlayerControl.GameOptions.NumLongTasks > longTaskCount) PlayerControl.GameOptions.NumLongTasks = longTaskCount;
             return true;
         }
 
@@ -145,15 +145,18 @@ namespace TheOtherRoles.Patches
                 Logger.info("Game Started", "Phase");
             }
         }
-            
+
         [HarmonyPostfix]
         [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.SpawnPlayer))]
-        public static void Postfix(ShipStatus __instance, PlayerControl player, int numPlayers, bool initialSpawn){
+        public static void Postfix(ShipStatus __instance, PlayerControl player, int numPlayers, bool initialSpawn)
+        {
             // Polusの湧き位置をランダムにする 無駄に人数分シャッフルが走るのをそのうち直す
-            if(PlayerControl.GameOptions.MapId == 2 && CustomOptionHolder.polusRandomSpawn.getBool()){
-                if(AmongUsClient.Instance.AmHost){
-                    System.Random rand = new System.Random();
-                    int randVal = rand.Next(0,6);
+            if (PlayerControl.GameOptions.MapId == 2 && CustomOptionHolder.polusRandomSpawn.getBool())
+            {
+                if (AmongUsClient.Instance.AmHost)
+                {
+                    System.Random rand = new();
+                    int randVal = rand.Next(0, 6);
                     MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.RandomSpawn, Hazel.SendOption.Reliable, -1);
                     writer.Write((byte)player.Data.PlayerId);
                     writer.Write((byte)randVal);
@@ -165,6 +168,6 @@ namespace TheOtherRoles.Patches
             CustomButton.stopCountdown = false;
         }
 
-        
+
     }
 }

@@ -1,10 +1,10 @@
-using HarmonyLib;
-using Hazel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System;
-using UnityEngine;
+using HarmonyLib;
+using Hazel;
 using TheOtherRoles.Objects;
+using UnityEngine;
 using static TheOtherRoles.Patches.PlayerControlFixedUpdatePatch;
 
 
@@ -13,7 +13,7 @@ namespace TheOtherRoles
     [HarmonyPatch]
     public class JekyllAndHyde : RoleBase<JekyllAndHyde>
     {
-        
+
         public enum Status
         {
             None,
@@ -24,14 +24,14 @@ namespace TheOtherRoles
         public static Status status;
         public static Color color = Color.grey;
         public static int counter = 0;
-        public static int numberToWin {get { return (int)CustomOptionHolder.jekyllAndHydeNumberToWin.getFloat();}}
-        public static float suicideTimer {get {return CustomOptionHolder.jekyllAndHydeSuicideTimer.getFloat();}}
-        public static bool reset {get {return CustomOptionHolder.jekyyllAndHydeResetAfterMeeting.getBool();}}
-        public static float cooldown {get {return CustomOptionHolder.jekyllAndHydeCooldown.getFloat();}}
+        public static int numberToWin { get { return (int)CustomOptionHolder.jekyllAndHydeNumberToWin.getFloat(); } }
+        public static float suicideTimer { get { return CustomOptionHolder.jekyllAndHydeSuicideTimer.getFloat(); } }
+        public static bool reset { get { return CustomOptionHolder.jekyyllAndHydeResetAfterMeeting.getBool(); } }
+        public static float cooldown { get { return CustomOptionHolder.jekyllAndHydeCooldown.getFloat(); } }
         public static int numCommonTasks { get { return CustomOptionHolder.jekyllAndHydeTasks.commonTasks; } }
         public static int numLongTasks { get { return CustomOptionHolder.jekyllAndHydeTasks.longTasks; } }
         public static int numShortTasks { get { return CustomOptionHolder.jekyllAndHydeTasks.shortTasks; } }
-        public static int numTasks { get { return (int)CustomOptionHolder.jekyllAndHydeNumTasks.getFloat();}}
+        public static int numTasks { get { return (int)CustomOptionHolder.jekyllAndHydeNumTasks.getFloat(); } }
         public static int numUsed;
         public static bool oddIsJekyll;
         public static bool triggerWin = false;
@@ -50,22 +50,22 @@ namespace TheOtherRoles
         public override void OnMeetingStart() { }
         public override void OnMeetingEnd()
         {
-            if(reset)
+            if (reset)
                 suicideButton.Timer = suicideButton.MaxTimer;
         }
-        public override void FixedUpdate() 
+        public override void FixedUpdate()
         {
-            if(player == PlayerControl.LocalPlayer && !isJekyll())
+            if (player == PlayerControl.LocalPlayer && !isJekyll())
             {
-                    currentTarget = setTarget();
-                    setPlayerOutline(currentTarget, JekyllAndHyde.color);
+                currentTarget = setTarget();
+                setPlayerOutline(currentTarget, JekyllAndHyde.color);
             }
         }
         public override void OnKill(PlayerControl target)
         {
-            if(!(target.isRole(RoleType.SchrodingersCat) && SchrodingersCat.team == SchrodingersCat.Team.None))
+            if (!(target.isRole(RoleType.SchrodingersCat) && SchrodingersCat.team == SchrodingersCat.Team.None))
                 counter += 1;
-            if(counter >= numberToWin) triggerWin = true;
+            if (counter >= numberToWin) triggerWin = true;
             killButton.Timer = killButton.MaxTimer;
             suicideButton.Timer = suicideButton.MaxTimer;
         }
@@ -86,11 +86,11 @@ namespace TheOtherRoles
                     currentTarget = null;
                 },
                 // HasButton
-                () => { return PlayerControl.LocalPlayer.isRole(RoleType.JekyllAndHyde) && !JekyllAndHyde.isJekyll() && PlayerControl.LocalPlayer.isAlive();},
+                () => { return PlayerControl.LocalPlayer.isRole(RoleType.JekyllAndHyde) && !JekyllAndHyde.isJekyll() && PlayerControl.LocalPlayer.isAlive(); },
                 // CouldUse
                 () =>
                 {
-                    if(text != null)
+                    if (text != null)
                     {
                         text.text = $"{counter}/{numberToWin}";
                     }
@@ -107,8 +107,10 @@ namespace TheOtherRoles
                 hm.KillButton,
                 KeyCode.Q,
                 false
-            );
-            killButton.MaxTimer = cooldown;
+            )
+            {
+                MaxTimer = cooldown
+            };
             killButton.Timer = killButton.MaxTimer;
             text = GameObject.Instantiate(killButton.actionButton.cooldownTimerText, killButton.actionButton.cooldownTimerText.transform.parent);
             text.text = "";
@@ -129,11 +131,11 @@ namespace TheOtherRoles
                     numUsed += 1;
                 },
                 // HasButton
-                () => { return PlayerControl.LocalPlayer.isRole(RoleType.JekyllAndHyde) && PlayerControl.LocalPlayer.isAlive() && numUsed < getNumDrugs();},
+                () => { return PlayerControl.LocalPlayer.isRole(RoleType.JekyllAndHyde) && PlayerControl.LocalPlayer.isAlive() && numUsed < getNumDrugs(); },
                 // CouldUse
                 () =>
                 {
-                    if(drugText != null)
+                    if (drugText != null)
                     {
                         drugText.text = $"{numUsed}/{getNumDrugs()}";
                     }
@@ -150,10 +152,12 @@ namespace TheOtherRoles
                 hm.AbilityButton,
                 KeyCode.F,
                 false
-            );
-            drugButton.buttonText = ModTranslation.getString("jekyllAndHydeDrugButton");
-            drugButton.MaxTimer = 0;
-            drugButton.Timer = 0f;
+            )
+            {
+                buttonText = ModTranslation.getString("jekyllAndHydeDrugButton"),
+                MaxTimer = 0,
+                Timer = 0f
+            };
             drugText = GameObject.Instantiate(drugButton.actionButton.cooldownTimerText, drugButton.actionButton.cooldownTimerText.transform.parent); text.text = "";
             drugText.enableWordWrapping = false;
             drugText.transform.localScale = Vector3.one * 0.5f;
@@ -162,7 +166,7 @@ namespace TheOtherRoles
             // Suicide Countdown
             suicideButton = new CustomButton(
                 () => { },
-                () => { return PlayerControl.LocalPlayer.isRole(RoleType.JekyllAndHyde) && !JekyllAndHyde.isJekyll() && PlayerControl.LocalPlayer.isAlive();},
+                () => { return PlayerControl.LocalPlayer.isRole(RoleType.JekyllAndHyde) && !JekyllAndHyde.isJekyll() && PlayerControl.LocalPlayer.isAlive(); },
                 () => { return true; },
                 () => { },
                 SerialKiller.getButtonSprite(),
@@ -173,13 +177,16 @@ namespace TheOtherRoles
                 true,
                 suicideTimer,
                 () => { local.suicide(); }
-            );
-            suicideButton.MaxTimer = suicideTimer;
+            )
+            {
+                MaxTimer = suicideTimer
+            };
             suicideButton.Timer = suicideButton.MaxTimer;
             suicideButton.buttonText = ModTranslation.getString("SerialKillerText");
             suicideButton.isEffectActive = true;
         }
-        public void suicide() {
+        public void suicide()
+        {
             byte targetId = PlayerControl.LocalPlayer.PlayerId;
             MessageWriter killWriter = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SerialKillerSuicide, Hazel.SendOption.Reliable, -1); killWriter.Write(targetId);
             AmongUsClient.Instance.FinishRpcImmediately(killWriter);
@@ -210,11 +217,11 @@ namespace TheOtherRoles
         {
             if (status == Status.None)
             {
-                var alive = PlayerControl.AllPlayerControls.ToArray().Where(x=> 
+                var alive = PlayerControl.AllPlayerControls.ToArray().Where(x =>
                 {
                     return x.isAlive() && x != Puppeteer.dummy;
                 });
-                bool ret = oddIsJekyll ? isOdd(alive.Count()): !isOdd(alive.Count());
+                bool ret = oddIsJekyll ? isOdd(alive.Count()) : !isOdd(alive.Count());
                 return ret;
             }
             return status == Status.Jekyll;
@@ -223,9 +230,9 @@ namespace TheOtherRoles
         public static int countLovers()
         {
             int counter = 0;
-            foreach(var player in allPlayers)
+            foreach (var player in allPlayers)
             {
-                if(player.isLovers()) counter += 1;
+                if (player.isLovers()) counter += 1;
             }
             return counter;
         }
@@ -233,9 +240,9 @@ namespace TheOtherRoles
 
         public static int getNumDrugs()
         {
-            var p = players.Where(p=> p.player ==PlayerControl.LocalPlayer).FirstOrDefault();
-            int counter = p.player.Data.Tasks.ToArray().Where(t=> t.Complete).Count();
-            return (int)Math.Floor((float)counter/numTasks);
+            var p = players.Where(p => p.player == PlayerControl.LocalPlayer).FirstOrDefault();
+            int counter = p.player.Data.Tasks.ToArray().Where(t => t.Complete).Count();
+            return (int)Math.Floor((float)counter / numTasks);
         }
 
         public void assignTasks()

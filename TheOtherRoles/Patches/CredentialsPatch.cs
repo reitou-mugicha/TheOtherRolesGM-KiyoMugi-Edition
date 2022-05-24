@@ -1,10 +1,11 @@
-﻿using HarmonyLib;
+using HarmonyLib;
 using UnityEngine;
 
 namespace TheOtherRoles.Patches
 {
     [HarmonyPatch]
-    public static class CredentialsPatch {
+    public static class CredentialsPatch
+    {
 
         public static string baseCredentials = $@"<size=130%><color=#ff351f>TheOtherRoles GM H</color></size> v{TheOtherRolesPlugin.Version.ToString()}";
 
@@ -14,7 +15,8 @@ namespace TheOtherRoles.Patches
         [HarmonyPatch(typeof(VersionShower), nameof(VersionShower.Start))]
         private static class VersionShowerPatch
         {
-            static void Postfix(VersionShower __instance) {
+            static void Postfix(VersionShower __instance)
+            {
                 var amongUsLogo = GameObject.Find("bannerLogo_AmongUs");
                 if (amongUsLogo == null) return;
 
@@ -36,18 +38,25 @@ namespace TheOtherRoles.Patches
         [HarmonyPatch(typeof(PingTracker), nameof(PingTracker.Update))]
         private static class PingTrackerPatch
         {
-            static void Postfix(PingTracker __instance){
+            static void Postfix(PingTracker __instance)
+            {
                 __instance.text.alignment = TMPro.TextAlignmentOptions.TopRight;
-                if (AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started) {
+                if (AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started)
+                {
                     __instance.text.text = $"{baseCredentials}\n{__instance.text.text}";
-                    if (PlayerControl.LocalPlayer.Data.IsDead || (!(PlayerControl.LocalPlayer == null) && PlayerControl.LocalPlayer.isLovers())) {
+                    if (PlayerControl.LocalPlayer.Data.IsDead || (!(PlayerControl.LocalPlayer == null) && PlayerControl.LocalPlayer.isLovers()))
+                    {
                         // __instance.transform.localPosition = new Vector3(3.45f, __instance.transform.localPosition.y, __instance.transform.localPosition.z);
                         __instance.gameObject.GetComponent<AspectPosition>().DistanceFromEdge = new Vector3(1.2f, 0.8f, 0f);
-                    } else {
+                    }
+                    else
+                    {
                         // __instance.transform.localPosition = new Vector3(4.2f, __instance.transform.localPosition.y, __instance.transform.localPosition.z);
                         __instance.gameObject.GetComponent<AspectPosition>().DistanceFromEdge = new Vector3(2.0f, 0.1f, 0f);
                     }
-                } else {
+                }
+                else
+                {
                     __instance.text.text = $"{baseCredentials}\n{ModTranslation.getString("creditsFull")}\n{__instance.text.text}";
                     // __instance.transform.localPosition = new Vector3(3.5f, __instance.transform.localPosition.y, __instance.transform.localPosition.z);
                     __instance.gameObject.GetComponent<AspectPosition>().DistanceFromEdge = new Vector3(2.7f, 0.0f, 0f);
@@ -58,11 +67,13 @@ namespace TheOtherRoles.Patches
         [HarmonyPatch(typeof(MainMenuManager), nameof(MainMenuManager.Start))]
         private static class LogoPatch
         {
-            static void Postfix(MainMenuManager __instance) {
+            static void Postfix(MainMenuManager __instance)
+            {
                 DestroyableSingleton<ModManager>.Instance.ShowModStamp();
 
                 var amongUsLogo = GameObject.Find("bannerLogo_AmongUs");
-                if (amongUsLogo != null) {
+                if (amongUsLogo != null)
+                {
                     amongUsLogo.transform.localScale *= 0.6f;
                     amongUsLogo.transform.position += Vector3.up * 0.25f;
                 }
@@ -71,7 +82,7 @@ namespace TheOtherRoles.Patches
                 torLogo.transform.position = Vector3.up;
                 var renderer = torLogo.AddComponent<SpriteRenderer>();
                 renderer.sprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.Banner.png", 300f);
-                
+
             }
         }
     }

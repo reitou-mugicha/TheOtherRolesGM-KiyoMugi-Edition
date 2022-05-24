@@ -1,12 +1,12 @@
-using HarmonyLib;
-using Hazel;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
+using HarmonyLib;
+using Hazel;
 using TheOtherRoles.Objects;
 using TheOtherRoles.Patches;
-using static TheOtherRoles.TheOtherRoles;
+using UnityEngine;
 using static TheOtherRoles.Patches.PlayerControlFixedUpdatePatch;
+using static TheOtherRoles.TheOtherRoles;
 
 namespace TheOtherRoles
 {
@@ -31,12 +31,12 @@ namespace TheOtherRoles
 
         public static Color color = Color.grey;
         public static Team team = Team.None;
-        public static float killCooldown {get {return CustomOptionHolder.schrodingersCatKillCooldown.getFloat();}}
-        public static bool becomesImpostor {get {return CustomOptionHolder.schrodingersCatBecomesImpostor.getBool();}}
-        public static exileType becomesWhichTeamsOnExiled {get {return (exileType)CustomOptionHolder.schrodingersCatBecomesWhichTeamsOnExiled.getSelection();}}
-        public static bool cantKillUntilLastOne {get {return CustomOptionHolder.schrodingersCatCantKillUntilLastOne.getBool();}}
-        public static bool killsKiller {get {return CustomOptionHolder.schrodingersCatKillsKiller.getBool();}}
-        public static bool justDieOnKilledByCrew {get {return CustomOptionHolder.schrodingersCatJustDieOnKilledByCrew.getBool();}}
+        public static float killCooldown { get { return CustomOptionHolder.schrodingersCatKillCooldown.getFloat(); } }
+        public static bool becomesImpostor { get { return CustomOptionHolder.schrodingersCatBecomesImpostor.getBool(); } }
+        public static exileType becomesWhichTeamsOnExiled { get { return (exileType)CustomOptionHolder.schrodingersCatBecomesWhichTeamsOnExiled.getSelection(); } }
+        public static bool cantKillUntilLastOne { get { return CustomOptionHolder.schrodingersCatCantKillUntilLastOne.getBool(); } }
+        public static bool killsKiller { get { return CustomOptionHolder.schrodingersCatKillsKiller.getBool(); } }
+        public static bool justDieOnKilledByCrew { get { return CustomOptionHolder.schrodingersCatJustDieOnKilledByCrew.getBool(); } }
         public static PlayerControl killer = null;
 
         public SchrodingersCat()
@@ -45,7 +45,7 @@ namespace TheOtherRoles
         }
 
         public override void OnMeetingStart() { }
-        public override void OnMeetingEnd() 
+        public override void OnMeetingEnd()
         {
             if (PlayerControl.LocalPlayer.isRole(RoleType.SchrodingersCat))
                 PlayerControl.LocalPlayer.SetKillTimerUnchecked(killCooldown);
@@ -54,7 +54,7 @@ namespace TheOtherRoles
         {
             if (player == PlayerControl.LocalPlayer && team == Team.Jackal)
             {
-                if(!isTeamJackalAlive() || !cantKillUntilLastOne)
+                if (!isTeamJackalAlive() || !cantKillUntilLastOne)
                 {
                     currentTarget = setTarget();
                     setPlayerOutline(currentTarget, Sheriff.color);
@@ -62,7 +62,7 @@ namespace TheOtherRoles
             }
             if (player == PlayerControl.LocalPlayer && team == Team.JekyllAndHyde)
             {
-                if(JekyllAndHyde.livingPlayers.Count == 0 || !cantKillUntilLastOne)
+                if (JekyllAndHyde.livingPlayers.Count == 0 || !cantKillUntilLastOne)
                 {
                     currentTarget = setTarget();
                     setPlayerOutline(currentTarget, Sheriff.color);
@@ -74,32 +74,32 @@ namespace TheOtherRoles
             }
         }
 
-        public override void OnKill(PlayerControl target) 
+        public override void OnKill(PlayerControl target)
         {
             if (PlayerControl.LocalPlayer == player && team == Team.Impostor)
                 player.SetKillTimerUnchecked(killCooldown);
         }
         public override void OnDeath(PlayerControl killer = null)
-        { 
+        {
             // 占い師の画面では呪殺したことを分からなくするために自殺処理させているので注意すること
-            if(team != Team.None) return;
-            if(((killer != null && killer.isCrew()) || killer.isRole(RoleType.SchrodingersCat)) && justDieOnKilledByCrew) return;
-            if(killer == null)
+            if (team != Team.None) return;
+            if (((killer != null && killer.isCrew()) || killer.isRole(RoleType.SchrodingersCat)) && justDieOnKilledByCrew) return;
+            if (killer == null)
             {
-                if(becomesWhichTeamsOnExiled == exileType.Random && player == PlayerControl.LocalPlayer)
+                if (becomesWhichTeamsOnExiled == exileType.Random && player == PlayerControl.LocalPlayer)
                 {
-                    List<Team> candidates = new List<Team>();
+                    List<Team> candidates = new();
                     candidates.Add(Team.Crew);
                     candidates.Add(Team.Impostor);
-                    if(JekyllAndHyde.exists) candidates.Add(Team.JekyllAndHyde);
-                    if(Jackal.jackal != null) candidates.Add(Team.Jackal);
+                    if (JekyllAndHyde.exists) candidates.Add(Team.JekyllAndHyde);
+                    if (Jackal.jackal != null) candidates.Add(Team.Jackal);
                     int rndVal = rnd.Next(0, candidates.Count);
                     MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SchrodingersCatSetTeam, Hazel.SendOption.Reliable, -1);
                     writer.Write((byte)candidates[rndVal]);
                     AmongUsClient.Instance.FinishRpcImmediately(writer);
                     RPCProcedure.schrodingersCatSetTeam((byte)candidates[rndVal]);
                 }
-                else if(becomesWhichTeamsOnExiled == exileType.Crew)
+                else if (becomesWhichTeamsOnExiled == exileType.Crew)
                 {
                     setCrewFlag();
                 }
@@ -107,28 +107,28 @@ namespace TheOtherRoles
             }
             else
             {
-                bool isCrewOrSchrodingersCat = (!killer.isRole(RoleType.JekyllAndHyde) &&  killer.isCrew()) || killer.isRole(RoleType.SchrodingersCat);
-                if(killer.isImpostor())
+                bool isCrewOrSchrodingersCat = (!killer.isRole(RoleType.JekyllAndHyde) && killer.isCrew()) || killer.isRole(RoleType.SchrodingersCat);
+                if (killer.isImpostor())
                 {
                     setImpostorFlag();
-                    if(becomesImpostor)
+                    if (becomesImpostor)
                         DestroyableSingleton<RoleManager>.Instance.SetRole(player, RoleTypes.Impostor);
                 }
-                else if(killer.isRole(RoleType.Jackal))
+                else if (killer.isRole(RoleType.Jackal))
                 {
                     setJackalFlag();
                 }
-                else if(killer.isRole(RoleType.JekyllAndHyde))
+                else if (killer.isRole(RoleType.JekyllAndHyde))
                 {
                     setJekyllAndHydeFlag();
                 }
-                else if(isCrewOrSchrodingersCat)
+                else if (isCrewOrSchrodingersCat)
                 {
                     setCrewFlag();
                 }
 
                 // EndGamePatchでゲームを終了させないために先にkillerに値を代入する
-                if(SchrodingersCat.killsKiller && !isCrewOrSchrodingersCat)
+                if (SchrodingersCat.killsKiller && !isCrewOrSchrodingersCat)
                     SchrodingersCat.killer = killer;
 
 
@@ -136,31 +136,36 @@ namespace TheOtherRoles
                 player.Revive();
                 // 死体を消す
                 DeadBody[] array = UnityEngine.Object.FindObjectsOfType<DeadBody>();
-                for (int i = 0; i < array.Length; i++) {
-                    if (GameData.Instance.GetPlayerById(array[i].ParentId).PlayerId == player.PlayerId) {
-                        array[i].gameObject.active = false;
-                    }     
-                }
-                if(SchrodingersCat.killsKiller && !isCrewOrSchrodingersCat)
+                for (int i = 0; i < array.Length; i++)
                 {
-                    if(PlayerControl.LocalPlayer == killer){
+                    if (GameData.Instance.GetPlayerById(array[i].ParentId).PlayerId == player.PlayerId)
+                    {
+                        array[i].gameObject.active = false;
+                    }
+                }
+                if (SchrodingersCat.killsKiller && !isCrewOrSchrodingersCat)
+                {
+                    if (PlayerControl.LocalPlayer == killer)
+                    {
                         // 死亡までのカウントダウン
                         TMPro.TMP_Text text;
-                        RoomTracker roomTracker =  HudManager.Instance?.roomTracker;
+                        RoomTracker roomTracker = HudManager.Instance?.roomTracker;
                         GameObject gameObject = UnityEngine.Object.Instantiate(roomTracker.gameObject);
                         UnityEngine.Object.DestroyImmediate(gameObject.GetComponent<RoomTracker>());
                         gameObject.transform.SetParent(HudManager.Instance.transform);
                         gameObject.transform.localPosition = new Vector3(0, -1.8f, gameObject.transform.localPosition.z);
                         gameObject.transform.localScale = Vector3.one * 3f;
                         text = gameObject.GetComponent<TMPro.TMP_Text>();
-                        HudManager.Instance.StartCoroutine(Effects.Lerp(15f, new Action<float>((p) => {
-                            string message = (15 -(p * 15f)).ToString("0");
+                        HudManager.Instance.StartCoroutine(Effects.Lerp(15f, new Action<float>((p) =>
+                        {
+                            string message = (15 - (p * 15f)).ToString("0");
                             bool even = ((int)(p * 15f / 0.25f)) % 2 == 0; // Bool flips every 0.25 seconds
                             string prefix = (even ? "<color=#FCBA03FF>" : "<color=#FF0000FF>");
                             text.text = prefix + message + "</color>";
                             if (text != null) text.color = even ? Color.yellow : Color.red;
-                            if (p == 1f && text != null && text.gameObject != null) {
-                                if(SchrodingersCat.killer != null && SchrodingersCat.killer.isAlive())
+                            if (p == 1f && text != null && text.gameObject != null)
+                            {
+                                if (SchrodingersCat.killer != null && SchrodingersCat.killer.isAlive())
                                 {
                                     MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SchrodingersCatSuicide, Hazel.SendOption.Reliable, -1);
                                     AmongUsClient.Instance.FinishRpcImmediately(writer);
@@ -239,9 +244,9 @@ namespace TheOtherRoles
 
         public static bool isJackalButtonEnable()
         {
-            if(team == Team.Jackal && PlayerControl.LocalPlayer.isRole(RoleType.SchrodingersCat) && PlayerControl.LocalPlayer.isAlive())
+            if (team == Team.Jackal && PlayerControl.LocalPlayer.isRole(RoleType.SchrodingersCat) && PlayerControl.LocalPlayer.isAlive())
             {
-                if(!isTeamJackalAlive() || !cantKillUntilLastOne )
+                if (!isTeamJackalAlive() || !cantKillUntilLastOne)
                 {
                     return true;
                 }
@@ -251,9 +256,9 @@ namespace TheOtherRoles
 
         public static bool isJekyllAndHydeButtonEnable()
         {
-            if(team == Team.JekyllAndHyde && PlayerControl.LocalPlayer.isRole(RoleType.SchrodingersCat) && PlayerControl.LocalPlayer.isAlive())
+            if (team == Team.JekyllAndHyde && PlayerControl.LocalPlayer.isRole(RoleType.SchrodingersCat) && PlayerControl.LocalPlayer.isAlive())
             {
-                if(JekyllAndHyde.livingPlayers.Count == 0 || !cantKillUntilLastOne)
+                if (JekyllAndHyde.livingPlayers.Count == 0 || !cantKillUntilLastOne)
                 {
                     return true;
                 }
@@ -263,12 +268,14 @@ namespace TheOtherRoles
 
         public static bool isTeamJackalAlive()
         {
-            foreach(var p in PlayerControl.AllPlayerControls)
+            foreach (var p in PlayerControl.AllPlayerControls)
             {
-                if(p.isRole(RoleType.Jackal) && p.isAlive()){
+                if (p.isRole(RoleType.Jackal) && p.isAlive())
+                {
                     return true;
                 }
-                else if(p.isRole(RoleType.Sidekick) && p.isAlive()){
+                else if (p.isRole(RoleType.Sidekick) && p.isAlive())
+                {
                     return true;
                 }
             }
@@ -277,9 +284,9 @@ namespace TheOtherRoles
 
         public static bool isLastImpostor()
         {
-            foreach(var p in PlayerControl.AllPlayerControls)
+            foreach (var p in PlayerControl.AllPlayerControls)
             {
-                if(PlayerControl.LocalPlayer != p && p.isImpostor() && p.isAlive()) return false;
+                if (PlayerControl.LocalPlayer != p && p.isImpostor() && p.isAlive()) return false;
             }
             return true;
         }
@@ -290,7 +297,8 @@ namespace TheOtherRoles
             public static void Prefix(PlayerControl __instance)
             {
                 // 時限爆弾よりも前にミーティングが来たら直後に死亡する
-                if(killer != null && killsKiller){
+                if (killer != null && killsKiller)
+                {
                     MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SchrodingersCatSuicide, Hazel.SendOption.Reliable, -1);
                     AmongUsClient.Instance.FinishRpcImmediately(writer);
                     RPCProcedure.schrodingersCatSuicide();

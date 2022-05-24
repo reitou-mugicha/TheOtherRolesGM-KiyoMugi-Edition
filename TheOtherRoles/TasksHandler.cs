@@ -1,18 +1,19 @@
+using System;
 using HarmonyLib;
 using static TheOtherRoles.TheOtherRolesGM;
-using System;
 
 namespace TheOtherRoles
 {
     [HarmonyPatch]
-    public static class TasksHandler {
+    public static class TasksHandler
+    {
 
         [HarmonyPatch(typeof(NormalPlayerTask), nameof(NormalPlayerTask.FixedUpdate))]
         public static class NormalPlayerTaskPatch
         {
             public static void Postfix(NormalPlayerTask __instance)
             {
-                if(!MapOptions.hideTaskArrows) return;
+                if (!MapOptions.hideTaskArrows) return;
                 bool commsActive = false;
                 foreach (PlayerTask t in PlayerControl.LocalPlayer.myTasks)
                 {
@@ -22,20 +23,20 @@ namespace TheOtherRoles
                         break;
                     }
                 }
-                if(!(__instance.TaskType == TaskTypes.SortRecords) && !commsActive)
+                if (!(__instance.TaskType == TaskTypes.SortRecords) && !commsActive)
                 {
                     bool showArrows = !__instance.IsComplete && __instance.TaskStep > 0;
                     __instance.Arrow?.gameObject?.SetActive(showArrows);
                 }
             }
         }
-        
+
         [HarmonyPatch(typeof(AirshipUploadTask), nameof(AirshipUploadTask.FixedUpdate))]
         public static class AirshipUploadTaskPatch
         {
             public static void Postfix(AirshipUploadTask __instance)
             {
-                if(!MapOptions.hideTaskArrows) return;
+                if (!MapOptions.hideTaskArrows) return;
                 bool commsActive = false;
                 foreach (PlayerTask t in PlayerControl.LocalPlayer.myTasks)
                 {
@@ -45,7 +46,7 @@ namespace TheOtherRoles
                         break;
                     }
                 }
-                if(!commsActive)
+                if (!commsActive)
                 {
                     bool showArrows = !MapOptions.hideTaskArrows && !__instance.IsComplete && __instance.TaskStep > 0;
                     __instance.Arrows?.DoIf(x => x != null, x => x.gameObject?.SetActive(showArrows));
@@ -77,7 +78,8 @@ namespace TheOtherRoles
             }
         }
 
-        public static Tuple<int, int> taskInfo(GameData.PlayerInfo playerInfo) {
+        public static Tuple<int, int> taskInfo(GameData.PlayerInfo playerInfo)
+        {
             int TotalTasks = 0;
             int CompletedTasks = 0;
             if (!playerInfo.Disconnected && playerInfo.Tasks != null &&
@@ -87,7 +89,8 @@ namespace TheOtherRoles
                 !(playerInfo.Object.isGM() && !GM.hasTasks) &&
                 !(playerInfo.Object.isLovers() && !Lovers.hasTasks) &&
                 !playerInfo.Object.hasFakeTasks()
-                ) {
+                )
+            {
 
                 foreach (var playerInfoTask in playerInfo.Tasks)
                 {
@@ -99,11 +102,14 @@ namespace TheOtherRoles
         }
 
         [HarmonyPatch(typeof(GameData), nameof(GameData.RecomputeTaskCounts))]
-        private static class GameDataRecomputeTaskCountsPatch {
-            private static bool Prefix(GameData __instance) {
+        private static class GameDataRecomputeTaskCountsPatch
+        {
+            private static bool Prefix(GameData __instance)
+            {
                 __instance.TotalTasks = 0;
                 __instance.CompletedTasks = 0;
-                foreach (var playerInfo in  GameData.Instance.AllPlayers) {
+                foreach (var playerInfo in GameData.Instance.AllPlayers)
+                {
                     if (playerInfo.Object &&
                         ((playerInfo.Object?.isLovers() == true && !Lovers.tasksCount) ||
                          (playerInfo.PlayerId == Shifter.shifter?.PlayerId && Shifter.isNeutral) || // Neutral shifter has tasks, but they don't count
@@ -112,7 +118,7 @@ namespace TheOtherRoles
                           playerInfo.Object?.isRole(RoleType.Fox) == true ||
                           playerInfo.Object?.isRole(RoleType.JekyllAndHyde) == true ||
                          (Madmate.hasTasks && playerInfo.Object?.hasModifier(ModifierType.Madmate) == true) ||
-                         (CreatedMadmate.hasTasks && playerInfo.Object?.hasModifier(ModifierType.CreatedMadmate) == true) 
+                         (CreatedMadmate.hasTasks && playerInfo.Object?.hasModifier(ModifierType.CreatedMadmate) == true)
                         )
                     )
                         continue;

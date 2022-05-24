@@ -2,7 +2,8 @@ using UnityEngine;
 
 namespace TheOtherRoles.Objects
 {
-    public class Arrow {
+    public class Arrow
+    {
         public float perc = 0.925f;
         public SpriteRenderer image;
         public GameObject arrow;
@@ -10,16 +11,20 @@ namespace TheOtherRoles.Objects
         private ArrowBehaviour arrowBehaviour;
 
         private static Sprite sprite;
-        public static Sprite getSprite() {
+        public static Sprite getSprite()
+        {
             if (sprite) return sprite;
             sprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.Arrow.png", 200f);
             return sprite;
         }
 
 
-        public Arrow(Color color) {
-            arrow = new GameObject("Arrow");
-            arrow.layer = 5;
+        public Arrow(Color color)
+        {
+            arrow = new GameObject("Arrow")
+            {
+                layer = 5
+            };
             image = arrow.AddComponent<SpriteRenderer>();
             image.sprite = getSprite();
             image.color = color;
@@ -27,7 +32,8 @@ namespace TheOtherRoles.Objects
             arrowBehaviour.image = image;
         }
 
-        public void Update() {
+        public void Update()
+        {
             Vector3 target = oldTarget;
             if (target == null) target = Vector3.zero;
             Update(target);

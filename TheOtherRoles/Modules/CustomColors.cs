@@ -1,14 +1,15 @@
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 using HarmonyLib;
 using UnhollowerBaseLib;
+using UnityEngine;
 
 namespace TheOtherRoles.Modules
 {
-    public class CustomColors {
-        protected static Dictionary<int, string> ColorStrings = new Dictionary<int, string>();
-        public static List<int> lighterColors = new List<int>(){ 3, 4, 5, 7, 10, 11, 13, 14, 17 };
+    public class CustomColors
+    {
+        protected static Dictionary<int, string> ColorStrings = new();
+        public static List<int> lighterColors = new() { 3, 4, 5, 7, 10, 11, 13, 14, 17 };
         public static uint pickableColors = (uint)Palette.ColorNames.Length;
 
         /* version 1
@@ -19,19 +20,20 @@ namespace TheOtherRoles.Modules
                                                                     10, 34, 12, 14, 28,
                                                                     22, 29, 11, 26, 2,
                                                                     20, 24, 9, 16, 6 }; */
-        private static readonly List<int> ORDER = new List<int>() { 7, 14, 5, 33, 4, 
+        private static readonly List<int> ORDER = new() { 7, 14, 5, 33, 4,
                                                                     30, 0, 19, 27, 3,
                                                                     17, 25, 18, 13, 23,
                                                                     8, 32, 1, 21, 31,
                                                                     10, 34, 15, 28, 22,
                                                                     29, 11, 2, 26, 16,
                                                                     20, 24, 9, 12, 6 };
-        public static void Load() {
+        public static void Load()
+        {
             List<StringNames> longlist = Enumerable.ToList<StringNames>(Palette.ColorNames);
             List<Color32> colorlist = Enumerable.ToList<Color32>(Palette.PlayerColors);
             List<Color32> shadowlist = Enumerable.ToList<Color32>(Palette.ShadowColors);
 
-            List<CustomColor> colors = new List<CustomColor>();
+            List<CustomColor> colors = new();
 
             /* Custom Colors */
             colors.Add(new CustomColor
@@ -171,11 +173,12 @@ namespace TheOtherRoles.Modules
             });
 
             pickableColors += (uint)colors.Count; // Colors to show in Tab
-            /** Hidden Colors **/     
-                    
+            /** Hidden Colors **/
+
             /** Add Colors **/
             int id = 50000;
-            foreach (CustomColor cc in colors) {
+            foreach (CustomColor cc in colors)
+            {
                 longlist.Add((StringNames)id);
                 CustomColors.ColorStrings[id++] = cc.longname;
                 colorlist.Add(cc.color);
@@ -189,7 +192,8 @@ namespace TheOtherRoles.Modules
             Palette.ShadowColors = shadowlist.ToArray();
         }
 
-        protected internal struct CustomColor {
+        protected internal struct CustomColor
+        {
             public string longname;
             public Color32 color;
             public Color32 shadow;
@@ -197,16 +201,21 @@ namespace TheOtherRoles.Modules
         }
 
         [HarmonyPatch]
-        public static class CustomColorPatches {
+        public static class CustomColorPatches
+        {
             [HarmonyPatch(typeof(TranslationController), nameof(TranslationController.GetString), new[] {
                 typeof(StringNames),
                 typeof(Il2CppReferenceArray<Il2CppSystem.Object>)
             })]
-            private class ColorStringPatch {
-                public static bool Prefix(ref string __result, [HarmonyArgument(0)] StringNames name) {
-                    if ((int)name >= 50000) {
+            private class ColorStringPatch
+            {
+                public static bool Prefix(ref string __result, [HarmonyArgument(0)] StringNames name)
+                {
+                    if ((int)name >= 50000)
+                    {
                         string text = CustomColors.ColorStrings[(int)name];
-                        if (text != null) {
+                        if (text != null)
+                        {
                             __result = ModTranslation.getString(text) + " (MOD)";
                             return false;
                         }
@@ -215,12 +224,15 @@ namespace TheOtherRoles.Modules
                 }
             }
             [HarmonyPatch(typeof(PlayerTab), nameof(PlayerTab.OnEnable))]
-            private static class PlayerTabEnablePatch {
-                public static void Postfix(PlayerTab __instance) { // Replace instead
+            private static class PlayerTabEnablePatch
+            {
+                public static void Postfix(PlayerTab __instance)
+                { // Replace instead
                     Il2CppArrayBase<ColorChip> chips = __instance.ColorChips.ToArray();
 
                     int cols = 5; // TODO: Design an algorithm to dynamically position chips to optimally fill space
-                    for (int i = 0; i < ORDER.Count; i++) {
+                    for (int i = 0; i < ORDER.Count; i++)
+                    {
                         int pos = ORDER[i];
                         if (pos < 0 || pos > chips.Length)
                             continue;
@@ -229,9 +241,10 @@ namespace TheOtherRoles.Modules
                         chip.transform.localPosition = new Vector3(-0.975f + (col * 0.485f), 1.475f - (row * 0.49f), chip.transform.localPosition.z);
                         chip.transform.localScale *= 0.78f;
                     }
-                    for (int j = ORDER.Count; j < chips.Length; j++) { // If number isn't in order, hide it
+                    for (int j = ORDER.Count; j < chips.Length; j++)
+                    { // If number isn't in order, hide it
                         ColorChip chip = chips[j];
-                        chip.transform.localScale *= 0f; 
+                        chip.transform.localScale *= 0f;
                         chip.enabled = false;
                         chip.Button.enabled = false;
                         chip.Button.OnClick.RemoveAllListeners();
@@ -239,31 +252,39 @@ namespace TheOtherRoles.Modules
                 }
             }
             [HarmonyPatch(typeof(SaveManager), nameof(SaveManager.LoadPlayerPrefs))]
-            private static class LoadPlayerPrefsPatch { // Fix Potential issues with broken colors
+            private static class LoadPlayerPrefsPatch
+            { // Fix Potential issues with broken colors
                 private static bool needsPatch = false;
-                public static void Prefix([HarmonyArgument(0)] bool overrideLoad) {
+                public static void Prefix([HarmonyArgument(0)] bool overrideLoad)
+                {
                     if (!SaveManager.loaded || overrideLoad)
                         needsPatch = true;
                 }
-                public static void Postfix() {
+                public static void Postfix()
+                {
                     if (!needsPatch) return;
                     SaveManager.colorConfig %= CustomColors.pickableColors;
                     needsPatch = false;
                 }
             }
             [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.CheckColor))]
-            private static class PlayerControlCheckColorPatch {
-                private static bool isTaken(PlayerControl player, uint color) {
+            private static class PlayerControlCheckColorPatch
+            {
+                private static bool isTaken(PlayerControl player, uint color)
+                {
                     foreach (GameData.PlayerInfo p in GameData.Instance.AllPlayers)
                         if (!p.Disconnected && p.PlayerId != player.PlayerId && p.DefaultOutfit.ColorId == color)
                             return true;
                     return false;
                 }
-                public static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)] byte bodyColor) { // Fix incorrect color assignment
+                public static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)] byte bodyColor)
+                { // Fix incorrect color assignment
                     uint color = (uint)bodyColor;
-                   if (isTaken(__instance, color) || color >= Palette.PlayerColors.Length) {
+                    if (isTaken(__instance, color) || color >= Palette.PlayerColors.Length)
+                    {
                         int num = 0;
-                        while (num++ < 50 && (color >= CustomColors.pickableColors || isTaken(__instance, color))) {
+                        while (num++ < 50 && (color >= CustomColors.pickableColors || isTaken(__instance, color)))
+                        {
                             color = (color + 1) % CustomColors.pickableColors;
                         }
                     }

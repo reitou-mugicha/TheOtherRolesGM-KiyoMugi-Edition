@@ -1,10 +1,10 @@
+using System;
+using System.Collections.Generic;
 using HarmonyLib;
 using Hazel;
-using System;
+using TheOtherRoles.Objects;
 using UnityEngine;
 using static TheOtherRoles.TheOtherRolesGM;
-using TheOtherRoles.Objects;
-using System.Collections.Generic;
 
 namespace TheOtherRoles
 {
@@ -163,7 +163,7 @@ namespace TheOtherRoles
                     }
 
                     Vector3 pos = gmCalcPos(index);
-                    Vector3 scale = new Vector3(0.4f, 0.8f, 1.0f);
+                    Vector3 scale = new(0.4f, 0.8f, 1.0f);
 
                     Vector3 iconBase = hm.UseButton.transform.localPosition;
                     iconBase.x *= -1;
@@ -190,7 +190,7 @@ namespace TheOtherRoles
                     }
 
                     Vector3 pos = gmCalcPos(index) + Vector3.up * 0.55f;
-                    Vector3 scale = new Vector3(0.4f, 0.25f, 1.0f);
+                    Vector3 scale = new(0.4f, 0.25f, 1.0f);
                     if (gmKillButtons[index].PositionOffset != pos)
                     {
                         gmKillButtons[index].PositionOffset = pos;
@@ -216,7 +216,7 @@ namespace TheOtherRoles
             {
                 //TheOtherRolesPlugin.Instance.Log.LogInfo($"Added {i}");
 
-                CustomButton gmButton = new CustomButton(
+                CustomButton gmButton = new(
                     // Action OnClick
                     gmButtonOnClick(i),
                     // bool HasButton
@@ -235,13 +235,15 @@ namespace TheOtherRoles
                     // keyboard shortcut
                     null,
                     true
-                );
-                gmButton.Timer = 0.0f;
-                gmButton.MaxTimer = 0.0f;
-                gmButton.showButtonText = false;
+                )
+                {
+                    Timer = 0.0f,
+                    MaxTimer = 0.0f,
+                    showButtonText = false
+                };
                 gmButtons.Add(gmButton);
 
-                CustomButton gmKillButton = new CustomButton(
+                CustomButton gmKillButton = new(
                     // Action OnClick
                     gmKillButtonOnClick(i),
                     // bool HasButton
@@ -260,10 +262,12 @@ namespace TheOtherRoles
                     // keyboard shortcut
                     null,
                     true
-                );
-                gmKillButton.Timer = 0.0f;
-                gmKillButton.MaxTimer = 0.0f;
-                gmKillButton.showButtonText = true;
+                )
+                {
+                    Timer = 0.0f,
+                    MaxTimer = 0.0f,
+                    showButtonText = true
+                };
 
                 var buttonPos = gmKillButton.actionButton.buttonLabelText.transform.localPosition;
                 gmKillButton.actionButton.buttonLabelText.transform.localPosition = new Vector3(buttonPos.x, buttonPos.y + 0.6f, -500f);
@@ -273,7 +277,8 @@ namespace TheOtherRoles
             }
 
             gmZoomOut = new CustomButton(
-                () => {
+                () =>
+                {
 
                     if (Camera.main.orthographicSize < 18.0f)
                     {
@@ -300,14 +305,17 @@ namespace TheOtherRoles
                 // keyboard shortcut
                 KeyCode.PageDown,
                 false
-            );
-            gmZoomOut.Timer = 0.0f;
-            gmZoomOut.MaxTimer = 0.0f;
-            gmZoomOut.showButtonText = false;
-            gmZoomOut.LocalScale = Vector3.one * 0.275f;
+            )
+            {
+                Timer = 0.0f,
+                MaxTimer = 0.0f,
+                showButtonText = false,
+                LocalScale = Vector3.one * 0.275f
+            };
 
             gmZoomIn = new CustomButton(
-                () => {
+                () =>
+                {
 
                     if (Camera.main.orthographicSize > 3.0f)
                     {
@@ -334,11 +342,13 @@ namespace TheOtherRoles
                 // keyboard shortcut
                 KeyCode.PageUp,
                 false
-            );
-            gmZoomIn.Timer = 0.0f;
-            gmZoomIn.MaxTimer = 0.0f;
-            gmZoomIn.showButtonText = false;
-            gmZoomIn.LocalScale = Vector3.one * 0.275f;
+            )
+            {
+                Timer = 0.0f,
+                MaxTimer = 0.0f,
+                showButtonText = false,
+                LocalScale = Vector3.one * 0.275f
+            };
         }
     }
 }

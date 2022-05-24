@@ -1,13 +1,13 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Text;
 using HarmonyLib;
 using Hazel;
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
-using static TheOtherRoles.TheOtherRoles;
 using static TheOtherRoles.GameHistory;
-using System.Reflection;
+using static TheOtherRoles.TheOtherRoles;
 
 namespace TheOtherRoles.Patches
 {
@@ -30,11 +30,13 @@ namespace TheOtherRoles.Patches
 
                 SpriteRenderer renderer;
 
-                GameObject fance = new GameObject("ModFance");
-                fance.layer = LayerMask.NameToLayer("Ship");
+                GameObject fance = new("ModFance")
+                {
+                    layer = LayerMask.NameToLayer("Ship")
+                };
                 fance.transform.SetParent(obj.transform);
                 fance.transform.localPosition = new Vector3(4.2f, 0.15f, 0.5f);
-                fance.transform.localScale = new Vector3(1f,1f,1f);
+                fance.transform.localScale = new Vector3(1f, 1f, 1f);
                 fance.SetActive(true);
                 var Collider = fance.AddComponent<EdgeCollider2D>();
                 Collider.points = new Vector2[] { new Vector2(1.5f, -0.2f), new Vector2(-1.5f, -0.2f), new Vector2(-1.5f, 1.5f) };
@@ -42,8 +44,10 @@ namespace TheOtherRoles.Patches
                 renderer = fance.AddComponent<SpriteRenderer>();
                 renderer.sprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.AirshipFance.png", 100f);
 
-                GameObject pole = new GameObject("DownloadPole");
-                pole.layer = LayerMask.NameToLayer("Ship");
+                GameObject pole = new("DownloadPole")
+                {
+                    layer = LayerMask.NameToLayer("Ship")
+                };
                 pole.transform.SetParent(obj.transform);
                 pole.transform.localPosition = new Vector3(4.1f, 0.75f, 0.8f);
                 pole.transform.localScale = new Vector3(1f, 1f, 1f);
@@ -84,7 +88,7 @@ namespace TheOtherRoles.Patches
 
             if (!console.TaskTypes.Contains(TaskTypes.FixWiring))
             {
-                var list=console.TaskTypes.ToList();
+                var list = console.TaskTypes.ToList();
                 list.Add(TaskTypes.FixWiring);
                 console.TaskTypes = list.ToArray();
             }
@@ -140,18 +144,18 @@ namespace TheOtherRoles.Patches
     [HarmonyPatch(typeof(NormalPlayerTask), nameof(NormalPlayerTask.PickRandomConsoles))]
     class NormalPlayerTaskPickRandomConsolesPatch
     {
-        private static int numWireTask {get {return (int)CustomOptionHolder.numWireTask.getFloat();}}
+        private static int numWireTask { get { return (int)CustomOptionHolder.numWireTask.getFloat(); } }
         static void Postfix(NormalPlayerTask __instance, TaskTypes taskType, byte[] consoleIds)
         {
             if (taskType != TaskTypes.FixWiring || !CustomOptionHolder.randomWireTask.getBool()) return;
             List<Console> orgList = ShipStatus.Instance.AllConsoles.Where((global::Console t) => t.TaskTypes.Contains(taskType)).ToList<global::Console>();
-            List<Console> list = new List<Console>(orgList);
+            List<Console> list = new(orgList);
 
             __instance.MaxStep = numWireTask;
             __instance.Data = new byte[numWireTask];
             for (int i = 0; i < __instance.Data.Length; i++)
             {
-                if(list.Count == 0)
+                if (list.Count == 0)
                     list = new List<Console>(orgList);
                 int index = list.RandomIdx<global::Console>();
                 __instance.Data[i] = (byte)list[index].ConsoleId;

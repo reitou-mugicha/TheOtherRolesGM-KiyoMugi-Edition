@@ -4,27 +4,30 @@ using UnityEngine;
 
 namespace TheOtherRoles.Objects
 {
-    class AssassinTrace {
-        public static List<AssassinTrace> traces = new List<AssassinTrace>();
+    class AssassinTrace
+    {
+        public static List<AssassinTrace> traces = new();
 
         private GameObject trace;
         private float timeRemaining;
-        
+
         private static Sprite TraceSprite;
-        public static Sprite getTraceSprite() {
+        public static Sprite getTraceSprite()
+        {
             if (TraceSprite) return TraceSprite;
             TraceSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.AssassinTraceW.png", 225f);
             return TraceSprite;
         }
 
-        public AssassinTrace(Vector2 p, float duration=1f) {
+        public AssassinTrace(Vector2 p, float duration = 1f)
+        {
             trace = new GameObject("AssassinTrace") { layer = 11 };
             trace.AddSubmergedComponent(SubmergedCompatibility.Classes.ElevatorMover);
             //Vector3 position = new Vector3(p.x, p.y, PlayerControl.LocalPlayer.transform.localPosition.z + 0.001f); // just behind player
-            Vector3 position = new Vector3(p.x, p.y, p.y / 1000f + 0.01f);
+            Vector3 position = new(p.x, p.y, p.y / 1000f + 0.01f);
             trace.transform.position = position;
             trace.transform.localPosition = position;
-            
+
             var traceRenderer = trace.AddComponent<SpriteRenderer>();
             traceRenderer.sprite = getTraceSprite();
 
@@ -32,7 +35,8 @@ namespace TheOtherRoles.Objects
 
             // display the assassins color in the trace
             float colorDuration = CustomOptionHolder.assassinTraceColorTime.getFloat();
-            HudManager.Instance.StartCoroutine(Effects.Lerp(colorDuration, new Action<float>((p) => {
+            HudManager.Instance.StartCoroutine(Effects.Lerp(colorDuration, new Action<float>((p) =>
+            {
                 Color c = Palette.PlayerColors[(int)Assassin.assassin.Data.DefaultOutfit.ColorId];
                 if (Helpers.isLighterColor(Assassin.assassin.Data.DefaultOutfit.ColorId)) c = Color.white;
                 else c = Palette.PlayerColors[6];
@@ -50,7 +54,8 @@ namespace TheOtherRoles.Objects
 
             float fadeOutDuration = 1f;
             if (fadeOutDuration > duration) fadeOutDuration = 0.5f * duration;
-            HudManager.Instance.StartCoroutine(Effects.Lerp(duration, new Action<float>((p) => {
+            HudManager.Instance.StartCoroutine(Effects.Lerp(duration, new Action<float>((p) =>
+            {
                 float interP = 0f;
                 if (p < (duration - fadeOutDuration) / duration)
                     interP = 0f;
@@ -62,11 +67,13 @@ namespace TheOtherRoles.Objects
             traces.Add(this);
         }
 
-        public static void clearTraces() {
+        public static void clearTraces()
+        {
             traces = new List<AssassinTrace>();
         }
 
-        public static void UpdateAll() {
+        public static void UpdateAll()
+        {
             foreach (AssassinTrace traceCurrent in new List<AssassinTrace>(traces))
             {
                 traceCurrent.timeRemaining -= Time.fixedDeltaTime;

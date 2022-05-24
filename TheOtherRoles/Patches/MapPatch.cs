@@ -1,6 +1,6 @@
+using System.Collections.Generic;
 using HarmonyLib;
 using UnityEngine;
-using System.Collections.Generic;
 
 namespace TheOtherRoles.Patches
 
@@ -42,7 +42,7 @@ namespace TheOtherRoles.Patches
 
         static void initializeIcons(MapBehaviour __instance, PlayerControl pc = null)
         {
-            List<PlayerControl> players = new List<PlayerControl>();
+            List<PlayerControl> players = new();
             if (pc == null)
             {
                 mapIcons = new Dictionary<byte, SpriteRenderer>();
@@ -51,7 +51,8 @@ namespace TheOtherRoles.Patches
                 {
                     players.Add(p);
                 }
-            } else
+            }
+            else
             {
                 players.Add(pc);
             }
@@ -64,7 +65,7 @@ namespace TheOtherRoles.Patches
                 mapIcons[id] = UnityEngine.Object.Instantiate(__instance.HerePoint, __instance.HerePoint.transform.parent);
                 p.SetPlayerMaterialColors(mapIcons[id]);
 
-                
+
                 corpseIcons[id] = UnityEngine.Object.Instantiate(__instance.HerePoint, __instance.HerePoint.transform.parent);
                 corpseIcons[id].sprite = getCorpseSprite();
                 corpseIcons[id].transform.localScale = Vector3.one * 0.20f;
@@ -75,12 +76,13 @@ namespace TheOtherRoles.Patches
         [HarmonyPatch(typeof(MapBehaviour), nameof(MapBehaviour.FixedUpdate))]
         class MapBehaviourFixedUpdatePatch
         {
-            static bool Prefix(MapBehaviour __instance) {
+            static bool Prefix(MapBehaviour __instance)
+            {
                 if (!MeetingHud.Instance) return true;  // Only run in meetings, and then set the Position of the HerePoint to the Position before the Meeting!
                 // if (!ShipStatus.Instance) {
                 //     return false;
                 // }
-                Vector3 vector = AntiTeleport.position != null? AntiTeleport.position : PlayerControl.LocalPlayer.transform.position;
+                Vector3 vector = AntiTeleport.position != null ? AntiTeleport.position : PlayerControl.LocalPlayer.transform.position;
                 vector /= ShipStatus.Instance.MapScale;
                 vector.x *= Mathf.Sign(ShipStatus.Instance.transform.localScale.x);
                 vector.z = -1f;
@@ -153,7 +155,7 @@ namespace TheOtherRoles.Patches
 
             }
         }
-        
+
 
 
         [HarmonyPatch(typeof(MapBehaviour), nameof(MapBehaviour.GenericShow))]
@@ -212,7 +214,7 @@ namespace TheOtherRoles.Patches
         {
             static bool Prefix(ref bool __result, MapBehaviour __instance)
             {
-                if(PlayerControl.LocalPlayer.isRole(RoleType.EvilHacker) && CustomOptionHolder.evilHackerCanMoveEvenIfUsesAdmin.getBool())
+                if (PlayerControl.LocalPlayer.isRole(RoleType.EvilHacker) && CustomOptionHolder.evilHackerCanMoveEvenIfUsesAdmin.getBool())
                 {
                     __result = false;
                     return false;

@@ -1,6 +1,6 @@
+using System.Collections.Generic;
 using HarmonyLib;
 using Hazel;
-using System.Collections.Generic;
 using TheOtherRoles.Objects;
 using UnityEngine;
 
@@ -12,7 +12,7 @@ namespace TheOtherRoles
         public static Color color = Fox.color;
         private static CustomButton immoralistButton;
 
-        public static List<Arrow> arrows = new List<Arrow>();
+        public static List<Arrow> arrows = new();
         public static float updateTimer = 0f;
         public static float arrowUpdateInterval = 1f;
 
@@ -45,7 +45,7 @@ namespace TheOtherRoles
 
         public static void Clear()
         {
-            foreach(Arrow arrow in arrows)
+            foreach (Arrow arrow in arrows)
             {
                 if (arrow?.arrow != null)
                 {
@@ -95,9 +95,11 @@ namespace TheOtherRoles
                 false,
                 0,
                 () => { }
-            );
-            immoralistButton.buttonText = ModTranslation.getString("immoralistSuicideText");
-            immoralistButton.effectCancellable = true;
+            )
+            {
+                buttonText = ModTranslation.getString("immoralistSuicideText"),
+                effectCancellable = true
+            };
         }
 
         static void arrowUpdate()

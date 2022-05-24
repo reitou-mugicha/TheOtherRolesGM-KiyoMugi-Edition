@@ -1,13 +1,13 @@
-﻿using System;
-using UnityEngine;
-using UnhollowerBaseLib;
+using System;
 using System.Linq;
+using UnhollowerBaseLib;
+using UnityEngine;
 
 namespace TheOtherRoles
 {
     public class SpawnCandidate
     {
-        #nullable enable
+#nullable enable
         static private Il2CppArrayBase<UnityEngine.Object>? audioClips = null;
 
         public Vector2 SpawnLocation;
@@ -34,13 +34,13 @@ namespace TheOtherRoles
 
         private void ReloadSprites()
         {
-            foreach(Sprite sprite in Sprites)
+            foreach (Sprite sprite in Sprites)
             {
                 if (sprite) UnityEngine.Object.Destroy(sprite);
             }
             Sprites = new Sprite[Texture!.width / 200];
-            
-            for(int i = 0; i < Sprites.Length; i++)
+
+            for (int i = 0; i < Sprites.Length; i++)
             {
                 Sprites[i] = Helpers.loadSpriteFromResources(Texture, 100f, new Rect((float)(i * 200), 0f, 200f, -200f), new Vector2(0.5f, 1f));
             }
@@ -53,6 +53,7 @@ namespace TheOtherRoles
             return null;
         }
 
+        [Obsolete]
         public AudioClip? GetAudioClip()
         {
             if (AudioClipName == null) return null;
@@ -68,14 +69,15 @@ namespace TheOtherRoles
         public Il2CppSystem.Collections.IEnumerator GetEnumerator(SpriteRenderer renderer)
         {
             GetTexture();
-            return Effects.Lerp(Sprites.Length*0.06f, new Action<float>((t)=>{
+            return Effects.Lerp(Sprites.Length * 0.06f, new Action<float>((t) =>
+            {
                 if (!renderer) return;
                 int num = (int)(t * Sprites.Length);
                 if (num < Sprites.Length) renderer.sprite = Sprites[num];
             }));
         }
 
-        public SpawnCandidate(StringNames locationKey,Vector2 location,string textureAddress,string? audioClip)
+        public SpawnCandidate(StringNames locationKey, Vector2 location, string textureAddress, string? audioClip)
         {
             SpawnLocation = location;
             LocationKey = locationKey;

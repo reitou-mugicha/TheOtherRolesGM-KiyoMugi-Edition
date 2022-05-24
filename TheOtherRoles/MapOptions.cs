@@ -1,10 +1,11 @@
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace TheOtherRoles
 {
-    static class MapOptions {
+    static class MapOptions
+    {
         // Set values
         public static int maxNumberOfMeetings = 10;
         public static bool blockSkippingInEmergencyMeetings = false;
@@ -43,14 +44,15 @@ namespace TheOtherRoles
 
         // Updating values
         public static int meetingsCount = 0;
-        public static List<SurvCamera> camerasToAdd = new List<SurvCamera>();
-        public static List<Vent> ventsToSeal = new List<Vent>();
-        public static Dictionary<byte, PoolablePlayer> playerIcons = new Dictionary<byte, PoolablePlayer>();
+        public static List<SurvCamera> camerasToAdd = new();
+        public static List<Vent> ventsToSeal = new();
+        public static Dictionary<byte, PoolablePlayer> playerIcons = new();
         public static TMPro.TextMeshPro AdminTimerText = null;
         public static TMPro.TextMeshPro CamerasTimerText = null;
         public static TMPro.TextMeshPro VitalsTimerText = null;
 
-        public static void clearAndReloadMapOptions() {
+        public static void clearAndReloadMapOptions()
+        {
             meetingsCount = 0;
             camerasToAdd = new List<SurvCamera>();
             ventsToSeal = new List<Vent>();
@@ -160,7 +162,7 @@ namespace TheOtherRoles
                 return;
 
             // Admin
-            if(restrictAdminText)
+            if (restrictAdminText)
             {
                 AdminTimerText = UnityEngine.Object.Instantiate(HudManager.Instance.TaskText, HudManager.Instance.transform);
                 float y = -4.0f;
@@ -171,7 +173,7 @@ namespace TheOtherRoles
                 AdminTimerText.transform.localPosition = new Vector3(-3.5f, y, 0);
                 if (restrictAdminTime > 0)
                     // AdminTimerText.text = $"Admin: {Mathf.RoundToInt(restrictAdminTime)} sec remaining";
-                    AdminTimerText.text = String.Format(ModTranslation.getString("adminText"),restrictAdminTime.ToString("0.00"));
+                    AdminTimerText.text = String.Format(ModTranslation.getString("adminText"), restrictAdminTime.ToString("0.00"));
                 else
                     // AdminTimerText.text = "Admin: ran out of time";
                     AdminTimerText.text = ModTranslation.getString("adminRanOut");
@@ -179,16 +181,16 @@ namespace TheOtherRoles
             }
 
             // Cameras
-            if(restrictCamerasText)
+            if (restrictCamerasText)
             {
                 CamerasTimerText = UnityEngine.Object.Instantiate(HudManager.Instance.TaskText, HudManager.Instance.transform);
-                float y= -4.0f;
+                float y = -4.0f;
                 if (restrictVitalsText)
                     y += 0.2f;
                 CamerasTimerText.transform.localPosition = new Vector3(-3.5f, y, 0);
                 if (restrictCamerasTime > 0)
                     // CamerasTimerText.text = $"Cameras: {Mathf.RoundToInt(restrictCamerasTime)} sec remaining";
-                    CamerasTimerText.text = String.Format(ModTranslation.getString("camerasText"),restrictCamerasTime.ToString("0.00"));
+                    CamerasTimerText.text = String.Format(ModTranslation.getString("camerasText"), restrictCamerasTime.ToString("0.00"));
                 else
                     // CamerasTimerText.text = "Cameras: ran out of time";
                     CamerasTimerText.text = ModTranslation.getString("camerasRanOut");
@@ -196,13 +198,13 @@ namespace TheOtherRoles
             }
 
             // Vitals
-            if(restrictVitalsText)
+            if (restrictVitalsText)
             {
                 VitalsTimerText = UnityEngine.Object.Instantiate(HudManager.Instance.TaskText, HudManager.Instance.transform);
                 VitalsTimerText.transform.localPosition = new Vector3(-3.5f, -4.0f, 0);
                 if (restrictVitalsTime > 0)
                     // VitalsTimerText.text = $"Vitals: {Mathf.RoundToInt(restrictVitalsTime)} sec remaining";
-                    VitalsTimerText.text = String.Format(ModTranslation.getString("vitalsText"),restrictVitalsTime.ToString("0.00"));
+                    VitalsTimerText.text = String.Format(ModTranslation.getString("vitalsText"), restrictVitalsTime.ToString("0.00"));
                 else
                     // VitalsTimerText.text = "Vitals: ran out of time";
                     VitalsTimerText.text = ModTranslation.getString("vitalsRanOut");
@@ -214,13 +216,13 @@ namespace TheOtherRoles
         {
             if (AdminTimerText != null)
                 UnityEngine.Object.Destroy(AdminTimerText);
-                AdminTimerText = null;
+            AdminTimerText = null;
             if (CamerasTimerText != null)
                 UnityEngine.Object.Destroy(CamerasTimerText);
-                CamerasTimerText = null;
+            CamerasTimerText = null;
             if (VitalsTimerText != null)
                 UnityEngine.Object.Destroy(VitalsTimerText);
-                VitalsTimerText = null;
+            VitalsTimerText = null;
 
         }
     }
