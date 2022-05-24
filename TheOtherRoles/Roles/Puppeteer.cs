@@ -92,6 +92,7 @@ namespace TheOtherRoles
         public override void OnDeath(PlayerControl killer = null)
         {
             counter -= penaltyOnDeath;
+            setOpacity(player, 1f);
         } 
         public override void HandleDisconnect(PlayerControl player, DisconnectReasons reason) { }
 
@@ -458,7 +459,7 @@ namespace TheOtherRoles
 
                 // インポスターの位置を示すArrowsを描画
                 foreach(PlayerControl p in PlayerControl.AllPlayerControls){
-                    if(p.Data.IsDead) continue;
+                    if(p.Data.IsDead || !p.Data.Role) continue;
                     Arrow arrow;
                     if(p.Data.Role.IsImpostor || p.isRole(RoleType.Jackal) || p.isRole(RoleType.JekyllAndHyde) || p == target)
                     {
@@ -805,7 +806,7 @@ namespace TheOtherRoles
                     if (Input.GetKeyUp(KeyCode.S))
                         down = false;
 
-                    if(Puppeteer.dummy != null)
+                    if(Puppeteer.dummy != null && !MeetingHud.Instance)
                     {
                         Vector2 pos = Puppeteer.dummy.transform.position;
                         Vector2 offset = Vector2.zero;
@@ -813,12 +814,16 @@ namespace TheOtherRoles
                         if(down) offset += new Vector2(0f, -0.5f);
                         if(left) offset += new Vector2(-0.5f, 0.0f);
                         if(right) offset += new Vector2(0.5f, 0.0f);
-                        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.WalkDummy, Hazel.SendOption.Reliable, -1);
-                        writer.Write(offset.x);
-                        writer.Write(offset.y);
-                        AmongUsClient.Instance.FinishRpcImmediately(writer);
-                        RPCProcedure.walkDummy(offset);
-                        if(!(up||down||right||left))
+                        MessageWriter writer;
+                        if (offset != Vector2.zero)
+                        {
+                            writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.WalkDummy, Hazel.SendOption.Reliable, -1);
+                            writer.Write(offset.x);
+                            writer.Write(offset.y);
+                            AmongUsClient.Instance.FinishRpcImmediately(writer);
+                            RPCProcedure.walkDummy(offset);
+                        }
+                        if(!(up||down||right||left) && dummy.NetTransform.targetSyncPosition != pos)
                         {
                             writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.MoveDummy, Hazel.SendOption.Reliable, -1);
                             writer.Write(Puppeteer.dummy.transform.position.x);
