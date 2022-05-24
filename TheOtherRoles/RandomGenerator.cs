@@ -92,9 +92,9 @@ namespace TheOtherRoles
         /*
             以下のURLの実装を元に実装
              https://github.com/igiagkiozis/PCGSharp
-            
+
             ToDo:PCG32-XSH-RR => PCG32-RXS-M-XS
-        
+
             implement(official):
                 static xtype output(itype internal)
                 {
