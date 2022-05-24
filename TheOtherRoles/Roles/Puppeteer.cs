@@ -1,15 +1,15 @@
 using System;
-using Hazel;
-using HarmonyLib;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
-using UnityEngine;
+using BepInEx.IL2CPP.Utils.Collections;
+using HarmonyLib;
+using Hazel;
 using TheOtherRoles.Objects;
-using static TheOtherRoles.TheOtherRoles;
+using UnityEngine;
 using static TheOtherRoles.Patches.PlayerControlFixedUpdatePatch;
 using static TheOtherRoles.Patches.SubmergedPatch;
-using BepInEx.IL2CPP.Utils.Collections;
+using static TheOtherRoles.TheOtherRoles;
 
 namespace TheOtherRoles
 {
@@ -18,11 +18,11 @@ namespace TheOtherRoles
     {
         public static Color color = Palette.Purple;
         public static int counter = 0;
-        public static int numKills {get {return (int)CustomOptionHolder.puppeteerNumKills.getFloat();}}
-        public static float sampleDuration {get {return CustomOptionHolder.puppeteerSampleDuration.getFloat();}}
-        public static bool canControlDummyEvenIfDead {get {return CustomOptionHolder.puppeteerCanControlDummyEvenIfDead.getBool();}}
-        public static int penaltyOnDeath {get {return (int)CustomOptionHolder.puppeteerPenaltyOnDeath.getFloat();}}
-        public static bool losesSenriganOnDeath {get {return CustomOptionHolder.puppeteerLosesSenriganOnDeath.getBool();}}
+        public static int numKills { get { return (int)CustomOptionHolder.puppeteerNumKills.getFloat(); } }
+        public static float sampleDuration { get { return CustomOptionHolder.puppeteerSampleDuration.getFloat(); } }
+        public static bool canControlDummyEvenIfDead { get { return CustomOptionHolder.puppeteerCanControlDummyEvenIfDead.getBool(); } }
+        public static int penaltyOnDeath { get { return (int)CustomOptionHolder.puppeteerPenaltyOnDeath.getFloat(); } }
+        public static bool losesSenriganOnDeath { get { return CustomOptionHolder.puppeteerLosesSenriganOnDeath.getBool(); } }
         public static bool triggerPuppeteerWin = false;
         public static bool isActive = false;
         public static bool canSpawn = true;
@@ -35,13 +35,13 @@ namespace TheOtherRoles
         public static Sprite sampleButtonSprite;
         public static CustomButton puppeteerButton;
         public static Sprite puppeteerButtonSprite;
-        public static List<Arrow> arrows = new List<Arrow>();
+        public static List<Arrow> arrows = new();
         public static float arrowUpdateInterval = 0.5f;
         public static float updateTimer = 0f;
         public static float posUpdateTimer = 0f;
         public static AudioClip laugh;
         public static bool soundFlag;
-        
+
         public static TMPro.TMP_Text puppeteerText;
 
         public Puppeteer()
@@ -51,13 +51,13 @@ namespace TheOtherRoles
 
         public override void OnMeetingStart()
         {
-            bool isAlive = Puppeteer.allPlayers.FindAll(x=> x.isAlive()).Count >= 1;
-            if(soundFlag && isAlive)
+            bool isAlive = Puppeteer.allPlayers.FindAll(x => x.isAlive()).Count >= 1;
+            if (soundFlag && isAlive)
             {
                 SoundManager._Instance.PlaySound(laugh, false, 1f);
             }
             soundFlag = false;
-            if(!isAlive && (PlayerControl.LocalPlayer.isImpostor() || PlayerControl.LocalPlayer.isRole(RoleType.Jackal) || PlayerControl.LocalPlayer.isRole(RoleType.JekyllAndHyde)))
+            if (!isAlive && (PlayerControl.LocalPlayer.isImpostor() || PlayerControl.LocalPlayer.isRole(RoleType.Jackal) || PlayerControl.LocalPlayer.isRole(RoleType.JekyllAndHyde)))
             {
                 string msg = $"人形遣いのカウント数 {counter}/{numKills}";
                 if (AmongUsClient.Instance.AmClient && DestroyableSingleton<HudManager>.Instance)
@@ -73,14 +73,14 @@ namespace TheOtherRoles
             target = null;
             canSpawn = false;
             isActive = false;
-            if(PlayerControl.LocalPlayer.isRole(RoleType.Puppeteer))
+            if (PlayerControl.LocalPlayer.isRole(RoleType.Puppeteer))
             {
                 switchStealth(false);
             }
         }
-        public override void FixedUpdate() 
+        public override void FixedUpdate()
         {
-            if(PlayerControl.LocalPlayer.isRole(RoleType.Puppeteer))
+            if (PlayerControl.LocalPlayer.isRole(RoleType.Puppeteer))
             {
                 currentTarget = setTarget();
                 setPlayerOutline(currentTarget, Puppeteer.color);
@@ -93,7 +93,7 @@ namespace TheOtherRoles
         {
             counter -= penaltyOnDeath;
             setOpacity(player, 1f);
-        } 
+        }
         public override void HandleDisconnect(PlayerControl player, DisconnectReasons reason) { }
 
         public static Sprite getSampleButtonSprite()
@@ -108,7 +108,7 @@ namespace TheOtherRoles
             puppeteerButtonSprite = ModTranslation.getImage("PuppeteerButton.png", 115f);
             return puppeteerButtonSprite;
         }
-        public static void MakeButtons(HudManager hm) 
+        public static void MakeButtons(HudManager hm)
         {
             sampleButton = new CustomButton(
                 // OnClick
@@ -123,7 +123,7 @@ namespace TheOtherRoles
                     }
                 },
                 // HasButton
-                () => { return PlayerControl.LocalPlayer.isRole(RoleType.Puppeteer)  && (PlayerControl.LocalPlayer.isAlive() || canControlDummyEvenIfDead); },
+                () => { return PlayerControl.LocalPlayer.isRole(RoleType.Puppeteer) && (PlayerControl.LocalPlayer.isAlive() || canControlDummyEvenIfDead); },
                 // CouldUse
                 () =>
                 {
@@ -144,7 +144,7 @@ namespace TheOtherRoles
                     target = null;
                     tmpTarget = null;
                 },
-                getSampleButtonSprite(), 
+                getSampleButtonSprite(),
                 new Vector3(-0.9f, 1f, 0),
                 hm,
                 hm.KillButton,
@@ -164,14 +164,16 @@ namespace TheOtherRoles
                     sampleButton.Timer = sampleButton.MaxTimer;
 
                 }
-            );
-            sampleButton.buttonText = "";
+            )
+            {
+                buttonText = ""
+            };
 
             puppeteerButton = new CustomButton(
                 // OnClick
                 () =>
                 {
-                    if(canSpawn)
+                    if (canSpawn)
                     {
                         spawnDummy();
                         switchStealth(true);
@@ -182,11 +184,11 @@ namespace TheOtherRoles
                     }
                 },
                 // HasButton
-                () => { return PlayerControl.LocalPlayer.isRole(RoleType.Puppeteer)  && (PlayerControl.LocalPlayer.isAlive() || canControlDummyEvenIfDead) && target != null; },
+                () => { return PlayerControl.LocalPlayer.isRole(RoleType.Puppeteer) && (PlayerControl.LocalPlayer.isAlive() || canControlDummyEvenIfDead) && target != null; },
                 // CouldUse
                 () =>
                 {
-                    if(puppeteerText != null)
+                    if (puppeteerText != null)
                     {
                         puppeteerText.text = $"{counter}/{numKills}";
                     }
@@ -197,14 +199,16 @@ namespace TheOtherRoles
                 {
                     puppeteerButton.Timer = puppeteerButton.MaxTimer;
                 },
-                getPuppeteerButtonSprite(), 
+                getPuppeteerButtonSprite(),
                 new Vector3(0.0f, 1f, 0),
                 hm,
                 hm.UseButton,
                 KeyCode.F,
                 false
-            );
-            puppeteerButton.buttonText = "";
+            )
+            {
+                buttonText = ""
+            };
             puppeteerText = GameObject.Instantiate(puppeteerButton.actionButton.cooldownTimerText, puppeteerButton.actionButton.cooldownTimerText.transform.parent);
             puppeteerText.text = "";
             puppeteerText.enableWordWrapping = false;
@@ -222,7 +226,7 @@ namespace TheOtherRoles
         {
             soundFlag = false;
             players = new List<Puppeteer>();
-            if(dummy != null) GameData.Instance.RemovePlayer(dummy.PlayerId);
+            if (dummy != null) GameData.Instance.RemovePlayer(dummy.PlayerId);
             dummy = null;
             stealthed = false;
             isActive = false;
@@ -230,8 +234,9 @@ namespace TheOtherRoles
             triggerPuppeteerWin = false;
             target = null;
             counter = 0;
-            foreach(Arrow arrow in arrows){
-                if(arrow != null && arrow.arrow != null)
+            foreach (Arrow arrow in arrows)
+            {
+                if (arrow != null && arrow.arrow != null)
                 {
                     arrow.arrow.SetActive(false);
                     UnityEngine.Object.Destroy(arrow.arrow);
@@ -245,9 +250,9 @@ namespace TheOtherRoles
         public static void spawnDummy()
         {
             MessageWriter writer;
-            if(dummy == null)
+            if (dummy == null)
             {
-                var playerId = (byte) GameData.Instance.GetAvailableId();
+                var playerId = (byte)GameData.Instance.GetAvailableId();
                 writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SpawnDummy, Hazel.SendOption.Reliable, -1);
                 writer.Write(playerId);
                 writer.Write(PlayerControl.LocalPlayer.transform.position.x);
@@ -263,13 +268,14 @@ namespace TheOtherRoles
             writer.Write(true);
             AmongUsClient.Instance.FinishRpcImmediately(writer);
             // 暫定遅延実行　何故か透明化が解除されないため
-            DestroyableSingleton<HudManager>.Instance.StartCoroutine(Effects.Lerp(0.25f, new Action<float>( p =>{
-                if(p== 1)
+            DestroyableSingleton<HudManager>.Instance.StartCoroutine(Effects.Lerp(0.25f, new Action<float>(p =>
+            {
+                if (p == 1)
                 {
                     RPCProcedure.moveDummy(PlayerControl.LocalPlayer.transform.position);
                 }
             })));
-            if(target != null)
+            if (target != null)
             {
                 writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.PuppeteerMorph, Hazel.SendOption.Reliable, -1);
                 writer.Write(target.PlayerId);
@@ -279,22 +285,22 @@ namespace TheOtherRoles
             canSpawn = false;
             isActive = true;
         }
-        
+
         public static float originalZoom = 0f;
-        public static Vector3 originalScale = new Vector3();
+        public static Vector3 originalScale = new();
         public static void senrigan(bool toggle)
         {
             // 初回呼び出し時にカメラのズーム率を保持しておく
             var hm = DestroyableSingleton<HudManager>.Instance;
-            if(originalZoom == 0) originalZoom = Camera.main.orthographicSize;
-            if(originalScale == new Vector3()) originalScale = hm.transform.localScale;
-            if(!toggle)
+            if (originalZoom == 0) originalZoom = Camera.main.orthographicSize;
+            if (originalScale == new Vector3()) originalScale = hm.transform.localScale;
+            if (!toggle)
             {
                 Camera.main.orthographicSize = originalZoom;
                 hm.UICamera.orthographicSize = originalZoom;
                 hm.transform.localScale = originalScale;
 
-                if(PlayerControl.LocalPlayer.isAlive())
+                if (PlayerControl.LocalPlayer.isAlive())
                 {
                     hm.ShadowQuad.gameObject.SetActive(true);
                 }
@@ -309,7 +315,7 @@ namespace TheOtherRoles
         }
         public static void switchStealth(bool flag)
         {
-            if(!flag)
+            if (!flag)
             {
                 MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.PuppeteerStealth, Hazel.SendOption.Reliable, -1);
                 writer.Write(false);
@@ -342,9 +348,9 @@ namespace TheOtherRoles
                 var hudManager = DestroyableSingleton<HudManager>.Instance;
                 var dummy = Puppeteer.dummy;
                 hudManager.PlayerCam.SetTarget(dummy);
-                if(losesSenriganOnDeath)
+                if (losesSenriganOnDeath)
                 {
-                    bool isAlive = Puppeteer.allPlayers.FindAll(x=> x.isAlive()).Count >= 1;
+                    bool isAlive = Puppeteer.allPlayers.FindAll(x => x.isAlive()).Count >= 1;
                     senrigan(isAlive);
                 }
                 else
@@ -362,24 +368,24 @@ namespace TheOtherRoles
 
         public static void setStealthed(bool stealthed = true)
         {
-                Puppeteer.stealthed = stealthed;
-                if(Puppeteer.stealthed)
-                {
-                    KeyboardJoystickUpdatePatch.up = false;
-                    KeyboardJoystickUpdatePatch.down = false;
-                    KeyboardJoystickUpdatePatch.left= false;
-                    KeyboardJoystickUpdatePatch.right= false;
-                }
+            Puppeteer.stealthed = stealthed;
+            if (Puppeteer.stealthed)
+            {
+                KeyboardJoystickUpdatePatch.up = false;
+                KeyboardJoystickUpdatePatch.down = false;
+                KeyboardJoystickUpdatePatch.left = false;
+                KeyboardJoystickUpdatePatch.right = false;
+            }
         }
 
         public static void OnTargetExiled()
         {
-            bool isAlive = Puppeteer.allPlayers.FindAll(x=> x.isAlive()).Count >= 1;
-            if(!target.isImpostor() && !target.isRole(RoleType.Jackal) && !target.isRole(RoleType.JekyllAndHyde) && isAlive)
+            bool isAlive = Puppeteer.allPlayers.FindAll(x => x.isAlive()).Count >= 1;
+            if (!target.isImpostor() && !target.isRole(RoleType.Jackal) && !target.isRole(RoleType.JekyllAndHyde) && isAlive)
             {
                 counter += 1;
             }
-            if(counter >= numKills && PlayerControl.LocalPlayer.isRole(RoleType.Puppeteer))
+            if (counter >= numKills && PlayerControl.LocalPlayer.isRole(RoleType.Puppeteer))
             {
                 MessageWriter winWriter = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.PuppeteerWin, Hazel.SendOption.Reliable, -1);
                 AmongUsClient.Instance.FinishRpcImmediately(winWriter);
@@ -390,22 +396,22 @@ namespace TheOtherRoles
         public static void OnDummyDeath(PlayerControl killer)
         {
             // クルーがダミーを殺した場合は本体が死ぬのでカウント対象外とする
-            if(!killer.isCrew())
+            if (!killer.isCrew())
                 counter += 1;
-                soundFlag = true;
+            soundFlag = true;
 
             // 人形遣い死亡時は空キルになるのでクールダウンにしない
-            bool isAlive = Puppeteer.allPlayers.FindAll(x=> x.isAlive()).Count >= 1;
-            if(!isAlive)
+            bool isAlive = Puppeteer.allPlayers.FindAll(x => x.isAlive()).Count >= 1;
+            if (!isAlive)
             {
                 killer.SetKillTimer(0f);
             }
 
             // 人形遣い専用の処理なので人形遣い以外はreturn
-            if(!PlayerControl.LocalPlayer.isRole(RoleType.Puppeteer)) return;
+            if (!PlayerControl.LocalPlayer.isRole(RoleType.Puppeteer)) return;
 
             // 勝利条件を満たしていたら勝利
-            if(counter >= numKills)
+            if (counter >= numKills)
             {
                 MessageWriter winWriter = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.PuppeteerWin, Hazel.SendOption.Reliable, -1);
                 AmongUsClient.Instance.FinishRpcImmediately(winWriter);
@@ -413,7 +419,7 @@ namespace TheOtherRoles
             }
 
             // ダミー死亡時に連動して発動するキル処理
-            if(target.isAlive() && isAlive && !killer.isCrew())
+            if (target.isAlive() && isAlive && !killer.isCrew())
             {
                 MessageWriter killWriter = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.PuppeteerKill, Hazel.SendOption.Reliable, -1);
                 killWriter.Write(killer.PlayerId);
@@ -421,7 +427,7 @@ namespace TheOtherRoles
                 AmongUsClient.Instance.FinishRpcImmediately(killWriter);
                 RPCProcedure.puppeteerKill(killer.PlayerId, target.PlayerId);
             }
-            else if(isAlive && killer.isCrew()) // ダミーをクルーがキルした場合は人形遣いが死亡する
+            else if (isAlive && killer.isCrew()) // ダミーをクルーがキルした場合は人形遣いが死亡する
             {
                 MessageWriter killWriter = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.PuppeteerKill, Hazel.SendOption.Reliable, -1);
                 killWriter.Write(killer.PlayerId);
@@ -437,16 +443,19 @@ namespace TheOtherRoles
             switchStealth(false);
         }
 
-        static void arrowUpdate(){
+        static void arrowUpdate()
+        {
 
             // 前フレームからの経過時間をマイナスする
             updateTimer -= Time.fixedDeltaTime;
 
             // 1秒経過したらArrowを更新
-            if(updateTimer <= 0.0f){
+            if (updateTimer <= 0.0f)
+            {
 
                 // 前回のArrowをすべて破棄する
-                foreach(Arrow arrow in arrows){
+                foreach (Arrow arrow in arrows)
+                {
                     if (arrow != null)
                     {
                         arrow.arrow.SetActive(false);
@@ -458,27 +467,30 @@ namespace TheOtherRoles
                 arrows = new List<Arrow>();
 
                 // インポスターの位置を示すArrowsを描画
-                foreach(PlayerControl p in PlayerControl.AllPlayerControls){
-                    if(p.Data.IsDead || !p.Data.Role) continue;
+                foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+                {
+                    if (p.Data.IsDead || !p.Data.Role) continue;
                     Arrow arrow;
-                    if(p.Data.Role.IsImpostor || p.isRole(RoleType.Jackal) || p.isRole(RoleType.JekyllAndHyde) || p == target)
+                    if (p.Data.Role.IsImpostor || p.isRole(RoleType.Jackal) || p.isRole(RoleType.JekyllAndHyde) || p == target)
                     {
-                        if(p.Data.Role.IsImpostor)
+                        if (p.Data.Role.IsImpostor)
                         {
                             arrow = new Arrow(Color.red);
                         }
-                        else if(p.isRole(RoleType.Jackal) || (p.isRole(RoleType.SchrodingersCat) && SchrodingersCat.team == SchrodingersCat.Team.Jackal))
+                        else if (p.isRole(RoleType.Jackal) || (p.isRole(RoleType.SchrodingersCat) && SchrodingersCat.team == SchrodingersCat.Team.Jackal))
                         {
                             arrow = new Arrow(Jackal.color);
                         }
-                        else if(p.isRole(RoleType.JekyllAndHyde))
+                        else if (p.isRole(RoleType.JekyllAndHyde))
                         {
                             arrow = new Arrow(JekyllAndHyde.color);
                         }
-                        else if(p==target)
+                        else if (p == target)
                         {
                             arrow = new Arrow(Puppeteer.color);
-                        }else{
+                        }
+                        else
+                        {
                             arrow = new Arrow(Color.black);
                         }
                         arrow.arrow.SetActive(true);
@@ -498,9 +510,10 @@ namespace TheOtherRoles
             posUpdateTimer -= Time.fixedDeltaTime;
 
             // 1秒経過したらArrowを更新
-            if(updateTimer <= 0.0f){
+            if (updateTimer <= 0.0f)
+            {
 
-                if(dummy != null)
+                if (dummy != null)
                 {
                     MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.MoveDummy, Hazel.SendOption.Reliable, -1);
                     writer.Write(Puppeteer.dummy.transform.position.x);
@@ -557,7 +570,7 @@ namespace TheOtherRoles
                     var puppeteer = __instance.myPlayer;
                     if (puppeteer == null || puppeteer.isDead()) return;
 
-                    bool canSee = 
+                    bool canSee =
                         PlayerControl.LocalPlayer.isRole(RoleType.Puppeteer) ||
                         PlayerControl.LocalPlayer.isDead();
 
@@ -579,7 +592,7 @@ namespace TheOtherRoles
                     var dummy = __instance.myPlayer;
                     if (dummy == null || dummy.isDead()) return;
 
-                    bool canSee = 
+                    bool canSee =
                         PlayerControl.LocalPlayer.isRole(RoleType.Puppeteer) ||
                         PlayerControl.LocalPlayer.isDead();
 
@@ -599,8 +612,10 @@ namespace TheOtherRoles
         }
 
         [HarmonyPatch(typeof(ExileController), nameof(ExileController.Begin))]
-        class ExileControllerBeginPatch {
-            public static void Prefix(ExileController __instance, [HarmonyArgument(0)]ref GameData.PlayerInfo exiled, [HarmonyArgument(1)]bool tie) {
+        class ExileControllerBeginPatch
+        {
+            public static void Prefix(ExileController __instance, [HarmonyArgument(0)] ref GameData.PlayerInfo exiled, [HarmonyArgument(1)] bool tie)
+            {
                 if (exiled != null && exiled.Object == target)
                 {
                     OnTargetExiled();
@@ -625,24 +640,24 @@ namespace TheOtherRoles
             }
             public static void Postfix(KeyboardJoystick __instance)
             {
-                if(!PlayerControl.LocalPlayer.isRole(RoleType.Puppeteer)) return;
+                if (!PlayerControl.LocalPlayer.isRole(RoleType.Puppeteer)) return;
 
                 if (stealthed)
                 {
-                    if(stop) return;
+                    if (stop) return;
                     // 梯子を使う/ドアを開ける
                     if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Space))
                     {
                         PlainDoor[] doors;
-                        if(PlayerControl.GameOptions.MapId == 4)
+                        if (PlayerControl.GameOptions.MapId == 4)
                         {
                             doors = DestroyableSingleton<AirshipStatus>.Instance.GetComponentsInChildren<PlainDoor>();
                         }
-                        else if(PlayerControl.GameOptions.MapId == 2)
+                        else if (PlayerControl.GameOptions.MapId == 2)
                         {
                             doors = DestroyableSingleton<PolusShipStatus>.Instance.GetComponentsInChildren<PlainDoor>();
                         }
-                        else if(PlayerControl.GameOptions.MapId == 1)
+                        else if (PlayerControl.GameOptions.MapId == 1)
                         {
                             doors = DestroyableSingleton<MiraShipStatus>.Instance.GetComponentsInChildren<PlainDoor>();
                         }
@@ -657,36 +672,36 @@ namespace TheOtherRoles
                         }
                         PlainDoor t = null;
                         float minDistance = 9999;
-                        foreach(var door in doors)
+                        foreach (var door in doors)
                         {
                             float distance = Vector2.Distance(door.transform.position, dummy.transform.position);
-                            if(distance < 1.5f && distance < minDistance)
+                            if (distance < 1.5f && distance < minDistance)
                             {
                                 t = door;
                                 minDistance = distance;
                             }
                         }
-                        if(t != null)
+                        if (t != null)
                         {
                             var deconSystem = t.transform.parent.gameObject.GetComponent<DeconSystem>();
-                            if(deconSystem != null)
+                            if (deconSystem != null)
                             {
                                 bool flag = true;
                                 if (PlayerControl.GameOptions.MapId == 2)
                                     flag = t.name.Contains("Inner");
-                                else if(SubmergedCompatibility.isSubmerged())
+                                else if (SubmergedCompatibility.isSubmerged())
                                     flag = t.name.Contains("Upper");
                                 var consoles = t.GetComponentsInChildren<DeconControl>();
                                 DeconControl inner = null;
                                 DeconControl outer = null;
-                                foreach(var console in consoles)
+                                foreach (var console in consoles)
                                 {
-                                    if(console.name == "InnerConsole") inner = console;
-                                    if(console.name == "OuterConsole") outer = console;
+                                    if (console.name == "InnerConsole") inner = console;
+                                    if (console.name == "OuterConsole") outer = console;
                                 }
-                                float distOuter  = Vector2.Distance(outer.transform.position, dummy.transform.position);
-                                float distInner  = Vector2.Distance(inner.transform.position, dummy.transform.position);
-                                if(distInner < distOuter)
+                                float distOuter = Vector2.Distance(outer.transform.position, dummy.transform.position);
+                                float distInner = Vector2.Distance(inner.transform.position, dummy.transform.position);
+                                if (distInner < distOuter)
                                 {
                                     deconSystem.OpenFromInside(flag);
                                 }
@@ -703,14 +718,14 @@ namespace TheOtherRoles
                         }
 
 
-                        if(PlayerControl.GameOptions.MapId == 4)
+                        if (PlayerControl.GameOptions.MapId == 4)
                         {
                             Ladder[] ladders = DestroyableSingleton<AirshipStatus>.Instance.GetComponentsInChildren<Ladder>();
                             Ladder target = null;
-                            foreach(var ladder in ladders)
+                            foreach (var ladder in ladders)
                             {
                                 float distance = Vector2.Distance(ladder.transform.position, dummy.transform.position);
-                                if(distance < 0.5f)
+                                if (distance < 0.5f)
                                 {
                                     target = ladder;
                                     break;
@@ -726,15 +741,15 @@ namespace TheOtherRoles
                                 return;
                             }
 
-                            AirshipStatus shipstatus =  DestroyableSingleton<AirshipStatus>.Instance;
-                            if(shipstatus != null)
+                            AirshipStatus shipstatus = DestroyableSingleton<AirshipStatus>.Instance;
+                            if (shipstatus != null)
                             {
                                 var consoles = shipstatus.GetComponentsInChildren<PlatformConsole>().ToList();
-                                PlatformConsole leftPlatform = consoles.Find(x=> x.name == "PlatformLeft");
-                                PlatformConsole rightPlatform = consoles.Find(x=> x.name == "PlatformRight");
+                                PlatformConsole leftPlatform = consoles.Find(x => x.name == "PlatformLeft");
+                                PlatformConsole rightPlatform = consoles.Find(x => x.name == "PlatformRight");
                                 float distanceRight = Vector2.Distance(leftPlatform.transform.position, dummy.transform.position);
                                 float distanceLeft = Vector2.Distance(rightPlatform.transform.position, dummy.transform.position);
-                                if(distanceRight < 0.8f || distanceLeft < 0.8f)
+                                if (distanceRight < 0.8f || distanceLeft < 0.8f)
                                 {
                                     MessageWriter messageWriter = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.PuppeteerUsePlatform, Hazel.SendOption.Reliable, -1);
                                     messageWriter.Write(dummy.PlayerId);
@@ -744,7 +759,7 @@ namespace TheOtherRoles
                                     DestroyableSingleton<HudManager>._instance.StartCoroutine(DontMove(1).WrapToIl2Cpp());
                                     DestroyableSingleton<HudManager>.Instance.StartCoroutine(Effects.Lerp(1f, new Action<float>(t =>
                                     {
-                                        if(t >= 1.0f)
+                                        if (t >= 1.0f)
                                         {
                                             messageWriter = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.PuppeteerUsePlatform, Hazel.SendOption.Reliable, -1);
                                             messageWriter.Write(dummy.PlayerId);
@@ -758,12 +773,12 @@ namespace TheOtherRoles
                         }
 
                         // エレベーター(サブマージド)
-                        if(SubmergedCompatibility.isSubmerged())
+                        if (SubmergedCompatibility.isSubmerged())
                         {
                             var elevators = Helpers.FindObjectsOfType(SubmarineElevatorType);
                             object elevator = null;
                             minDistance = 9999;
-                            foreach(var e in elevators)
+                            foreach (var e in elevators)
                             {
                                 var pos = (e as UnityEngine.MonoBehaviour).transform.position;
                                 FieldInfo lowerInnerDoorInfo = SubmarineElevatorType.GetField("LowerInnerDoor");
@@ -773,18 +788,18 @@ namespace TheOtherRoles
                                 float lowerDistance = Vector2.Distance(dummy.transform.position, lowerInnerDoor.transform.position);
                                 float upperDistance = Vector2.Distance(dummy.transform.position, upperInnerDoor.transform.position);
                                 float distance = lowerDistance < upperDistance ? lowerDistance : upperDistance;
-                                if(distance < 1.5 &&  distance < minDistance)
+                                if (distance < 1.5 && distance < minDistance)
                                 {
                                     minDistance = distance;
                                     elevator = e;
                                 }
                             }
-                            if(elevator != null)
+                            if (elevator != null)
                             {
                                 var use = SubmarineElevatorType.GetMethod("Use");
                                 use.Invoke(elevator, new object[0]);
                             }
-                            
+
                         }
 
                     }
@@ -806,14 +821,14 @@ namespace TheOtherRoles
                     if (Input.GetKeyUp(KeyCode.S))
                         down = false;
 
-                    if(Puppeteer.dummy != null && !MeetingHud.Instance)
+                    if (Puppeteer.dummy != null && !MeetingHud.Instance)
                     {
                         Vector2 pos = Puppeteer.dummy.transform.position;
                         Vector2 offset = Vector2.zero;
-                        if(up) offset += new Vector2(0f, 0.5f);
-                        if(down) offset += new Vector2(0f, -0.5f);
-                        if(left) offset += new Vector2(-0.5f, 0.0f);
-                        if(right) offset += new Vector2(0.5f, 0.0f);
+                        if (up) offset += new Vector2(0f, 0.5f);
+                        if (down) offset += new Vector2(0f, -0.5f);
+                        if (left) offset += new Vector2(-0.5f, 0.0f);
+                        if (right) offset += new Vector2(0.5f, 0.0f);
                         MessageWriter writer;
                         if (offset != Vector2.zero)
                         {
@@ -823,7 +838,7 @@ namespace TheOtherRoles
                             AmongUsClient.Instance.FinishRpcImmediately(writer);
                             RPCProcedure.walkDummy(offset);
                         }
-                        if(!(up||down||right||left) && dummy.NetTransform.targetSyncPosition != pos)
+                        if (!(up || down || right || left) && dummy.NetTransform.targetSyncPosition != pos)
                         {
                             writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.MoveDummy, Hazel.SendOption.Reliable, -1);
                             writer.Write(Puppeteer.dummy.transform.position.x);
@@ -832,7 +847,7 @@ namespace TheOtherRoles
                             writer.Write(false);
                             AmongUsClient.Instance.FinishRpcImmediately(writer);
                             // RPCProcedure.moveDummy(Puppeteer.dummy.transform.position);
-                        } 
+                        }
                     }
 
                 }

@@ -1,9 +1,9 @@
-﻿using HarmonyLib;
-using Hazel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using HarmonyLib;
+using Hazel;
 using UnityEngine;
-using System;
 using static TheOtherRoles.TheOtherRoles;
 
 namespace TheOtherRoles.Patches
@@ -23,7 +23,7 @@ namespace TheOtherRoles.Patches
     [HarmonyPatch(typeof(RoleManager), nameof(RoleManager.SelectRoles))]
     class RoleManagerSelectRolesPatch
     {
-        private static List<byte> blockLovers = new List<byte>();
+        private static List<byte> blockLovers = new();
         public static int blockedAssignments = 0;
         public static int maxBlocks = 10;
 
@@ -132,9 +132,9 @@ namespace TheOtherRoles.Patches
             int maxImpostorRoles = Mathf.Min(impostors.Count, impCountSettings);
 
             // Fill in the lists with the roles that should be assigned to players. Note that the special roles (like Mafia or Lovers) are NOT included in these lists
-            Dictionary<byte, (int rate, int count)> impSettings = new Dictionary<byte, (int, int)>();
-            Dictionary<byte, (int rate, int count)> neutralSettings = new Dictionary<byte, (int, int)>();
-            Dictionary<byte, (int rate, int count)> crewSettings = new Dictionary<byte, (int, int)>();
+            Dictionary<byte, (int rate, int count)> impSettings = new();
+            Dictionary<byte, (int rate, int count)> neutralSettings = new();
+            Dictionary<byte, (int rate, int count)> crewSettings = new();
 
             impSettings.Add((byte)RoleType.Morphling, CustomOptionHolder.morphlingSpawnRate.data);
             impSettings.Add((byte)RoleType.Camouflager, CustomOptionHolder.camouflagerSpawnRate.data);
@@ -320,25 +320,32 @@ namespace TheOtherRoles.Patches
 
             // Assign Guesser (chance to be impostor based on setting)
             bool isEvilGuesser = (rnd.Next(1, 101) <= CustomOptionHolder.guesserIsImpGuesserRate.getSelection() * 10);
-            if (CustomOptionHolder.guesserSpawnBothRate.getSelection() > 0) {
-                if (rnd.Next(1, 101) <= CustomOptionHolder.guesserSpawnRate.getSelection() * 10) {
-                    if (isEvilGuesser) {
-                        if (data.impostors.Count > 0 && data.maxImpostorRoles > 0) {
+            if (CustomOptionHolder.guesserSpawnBothRate.getSelection() > 0)
+            {
+                if (rnd.Next(1, 101) <= CustomOptionHolder.guesserSpawnRate.getSelection() * 10)
+                {
+                    if (isEvilGuesser)
+                    {
+                        if (data.impostors.Count > 0 && data.maxImpostorRoles > 0)
+                        {
                             byte evilGuesser = setRoleToRandomPlayer((byte)RoleType.EvilGuesser, data.impostors);
                             data.impostors.ToList().RemoveAll(x => x.PlayerId == evilGuesser);
                             data.maxImpostorRoles--;
                             data.crewSettings.Add((byte)RoleType.NiceGuesser, (CustomOptionHolder.guesserSpawnBothRate.getSelection(), 1));
                         }
                     }
-                    else if (data.crewmates.Count > 0 && data.maxCrewmateRoles > 0) {                    
+                    else if (data.crewmates.Count > 0 && data.maxCrewmateRoles > 0)
+                    {
                         byte niceGuesser = setRoleToRandomPlayer((byte)RoleType.NiceGuesser, data.crewmates);
                         data.crewmates.ToList().RemoveAll(x => x.PlayerId == niceGuesser);
                         data.maxCrewmateRoles--;
                         data.impSettings.Add((byte)RoleType.EvilGuesser, (CustomOptionHolder.guesserSpawnBothRate.getSelection(), 1));
                     }
                 }
-            } else {
-                if (isEvilGuesser) data.impSettings.Add((byte)RoleType.EvilGuesser, (CustomOptionHolder.guesserSpawnRate.getSelection(), 1)); 
+            }
+            else
+            {
+                if (isEvilGuesser) data.impSettings.Add((byte)RoleType.EvilGuesser, (CustomOptionHolder.guesserSpawnRate.getSelection(), 1));
                 else data.crewSettings.Add((byte)RoleType.NiceGuesser, (CustomOptionHolder.guesserSpawnRate.getSelection(), 1));
             }
 
@@ -418,7 +425,7 @@ namespace TheOtherRoles.Patches
                 )))
             {
 
-                Dictionary<TeamType, List<byte>> rolesToAssign = new Dictionary<TeamType, List<byte>>();
+                Dictionary<TeamType, List<byte>> rolesToAssign = new();
                 if (data.crewmates.Count > 0 && data.maxCrewmateRoles > 0 && ensuredCrewmateRoles.Count > 0) rolesToAssign.Add(TeamType.Crewmate, ensuredCrewmateRoles);
                 if (data.crewmates.Count > 0 && data.maxNeutralRoles > 0 && ensuredNeutralRoles.Count > 0) rolesToAssign.Add(TeamType.Neutral, ensuredNeutralRoles);
                 if (data.impostors.Count > 0 && data.maxImpostorRoles > 0 && ensuredImpostorRoles.Count > 0) rolesToAssign.Add(TeamType.Impostor, ensuredImpostorRoles);
@@ -485,7 +492,7 @@ namespace TheOtherRoles.Patches
                 )))
             {
 
-                Dictionary<TeamType, List<byte>> rolesToAssign = new Dictionary<TeamType, List<byte>>();
+                Dictionary<TeamType, List<byte>> rolesToAssign = new();
                 if (data.crewmates.Count > 0 && data.maxCrewmateRoles > 0 && crewmateTickets.Count > 0) rolesToAssign.Add(TeamType.Crewmate, crewmateTickets);
                 if (data.crewmates.Count > 0 && data.maxNeutralRoles > 0 && neutralTickets.Count > 0) rolesToAssign.Add(TeamType.Neutral, neutralTickets);
                 if (data.impostors.Count > 0 && data.maxImpostorRoles > 0 && impostorTickets.Count > 0) rolesToAssign.Add(TeamType.Impostor, impostorTickets);
@@ -689,9 +696,9 @@ namespace TheOtherRoles.Patches
         {
             public List<PlayerControl> crewmates { get; set; }
             public List<PlayerControl> impostors { get; set; }
-            public Dictionary<byte, (int rate, int count)> impSettings = new Dictionary<byte, (int, int)>();
-            public Dictionary<byte, (int rate, int count)> neutralSettings = new Dictionary<byte, (int, int)>();
-            public Dictionary<byte, (int rate, int count)> crewSettings = new Dictionary<byte, (int, int)>();
+            public Dictionary<byte, (int rate, int count)> impSettings = new();
+            public Dictionary<byte, (int rate, int count)> neutralSettings = new();
+            public Dictionary<byte, (int rate, int count)> crewSettings = new();
             public int maxCrewmateRoles { get; set; }
             public int maxNeutralRoles { get; set; }
             public int maxImpostorRoles { get; set; }

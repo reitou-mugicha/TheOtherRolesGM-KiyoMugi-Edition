@@ -1,26 +1,26 @@
-using HarmonyLib;
-using Hazel;
 using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using System.Linq;
-using UnityEngine;
+using System.Text.RegularExpressions;
+using HarmonyLib;
+using Hazel;
 using TheOtherRoles.Objects;
 using TheOtherRoles.Patches;
-using static TheOtherRoles.TheOtherRoles;
+using UnityEngine;
 using static TheOtherRoles.GameHistory;
+using static TheOtherRoles.TheOtherRoles;
 
 namespace TheOtherRoles
 {
     [HarmonyPatch]
-    public class Mini: ModifierBase<Mini>
+    public class Mini : ModifierBase<Mini>
     {
         public static Color color = Color.yellow;
         public static List<PlayerControl> candidates
         {
             get
             {
-                List<PlayerControl> validPlayers = new List<PlayerControl>();
+                List<PlayerControl> validPlayers = new();
 
                 foreach (var player in PlayerControl.AllPlayerControls)
                 {
@@ -51,7 +51,7 @@ namespace TheOtherRoles
         public static bool isGrownUp(PlayerControl player)
         {
             Mini mini = players.First(x => x.player == player);
-            if(mini == null) return true;
+            if (mini == null) return true;
             return mini.growingProgress() == 1f;
         }
         public static string postfix

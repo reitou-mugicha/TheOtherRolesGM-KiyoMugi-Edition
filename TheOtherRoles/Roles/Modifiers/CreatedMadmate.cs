@@ -1,11 +1,11 @@
-using HarmonyLib;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
+using HarmonyLib;
 using TheOtherRoles.Objects;
 using TheOtherRoles.Patches;
-using static TheOtherRoles.TheOtherRoles;
+using UnityEngine;
 using static TheOtherRoles.GameHistory;
+using static TheOtherRoles.TheOtherRoles;
 
 namespace TheOtherRoles
 {
@@ -38,7 +38,7 @@ namespace TheOtherRoles
         public static int numTasks { get { return (int)CustomOptionHolder.createdMadmateNumTasks.getFloat(); } }
 
         public static bool hasTasks { get { return madmateAbility == CreatedMadmateAbility.Fanatic; } }
-        public static bool exileCrewmate { get {return CustomOptionHolder.createdMadmateExileCrewmate.getBool(); } }
+        public static bool exileCrewmate { get { return CustomOptionHolder.createdMadmateExileCrewmate.getBool(); } }
 
         public static string prefix
         {

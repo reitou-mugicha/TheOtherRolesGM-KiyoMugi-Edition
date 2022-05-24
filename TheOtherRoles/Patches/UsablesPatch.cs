@@ -1,6 +1,6 @@
+using System;
 using HarmonyLib;
 using Hazel;
-using System;
 using UnityEngine;
 using static TheOtherRoles.MapOptions;
 using static TheOtherRoles.TheOtherRoles;
@@ -39,19 +39,19 @@ namespace TheOtherRoles.Patches
             {
                 return true;
             }
-            
+
             if (pc.isRole(RoleType.Fox) && (isLights || isComms || isReactor || isO2))
             {
-                if(Fox.foxCanFixSabotageWhileStealth && Fox.isStealthed(pc))
+                if (Fox.foxCanFixSabotageWhileStealth && Fox.isStealthed(pc))
                 {
                     return false;
                 }
-                
-                else if(isLights|| isComms)
+
+                else if (isLights || isComms)
                 {
                     return true;
                 }
-                else if((isO2 || isReactor ) && !Fox.canFixReactorAndO2)
+                else if ((isO2 || isReactor) && !Fox.canFixReactorAndO2)
                 {
                     return true;
                 }
@@ -69,7 +69,7 @@ namespace TheOtherRoles.Patches
 
             if (pc.isRole(RoleType.Fox) && (isLights || isComms || isReactor || isO2))
             {
-                if (isLights|| isComms)
+                if (isLights || isComms)
                 {
                     return true;
                 }
@@ -120,7 +120,7 @@ namespace TheOtherRoles.Patches
             // Hydeの時にはタスクができない
             if (PlayerControl.LocalPlayer.isRole(RoleType.JekyllAndHyde) && !JekyllAndHyde.isJekyll())
             {
-                string name = targetSysConsole == null ? "":targetSysConsole.name;
+                string name = targetSysConsole == null ? "" : targetSysConsole.name;
                 bool isSecurity = name == "task_cams" || name == "Surv_Panel" || name == "SurvLogConsole" || name == "SurvConsole";
                 bool isVitals = name == "panel_vitals";
                 bool isButton = name == "EmergencyButton" || name == "EmergencyConsole" || name == "task_emergency";
@@ -129,7 +129,7 @@ namespace TheOtherRoles.Patches
                 bool isComms = task?.TaskType == TaskTypes.FixComms;
                 bool isReactor = task?.TaskType == TaskTypes.StopCharles || task?.TaskType == TaskTypes.ResetSeismic || task?.TaskType == TaskTypes.ResetReactor;
                 bool isO2 = task?.TaskType == TaskTypes.RestoreOxy;
-                if( !isSecurity || !isVitals || !isButton || ! isLights || !isComms || !isReactor || !isO2)
+                if (!isSecurity || !isVitals || !isButton || !isLights || !isComms || !isReactor || !isO2)
                 {
                     return true;
                 }
@@ -160,29 +160,34 @@ namespace TheOtherRoles.Patches
                 }
                 bool roleCouldUse = @object.roleCanUseVents();
 
-                if (__instance.name.StartsWith("SealedVent_")) {
+                if (__instance.name.StartsWith("SealedVent_"))
+                {
                     canUse = couldUse = false;
                     __result = num;
                     return false;
                 }
 
                 // Submerged Compatability if needed:
-                if (SubmergedCompatibility.isSubmerged()) {
+                if (SubmergedCompatibility.isSubmerged())
+                {
                     // as submerged does, only change stuff for vents 9 and 14 of submerged. Code partially provided by AlexejheroYTB
-                    if (SubmergedCompatibility.getInTransition()) {
+                    if (SubmergedCompatibility.getInTransition())
+                    {
                         __result = float.MaxValue;
                         return canUse = couldUse = false;
-                    }                
-                    switch (__instance.Id) {
+                    }
+                    switch (__instance.Id)
+                    {
                         case 9:  // Cannot enter vent 9 (Engine Room Exit Only Vent)!
                             if (PlayerControl.LocalPlayer.inVent) break;
                             __result = float.MaxValue;
-                            return canUse = couldUse = false;                    
+                            return canUse = couldUse = false;
                         case 14: // Lower Central
                             __result = float.MaxValue;
                             couldUse = roleCouldUse && !pc.IsDead && (@object.CanMove || @object.inVent);
                             canUse = couldUse;
-                            if (canUse) {
+                            if (canUse)
+                            {
                                 Vector3 center = @object.Collider.bounds.center;
                                 Vector3 position = __instance.transform.position;
                                 __result = Vector2.Distance(center, position);
@@ -282,17 +287,21 @@ namespace TheOtherRoles.Patches
 
         // disable vent animation
         [HarmonyPatch(typeof(Vent), nameof(Vent.EnterVent))]
-        public static class EnterVentPatch {
-            public static bool Prefix(Vent __instance, [HarmonyArgument(0)] PlayerControl pc) {
-                if(!CustomOptionHolder.disableVentAnimation.getBool()) return true;
+        public static class EnterVentPatch
+        {
+            public static bool Prefix(Vent __instance, [HarmonyArgument(0)] PlayerControl pc)
+            {
+                if (!CustomOptionHolder.disableVentAnimation.getBool()) return true;
                 return pc.AmOwner;
             }
         }
 
         [HarmonyPatch(typeof(Vent), nameof(Vent.ExitVent))]
-        public static class ExitVentPatch {
-            public static bool Prefix(Vent __instance, [HarmonyArgument(0)] PlayerControl pc) {
-                if(!CustomOptionHolder.disableVentAnimation.getBool()) return true;
+        public static class ExitVentPatch
+        {
+            public static bool Prefix(Vent __instance, [HarmonyArgument(0)] PlayerControl pc)
+            {
+                if (!CustomOptionHolder.disableVentAnimation.getBool()) return true;
                 return pc.AmOwner;
             }
         }
@@ -355,7 +364,8 @@ namespace TheOtherRoles.Patches
                     // Use an unchecked kill command, to allow shorter kill cooldowns etc. without getting kicked
                     MurderAttemptResult res = Helpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer, __instance.currentTarget, showAnimation: showAnimation);
                     // Handle blank kill
-                    if (res == MurderAttemptResult.BlankKill) {
+                    if (res == MurderAttemptResult.BlankKill)
+                    {
                         PlayerControl.LocalPlayer.killTimer = PlayerControl.GameOptions.KillCooldown;
                         if (PlayerControl.LocalPlayer == Cleaner.cleaner)
                             Cleaner.cleaner.killTimer = HudManagerStartPatch.cleanerCleanButton.Timer = HudManagerStartPatch.cleanerCleanButton.MaxTimer;
@@ -460,12 +470,12 @@ namespace TheOtherRoles.Patches
                 {
                     roleCanCallEmergency = false;
                     statusText = ModTranslation.getString("jesterMeetingButton");
-	            }
+                }
 
-	            // Potentially deactivate emergency button for Lawyer
-	            if (Lawyer.lawyer != null && Lawyer.lawyer == PlayerControl.LocalPlayer && Lawyer.winsAfterMeetings)
+                // Potentially deactivate emergency button for Lawyer
+                if (Lawyer.lawyer != null && Lawyer.lawyer == PlayerControl.LocalPlayer && Lawyer.winsAfterMeetings)
                 {
-	                roleCanCallEmergency = false;
+                    roleCanCallEmergency = false;
                     statusText = String.Format(ModTranslation.getString("lawyerMeetingButton"), Lawyer.neededMeetings - Lawyer.meetings);
                 }
 

@@ -1,9 +1,9 @@
-﻿using HarmonyLib;
 using System.Collections.Generic;
+using HarmonyLib;
+using TheOtherRoles.Patches;
 using UnityEngine;
 using static TheOtherRoles.GameHistory;
 using static TheOtherRoles.TheOtherRoles;
-using TheOtherRoles.Patches;
 
 namespace TheOtherRoles
 {
@@ -74,11 +74,11 @@ namespace TheOtherRoles
     [HarmonyPatch]
     public static class Lovers
     {
-        public static List<Couple> couples = new List<Couple>();
+        public static List<Couple> couples = new();
         public static Color color = new Color32(232, 57, 185, byte.MaxValue);
 
-        public static List<Color> loverIconColors = new List<Color>
-            {
+        public static List<Color> loverIconColors = new()
+        {
                 Lovers.color,                  // pink
                 new Color32(255, 165, 0, 255), // orange
                 new Color32(255, 255, 0, 255), // yellow

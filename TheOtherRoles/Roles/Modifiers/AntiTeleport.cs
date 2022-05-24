@@ -1,27 +1,27 @@
-using HarmonyLib;
-using Hazel;
 using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using System.Linq;
-using UnityEngine;
+using System.Text.RegularExpressions;
+using HarmonyLib;
+using Hazel;
 using TheOtherRoles.Objects;
 using TheOtherRoles.Patches;
-using static TheOtherRoles.TheOtherRoles;
+using UnityEngine;
 using static TheOtherRoles.GameHistory;
+using static TheOtherRoles.TheOtherRoles;
 
 namespace TheOtherRoles
 {
     [HarmonyPatch]
-    public class AntiTeleport: ModifierBase<AntiTeleport>
+    public class AntiTeleport : ModifierBase<AntiTeleport>
     {
         public static Color color = Palette.Orange;
-        public static Vector3 position = new Vector3();
+        public static Vector3 position = new();
         public static List<PlayerControl> candidates
         {
             get
             {
-                List<PlayerControl> validPlayers = new List<PlayerControl>();
+                List<PlayerControl> validPlayers = new();
 
                 foreach (var player in PlayerControl.AllPlayerControls)
                 {

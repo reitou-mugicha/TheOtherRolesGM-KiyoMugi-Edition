@@ -1,13 +1,13 @@
-using HarmonyLib;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System;
+using HarmonyLib;
 using Hazel;
-using UnityEngine;
 using TheOtherRoles.Objects;
 using TheOtherRoles.Patches;
-using static TheOtherRoles.TheOtherRoles;
+using UnityEngine;
 using static TheOtherRoles.GameHistory;
+using static TheOtherRoles.TheOtherRoles;
 
 namespace TheOtherRoles
 {
@@ -37,13 +37,13 @@ namespace TheOtherRoles
         public override void OnMeetingEnd() { }
         public override void FixedUpdate()
         {
-            if(PlayerControl.LocalPlayer == player)
+            if (PlayerControl.LocalPlayer == player)
                 arrowUpdate();
         }
         public override void OnKill(PlayerControl target) { }
         public override void OnDeath(PlayerControl killer = null)
         {
-            if(MimicK.ifOneDiesBothDie)
+            if (MimicK.ifOneDiesBothDie)
             {
                 var partner = MimicK.players.FirstOrDefault().player;
                 if (!partner.Data.IsDead)
@@ -74,7 +74,8 @@ namespace TheOtherRoles
             morphButtonSprite = ModTranslation.getImage("MorphButton.png", 115f);
             return morphButtonSprite;
         }
-        public static Sprite getAdminButtonSprite() {
+        public static Sprite getAdminButtonSprite()
+        {
             if (adminButtonSprite) return adminButtonSprite;
             byte mapId = PlayerControl.GameOptions.MapId;
             UseButtonSettings button = HudManager.Instance.UseButton.fastUseSettings[ImageNames.PolusAdminButton]; // Polus
@@ -89,7 +90,7 @@ namespace TheOtherRoles
             morphButton = new CustomButton(
                 () =>
                 {
-                    if(!isMorph)
+                    if (!isMorph)
                     {
                         MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.mimicMorph, Hazel.SendOption.Reliable, -1);
                         writer.Write(PlayerControl.LocalPlayer.PlayerId);
@@ -106,7 +107,7 @@ namespace TheOtherRoles
                     }
 
                 },
-                () => { return PlayerControl.LocalPlayer.isRole(RoleType.MimicA) && PlayerControl.LocalPlayer.isAlive() && MimicK.isAlive();},
+                () => { return PlayerControl.LocalPlayer.isRole(RoleType.MimicA) && PlayerControl.LocalPlayer.isAlive() && MimicK.isAlive(); },
                 () => { return PlayerControl.LocalPlayer.CanMove; },
                 () =>
                 {
@@ -117,39 +118,46 @@ namespace TheOtherRoles
                 hm.UseButton,
                 KeyCode.Q,
                 false
-            );
-            morphButton.buttonText = "";
+            )
+            {
+                buttonText = ""
+            };
 
-           adminButton = new CustomButton(
-                () => {
-                    PlayerControl.LocalPlayer.NetTransform.Halt();
-                    Action<MapBehaviour> tmpAction = (MapBehaviour m) => { m.ShowCountOverlay(); };
-                    DestroyableSingleton<HudManager>.Instance.ShowMap(tmpAction);
-                    if (PlayerControl.LocalPlayer.AmOwner) {
-                        PlayerControl.LocalPlayer.MyPhysics.inputHandler.enabled = true;
-                        ConsoleJoystick.SetMode_Task();
-                    }
-                },
-                () => {
-                    return PlayerControl.LocalPlayer.isRole(RoleType.MimicA) &&
-                      PlayerControl.LocalPlayer.isAlive() &&
-                      MimicK.isAlive();
-                },
-                () => { return PlayerControl.LocalPlayer.CanMove; },
-                () => {},
-                EvilHacker.getButtonSprite(),
-                new Vector3(0f, 1.0f, 0),
-                hm,
-				hm.KillButton,
-				KeyCode.F,
-                false);
-                adminButton.buttonText = DestroyableSingleton<TranslationController>.Instance.GetString(StringNames.Admin);
-            adminButton.MaxTimer =  adminButton.Timer = 0;
+            adminButton = new CustomButton(
+                 () =>
+                 {
+                     PlayerControl.LocalPlayer.NetTransform.Halt();
+                     Action<MapBehaviour> tmpAction = (MapBehaviour m) => { m.ShowCountOverlay(); };
+                     DestroyableSingleton<HudManager>.Instance.ShowMap(tmpAction);
+                     if (PlayerControl.LocalPlayer.AmOwner)
+                     {
+                         PlayerControl.LocalPlayer.MyPhysics.inputHandler.enabled = true;
+                         ConsoleJoystick.SetMode_Task();
+                     }
+                 },
+                 () =>
+                 {
+                     return PlayerControl.LocalPlayer.isRole(RoleType.MimicA) &&
+                       PlayerControl.LocalPlayer.isAlive() &&
+                       MimicK.isAlive();
+                 },
+                 () => { return PlayerControl.LocalPlayer.CanMove; },
+                 () => { },
+                 EvilHacker.getButtonSprite(),
+                 new Vector3(0f, 1.0f, 0),
+                 hm,
+                 hm.KillButton,
+                 KeyCode.F,
+                 false)
+            {
+                buttonText = DestroyableSingleton<TranslationController>.Instance.GetString(StringNames.Admin)
+            };
+            adminButton.MaxTimer = adminButton.Timer = 0;
         }
         public static void SetButtonCooldowns()
         {
             morphButton.MaxTimer = 0f;
-            adminButton.MaxTimer =  0f;
+            adminButton.MaxTimer = 0f;
         }
 
         public static void Clear()
@@ -159,28 +167,31 @@ namespace TheOtherRoles
         }
         public static bool isAlive()
         {
-            foreach(var p in players)
+            foreach (var p in players)
             {
-                if(!(p.player.Data.IsDead || p.player.Data.Disconnected))
+                if (!(p.player.Data.IsDead || p.player.Data.Disconnected))
                     return true;
             }
             return false;
         }
 
-        public static List<Arrow> arrows = new List<Arrow>();
+        public static List<Arrow> arrows = new();
         public static float updateTimer = 0f;
         public static float arrowUpdateInterval = 0.5f;
-        static void arrowUpdate(){
+        static void arrowUpdate()
+        {
 
             // 前フレームからの経過時間をマイナスする
             updateTimer -= Time.fixedDeltaTime;
 
             // 1秒経過したらArrowを更新
-            if(updateTimer <= 0.0f){
+            if (updateTimer <= 0.0f)
+            {
 
                 // 前回のArrowをすべて破棄する
-                foreach(Arrow arrow in arrows){
-                    if(arrow != null && arrow.arrow != null)
+                foreach (Arrow arrow in arrows)
+                {
+                    if (arrow != null && arrow.arrow != null)
                     {
                         arrow.arrow.SetActive(false);
                         UnityEngine.Object.Destroy(arrow.arrow);
@@ -191,10 +202,12 @@ namespace TheOtherRoles
                 arrows = new List<Arrow>();
 
                 // インポスターの位置を示すArrowsを描画
-                foreach(PlayerControl p in PlayerControl.AllPlayerControls){
-                    if(p.Data.IsDead) continue;
+                foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+                {
+                    if (p.Data.IsDead) continue;
                     Arrow arrow;
-                    if(p.isRole(RoleType.MimicK)){
+                    if (p.isRole(RoleType.MimicK))
+                    {
                         arrow = new Arrow(Palette.ImpostorRed);
                         arrow.arrow.SetActive(true);
                         arrow.Update(p.transform.position);
@@ -207,11 +220,13 @@ namespace TheOtherRoles
             }
         }
         [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.MurderPlayer))]
-        public static class MurderPlayerPatch{
+        public static class MurderPlayerPatch
+        {
             public static void Postfix(PlayerControl __instance, [HarmonyArgument(0)] PlayerControl target)
             {
                 PlayerControl player = PlayerControl.LocalPlayer;
-                if(__instance.isRole(RoleType.MimicK) && __instance != player && player.isRole(RoleType.MimicA) && player.isAlive() ){
+                if (__instance.isRole(RoleType.MimicK) && __instance != player && player.isRole(RoleType.MimicA) && player.isAlive())
+                {
                     Helpers.showFlash(new Color(42f / 255f, 187f / 255f, 245f / 255f));
                 }
             }

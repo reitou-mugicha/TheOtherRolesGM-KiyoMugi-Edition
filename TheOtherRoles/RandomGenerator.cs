@@ -1,4 +1,4 @@
-﻿// 元ネタ
+// 元ネタ
 // https://github.com/yukieiji/ExtremeRoles
 using System;
 using System.Security.Cryptography;
@@ -9,7 +9,7 @@ namespace TheOtherRoles
     {
         public static PermutedCongruentialGenerator Instance;
         public static bool prevValue = false;
-        public static bool useStrongGen {get { return CustomOptionHolder.strongRandomGen.getBool();}}
+        public static bool useStrongGen { get { return CustomOptionHolder.strongRandomGen.getBool(); } }
 
         public static void Initialize()
         {

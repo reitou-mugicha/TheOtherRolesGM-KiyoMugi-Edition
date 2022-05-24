@@ -1,15 +1,17 @@
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
+using UnityEngine;
 
 namespace TheOtherRoles
 {
 
-    public class AdditionalVents {
+    public class AdditionalVents
+    {
         public Vent vent;
-        public static System.Collections.Generic.List<AdditionalVents> AllVents = new System.Collections.Generic.List<AdditionalVents>();
+        public static System.Collections.Generic.List<AdditionalVents> AllVents = new();
         public static bool flag = false;
-        public  AdditionalVents(Vector3 p){
+        public AdditionalVents(Vector3 p)
+        {
             // Create the vent
             var referenceVent = UnityEngine.Object.FindObjectOfType<Vent>();
             vent = UnityEngine.Object.Instantiate<Vent>(referenceVent);
@@ -30,17 +32,19 @@ namespace TheOtherRoles
             AllVents.Add(this);
         }
 
-        public static void AddAdditionalVents(){
+        public static void AddAdditionalVents()
+        {
             if (AdditionalVents.flag) return;
             AdditionalVents.flag = true;
             if (AmongUsClient.Instance.GameState != InnerNet.InnerNetClient.GameStates.Started) return;
             System.Console.WriteLine("AddAdditionalVents");
 
             // Polusにベントを追加する
-            if(PlayerControl.GameOptions.MapId == 2 && CustomOptionHolder.additionalVents.getBool()){
-                AdditionalVents vents1 = new AdditionalVents(new Vector3(36.54f, -21.77f, PlayerControl.LocalPlayer.transform.position.z + 1f)); // Specimen
-                AdditionalVents vents2 = new AdditionalVents(new Vector3(16.64f, -2.46f, PlayerControl.LocalPlayer.transform.position.z + 1f)); // InitialSpawn
-                AdditionalVents vents3 = new AdditionalVents(new Vector3(26.67f, -17.54f, PlayerControl.LocalPlayer.transform.position.z + 1f)); // Vital
+            if (PlayerControl.GameOptions.MapId == 2 && CustomOptionHolder.additionalVents.getBool())
+            {
+                AdditionalVents vents1 = new(new Vector3(36.54f, -21.77f, PlayerControl.LocalPlayer.transform.position.z + 1f)); // Specimen
+                AdditionalVents vents2 = new(new Vector3(16.64f, -2.46f, PlayerControl.LocalPlayer.transform.position.z + 1f)); // InitialSpawn
+                AdditionalVents vents3 = new(new Vector3(26.67f, -17.54f, PlayerControl.LocalPlayer.transform.position.z + 1f)); // Vital
                 vents1.vent.Left = vents3.vent; // Specimen - Vital
                 vents2.vent.Center = vents3.vent; // InitialSpawn - Vital
                 vents3.vent.Right = vents1.vent; // Vital - Specimen
@@ -56,7 +60,8 @@ namespace TheOtherRoles
             // }
         }
 
-        public static void clearAndReload(){
+        public static void clearAndReload()
+        {
             System.Console.WriteLine("additionalVentsClearAndReload");
             flag = false;
             AllVents = new List<AdditionalVents>();

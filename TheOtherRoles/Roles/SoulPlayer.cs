@@ -9,16 +9,20 @@ namespace TheOtherRoles
     {
         public static Color color = Palette.CrewmateBlue;
         private static CustomButton senriganButton;
-        private static bool enableSenrigan {get {return CustomOptionHolder.enableSenrigan.getBool();}}
+        private static bool enableSenrigan { get { return CustomOptionHolder.enableSenrigan.getBool(); } }
         public static bool toggle = false;
         public static Sprite senriganIcon;
-        public static void senrigan(){
+        public static void senrigan()
+        {
             var hm = DestroyableSingleton<HudManager>.Instance;
-            if(toggle){
+            if (toggle)
+            {
                 Camera.main.orthographicSize /= 6f;
                 hm.UICamera.orthographicSize /= 6f;
                 hm.transform.localScale /= 6f;
-            }else{
+            }
+            else
+            {
                 Camera.main.orthographicSize *= 6f;
                 hm.UICamera.orthographicSize *= 6f;
                 hm.transform.localScale *= 6f;
@@ -48,17 +52,19 @@ namespace TheOtherRoles
                     senrigan();
                 },
                 () => {/*ボタンが有効になる条件*/ return enableSenrigan && PlayerControl.LocalPlayer.isDead() && !PlayerControl.LocalPlayer.isRole(RoleType.Puppeteer); },
-                () => {/*ボタンが使える条件*/ return PlayerControl.LocalPlayer.isDead();},
+                () => {/*ボタンが使える条件*/ return PlayerControl.LocalPlayer.isDead(); },
                 () => {/*ミーティング終了時*/ },
                 getSenriganIcon(),
                 new Vector3(-1.8f, -0.06f, 0),
                 hm,
                 hm.AbilityButton,
                 KeyCode.F
-            );
-            senriganButton.MaxTimer = 0f;
-            senriganButton.Timer = 0f;
-            senriganButton.buttonText = ModTranslation.getString("");
+            )
+            {
+                MaxTimer = 0f,
+                Timer = 0f,
+                buttonText = ModTranslation.getString("")
+            };
         }
         public static Sprite getSenriganIcon()
         {
@@ -72,7 +78,7 @@ namespace TheOtherRoles
 
         }
 
-        
+
 
         public static void Clear()
         {
@@ -82,11 +88,11 @@ namespace TheOtherRoles
         [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.CoStartMeeting))]
         class StartMeetingPatch
         {
-            public static void Prefix(PlayerControl __instance, [HarmonyArgument(0)]GameData.PlayerInfo meetingTarget)
+            public static void Prefix(PlayerControl __instance, [HarmonyArgument(0)] GameData.PlayerInfo meetingTarget)
             {
-                if(PlayerControl.LocalPlayer.Data.IsDead)
+                if (PlayerControl.LocalPlayer.Data.IsDead)
                 {
-                    if(toggle)
+                    if (toggle)
                     {
                         senrigan();
                     }
@@ -99,9 +105,9 @@ namespace TheOtherRoles
         {
             static void Prefix(Minigame __instance)
             {
-                if(PlayerControl.LocalPlayer.isDead())
+                if (PlayerControl.LocalPlayer.isDead())
                 {
-                    if(toggle)
+                    if (toggle)
                     {
                         senrigan();
                     }

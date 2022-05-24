@@ -1,14 +1,14 @@
-using HarmonyLib;
-using Hazel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using HarmonyLib;
+using Hazel;
 using TheOtherRoles.Objects;
+using TheOtherRoles.Patches;
 using UnityEngine;
+using static TheOtherRoles.GameHistory;
 using static TheOtherRoles.Patches.PlayerControlFixedUpdatePatch;
 using static TheOtherRoles.TheOtherRoles;
-using static TheOtherRoles.GameHistory;
-using TheOtherRoles.Patches;
 
 namespace TheOtherRoles
 {
@@ -19,7 +19,7 @@ namespace TheOtherRoles
         private static CustomButton foxButton;
         private static CustomButton foxRepairButton;
         private static CustomButton foxImmoralistButton;
-        public static List<Arrow> arrows = new List<Arrow>();
+        public static List<Arrow> arrows = new();
         public static float updateTimer = 0f;
 
         public static bool canFixReactorAndO2 { get { return CustomOptionHolder.foxCanFixReactorAndO2.getBool(); } }
@@ -38,12 +38,12 @@ namespace TheOtherRoles
 
         public static int optNumRepair { get { return (int)CustomOptionHolder.foxNumRepair.getFloat(); } }
         public static int numRepair = 0;
-        public static bool foxCanFixSabotageWhileStealth {get {return CustomOptionHolder.foxCanFixSabotageWhileStealth.getBool();}}
+        public static bool foxCanFixSabotageWhileStealth { get { return CustomOptionHolder.foxCanFixSabotageWhileStealth.getBool(); } }
 
         public static bool canCreateImmoralist { get { return CustomOptionHolder.foxCanCreateImmoralist.getBool(); } }
         public static PlayerControl currentTarget;
         public static PlayerControl immoralist;
-        public static List<byte> exiledFox = new List<byte>();
+        public static List<byte> exiledFox = new();
 
 
 
@@ -94,11 +94,12 @@ namespace TheOtherRoles
 
         public override void FixedUpdate()
         {
-            if (player == PlayerControl.LocalPlayer) {
+            if (player == PlayerControl.LocalPlayer)
+            {
                 arrowUpdate();
                 if (player.isAlive())
                 {
-                    List<PlayerControl> untargetablePlayers = new List<PlayerControl>();
+                    List<PlayerControl> untargetablePlayers = new();
                     foreach (var p in PlayerControl.AllPlayerControls)
                     {
                         if (p.isImpostor() || p.isRole(RoleType.Jackal) || p.isRole(RoleType.Sheriff))
@@ -311,14 +312,14 @@ namespace TheOtherRoles
                 },
                 () => { return !Immoralist.exists && canCreateImmoralist && PlayerControl.LocalPlayer.isRole(RoleType.Fox) && PlayerControl.LocalPlayer.isAlive(); },
                 () => { return canCreateImmoralist && Fox.currentTarget != null && PlayerControl.LocalPlayer.CanMove; },
-                () => { foxImmoralistButton.Timer = foxImmoralistButton.MaxTimer =  20f; },
+                () => { foxImmoralistButton.Timer = foxImmoralistButton.MaxTimer = 20f; },
                 getImmoralistButtonSprite(),
                 new Vector3(-1.8f, 1f, 0),
                 hm,
                 hm.AbilityButton,
                 KeyCode.I
             );
-            foxImmoralistButton.Timer = foxImmoralistButton.MaxTimer =  20f;
+            foxImmoralistButton.Timer = foxImmoralistButton.MaxTimer = 20f;
             foxImmoralistButton.buttonText = ModTranslation.getString("FoxImmoralistText");
         }
 

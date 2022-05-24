@@ -1,17 +1,17 @@
-using HarmonyLib;
-using Hazel;
-using static TheOtherRoles.TheOtherRoles;
-using static TheOtherRoles.TheOtherRolesGM;
-using static TheOtherRoles.HudManagerStartPatch;
-using static TheOtherRoles.GameHistory;
-using static TheOtherRoles.MapOptions;
-using TheOtherRoles.Objects;
-using TheOtherRoles.Modules;
-using TheOtherRoles.Patches;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using HarmonyLib;
+using Hazel;
+using TheOtherRoles.Modules;
+using TheOtherRoles.Objects;
+using TheOtherRoles.Patches;
 using UnityEngine;
-using System;
+using static TheOtherRoles.GameHistory;
+using static TheOtherRoles.HudManagerStartPatch;
+using static TheOtherRoles.MapOptions;
+using static TheOtherRoles.TheOtherRoles;
+using static TheOtherRoles.TheOtherRolesGM;
 
 namespace TheOtherRoles
 {
@@ -78,7 +78,7 @@ namespace TheOtherRoles
         NinjaStealth,
         SetShifterType,
         GMKill = 145, // 130-144をSubmergedが使用する
-        GMRevive, 
+        GMRevive,
         UseAdminTime,
         UseCameraTime,
         UseVitalsTime,
@@ -103,7 +103,7 @@ namespace TheOtherRoles
         TrapperKill,
         TrapperMeetingFlag,
         RandomSpawn = 170,
-        PlantBomb ,
+        PlantBomb,
         ReleaseBomb,
         BomberKill,
         SpawnDummy,
@@ -226,7 +226,7 @@ namespace TheOtherRoles
             PlayerControl player = Helpers.playerById(playerId);
             if (player == null) return;
             // Fill dummy MessageReader and call MyPhysics.HandleRpc as the corountines cannot be accessed
-            MessageReader reader = new MessageReader();
+            MessageReader reader = new();
             byte[] bytes = BitConverter.GetBytes(ventId);
             if (!BitConverter.IsLittleEndian)
                 Array.Reverse(bytes);
@@ -296,7 +296,8 @@ namespace TheOtherRoles
             GameData.Instance.SetTasks(playerId, taskTypeIds);
         }
 
-        public static void dynamicMapOption(byte mapId) {
+        public static void dynamicMapOption(byte mapId)
+        {
             PlayerControl.GameOptions.MapId = mapId;
         }
 
@@ -308,7 +309,8 @@ namespace TheOtherRoles
             switchSystem.ActualSwitches = switchSystem.ExpectedSwitches;
         }
 
-        public static void engineerFixSubmergedOxygen() {
+        public static void engineerFixSubmergedOxygen()
+        {
             SubmergedCompatibility.RepairOxygen();
         }
 
@@ -403,7 +405,7 @@ namespace TheOtherRoles
             if ((isShieldedAndShow || isMedicAndShow) && HudManager.Instance?.FullScreen != null)
             {
                 Color c = Palette.ImpostorRed;
-                Helpers.showFlash(new Color(c.r,c.g,c.b));
+                Helpers.showFlash(new Color(c.r, c.g, c.b));
             }
         }
 
@@ -532,20 +534,26 @@ namespace TheOtherRoles
                     Tracker.tracked = player;
         }
 
-        public static void evilHackerCreatesMadmate(byte targetId) {
+        public static void evilHackerCreatesMadmate(byte targetId)
+        {
             PlayerControl player = Helpers.playerById(targetId);
-            if (!EvilHacker.canCreateMadmateFromJackal && player.isRole(RoleType.Jackal)) {
+            if (!EvilHacker.canCreateMadmateFromJackal && player.isRole(RoleType.Jackal))
+            {
                 EvilHacker.fakeMadmate = player;
-            }else if (!EvilHacker.canCreateMadmateFromFox && player.isRole(RoleType.Fox)){
+            }
+            else if (!EvilHacker.canCreateMadmateFromFox && player.isRole(RoleType.Fox))
+            {
                 EvilHacker.fakeMadmate = player;
-            }else {
+            }
+            else
+            {
                 // Jackalバグ対応
-                List<PlayerControl> tmpFormerJackals = new List<PlayerControl>(Jackal.formerJackals);
+                List<PlayerControl> tmpFormerJackals = new(Jackal.formerJackals);
 
                 // タスクがないプレイヤーがMadmateになった場合はショートタスクを必要数割り当てる
                 if (Helpers.hasFakeTasks(player))
                 {
-                    if(CreatedMadmate.hasTasks)
+                    if (CreatedMadmate.hasTasks)
                     {
                         Helpers.clearAllTasks(player);
                         player.generateAndAssignTasks(0, CreatedMadmate.numTasks, 0);
@@ -568,28 +576,34 @@ namespace TheOtherRoles
         {
             PlayerControl player = Helpers.playerById(targetId);
             if (player == null) return;
-            Logger.info($"SideKick {player.Data.PlayerName}({RoleInfo.GetRolesString(player, false, joinSeparator:" + ")})", "Jackal");
+            Logger.info($"SideKick {player.Data.PlayerName}({RoleInfo.GetRolesString(player, false, joinSeparator: " + ")})", "Jackal");
 
-            if (!Jackal.canCreateSidekickFromImpostor && player.Data.Role.IsImpostor) {
+            if (!Jackal.canCreateSidekickFromImpostor && player.Data.Role.IsImpostor)
+            {
                 Jackal.fakeSidekick = player;
-            }else if (!Jackal.canCreateSidekickFromFox && player.isRole(RoleType.Fox)){
+            }
+            else if (!Jackal.canCreateSidekickFromFox && player.isRole(RoleType.Fox))
+            {
                 Jackal.fakeSidekick = player;
-            }else {
+            }
+            else
+            {
                 bool wasSpy = Spy.spy != null && player == Spy.spy;
                 bool wasImpostor = player.Data.Role.IsImpostor;  // This can only be reached if impostors can be sidekicked.
                 DestroyableSingleton<RoleManager>.Instance.SetRole(player, RoleTypes.Crewmate);
                 erasePlayerRoles(player.PlayerId, true, false);
                 Sidekick.sidekick = player;
-                if (player.PlayerId == PlayerControl.LocalPlayer.PlayerId) PlayerControl.LocalPlayer.moveable = true; 
+                if (player.PlayerId == PlayerControl.LocalPlayer.PlayerId) PlayerControl.LocalPlayer.moveable = true;
                 if (wasSpy || wasImpostor) Sidekick.wasTeamRed = true;
                 Sidekick.wasSpy = wasSpy;
                 Sidekick.wasImpostor = wasImpostor;
                 // 狐が一人もいなくなったら背徳者は死亡する
-                if(Fox.exists && !Fox.isFoxAlive())
+                if (Fox.exists && !Fox.isFoxAlive())
                 {
-                    foreach(var immoralist in Immoralist.allPlayers)
+                    foreach (var immoralist in Immoralist.allPlayers)
                     {
-                        if(immoralist.isAlive()){
+                        if (immoralist.isAlive())
+                        {
                             immoralist.MurderPlayer(immoralist);
                         }
                     }
@@ -606,7 +620,7 @@ namespace TheOtherRoles
             Sidekick.clearAndReload();
             return;
         }
-        
+
         public static void erasePlayerRoles(byte playerId, bool ignoreLovers = false, bool clearNeutralTasks = true)
         {
             PlayerControl player = Helpers.playerById(playerId);
@@ -660,7 +674,8 @@ namespace TheOtherRoles
             }
         }
 
-        public static void placeAssassinTrace(byte[] buff) {
+        public static void placeAssassinTrace(byte[] buff)
+        {
             Vector3 position = Vector3.zero;
             position.x = BitConverter.ToSingle(buff, 0 * sizeof(float));
             position.y = BitConverter.ToSingle(buff, 1 * sizeof(float));
@@ -1048,14 +1063,16 @@ namespace TheOtherRoles
             if (serialKiller == null) return;
             serialKiller.MurderPlayer(serialKiller);
         }
-        public static void fortuneTellerUsedDivine(byte fortuneTellerId, byte targetId) {
+        public static void fortuneTellerUsedDivine(byte fortuneTellerId, byte targetId)
+        {
             PlayerControl fortuneTeller = Helpers.playerById(fortuneTellerId);
             PlayerControl target = Helpers.playerById(targetId);
             if (target == null) return;
             if (target.isDead()) return;
             // 呪殺
-            if(target.isRole(RoleType.Fox) || target.isRole(RoleType.SchrodingersCat) || target.isRole(RoleType.Puppeteer)){
-                if(!PlayerControl.LocalPlayer.isRole(RoleType.FortuneTeller))
+            if (target.isRole(RoleType.Fox) || target.isRole(RoleType.SchrodingersCat) || target.isRole(RoleType.Puppeteer))
+            {
+                if (!PlayerControl.LocalPlayer.isRole(RoleType.FortuneTeller))
                 {
                     KillAnimationCoPerformKillPatch.hideNextAnimation = true;
                     fortuneTeller.MurderPlayer(target);
@@ -1066,12 +1083,13 @@ namespace TheOtherRoles
                 }
             }
             // インポスターの場合は占い師の位置に矢印を表示 ラストインポスターの占いの場合は表示しない
-            if(fortuneTeller.isRole(RoleType.FortuneTeller) && PlayerControl.LocalPlayer.isImpostor()){
+            if (fortuneTeller.isRole(RoleType.FortuneTeller) && PlayerControl.LocalPlayer.isImpostor())
+            {
                 FortuneTeller.fortuneTellerMessage(ModTranslation.getString("fortuneTellerDivinedSomeone"), 5f, Color.white);
                 FortuneTeller.setDivinedFlag(fortuneTeller, true);
             }
             // 占われたのが背徳者の場合は通知を表示
-            if(target.isRole(RoleType.Immoralist) && PlayerControl.LocalPlayer.isRole(RoleType.Immoralist))
+            if (target.isRole(RoleType.Immoralist) && PlayerControl.LocalPlayer.isRole(RoleType.Immoralist))
             {
                 FortuneTeller.fortuneTellerMessage(ModTranslation.getString("fortuneTellerDivinedYou"), 5f, Color.white);
             }
@@ -1086,7 +1104,7 @@ namespace TheOtherRoles
 
         public static void schrodingersCatSetTeam(byte team)
         {
-            switch((SchrodingersCat.Team)team)
+            switch ((SchrodingersCat.Team)team)
             {
                 case SchrodingersCat.Team.Crew:
                     SchrodingersCat.setCrewFlag();
@@ -1108,9 +1126,9 @@ namespace TheOtherRoles
         public static void placeTrap(byte[] buff)
         {
             Vector3 pos = Vector3.zero;
-            pos.x = BitConverter.ToSingle(buff, 0*sizeof(float));
-            pos.y = BitConverter.ToSingle(buff, 1*sizeof(float)) - 0.2f;
-            Trap trap = new Trap(pos);
+            pos.x = BitConverter.ToSingle(buff, 0 * sizeof(float));
+            pos.y = BitConverter.ToSingle(buff, 1 * sizeof(float)) - 0.2f;
+            Trap trap = new(pos);
         }
         public static void clearTrap()
         {
@@ -1123,7 +1141,7 @@ namespace TheOtherRoles
         public static void activateTrap(byte trapId, byte trapperId, byte playerId)
         {
             var trapper = Helpers.playerById(trapperId);
-            var player= Helpers.playerById(playerId);
+            var player = Helpers.playerById(playerId);
             Trap.activateTrap(trapId, trapper, player);
         }
         public static void trapperKill(byte trapId, byte trapperId, byte playerId)
@@ -1136,24 +1154,28 @@ namespace TheOtherRoles
         {
             Trap.onMeeting();
         }
-        public static void randomSpawn(byte playerId, byte locId){
-            HudManager.Instance.StartCoroutine(Effects.Lerp(3f, new Action<float>((p) => { // Delayed action
-                if (p == 1f) {
-                    Vector2 InitialSpawnCenter  = new Vector2(16.64f, -2.46f);
-                    Vector2 MeetingSpawnCenter  = new Vector2(17.4f, -16.286f);
-                    Vector2 ElectricalSpawn  = new Vector2(5.53f, -9.84f);
-                    Vector2 O2Spawn  = new Vector2(3.28f, -21.67f);
-                    Vector2 SpecimenSpawn  = new Vector2(36.54f, -20.84f);
-                    Vector2 LaboSpawn  = new Vector2(34.91f, -6.50f);
+        public static void randomSpawn(byte playerId, byte locId)
+        {
+            HudManager.Instance.StartCoroutine(Effects.Lerp(3f, new Action<float>((p) =>
+            { // Delayed action
+                if (p == 1f)
+                {
+                    Vector2 InitialSpawnCenter = new(16.64f, -2.46f);
+                    Vector2 MeetingSpawnCenter = new(17.4f, -16.286f);
+                    Vector2 ElectricalSpawn = new(5.53f, -9.84f);
+                    Vector2 O2Spawn = new(3.28f, -21.67f);
+                    Vector2 SpecimenSpawn = new(36.54f, -20.84f);
+                    Vector2 LaboSpawn = new(34.91f, -6.50f);
                     Vector2 loc;
-                    switch(locId){
+                    switch (locId)
+                    {
                         case 0:
                             loc = InitialSpawnCenter;
                             break;
                         case 1:
                             loc = MeetingSpawnCenter;
                             break;
-                        case 2: 
+                        case 2:
                             loc = ElectricalSpawn;
                             break;
                         case 3:
@@ -1169,11 +1191,13 @@ namespace TheOtherRoles
                             loc = InitialSpawnCenter;
                             break;
                     }
-                    foreach(PlayerControl player in PlayerControl.AllPlayerControls){
-                        if(player.Data.PlayerId == playerId){
+                    foreach (PlayerControl player in PlayerControl.AllPlayerControls)
+                    {
+                        if (player.Data.PlayerId == playerId)
+                        {
                             player.transform.position = loc;
                             break;
-                        } 
+                        }
                     }
                 }
             })));
@@ -1187,7 +1211,7 @@ namespace TheOtherRoles
         public static void releaseBomb(byte killer, byte target)
         {
             // 同時押しでダブルキルが発生するのを防止するためにBomberAで一度受け取ってから実行する
-            if(PlayerControl.LocalPlayer.isRole(RoleType.BomberA))
+            if (PlayerControl.LocalPlayer.isRole(RoleType.BomberA))
             {
                 if (BomberA.bombTarget != null && BomberB.bombTarget != null)
                 {
@@ -1209,7 +1233,7 @@ namespace TheOtherRoles
             {
                 KillAnimationCoPerformKillPatch.hideNextAnimation = true;
                 k.MurderPlayer(t);
-                if(BomberA.showEffects)
+                if (BomberA.showEffects)
                 {
                     new BombEffect(t);
                 }
@@ -1238,14 +1262,14 @@ namespace TheOtherRoles
 
         public static void walkDummy(Vector3 direction)
         {
-            if(Puppeteer.dummy == null) return;
+            if (Puppeteer.dummy == null) return;
             var dummy = Puppeteer.dummy;
             dummy.NetTransform.targetSyncPosition = dummy.transform.position + direction;
         }
 
-        public static void moveDummy(Vector3 pos, bool spawn=false)
+        public static void moveDummy(Vector3 pos, bool spawn = false)
         {
-            if(Puppeteer.dummy == null) return;
+            if (Puppeteer.dummy == null) return;
             var dummy = Puppeteer.dummy;
             if (SubmergedCompatibility.isSubmerged() && spawn)
             {
@@ -1269,7 +1293,7 @@ namespace TheOtherRoles
         {
             if (Puppeteer.dummy != null)
             {
-                var to  = Helpers.playerById(playerId);
+                var to = Helpers.playerById(playerId);
                 MorphHandler.setOutfit(Puppeteer.dummy, to.Data.DefaultOutfit);
             }
         }
@@ -1295,15 +1319,15 @@ namespace TheOtherRoles
         public static void puppeteerClimbRadder(byte dummyId, byte targetId)
         {
             PlayerControl dummy = Helpers.playerById(dummyId);
-            Ladder target = DestroyableSingleton<AirshipStatus>.Instance.GetComponentsInChildren<Ladder>().ToList().Find(x=> x.Id == targetId);
-            if(target == null) return;
+            Ladder target = DestroyableSingleton<AirshipStatus>.Instance.GetComponentsInChildren<Ladder>().ToList().Find(x => x.Id == targetId);
+            if (target == null) return;
             dummy.MyPhysics.ClimbLadder(target, (byte)(dummy.MyPhysics.lastClimbLadderSid + 1));
         }
         public static void puppeteerUsePlatform(byte dummyId)
         {
             PlayerControl dummy = Helpers.playerById(dummyId);
             MovingPlatformBehaviour target = DestroyableSingleton<AirshipStatus>.Instance.GapPlatform;
-            if(target == null) return;
+            if (target == null) return;
             dummy.NetTransform.Halt();
             target.Use(dummy);
         }
@@ -1323,7 +1347,7 @@ namespace TheOtherRoles
             MimicA.isMorph = false;
         }
 
-        public static void synchronize(byte playerId,int tag)
+        public static void synchronize(byte playerId, int tag)
         {
             SpawnInMinigamePatch.synchronizeData.Synchronize((SpawnInMinigamePatch.SynchronizeTag)tag, playerId);
         }
@@ -1352,7 +1376,8 @@ namespace TheOtherRoles
             static void Postfix([HarmonyArgument(0)] byte callId, [HarmonyArgument(1)] MessageReader reader)
             {
                 byte packetId = callId;
-                try{
+                try
+                {
                     switch (packetId)
                     {
 
@@ -1612,7 +1637,7 @@ namespace TheOtherRoles
                             byte fId = reader.ReadByte();
                             byte tId = reader.ReadByte();
                             RPCProcedure.fortuneTellerUsedDivine(fId, tId);
-                            break;    
+                            break;
                         case (byte)CustomRPC.FoxStealth:
                             RPCProcedure.foxStealth(reader.ReadByte(), reader.ReadBoolean());
                             break;
@@ -1712,13 +1737,15 @@ namespace TheOtherRoles
                             RPCProcedure.mimicResetMorph(reader.ReadByte());
                             break;
                         case (byte)CustomRPC.Synchronize:
-                            RPCProcedure.synchronize(reader.ReadByte(),reader.ReadInt32());
+                            RPCProcedure.synchronize(reader.ReadByte(), reader.ReadInt32());
                             break;
-                    case (byte)CustomRPC.SetOddIsJekyll:
-                        RPCProcedure.setOddIsJekyll(reader.ReadBoolean());
-                        break;
+                        case (byte)CustomRPC.SetOddIsJekyll:
+                            RPCProcedure.setOddIsJekyll(reader.ReadBoolean());
+                            break;
                     }
-                } catch(Exception ex) {
+                }
+                catch (Exception ex)
+                {
                     Logger.error($"CallID:{callId} {ex}", "CustomRPC");
                 }
             }

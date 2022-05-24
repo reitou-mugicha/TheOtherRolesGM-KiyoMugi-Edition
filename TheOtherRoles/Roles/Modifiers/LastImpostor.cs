@@ -1,14 +1,14 @@
-using HarmonyLib;
-using Hazel;
 using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using System.Linq;
-using UnityEngine;
+using System.Text.RegularExpressions;
+using HarmonyLib;
+using Hazel;
 using TheOtherRoles.Objects;
 using TheOtherRoles.Patches;
-using static TheOtherRoles.TheOtherRoles;
+using UnityEngine;
 using static TheOtherRoles.GameHistory;
+using static TheOtherRoles.TheOtherRoles;
 
 namespace TheOtherRoles
 {
@@ -22,13 +22,13 @@ namespace TheOtherRoles
             Role,
         }
         public static Color color = Palette.ImpostorRed;
-        public static bool isEnable {get {return CustomOptionHolder.lastImpostorEnable.getBool();}}
+        public static bool isEnable { get { return CustomOptionHolder.lastImpostorEnable.getBool(); } }
         public static int killCounter = 0;
-        public static int maxKillCounter {get {return (int)CustomOptionHolder.lastImpostorNumKills.getFloat();}}
+        public static int maxKillCounter { get { return (int)CustomOptionHolder.lastImpostorNumKills.getFloat(); } }
         public static int numUsed = 0;
         public static int remainingShots = 0;
-        public static int selectedFunction {get {return CustomOptionHolder.lastImpostorFunctions.getSelection();}}
-        public static DivineResults divineResult {get {return (DivineResults)CustomOptionHolder.lastImpostorResults.getSelection();}}
+        public static int selectedFunction { get { return CustomOptionHolder.lastImpostorFunctions.getSelection(); } }
+        public static DivineResults divineResult { get { return (DivineResults)CustomOptionHolder.lastImpostorResults.getSelection(); } }
         public static string postfix
         {
             get
@@ -52,14 +52,15 @@ namespace TheOtherRoles
         public override void OnMeetingStart() { }
         public override void OnMeetingEnd() { }
         public override void FixedUpdate() { }
-        public override void OnKill(PlayerControl target) { 
+        public override void OnKill(PlayerControl target)
+        {
             killCounter += 1;
         }
         public override void OnDeath(PlayerControl killer = null) { }
         public override void HandleDisconnect(PlayerControl player, DisconnectReasons reason) { }
 
-        public static List<CustomButton> lastImpostorButtons = new List<CustomButton>();
-        static Dictionary<byte, PoolablePlayer> playerIcons = new Dictionary<byte, PoolablePlayer>();
+        public static List<CustomButton> lastImpostorButtons = new();
+        static Dictionary<byte, PoolablePlayer> playerIcons = new();
         public static void MakeButtons(HudManager hm)
         {
             lastImpostorButtons = new List<CustomButton>();
@@ -74,7 +75,7 @@ namespace TheOtherRoles
             {
                 return () =>
                 {
-                    if(selectedFunction == 1) return;
+                    if (selectedFunction == 1) return;
                     PlayerControl p = Helpers.playerById(index);
                     LastImpostor.divine(p);
                 };
@@ -84,23 +85,23 @@ namespace TheOtherRoles
             {
                 return () =>
                 {
-                    if(selectedFunction == 1) return false;
+                    if (selectedFunction == 1) return false;
                     var p = PlayerControl.LocalPlayer;
-                    if(!p.hasModifier(ModifierType.LastImpostor)) return false;
+                    if (!p.hasModifier(ModifierType.LastImpostor)) return false;
                     if (p.hasModifier(ModifierType.LastImpostor) && p.CanMove && p.isAlive() & p.PlayerId != index
                         && MapOptions.playerIcons.ContainsKey(index) && numUsed < 1 && isCounterMax())
                     {
                         return true;
-                    } 
+                    }
                     else
                     {
-                        if(playerIcons.ContainsKey(index))
+                        if (playerIcons.ContainsKey(index))
                         {
                             playerIcons[index].gameObject.SetActive(false);
-                            if(PlayerControl.LocalPlayer.isRole(RoleType.BountyHunter))
+                            if (PlayerControl.LocalPlayer.isRole(RoleType.BountyHunter))
                                 setBountyIconPos(Vector3.zero);
                         }
-                        if(lastImpostorButtons.Count > index)
+                        if (lastImpostorButtons.Count > index)
                         {
                             lastImpostorButtons[index].setActive(false);
                         }
@@ -112,7 +113,7 @@ namespace TheOtherRoles
             void setButtonPos(byte index)
             {
                 Vector3 pos = lastImpostorCalcPos(index);
-                Vector3 scale = new Vector3(0.4f, 0.8f, 1.0f);
+                Vector3 scale = new(0.4f, 0.8f, 1.0f);
 
                 Vector3 iconBase = hm.UseButton.transform.localPosition;
                 iconBase.x *= -1;
@@ -131,8 +132,9 @@ namespace TheOtherRoles
                 playerIcons[index].setSemiTransparent(transparent);
             }
 
-            void setBountyIconPos(Vector3 offset){
-                Vector3 bottomLeft = new Vector3(-HudManager.Instance.UseButton.transform.localPosition.x, HudManager.Instance.UseButton.transform.localPosition.y, HudManager.Instance.UseButton.transform.localPosition.z);
+            void setBountyIconPos(Vector3 offset)
+            {
+                Vector3 bottomLeft = new(-HudManager.Instance.UseButton.transform.localPosition.x, HudManager.Instance.UseButton.transform.localPosition.y, HudManager.Instance.UseButton.transform.localPosition.z);
                 PoolablePlayer icon = MapOptions.playerIcons[BountyHunter.bounty.PlayerId];
                 icon.transform.localPosition = bottomLeft + new Vector3(-0.25f, 0f, 0) + offset;
                 BountyHunter.cooldownText.transform.localPosition = bottomLeft + new Vector3(-0.25f, 0f, -1f) + offset;
@@ -142,13 +144,13 @@ namespace TheOtherRoles
             {
                 return () =>
                 {
-                    if(selectedFunction == 1) return false;
+                    if (selectedFunction == 1) return false;
 
                     //　ラストインポスター以外の場合、リソースがない場合はボタンを表示しない
                     var p = Helpers.playerById(index);
                     if (!playerIcons.ContainsKey(index) ||
                         !PlayerControl.LocalPlayer.hasModifier(ModifierType.LastImpostor) ||
-                        !isCounterMax()) 
+                        !isCounterMax())
                     {
                         return false;
                     }
@@ -157,18 +159,18 @@ namespace TheOtherRoles
                     setButtonPos(index);
 
                     // ボタンにテキストを設定
-                    lastImpostorButtons[index].buttonText = PlayerControl.LocalPlayer.isAlive() ? "生存": "死亡";
+                    lastImpostorButtons[index].buttonText = PlayerControl.LocalPlayer.isAlive() ? "生存" : "死亡";
 
                     // アイコンの位置と透明度を変更
                     setIconStatus(index, false);
 
                     // Bounty Hunterの場合賞金首の位置をずらして表示する
-                    if(PlayerControl.LocalPlayer.isRole(RoleType.BountyHunter))
+                    if (PlayerControl.LocalPlayer.isRole(RoleType.BountyHunter))
                     {
-                        Vector3 offset = new Vector3(0f, 1f, 0f);
+                        Vector3 offset = new(0f, 1f, 0f);
                         setBountyIconPos(offset);
                     }
-                    
+
                     return PlayerControl.LocalPlayer.CanMove && numUsed < 1;
                 };
             }
@@ -176,7 +178,7 @@ namespace TheOtherRoles
 
             for (byte i = 0; i < 15; i++)
             {
-                CustomButton lastImpostorButton = new CustomButton(
+                CustomButton lastImpostorButton = new(
                     // Action OnClick
                     lastImpostorButtonOnClick(i),
                     // bool HasButton
@@ -195,9 +197,11 @@ namespace TheOtherRoles
                     null,
                     KeyCode.None,
                     true
-                );
-                lastImpostorButton.Timer = 0.0f;
-                lastImpostorButton.MaxTimer = 0.0f;
+                )
+                {
+                    Timer = 0.0f,
+                    MaxTimer = 0.0f
+                };
 
                 lastImpostorButtons.Add(lastImpostorButton);
             }
@@ -213,25 +217,27 @@ namespace TheOtherRoles
             remainingShots = (int)CustomOptionHolder.lastImpostorNumShots.getFloat();
             playerIcons = new Dictionary<byte, PoolablePlayer>();
         }
-        public static bool isCounterMax(){
-            if(maxKillCounter <= killCounter) return true;
+        public static bool isCounterMax()
+        {
+            if (maxKillCounter <= killCounter) return true;
             return false;
         }
 
-        public static bool canGuess(){
+        public static bool canGuess()
+        {
             return remainingShots > 0 && selectedFunction == 1 && isCounterMax();
         }
 
         public static void promoteToLastImpostor()
         {
-            if(!isEnable) return;
+            if (!isEnable) return;
 
             var impList = new List<PlayerControl>();
-            foreach(var p in PlayerControl.AllPlayerControls)
+            foreach (var p in PlayerControl.AllPlayerControls)
             {
-                if(p.isImpostor() && p.isAlive()) impList.Add(p);
+                if (p.isImpostor() && p.isAlive()) impList.Add(p);
             }
-            if(impList.Count == 1)
+            if (impList.Count == 1)
             {
                 MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.ImpostorPromotesToLastImpostor, Hazel.SendOption.Reliable, -1);
                 writer.Write(impList[0].PlayerId);
@@ -246,7 +252,8 @@ namespace TheOtherRoles
             string msgInfo = "";
             Color color = Color.white;
 
-            if (divineResult == DivineResults.BlackWhite) {
+            if (divineResult == DivineResults.BlackWhite)
+            {
                 if (p.isCrew())
                 {
                     msgBase = "divineMessageIsCrew";
@@ -259,7 +266,8 @@ namespace TheOtherRoles
                 }
             }
 
-            else if (divineResult == DivineResults.Team) {
+            else if (divineResult == DivineResults.Team)
+            {
                 msgBase = "divineMessageTeam";
                 if (p.isCrew())
                 {
@@ -278,7 +286,8 @@ namespace TheOtherRoles
                 }
             }
 
-            else if (divineResult == DivineResults.Role) { 
+            else if (divineResult == DivineResults.Role)
+            {
                 msgBase = "divineMessageRole";
                 msgInfo = String.Join(" ", RoleInfo.getRoleInfoForPlayer(p).Select(x => Helpers.cs(x.color, x.name)).ToArray());
             }
@@ -304,11 +313,13 @@ namespace TheOtherRoles
         [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.OnDestroy))]
         class IntroCutsceneOnDestroyPatch
         {
-            public static void Prefix(IntroCutscene __instance) {
+            public static void Prefix(IntroCutscene __instance)
+            {
                 if (PlayerControl.LocalPlayer != null && HudManager.Instance != null)
                 {
-                    Vector3 bottomLeft = new Vector3(-HudManager.Instance.UseButton.transform.localPosition.x, HudManager.Instance.UseButton.transform.localPosition.y, HudManager.Instance.UseButton.transform.localPosition.z);
-                    foreach (PlayerControl p in PlayerControl.AllPlayerControls) {
+                    Vector3 bottomLeft = new(-HudManager.Instance.UseButton.transform.localPosition.x, HudManager.Instance.UseButton.transform.localPosition.y, HudManager.Instance.UseButton.transform.localPosition.z);
+                    foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+                    {
                         GameData.PlayerInfo data = p.Data;
                         PoolablePlayer player = UnityEngine.Object.Instantiate<PoolablePlayer>(__instance.PlayerPrefab, HudManager.Instance.transform);
                         player.UpdateFromPlayerOutfit(p.Data.DefaultOutfit, p.Data.IsDead);

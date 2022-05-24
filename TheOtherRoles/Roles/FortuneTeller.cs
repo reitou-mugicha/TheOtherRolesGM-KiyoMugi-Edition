@@ -1,8 +1,8 @@
-using HarmonyLib;
-using Hazel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using HarmonyLib;
+using Hazel;
 using TheOtherRoles.Objects;
 using UnityEngine;
 
@@ -27,8 +27,8 @@ namespace TheOtherRoles
         public static bool endGameFlag = false;
         public static bool meetingFlag = false;
 
-        public Dictionary<byte, float> progress = new Dictionary<byte, float>();
-        public Dictionary<byte, bool> playerStatus = new Dictionary<byte, bool>();
+        public Dictionary<byte, float> progress = new();
+        public Dictionary<byte, bool> playerStatus = new();
         public bool divinedFlag = false;
         public int numUsed = 0;
 
@@ -131,7 +131,7 @@ namespace TheOtherRoles
             void setButtonPos(byte index)
             {
                 Vector3 pos = fortuneTellerCalcPos(index);
-                Vector3 scale = new Vector3(0.4f, 0.5f, 1.0f);
+                Vector3 scale = new(0.4f, 0.5f, 1.0f);
 
                 Vector3 iconBase = hm.UseButton.transform.localPosition;
                 iconBase.x *= -1;
@@ -203,7 +203,7 @@ namespace TheOtherRoles
 
             for (byte i = 0; i < 15; i++)
             {
-                CustomButton fortuneTellerButton = new CustomButton(
+                CustomButton fortuneTellerButton = new(
                     // Action OnClick
                     fortuneTellerButtonOnClick(i),
                     // bool HasButton
@@ -222,9 +222,11 @@ namespace TheOtherRoles
                     // keyboard shortcut
                     KeyCode.None,
                     true
-                );
-                fortuneTellerButton.Timer = 0.0f;
-                fortuneTellerButton.MaxTimer = 0.0f;
+                )
+                {
+                    Timer = 0.0f,
+                    MaxTimer = 0.0f
+                };
 
                 fortuneTellerButtons.Add(fortuneTellerButton);
             }
@@ -251,7 +253,7 @@ namespace TheOtherRoles
             }
         }
 
-        public static List<Arrow> arrows = new List<Arrow>();
+        public static List<Arrow> arrows = new();
         public static float updateTimer = 0f;
 
         public void impostorArrowUpdate()
@@ -283,7 +285,7 @@ namespace TheOtherRoles
                         if (p.player.isDead()) continue;
                         if (!p.divinedFlag) continue;
 
-                        Arrow arrow = new Arrow(FortuneTeller.color);
+                        Arrow arrow = new(FortuneTeller.color);
                         arrow.arrow.SetActive(true);
                         arrow.Update(p.player.transform.position);
                         arrows.Add(arrow);
@@ -312,7 +314,8 @@ namespace TheOtherRoles
             string msgInfo = "";
             Color color = Color.white;
 
-            if (divineResult == DivineResults.BlackWhite) {
+            if (divineResult == DivineResults.BlackWhite)
+            {
                 if (p.isCrew())
                 {
                     msgBase = "divineMessageIsCrew";
@@ -325,7 +328,8 @@ namespace TheOtherRoles
                 }
             }
 
-            else if (divineResult == DivineResults.Team) {
+            else if (divineResult == DivineResults.Team)
+            {
                 msgBase = "divineMessageTeam";
                 if (p.isCrew())
                 {
@@ -344,7 +348,8 @@ namespace TheOtherRoles
                 }
             }
 
-            else if (divineResult == DivineResults.Role) { 
+            else if (divineResult == DivineResults.Role)
+            {
                 msgBase = "divineMessageRole";
                 msgInfo = String.Join(" ", RoleInfo.getRoleInfoForPlayer(p).Select(x => Helpers.cs(x.color, x.name)).ToArray());
             }

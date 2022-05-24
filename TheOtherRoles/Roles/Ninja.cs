@@ -1,16 +1,17 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
 using Hazel;
-using System;
-using System.Collections.Generic;
-using UnityEngine;
 using TheOtherRoles.Objects;
 using TheOtherRoles.Patches;
+using UnityEngine;
 
 namespace TheOtherRoles
 {
     [HarmonyPatch]
-    public class Ninja : RoleBase<Ninja> {
+    public class Ninja : RoleBase<Ninja>
+    {
 
         private static CustomButton ninjaButton;
 
@@ -136,7 +137,8 @@ namespace TheOtherRoles
         {
             // Ninja stealth
             ninjaButton = new CustomButton(
-                () => {
+                () =>
+                {
                     if (ninjaButton.isEffectActive)
                     {
                         ninjaButton.Timer = 0;
@@ -150,7 +152,8 @@ namespace TheOtherRoles
                     RPCProcedure.ninjaStealth(PlayerControl.LocalPlayer.PlayerId, true);
                 },
                 () => { return PlayerControl.LocalPlayer.isRole(RoleType.Ninja) && !PlayerControl.LocalPlayer.Data.IsDead; },
-                () => {
+                () =>
+                {
                     if (ninjaButton.isEffectActive)
                     {
                         ninjaButton.buttonText = ModTranslation.getString("NinjaUnstealthText");
@@ -161,7 +164,8 @@ namespace TheOtherRoles
                     }
                     return PlayerControl.LocalPlayer.CanMove;
                 },
-                () => {
+                () =>
+                {
                     ninjaButton.Timer = ninjaButton.MaxTimer = Ninja.stealthCooldown;
                 },
                 Ninja.getButtonSprite(),
@@ -171,7 +175,8 @@ namespace TheOtherRoles
                 KeyCode.F,
                 true,
                 Ninja.stealthDuration,
-                () => {
+                () =>
+                {
                     ninjaButton.Timer = ninjaButton.MaxTimer = Ninja.stealthCooldown;
 
                     MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.NinjaStealth, Hazel.SendOption.Reliable, -1);
@@ -182,9 +187,11 @@ namespace TheOtherRoles
 
                     PlayerControl.LocalPlayer.SetKillTimerUnchecked(Math.Max(PlayerControl.LocalPlayer.killTimer, Ninja.killPenalty));
                 }
-            );
-            ninjaButton.buttonText = ModTranslation.getString("NinjaText");
-            ninjaButton.effectCancellable = true;
+            )
+            {
+                buttonText = ModTranslation.getString("NinjaText"),
+                effectCancellable = true
+            };
         }
 
         public static void SetButtonCooldowns()
@@ -243,7 +250,7 @@ namespace TheOtherRoles
                     var ninja = __instance.myPlayer;
                     if (ninja == null || ninja.isDead()) return;
 
-                    bool canSee = 
+                    bool canSee =
                         PlayerControl.LocalPlayer.isImpostor() ||
                         PlayerControl.LocalPlayer.isDead() ||
                         (Lighter.canSeeNinja && PlayerControl.LocalPlayer.isRole(RoleType.Lighter) && Lighter.isLightActive(PlayerControl.LocalPlayer));

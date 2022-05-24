@@ -1,9 +1,9 @@
+using System;
+using System.Linq;
 using HarmonyLib;
 using Hazel;
-using System;
-using UnityEngine;
 using TheOtherRoles.Objects;
-using System.Linq;
+using UnityEngine;
 using static TheOtherRoles.TheOtherRoles;
 using static TheOtherRoles.TheOtherRolesGM;
 
@@ -184,8 +184,10 @@ namespace TheOtherRoles
                 __instance,
                 __instance.UseButton,
                 KeyCode.F
-            );
-            engineerRepairButton.buttonText = ModTranslation.getString("RepairText");
+            )
+            {
+                buttonText = ModTranslation.getString("RepairText")
+            };
 
             // Janitor Clean
             janitorCleanButton = new CustomButton(
@@ -224,8 +226,10 @@ namespace TheOtherRoles
                 __instance,
                 __instance.KillButton,
                 KeyCode.F
-            );
-            janitorCleanButton.buttonText = ModTranslation.getString("CleanText");
+            )
+            {
+                buttonText = ModTranslation.getString("CleanText")
+            };
 
 
             // Time Master Rewind Time
@@ -252,8 +256,10 @@ namespace TheOtherRoles
                 true,
                 TimeMaster.shieldDuration,
                 () => { timeMasterShieldButton.Timer = timeMasterShieldButton.MaxTimer; }
-            );
-            timeMasterShieldButton.buttonText = ModTranslation.getString("TimeShieldText");
+            )
+            {
+                buttonText = ModTranslation.getString("TimeShieldText")
+            };
 
             // Medic Shield
             medicShieldButton = new CustomButton(
@@ -277,8 +283,10 @@ namespace TheOtherRoles
                 __instance,
                 __instance.UseButton,
                 KeyCode.F
-            );
-            medicShieldButton.buttonText = ModTranslation.getString("ShieldText");
+            )
+            {
+                buttonText = ModTranslation.getString("ShieldText")
+            };
 
 
             // Shifter shift
@@ -298,8 +306,10 @@ namespace TheOtherRoles
                 __instance,
                 __instance.UseButton,
                 KeyCode.F
-            );
-            shifterShiftButton.buttonText = ModTranslation.getString("ShiftText");
+            )
+            {
+                buttonText = ModTranslation.getString("ShiftText")
+            };
 
             // Morphling morph
             morphlingButton = new CustomButton(
@@ -349,8 +359,10 @@ namespace TheOtherRoles
                         morphlingButton.buttonText = ModTranslation.getString("SampleText");
                     }
                 }
-            );
-            morphlingButton.buttonText = ModTranslation.getString("SampleText");
+            )
+            {
+                buttonText = ModTranslation.getString("SampleText")
+            };
 
             // Camouflager camouflage
             camouflagerButton = new CustomButton(
@@ -376,38 +388,43 @@ namespace TheOtherRoles
                 true,
                 Camouflager.duration,
                 () => { camouflagerButton.Timer = camouflagerButton.MaxTimer; }
-            );
-            camouflagerButton.buttonText = ModTranslation.getString("CamoText");
+            )
+            {
+                buttonText = ModTranslation.getString("CamoText")
+            };
 
             // EvilHacker button
             evilHackerButton = new CustomButton(
-                () => {
+                () =>
+                {
                     PlayerControl.LocalPlayer.NetTransform.Halt();
                     Action<MapBehaviour> tmpAction = (MapBehaviour m) => { m.ShowCountOverlay(); };
                     DestroyableSingleton<HudManager>.Instance.ShowMap(tmpAction);
                 },
-                () => {
+                () =>
+                {
                     return EvilHacker.evilHacker != null &&
                     EvilHacker.evilHacker == PlayerControl.LocalPlayer &&
                     PlayerControl.LocalPlayer.isAlive();
                 },
                 () => { return PlayerControl.LocalPlayer.CanMove; },
-                () => {},
+                () => { },
                 EvilHacker.getButtonSprite(),
                 new Vector3(-1.8f, -0.06f, 0),
                 __instance,
-				__instance.KillButton,
-				KeyCode.F,
+                __instance.KillButton,
+                KeyCode.F,
                 false,
                 0f,
-                () => {},
+                () => { },
                 PlayerControl.GameOptions.MapId == 3,
                 DestroyableSingleton<TranslationController>.Instance.GetString(StringNames.Admin)
             );
 
             // EvilHacker creates madmate button
             evilHackerCreatesMadmateButton = new CustomButton(
-                () => {
+                () =>
+                {
                     /*
                      * creates madmate
                      */
@@ -416,21 +433,24 @@ namespace TheOtherRoles
                     AmongUsClient.Instance.FinishRpcImmediately(writer);
                     RPCProcedure.evilHackerCreatesMadmate(EvilHacker.currentTarget.PlayerId);
                 },
-                () => {
+                () =>
+                {
                     return EvilHacker.evilHacker != null &&
                       EvilHacker.evilHacker == PlayerControl.LocalPlayer &&
                       EvilHacker.canCreateMadmate &&
                       PlayerControl.LocalPlayer.isAlive();
                 },
                 () => { return EvilHacker.currentTarget && PlayerControl.LocalPlayer.CanMove; },
-                () => {},
+                () => { },
                 EvilHacker.getMadmateButtonSprite(),
                 new Vector3(-2.7f, -0.06f, 0),
                 __instance,
-				__instance.KillButton,
-				null
-			);
-            evilHackerCreatesMadmateButton.buttonText = ModTranslation.getString("MadmateText");
+                __instance.KillButton,
+                null
+            )
+            {
+                buttonText = ModTranslation.getString("MadmateText")
+            };
 
             // Hacker button
             hackerButton = new CustomButton(
@@ -454,8 +474,10 @@ namespace TheOtherRoles
                 true,
                 0f,
                 () => { hackerButton.Timer = hackerButton.MaxTimer; }
-            );
-            hackerButton.buttonText = ModTranslation.getString("HackerText");
+            )
+            {
+                buttonText = ModTranslation.getString("HackerText")
+            };
 
             hackerAdminTableButton = new CustomButton(
                () =>
@@ -472,7 +494,7 @@ namespace TheOtherRoles
                {
                    if (hackerAdminTableChargesText != null)
                        hackerAdminTableChargesText.text = hackerVitalsChargesText.text = String.Format(ModTranslation.getString("hackerChargesText"), Hacker.chargesAdminTable, Hacker.toolsNumber);
-                   return Hacker.chargesAdminTable > 0 && MapOptions.canUseAdmin;; 
+                   return Hacker.chargesAdminTable > 0 && MapOptions.canUseAdmin; ;
                },
                () =>
                {
@@ -564,7 +586,7 @@ namespace TheOtherRoles
                () =>
                {
                    hackerVitalsButton.Timer = hackerVitalsButton.MaxTimer;
-                   if(!hackerAdminTableButton.isEffectActive) PlayerControl.LocalPlayer.moveable = true;
+                   if (!hackerAdminTableButton.isEffectActive) PlayerControl.LocalPlayer.moveable = true;
                    if (Minigame.Instance)
                    {
                        if (PlayerControl.GameOptions.MapId == 1) Hacker.doorLog.ForceClose();
@@ -601,8 +623,10 @@ namespace TheOtherRoles
                 __instance,
                 __instance.UseButton,
                 KeyCode.F
-            );
-            trackerTrackPlayerButton.buttonText = ModTranslation.getString("TrackerText");
+            )
+            {
+                buttonText = ModTranslation.getString("TrackerText")
+            };
 
             trackerTrackCorpsesButton = new CustomButton(
                 () => { Tracker.corpsesTrackingTimer = Tracker.corpsesTrackingDuration; },
@@ -625,8 +649,10 @@ namespace TheOtherRoles
                 {
                     trackerTrackCorpsesButton.Timer = trackerTrackCorpsesButton.MaxTimer;
                 }
-            );
-            trackerTrackCorpsesButton.buttonText = ModTranslation.getString("PathfindText");
+            )
+            {
+                buttonText = ModTranslation.getString("PathfindText")
+            };
 
             vampireKillButton = new CustomButton(
                 () =>
@@ -711,8 +737,10 @@ namespace TheOtherRoles
                 {
                     vampireKillButton.Timer = vampireKillButton.MaxTimer;
                 }
-            );
-            vampireKillButton.buttonText = ModTranslation.getString("VampireText");
+            )
+            {
+                buttonText = ModTranslation.getString("VampireText")
+            };
 
             garlicButton = new CustomButton(
                 () =>
@@ -737,8 +765,10 @@ namespace TheOtherRoles
                 __instance.UseButton,
                 null,
                 true
-            );
-            garlicButton.buttonText = ModTranslation.getString("GarlicText");
+            )
+            {
+                buttonText = ModTranslation.getString("GarlicText")
+            };
 
 
             // Jackal Sidekick Button
@@ -758,8 +788,10 @@ namespace TheOtherRoles
                 __instance,
                 __instance.KillButton,
                 KeyCode.F
-            );
-            jackalSidekickButton.buttonText = ModTranslation.getString("SidekickText");
+            )
+            {
+                buttonText = ModTranslation.getString("SidekickText")
+            };
 
             // Jackal Kill
             jackalKillButton = new CustomButton(
@@ -819,8 +851,10 @@ namespace TheOtherRoles
                 __instance,
                 __instance.KillButton,
                 KeyCode.F
-            );
-            eraserButton.buttonText = ModTranslation.getString("EraserText");
+            )
+            {
+                buttonText = ModTranslation.getString("EraserText")
+            };
 
             placeJackInTheBoxButton = new CustomButton(
                 () =>
@@ -845,8 +879,10 @@ namespace TheOtherRoles
                 __instance,
                 __instance.KillButton,
                 KeyCode.F
-            );
-            placeJackInTheBoxButton.buttonText = ModTranslation.getString("PlaceJackInTheBoxText");
+            )
+            {
+                buttonText = ModTranslation.getString("PlaceJackInTheBoxText")
+            };
 
             lightsOutButton = new CustomButton(
                 () =>
@@ -871,8 +907,10 @@ namespace TheOtherRoles
                 true,
                 Trickster.lightsOutDuration,
                 () => { lightsOutButton.Timer = lightsOutButton.MaxTimer; }
-            );
-            lightsOutButton.buttonText = ModTranslation.getString("LightsOutText");
+            )
+            {
+                buttonText = ModTranslation.getString("LightsOutText")
+            };
 
             // Cleaner Clean
             cleanerCleanButton = new CustomButton(
@@ -911,8 +949,10 @@ namespace TheOtherRoles
                 __instance,
                 __instance.KillButton,
                 KeyCode.F
-            );
-            cleanerCleanButton.buttonText = ModTranslation.getString("CleanText");
+            )
+            {
+                buttonText = ModTranslation.getString("CleanText")
+            };
 
             // Warlock curse
             warlockCurseButton = new CustomButton(
@@ -968,8 +1008,10 @@ namespace TheOtherRoles
                 __instance,
                 __instance.KillButton,
                 KeyCode.F
-            );
-            warlockCurseButton.buttonText = ModTranslation.getString("CurseText");
+            )
+            {
+                buttonText = ModTranslation.getString("CurseText")
+            };
 
             // Security Guard button
             securityGuardButton = new CustomButton(
@@ -1037,8 +1079,10 @@ namespace TheOtherRoles
                 __instance,
                 __instance.UseButton,
                 KeyCode.F
-            );
-            securityGuardButton.buttonText = ModTranslation.getString("PlaceCameraText");
+            )
+            {
+                buttonText = ModTranslation.getString("PlaceCameraText")
+            };
 
             // Security Guard button screws counter
             securityGuardButtonScrewsText = GameObject.Instantiate(securityGuardButton.actionButton.cooldownTimerText, securityGuardButton.actionButton.cooldownTimerText.transform.parent);
@@ -1048,9 +1092,12 @@ namespace TheOtherRoles
             securityGuardButtonScrewsText.transform.localPosition += new Vector3(-0.05f, 0.7f, 0);
 
             securityGuardCamButton = new CustomButton(
-                () => {
-                    if (PlayerControl.GameOptions.MapId != 1) {
-                        if (SecurityGuard.minigame == null) {
+                () =>
+                {
+                    if (PlayerControl.GameOptions.MapId != 1)
+                    {
+                        if (SecurityGuard.minigame == null)
+                        {
                             byte mapId = PlayerControl.GameOptions.MapId;
                             var e = UnityEngine.Object.FindObjectsOfType<SystemConsole>().FirstOrDefault(x => x.gameObject.name.Contains("Surv_Panel"));
                             if (mapId == 0 || mapId == 3) e = UnityEngine.Object.FindObjectsOfType<SystemConsole>().FirstOrDefault(x => x.gameObject.name.Contains("SurvConsole"));
@@ -1061,8 +1108,11 @@ namespace TheOtherRoles
                         SecurityGuard.minigame.transform.SetParent(Camera.main.transform, false);
                         SecurityGuard.minigame.transform.localPosition = new Vector3(0.0f, 0.0f, -50f);
                         SecurityGuard.minigame.Begin(null);
-                    } else {
-                        if (SecurityGuard.minigame == null) {
+                    }
+                    else
+                    {
+                        if (SecurityGuard.minigame == null)
+                        {
                             var e = UnityEngine.Object.FindObjectsOfType<SystemConsole>().FirstOrDefault(x => x.gameObject.name.Contains("SurvLogConsole"));
                             if (e == null || Camera.main == null) return;
                             SecurityGuard.minigame = UnityEngine.Object.Instantiate(e.MinigamePrefab, Camera.main.transform, false);
@@ -1077,7 +1127,8 @@ namespace TheOtherRoles
                     PlayerControl.LocalPlayer.NetTransform.Halt(); // Stop current movement 
                 },
                 () => { return SecurityGuard.securityGuard != null && SecurityGuard.securityGuard == PlayerControl.LocalPlayer && !PlayerControl.LocalPlayer.Data.IsDead && SecurityGuard.remainingScrews < Mathf.Min(SecurityGuard.ventPrice, SecurityGuard.camPrice) && SubmergedCompatibility.isSubmerged(); },
-                () => {
+                () =>
+                {
                     if (securityGuardChargesText != null)
                         securityGuardChargesText.text = securityGuardChargesText.text = String.Format(ModTranslation.getString("hackerChargesText"), SecurityGuard.charges, SecurityGuard.maxCharges);
                     securityGuardCamButton.actionButton.graphic.sprite = PlayerControl.GameOptions.MapId == 1 ? SecurityGuard.getLogSprite() : SecurityGuard.getCamSprite();
@@ -1086,7 +1137,8 @@ namespace TheOtherRoles
                         TranslationController.Instance.GetString(StringNames.SecurityCamsSystem));
                     return PlayerControl.LocalPlayer.CanMove && SecurityGuard.charges > 0;
                 },
-                () => {
+                () =>
+                {
                     securityGuardCamButton.Timer = securityGuardCamButton.MaxTimer;
                     securityGuardCamButton.isEffectActive = false;
                     securityGuardCamButton.actionButton.cooldownTimerText.color = Palette.EnabledColor;
@@ -1098,9 +1150,11 @@ namespace TheOtherRoles
                 KeyCode.Q,
                 true,
                 0f,
-                () => {
+                () =>
+                {
                     securityGuardCamButton.Timer = securityGuardCamButton.MaxTimer;
-                    if (Minigame.Instance) {
+                    if (Minigame.Instance)
+                    {
                         SecurityGuard.minigame.ForceClose();
                     }
                     PlayerControl.LocalPlayer.moveable = true;
@@ -1175,8 +1229,10 @@ namespace TheOtherRoles
                         }
                     }
                 }
-            );
-            arsonistButton.buttonText = ModTranslation.getString("DouseText");
+            )
+            {
+                buttonText = ModTranslation.getString("DouseText")
+            };
 
             arsonistIgniteButton = new CustomButton(
                 () =>
@@ -1196,8 +1252,10 @@ namespace TheOtherRoles
                 __instance,
                 __instance.KillButton,
                 KeyCode.Q
-            );
-            arsonistIgniteButton.buttonText = ModTranslation.getString("IgniteText");
+            )
+            {
+                buttonText = ModTranslation.getString("IgniteText")
+            };
 
             // Vulture Eat
             vultureEatButton = new CustomButton(
@@ -1248,8 +1306,10 @@ namespace TheOtherRoles
                 __instance,
                 __instance.KillButton,
                 KeyCode.F
-            );
-            vultureEatButton.buttonText = ModTranslation.getString("VultureText");
+            )
+            {
+                buttonText = ModTranslation.getString("VultureText")
+            };
 
             vultureNumCorpsesText = GameObject.Instantiate(vultureEatButton.actionButton.cooldownTimerText, vultureEatButton.actionButton.cooldownTimerText.transform.parent);
             vultureNumCorpsesText.text = "";
@@ -1298,9 +1358,9 @@ namespace TheOtherRoles
                     string msg = "";
 
                     int randomNumber = TheOtherRoles.rnd.Next(4);
-                    if(Medium.target.killerIfExisting != null)
+                    if (Medium.target.killerIfExisting != null)
                     {
-                        if(Helpers.playerById(Medium.target.killerIfExisting.PlayerId).hasModifier(ModifierType.Mini))
+                        if (Helpers.playerById(Medium.target.killerIfExisting.PlayerId).hasModifier(ModifierType.Mini))
                         {
                             randomNumber = TheOtherRoles.rnd.Next(3);
                         }
@@ -1361,8 +1421,10 @@ namespace TheOtherRoles
                         Medium.souls.Remove(target);
                     }
                 }
-            );
-            mediumButton.buttonText = ModTranslation.getString("MediumText");
+            )
+            {
+                buttonText = ModTranslation.getString("MediumText")
+            };
 
             // Pursuer button
             pursuerButton = new CustomButton(
@@ -1396,8 +1458,10 @@ namespace TheOtherRoles
                 __instance,
                 __instance.UseButton,
                 KeyCode.F
-            );
-            pursuerButton.buttonText = ModTranslation.getString("PursuerText");
+            )
+            {
+                buttonText = ModTranslation.getString("PursuerText")
+            };
 
             // Pursuer button blanks left
             pursuerButtonBlanksText = GameObject.Instantiate(pursuerButton.actionButton.cooldownTimerText, pursuerButton.actionButton.cooldownTimerText.transform.parent);
@@ -1464,16 +1528,21 @@ namespace TheOtherRoles
                     }
                     Witch.spellCastingTarget = null;
                 }
-            );
-            witchSpellButton.buttonText = ModTranslation.getString("WitchText");
+            )
+            {
+                buttonText = ModTranslation.getString("WitchText")
+            };
 
             // Assassin mark and assassinate button 
             assassinButton = new CustomButton(
-                () => {
-                    if (Assassin.assassinMarked != null) {
+                () =>
+                {
+                    if (Assassin.assassinMarked != null)
+                    {
                         // Murder attempt with teleport
                         MurderAttemptResult attempt = Helpers.checkMuderAttempt(Assassin.assassin, Assassin.assassinMarked);
-                        if (attempt == MurderAttemptResult.PerformKill) {
+                        if (attempt == MurderAttemptResult.PerformKill)
+                        {
                             // Create first trace before killing
                             var pos = PlayerControl.LocalPlayer.transform.position;
                             byte[] buff = new byte[sizeof(float) * 2];
@@ -1491,8 +1560,9 @@ namespace TheOtherRoles
                             writer2.Write(Assassin.assassinMarked.PlayerId);
                             writer2.Write(byte.MaxValue);
                             AmongUsClient.Instance.FinishRpcImmediately(writer2);
-                            if (SubmergedCompatibility.isSubmerged()) {
-                                    SubmergedCompatibility.ChangeFloor(Assassin.assassinMarked.transform.localPosition.y > -7);
+                            if (SubmergedCompatibility.isSubmerged())
+                            {
+                                SubmergedCompatibility.ChangeFloor(Assassin.assassinMarked.transform.localPosition.y > -7);
                             }
                             RPCProcedure.uncheckedMurderPlayer(PlayerControl.LocalPlayer.PlayerId, Assassin.assassinMarked.PlayerId, byte.MaxValue);
 
@@ -1508,26 +1578,32 @@ namespace TheOtherRoles
                             RPCProcedure.placeAssassinTrace(buff);
                         }
 
-                        if (attempt == MurderAttemptResult.BlankKill || attempt == MurderAttemptResult.PerformKill) {
+                        if (attempt == MurderAttemptResult.BlankKill || attempt == MurderAttemptResult.PerformKill)
+                        {
                             assassinButton.Timer = assassinButton.MaxTimer;
                             Assassin.assassin.killTimer = PlayerControl.GameOptions.KillCooldown;
-                        } else if (attempt == MurderAttemptResult.SuppressKill) {
+                        }
+                        else if (attempt == MurderAttemptResult.SuppressKill)
+                        {
                             assassinButton.Timer = 0f;
                         }
                         Assassin.assassinMarked = null;
                         return;
-                    } 
-                    if (Assassin.currentTarget != null) {
+                    }
+                    if (Assassin.currentTarget != null)
+                    {
                         Assassin.assassinMarked = Assassin.currentTarget;
                         assassinButton.Timer = 5f;
                     }
                 },
                 () => { return Assassin.assassin != null && Assassin.assassin == PlayerControl.LocalPlayer && !PlayerControl.LocalPlayer.Data.IsDead; },
-                () => {  // CouldUse
-                    assassinButton.Sprite = Assassin.assassinMarked != null ? Assassin.getKillButtonSprite() : Assassin.getMarkButtonSprite(); 
+                () =>
+                {  // CouldUse
+                    assassinButton.Sprite = Assassin.assassinMarked != null ? Assassin.getKillButtonSprite() : Assassin.getMarkButtonSprite();
                     return (Assassin.currentTarget != null || Assassin.assassinMarked != null) && PlayerControl.LocalPlayer.CanMove;
                 },
-                () => {  // on meeting ends
+                () =>
+                {  // on meeting ends
                     assassinButton.Timer = assassinButton.MaxTimer;
                     Assassin.assassinMarked = null;
                 },
@@ -1537,9 +1613,11 @@ namespace TheOtherRoles
                 __instance.UseButton,
                 KeyCode.F,
                 false
-            );
-            // assassinButton.buttonText = ModTranslation.getString("assassinText");
-            assassinButton.buttonText = "";
+            )
+            {
+                // assassinButton.buttonText = ModTranslation.getString("assassinText");
+                buttonText = ""
+            };
 
             ButtonsGM.makeButtons(__instance);
 

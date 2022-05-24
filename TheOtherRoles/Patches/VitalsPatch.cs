@@ -1,12 +1,12 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using HarmonyLib;
 using Hazel;
-using System;
-using System.Linq;
-using System.Collections.Generic;
 using UnityEngine;
-using static TheOtherRoles.TheOtherRoles;
 using static TheOtherRoles.GameHistory;
-using System.Reflection;
+using static TheOtherRoles.TheOtherRoles;
 
 namespace TheOtherRoles.Patches
 {
@@ -15,7 +15,7 @@ namespace TheOtherRoles.Patches
     {
         static float vitalsTimer = 0f;
         static TMPro.TextMeshPro TimeRemaining;
-        private static List<TMPro.TextMeshPro> hackerTexts = new List<TMPro.TextMeshPro>();
+        private static List<TMPro.TextMeshPro> hackerTexts = new();
 
         public static void ResetData()
         {

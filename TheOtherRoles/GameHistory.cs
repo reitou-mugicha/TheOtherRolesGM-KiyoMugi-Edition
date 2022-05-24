@@ -1,7 +1,7 @@
-using System.Collections.Generic;
 using System;
-using UnityEngine;
+using System.Collections.Generic;
 using TheOtherRoles.Patches;
+using UnityEngine;
 
 namespace TheOtherRoles
 {
@@ -12,7 +12,8 @@ namespace TheOtherRoles
         public DeathReason deathReason;
         public PlayerControl killerIfExisting;
 
-        public DeadPlayer(PlayerControl player, DateTime timeOfDeath, DeathReason deathReason, PlayerControl killerIfExisting) {
+        public DeadPlayer(PlayerControl player, DateTime timeOfDeath, DeathReason deathReason, PlayerControl killerIfExisting)
+        {
             this.player = player;
             this.timeOfDeath = timeOfDeath;
             this.deathReason = deathReason;
@@ -20,12 +21,14 @@ namespace TheOtherRoles
         }
     }
 
-    static class GameHistory {
-        public static List<Tuple<Vector3, bool>> localPlayerPositions = new List<Tuple<Vector3, bool>>();
-        public static List<DeadPlayer> deadPlayers = new List<DeadPlayer>();
-        public static Dictionary<int, FinalStatus> finalStatuses = new Dictionary<int, FinalStatus>();
+    static class GameHistory
+    {
+        public static List<Tuple<Vector3, bool>> localPlayerPositions = new();
+        public static List<DeadPlayer> deadPlayers = new();
+        public static Dictionary<int, FinalStatus> finalStatuses = new();
 
-        public static void clearGameHistory() {
+        public static void clearGameHistory()
+        {
             localPlayerPositions = new List<Tuple<Vector3, bool>>();
             deadPlayers = new List<DeadPlayer>();
             finalStatuses = new Dictionary<int, FinalStatus>();

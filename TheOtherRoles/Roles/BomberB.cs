@@ -1,10 +1,10 @@
-using HarmonyLib;
-using Hazel;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
+using HarmonyLib;
+using Hazel;
 using TheOtherRoles.Objects;
 using TheOtherRoles.Patches;
+using UnityEngine;
 using static TheOtherRoles.GameHistory;
 using static TheOtherRoles.Patches.PlayerControlFixedUpdatePatch;
 
@@ -23,14 +23,14 @@ namespace TheOtherRoles
         public static PlayerControl tmpTarget;
         public static TMPro.TextMeshPro targetText;
         public static TMPro.TextMeshPro partnerTargetText;
-        public static Dictionary<byte, PoolablePlayer> playerIcons = new Dictionary<byte, PoolablePlayer>();
-        public static float duration {get {return CustomOptionHolder.bomberDuration.getFloat();}}
-        public static float cooldown {get {return CustomOptionHolder.bomberCooldown.getFloat();}}
-        public static bool ifOneDiesBothDie {get {return CustomOptionHolder.bomberIfOneDiesBothDie.getBool();}}
+        public static Dictionary<byte, PoolablePlayer> playerIcons = new();
+        public static float duration { get { return CustomOptionHolder.bomberDuration.getFloat(); } }
+        public static float cooldown { get { return CustomOptionHolder.bomberCooldown.getFloat(); } }
+        public static bool ifOneDiesBothDie { get { return CustomOptionHolder.bomberIfOneDiesBothDie.getBool(); } }
         public static Sprite bomberButtonSprite;
         public static Sprite releaseButtonSprite;
         public static float updateTimer = 0f;
-        public static List<Arrow> arrows = new List<Arrow>();
+        public static List<Arrow> arrows = new();
         public static float arrowUpdateInterval = 0.5f;
 
         public BomberB()
@@ -53,12 +53,12 @@ namespace TheOtherRoles
 
                 foreach (PoolablePlayer pp in MapOptions.playerIcons.Values) pp.gameObject.SetActive(false);
                 foreach (PoolablePlayer pp in playerIcons.Values) pp.gameObject.SetActive(false);
-                if(player.isAlive() && BomberA.isAlive())
+                if (player.isAlive() && BomberA.isAlive())
                 {
                     if (bombTarget != null && MapOptions.playerIcons.ContainsKey(bombTarget.PlayerId) && MapOptions.playerIcons[bombTarget.PlayerId].gameObject != null)
                     {
                         var icon = MapOptions.playerIcons[bombTarget.PlayerId];
-                        Vector3 bottomLeft = new Vector3(-HudManager.Instance.UseButton.transform.localPosition.x, HudManager.Instance.UseButton.transform.localPosition.y, HudManager.Instance.UseButton.transform.localPosition.z);
+                        Vector3 bottomLeft = new(-HudManager.Instance.UseButton.transform.localPosition.x, HudManager.Instance.UseButton.transform.localPosition.y, HudManager.Instance.UseButton.transform.localPosition.z);
                         icon.gameObject.SetActive(true);
                         icon.transform.localPosition = bottomLeft + new Vector3(-0.25f, 0f, 0);
                         icon.transform.localScale = Vector3.one * 0.4f;
@@ -77,7 +77,7 @@ namespace TheOtherRoles
                     if (BomberA.bombTarget != null && playerIcons.ContainsKey(BomberA.bombTarget.PlayerId) && playerIcons[BomberA.bombTarget.PlayerId].gameObject != null)
                     {
                         var icon = playerIcons[BomberA.bombTarget.PlayerId];
-                        Vector3 bottomLeft = new Vector3(-HudManager.Instance.UseButton.transform.localPosition.x, HudManager.Instance.UseButton.transform.localPosition.y, HudManager.Instance.UseButton.transform.localPosition.z);
+                        Vector3 bottomLeft = new(-HudManager.Instance.UseButton.transform.localPosition.x, HudManager.Instance.UseButton.transform.localPosition.y, HudManager.Instance.UseButton.transform.localPosition.z);
                         icon.gameObject.SetActive(true);
                         icon.transform.localPosition = bottomLeft + new Vector3(1.0f, 0f, 0);
                         icon.transform.localScale = Vector3.one * 0.4f;
@@ -96,9 +96,9 @@ namespace TheOtherRoles
             }
         }
         public override void OnKill(PlayerControl target) { }
-        public override void OnDeath(PlayerControl killer = null) 
+        public override void OnDeath(PlayerControl killer = null)
         {
-            if(ifOneDiesBothDie)
+            if (ifOneDiesBothDie)
             {
                 var partner = BomberA.players.FirstOrDefault().player;
                 if (!partner.Data.IsDead)
@@ -116,10 +116,10 @@ namespace TheOtherRoles
                 }
             }
 
-         }
+        }
         public override void HandleDisconnect(PlayerControl player, DisconnectReasons reason) { }
 
-        public static void MakeButtons(HudManager hm) 
+        public static void MakeButtons(HudManager hm)
         {
 
             // Bomber button
@@ -134,7 +134,7 @@ namespace TheOtherRoles
                     }
                 },
                 // HasButton
-                () => { return PlayerControl.LocalPlayer.isRole(RoleType.BomberB)  && PlayerControl.LocalPlayer.isAlive() && BomberA.isAlive(); },
+                () => { return PlayerControl.LocalPlayer.isRole(RoleType.BomberB) && PlayerControl.LocalPlayer.isAlive() && BomberA.isAlive(); },
                 // CouldUse
                 () =>
                 {
@@ -154,7 +154,7 @@ namespace TheOtherRoles
                     bomberButton.isEffectActive = false;
                     tmpTarget = null;
                 },
-                getBomberButtonSprite(), 
+                getBomberButtonSprite(),
                 new Vector3(-1.8f, -0.06f, 0),
                 hm,
                 hm.KillButton,
@@ -176,8 +176,10 @@ namespace TheOtherRoles
                     bomberButton.Timer = bomberButton.MaxTimer;
 
                 }
-            );
-            bomberButton.buttonText = ModTranslation.getString("bomberPlantBomb");
+            )
+            {
+                buttonText = ModTranslation.getString("bomberPlantBomb")
+            };
             // Bomber button
             releaseButton = new CustomButton(
                 // OnClick
@@ -197,7 +199,7 @@ namespace TheOtherRoles
                     }
                 },
                 // HasButton
-                () => { return PlayerControl.LocalPlayer.isRole(RoleType.BomberB)  && PlayerControl.LocalPlayer.isAlive() && BomberA.isAlive(); },
+                () => { return PlayerControl.LocalPlayer.isRole(RoleType.BomberB) && PlayerControl.LocalPlayer.isAlive() && BomberA.isAlive(); },
                 // CouldUse
                 () =>
                 {
@@ -211,21 +213,24 @@ namespace TheOtherRoles
                 {
                     releaseButton.Timer = releaseButton.MaxTimer;
                 },
-                getReleaseButtonSprite(), 
+                getReleaseButtonSprite(),
                 new Vector3(-2.7f, -0.06f, 0),
                 hm,
                 hm.KillButton,
                 KeyCode.F,
                 false
-            );
-            releaseButton.buttonText = ModTranslation.getString("bomberDetonate");
+            )
+            {
+                buttonText = ModTranslation.getString("bomberDetonate")
+            };
 
-         }
-        public static void SetButtonCooldowns() {
+        }
+        public static void SetButtonCooldowns()
+        {
             bomberButton.MaxTimer = cooldown;
             bomberButton.EffectDuration = duration;
             releaseButton.MaxTimer = 0f;
-         }
+        }
 
         public static void Clear()
         {
@@ -240,9 +245,9 @@ namespace TheOtherRoles
         }
         public static bool isAlive()
         {
-            foreach(var bomber in players)
+            foreach (var bomber in players)
             {
-                if(!(bomber.player.Data.IsDead || bomber.player.Data.Disconnected))
+                if (!(bomber.player.Data.IsDead || bomber.player.Data.Disconnected))
                     return true;
             }
             return false;
@@ -261,17 +266,19 @@ namespace TheOtherRoles
         }
         static void arrowUpdate()
         {
-            if((BomberA.bombTarget == null || BomberB.bombTarget == null) && !BomberA.alwaysShowArrow) return;
+            if ((BomberA.bombTarget == null || BomberB.bombTarget == null) && !BomberA.alwaysShowArrow) return;
 
             // 前フレームからの経過時間をマイナスする
             updateTimer -= Time.fixedDeltaTime;
 
             // 1秒経過したらArrowを更新
-            if(updateTimer <= 0.0f){
+            if (updateTimer <= 0.0f)
+            {
 
                 // 前回のArrowをすべて破棄する
-                foreach(Arrow arrow in arrows){
-                    if(arrow != null)
+                foreach (Arrow arrow in arrows)
+                {
+                    if (arrow != null)
                     {
                         arrow.arrow.SetActive(false);
                         UnityEngine.Object.Destroy(arrow.arrow);
@@ -282,9 +289,10 @@ namespace TheOtherRoles
                 arrows = new List<Arrow>();
 
                 // 相方の位置を示すArrowsを描画
-                foreach(PlayerControl p in PlayerControl.AllPlayerControls){
-                    if(p.Data.IsDead) continue;
-                    if(p.isRole(RoleType.BomberA))
+                foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+                {
+                    if (p.Data.IsDead) continue;
+                    if (p.isRole(RoleType.BomberA))
                     {
                         Arrow arrow;
                         arrow = new Arrow(Color.red);
@@ -306,8 +314,9 @@ namespace TheOtherRoles
             {
                 if (PlayerControl.LocalPlayer != null && HudManager.Instance != null)
                 {
-                    Vector3 bottomLeft = new Vector3(-HudManager.Instance.UseButton.transform.localPosition.x, HudManager.Instance.UseButton.transform.localPosition.y, HudManager.Instance.UseButton.transform.localPosition.z);
-                    foreach (PlayerControl p in PlayerControl.AllPlayerControls) {
+                    Vector3 bottomLeft = new(-HudManager.Instance.UseButton.transform.localPosition.x, HudManager.Instance.UseButton.transform.localPosition.y, HudManager.Instance.UseButton.transform.localPosition.z);
+                    foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+                    {
                         GameData.PlayerInfo data = p.Data;
                         PoolablePlayer player = UnityEngine.Object.Instantiate<PoolablePlayer>(__instance.PlayerPrefab, HudManager.Instance.transform);
                         player.UpdateFromPlayerOutfit(p.Data.DefaultOutfit, p.Data.IsDead);

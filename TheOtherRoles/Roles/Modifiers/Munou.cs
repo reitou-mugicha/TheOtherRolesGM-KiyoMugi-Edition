@@ -1,18 +1,18 @@
-using HarmonyLib;
-using Hazel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
+using HarmonyLib;
+using Hazel;
 using TheOtherRoles.Objects;
 using TheOtherRoles.Patches;
-using static TheOtherRoles.TheOtherRoles;
+using UnityEngine;
 using static TheOtherRoles.GameHistory;
+using static TheOtherRoles.TheOtherRoles;
 
 namespace TheOtherRoles
 {
     [HarmonyPatch]
-    public class Munou: ModifierBase<Munou>
+    public class Munou : ModifierBase<Munou>
     {
         public enum MunouType
         {
@@ -22,9 +22,9 @@ namespace TheOtherRoles
         public static Color color = Color.grey;
         public static bool endGameFlag = false;
         public static bool randomColorFlag = false;
-        public static int probability {get {return (int)CustomOptionHolder.munouProbability.getFloat();}}
-        public static int numShufflePlayers {get {return (int)CustomOptionHolder.munouNumShufflePlayers.getFloat();}}
-        public static Dictionary<byte, byte> randomPlayers = new Dictionary<byte, byte>();
+        public static int probability { get { return (int)CustomOptionHolder.munouProbability.getFloat(); } }
+        public static int numShufflePlayers { get { return (int)CustomOptionHolder.munouNumShufflePlayers.getFloat(); } }
+        public static Dictionary<byte, byte> randomPlayers = new();
         public static string postfix
         {
             get
@@ -33,8 +33,8 @@ namespace TheOtherRoles
             }
         }
 
-        public static MunouType munouType {get {return (MunouType)CustomOptionHolder.munouType.getSelection();}}
-        public static List<RoleType> validRoles = new List<RoleType>
+        public static MunouType munouType { get { return (MunouType)CustomOptionHolder.munouType.getSelection(); } }
+        public static List<RoleType> validRoles = new()
         {
             RoleType.Crewmate,
             RoleType.Shifter,
@@ -60,8 +60,8 @@ namespace TheOtherRoles
         {
             get
             {
-                List<PlayerControl> crewNoRole = new List<PlayerControl>();
-                List<PlayerControl> validPlayers = new List<PlayerControl>();
+                List<PlayerControl> crewNoRole = new();
+                List<PlayerControl> validPlayers = new();
 
                 foreach (var player in PlayerControl.AllPlayerControls)
                 {
@@ -90,16 +90,17 @@ namespace TheOtherRoles
 
         public override void OnMeetingStart()
         {
-            DestroyableSingleton<HudManager>._instance.StartCoroutine(Effects.Lerp(3f, new Action<float>((p)=>
+            DestroyableSingleton<HudManager>._instance.StartCoroutine(Effects.Lerp(3f, new Action<float>((p) =>
             {
-                if (p == 1){
+                if (p == 1)
+                {
                     resetColors();
                 }
             })));
         }
         public override void OnMeetingEnd()
         {
-            if(player == PlayerControl.LocalPlayer && PlayerControl.LocalPlayer.hasModifier(ModifierType.Munou) && PlayerControl.LocalPlayer.isAlive())
+            if (player == PlayerControl.LocalPlayer && PlayerControl.LocalPlayer.hasModifier(ModifierType.Munou) && PlayerControl.LocalPlayer.isAlive())
             {
                 randomColors();
             }
@@ -109,7 +110,7 @@ namespace TheOtherRoles
         public override void OnKill(PlayerControl target) { }
         public override void OnDeath(PlayerControl killer = null)
         {
-            if(player == PlayerControl.LocalPlayer && PlayerControl.LocalPlayer.hasModifier(ModifierType.Munou)) resetColors();
+            if (player == PlayerControl.LocalPlayer && PlayerControl.LocalPlayer.hasModifier(ModifierType.Munou)) resetColors();
         }
         public override void HandleDisconnect(PlayerControl player, DisconnectReasons reason) { }
 
@@ -125,34 +126,36 @@ namespace TheOtherRoles
             resetColors();
         }
 
-        public static Dictionary<byte, byte> colorPairs = new Dictionary<byte, byte>();
-        public static void randomColors(){
+        public static Dictionary<byte, byte> colorPairs = new();
+        public static void randomColors()
+        {
             colorPairs = new Dictionary<byte, byte>();
             // 発生確率
             int random = rnd.Next(100);
-            if(random > probability) return;
+            if (random > probability) return;
 
             var allPlayers = PlayerControl.AllPlayerControls;
-            List<byte> alivePlayers = new List<byte>();
-            List<int> tempList = new List<int>();
-            foreach(var p in allPlayers)
+            List<byte> alivePlayers = new();
+            List<int> tempList = new();
+            foreach (var p in allPlayers)
             {
-                if(p.PlayerId == PlayerControl.LocalPlayer.PlayerId) continue;
-                if(p == Puppeteer.dummy) continue;
-                if(p.isAlive()) alivePlayers.Add(p.PlayerId);
+                if (p.PlayerId == PlayerControl.LocalPlayer.PlayerId) continue;
+                if (p == Puppeteer.dummy) continue;
+                if (p.isAlive()) alivePlayers.Add(p.PlayerId);
             }
             alivePlayers.shuffle();
             List<byte> shuffleTargets = alivePlayers.Count > numShufflePlayers ? alivePlayers.Take(numShufflePlayers).ToList() : alivePlayers;
-            foreach(byte id in shuffleTargets)
+            foreach (byte id in shuffleTargets)
             {
-                if(id == PlayerControl.LocalPlayer.PlayerId) continue;
+                if (id == PlayerControl.LocalPlayer.PlayerId) continue;
                 var p = Helpers.playerById(id);
                 int rnd;
                 int coutner = 0;
-                while(true){
+                while (true)
+                {
                     rnd = TheOtherRoles.rnd.Next(shuffleTargets.Count);
-                    if(shuffleTargets[rnd] == PlayerControl.LocalPlayer.PlayerId) continue;
-                    if(!tempList.Contains(rnd))
+                    if (shuffleTargets[rnd] == PlayerControl.LocalPlayer.PlayerId) continue;
+                    if (!tempList.Contains(rnd))
                     {
                         tempList.Add(rnd);
                         break;
@@ -165,19 +168,20 @@ namespace TheOtherRoles
             }
             randomColorFlag = true;
         }
-        
+
         public static void reMorph(byte playerId)
         {
-            if(colorPairs.ContainsKey(playerId))
+            if (colorPairs.ContainsKey(playerId))
             {
                 MorphHandler.morphToPlayer(Helpers.playerById(playerId), Helpers.playerById(colorPairs[playerId]));
             }
         }
 
-        public static void resetColors(){
+        public static void resetColors()
+        {
             colorPairs = new Dictionary<byte, byte>();
             var allPlayers = PlayerControl.AllPlayerControls;
-            foreach(var p in allPlayers)
+            foreach (var p in allPlayers)
             {
                 MorphHandler.morphToPlayer(p, p);
             }
@@ -190,7 +194,7 @@ namespace TheOtherRoles
 
             public static void Prefix(AmongUsClient __instance, [HarmonyArgument(0)] ref EndGameResult endGameResult)
             {
-                    Munou.endGameFlag = true;
+                Munou.endGameFlag = true;
             }
         }
     }

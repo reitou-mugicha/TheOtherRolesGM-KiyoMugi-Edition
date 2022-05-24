@@ -1,12 +1,12 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using HarmonyLib;
+using UnityEngine;
+using static TheOtherRoles.GameHistory;
 using static TheOtherRoles.TheOtherRoles;
 using static TheOtherRoles.TheOtherRolesGM;
-using static TheOtherRoles.GameHistory;
-using System.Collections.Generic;
-using UnityEngine;
-using System.Linq;
-using System;
-using System.Text;
 
 namespace TheOtherRoles.Patches
 {
@@ -68,13 +68,13 @@ namespace TheOtherRoles.Patches
     {
         // Should be implemented using a proper GameOverReason in the future
         public static WinCondition winCondition = WinCondition.Default;
-        public static List<WinCondition> additionalWinConditions = new List<WinCondition>();
-        public static List<PlayerRoleInfo> playerRoles = new List<PlayerRoleInfo>();
+        public static List<WinCondition> additionalWinConditions = new();
+        public static List<PlayerRoleInfo> playerRoles = new();
         public static bool isGM = false;
         public static GameOverReason gameOverReason;
 
-        public static Dictionary<int, PlayerControl> plagueDoctorInfected = new Dictionary<int, PlayerControl>();
-        public static Dictionary<int, float> plagueDoctorProgress = new Dictionary<int, float>();
+        public static Dictionary<int, PlayerControl> plagueDoctorInfected = new();
+        public static Dictionary<int, float> plagueDoctorProgress = new();
 
         public static void clear()
         {
@@ -119,19 +119,20 @@ namespace TheOtherRoles.Patches
             Boolean isFoxAlive = Fox.isFoxAlive();
 
             Boolean isFoxCompletedTasks = Fox.isFoxCompletedTasks(); // 生存中の狐が1匹でもタスクを全て終えていること
-            if(isFoxAlive && isFoxCompletedTasks){
+            if (isFoxAlive && isFoxCompletedTasks)
+            {
                 // タスク・サボタージュ勝利の場合はオプションの設定次第
-                if(gameOverReason == GameOverReason.HumansByTask && !Fox.crewWinsByTasks)
+                if (gameOverReason == GameOverReason.HumansByTask && !Fox.crewWinsByTasks)
                 {
                     gameOverReason = (GameOverReason)CustomGameOverReason.FoxWin;
                 }
-                else if(gameOverReason == GameOverReason.ImpostorBySabotage && !Fox.impostorWinsBySabotage)
+                else if (gameOverReason == GameOverReason.ImpostorBySabotage && !Fox.impostorWinsBySabotage)
                 {
                     gameOverReason = (GameOverReason)CustomGameOverReason.FoxWin;
                 }
 
                 // 第三陣営の勝利以外の場合に狐が生存していたら狐の勝ち
-                else if(gameOverReason != (GameOverReason)CustomGameOverReason.PlagueDoctorWin &&
+                else if (gameOverReason != (GameOverReason)CustomGameOverReason.PlagueDoctorWin &&
                 gameOverReason != (GameOverReason)CustomGameOverReason.ArsonistWin &&
                 gameOverReason != (GameOverReason)CustomGameOverReason.JesterWin &&
                 gameOverReason != (GameOverReason)CustomGameOverReason.VultureWin &&
@@ -180,7 +181,7 @@ namespace TheOtherRoles.Patches
 
 
             // Remove Jester, Arsonist, Vulture, Jackal, former Jackals and Sidekick from winners (if they win, they'll be readded)
-            List<PlayerControl> notWinners = new List<PlayerControl>();
+            List<PlayerControl> notWinners = new();
             if (Jester.jester != null) notWinners.Add(Jester.jester);
             if (Sidekick.sidekick != null) notWinners.Add(Sidekick.sidekick);
             if (Jackal.jackal != null) notWinners.Add(Jackal.jackal);
@@ -198,7 +199,7 @@ namespace TheOtherRoles.Patches
             notWinners.AddRange(Immoralist.allPlayers);
             notWinners.AddRange(Puppeteer.allPlayers);
             notWinners.AddRange(JekyllAndHyde.allPlayers);
-            if(Puppeteer.dummy != null) notWinners.Add(Puppeteer.dummy);
+            if (Puppeteer.dummy != null) notWinners.Add(Puppeteer.dummy);
             if (SchrodingersCat.team != SchrodingersCat.Team.Crew) notWinners.AddRange(SchrodingersCat.allPlayers);
 
             // Neutral shifter can't win
@@ -216,7 +217,7 @@ namespace TheOtherRoles.Patches
                 }
             }
 
-            List<WinningPlayerData> winnersToRemove = new List<WinningPlayerData>();
+            List<WinningPlayerData> winnersToRemove = new();
             foreach (WinningPlayerData winner in TempData.winners)
             {
                 if (notWinners.Any(x => x.Data.PlayerName == winner.PlayerName)) winnersToRemove.Add(winner);
@@ -238,7 +239,7 @@ namespace TheOtherRoles.Patches
             bool jekyllAndHydeWin = JekyllAndHyde.exists && gameOverReason == (GameOverReason)CustomGameOverReason.JekyllAndHydeWin;
             bool everyoneDead = AdditionalTempData.playerRoles.All(x => x.Status != FinalStatus.Alive);
 
-            
+
             // Mini lose
             if (miniLose)
             {
@@ -253,7 +254,7 @@ namespace TheOtherRoles.Patches
             else if (jesterWin)
             {
                 TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
-                WinningPlayerData wpd = new WinningPlayerData(Jester.jester.Data);
+                WinningPlayerData wpd = new(Jester.jester.Data);
                 TempData.winners.Add(wpd);
                 AdditionalTempData.winCondition = WinCondition.JesterWin;
             }
@@ -262,7 +263,7 @@ namespace TheOtherRoles.Patches
             else if (arsonistWin)
             {
                 TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
-                WinningPlayerData wpd = new WinningPlayerData(Arsonist.arsonist.Data);
+                WinningPlayerData wpd = new(Arsonist.arsonist.Data);
                 TempData.winners.Add(wpd);
                 AdditionalTempData.winCondition = WinCondition.ArsonistWin;
             }
@@ -272,7 +273,7 @@ namespace TheOtherRoles.Patches
                 foreach (var pd in PlagueDoctor.players)
                 {
                     TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
-                    WinningPlayerData wpd = new WinningPlayerData(pd.player.Data);
+                    WinningPlayerData wpd = new(pd.player.Data);
                     TempData.winners.Add(wpd);
                     AdditionalTempData.winCondition = WinCondition.PlagueDoctorWin;
                 }
@@ -283,7 +284,7 @@ namespace TheOtherRoles.Patches
                 TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
                 foreach (var puppeteer in Puppeteer.players)
                 {
-                    WinningPlayerData wpd = new WinningPlayerData(puppeteer.player.Data);
+                    WinningPlayerData wpd = new(puppeteer.player.Data);
                     TempData.winners.Add(wpd);
                 }
                 AdditionalTempData.winCondition = WinCondition.PuppeteerWin;
@@ -294,14 +295,14 @@ namespace TheOtherRoles.Patches
                 TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
                 foreach (var jekyllAndHyde in JekyllAndHyde.players)
                 {
-                    WinningPlayerData wpd = new WinningPlayerData(jekyllAndHyde.player.Data);
+                    WinningPlayerData wpd = new(jekyllAndHyde.player.Data);
                     TempData.winners.Add(wpd);
                 }
-                if(SchrodingersCat.team == SchrodingersCat.Team.JekyllAndHyde)
+                if (SchrodingersCat.team == SchrodingersCat.Team.JekyllAndHyde)
                 {
                     foreach (var schrodingersCat in SchrodingersCat.allPlayers)
                     {
-                        WinningPlayerData wpd = new WinningPlayerData(schrodingersCat.Data);
+                        WinningPlayerData wpd = new(schrodingersCat.Data);
                         TempData.winners.Add(wpd);
                     }
                 }
@@ -318,7 +319,7 @@ namespace TheOtherRoles.Patches
             else if (vultureWin)
             {
                 TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
-                WinningPlayerData wpd = new WinningPlayerData(Vulture.vulture.Data);
+                WinningPlayerData wpd = new(Vulture.vulture.Data);
                 TempData.winners.Add(wpd);
                 AdditionalTempData.winCondition = WinCondition.VultureWin;
             }
@@ -355,28 +356,36 @@ namespace TheOtherRoles.Patches
                 // Jackal wins if nobody except jackal is alive
                 AdditionalTempData.winCondition = WinCondition.JackalWin;
                 TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
-                WinningPlayerData wpd = new WinningPlayerData(Jackal.jackal.Data);
-                wpd.IsImpostor = false;
+                WinningPlayerData wpd = new(Jackal.jackal.Data)
+                {
+                    IsImpostor = false
+                };
                 TempData.winners.Add(wpd);
                 // If there is a sidekick. The sidekick also wins
                 if (Sidekick.sidekick != null)
                 {
-                    WinningPlayerData wpdSidekick = new WinningPlayerData(Sidekick.sidekick.Data);
-                    wpdSidekick.IsImpostor = false;
+                    WinningPlayerData wpdSidekick = new(Sidekick.sidekick.Data)
+                    {
+                        IsImpostor = false
+                    };
                     TempData.winners.Add(wpdSidekick);
                 }
                 foreach (var player in Jackal.formerJackals)
                 {
-                    WinningPlayerData wpdFormerJackal = new WinningPlayerData(player.Data);
-                    wpdFormerJackal.IsImpostor = false;
+                    WinningPlayerData wpdFormerJackal = new(player.Data)
+                    {
+                        IsImpostor = false
+                    };
                     TempData.winners.Add(wpdFormerJackal);
                 }
                 if (SchrodingersCat.team == SchrodingersCat.Team.Jackal)
                 {
                     foreach (var player in SchrodingersCat.allPlayers)
                     {
-                        WinningPlayerData wpdSchrodingersCat= new WinningPlayerData(player.Data);
-                        wpdSchrodingersCat.IsImpostor = false;
+                        WinningPlayerData wpdSchrodingersCat = new(player.Data)
+                        {
+                            IsImpostor = false
+                        };
                         TempData.winners.Add(wpdSchrodingersCat);
                     }
                 }
@@ -385,7 +394,7 @@ namespace TheOtherRoles.Patches
             else if (lawyerSoloWin)
             {
                 TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
-                WinningPlayerData wpd = new WinningPlayerData(Lawyer.lawyer.Data);
+                WinningPlayerData wpd = new(Lawyer.lawyer.Data);
                 TempData.winners.Add(wpd);
                 AdditionalTempData.winCondition = WinCondition.LawyerSoloWin;
             }
@@ -394,25 +403,25 @@ namespace TheOtherRoles.Patches
                 TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
                 foreach (var fox in Fox.players)
                 {
-                    WinningPlayerData wpd = new WinningPlayerData(fox.player.Data);
+                    WinningPlayerData wpd = new(fox.player.Data);
                     TempData.winners.Add(wpd);
                 }
                 foreach (var immoralist in Immoralist.players)
                 {
-                    WinningPlayerData wpd = new WinningPlayerData(immoralist.player.Data);
+                    WinningPlayerData wpd = new(immoralist.player.Data);
                     TempData.winners.Add(wpd);
                 }
                 AdditionalTempData.winCondition = WinCondition.FoxWin;
             }
 
 
-            
+
             // Madmate win with impostors
             if (Madmate.exists && TempData.winners.ToArray().Any(x => x.IsImpostor))
             {
                 foreach (var p in Madmate.allPlayers)
                 {
-                    WinningPlayerData wpd = new WinningPlayerData(p.Data);
+                    WinningPlayerData wpd = new(p.Data);
                     TempData.winners.Add(wpd);
                 }
             }
@@ -422,16 +431,16 @@ namespace TheOtherRoles.Patches
             {
                 foreach (var p in CreatedMadmate.allPlayers)
                 {
-                    WinningPlayerData wpd = new WinningPlayerData(p.Data);
+                    WinningPlayerData wpd = new(p.Data);
                     TempData.winners.Add(wpd);
                 }
             }
 
-            if (SchrodingersCat.team == SchrodingersCat.Team.Impostor && TempData.winners.ToArray().Any(x=> x.IsImpostor))
+            if (SchrodingersCat.team == SchrodingersCat.Team.Impostor && TempData.winners.ToArray().Any(x => x.IsImpostor))
             {
-                foreach ( var p in SchrodingersCat.allPlayers)
+                foreach (var p in SchrodingersCat.allPlayers)
                 {
-                    WinningPlayerData wpd = new WinningPlayerData(p.Data);
+                    WinningPlayerData wpd = new(p.Data);
                     TempData.winners.Add(wpd);
                 }
             }
@@ -539,7 +548,7 @@ namespace TheOtherRoles.Patches
                         PoolablePlayer poolablePlayer = UnityEngine.Object.Instantiate<PoolablePlayer>(__instance.PlayerPrefab, __instance.transform);
                         poolablePlayer.transform.localPosition = new Vector3(1f * (float)num2 * (float)num3 * num5, FloatRange.SpreadToEdges(-1.125f, 0f, num3, num), num6 + (float)num3 * 0.01f) * 0.9f;
                         float num7 = Mathf.Lerp(1f, 0.65f, num4) * 0.9f;
-                        Vector3 vector = new Vector3(num7, num7, 1f);
+                        Vector3 vector = new(num7, num7, 1f);
                         poolablePlayer.transform.localScale = vector;
                         poolablePlayer.UpdateFromPlayerOutfit(winningPlayerData2, winningPlayerData2.IsDead);
                         if (winningPlayerData2.IsDead)
@@ -884,14 +893,14 @@ namespace TheOtherRoles.Patches
                     }
 
                     if (statistics.JekyllAndHydeAlive >= statistics.TotalAlive - statistics.JekyllAndHydeAlive - statistics.FoxAlive &&
-                        statistics.TeamImpostorsAlive == 0 &&  statistics.TeamJackalAlive == 0 &&
+                        statistics.TeamImpostorsAlive == 0 && statistics.TeamJackalAlive == 0 &&
                         (statistics.JekyllAndHydeLovers == 0 || statistics.JekyllAndHydeLovers >= statistics.CouplesAlive * 2)
                        )
                     {
                         UncheckedEndGame(CustomGameOverReason.JekyllAndHydeWin);
                         return true;
                     }
-                    
+
                     return false;
                 }
 
@@ -980,7 +989,7 @@ namespace TheOtherRoles.Patches
                 private static bool CheckAndEndGameForJackalWin(ShipStatus __instance, PlayerStatistics statistics)
                 {
                     if (statistics.TeamJackalAlive >= statistics.TotalAlive - statistics.TeamJackalAlive - statistics.FoxAlive &&
-                        statistics.TeamImpostorsAlive == 0 &&  statistics.JekyllAndHydeAlive == 0 &&
+                        statistics.TeamImpostorsAlive == 0 && statistics.JekyllAndHydeAlive == 0 &&
                         (statistics.TeamJackalLovers == 0 || statistics.TeamJackalLovers >= statistics.CouplesAlive * 2)
                        )
                     {
@@ -1121,9 +1130,9 @@ namespace TheOtherRoles.Patches
 
                                 if (SchrodingersCat.team == SchrodingersCat.Team.Jackal)
                                 {
-                                    if(Helpers.playerById(playerInfo.PlayerId).isRole(RoleType.SchrodingersCat))
+                                    if (Helpers.playerById(playerInfo.PlayerId).isRole(RoleType.SchrodingersCat))
                                     {
-                                            numJackalAlive++;
+                                        numJackalAlive++;
                                     }
                                 }
 
@@ -1146,16 +1155,16 @@ namespace TheOtherRoles.Patches
 
                     // 爆弾魔を一人としてカウントする、猫の自爆中はインポスターのカウントを一人減らす
                     // PlayerControl.isAlive()を使うと会議での追放時にカウントバグが発生するので使用禁止
-                    if(SchrodingersCat.killer != null && !(SchrodingersCat.killer.Data.IsDead || SchrodingersCat.killer.Data.Disconnected) && SchrodingersCat.team == SchrodingersCat.Team.Impostor)
+                    if (SchrodingersCat.killer != null && !(SchrodingersCat.killer.Data.IsDead || SchrodingersCat.killer.Data.Disconnected) && SchrodingersCat.team == SchrodingersCat.Team.Impostor)
                     {
                         numImpostorsAlive--;
                     }
-                    else if(BomberA.isAlive() && BomberB.isAlive() && BomberA.countAsOne)
+                    else if (BomberA.isAlive() && BomberB.isAlive() && BomberA.countAsOne)
                     {
                         numImpostorsAlive--;
                         numTotalAlive--;
                     }
-                    else if(MimicK.isAlive() && MimicA.isAlive() && MimicK.countAsOne)
+                    else if (MimicK.isAlive() && MimicA.isAlive() && MimicK.countAsOne)
                     {
                         numImpostorsAlive--;
                         numTotalAlive--;
@@ -1163,23 +1172,23 @@ namespace TheOtherRoles.Patches
 
 
                     // 猫の自爆中はジャッカルのカウントを一人減らす
-                    if(SchrodingersCat.killer != null && !(SchrodingersCat.killer.Data.IsDead || SchrodingersCat.killer.Data.Disconnected) && SchrodingersCat.team == SchrodingersCat.Team.Jackal)
+                    if (SchrodingersCat.killer != null && !(SchrodingersCat.killer.Data.IsDead || SchrodingersCat.killer.Data.Disconnected) && SchrodingersCat.team == SchrodingersCat.Team.Jackal)
                     {
                         numJackalAlive--;
                     }
-                    if(SchrodingersCat.livingPlayers.Count > 0 && SchrodingersCat.team == SchrodingersCat.Team.JekyllAndHyde)
+                    if (SchrodingersCat.livingPlayers.Count > 0 && SchrodingersCat.team == SchrodingersCat.Team.JekyllAndHyde)
                     {
                         numJekyllAndHydeAlive = JekyllAndHyde.livingPlayers.Count + SchrodingersCat.livingPlayers.Count;
                     }
 
                     // 猫の自爆中はジキルとハイドのカウントを一人減らす
-                    if(SchrodingersCat.killer != null && !(SchrodingersCat.killer.Data.IsDead || SchrodingersCat.killer.Data.Disconnected) && SchrodingersCat.team == SchrodingersCat.Team.JekyllAndHyde)
+                    if (SchrodingersCat.killer != null && !(SchrodingersCat.killer.Data.IsDead || SchrodingersCat.killer.Data.Disconnected) && SchrodingersCat.team == SchrodingersCat.Team.JekyllAndHyde)
                     {
                         --numJekyllAndHydeAlive;
                     }
 
                     // 人形使いのダミーはカウントしない
-                    if(Puppeteer.dummy != null)
+                    if (Puppeteer.dummy != null)
                     {
                         numTotalAlive--;
                     }

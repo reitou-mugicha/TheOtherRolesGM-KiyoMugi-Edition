@@ -1,9 +1,9 @@
-﻿using HarmonyLib;
-using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using HarmonyLib;
+using Newtonsoft.Json.Linq;
 using TheOtherRoles.Patches;
 using UnityEngine;
 
@@ -16,7 +16,8 @@ namespace TheOtherRoles
 
         private const string blankText = "[BLANK]";
 
-        public ModTranslation() { 
+        public ModTranslation()
+        {
 
         }
 

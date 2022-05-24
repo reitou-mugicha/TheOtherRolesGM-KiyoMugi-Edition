@@ -1,15 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
+using static TheOtherRoles.CustomOption;
 using static TheOtherRoles.TheOtherRoles;
 using static TheOtherRoles.TheOtherRolesGM;
-using static TheOtherRoles.CustomOption;
 
 namespace TheOtherRoles
 {
 
-    public class CustomOptionHolder {
-        public static string[] rates = new string[]{"0%", "10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%"};
-        public static string[] presets = new string[]{"preset1", "preset2", "preset3", "preset4", "preset5" };
+    public class CustomOptionHolder
+    {
+        public static string[] rates = new string[] { "0%", "10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%" };
+        public static string[] presets = new string[] { "preset1", "preset2", "preset3", "preset4", "preset5" };
 
         public static CustomOption presetSelection;
         public static CustomOption activateRoles;
@@ -229,7 +230,7 @@ namespace TheOtherRoles
 
         public static CustomRoleOption cleanerSpawnRate;
         public static CustomOption cleanerCooldown;
-        
+
         public static CustomRoleOption warlockSpawnRate;
         public static CustomOption warlockCooldown;
         public static CustomOption warlockRootTime;
@@ -248,8 +249,8 @@ namespace TheOtherRoles
         public static CustomOption baitHighlightAllVents;
         public static CustomOption baitReportDelay;
         public static CustomOption baitShowKillFlash;
-		
-		public static CustomRoleOption vultureSpawnRate;
+
+        public static CustomRoleOption vultureSpawnRate;
         public static CustomOption vultureCooldown;
         public static CustomOption vultureNumberToWin;
         public static CustomOption vultureCanUseVents;
@@ -285,7 +286,7 @@ namespace TheOtherRoles
         public static CustomOption noVoteIsSelfVote;
         public static CustomOption hidePlayerNames;
 
-		public static CustomOption allowParallelMedBayScans;
+        public static CustomOption allowParallelMedBayScans;
 
         public static CustomOption dynamicMap;
         public static CustomOption dynamicMapEnableSkeld;
@@ -454,18 +455,21 @@ namespace TheOtherRoles
 
 
 
-        internal static Dictionary<byte, byte[]> blockedRolePairings = new Dictionary<byte, byte[]>();
+        internal static Dictionary<byte, byte[]> blockedRolePairings = new();
 
-        public static string cs(Color c, string s) {
+        public static string cs(Color c, string s)
+        {
             return string.Format("<color=#{0:X2}{1:X2}{2:X2}{3:X2}>{4}</color>", ToByte(c.r), ToByte(c.g), ToByte(c.b), ToByte(c.a), s);
         }
- 
-        private static byte ToByte(float f) {
+
+        private static byte ToByte(float f)
+        {
             f = Mathf.Clamp01(f);
             return (byte)(f * 255);
         }
 
-        public static void Load() {
+        public static void Load()
+        {
 
             // Role Options
             activateRoles = CustomOption.Create(7, CustomOptionType.General, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "blockOriginal"), true, null, true);
@@ -486,16 +490,16 @@ namespace TheOtherRoles
             //gmHasTasks = CustomOption.Create(402, "gmHasTasks", false, gmEnabled);
             gmCanWarp = CustomOption.Create(405, CustomOptionType.General, "gmCanWarp", true, gmEnabled);
             gmCanKill = CustomOption.Create(406, CustomOptionType.General, "gmCanKill", false, gmEnabled);
-            gmDiesAtStart = CustomOption.Create(404,CustomOptionType.General,  "gmDiesAtStart", true, gmEnabled);
+            gmDiesAtStart = CustomOption.Create(404, CustomOptionType.General, "gmDiesAtStart", true, gmEnabled);
 
 
             mafiaSpawnRate = new CustomRoleOption(10, CustomOptionType.Impostor, "mafia", Janitor.color, 1);
-            mafiosoCanSabotage = CustomOption.Create(12, CustomOptionType.Impostor,  "mafiosoCanSabotage", false, mafiaSpawnRate);
+            mafiosoCanSabotage = CustomOption.Create(12, CustomOptionType.Impostor, "mafiosoCanSabotage", false, mafiaSpawnRate);
             mafiosoCanRepair = CustomOption.Create(13, CustomOptionType.Impostor, "mafiosoCanRepair", false, mafiaSpawnRate);
             mafiosoCanVent = CustomOption.Create(14, CustomOptionType.Impostor, "mafiosoCanVent", false, mafiaSpawnRate);
             janitorCooldown = CustomOption.Create(11, CustomOptionType.Impostor, "janitorCooldown", 30f, 2.5f, 60f, 2.5f, mafiaSpawnRate, format: "unitSeconds");
             janitorCanSabotage = CustomOption.Create(15, CustomOptionType.Impostor, "janitorCanSabotage", false, mafiaSpawnRate);
-            janitorCanRepair = CustomOption.Create(16, CustomOptionType.Impostor,  "janitorCanRepair", false, mafiaSpawnRate);
+            janitorCanRepair = CustomOption.Create(16, CustomOptionType.Impostor, "janitorCanRepair", false, mafiaSpawnRate);
             janitorCanVent = CustomOption.Create(17, CustomOptionType.Impostor, "janitorCanVent", false, mafiaSpawnRate);
 
             morphlingSpawnRate = new CustomRoleOption(20, CustomOptionType.Impostor, "morphling", Morphling.color, 1);
@@ -606,7 +610,7 @@ namespace TheOtherRoles
 
             mimicSpawnRate = new CustomRoleOption(1080, CustomOptionType.Impostor, "mimic", MimicK.color, 1);
             mimicCountAsOne = CustomOption.Create(1081, CustomOptionType.Impostor, "mimicCountAsOne", true, mimicSpawnRate);
-            mimicIfOneDiesBothDie = CustomOption.Create(1082,CustomOptionType.Impostor, "mimicIfOneDiesBothDie", true, mimicSpawnRate);
+            mimicIfOneDiesBothDie = CustomOption.Create(1082, CustomOptionType.Impostor, "mimicIfOneDiesBothDie", true, mimicSpawnRate);
             mimicHasOneVote = CustomOption.Create(1083, CustomOptionType.Impostor, "mimicHasOneVote", true, mimicSpawnRate);
 
 
@@ -640,7 +644,7 @@ namespace TheOtherRoles
             loversCanHaveAnotherRole = CustomOption.Create(53, CustomOptionType.Modifier, "loversCanHaveAnotherRole", true, loversSpawnRate);
             loversSeparateTeam = CustomOption.Create(56, CustomOptionType.Modifier, "loversSeparateTeam", true, loversSpawnRate);
             loversTasksCount = CustomOption.Create(55, CustomOptionType.Modifier, "loversTasksCount", false, loversSpawnRate);
-			loversEnableChat = CustomOption.Create(54, CustomOptionType.Modifier, "loversEnableChat", true, loversSpawnRate);
+            loversEnableChat = CustomOption.Create(54, CustomOptionType.Modifier, "loversEnableChat", true, loversSpawnRate);
 
             antiTeleportSpawnRate = new CustomRoleOption(1090, CustomOptionType.Modifier, "antiTeleport", AntiTeleport.color, 15);
 
@@ -653,7 +657,7 @@ namespace TheOtherRoles
             guesserShowInfoInGhostChat = CustomOption.Create(315, CustomOptionType.Neutral, "guesserToGhostChat", true, guesserSpawnRate);
             guesserKillsThroughShield = CustomOption.Create(316, CustomOptionType.Neutral, "guesserPierceShield", true, guesserSpawnRate);
             guesserEvilCanKillSpy = CustomOption.Create(318, CustomOptionType.Neutral, "guesserEvilCanKillSpy", true, guesserSpawnRate);
-			guesserCantGuessSnitchIfTaskDone = CustomOption.Create(319, CustomOptionType.Neutral, "guesserCantGuessSnitchIfTaskDone", true, guesserSpawnRate);
+            guesserCantGuessSnitchIfTaskDone = CustomOption.Create(319, CustomOptionType.Neutral, "guesserCantGuessSnitchIfTaskDone", true, guesserSpawnRate);
 
             swapperSpawnRate = new CustomRoleOption(150, CustomOptionType.Neutral, "swapper", Swapper.color, 1);
             swapperIsImpRate = CustomOption.Create(153, CustomOptionType.Neutral, "swapperIsImpRate", rates, swapperSpawnRate);
@@ -663,7 +667,7 @@ namespace TheOtherRoles
 
             jesterSpawnRate = new CustomRoleOption(60, CustomOptionType.Neutral, "jester", Jester.color, 1);
             jesterCanCallEmergency = CustomOption.Create(61, CustomOptionType.Neutral, "jesterCanCallEmergency", true, jesterSpawnRate);
-			jesterCanSabotage = CustomOption.Create(62, CustomOptionType.Neutral, "jesterCanSabotage", true, jesterSpawnRate);
+            jesterCanSabotage = CustomOption.Create(62, CustomOptionType.Neutral, "jesterCanSabotage", true, jesterSpawnRate);
             jesterHasImpostorVision = CustomOption.Create(63, CustomOptionType.Neutral, "jesterHasImpostorVision", false, jesterSpawnRate);
 
             arsonistSpawnRate = new CustomRoleOption(290, CustomOptionType.Neutral, "arsonist", Arsonist.color, 1);
@@ -729,7 +733,7 @@ namespace TheOtherRoles
             foxStealthDuration = CustomOption.Create(917, CustomOptionType.Neutral, "foxStealthDuration", 15f, 1f, 30f, 1f, foxSpawnRate, format: "unitSeconds");
             foxCanCreateImmoralist = CustomOption.Create(918, CustomOptionType.Neutral, "foxCanCreateImmoralist", true, foxSpawnRate);
             foxNumRepair = CustomOption.Create(920, CustomOptionType.Neutral, "foxNumRepair", 0f, 0f, 5f, 1f, foxSpawnRate, format: "unitTimes");
-            foxCanFixSabotageWhileStealth  = CustomOption.Create(921, CustomOptionType.Neutral, "foxCanFixSabotageWhileStealth", true, foxSpawnRate);
+            foxCanFixSabotageWhileStealth = CustomOption.Create(921, CustomOptionType.Neutral, "foxCanFixSabotageWhileStealth", true, foxSpawnRate);
 
 
             fortuneTellerSpawnRate = new CustomRoleOption(940, CustomOptionType.Crewmate, "fortuneTeller", FortuneTeller.color, 15);
@@ -743,15 +747,15 @@ namespace TheOtherRoles
             schrodingersCatBecomesImpostor = CustomOption.Create(972, CustomOptionType.Neutral, "schrodingersCatBecomesImpostor", true, schrodingersCatSpawnRate);
             schrodingersCatKillsKiller = CustomOption.Create(973, CustomOptionType.Neutral, "schrodingersCatKillsKiller", false, schrodingersCatSpawnRate);
             schrodingersCatCantKillUntilLastOne = CustomOption.Create(974, CustomOptionType.Neutral, "schrodingersCatCantKillUntilLastOne", false, schrodingersCatSpawnRate);
-            schrodingersCatBecomesWhichTeamsOnExiled = CustomOption.Create(975, CustomOptionType.Neutral, "schrodingersCatBecomesWhichTeamsOnExiled", new string[] {"schrodingersCatNone", "schrodingersCatCrew", "schrodingersCatRandom"}, schrodingersCatSpawnRate);
+            schrodingersCatBecomesWhichTeamsOnExiled = CustomOption.Create(975, CustomOptionType.Neutral, "schrodingersCatBecomesWhichTeamsOnExiled", new string[] { "schrodingersCatNone", "schrodingersCatCrew", "schrodingersCatRandom" }, schrodingersCatSpawnRate);
             schrodingersCatJustDieOnKilledByCrew = CustomOption.Create(976, CustomOptionType.Neutral, "schrodingersCatJustDieOnKilledByCrew", false, schrodingersCatSpawnRate);
 
             puppeteerSpawnRate = new CustomRoleOption(1060, CustomOptionType.Neutral, "puppeteer", Puppeteer.color, 1);
             puppeteerNumKills = CustomOption.Create(1061, CustomOptionType.Neutral, "puppeteerNumKills", 3f, 1f, 15f, 1f, puppeteerSpawnRate);
             puppeteerSampleDuration = CustomOption.Create(1062, CustomOptionType.Neutral, "puppeteerSampleDuration", 1f, 0f, 20f, 0.25f, puppeteerSpawnRate);
             puppeteerCanControlDummyEvenIfDead = CustomOption.Create(1063, CustomOptionType.Neutral, "puppeteerCanControlDummyEvenIfDead", true, puppeteerSpawnRate);
-            puppeteerPenaltyOnDeath= CustomOption.Create(1064, CustomOptionType.Neutral, "puppeteerPenaltyOnDeath", 1f, 0f, 5f, 1f, puppeteerCanControlDummyEvenIfDead);
-            puppeteerLosesSenriganOnDeath = CustomOption.Create(1065, CustomOptionType.Neutral, "puppeteerLosesSenriganOnDeath", true,puppeteerCanControlDummyEvenIfDead);
+            puppeteerPenaltyOnDeath = CustomOption.Create(1064, CustomOptionType.Neutral, "puppeteerPenaltyOnDeath", 1f, 0f, 5f, 1f, puppeteerCanControlDummyEvenIfDead);
+            puppeteerLosesSenriganOnDeath = CustomOption.Create(1065, CustomOptionType.Neutral, "puppeteerLosesSenriganOnDeath", true, puppeteerCanControlDummyEvenIfDead);
 
             jekyllAndHydeSpawnRate = new CustomRoleOption(1100, CustomOptionType.Neutral, "jekyllAndHyde", JekyllAndHyde.color, 1);
             jekyllAndHydeNumberToWin = CustomOption.Create(1101, CustomOptionType.Neutral, "jekyllAndHydeNumberToWin", 3f, 1f, 10f, 1f, jekyllAndHydeSpawnRate);
@@ -760,7 +764,7 @@ namespace TheOtherRoles
             jekyyllAndHydeResetAfterMeeting = CustomOption.Create(1105, CustomOptionType.Neutral, "jekyllAndHydeResetAfterMeeting", true, jekyllAndHydeSpawnRate);
             jekyllAndHydeTasks = new CustomTasksOption(1106, CustomOptionType.Neutral, 1, 2, 3, jekyllAndHydeSpawnRate);
             jekyllAndHydeNumTasks = CustomOption.Create(1107, CustomOptionType.Neutral, "jekyllAndHydeNumTasks", 3f, 1f, 10f, 1f, jekyllAndHydeSpawnRate);
-            
+
             munouSpawnRate = new CustomRoleOption(960, CustomOptionType.Modifier, "incompetent", Munou.color, 15);
             munouType = CustomOption.Create(963, CustomOptionType.Modifier, "incompetentType", new string[] { "incompetentSimple", "incompetentRandom" }, munouSpawnRate);
             munouProbability = CustomOption.Create(961, CustomOptionType.Modifier, "incompetentProbability", 60f, 0f, 100f, 10f, munouSpawnRate);
@@ -860,7 +864,7 @@ namespace TheOtherRoles
             // Other options
 
             mapOptions = new CustomOptionBlank(null);
-            
+
             randomWireTask = CustomOption.Create(9909, CustomOptionType.General, "randomWireTask", false, mapOptions, true);
             additionalWireTask = CustomOption.Create(9914, CustomOptionType.General, "additionalWireTask", false, randomWireTask);
             numWireTask = CustomOption.Create(9913, CustomOptionType.General, "numWireTask", 3f, 1f, 10f, 1f, randomWireTask);
@@ -889,10 +893,10 @@ namespace TheOtherRoles
             enabledHorseMode = CustomOption.Create(552, CustomOptionType.General, "enableHorseMode", false, specialOptions, true);
 
             lastImpostorEnable = CustomOption.Create(9900, CustomOptionType.General, "lastImpostorEnable", true, specialOptions, true);
-            lastImpostorFunctions = CustomOption.Create(9901, CustomOptionType.General, "lastImpostorFunctions", new string[]{ModTranslation.getString("lastImpostorDivine"), ModTranslation.getString("lastImpostorGuesser")}, lastImpostorEnable);
+            lastImpostorFunctions = CustomOption.Create(9901, CustomOptionType.General, "lastImpostorFunctions", new string[] { ModTranslation.getString("lastImpostorDivine"), ModTranslation.getString("lastImpostorGuesser") }, lastImpostorEnable);
             lastImpostorNumKills = CustomOption.Create(9902, CustomOptionType.General, "lastImpostorNumKills", 3f, 0f, 10f, 1f, lastImpostorEnable);
             lastImpostorResults = CustomOption.Create(9903, CustomOptionType.General, "fortuneTellerResults ", new string[] { "fortuneTellerResultCrew", "fortuneTellerResultTeam", "fortuneTellerResultRole" }, lastImpostorEnable);
-            lastImpostorNumShots = CustomOption.Create(9904, CustomOptionType.General, "lastImpostorNumShots", 1f, 1f, 15f, 1f, lastImpostorEnable );
+            lastImpostorNumShots = CustomOption.Create(9904, CustomOptionType.General, "lastImpostorNumShots", 1f, 1f, 15f, 1f, lastImpostorEnable);
 
             strongRandomGen = CustomOption.Create(9915, CustomOptionType.General, "strongRandomGen", true, specialOptions, true);
 
@@ -922,16 +926,16 @@ namespace TheOtherRoles
             dynamicMapEnablePolus = CustomOption.Create(533, CustomOptionType.General, "dynamicMapEnablePolus", true, dynamicMap, false);
             dynamicMapEnableAirShip = CustomOption.Create(534, CustomOptionType.General, "dynamicMapEnableAirShip", true, dynamicMap, false);
             dynamicMapEnableSubmerged = CustomOption.Create(535, CustomOptionType.General, "Enable Submerged Rotation", true, dynamicMap, false);
-			
+
             disableVents = CustomOption.Create(504, CustomOptionType.General, "disableVents", false, uselessOptions);
             hidePlayerNames = CustomOption.Create(6, CustomOptionType.General, "hidePlayerNames", false, uselessOptions);
             playerNameDupes = CustomOption.Create(522, CustomOptionType.General, "playerNameDupes", false, uselessOptions);
             playerColorRandom = CustomOption.Create(521, CustomOptionType.General, "playerColorRandom", false, uselessOptions);
 
-            blockedRolePairings.Add((byte)RoleType.Vampire, new [] { (byte)RoleType.Warlock});
-            blockedRolePairings.Add((byte)RoleType.Warlock, new [] { (byte)RoleType.Vampire});
-            blockedRolePairings.Add((byte)RoleType.Vulture, new [] { (byte)RoleType.Cleaner});
-            blockedRolePairings.Add((byte)RoleType.Cleaner, new [] { (byte)RoleType.Vulture});
+            blockedRolePairings.Add((byte)RoleType.Vampire, new[] { (byte)RoleType.Warlock });
+            blockedRolePairings.Add((byte)RoleType.Warlock, new[] { (byte)RoleType.Vampire });
+            blockedRolePairings.Add((byte)RoleType.Vulture, new[] { (byte)RoleType.Cleaner });
+            blockedRolePairings.Add((byte)RoleType.Cleaner, new[] { (byte)RoleType.Vulture });
         }
     }
 

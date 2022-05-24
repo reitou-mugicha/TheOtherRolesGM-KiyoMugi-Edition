@@ -1,14 +1,15 @@
+using System.Collections.Generic;
 using HarmonyLib;
 using Hazel;
-using System.Collections.Generic;
-using UnityEngine;
 using TheOtherRoles.Objects;
 using TheOtherRoles.Patches;
+using UnityEngine;
 
 namespace TheOtherRoles
 {
     [HarmonyPatch]
-    public class SerialKiller : RoleBase<SerialKiller> {
+    public class SerialKiller : RoleBase<SerialKiller>
+    {
 
         private static CustomButton serialKillerButton;
 
@@ -77,12 +78,15 @@ namespace TheOtherRoles
                 true,
                 suicideTimer,
                 () => { local.suicide(); }
-            );
-            serialKillerButton.buttonText = ModTranslation.getString("SerialKillerText");
-            serialKillerButton.isEffectActive = true;
+            )
+            {
+                buttonText = ModTranslation.getString("SerialKillerText"),
+                isEffectActive = true
+            };
         }
 
-        public void suicide() {
+        public void suicide()
+        {
             byte targetId = PlayerControl.LocalPlayer.PlayerId;
             MessageWriter killWriter = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SerialKillerSuicide, Hazel.SendOption.Reliable, -1); killWriter.Write(targetId);
             AmongUsClient.Instance.FinishRpcImmediately(killWriter);

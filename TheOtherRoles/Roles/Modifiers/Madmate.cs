@@ -1,11 +1,11 @@
-using HarmonyLib;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
+using HarmonyLib;
 using TheOtherRoles.Objects;
 using TheOtherRoles.Patches;
-using static TheOtherRoles.TheOtherRoles;
+using UnityEngine;
 using static TheOtherRoles.GameHistory;
+using static TheOtherRoles.TheOtherRoles;
 
 namespace TheOtherRoles
 {
@@ -41,7 +41,7 @@ namespace TheOtherRoles
         public static int numShortTasks { get { return CustomOptionHolder.madmateTasks.shortTasks; } }
 
         public static bool hasTasks { get { return madmateAbility == MadmateAbility.Fanatic; } }
-        public static bool exileCrewmate { get {return CustomOptionHolder.madmateExilePlayer.getBool(); } }
+        public static bool exileCrewmate { get { return CustomOptionHolder.madmateExilePlayer.getBool(); } }
 
         public static string prefix
         {
@@ -59,7 +59,7 @@ namespace TheOtherRoles
             }
         }
 
-        public static List<RoleType> validRoles = new List<RoleType>
+        public static List<RoleType> validRoles = new()
         {
             RoleType.NoRole, // NoRole = off
             RoleType.Shifter,
@@ -85,9 +85,9 @@ namespace TheOtherRoles
         {
             get
             {
-                List<PlayerControl> crewHasRole = new List<PlayerControl>();
-                List<PlayerControl> crewNoRole = new List<PlayerControl>();
-                List<PlayerControl> validCrewmates = new List<PlayerControl>();
+                List<PlayerControl> crewHasRole = new();
+                List<PlayerControl> crewNoRole = new();
+                List<PlayerControl> validCrewmates = new();
 
                 foreach (var player in PlayerControl.AllPlayerControls.ToArray().Where(x => x.isCrew() && !hasModifier(x)).ToList())
                 {

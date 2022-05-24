@@ -1,12 +1,12 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
 using Hazel;
-using System;
-using System.Collections.Generic;
 using TheOtherRoles.Objects;
 using UnityEngine;
-using static TheOtherRoles.TheOtherRoles;
 using static TheOtherRoles.Patches.PlayerControlFixedUpdatePatch;
+using static TheOtherRoles.TheOtherRoles;
 
 namespace TheOtherRoles
 {
@@ -44,7 +44,8 @@ namespace TheOtherRoles
             canKill = sheriffCanKillNoDeadBody || PlayerControl.AllPlayerControls.ToArray().Any(p => p.Data.IsDead);
         }
 
-        public override void FixedUpdate() {
+        public override void FixedUpdate()
+        {
             if (player == PlayerControl.LocalPlayer && numShots > 0)
             {
                 currentTarget = setTarget();
@@ -56,7 +57,8 @@ namespace TheOtherRoles
         public override void OnDeath(PlayerControl killer = null) { }
         public override void HandleDisconnect(PlayerControl player, DisconnectReasons reason) { }
 
-        public static void MakeButtons(HudManager hm) {
+        public static void MakeButtons(HudManager hm)
+        {
 
             // Sheriff Kill
             sheriffKillButton = new CustomButton(

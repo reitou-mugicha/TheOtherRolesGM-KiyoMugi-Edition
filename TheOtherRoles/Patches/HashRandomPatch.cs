@@ -1,4 +1,4 @@
-﻿// 元ネタ
+// 元ネタ
 // https://github.com/yukieiji/ExtremeRoles
 using System;
 using HarmonyLib;

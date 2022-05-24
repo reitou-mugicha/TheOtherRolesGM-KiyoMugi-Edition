@@ -1,13 +1,13 @@
-using HarmonyLib;
-using UnityEngine;
 using System;
 using System.Collections.Generic;
+using HarmonyLib;
 using TMPro;
+using UnityEngine;
 using UnityEngine.Events;
 using static UnityEngine.UI.Button;
 using Object = UnityEngine.Object;
 
-namespace TheOtherRoles.Patches 
+namespace TheOtherRoles.Patches
 {
     [HarmonyPatch]
     public static class ClientOptionsPatch
@@ -27,7 +27,7 @@ namespace TheOtherRoles.Patches
             new SelectionBehaviour("hideTaskArrows", () => MapOptions.hideTaskArrows = TheOtherRolesPlugin.HideTaskArrows.Value = !TheOtherRolesPlugin.HideTaskArrows.Value, TheOtherRolesPlugin.HideTaskArrows.Value),
             new SelectionBehaviour("offlineHats", () => MapOptions.offlineHats = TheOtherRolesPlugin.OfflineHats.Value = !TheOtherRolesPlugin.OfflineHats.Value, TheOtherRolesPlugin.OfflineHats.Value),
         };
-        
+
         private static GameObject popUp;
         private static TextMeshPro titleText;
 
@@ -37,7 +37,7 @@ namespace TheOtherRoles.Patches
 
         private static ToggleButtonBehaviour buttonPrefab;
         private static Vector3? _origin;
-        
+
         [HarmonyPostfix]
         [HarmonyPatch(typeof(MainMenuManager), nameof(MainMenuManager.Start))]
         public static void MainMenuManager_StartPostfix(MainMenuManager __instance)
@@ -70,7 +70,7 @@ namespace TheOtherRoles.Patches
                 buttonPrefab.name = "CensorChatPrefab";
                 buttonPrefab.gameObject.SetActive(false);
             }
-            
+
             SetUpOptions();
             InitializeMoreButton(__instance);
         }
@@ -81,7 +81,7 @@ namespace TheOtherRoles.Patches
             Object.DontDestroyOnLoad(popUp);
             var transform = popUp.transform;
             var pos = transform.localPosition;
-            pos.z = -810f; 
+            pos.z = -810f;
             transform.localPosition = pos;
 
             Object.Destroy(popUp.GetComponent<OptionsMenuBehaviour>());
@@ -90,7 +90,7 @@ namespace TheOtherRoles.Patches
                 if (gObj.name != "Background" && gObj.name != "CloseButton")
                     Object.Destroy(gObj);
             }
-            
+
             popUp.SetActive(false);
         }
 
@@ -99,29 +99,29 @@ namespace TheOtherRoles.Patches
             __instance.BackButton.transform.localPosition += Vector3.right * 1.8f;
             moreOptions = Object.Instantiate(buttonPrefab, __instance.CensorChatButton.transform.parent);
             moreOptions.transform.localPosition = __instance.CensorChatButton.transform.localPosition + Vector3.down * 0.5f;
-            
+
             moreOptions.gameObject.SetActive(true);
             moreOptions.Text.text = ModTranslation.getString("modOptionsText");
             var moreOptionsButton = moreOptions.GetComponent<PassiveButton>();
             moreOptionsButton.OnClick = new ButtonClickedEvent();
-            moreOptionsButton.OnClick.AddListener((Action) (() =>
-            {
-                if (!popUp) return;
+            moreOptionsButton.OnClick.AddListener((Action)(() =>
+           {
+               if (!popUp) return;
 
-                if (__instance.transform.parent && __instance.transform.parent == HudManager.Instance.transform)
-                {
-                    popUp.transform.SetParent(HudManager.Instance.transform);
-                    popUp.transform.localPosition = new Vector3(0, 0, -800f);
-                }
-                else
-                {
-                    popUp.transform.SetParent(null);
-                    Object.DontDestroyOnLoad(popUp);
-                }
-                
-                CheckSetTitle();
-                RefreshOpen();
-            }));
+               if (__instance.transform.parent && __instance.transform.parent == HudManager.Instance.transform)
+               {
+                   popUp.transform.SetParent(HudManager.Instance.transform);
+                   popUp.transform.localPosition = new Vector3(0, 0, -800f);
+               }
+               else
+               {
+                   popUp.transform.SetParent(null);
+                   Object.DontDestroyOnLoad(popUp);
+               }
+
+               CheckSetTitle();
+               RefreshOpen();
+           }));
 
             var leaveGameButton = GameObject.Find("LeaveGameButton");
             if (leaveGameButton != null)
@@ -136,11 +136,11 @@ namespace TheOtherRoles.Patches
             popUp.gameObject.SetActive(true);
             SetUpOptions();
         }
-        
+
         private static void CheckSetTitle()
         {
             if (!popUp || popUp.GetComponentInChildren<TextMeshPro>() || !titleText) return;
-            
+
             var title = titleTextTitle = Object.Instantiate(titleText, popUp.transform);
             title.GetComponent<RectTransform>().localPosition = Vector3.up * 2.3f;
             title.gameObject.SetActive(true);
@@ -157,7 +157,7 @@ namespace TheOtherRoles.Patches
             for (var i = 0; i < AllOptions.Length; i++)
             {
                 var info = AllOptions[i];
-                
+
                 var button = Object.Instantiate(buttonPrefab, popUp.transform);
                 var pos = new Vector3(i % 2 == 0 ? -1.17f : 1.17f, 1.3f - i / 2 * 0.8f, -.5f);
 
@@ -166,7 +166,7 @@ namespace TheOtherRoles.Patches
 
                 button.onState = info.DefaultValue;
                 button.Background.color = button.onState ? Color.green : Palette.ImpostorRed;
-                
+
                 button.Text.text = ModTranslation.getString(info.Title);
                 button.Text.fontSizeMin = button.Text.fontSizeMax = 2.2f;
                 button.Text.font = Object.Instantiate(titleText.font);
@@ -174,24 +174,24 @@ namespace TheOtherRoles.Patches
 
                 button.name = info.Title.Replace(" ", "") + "Toggle";
                 button.gameObject.SetActive(true);
-                
+
                 var passiveButton = button.GetComponent<PassiveButton>();
                 var colliderButton = button.GetComponent<BoxCollider2D>();
-                
+
                 colliderButton.size = new Vector2(2.2f, .7f);
-                
+
                 passiveButton.OnClick = new ButtonClickedEvent();
                 passiveButton.OnMouseOut = new UnityEvent();
                 passiveButton.OnMouseOver = new UnityEvent();
 
-                passiveButton.OnClick.AddListener((Action) (() =>
-                {
-                    button.onState = info.OnClick();
-                    button.Background.color = button.onState ? Color.green : Palette.ImpostorRed;
-                }));
-                
-                passiveButton.OnMouseOver.AddListener((Action) (() => button.Background.color = new Color32(34 ,139, 34, byte.MaxValue)));
-                passiveButton.OnMouseOut.AddListener((Action) (() => button.Background.color = button.onState ? Color.green : Palette.ImpostorRed));
+                passiveButton.OnClick.AddListener((Action)(() =>
+               {
+                   button.onState = info.OnClick();
+                   button.Background.color = button.onState ? Color.green : Palette.ImpostorRed;
+               }));
+
+                passiveButton.OnMouseOver.AddListener((Action)(() => button.Background.color = new Color32(34, 139, 34, byte.MaxValue)));
+                passiveButton.OnMouseOut.AddListener((Action)(() => button.Background.color = button.onState ? Color.green : Palette.ImpostorRed));
 
                 foreach (var spr in button.gameObject.GetComponentsInChildren<SpriteRenderer>())
                     spr.size = new Vector2(2.2f, .7f);
@@ -199,10 +199,10 @@ namespace TheOtherRoles.Patches
                 modButtons.Add(button);
             }
         }
-        
+
         private static IEnumerable<GameObject> GetAllChilds(this GameObject Go)
         {
-            for (var i = 0; i< Go.transform.childCount; i++)
+            for (var i = 0; i < Go.transform.childCount; i++)
             {
                 yield return Go.transform.GetChild(i).gameObject;
             }
@@ -237,14 +237,14 @@ namespace TheOtherRoles.Patches
             }
         }
     }
-    
+
     [HarmonyPatch(typeof(TextBoxTMP), nameof(TextBoxTMP.SetText))]
-	public static class HiddenTextPatch
-	{
-		private static void Postfix(TextBoxTMP __instance)
-		{
-			bool flag = TheOtherRolesPlugin.StreamerMode.Value && (__instance.name == "GameIdText" || __instance.name == "IpTextBox" || __instance.name == "PortTextBox");
-			if (flag) __instance.outputText.text = new string('*', __instance.text.Length);
-		}
-	}
+    public static class HiddenTextPatch
+    {
+        private static void Postfix(TextBoxTMP __instance)
+        {
+            bool flag = TheOtherRolesPlugin.StreamerMode.Value && (__instance.name == "GameIdText" || __instance.name == "IpTextBox" || __instance.name == "PortTextBox");
+            if (flag) __instance.outputText.text = new string('*', __instance.text.Length);
+        }
+    }
 }

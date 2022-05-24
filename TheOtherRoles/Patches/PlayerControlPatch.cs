@@ -1,13 +1,13 @@
-﻿using HarmonyLib;
-using Hazel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using static TheOtherRoles.TheOtherRoles;
-using static TheOtherRoles.TheOtherRolesGM;
-using static TheOtherRoles.GameHistory;
+using HarmonyLib;
+using Hazel;
 using TheOtherRoles.Objects;
 using UnityEngine;
+using static TheOtherRoles.GameHistory;
+using static TheOtherRoles.TheOtherRoles;
+using static TheOtherRoles.TheOtherRolesGM;
 
 namespace TheOtherRoles.Patches
 {
@@ -49,7 +49,7 @@ namespace TheOtherRoles.Patches
             // Can't target stealthed Fox
             foreach (Fox f in Fox.players)
             {
-                if(f.stealthed) untargetablePlayers.Add(f.player);
+                if (f.stealthed) untargetablePlayers.Add(f.player);
             }
 
             // 透明になっている人形使い or ダミーをターゲット不可にする
@@ -60,7 +60,7 @@ namespace TheOtherRoles.Patches
                     var puppeteer = Puppeteer.players.FirstOrDefault().player;
                     untargetablePlayers.Add(puppeteer);
                 }
-                else if(!Puppeteer.stealthed && Puppeteer.dummy != null)
+                else if (!Puppeteer.stealthed && Puppeteer.dummy != null)
                 {
                     untargetablePlayers.Add(Puppeteer.dummy);
                 }
@@ -70,7 +70,8 @@ namespace TheOtherRoles.Patches
             Vector2 truePosition = targetingPlayer.GetTruePosition();
             foreach (var playerInfo in GameData.Instance.AllPlayers)
             {
-                if (!playerInfo.Disconnected && playerInfo.PlayerId != targetingPlayer.PlayerId && !playerInfo.IsDead && (!onlyCrewmates || !playerInfo.Role.IsImpostor)) {
+                if (!playerInfo.Disconnected && playerInfo.PlayerId != targetingPlayer.PlayerId && !playerInfo.IsDead && (!onlyCrewmates || !playerInfo.Role.IsImpostor))
+                {
                     PlayerControl @object = playerInfo.Object;
                     if (untargetablePlayers.Any(x => x == @object))
                     {
@@ -216,7 +217,8 @@ namespace TheOtherRoles.Patches
             setPlayerOutline(Morphling.currentTarget, Morphling.color);
         }
 
-        static void evilHackerSetTarget() {
+        static void evilHackerSetTarget()
+        {
             if (EvilHacker.evilHacker == null || EvilHacker.evilHacker != PlayerControl.LocalPlayer) return;
             EvilHacker.currentTarget = setTarget(true);
             setPlayerOutline(EvilHacker.currentTarget, EvilHacker.color);
@@ -262,8 +264,8 @@ namespace TheOtherRoles.Patches
                 {
                     var listp = new List<PlayerControl>();
                     listp.Add(Spy.spy);
-                    if(Sidekick.wasTeamRed) listp.Add(Sidekick.sidekick);
-                    if(Jackal.wasTeamRed) listp.Add(Jackal.jackal);
+                    if (Sidekick.wasTeamRed) listp.Add(Sidekick.sidekick);
+                    if (Jackal.wasTeamRed) listp.Add(Jackal.jackal);
                     target = setTarget(true, true, listp);
                 }
             }
@@ -297,9 +299,9 @@ namespace TheOtherRoles.Patches
                 // Only exclude sidekick from beeing targeted if the jackal can create sidekicks from impostors
                 if (Sidekick.sidekick != null) untargetablePlayers.Add(Sidekick.sidekick);
             }
-            foreach(var mini in Mini.players)
+            foreach (var mini in Mini.players)
             {
-                if(!Mini.isGrownUp(mini.player))
+                if (!Mini.isGrownUp(mini.player))
                 {
                     untargetablePlayers.Add(mini.player);
                 }
@@ -313,9 +315,9 @@ namespace TheOtherRoles.Patches
             if (Sidekick.sidekick == null || Sidekick.sidekick != PlayerControl.LocalPlayer) return;
             var untargetablePlayers = new List<PlayerControl>();
             if (Jackal.jackal != null) untargetablePlayers.Add(Jackal.jackal);
-            foreach(var mini in Mini.players)
+            foreach (var mini in Mini.players)
             {
-                if(!Mini.isGrownUp(mini.player))
+                if (!Mini.isGrownUp(mini.player))
                 {
                     untargetablePlayers.Add(mini.player);
                 }
@@ -327,9 +329,9 @@ namespace TheOtherRoles.Patches
         static void sidekickCheckPromotion()
         {
             // If LocalPlayer is Sidekick, the Jackal is disconnected and Sidekick promotion is enabled, then trigger promotion
-            if (Sidekick.promotesToJackal && 
+            if (Sidekick.promotesToJackal &&
                 PlayerControl.LocalPlayer.isRole(RoleType.Sidekick) &&
-                PlayerControl.LocalPlayer.isAlive() && 
+                PlayerControl.LocalPlayer.isAlive() &&
                 (Jackal.jackal == null || Jackal.jackal.Data.Disconnected))
             {
                 MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SidekickPromotes, Hazel.SendOption.Reliable, -1);
@@ -342,7 +344,7 @@ namespace TheOtherRoles.Patches
         {
             if (Eraser.eraser == null || Eraser.eraser != PlayerControl.LocalPlayer) return;
 
-            List<PlayerControl> untargetables = new List<PlayerControl>();
+            List<PlayerControl> untargetables = new();
             if (Spy.spy != null) untargetables.Add(Spy.spy);
             if (Sidekick.wasTeamRed) untargetables.Add(Sidekick.sidekick);
             if (Jackal.wasTeamRed) untargetables.Add(Jackal.jackal);
@@ -399,8 +401,8 @@ namespace TheOtherRoles.Patches
                 {
                     var listp = new List<PlayerControl>();
                     listp.Add(Spy.spy);
-                    if(Sidekick.wasTeamRed) listp.Add(Sidekick.sidekick);
-                    if(Jackal.wasTeamRed) listp.Add(Jackal.jackal);
+                    if (Sidekick.wasTeamRed) listp.Add(Sidekick.sidekick);
+                    if (Jackal.wasTeamRed) listp.Add(Jackal.jackal);
                     target = setTarget(true, true, listp);
                 }
             }
@@ -435,7 +437,8 @@ namespace TheOtherRoles.Patches
         {
             if (Assassin.arrow?.arrow != null)
             {
-                if (Assassin.assassin == null || Assassin.assassin != PlayerControl.LocalPlayer || !Assassin.knowsTargetLocation) {
+                if (Assassin.assassin == null || Assassin.assassin != PlayerControl.LocalPlayer || !Assassin.knowsTargetLocation)
+                {
                     Assassin.arrow.arrow.SetActive(false);
                     return;
                 }
@@ -454,7 +457,8 @@ namespace TheOtherRoles.Patches
                     }
                     Assassin.arrow.Update(position);
                     Assassin.arrow.arrow.SetActive(trackedOnMap);
-                } else
+                }
+                else
                 {
                     Assassin.arrow.arrow.SetActive(false);
                 }
@@ -542,7 +546,7 @@ namespace TheOtherRoles.Patches
             // Set adapted player size to Mini and Morphling
             if (Camouflager.camouflageTimer > 0f) return;
 
-            foreach(var mini in Mini.players)
+            foreach (var mini in Mini.players)
             {
                 float growingProgress = mini.growingProgress();
                 float scale = growingProgress * 0.35f + 0.35f;
@@ -580,7 +584,7 @@ namespace TheOtherRoles.Patches
 
                 var canSeeInfo =
                     canSeeEverything ||
-                    p == PlayerControl.LocalPlayer || p.isGM() || 
+                    p == PlayerControl.LocalPlayer || p.isGM() ||
                     (Lawyer.lawyerKnowsRole && PlayerControl.LocalPlayer == Lawyer.lawyer && p == Lawyer.target);
 
                 if (canSeeInfo)
@@ -609,9 +613,10 @@ namespace TheOtherRoles.Patches
                     }
 
                     // Set player name higher to align in middle
-                    if (meetingInfo != null && playerVoteArea != null) {
+                    if (meetingInfo != null && playerVoteArea != null)
+                    {
                         var playerName = playerVoteArea.NameText;
-                        playerName.transform.localPosition = new Vector3(0.3384f, (0.0311f + 0.0683f), -0.1f);    
+                        playerName.transform.localPosition = new Vector3(0.3384f, (0.0311f + 0.0683f), -0.1f);
                     }
 
                     var (tasksCompleted, tasksTotal) = TasksHandler.taskInfo(p.Data);
@@ -681,10 +686,12 @@ namespace TheOtherRoles.Patches
             SecurityGuard.ventTarget = target;
         }
 
-        public static void securityGuardUpdate() {
+        public static void securityGuardUpdate()
+        {
             if (SecurityGuard.securityGuard == null || PlayerControl.LocalPlayer != SecurityGuard.securityGuard || SecurityGuard.securityGuard.Data.IsDead) return;
             var (playerCompleted, _) = TasksHandler.taskInfo(SecurityGuard.securityGuard.Data);
-            if (playerCompleted == SecurityGuard.rechargedTasks) {
+            if (playerCompleted == SecurityGuard.rechargedTasks)
+            {
                 SecurityGuard.rechargedTasks += SecurityGuard.rechargeTasksNumber;
                 if (SecurityGuard.maxCharges > SecurityGuard.charges) SecurityGuard.charges++;
             }
@@ -734,10 +741,12 @@ namespace TheOtherRoles.Patches
 
                     // Update the arrows' color every time bc things go weird when you add a sidekick or someone dies
                     Color c = Palette.ImpostorRed;
-                    if(arrowForTeamJackal){
+                    if (arrowForTeamJackal)
+                    {
                         c = Jackal.color;
                     }
-                    else if(arrowForFox){
+                    else if (arrowForFox)
+                    {
                         c = Fox.color;
                     }
                     if (!p.Data.IsDead && (arrowForImp || arrowForTeamJackal || arrowForFox))
@@ -831,9 +840,9 @@ namespace TheOtherRoles.Patches
         static void assassinSetTarget()
         {
             if (Assassin.assassin == null || Assassin.assassin != PlayerControl.LocalPlayer) return;
-            List<PlayerControl> untargetables = new List<PlayerControl>();
+            List<PlayerControl> untargetables = new();
             if (Spy.spy != null && !Spy.impostorsCanKillAnyone) untargetables.Add(Spy.spy);
-            foreach(var mini in Mini.players)
+            foreach (var mini in Mini.players)
             {
                 untargetables.Add(mini.player);
             }
@@ -1020,10 +1029,12 @@ namespace TheOtherRoles.Patches
             }
         }
 
-        public static void hackerUpdate() {
+        public static void hackerUpdate()
+        {
             if (Hacker.hacker == null || PlayerControl.LocalPlayer != Hacker.hacker || Hacker.hacker.Data.IsDead) return;
             var (playerCompleted, _) = TasksHandler.taskInfo(Hacker.hacker.Data);
-            if (playerCompleted == Hacker.rechargedTasks) {
+            if (playerCompleted == Hacker.rechargedTasks)
+            {
                 Hacker.rechargedTasks += Hacker.rechargeTasksNumber;
                 if (Hacker.toolsNumber > Hacker.chargesVitals) Hacker.chargesVitals++;
                 if (Hacker.toolsNumber > Hacker.chargesAdminTable) Hacker.chargesAdminTable++;
@@ -1061,7 +1072,7 @@ namespace TheOtherRoles.Patches
                 // オプションがONの場合はベント内はクールダウン減少を止める
                 bool exceptInVent = CustomOptionHolder.exceptInVent.getBool() && __instance.inVent;
 
-                if(!__instance.Data.IsDead && !__instance.CanMove && !exceptInVent)
+                if (!__instance.Data.IsDead && !__instance.CanMove && !exceptInVent)
                     __instance.SetKillTimer(__instance.killTimer - Time.fixedDeltaTime);
             }
 
@@ -1168,11 +1179,11 @@ namespace TheOtherRoles.Patches
         private static Vector2 offset = Vector2.zero;
         public static void Prefix(PlayerPhysics __instance)
         {
-            bool correctOffset = Camouflager.camouflageTimer <= 0f && (__instance.myPlayer.hasModifier(ModifierType.Mini)  || (Morphling.morphling != null && __instance.myPlayer == Morphling.morphling && Morphling.morphTarget.hasModifier(ModifierType.Mini) && Morphling.morphTimer > 0f));
+            bool correctOffset = Camouflager.camouflageTimer <= 0f && (__instance.myPlayer.hasModifier(ModifierType.Mini) || (Morphling.morphling != null && __instance.myPlayer == Morphling.morphling && Morphling.morphTarget.hasModifier(ModifierType.Mini) && Morphling.morphTimer > 0f));
             if (correctOffset)
             {
-                Mini mini = Mini.players.First(x=> x.player == __instance.myPlayer);
-                if(mini == null) return;
+                Mini mini = Mini.players.First(x => x.player == __instance.myPlayer);
+                if (mini == null) return;
                 float currentScaling = (mini.growingProgress() + 1) * 0.5f;
                 __instance.myPlayer.Collider.offset = currentScaling * Mini.defaultColliderOffset * Vector2.down;
             }
@@ -1277,7 +1288,7 @@ namespace TheOtherRoles.Patches
         {
             Logger.info($"{__instance.getNameWithRole()} => {target.getNameWithRole()}", "MurderPlayer");
             // Collect dead player info
-            DeadPlayer deadPlayer = new DeadPlayer(target, DateTime.UtcNow, DeathReason.Kill, __instance);
+            DeadPlayer deadPlayer = new(target, DateTime.UtcNow, DeathReason.Kill, __instance);
             GameHistory.deadPlayers.Add(deadPlayer);
 
             // Reset killer to crewmate if resetToCrewmate
@@ -1359,29 +1370,32 @@ namespace TheOtherRoles.Patches
 
             // Update arsonist status
             Arsonist.updateStatus();
-			
+
             // Show flash on bait kill to the killer if enabled
-            if (Bait.bait != null && target == Bait.bait && Bait.showKillFlash && __instance != Bait.bait && __instance == PlayerControl.LocalPlayer) {
+            if (Bait.bait != null && target == Bait.bait && Bait.showKillFlash && __instance != Bait.bait && __instance == PlayerControl.LocalPlayer)
+            {
                 Helpers.showFlash(new Color(42f / 255f, 187f / 255f, 245f / 255f));
             }
 
             // impostor promote to last impostor
-            if(target.isImpostor() && AmongUsClient.Instance.AmHost)
+            if (target.isImpostor() && AmongUsClient.Instance.AmHost)
             {
                 LastImpostor.promoteToLastImpostor();
             }
 
             // 人形使いのダミー死亡処理
-            if(target == Puppeteer.dummy)
+            if (target == Puppeteer.dummy)
             {
                 // 蘇生する
                 target.Revive();
                 // 死体を消す
                 DeadBody[] array = UnityEngine.Object.FindObjectsOfType<DeadBody>();
-                for (int i = 0; i < array.Length; i++) {
-                    if (GameData.Instance.GetPlayerById(array[i].ParentId).PlayerId == target.PlayerId) {
+                for (int i = 0; i < array.Length; i++)
+                {
+                    if (GameData.Instance.GetPlayerById(array[i].ParentId).PlayerId == target.PlayerId)
+                    {
                         array[i].gameObject.active = false;
-                    }     
+                    }
                 }
                 Puppeteer.OnDummyDeath(__instance);
             }
@@ -1418,10 +1432,12 @@ namespace TheOtherRoles.Patches
     }
 
     [HarmonyPatch(typeof(KillAnimation), nameof(KillAnimation.CoPerformKill))]
-    class KillAnimationCoPerformKillPatch {
+    class KillAnimationCoPerformKillPatch
+    {
         public static bool hideNextAnimation = false;
 
-        public static void Prefix(KillAnimation __instance, [HarmonyArgument(0)]ref PlayerControl source, [HarmonyArgument(1)]ref PlayerControl target) {
+        public static void Prefix(KillAnimation __instance, [HarmonyArgument(0)] ref PlayerControl source, [HarmonyArgument(1)] ref PlayerControl target)
+        {
             if (hideNextAnimation)
                 source = target;
             hideNextAnimation = false;
@@ -1429,17 +1445,21 @@ namespace TheOtherRoles.Patches
     }
 
     [HarmonyPatch(typeof(KillAnimation), nameof(KillAnimation.SetMovement))]
-    class KillAnimationSetMovementPatch {
+    class KillAnimationSetMovementPatch
+    {
         private static int? colorId = null;
-        public static void Prefix(PlayerControl source, bool canMove) {
+        public static void Prefix(PlayerControl source, bool canMove)
+        {
             Color color = source.MyRend.material.GetColor("_BodyColor");
-            if (color != null && Morphling.morphling != null && source.Data.PlayerId == Morphling.morphling.PlayerId) {
+            if (color != null && Morphling.morphling != null && source.Data.PlayerId == Morphling.morphling.PlayerId)
+            {
                 var index = Palette.PlayerColors.IndexOf(color);
                 if (index != -1) colorId = index;
             }
         }
 
-        public static void Postfix(PlayerControl source, bool canMove) {
+        public static void Postfix(PlayerControl source, bool canMove)
+        {
             if (colorId.HasValue) source.RawSetColor(colorId.Value);
             colorId = null;
         }
@@ -1451,7 +1471,7 @@ namespace TheOtherRoles.Patches
         public static void Postfix(PlayerControl __instance)
         {
             // Collect dead player info
-            DeadPlayer deadPlayer = new DeadPlayer(__instance, DateTime.UtcNow, DeathReason.Exile, null);
+            DeadPlayer deadPlayer = new(__instance, DateTime.UtcNow, DeathReason.Exile, null);
             GameHistory.deadPlayers.Add(deadPlayer);
 
             // Remove fake tasks when player dies
@@ -1475,9 +1495,9 @@ namespace TheOtherRoles.Patches
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
                 RPCProcedure.lawyerPromotesToPursuer();
             }
-            
+
             // impostor promote to last impostor
-            if(__instance.isImpostor() && AmongUsClient.Instance.AmHost)
+            if (__instance.isImpostor() && AmongUsClient.Instance.AmHost)
             {
                 LastImpostor.promoteToLastImpostor();
             }

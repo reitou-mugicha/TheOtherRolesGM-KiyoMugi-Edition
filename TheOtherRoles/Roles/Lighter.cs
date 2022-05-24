@@ -1,8 +1,8 @@
-using HarmonyLib;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
+using HarmonyLib;
 using TheOtherRoles.Objects;
+using UnityEngine;
 
 namespace TheOtherRoles
 {
@@ -57,7 +57,7 @@ namespace TheOtherRoles
                 () => { return PlayerControl.LocalPlayer.CanMove; },
                 () =>
                 {
-                    if(local != null) local.lightActive = false;
+                    if (local != null) local.lightActive = false;
                     lighterButton.Timer = lighterButton.MaxTimer;
                     lighterButton.isEffectActive = false;
                     lighterButton.actionButton.graphic.color = Palette.EnabledColor;
@@ -69,12 +69,15 @@ namespace TheOtherRoles
                 KeyCode.F,
                 true,
                 duration,
-                () => {
+                () =>
+                {
                     local.lightActive = false;
                     lighterButton.Timer = lighterButton.MaxTimer;
                 }
-            );
-            lighterButton.buttonText = ModTranslation.getString("LighterText");
+            )
+            {
+                buttonText = ModTranslation.getString("LighterText")
+            };
         }
 
         public static void SetButtonCooldowns()

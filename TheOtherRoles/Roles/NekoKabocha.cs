@@ -1,11 +1,11 @@
-using HarmonyLib;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
-using TheOtherRoles.Patches;
-using static TheOtherRoles.TheOtherRoles;
-using static TheOtherRoles.GameHistory;
+using HarmonyLib;
 using Hazel;
+using TheOtherRoles.Patches;
+using UnityEngine;
+using static TheOtherRoles.GameHistory;
+using static TheOtherRoles.TheOtherRoles;
 
 namespace TheOtherRoles
 {
@@ -26,7 +26,8 @@ namespace TheOtherRoles
             RoleType = roleId = RoleType.NekoKabocha;
         }
 
-        public override void OnMeetingStart() {
+        public override void OnMeetingStart()
+        {
             meetingKiller = null;
         }
 
@@ -37,7 +38,7 @@ namespace TheOtherRoles
 
         public override void FixedUpdate() { }
         public override void OnKill(PlayerControl target) { }
-        
+
         public override void OnDeath(PlayerControl killer = null)
         {
             killer = killer ?? meetingKiller;

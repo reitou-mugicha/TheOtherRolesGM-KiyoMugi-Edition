@@ -1,14 +1,15 @@
-using HarmonyLib;
-using System.Linq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using HarmonyLib;
+using UnityEngine;
 using static TheOtherRoles.TheOtherRoles;
 using static TheOtherRoles.TheOtherRolesGM;
-using UnityEngine;
 
 namespace TheOtherRoles
 {
-    class RoleInfo {
+    class RoleInfo
+    {
         public Color color;
         public virtual string name { get { return ModTranslation.getString(nameKey); } }
         public virtual string nameColored { get { return Helpers.cs(color, name); } }
@@ -24,16 +25,20 @@ namespace TheOtherRoles
             }
         }
 
-        public bool enabled { get 
-        { 
-            return Helpers.RolesEnabled && (baseOption == null || baseOption.enabled); 
-        }}
+        public bool enabled
+        {
+            get
+            {
+                return Helpers.RolesEnabled && (baseOption == null || baseOption.enabled);
+            }
+        }
         public RoleType roleType;
 
         private string nameKey;
         private CustomOption baseOption;
 
-        RoleInfo(string name, Color color, CustomOption baseOption, RoleType roleType) {
+        RoleInfo(string name, Color color, CustomOption baseOption, RoleType roleType)
+        {
             this.color = color;
             this.nameKey = name;
             this.baseOption = baseOption;
@@ -106,7 +111,7 @@ namespace TheOtherRoles
         public static RoleInfo mimicA;
         public static RoleInfo jekyllAndHyde;
         public static List<RoleInfo> allRoleInfos;
-        public static void Load() 
+        public static void Load()
         {
             jester = new RoleInfo("jester", Jester.color, CustomOptionHolder.jesterSpawnRate, RoleType.Jester);
             mayor = new RoleInfo("mayor", Mayor.color, CustomOptionHolder.mayorSpawnRate, RoleType.Mayor);
@@ -143,7 +148,7 @@ namespace TheOtherRoles
             niceGuesser = new RoleInfo("niceGuesser", Guesser.color, CustomOptionHolder.guesserSpawnRate, RoleType.NiceGuesser);
             evilGuesser = new RoleInfo("evilGuesser", Palette.ImpostorRed, CustomOptionHolder.guesserSpawnRate, RoleType.EvilGuesser);
             bait = new RoleInfo("bait", Bait.color, CustomOptionHolder.baitSpawnRate, RoleType.Bait);
-            impostor = new RoleInfo("impostor", Palette.ImpostorRed,null, RoleType.Impostor);
+            impostor = new RoleInfo("impostor", Palette.ImpostorRed, null, RoleType.Impostor);
             lawyer = new RoleInfo("lawyer", Lawyer.color, CustomOptionHolder.lawyerSpawnRate, RoleType.Lawyer);
             pursuer = new RoleInfo("pursuer", Pursuer.color, CustomOptionHolder.lawyerSpawnRate, RoleType.Pursuer);
             crewmate = new RoleInfo("crewmate", Color.white, null, RoleType.Crewmate);
@@ -199,7 +204,7 @@ namespace TheOtherRoles
                 arsonist,
                 jackal,
                 sidekick,
-            	vulture,
+                vulture,
                 pursuer,
                 lawyer,
                 crewmate,
@@ -249,8 +254,9 @@ namespace TheOtherRoles
             return ModTranslation.getString(key);
         }
 
-        public static List<RoleInfo> getRoleInfoForPlayer(PlayerControl p, RoleType[] excludeRoles = null, bool includeHidden = false) {
-            List<RoleInfo> infos = new List<RoleInfo>();
+        public static List<RoleInfo> getRoleInfoForPlayer(PlayerControl p, RoleType[] excludeRoles = null, bool includeHidden = false)
+        {
+            List<RoleInfo> infos = new();
             if (p == null) return infos;
 
             // Special roles
@@ -315,21 +321,21 @@ namespace TheOtherRoles
                 }
                 else
                 {
-                    var info = FortuneTeller.isCompletedNumTasks(p) ? fortuneTeller: crewmate;
+                    var info = FortuneTeller.isCompletedNumTasks(p) ? fortuneTeller : crewmate;
                     infos.Add(info);
                 }
             }
 
             // はおみんオリジナル
-            if(p.isRole(RoleType.SchrodingersCat)) infos.Add(schrodingersCat);
-            if(p.isRole(RoleType.Trapper)) infos.Add(trapper);
-            if(p.isRole(RoleType.BomberA)) infos.Add(bomberA);
-            if(p.isRole(RoleType.BomberB)) infos.Add(bomberB);
-            if(p.isRole(RoleType.EvilTracker)) infos.Add(evilTracker);
-            if(p.isRole(RoleType.Puppeteer)) infos.Add(puppeteer);
-            if(p.isRole(RoleType.MimicK)) infos.Add(mimicK);
-            if(p.isRole(RoleType.MimicA)) infos.Add(mimicA);
-            if(p.isRole(RoleType.JekyllAndHyde)) infos.Add(jekyllAndHyde);
+            if (p.isRole(RoleType.SchrodingersCat)) infos.Add(schrodingersCat);
+            if (p.isRole(RoleType.Trapper)) infos.Add(trapper);
+            if (p.isRole(RoleType.BomberA)) infos.Add(bomberA);
+            if (p.isRole(RoleType.BomberB)) infos.Add(bomberB);
+            if (p.isRole(RoleType.EvilTracker)) infos.Add(evilTracker);
+            if (p.isRole(RoleType.Puppeteer)) infos.Add(puppeteer);
+            if (p.isRole(RoleType.MimicK)) infos.Add(mimicK);
+            if (p.isRole(RoleType.MimicA)) infos.Add(mimicA);
+            if (p.isRole(RoleType.JekyllAndHyde)) infos.Add(jekyllAndHyde);
 
 
             // Default roles
@@ -345,7 +351,8 @@ namespace TheOtherRoles
             return infos;
         }
 
-        public static String GetRolesString(PlayerControl p, bool useColors, RoleType[] excludeRoles = null, bool includeHidden = false, string joinSeparator = " ") {
+        public static String GetRolesString(PlayerControl p, bool useColors, RoleType[] excludeRoles = null, bool includeHidden = false, string joinSeparator = " ")
+        {
             if (p?.Data?.Disconnected != false) return "";
 
             var roleInfo = getRoleInfoForPlayer(p, excludeRoles, includeHidden);
@@ -376,15 +383,15 @@ namespace TheOtherRoles
                 else
                 {
                     string postfix = useColors ? Helpers.cs(LastImpostor.color, LastImpostor.postfix) : LastImpostor.postfix;
-                    roleName = String.Join(joinSeparator, roleInfo.Select(x => useColors? Helpers.cs(x.color, x.name)  : x.name).ToArray());
+                    roleName = String.Join(joinSeparator, roleInfo.Select(x => useColors ? Helpers.cs(x.color, x.name) : x.name).ToArray());
                     roleName = roleName + postfix;
                 }
             }
 
 
-            if(p.hasModifier(ModifierType.Munou))
+            if (p.hasModifier(ModifierType.Munou))
             {
-                if(PlayerControl.LocalPlayer.Data.IsDead || Munou.endGameFlag)
+                if (PlayerControl.LocalPlayer.Data.IsDead || Munou.endGameFlag)
                 {
                     string postfix = useColors ? Helpers.cs(Munou.color, Munou.postfix) : Munou.postfix;
                     // roleName = String.Join(joinSeparator, roleInfo.Select(x => useColors? Helpers.cs(x.color, x.name)  : x.name).ToArray());
@@ -392,7 +399,7 @@ namespace TheOtherRoles
                 }
             }
 
-            if(p.hasModifier(ModifierType.AntiTeleport))
+            if (p.hasModifier(ModifierType.AntiTeleport))
             {
                 string postfix = useColors ? Helpers.cs(AntiTeleport.color, AntiTeleport.postfix) : AntiTeleport.postfix;
                 // roleName = String.Join(joinSeparator, roleInfo.Select(x => useColors? Helpers.cs(x.color, x.name)  : x.name).ToArray());

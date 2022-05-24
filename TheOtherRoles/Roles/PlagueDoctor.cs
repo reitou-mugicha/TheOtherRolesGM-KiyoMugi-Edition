@@ -1,8 +1,8 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using HarmonyLib;
 using Hazel;
-using System;
-using System.Linq;
-using System.Collections.Generic;
 using TheOtherRoles.Objects;
 using UnityEngine;
 using static TheOtherRoles.Patches.PlayerControlFixedUpdatePatch;
@@ -35,10 +35,14 @@ namespace TheOtherRoles
         public static float immunityTime { get { return CustomOptionHolder.plagueDoctorImmunityTime.getFloat(); } }
 
         public static bool infectKiller { get { return CustomOptionHolder.plagueDoctorInfectKiller.getBool(); } }
-        public static bool resetAfterMeeting { get {
+        public static bool resetAfterMeeting
+        {
+            get
+            {
                 //return CustomOptionHolder.plagueDoctorResetMeeting.getBool();
                 return false;
-            } }
+            }
+        }
         public static bool canWinDead { get { return CustomOptionHolder.plagueDoctorWinDead.getBool(); } }
 
         public PlagueDoctor()
@@ -101,7 +105,7 @@ namespace TheOtherRoles
 
                 if (!meetingFlag && (canWinDead || player.isAlive()))
                 {
-                    List<PlayerControl> newInfected = new List<PlayerControl>();
+                    List<PlayerControl> newInfected = new();
                     foreach (PlayerControl target in PlayerControl.AllPlayerControls)
                     { // 非感染プレイヤーのループ
                         if (target == player || target.isDead() || infected.ContainsKey(target.PlayerId) || target.inVent) continue;
@@ -178,11 +182,11 @@ namespace TheOtherRoles
         private bool hasInfected()
         {
             bool flag = false;
-            foreach(var item in progress)
+            foreach (var item in progress)
             {
-                if(item.Value != 0f)
+                if (item.Value != 0f)
                 {
-                    flag =true;
+                    flag = true;
                     break;
                 }
             }
@@ -192,7 +196,7 @@ namespace TheOtherRoles
         public void UpdateStatusText()
         {
             // ロード画面でstatusTextを生成すると上手く表示されないのでゲームが開始してから最初に感染させた時点から表示する
-            if(!hasInfected()) return;
+            if (!hasInfected()) return;
             if (MeetingHud.Instance != null)
             {
                 if (statusText != null)
@@ -264,7 +268,8 @@ namespace TheOtherRoles
                     local.currentTarget = null;
                 },
                 () => {/*ボタンが有効になる条件*/ return PlayerControl.LocalPlayer.isRole(RoleType.PlagueDoctor) && local.numInfections > 0 && !PlayerControl.LocalPlayer.isDead(); },
-                () => {/*ボタンが使える条件*/
+                () =>
+                {/*ボタンが使える条件*/
                     if (numInfectionsText != null)
                     {
                         if (local.numInfections > 0)
@@ -281,8 +286,10 @@ namespace TheOtherRoles
                 hm,
                 hm.UseButton,
                 KeyCode.F
-            );
-            plagueDoctorButton.buttonText = ModTranslation.getString("plagueDoctorInfectButton");
+            )
+            {
+                buttonText = ModTranslation.getString("plagueDoctorInfectButton")
+            };
 
             numInfectionsText = GameObject.Instantiate(plagueDoctorButton.actionButton.cooldownTimerText, plagueDoctorButton.actionButton.cooldownTimerText.transform.parent);
             numInfectionsText.text = "";

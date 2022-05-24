@@ -1,13 +1,13 @@
-﻿using BepInEx;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.IL2CPP;
 using HarmonyLib;
 using Hazel;
-using System.Collections.Generic;
-using System.Linq;
-using System;
-using UnityEngine;
 using TheOtherRoles.Modules;
+using UnityEngine;
 
 namespace TheOtherRoles
 {
@@ -19,7 +19,7 @@ namespace TheOtherRoles
         public const string Id = "me.eisbison.theotherroles";
 
         public const string VersionString = "999.999.999";
-        
+
         public static System.Version Version = System.Version.Parse(VersionString);
         internal static BepInEx.Logging.ManualLogSource Logger;
 
@@ -32,7 +32,7 @@ namespace TheOtherRoles
         public static ConfigEntry<bool> StreamerMode { get; set; }
         public static ConfigEntry<bool> GhostsSeeTasks { get; set; }
         public static ConfigEntry<bool> GhostsSeeRoles { get; set; }
-        public static ConfigEntry<bool> GhostsSeeVotes{ get; set; }
+        public static ConfigEntry<bool> GhostsSeeVotes { get; set; }
         public static ConfigEntry<bool> ShowRoleSummary { get; set; }
         public static ConfigEntry<bool> HideNameplates { get; set; }
         public static ConfigEntry<bool> ShowLighterDarker { get; set; }
@@ -48,7 +48,8 @@ namespace TheOtherRoles
         public static Sprite ModStamp;
 
         public static IRegionInfo[] defaultRegions;
-        public static void UpdateRegions() {
+        public static void UpdateRegions()
+        {
             ServerManager serverManager = DestroyableSingleton<ServerManager>.Instance;
             IRegionInfo[] regions = defaultRegions;
 
@@ -99,7 +100,8 @@ namespace TheOtherRoles
             SubmergedCompatibility.Initialize();
         }
 
-        public static Sprite GetModStamp() {
+        public static Sprite GetModStamp()
+        {
             if (ModStamp) return ModStamp;
             return ModStamp = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.ModStamp.png", 150f);
         }
@@ -116,21 +118,24 @@ namespace TheOtherRoles
     }
 
     [HarmonyPatch(typeof(ChatController), nameof(ChatController.Awake))]
-    public static class ChatControllerAwakePatch {
-        private static void Prefix() {
-            if (!EOSManager.Instance.IsMinor()) {
+    public static class ChatControllerAwakePatch
+    {
+        private static void Prefix()
+        {
+            if (!EOSManager.Instance.IsMinor())
+            {
                 SaveManager.chatModeType = 1;
                 SaveManager.isGuest = false;
             }
         }
     }
-    
+
     // Debugging tools
     [HarmonyPatch(typeof(KeyboardJoystick), nameof(KeyboardJoystick.Update))]
     public static class DebugManager
     {
-        private static readonly System.Random random = new System.Random((int)DateTime.Now.Ticks);
-        private static List<PlayerControl> bots = new List<PlayerControl>();
+        private static readonly System.Random random = new((int)DateTime.Now.Ticks);
+        private static List<PlayerControl> bots = new();
 
         public static void Postfix(KeyboardJoystick __instance)
         {
@@ -148,9 +153,10 @@ namespace TheOtherRoles
             if (!TheOtherRolesPlugin.DebugMode.Value) return;
 
             // Spawn dummys
-            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.F)) {
+            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.F))
+            {
                 var playerControl = UnityEngine.Object.Instantiate(AmongUsClient.Instance.PlayerPrefab);
-                var i = playerControl.PlayerId = (byte) GameData.Instance.GetAvailableId();
+                var i = playerControl.PlayerId = (byte)GameData.Instance.GetAvailableId();
 
                 bots.Add(playerControl);
                 GameData.Instance.AddPlayer(playerControl);
@@ -177,7 +183,8 @@ namespace TheOtherRoles
             }
 
             // ゲーム内ログ出力のトグル
-            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.F2)) {
+            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.F2))
+            {
                 Logger.isAlsoInGame = !Logger.isAlsoInGame;
                 Logger.SendInGame("isAlsoInGame: " + Logger.isAlsoInGame);
             }
