@@ -94,27 +94,27 @@ namespace TheOtherRoles
             // Crew
             { RoleType.Sheriff, typeof(RoleBase<Sheriff>) },
             { RoleType.Lighter, typeof(RoleBase<Lighter>) },
-            { RoleType.FortuneTeller, typeof(RoleBase<FortuneTeller>)},
+            { RoleType.FortuneTeller, typeof(RoleBase<FortuneTeller>) },
 
             // Impostor
             { RoleType.Ninja, typeof(RoleBase<Ninja>) },
             { RoleType.NekoKabocha, typeof(RoleBase<NekoKabocha>) },
             { RoleType.SerialKiller, typeof(RoleBase<SerialKiller>) },
-            { RoleType.Trapper, typeof(RoleBase<Trapper>)},
-            { RoleType.BomberA, typeof(RoleBase<BomberA>)},
-            { RoleType.BomberB, typeof(RoleBase<BomberB>)},
-            { RoleType.EvilTracker, typeof(RoleBase<EvilTracker>)},
-            { RoleType.MimicK, typeof(RoleBase<MimicK>)},
-            { RoleType.MimicA, typeof(RoleBase<MimicA>)},
+            { RoleType.Trapper, typeof(RoleBase<Trapper>) },
+            { RoleType.BomberA, typeof(RoleBase<BomberA>) },
+            { RoleType.BomberB, typeof(RoleBase<BomberB>) },
+            { RoleType.EvilTracker, typeof(RoleBase<EvilTracker>) },
+            { RoleType.MimicK, typeof(RoleBase<MimicK>) },
+            { RoleType.MimicA, typeof(RoleBase<MimicA>) },
 
             // Neutral
             { RoleType.Opportunist, typeof(RoleBase<Opportunist>) },
             { RoleType.PlagueDoctor, typeof(RoleBase<PlagueDoctor>) },
-            { RoleType.Fox, typeof(RoleBase<Fox>)},
-            { RoleType.Immoralist, typeof(RoleBase<Immoralist>)},
-            { RoleType.SchrodingersCat, typeof(RoleBase<SchrodingersCat>)},
-            { RoleType.Puppeteer, typeof(RoleBase<Puppeteer>)},
-            { RoleType.JekyllAndHyde, typeof(RoleBase<JekyllAndHyde>)},
+            { RoleType.Fox, typeof(RoleBase<Fox>) },
+            { RoleType.Immoralist, typeof(RoleBase<Immoralist>) },
+            { RoleType.SchrodingersCat, typeof(RoleBase<SchrodingersCat>) },
+            { RoleType.Puppeteer, typeof(RoleBase<Puppeteer>) },
+            { RoleType.JekyllAndHyde, typeof(RoleBase<JekyllAndHyde>) },
 
             // Other
             { RoleType.Watcher, typeof(RoleBase<Watcher>) },
