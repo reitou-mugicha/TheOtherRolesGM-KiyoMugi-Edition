@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
@@ -1334,6 +1334,10 @@ namespace TheOtherRoles.Patches
                     HudManagerStartPatch.warlockCurseButton.Timer = Warlock.warlock.killTimer;
                 }
             }
+
+            // Assassin Button Sync
+            if (Assassin.assassin != null && PlayerControl.LocalPlayer == Assassin.assassin && __instance == Assassin.assassin && HudManagerStartPatch.assassinButton != null)
+                HudManagerStartPatch.assassinButton.Timer = HudManagerStartPatch.assassinButton.MaxTimer;
 
             // Seer show flash and add dead player position
             if (Seer.seer != null && PlayerControl.LocalPlayer == Seer.seer && !Seer.seer.Data.IsDead && Seer.seer != target && Seer.mode <= 1)
