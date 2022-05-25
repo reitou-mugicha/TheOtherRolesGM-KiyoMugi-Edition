@@ -767,7 +767,7 @@ namespace TheOtherRoles
                 SystemTypes.Medical => StringNames.Medical,
                 _ => StringNames.ExitButton,
             };
-            if (PlayerControl.GameOptions.MapId is 2 or 4) camera.transform.localRotation = new Quaternion(0, 0, 1, 1); // Polus and Airship 
+            if (PlayerControl.GameOptions.MapId is 2 or 4) camera.transform.localRotation = new Quaternion(0, 0, 1, 1); // Polus and Airship
 
             if (PlayerControl.LocalPlayer == SecurityGuard.securityGuard)
             {
@@ -1339,6 +1339,25 @@ namespace TheOtherRoles
         public static void setOddIsJekyll(bool b)
         {
             JekyllAndHyde.oddIsJekyll = b;
+        }
+
+        [HarmonyPatch(typeof(CustomNetworkTransform), nameof(CustomNetworkTransform.HandleRpc))]
+        class CustomNetworkTransformRPCHandlerPatch
+        {
+            public static bool Prefix(CustomNetworkTransform __instance, [HarmonyArgument(0)] byte callId, [HarmonyArgument(1)] MessageReader reader)
+            {
+                var rpcType = (RpcCalls)callId;
+                MessageReader subReader = MessageReader.Get(reader);
+                switch (rpcType)
+                {
+                    case RpcCalls.SnapTo:
+                        Vector2 position = __instance.ReadVector2(subReader);
+                        ushort minSid = subReader.ReadUInt16();
+                        Logger.info($"{__instance.name} => x:{position.x} y:{position.y} minSid:{minSid}", "SnapTo");
+                        break;
+                }
+                return true;
+            }
         }
 
         [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.HandleRpc))]
