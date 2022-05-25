@@ -312,7 +312,7 @@ namespace TheOtherRoles
         {
             if (DestroyableSingleton<ServerManager>.Instance == null) return false;
             StringNames n = DestroyableSingleton<ServerManager>.Instance.CurrentRegion.TranslateName;
-            return n != StringNames.ServerNA && n != StringNames.ServerEU && n != StringNames.ServerAS;
+            return n is not StringNames.ServerNA and not StringNames.ServerEU and not StringNames.ServerAS;
         }
 
         public static bool isDead(this PlayerControl player)
@@ -328,7 +328,7 @@ namespace TheOtherRoles
 
         public static bool isNeutral(this PlayerControl player)
         {
-            return (player != null &&
+            return player != null &&
                    (player.isRole(RoleType.Jackal) ||
                     player.isRole(RoleType.Sidekick) ||
                     Jackal.formerJackals.Contains(player) ||
@@ -345,7 +345,7 @@ namespace TheOtherRoles
                     player.isRole(RoleType.Vulture) ||
                     player.isRole(RoleType.Lawyer) ||
                     player.isRole(RoleType.Pursuer) ||
-                    (player.isRole(RoleType.Shifter) && Shifter.isNeutral)));
+                    (player.isRole(RoleType.Shifter) && Shifter.isNeutral));
         }
 
         public static bool isCrew(this PlayerControl player)
@@ -389,7 +389,7 @@ namespace TheOtherRoles
 
         public static bool canBeErased(this PlayerControl player)
         {
-            return (player != Jackal.jackal && player != Sidekick.sidekick && !Jackal.formerJackals.Contains(player));
+            return player != Jackal.jackal && player != Sidekick.sidekick && !Jackal.formerJackals.Contains(player);
         }
 
         public static void clearAllTasks(this PlayerControl player)
@@ -456,7 +456,7 @@ namespace TheOtherRoles
                 if (distance > ShipStatus.Instance.CalculateLightRadius(source.Data) * distMod || anythingBetween) return true;
             }
             if (!MapOptions.hidePlayerNames) return false; // All names are visible
-            if (source.isImpostor() && ((target.isImpostor() || target.isRole(RoleType.Spy)) || (target == Sidekick.sidekick && Sidekick.wasTeamRed) || (target == Jackal.jackal && Jackal.wasTeamRed))) return false; // Members of team Impostors see the names of Impostors/Spies
+            if (source.isImpostor() && (target.isImpostor() || target.isRole(RoleType.Spy) || (target == Sidekick.sidekick && Sidekick.wasTeamRed) || (target == Jackal.jackal && Jackal.wasTeamRed))) return false; // Members of team Impostors see the names of Impostors/Spies
             if (source.getPartner() == target) return false; // Members of team Lovers see the names of each other
             if ((source.isRole(RoleType.Jackal) || source.isRole(RoleType.Sidekick)) && (target.isRole(RoleType.Jackal) || target.isRole(RoleType.Sidekick) || target == Jackal.fakeSidekick)) return false; // Members of team Jackal see the names of each other
             if ((source.isRole(RoleType.Fox) || source.isRole(RoleType.Immoralist)) && (target.isRole(RoleType.Fox) || target.isRole(RoleType.Immoralist))) return false; // Members of team Fox see the names of each other

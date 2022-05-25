@@ -160,7 +160,7 @@ namespace TheOtherRoles
                         {
                             string message = (15 - (p * 15f)).ToString("0");
                             bool even = ((int)(p * 15f / 0.25f)) % 2 == 0; // Bool flips every 0.25 seconds
-                            string prefix = (even ? "<color=#FCBA03FF>" : "<color=#FF0000FF>");
+                            string prefix = even ? "<color=#FCBA03FF>" : "<color=#FF0000FF>";
                             text.text = prefix + message + "</color>";
                             if (text != null) text.color = even ? Color.yellow : Color.red;
                             if (p == 1f && text != null && text.gameObject != null)

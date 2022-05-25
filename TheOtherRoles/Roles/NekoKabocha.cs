@@ -41,7 +41,7 @@ namespace TheOtherRoles
 
         public override void OnDeath(PlayerControl killer = null)
         {
-            killer = killer ?? meetingKiller;
+            killer ??= meetingKiller;
             if (killer != null && killer != player && killer.isAlive() && !killer.isGM())
             {
                 if ((revengeCrew && killer.isCrew()) ||

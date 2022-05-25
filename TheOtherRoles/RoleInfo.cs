@@ -315,7 +315,7 @@ namespace TheOtherRoles
             if (p.isRole(RoleType.Immoralist)) infos.Add(immoralist);
             if (p.isRole(RoleType.FortuneTeller))
             {
-                if (includeHidden || PlayerControl.LocalPlayer ? PlayerControl.LocalPlayer.Data.IsDead : false)
+                if ((includeHidden || PlayerControl.LocalPlayer) && PlayerControl.LocalPlayer.Data.IsDead)
                 {
                     infos.Add(fortuneTeller);
                 }
@@ -357,7 +357,7 @@ namespace TheOtherRoles
 
             var roleInfo = getRoleInfoForPlayer(p, excludeRoles, includeHidden);
             string roleName = String.Join(joinSeparator, roleInfo.Select(x => useColors ? Helpers.cs(x.color, x.name) : x.name).ToArray());
-            if (Lawyer.target != null && p?.PlayerId == Lawyer.target.PlayerId && PlayerControl.LocalPlayer != Lawyer.target) roleName += (useColors ? Helpers.cs(Pursuer.color, " §") : " §");
+            if (Lawyer.target != null && p?.PlayerId == Lawyer.target.PlayerId && PlayerControl.LocalPlayer != Lawyer.target) roleName += useColors ? Helpers.cs(Pursuer.color, " §") : " §";
 
             if (p.hasModifier(ModifierType.Madmate) || p.hasModifier(ModifierType.CreatedMadmate))
             {
@@ -384,7 +384,7 @@ namespace TheOtherRoles
                 {
                     string postfix = useColors ? Helpers.cs(LastImpostor.color, LastImpostor.postfix) : LastImpostor.postfix;
                     roleName = String.Join(joinSeparator, roleInfo.Select(x => useColors ? Helpers.cs(x.color, x.name) : x.name).ToArray());
-                    roleName = roleName + postfix;
+                    roleName += postfix;
                 }
             }
 
@@ -395,7 +395,7 @@ namespace TheOtherRoles
                 {
                     string postfix = useColors ? Helpers.cs(Munou.color, Munou.postfix) : Munou.postfix;
                     // roleName = String.Join(joinSeparator, roleInfo.Select(x => useColors? Helpers.cs(x.color, x.name)  : x.name).ToArray());
-                    roleName = roleName + postfix;
+                    roleName += postfix;
                 }
             }
 
@@ -403,7 +403,7 @@ namespace TheOtherRoles
             {
                 string postfix = useColors ? Helpers.cs(AntiTeleport.color, AntiTeleport.postfix) : AntiTeleport.postfix;
                 // roleName = String.Join(joinSeparator, roleInfo.Select(x => useColors? Helpers.cs(x.color, x.name)  : x.name).ToArray());
-                roleName = roleName + postfix;
+                roleName += postfix;
             }
 
             return roleName;

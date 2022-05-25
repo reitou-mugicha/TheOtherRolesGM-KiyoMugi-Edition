@@ -119,7 +119,7 @@ namespace TheOtherRoles
 
                 option.entry = TheOtherRolesPlugin.Instance.Config.Bind($"Preset{preset}", option.id.ToString(), option.defaultSelection);
                 option.selection = Mathf.Clamp(option.entry.Value, 0, option.selections.Length - 1);
-                if (option.optionBehaviour != null && option.optionBehaviour is StringOption stringOption)
+                if (option.optionBehaviour is not null and StringOption stringOption)
                 {
                     stringOption.oldValue = stringOption.Value = option.selection;
                     stringOption.ValueText.text = option.getString();
@@ -129,7 +129,7 @@ namespace TheOtherRoles
 
         public static void ShareOptionSelections()
         {
-            if (PlayerControl.AllPlayerControls.Count <= 1 || AmongUsClient.Instance?.AmHost == false && PlayerControl.LocalPlayer == null) return;
+            if (PlayerControl.AllPlayerControls.Count <= 1 || (AmongUsClient.Instance?.AmHost == false && PlayerControl.LocalPlayer == null)) return;
 
             MessageWriter messageWriter = AmongUsClient.Instance.StartRpc(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.ShareOptions, Hazel.SendOption.Reliable);
             messageWriter.WritePacked((uint)CustomOption.options.Count);
@@ -193,7 +193,7 @@ namespace TheOtherRoles
         public virtual void updateSelection(int newSelection)
         {
             selection = Mathf.Clamp((newSelection + selections.Length) % selections.Length, 0, selections.Length - 1);
-            if (optionBehaviour != null && optionBehaviour is StringOption stringOption)
+            if (optionBehaviour is not null and StringOption stringOption)
             {
                 stringOption.oldValue = stringOption.Value = selection;
                 stringOption.ValueText.text = getString();
@@ -336,7 +336,7 @@ namespace TheOtherRoles
             var strings = roleTypes.Select(
                 x =>
                     x == RoleType.NoRole ? "optionOff" :
-                    ModTranslation.getString(x.ToString().Substring(0, 1).ToLower() + x.ToString().Substring(1))
+                    ModTranslation.getString(x.ToString()[..1].ToLower() + x.ToString()[1..])
                 //RoleInfo.allRoleInfos.First(y => y.roleType == x).nameColored
                 ).ToArray();
 
@@ -922,7 +922,7 @@ namespace TheOtherRoles
 
             entries.Add(entry.ToString().Trim('\r', '\n'));
 
-            void addChildren(CustomOption option, ref StringBuilder entry, bool indent = true)
+            static void addChildren(CustomOption option, ref StringBuilder entry, bool indent = true)
             {
                 if (!option.enabled) return;
 
@@ -988,7 +988,7 @@ namespace TheOtherRoles
             }
 
             int numPages = pages.Count;
-            int counter = TheOtherRolesPlugin.optionsPage = TheOtherRolesPlugin.optionsPage % numPages;
+            int counter = TheOtherRolesPlugin.optionsPage %= numPages;
 
             __result = pages[counter].Trim('\r', '\n') + "\n\n" + tl("pressTabForMore") + $" ({counter + 1}/{numPages})";
         }
@@ -1104,7 +1104,7 @@ namespace TheOtherRoles
 
             // Sets the MinX position to the left edge of the screen + 0.1 units
             Rect safeArea = Screen.safeArea;
-            float aspect = Mathf.Min((Camera.main).aspect, safeArea.width / safeArea.height);
+            float aspect = Mathf.Min(Camera.main.aspect, safeArea.width / safeArea.height);
             float safeOrthographicSize = CameraSafeArea.GetSafeOrthographicSize(Camera.main);
             MinX = 0.1f - safeOrthographicSize * aspect;
 

@@ -20,7 +20,7 @@ namespace TheOtherRoles.Modules
                 {
                     if (text.ToLower().StartsWith("/kick "))
                     {
-                        string playerName = text.Substring(6);
+                        string playerName = text[6..];
                         PlayerControl target = PlayerControl.AllPlayerControls.ToArray().ToList().FirstOrDefault(x => x.Data.PlayerName.Equals(playerName));
                         if (target != null && AmongUsClient.Instance != null && AmongUsClient.Instance.CanBan())
                         {
@@ -34,7 +34,7 @@ namespace TheOtherRoles.Modules
                     }
                     else if (text.ToLower().StartsWith("/ban "))
                     {
-                        string playerName = text.Substring(5);
+                        string playerName = text[5..];
                         PlayerControl target = PlayerControl.AllPlayerControls.ToArray().ToList().FirstOrDefault(x => x.Data.PlayerName.Equals(playerName));
                         if (target != null && AmongUsClient.Instance != null && AmongUsClient.Instance.CanBan())
                         {
@@ -59,8 +59,7 @@ namespace TheOtherRoles.Modules
                     else if (text.ToLower().StartsWith("/color "))
                     {
                         handled = true;
-                        int col;
-                        if (!Int32.TryParse(text.Substring(7), out col))
+                        if (!Int32.TryParse(text[7..], out int col))
                         {
                             __instance.AddChat(PlayerControl.LocalPlayer, "Unable to parse color id\nUsage: /color {id}");
                         }
@@ -72,7 +71,7 @@ namespace TheOtherRoles.Modules
 
                 if (text.ToLower().StartsWith("/tp ") && PlayerControl.LocalPlayer.Data.IsDead)
                 {
-                    string playerName = text.Substring(4).ToLower();
+                    string playerName = text[4..].ToLower();
                     PlayerControl target = PlayerControl.AllPlayerControls.ToArray().ToList().FirstOrDefault(x => x.Data.PlayerName.ToLower().Equals(playerName));
                     if (target != null)
                     {
@@ -119,9 +118,9 @@ namespace TheOtherRoles.Modules
                     return true;
                 PlayerControl localPlayer = PlayerControl.LocalPlayer;
                 return localPlayer == null ||
-                    (MeetingHud.Instance != null || LobbyBehaviour.Instance != null ||
+                    MeetingHud.Instance != null || LobbyBehaviour.Instance != null ||
                     localPlayer.isDead() || localPlayer.PlayerId == sourcePlayer.PlayerId ||
-                    (Lovers.enableChat && localPlayer.getPartner() == sourcePlayer));
+                    (Lovers.enableChat && localPlayer.getPartner() == sourcePlayer);
             }
         }
     }

@@ -11,6 +11,10 @@ charset = utf-8
 trim_trailing_whitespace = true
 insert_final_newline = true
 
+dotnet_diagnostic.IDE0051.severity = silent
+dotnet_diagnostic.IDE0052.severity = silent
+dotnet_diagnostic.IDE1006.severity = silent
+
 # usingをディレクティブごとにスペースで分けるか
 dotnet_separate_import_directive_groups = false
 # usingの先頭をSystemに並び変えるか
@@ -43,7 +47,7 @@ dotnet_style_collection_initializer = true:suggestion
 # 明示的に提供されたタプル名を使用する
 dotnet_style_explicit_tuple_names = true:suggestion
 # null 値の反映を使用する
-dotnet_style_null_propagation = true:suggestion
+dotnet_style_null_propagation = true:silent
 # 可能であれば、null 条件演算子を使用する
 dotnet_style_object_initializer = true:warning
 # 折り返し時の演算子の位置
@@ -66,10 +70,12 @@ dotnet_style_prefer_simplified_boolean_expressions = true:suggestion
 dotnet_style_prefer_simplified_interpolation = true:suggestion
 
 # 読み取り専用修飾子を追加する
-dotnet_style_readonly_field = true:suggestion
+dotnet_style_readonly_field = true:silent
 
 # 使用されていないパラメーターを削除する
 dotnet_code_quality_unused_parameters = all:silent
+# 不要な値の代入を削除する
+csharp_style_unused_value_assignment_preference = true:silent
 
 # 不要な抑制を削除する
 dotnet_remove_unnecessary_suppression_exclusions = none

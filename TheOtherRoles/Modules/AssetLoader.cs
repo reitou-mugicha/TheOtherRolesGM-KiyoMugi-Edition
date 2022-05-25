@@ -26,11 +26,9 @@ namespace TheOtherRoles.Modules
         }
         public static byte[] ReadFully(this Stream input)
         {
-            using (var ms = new MemoryStream())
-            {
-                input.CopyTo(ms);
-                return ms.ToArray();
-            }
+            using var ms = new MemoryStream();
+            input.CopyTo(ms);
+            return ms.ToArray();
         }
         public static T? LoadAsset<T>(this AssetBundle assetBundle, string name) where T : UnityEngine.Object
         {

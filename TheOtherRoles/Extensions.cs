@@ -41,7 +41,7 @@ namespace TheOtherRoles
             for (int i = self.Length - 1; i >= 0; i--)
             {
                 char c = self[i];
-                if (c != ' ' && c != '\t' && c != '\n' && c != '\r')
+                if (c is not ' ' and not '\t' and not '\n' and not '\r')
                 {
                     break;
                 }
@@ -75,10 +75,10 @@ namespace TheOtherRoles
             return string.Concat(new string[]
             {
                 "<color=#",
-                Extensions.ByteHex[(int)((byte)(c.r * 255f))],
-                Extensions.ByteHex[(int)((byte)(c.g * 255f))],
-                Extensions.ByteHex[(int)((byte)(c.b * 255f))],
-                Extensions.ByteHex[(int)((byte)(c.a * 255f))],
+                Extensions.ByteHex[(int)(byte)(c.r * 255f)],
+                Extensions.ByteHex[(int)(byte)(c.g * 255f)],
+                Extensions.ByteHex[(int)(byte)(c.b * 255f)],
+                Extensions.ByteHex[(int)(byte)(c.a * 255f)],
                 ">"
             });
         }
@@ -94,9 +94,9 @@ namespace TheOtherRoles
         {
             if (alpha)
             {
-                return (int)((byte)(c.r * 256f)) << 24 | (int)((byte)(c.g * 256f)) << 16 | (int)((byte)(c.b * 256f)) << 8 | (int)((byte)(c.a * 256f));
+                return (int)(byte)(c.r * 256f) << 24 | (int)(byte)(c.g * 256f) << 16 | (int)(byte)(c.b * 256f) << 8 | (int)(byte)(c.a * 256f);
             }
-            return (int)((byte)(c.r * 256f)) << 16 | (int)((byte)(c.g * 256f)) << 8 | (int)((byte)(c.b * 256f));
+            return (int)(byte)(c.r * 256f) << 16 | (int)(byte)(c.g * 256f) << 8 | (int)(byte)(c.b * 256f);
         }
 
         // Token: 0x060002E7 RID: 743 RVA: 0x00013086 File Offset: 0x00011286
@@ -191,8 +191,7 @@ namespace TheOtherRoles
         // Token: 0x060002EF RID: 751 RVA: 0x000131CC File Offset: 0x000113CC
         public static TV GetValueOrSetDefault<TK, TV>(this Dictionary<TK, TV> self, TK key, Func<TV> defaultValueFunc)
         {
-            TV tv;
-            if (!self.TryGetValue(key, out tv))
+            if (!self.TryGetValue(key, out TV tv))
             {
                 tv = defaultValueFunc();
                 self[key] = tv;
@@ -317,7 +316,7 @@ namespace TheOtherRoles
             {
                 return self[UnityEngine.Random.Range(0, self.Count)];
             }
-            return default(T);
+            return default;
         }
 
         // Token: 0x060002FB RID: 763 RVA: 0x00013422 File Offset: 0x00011622
@@ -347,7 +346,7 @@ namespace TheOtherRoles
         // Token: 0x060002FF RID: 767 RVA: 0x000134C0 File Offset: 0x000116C0
         public static Rect Lerp(this Rect source, Rect target, float t)
         {
-            Rect result = default(Rect);
+            Rect result = default;
             result.position = Vector2.Lerp(source.position, target.position, t);
             result.size = Vector2.Lerp(source.size, target.size, t);
             return result;
@@ -508,12 +507,12 @@ namespace TheOtherRoles
         // Token: 0x0600030E RID: 782 RVA: 0x0001385E File Offset: 0x00011A5E
         public static bool TryToEnum<TEnum>(this string strEnumValue, out TEnum enumValue)
         {
-            enumValue = default(TEnum);
+            enumValue = default;
             if (!Enum.IsDefined(typeof(TEnum), strEnumValue))
             {
                 return false;
             }
-            enumValue = (TEnum)((object)Enum.Parse(typeof(TEnum), strEnumValue));
+            enumValue = (TEnum)(object)Enum.Parse(typeof(TEnum), strEnumValue);
             return true;
         }
 
@@ -522,9 +521,9 @@ namespace TheOtherRoles
         {
             if (!Enum.IsDefined(typeof(TEnum), strEnumValue))
             {
-                return default(TEnum);
+                return default;
             }
-            return (TEnum)((object)Enum.Parse(typeof(TEnum), strEnumValue));
+            return (TEnum)(object)Enum.Parse(typeof(TEnum), strEnumValue);
         }
 
         // Token: 0x06000310 RID: 784 RVA: 0x000138D6 File Offset: 0x00011AD6
@@ -534,7 +533,7 @@ namespace TheOtherRoles
             {
                 return defaultValue;
             }
-            return (TEnum)((object)Enum.Parse(typeof(TEnum), strEnumValue));
+            return (TEnum)(object)Enum.Parse(typeof(TEnum), strEnumValue);
         }
 
         // Token: 0x06000311 RID: 785 RVA: 0x00013901 File Offset: 0x00011B01

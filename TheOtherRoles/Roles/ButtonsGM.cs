@@ -125,10 +125,10 @@ namespace TheOtherRoles
             {
                 return () =>
                 {
-                    if ((GM.gm == null || PlayerControl.LocalPlayer != GM.gm) ||
+                    if (GM.gm == null || PlayerControl.LocalPlayer != GM.gm ||
                         (!MapOptions.playerIcons.ContainsKey(index)) ||
                         (!GM.canWarp) ||
-                        (Helpers.playerById(index).Data.Disconnected))
+                        Helpers.playerById(index).Data.Disconnected)
                     {
                         return false;
                     }
@@ -141,10 +141,10 @@ namespace TheOtherRoles
             {
                 return () =>
                 {
-                    if ((GM.gm == null || PlayerControl.LocalPlayer != GM.gm) ||
+                    if (GM.gm == null || PlayerControl.LocalPlayer != GM.gm ||
                         (!MapOptions.playerIcons.ContainsKey(index)) ||
                         (!GM.canKill) ||
-                        (Helpers.playerById(index).Data.Disconnected))
+                        Helpers.playerById(index).Data.Disconnected)
                     {
                         return false;
                     }

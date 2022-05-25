@@ -17,7 +17,7 @@ namespace TheOtherRoles.Patches
 
             bool isLights = task.TaskType == TaskTypes.FixLights;
             bool isComms = task.TaskType == TaskTypes.FixComms;
-            bool isReactor = task.TaskType == TaskTypes.StopCharles || task.TaskType == TaskTypes.ResetSeismic || task.TaskType == TaskTypes.ResetReactor;
+            bool isReactor = task.TaskType is TaskTypes.StopCharles or TaskTypes.ResetSeismic or TaskTypes.ResetReactor;
             bool isO2 = task.TaskType == TaskTypes.RestoreOxy;
 
             if (pc.isRole(RoleType.Swapper) && (isLights || isComms))
@@ -101,9 +101,9 @@ namespace TheOtherRoles.Patches
             }
 
             string name = console.name;
-            bool isSecurity = name == "task_cams" || name == "Surv_Panel" || name == "SurvLogConsole" || name == "SurvConsole";
+            bool isSecurity = name is "task_cams" or "Surv_Panel" or "SurvLogConsole" or "SurvConsole";
             bool isVitals = name == "panel_vitals";
-            bool isButton = name == "EmergencyButton" || name == "EmergencyConsole" || name == "task_emergency";
+            bool isButton = name is "EmergencyButton" or "EmergencyConsole" or "task_emergency";
 
             if ((isSecurity && !MapOptions.canUseCameras) || (isVitals && !MapOptions.canUseVitals)) return true;
             return false;
@@ -121,13 +121,13 @@ namespace TheOtherRoles.Patches
             if (PlayerControl.LocalPlayer.isRole(RoleType.JekyllAndHyde) && !JekyllAndHyde.isJekyll())
             {
                 string name = targetSysConsole == null ? "" : targetSysConsole.name;
-                bool isSecurity = name == "task_cams" || name == "Surv_Panel" || name == "SurvLogConsole" || name == "SurvConsole";
+                bool isSecurity = name is "task_cams" or "Surv_Panel" or "SurvLogConsole" or "SurvConsole";
                 bool isVitals = name == "panel_vitals";
-                bool isButton = name == "EmergencyButton" || name == "EmergencyConsole" || name == "task_emergency";
+                bool isButton = name is "EmergencyButton" or "EmergencyConsole" or "task_emergency";
                 PlayerTask task = targetConsole.FindTask(pc);
                 bool isLights = task?.TaskType == TaskTypes.FixLights;
                 bool isComms = task?.TaskType == TaskTypes.FixComms;
-                bool isReactor = task?.TaskType == TaskTypes.StopCharles || task?.TaskType == TaskTypes.ResetSeismic || task?.TaskType == TaskTypes.ResetReactor;
+                bool isReactor = task?.TaskType is TaskTypes.StopCharles or TaskTypes.ResetSeismic or TaskTypes.ResetReactor;
                 bool isO2 = task?.TaskType == TaskTypes.RestoreOxy;
                 if (!isSecurity || !isVitals || !isButton || !isLights || !isComms || !isReactor || !isO2)
                 {
@@ -229,7 +229,7 @@ namespace TheOtherRoles.Patches
                     Vector3 position = __instance.transform.position;
                     num = Vector2.Distance(truePosition, position);
 
-                    canUse &= (num <= usableDistance && !PhysicsHelpers.AnythingBetween(truePosition, position, Constants.ShipOnlyMask, false));
+                    canUse &= num <= usableDistance && !PhysicsHelpers.AnythingBetween(truePosition, position, Constants.ShipOnlyMask, false);
                 }
                 __result = num;
                 return false;
@@ -252,9 +252,7 @@ namespace TheOtherRoles.Patches
         {
             public static bool Prefix(Vent __instance)
             {
-                bool canUse;
-                bool couldUse;
-                __instance.CanUse(PlayerControl.LocalPlayer.Data, out canUse, out couldUse);
+                __instance.CanUse(PlayerControl.LocalPlayer.Data, out bool canUse, out bool couldUse);
                 bool canMoveInVents = PlayerControl.LocalPlayer != Spy.spy && !PlayerControl.LocalPlayer.hasModifier(ModifierType.Madmate) && !PlayerControl.LocalPlayer.hasModifier(ModifierType.CreatedMadmate);
                 if (!canUse) return false; // No need to execute the native method as using is disallowed anyways
 
@@ -391,8 +389,8 @@ namespace TheOtherRoles.Patches
             static void Postfix()
             {
                 // Mafia disable sabotage button for Janitor and sometimes for Mafioso
-                bool blockSabotageJanitor = (PlayerControl.LocalPlayer.isRole(RoleType.Janitor) && !Janitor.canSabotage);
-                bool blockSabotageMafioso = (PlayerControl.LocalPlayer.isRole(RoleType.Mafioso) && !Mafioso.canSabotage);
+                bool blockSabotageJanitor = PlayerControl.LocalPlayer.isRole(RoleType.Janitor) && !Janitor.canSabotage;
+                bool blockSabotageMafioso = PlayerControl.LocalPlayer.isRole(RoleType.Mafioso) && !Mafioso.canSabotage;
                 if (blockSabotageJanitor || blockSabotageMafioso)
                 {
                     HudManager.Instance.SabotageButton.SetDisabled();

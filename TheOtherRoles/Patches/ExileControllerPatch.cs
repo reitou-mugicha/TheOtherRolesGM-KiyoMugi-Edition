@@ -356,12 +356,12 @@ namespace TheOtherRoles.Patches
                     PlayerControl player = Helpers.playerById(ExileController.Instance.exiled.Object.PlayerId);
                     if (player == null) return;
                     // Exile role text
-                    if (id == StringNames.ExileTextPN || id == StringNames.ExileTextSN || id == StringNames.ExileTextPP || id == StringNames.ExileTextSP)
+                    if (id is StringNames.ExileTextPN or StringNames.ExileTextSN or StringNames.ExileTextPP or StringNames.ExileTextSP)
                     {
                         __result = player.Data.PlayerName + " was The " + String.Join(" ", RoleInfo.getRoleInfoForPlayer(player).Select(x => x.name).ToArray());
                     }
                     // Hide number of remaining impostors on Jester win
-                    if (id == StringNames.ImpostorsRemainP || id == StringNames.ImpostorsRemainS)
+                    if (id is StringNames.ImpostorsRemainP or StringNames.ImpostorsRemainS)
                     {
                         if (Jester.jester != null && player.PlayerId == Jester.jester.PlayerId) __result = "";
                     }

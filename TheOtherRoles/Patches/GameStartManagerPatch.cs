@@ -60,7 +60,7 @@ namespace TheOtherRoles.Patches
         {
             public static void Postfix(AmongUsClient __instance, [HarmonyArgument(0)] ClientData client, [HarmonyArgument(1)] DisconnectReasons reason)
             {
-                Logger.info($"Player \"{client.PlayerName}(ID:{client.Id})\" Left (Reason: {reason.ToString()})", "Session");
+                Logger.info($"Player \"{client.PlayerName}(ID:{client.Id})\" Left (Reason: {reason})", "Session");
             }
         }
 
@@ -125,17 +125,17 @@ namespace TheOtherRoles.Patches
                             int diff = TheOtherRolesPlugin.Version.CompareTo(PV.version);
                             if (diff > 0)
                             {
-                                message += $"<color=#FF0000FF>{client.Character.Data.PlayerName}:  {ModTranslation.getString("errorOlderVersion")} (v{playerVersions[client.Id].version.ToString()})\n</color>";
+                                message += $"<color=#FF0000FF>{client.Character.Data.PlayerName}:  {ModTranslation.getString("errorOlderVersion")} (v{playerVersions[client.Id].version})\n</color>";
                                 blockStart = true;
                             }
                             else if (diff < 0)
                             {
-                                message += $"<color=#FF0000FF>{client.Character.Data.PlayerName}:  {ModTranslation.getString("errorNewerVersion")} (v{playerVersions[client.Id].version.ToString()})\n</color>";
+                                message += $"<color=#FF0000FF>{client.Character.Data.PlayerName}:  {ModTranslation.getString("errorNewerVersion")} (v{playerVersions[client.Id].version})\n</color>";
                                 blockStart = true;
                             }
                             else if (!PV.GuidMatches())
                             { // version presumably matches, check if Guid matches
-                                message += $"<color=#FF0000FF>{client.Character.Data.PlayerName}:  {ModTranslation.getString("errorWrongVersion")} v{playerVersions[client.Id].version.ToString()} <size=30%>({PV.guid.ToString()})</size>\n</color>";
+                                message += $"<color=#FF0000FF>{client.Character.Data.PlayerName}:  {ModTranslation.getString("errorWrongVersion")} v{playerVersions[client.Id].version} <size=30%>({PV.guid})</size>\n</color>";
                                 blockStart = true;
                             }
                         }
@@ -148,7 +148,7 @@ namespace TheOtherRoles.Patches
                     }
                     else
                     {
-                        __instance.StartButton.color = __instance.startLabelText.color = ((__instance.LastPlayerCount >= __instance.MinPlayers) ? Palette.EnabledColor : Palette.DisabledClear);
+                        __instance.StartButton.color = __instance.startLabelText.color = (__instance.LastPlayerCount >= __instance.MinPlayers) ? Palette.EnabledColor : Palette.DisabledClear;
                         __instance.GameStartText.transform.localPosition = __instance.StartButton.transform.localPosition;
                     }
                 }

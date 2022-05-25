@@ -30,7 +30,7 @@ namespace TheOtherRoles.Patches
 
         public static void updateNameplate(PlayerVoteArea pva, byte playerId = Byte.MaxValue)
         {
-            blankNameplate = blankNameplate ?? HatManager.Instance.GetNamePlateById("nameplate_NoPlate")?.viewData?.viewData?.Image;
+            blankNameplate ??= HatManager.Instance.GetNamePlateById("nameplate_NoPlate")?.viewData?.viewData?.Image;
 
             var nameplate = blankNameplate;
             if (!hideNameplates)
@@ -107,7 +107,7 @@ namespace TheOtherRoles.Patches
                     byte votedTarget = playerVoteArea.TargetPlayerId;
                     byte votedFor = playerVoteArea.VotedFor;
                     Logger.info(String.Format("{0,-2}{1}:{2,-3}{3}", votedTarget, $"({Helpers.getVoteName(votedTarget)})".PadRightV2(40), votedFor, Helpers.getVoteName(votedFor)), "Vote");
-                    if (votedFor != 252 && votedFor != 255 && votedFor != 254)
+                    if (votedFor is not 252 and not 255 and not 254)
                     {
                         PlayerControl player = Helpers.playerById((byte)playerVoteArea.TargetPlayerId);
                         if (player == null || player.Data == null || player.Data.IsDead || player.Data.Disconnected || player.isGM()) continue;
@@ -118,9 +118,8 @@ namespace TheOtherRoles.Patches
                         if (player.isRole(RoleType.BomberB) && BomberA.hasOneVote && BomberA.isAlive()) continue;
                         if (player.isRole(RoleType.MimicA) && MimicK.hasOneVote && MimicK.isAlive()) continue;
 
-                        int currentVotes;
                         int additionalVotes = (Mayor.mayor != null && Mayor.mayor.PlayerId == playerVoteArea.TargetPlayerId) ? Mayor.numVotes : 1; // Mayor vote
-                        if (dictionary.TryGetValue(votedFor, out currentVotes))
+                        if (dictionary.TryGetValue(votedFor, out int currentVotes))
                             dictionary[votedFor] = currentVotes + additionalVotes;
                         else
                             dictionary[votedFor] = additionalVotes;
@@ -142,10 +141,7 @@ namespace TheOtherRoles.Patches
                     {
                         if (!dictionary.ContainsKey(swapped1.TargetPlayerId)) dictionary[swapped1.TargetPlayerId] = 0;
                         if (!dictionary.ContainsKey(swapped2.TargetPlayerId)) dictionary[swapped2.TargetPlayerId] = 0;
-                        int tmp = dictionary[swapped1.TargetPlayerId];
-                        dictionary[swapped1.TargetPlayerId] = dictionary[swapped2.TargetPlayerId];
-                        dictionary[swapped2.TargetPlayerId] = tmp;
-
+                        (dictionary[swapped2.TargetPlayerId], dictionary[swapped1.TargetPlayerId]) = (dictionary[swapped1.TargetPlayerId], dictionary[swapped2.TargetPlayerId]);
                         if (AmongUsClient.Instance.AmHost)
                         {
                             MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SwapperAnimate, Hazel.SendOption.Reliable, -1);
@@ -165,8 +161,7 @@ namespace TheOtherRoles.Patches
                 {
 
                     Dictionary<byte, int> self = CalculateVotes(__instance);
-                    bool tie;
-                    KeyValuePair<byte, int> max = self.MaxPair(out tie);
+                    KeyValuePair<byte, int> max = self.MaxPair(out bool tie);
                     GameData.PlayerInfo exiled = GameData.Instance.AllPlayers.ToArray().FirstOrDefault(v => !tie && v.PlayerId == max.Key && !v.IsDead);
 
                     MeetingHud.VoterState[] array = new MeetingHud.VoterState[__instance.playerStates.Length];
@@ -433,7 +428,7 @@ namespace TheOtherRoles.Patches
             var smallButtonTemplate = __instance.playerStates[0].Buttons.transform.Find("CancelButton");
             var textTemplate = __instance.playerStates[0].NameText;
 
-            Transform exitButtonParent = (new GameObject()).transform;
+            Transform exitButtonParent = new GameObject().transform;
             exitButtonParent.SetParent(container);
             Transform exitButton = UnityEngine.Object.Instantiate(buttonTemplate.transform, exitButtonParent);
             Transform exitButtonMask = UnityEngine.Object.Instantiate(maskTemplate, exitButtonParent);
@@ -481,7 +476,7 @@ namespace TheOtherRoles.Patches
                     int numberOfLeftTasks = playerTotal - playerCompleted;
                     if (numberOfLeftTasks <= 0 && roleInfo.roleType == RoleType.Snitch) continue;
                 }
-                Transform buttonParent = (new GameObject()).transform;
+                Transform buttonParent = new GameObject().transform;
                 buttonParent.SetParent(container);
                 Transform button = UnityEngine.Object.Instantiate(buttonTemplate, buttonParent);
                 Transform buttonMask = UnityEngine.Object.Instantiate(maskTemplate, buttonParent);
@@ -648,7 +643,7 @@ namespace TheOtherRoles.Patches
                 {
                     if (Witch.futureSpelled.Any(x => x.PlayerId == pva.TargetPlayerId))
                     {
-                        SpriteRenderer rend = (new GameObject()).AddComponent<SpriteRenderer>();
+                        SpriteRenderer rend = new GameObject().AddComponent<SpriteRenderer>();
                         rend.transform.SetParent(pva.transform);
                         rend.gameObject.layer = pva.Megaphone.gameObject.layer;
                         rend.transform.localPosition = new Vector3(-0.5f, -0.03f, -1f);
@@ -698,9 +693,9 @@ namespace TheOtherRoles.Patches
             meetingInfoText.text = "";
             meetingInfoText.gameObject.SetActive(false);
 
-            if (MeetingHud.Instance.state != MeetingHud.VoteStates.Voted &&
-                MeetingHud.Instance.state != MeetingHud.VoteStates.NotVoted &&
-                MeetingHud.Instance.state != MeetingHud.VoteStates.Discussion)
+            if (MeetingHud.Instance.state is not MeetingHud.VoteStates.Voted and
+                not MeetingHud.VoteStates.NotVoted and
+                not MeetingHud.VoteStates.Discussion)
                 return;
 
             if (PlayerControl.LocalPlayer.isRole(RoleType.Swapper) && Swapper.numSwaps > 0 && !Swapper.swapper.Data.IsDead)

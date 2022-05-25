@@ -118,7 +118,7 @@ namespace TheOtherRoles
 
         public static T getModifier(PlayerControl player = null)
         {
-            player = player ?? PlayerControl.LocalPlayer;
+            player ??= PlayerControl.LocalPlayer;
             return players.FirstOrDefault(x => x.player == player);
         }
 

@@ -45,13 +45,12 @@ namespace TheOtherRoles.Patches
             {
                 bool result = true;
 
-                ulong value = 0;
-                dic.TryGetValue(tag, out value);
+                dic.TryGetValue(tag, out ulong value);
 
                 foreach (PlayerControl pc in PlayerControl.AllPlayerControls)
                 {
                     if (pc.Data.IsDead ? withGhost : withSurvivor)
-                        result &= ((value & ((ulong)1 << pc.PlayerId)) != 0);
+                        result &= (value & ((ulong)1 << pc.PlayerId)) != 0;
                 }
 
                 return result;
@@ -124,7 +123,7 @@ namespace TheOtherRoles.Patches
             CustomButton.stopCountdown = true;
             // base.Begin(task);
             __instance.MyTask = task;
-            __instance.MyNormTask = (task as NormalPlayerTask);
+            __instance.MyNormTask = task as NormalPlayerTask;
             if (PlayerControl.LocalPlayer)
             {
                 if (MapBehaviour.Instance)
@@ -169,7 +168,7 @@ namespace TheOtherRoles.Patches
                 ButtonAnimRolloverHandler component = passiveButton.GetComponent<ButtonAnimRolloverHandler>();
                 component.StaticOutImage = pt.Image;
                 component.RolloverAnim = pt.Rollover;
-                component.HoverSound = (pt.RolloverSfx ? pt.RolloverSfx : __instance.DefaultRolloverSound);
+                component.HoverSound = pt.RolloverSfx ? pt.RolloverSfx : __instance.DefaultRolloverSound;
             }
 
 

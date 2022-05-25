@@ -329,7 +329,7 @@ namespace TheOtherRoles
                 color = Color.Lerp(Color.yellow, Color.red, prog * 2 - 1);
 
             float progPercent = prog * 100;
-            return Helpers.cs(color, $"{progPercent.ToString("F1")}%");
+            return Helpers.cs(color, $"{progPercent:F1}%");
         }
 
         public static void Clear()
