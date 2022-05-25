@@ -79,14 +79,14 @@ namespace TheOtherRoles
 
         public static List<Color> loverIconColors = new()
         {
-                Lovers.color,                  // pink
-                new Color32(255, 165, 0, 255), // orange
-                new Color32(255, 255, 0, 255), // yellow
-                new Color32(0, 255, 0, 255),   // green
-                new Color32(0, 0, 255, 255),   // blue
-                new Color32(0, 255, 255, 255), // light blue
-                new Color32(255, 0, 0, 255),   // red
-            };
+            Lovers.color,                  // pink
+            new Color32(255, 165, 0, 255), // orange
+            new Color32(255, 255, 0, 255), // yellow
+            new Color32(0, 255, 0, 255),   // green
+            new Color32(0, 0, 255, 255),   // blue
+            new Color32(0, 255, 255, 255), // light blue
+            new Color32(255, 0, 0, 255),   // red
+        };
 
         public static bool bothDie { get { return CustomOptionHolder.loversBothDie.getBool(); } }
 
