@@ -146,9 +146,7 @@ namespace TheOtherRoles.Patches
                         {
                             foreach (Vent vent in ShipStatus.Instance.AllVents)
                             {
-                                bool canUse;
-                                bool couldUse;
-                                vent.CanUse(PlayerControl.LocalPlayer.Data, out canUse, out couldUse);
+                                vent.CanUse(PlayerControl.LocalPlayer.Data, out bool canUse, out bool couldUse);
                                 if (canUse)
                                 {
                                     PlayerControl.LocalPlayer.MyPhysics.RpcExitVent(vent.Id);
@@ -262,8 +260,10 @@ namespace TheOtherRoles.Patches
                 }
                 else
                 {
-                    var listp = new List<PlayerControl>();
-                    listp.Add(Spy.spy);
+                    var listp = new List<PlayerControl>
+                    {
+                        Spy.spy
+                    };
                     if (Sidekick.wasTeamRed) listp.Add(Sidekick.sidekick);
                     if (Jackal.wasTeamRed) listp.Add(Jackal.jackal);
                     target = setTarget(true, true, listp);
@@ -399,8 +399,10 @@ namespace TheOtherRoles.Patches
                 }
                 else
                 {
-                    var listp = new List<PlayerControl>();
-                    listp.Add(Spy.spy);
+                    var listp = new List<PlayerControl>
+                    {
+                        Spy.spy
+                    };
                     if (Sidekick.wasTeamRed) listp.Add(Sidekick.sidekick);
                     if (Jackal.wasTeamRed) listp.Add(Jackal.jackal);
                     target = setTarget(true, true, listp);
@@ -616,7 +618,7 @@ namespace TheOtherRoles.Patches
                     if (meetingInfo != null && playerVoteArea != null)
                     {
                         var playerName = playerVoteArea.NameText;
-                        playerName.transform.localPosition = new Vector3(0.3384f, (0.0311f + 0.0683f), -0.1f);
+                        playerName.transform.localPosition = new Vector3(0.3384f, 0.0311f + 0.0683f, -0.1f);
                     }
 
                     var (tasksCompleted, tasksTotal) = TasksHandler.taskInfo(p.Data);
@@ -1220,7 +1222,7 @@ namespace TheOtherRoles.Patches
 
                 if (deadPlayer != null && deadPlayer.killerIfExisting != null)
                 {
-                    float timeSinceDeath = ((float)(DateTime.UtcNow - deadPlayer.timeOfDeath).TotalMilliseconds);
+                    float timeSinceDeath = (float)(DateTime.UtcNow - deadPlayer.timeOfDeath).TotalMilliseconds;
                     string msg = "";
 
                     if (isMedicReport)

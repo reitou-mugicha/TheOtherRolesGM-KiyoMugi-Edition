@@ -13,7 +13,7 @@ namespace TheOtherRoles.Patches
     {
         public static void Postfix(ref int __result, ref RoleTypes role)
         {
-            if (role == RoleTypes.Crewmate || role == RoleTypes.Impostor) return;
+            if (role is RoleTypes.Crewmate or RoleTypes.Impostor) return;
 
             if (CustomOptionHolder.activateRoles.getBool()) __result = 0; // Deactivate Vanilla Roles if the mod roles are active
         }
@@ -319,7 +319,7 @@ namespace TheOtherRoles.Patches
         {
 
             // Assign Guesser (chance to be impostor based on setting)
-            bool isEvilGuesser = (rnd.Next(1, 101) <= CustomOptionHolder.guesserIsImpGuesserRate.getSelection() * 10);
+            bool isEvilGuesser = rnd.Next(1, 101) <= CustomOptionHolder.guesserIsImpGuesserRate.getSelection() * 10;
             if (CustomOptionHolder.guesserSpawnBothRate.getSelection() > 0)
             {
                 if (rnd.Next(1, 101) <= CustomOptionHolder.guesserSpawnRate.getSelection() * 10)
@@ -434,7 +434,7 @@ namespace TheOtherRoles.Patches
                 // then select one of the roles from the selected pool to a player 
                 // and remove the role (and any potentially blocked role pairings) from the pool(s)
                 var roleType = rolesToAssign.Keys.ElementAt(rnd.Next(0, rolesToAssign.Keys.Count()));
-                var players = roleType == TeamType.Crewmate || roleType == TeamType.Neutral ? data.crewmates : data.impostors;
+                var players = roleType is TeamType.Crewmate or TeamType.Neutral ? data.crewmates : data.impostors;
                 var index = rnd.Next(0, rolesToAssign[roleType].Count);
                 var roleId = rolesToAssign[roleType][index];
                 var player = setRoleToRandomPlayer(rolesToAssign[roleType][index], players);
@@ -479,9 +479,9 @@ namespace TheOtherRoles.Patches
             blockedAssignments = 0;
 
             // Get all roles where the chance to occur is set grater than 0% but not 100% and build a ticket pool based on their weight
-            List<byte> crewmateTickets = data.crewSettings.Where(x => x.Value.rate > 0 && x.Value.rate < 10).Select(x => Enumerable.Repeat(x.Key, x.Value.rate * x.Value.count)).SelectMany(x => x).ToList();
-            List<byte> neutralTickets = data.neutralSettings.Where(x => x.Value.rate > 0 && x.Value.rate < 10).Select(x => Enumerable.Repeat(x.Key, x.Value.rate * x.Value.count)).SelectMany(x => x).ToList();
-            List<byte> impostorTickets = data.impSettings.Where(x => x.Value.rate > 0 && x.Value.rate < 10).Select(x => Enumerable.Repeat(x.Key, x.Value.rate * x.Value.count)).SelectMany(x => x).ToList();
+            List<byte> crewmateTickets = data.crewSettings.Where(x => x.Value.rate is > 0 and < 10).Select(x => Enumerable.Repeat(x.Key, x.Value.rate * x.Value.count)).SelectMany(x => x).ToList();
+            List<byte> neutralTickets = data.neutralSettings.Where(x => x.Value.rate is > 0 and < 10).Select(x => Enumerable.Repeat(x.Key, x.Value.rate * x.Value.count)).SelectMany(x => x).ToList();
+            List<byte> impostorTickets = data.impSettings.Where(x => x.Value.rate is > 0 and < 10).Select(x => Enumerable.Repeat(x.Key, x.Value.rate * x.Value.count)).SelectMany(x => x).ToList();
 
             // Assign roles until we run out of either players we can assign roles to or run out of roles we can assign to players
             while (
@@ -501,7 +501,7 @@ namespace TheOtherRoles.Patches
                 // then select one of the roles from the selected pool to a player 
                 // and remove all tickets of this role (and any potentially blocked role pairings) from the pool(s)
                 var roleType = rolesToAssign.Keys.ElementAt(rnd.Next(0, rolesToAssign.Keys.Count()));
-                var players = roleType == TeamType.Crewmate || roleType == TeamType.Neutral ? data.crewmates : data.impostors;
+                var players = roleType is TeamType.Crewmate or TeamType.Neutral ? data.crewmates : data.impostors;
                 var index = rnd.Next(0, rolesToAssign[roleType].Count);
                 var roleId = rolesToAssign[roleType][index];
                 var player = setRoleToRandomPlayer(rolesToAssign[roleType][index], players);

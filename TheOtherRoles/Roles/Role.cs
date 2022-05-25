@@ -193,7 +193,7 @@ namespace TheOtherRoles
 
         public static T getRole(PlayerControl player = null)
         {
-            player = player ?? PlayerControl.LocalPlayer;
+            player ??= PlayerControl.LocalPlayer;
             return players.FirstOrDefault(x => x.player == player);
         }
 

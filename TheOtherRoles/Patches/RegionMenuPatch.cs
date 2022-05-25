@@ -101,8 +101,7 @@ namespace TheOtherRoles.Patches
             void onEnterOrPortFieldChange()
             {
                 var portTextBox = portField.GetComponent<TextBoxTMP>();
-                ushort port = 0;
-                if (ushort.TryParse(portTextBox.text, out port))
+                if (ushort.TryParse(portTextBox.text, out ushort port))
                 {
                     TheOtherRolesPlugin.Port.Value = port;
                     portTextBox.outputText.color = Color.white;

@@ -719,56 +719,55 @@ namespace TheOtherRoles
             camera.CamName = $"Security Camera {SecurityGuard.placedCameras}";
             camera.Offset = new Vector3(0f, 0f, camera.Offset.z);
 
-            switch (roomType)
+            camera.NewName = roomType switch
             {
-                case SystemTypes.Hallway: camera.NewName = StringNames.Hallway; break;
-                case SystemTypes.Storage: camera.NewName = StringNames.Storage; break;
-                case SystemTypes.Cafeteria: camera.NewName = StringNames.Cafeteria; break;
-                case SystemTypes.Reactor: camera.NewName = StringNames.Reactor; break;
-                case SystemTypes.UpperEngine: camera.NewName = StringNames.UpperEngine; break;
-                case SystemTypes.Nav: camera.NewName = StringNames.Nav; break;
-                case SystemTypes.Admin: camera.NewName = StringNames.Admin; break;
-                case SystemTypes.Electrical: camera.NewName = StringNames.Electrical; break;
-                case SystemTypes.LifeSupp: camera.NewName = StringNames.LifeSupp; break;
-                case SystemTypes.Shields: camera.NewName = StringNames.Shields; break;
-                case SystemTypes.MedBay: camera.NewName = StringNames.MedBay; break;
-                case SystemTypes.Security: camera.NewName = StringNames.Security; break;
-                case SystemTypes.Weapons: camera.NewName = StringNames.Weapons; break;
-                case SystemTypes.LowerEngine: camera.NewName = StringNames.LowerEngine; break;
-                case SystemTypes.Comms: camera.NewName = StringNames.Comms; break;
-                case SystemTypes.Decontamination: camera.NewName = StringNames.Decontamination; break;
-                case SystemTypes.Launchpad: camera.NewName = StringNames.Launchpad; break;
-                case SystemTypes.LockerRoom: camera.NewName = StringNames.LockerRoom; break;
-                case SystemTypes.Laboratory: camera.NewName = StringNames.Laboratory; break;
-                case SystemTypes.Balcony: camera.NewName = StringNames.Balcony; break;
-                case SystemTypes.Office: camera.NewName = StringNames.Office; break;
-                case SystemTypes.Greenhouse: camera.NewName = StringNames.Greenhouse; break;
-                case SystemTypes.Dropship: camera.NewName = StringNames.Dropship; break;
-                case SystemTypes.Decontamination2: camera.NewName = StringNames.Decontamination2; break;
-                case SystemTypes.Outside: camera.NewName = StringNames.Outside; break;
-                case SystemTypes.Specimens: camera.NewName = StringNames.Specimens; break;
-                case SystemTypes.BoilerRoom: camera.NewName = StringNames.BoilerRoom; break;
-                case SystemTypes.VaultRoom: camera.NewName = StringNames.VaultRoom; break;
-                case SystemTypes.Cockpit: camera.NewName = StringNames.Cockpit; break;
-                case SystemTypes.Armory: camera.NewName = StringNames.Armory; break;
-                case SystemTypes.Kitchen: camera.NewName = StringNames.Kitchen; break;
-                case SystemTypes.ViewingDeck: camera.NewName = StringNames.ViewingDeck; break;
-                case SystemTypes.HallOfPortraits: camera.NewName = StringNames.HallOfPortraits; break;
-                case SystemTypes.CargoBay: camera.NewName = StringNames.CargoBay; break;
-                case SystemTypes.Ventilation: camera.NewName = StringNames.Ventilation; break;
-                case SystemTypes.Showers: camera.NewName = StringNames.Showers; break;
-                case SystemTypes.Engine: camera.NewName = StringNames.Engine; break;
-                case SystemTypes.Brig: camera.NewName = StringNames.Brig; break;
-                case SystemTypes.MeetingRoom: camera.NewName = StringNames.MeetingRoom; break;
-                case SystemTypes.Records: camera.NewName = StringNames.Records; break;
-                case SystemTypes.Lounge: camera.NewName = StringNames.Lounge; break;
-                case SystemTypes.GapRoom: camera.NewName = StringNames.GapRoom; break;
-                case SystemTypes.MainHall: camera.NewName = StringNames.MainHall; break;
-                case SystemTypes.Medical: camera.NewName = StringNames.Medical; break;
-                default: camera.NewName = StringNames.ExitButton; break;
-            }
-
-            if (PlayerControl.GameOptions.MapId == 2 || PlayerControl.GameOptions.MapId == 4) camera.transform.localRotation = new Quaternion(0, 0, 1, 1); // Polus and Airship 
+                SystemTypes.Hallway => StringNames.Hallway,
+                SystemTypes.Storage => StringNames.Storage,
+                SystemTypes.Cafeteria => StringNames.Cafeteria,
+                SystemTypes.Reactor => StringNames.Reactor,
+                SystemTypes.UpperEngine => StringNames.UpperEngine,
+                SystemTypes.Nav => StringNames.Nav,
+                SystemTypes.Admin => StringNames.Admin,
+                SystemTypes.Electrical => StringNames.Electrical,
+                SystemTypes.LifeSupp => StringNames.LifeSupp,
+                SystemTypes.Shields => StringNames.Shields,
+                SystemTypes.MedBay => StringNames.MedBay,
+                SystemTypes.Security => StringNames.Security,
+                SystemTypes.Weapons => StringNames.Weapons,
+                SystemTypes.LowerEngine => StringNames.LowerEngine,
+                SystemTypes.Comms => StringNames.Comms,
+                SystemTypes.Decontamination => StringNames.Decontamination,
+                SystemTypes.Launchpad => StringNames.Launchpad,
+                SystemTypes.LockerRoom => StringNames.LockerRoom,
+                SystemTypes.Laboratory => StringNames.Laboratory,
+                SystemTypes.Balcony => StringNames.Balcony,
+                SystemTypes.Office => StringNames.Office,
+                SystemTypes.Greenhouse => StringNames.Greenhouse,
+                SystemTypes.Dropship => StringNames.Dropship,
+                SystemTypes.Decontamination2 => StringNames.Decontamination2,
+                SystemTypes.Outside => StringNames.Outside,
+                SystemTypes.Specimens => StringNames.Specimens,
+                SystemTypes.BoilerRoom => StringNames.BoilerRoom,
+                SystemTypes.VaultRoom => StringNames.VaultRoom,
+                SystemTypes.Cockpit => StringNames.Cockpit,
+                SystemTypes.Armory => StringNames.Armory,
+                SystemTypes.Kitchen => StringNames.Kitchen,
+                SystemTypes.ViewingDeck => StringNames.ViewingDeck,
+                SystemTypes.HallOfPortraits => StringNames.HallOfPortraits,
+                SystemTypes.CargoBay => StringNames.CargoBay,
+                SystemTypes.Ventilation => StringNames.Ventilation,
+                SystemTypes.Showers => StringNames.Showers,
+                SystemTypes.Engine => StringNames.Engine,
+                SystemTypes.Brig => StringNames.Brig,
+                SystemTypes.MeetingRoom => StringNames.MeetingRoom,
+                SystemTypes.Records => StringNames.Records,
+                SystemTypes.Lounge => StringNames.Lounge,
+                SystemTypes.GapRoom => StringNames.GapRoom,
+                SystemTypes.MainHall => StringNames.MainHall,
+                SystemTypes.Medical => StringNames.Medical,
+                _ => StringNames.ExitButton,
+            };
+            if (PlayerControl.GameOptions.MapId is 2 or 4) camera.transform.localRotation = new Quaternion(0, 0, 1, 1); // Polus and Airship 
 
             if (PlayerControl.LocalPlayer == SecurityGuard.securityGuard)
             {
@@ -1166,31 +1165,16 @@ namespace TheOtherRoles
                     Vector2 O2Spawn = new(3.28f, -21.67f);
                     Vector2 SpecimenSpawn = new(36.54f, -20.84f);
                     Vector2 LaboSpawn = new(34.91f, -6.50f);
-                    Vector2 loc;
-                    switch (locId)
+                    var loc = locId switch
                     {
-                        case 0:
-                            loc = InitialSpawnCenter;
-                            break;
-                        case 1:
-                            loc = MeetingSpawnCenter;
-                            break;
-                        case 2:
-                            loc = ElectricalSpawn;
-                            break;
-                        case 3:
-                            loc = O2Spawn;
-                            break;
-                        case 4:
-                            loc = SpecimenSpawn;
-                            break;
-                        case 5:
-                            loc = LaboSpawn;
-                            break;
-                        default:
-                            loc = InitialSpawnCenter;
-                            break;
-                    }
+                        0 => InitialSpawnCenter,
+                        1 => MeetingSpawnCenter,
+                        2 => ElectricalSpawn,
+                        3 => O2Spawn,
+                        4 => SpecimenSpawn,
+                        5 => LaboSpawn,
+                        _ => InitialSpawnCenter,
+                    };
                     foreach (PlayerControl player in PlayerControl.AllPlayerControls)
                     {
                         if (player.Data.PlayerId == playerId)

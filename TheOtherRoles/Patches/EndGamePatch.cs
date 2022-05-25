@@ -132,14 +132,14 @@ namespace TheOtherRoles.Patches
                 }
 
                 // 第三陣営の勝利以外の場合に狐が生存していたら狐の勝ち
-                else if (gameOverReason != (GameOverReason)CustomGameOverReason.PlagueDoctorWin &&
-                gameOverReason != (GameOverReason)CustomGameOverReason.ArsonistWin &&
-                gameOverReason != (GameOverReason)CustomGameOverReason.JesterWin &&
-                gameOverReason != (GameOverReason)CustomGameOverReason.VultureWin &&
-                gameOverReason != (GameOverReason)CustomGameOverReason.PuppeteerWin &&
-                gameOverReason != (GameOverReason)CustomGameOverReason.JekyllAndHydeWin &&
-                gameOverReason != (GameOverReason)GameOverReason.HumansByTask &&
-                gameOverReason != (GameOverReason)GameOverReason.ImpostorBySabotage)
+                else if (gameOverReason is not ((GameOverReason)CustomGameOverReason.PlagueDoctorWin) and
+                not ((GameOverReason)CustomGameOverReason.ArsonistWin) and
+                not ((GameOverReason)CustomGameOverReason.JesterWin) and
+                not ((GameOverReason)CustomGameOverReason.VultureWin) and
+                not ((GameOverReason)CustomGameOverReason.PuppeteerWin) and
+                not ((GameOverReason)CustomGameOverReason.JekyllAndHydeWin) and
+                not ((GameOverReason)GameOverReason.HumansByTask) and
+                not ((GameOverReason)GameOverReason.ImpostorBySabotage))
                 {
                     gameOverReason = (GameOverReason)CustomGameOverReason.FoxWin;
                 }
@@ -667,12 +667,12 @@ namespace TheOtherRoles.Patches
                         textRenderer.color = Mini.color;
                         __instance.BackgroundBar.material.SetColor("_Color", Palette.DisabledGrey);
                     }
-                    else if (AdditionalTempData.gameOverReason == GameOverReason.HumansByTask || AdditionalTempData.gameOverReason == GameOverReason.HumansByVote)
+                    else if (AdditionalTempData.gameOverReason is GameOverReason.HumansByTask or GameOverReason.HumansByVote)
                     {
                         bonusText = "crewWin";
                         textRenderer.color = Palette.White;
                     }
-                    else if (AdditionalTempData.gameOverReason == GameOverReason.ImpostorByKill || AdditionalTempData.gameOverReason == GameOverReason.ImpostorBySabotage || AdditionalTempData.gameOverReason == GameOverReason.ImpostorByVote)
+                    else if (AdditionalTempData.gameOverReason is GameOverReason.ImpostorByKill or GameOverReason.ImpostorBySabotage or GameOverReason.ImpostorByVote)
                     {
                         bonusText = "impostorWin";
                         textRenderer.color = Palette.ImpostorRed;
@@ -1006,19 +1006,12 @@ namespace TheOtherRoles.Patches
                         (statistics.TeamImpostorLovers == 0 || statistics.TeamImpostorLovers >= statistics.CouplesAlive * 2)
                        )
                     {
-                        GameOverReason endReason;
-                        switch (TempData.LastDeathReason)
+                        var endReason = TempData.LastDeathReason switch
                         {
-                            case DeathReason.Exile:
-                                endReason = GameOverReason.ImpostorByVote;
-                                break;
-                            case DeathReason.Kill:
-                                endReason = GameOverReason.ImpostorByKill;
-                                break;
-                            default:
-                                endReason = GameOverReason.ImpostorByVote;
-                                break;
-                        }
+                            DeathReason.Exile => GameOverReason.ImpostorByVote,
+                            DeathReason.Kill => GameOverReason.ImpostorByKill,
+                            _ => GameOverReason.ImpostorByVote,
+                        };
                         UncheckedEndGame(endReason);
                         return true;
                     }

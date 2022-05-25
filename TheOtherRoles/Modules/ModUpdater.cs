@@ -259,10 +259,9 @@ namespace TheOtherRoles.Modules
 
                 using (var responseStream = await response.Content.ReadAsStreamAsync())
                 {
-                    using (var fileStream = File.Create(fullname))
-                    { // probably want to have proper name here
-                        responseStream.CopyTo(fileStream);
-                    }
+                    using var fileStream = File.Create(fullname);
+                    // probably want to have proper name here
+                    responseStream.CopyTo(fileStream);
                 }
                 showPopup(ModTranslation.getString("updateRestart"));
                 return true;

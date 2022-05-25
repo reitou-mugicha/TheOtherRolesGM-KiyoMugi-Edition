@@ -81,7 +81,7 @@ namespace TheOtherRoles
                             (Sheriff.madmateCanDieToSheriff && local.currentTarget.hasModifier(ModifierType.Madmate)) ||
                             (Sheriff.createdMadmateCanDieToSheriff && local.currentTarget.hasModifier(ModifierType.CreatedMadmate)) ||
                             (Sheriff.canKillNeutrals && local.currentTarget.isNeutral()) ||
-                            (Jackal.jackal == local.currentTarget || Sidekick.sidekick == local.currentTarget))
+                            Jackal.jackal == local.currentTarget || Sidekick.sidekick == local.currentTarget)
                         {
                             //targetId = Sheriff.currentTarget.PlayerId;
                             misfire = false;

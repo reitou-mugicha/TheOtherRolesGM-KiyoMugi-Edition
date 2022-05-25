@@ -1100,7 +1100,7 @@ namespace TheOtherRoles
                         {
                             byte mapId = PlayerControl.GameOptions.MapId;
                             var e = UnityEngine.Object.FindObjectsOfType<SystemConsole>().FirstOrDefault(x => x.gameObject.name.Contains("Surv_Panel"));
-                            if (mapId == 0 || mapId == 3) e = UnityEngine.Object.FindObjectsOfType<SystemConsole>().FirstOrDefault(x => x.gameObject.name.Contains("SurvConsole"));
+                            if (mapId is 0 or 3) e = UnityEngine.Object.FindObjectsOfType<SystemConsole>().FirstOrDefault(x => x.gameObject.name.Contains("SurvConsole"));
                             else if (mapId == 4) e = UnityEngine.Object.FindObjectsOfType<SystemConsole>().FirstOrDefault(x => x.gameObject.name.Contains("task_cams"));
                             if (e == null || Camera.main == null) return;
                             SecurityGuard.minigame = UnityEngine.Object.Instantiate(e.MinigamePrefab, Camera.main.transform, false);
@@ -1368,7 +1368,7 @@ namespace TheOtherRoles
                     string typeOfColor = Helpers.isLighterColor(Medium.target.killerIfExisting.Data.DefaultOutfit.ColorId) ?
                         ModTranslation.getString("detectiveColorLight") :
                         ModTranslation.getString("detectiveColorDark");
-                    float timeSinceDeath = ((float)(Medium.meetingStartTime - Medium.target.timeOfDeath).TotalMilliseconds);
+                    float timeSinceDeath = (float)(Medium.meetingStartTime - Medium.target.timeOfDeath).TotalMilliseconds;
                     string name = " (" + Medium.target.player.Data.PlayerName + ")";
 
                     if (randomNumber == 0) msg = string.Format(ModTranslation.getString("mediumQuestion1"), RoleInfo.GetRolesString(Medium.target.player, false, includeHidden: true)) + name;
@@ -1515,7 +1515,7 @@ namespace TheOtherRoles
                         AmongUsClient.Instance.FinishRpcImmediately(writer);
                         RPCProcedure.setFutureSpelled(Witch.currentTarget.PlayerId);
                     }
-                    if (attempt == MurderAttemptResult.BlankKill || attempt == MurderAttemptResult.PerformKill)
+                    if (attempt is MurderAttemptResult.BlankKill or MurderAttemptResult.PerformKill)
                     {
                         witchSpellButton.MaxTimer += Witch.cooldownAddition;
                         witchSpellButton.Timer = witchSpellButton.MaxTimer;
@@ -1578,7 +1578,7 @@ namespace TheOtherRoles
                             RPCProcedure.placeAssassinTrace(buff);
                         }
 
-                        if (attempt == MurderAttemptResult.BlankKill || attempt == MurderAttemptResult.PerformKill)
+                        if (attempt is MurderAttemptResult.BlankKill or MurderAttemptResult.PerformKill)
                         {
                             assassinButton.Timer = assassinButton.MaxTimer;
                             Assassin.assassin.killTimer = PlayerControl.GameOptions.KillCooldown;

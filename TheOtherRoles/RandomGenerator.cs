@@ -190,7 +190,7 @@ namespace TheOtherRoles
                 throw new ArgumentException("MaxExclusive must be larger than MinInclusive");
             }
 
-            int range = (maxExclusive - minInclusive);
+            int range = maxExclusive - minInclusive;
             return Next(range) + minInclusive;
         }
 
@@ -213,7 +213,7 @@ namespace TheOtherRoles
         {
             ulong upper = (ulong)(Environment.TickCount ^ Guid.NewGuid().GetHashCode()) << 32;
             ulong lower = (ulong)(Environment.TickCount ^ Guid.NewGuid().GetHashCode());
-            return (upper | lower);
+            return upper | lower;
         }
 
         private void initialize(

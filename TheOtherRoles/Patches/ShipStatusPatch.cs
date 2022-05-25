@@ -26,10 +26,10 @@ namespace TheOtherRoles.Patches
                 || (Jester.jester != null && Jester.jester.PlayerId == player.PlayerId && Jester.hasImpostorVision)
                 || (player.Object.hasModifier(ModifierType.Madmate) && Madmate.hasImpostorVision) // Impostor, Jackal/Sidekick, Spy, or Madmate with Impostor vision
                 || (player.Object.hasModifier(ModifierType.CreatedMadmate) && CreatedMadmate.hasImpostorVision) // Impostor, Jackal/Sidekick, Spy, or Madmate with Impostor vision
-                || (player.Object.isRole(RoleType.Puppeteer))
+                || player.Object.isRole(RoleType.Puppeteer)
                 || (player.Object.isRole(RoleType.JekyllAndHyde) && !JekyllAndHyde.isJekyll())
                 || (Jester.jester != null && Jester.jester.PlayerId == player.PlayerId && Jester.hasImpostorVision) // Jester with Impostor vision
-                || (player.Object.isRole(RoleType.Fox)))
+                || player.Object.isRole(RoleType.Fox))
             {
                 // __result = __instance.MaxLightRadius * PlayerControl.GameOptions.ImpostorLightMod;
                 __result = GetNeutralLightRadius(__instance, true);

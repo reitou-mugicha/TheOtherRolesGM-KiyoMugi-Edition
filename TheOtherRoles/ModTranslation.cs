@@ -70,7 +70,7 @@ namespace TheOtherRoles
             keyClean = Regex.Replace(keyClean, "^-\\s*", "");
             keyClean = keyClean.Trim();
 
-            def = def ?? key;
+            def ??= key;
             if (!stringData.ContainsKey(keyClean))
             {
                 return def;

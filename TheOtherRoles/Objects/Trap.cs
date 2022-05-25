@@ -109,8 +109,10 @@ namespace TheOtherRoles.Objects
             spriteRenderer.sprite = trapActiveSprite;
 
             // 他のトラップを全て無効化する
-            var newTraps = new SortedDictionary<byte, Trap>();
-            newTraps.Add(trapId, trap);
+            var newTraps = new SortedDictionary<byte, Trap>
+            {
+                { trapId, trap }
+            };
             foreach (var t in traps.Values)
             {
                 if (t.trap == null || t == trap) continue;

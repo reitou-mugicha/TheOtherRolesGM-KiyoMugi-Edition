@@ -87,7 +87,7 @@ namespace TheOtherRoles.Patches
             Object.Destroy(popUp.GetComponent<OptionsMenuBehaviour>());
             foreach (var gObj in popUp.gameObject.GetAllChilds())
             {
-                if (gObj.name != "Background" && gObj.name != "CloseButton")
+                if (gObj.name is not "Background" and not "CloseButton")
                     Object.Destroy(gObj);
             }
 
@@ -126,7 +126,7 @@ namespace TheOtherRoles.Patches
             var leaveGameButton = GameObject.Find("LeaveGameButton");
             if (leaveGameButton != null)
             {
-                leaveGameButton.transform.localPosition += (Vector3.right * 1.3f);
+                leaveGameButton.transform.localPosition += Vector3.right * 1.3f;
             }
         }
 
