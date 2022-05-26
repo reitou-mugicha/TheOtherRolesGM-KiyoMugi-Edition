@@ -873,8 +873,8 @@ namespace TheOtherRoles
             alwaysReduceCooldown = CustomOption.Create(9911, CustomOptionType.General, "alwaysReduceCooldown", false, mapOptions);
             exceptInVent = CustomOption.Create(9912, CustomOptionType.General, "exceptInVent", false, alwaysReduceCooldown);
 
-            delayBeforeMeeting = CustomOption.Create(9921, CustomOptionType.General, "delayBeforeMeeting", 0f, 0f, 10f, 0.25f, specialOptions, true);
-            additionalVents = CustomOption.Create(9905, CustomOptionType.General, "additionalVents", false, specialOptions);
+            delayBeforeMeeting = CustomOption.Create(9921, CustomOptionType.General, "delayBeforeMeeting", 0f, 0f, 10f, 0.25f, mapOptions, true);
+            additionalVents = CustomOption.Create(9905, CustomOptionType.General, "additionalVents", false, mapOptions);
 
             specimenVital = CustomOption.Create(9906, CustomOptionType.General, "specimenVital", false, mapOptions);
             polusRandomSpawn = CustomOption.Create(9907, CustomOptionType.General, "polusRandomSpawn", false, mapOptions);
