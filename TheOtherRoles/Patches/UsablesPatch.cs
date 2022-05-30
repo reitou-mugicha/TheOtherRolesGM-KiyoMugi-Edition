@@ -3,10 +3,10 @@ using Hazel;
 using System;
 using UnityEngine;
 using static TheOtherRoles.MapOptions;
-using static TheOtherRoles.GameHistory;
+using TheOtherRoles.Utilities;
 using static TheOtherRoles.TheOtherRoles;
 using static TheOtherRoles.TheOtherRolesGM;
-
+using TheOtherRoles.Modules;
 
 namespace TheOtherRoles.Patches
 {
@@ -150,7 +150,7 @@ namespace TheOtherRoles.Patches
                 }
 
                 // Submerged Compatability if needed:
-                if (SubmergedCompatibility.isSubmerged())
+                if (SubmergedCompatibility.IsSubmerged)
                 {
                     // as submerged does, only change stuff for vents 9 and 14 of submerged. Code partially provided by AlexejheroYTB
                     if (SubmergedCompatibility.getInTransition())
@@ -241,9 +241,7 @@ namespace TheOtherRoles.Patches
                 __instance.CanUse(PlayerControl.LocalPlayer.Data, out canUse, out couldUse);
                 bool canMoveInVents = PlayerControl.LocalPlayer != Spy.spy && !PlayerControl.LocalPlayer.hasModifier(ModifierType.Madmate) && !PlayerControl.LocalPlayer.hasModifier(ModifierType.CreatedMadmate);
                 if (!canUse) return false; // No need to execute the native method as using is disallowed anyways
-
                 bool isEnter = !PlayerControl.LocalPlayer.inVent;
-
                 if (__instance.name.StartsWith("JackInTheBoxVent_"))
                 {
                     __instance.SetButtons(isEnter && canMoveInVents);
@@ -276,18 +274,18 @@ namespace TheOtherRoles.Patches
             {
                 if (__instance.AmOwner && Helpers.ShowButtons)
                 {
-                    HudManager.Instance.ImpostorVentButton.Hide();
-                    HudManager.Instance.SabotageButton.Hide();
+                    FastDestroyableSingleton<HudManager>.Instance.ImpostorVentButton.Hide();
+                    FastDestroyableSingleton<HudManager>.Instance.SabotageButton.Hide();
 
                     if (Helpers.ShowButtons)
                     {
                         if (__instance.roleCanUseVents())
-                            HudManager.Instance.ImpostorVentButton.Show();
+                            FastDestroyableSingleton<HudManager>.Instance.ImpostorVentButton.Show();
 
                         if (__instance.roleCanSabotage())
                         {
-                            HudManager.Instance.SabotageButton.Show();
-                            HudManager.Instance.SabotageButton.gameObject.SetActive(true);
+                            FastDestroyableSingleton<HudManager>.Instance.SabotageButton.Show();
+                            FastDestroyableSingleton<HudManager>.Instance.SabotageButton.gameObject.SetActive(true);
                         }
                     }
                 }
@@ -334,8 +332,8 @@ namespace TheOtherRoles.Patches
                             Cleaner.cleaner.killTimer = HudManagerStartPatch.cleanerCleanButton.Timer = HudManagerStartPatch.cleanerCleanButton.MaxTimer;
                         else if (PlayerControl.LocalPlayer == Warlock.warlock)
                             Warlock.warlock.killTimer = HudManagerStartPatch.warlockCurseButton.Timer = HudManagerStartPatch.warlockCurseButton.MaxTimer;
-                        else if (PlayerControl.LocalPlayer == Mini.mini && Mini.mini.Data.Role.IsImpostor)
-                            Mini.mini.SetKillTimer(PlayerControl.GameOptions.KillCooldown * (Mini.isGrownUp() ? 0.66f : 2f));
+                        else if (PlayerControl.LocalPlayer.hasModifier(ModifierType.Mini) && PlayerControl.LocalPlayer.Data.Role.IsImpostor)
+                            PlayerControl.LocalPlayer.SetKillTimer(PlayerControl.GameOptions.KillCooldown * (Mini.isGrownUp(PlayerControl.LocalPlayer) ? 0.66f : 2f));
                         else if (PlayerControl.LocalPlayer == Witch.witch)
                             Witch.witch.killTimer = HudManagerStartPatch.witchSpellButton.Timer = HudManagerStartPatch.witchSpellButton.MaxTimer;
                         else if (PlayerControl.LocalPlayer == Assassin.assassin)
@@ -345,21 +343,6 @@ namespace TheOtherRoles.Patches
                     __instance.SetTarget(null);
                 }
                 return false;
-            }
-        }
-
-        [HarmonyPatch(typeof(SabotageButton), nameof(SabotageButton.Refresh))]
-        class SabotageButtonRefreshPatch
-        {
-            static void Postfix()
-            {
-                // Mafia disable sabotage button for Janitor and sometimes for Mafioso
-                bool blockSabotageJanitor = (PlayerControl.LocalPlayer.isRole(RoleType.Janitor) && !Janitor.canSabotage);
-                bool blockSabotageMafioso = (PlayerControl.LocalPlayer.isRole(RoleType.Mafioso) && !Mafioso.canSabotage);
-                if (blockSabotageJanitor || blockSabotageMafioso)
-                {
-                    HudManager.Instance.SabotageButton.SetDisabled();
-                }
             }
         }
 
@@ -456,7 +439,6 @@ namespace TheOtherRoles.Patches
             }
         }
 
-
         public static class ConsolePatch
         {
             [HarmonyPatch(typeof(Console), nameof(Console.CanUse))]
@@ -510,8 +492,6 @@ namespace TheOtherRoles.Patches
                 }
             }
         }
-
-
     }
 
     [HarmonyPatch(typeof(MedScanMinigame), nameof(MedScanMinigame.FixedUpdate))]
@@ -538,12 +518,30 @@ namespace TheOtherRoles.Patches
                 __state = player.Data.Role.TeamType;
                 player.Data.Role.TeamType = RoleTeamTypes.Crewmate;
             }
+            if (CustomOptionHolder.janitorCanSabotage.getBool() == false && player.isRole(RoleType.Janitor))
+            {
+                __state = player.Data.Role.TeamType;
+                player.Data.Role.TeamType = RoleTeamTypes.Crewmate;
+            }
+            if (CustomOptionHolder.mafiosoCanSabotage.getBool() == false && player.isRole(RoleType.Mafioso))
+            {
+                __state = player.Data.Role.TeamType;
+                player.Data.Role.TeamType = RoleTeamTypes.Crewmate;
+            }
         }
 
         public static void Postfix(ref RoleTeamTypes __state)
         {
             var player = PlayerControl.LocalPlayer;
             if (player.isRole(RoleType.CustomImpostor))
+            {
+                player.Data.Role.TeamType = __state;
+            }
+            if (CustomOptionHolder.janitorCanSabotage.getBool() == false && player.isRole(RoleType.Janitor))
+            {
+                player.Data.Role.TeamType = __state;
+            }
+            if (CustomOptionHolder.mafiosoCanSabotage.getBool() == false && player.isRole(RoleType.Mafioso))
             {
                 player.Data.Role.TeamType = __state;
             }

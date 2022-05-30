@@ -1,10 +1,7 @@
 ﻿using HarmonyLib;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
+using TheOtherRoles.Modules;
 
 namespace TheOtherRoles.Patches
 {
@@ -13,7 +10,6 @@ namespace TheOtherRoles.Patches
     {
 
         public static string baseCredentials = $@"<size=130%><color=#ff351f>TheOtherRolesGM KM</color></size> Ver.{TheOtherRolesPlugin.Version.ToString()}";
-        public static string contributorsCredentials = "<size=80%>GitHub Contributors: Alex2911, amsyarasyiq, gendelo3</size>";
 
         [HarmonyPatch(typeof(VersionShower), nameof(VersionShower.Start))]
         private static class VersionShowerPatch
@@ -39,7 +35,7 @@ namespace TheOtherRoles.Patches
         }
 
         [HarmonyPatch(typeof(PingTracker), nameof(PingTracker.Update))]
-        private static class PingTrackerPatch
+        internal static class PingTrackerPatch
         {
             static void Postfix(PingTracker __instance)
             {

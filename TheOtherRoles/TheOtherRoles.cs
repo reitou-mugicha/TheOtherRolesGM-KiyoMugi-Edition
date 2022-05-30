@@ -1,18 +1,12 @@
-﻿using System.Net;
-using System.Linq;
-using BepInEx;
-using BepInEx.Configuration;
-using BepInEx.IL2CPP;
+﻿using System.Linq;
 using HarmonyLib;
-using Hazel;
 using System;
 using System.Collections.Generic;
-using System.Collections;
-using System.IO;
 using UnityEngine;
 using TheOtherRoles.Objects;
-using static TheOtherRoles.GameHistory;
-using TheOtherRoles.Patches;
+using TheOtherRoles.Modules;
+using TheOtherRoles.Utilities;
+
 
 namespace TheOtherRoles
 {
@@ -50,7 +44,6 @@ namespace TheOtherRoles
             Seer.clearAndReload();
             EvilHacker.clearAndReload();
             Hacker.clearAndReload();
-            Mini.clearAndReload();
             Tracker.clearAndReload();
             Vampire.clearAndReload();
             Snitch.clearAndReload();
@@ -314,10 +307,10 @@ namespace TheOtherRoles
                 // buttonSprite = DestroyableSingleton<TranslationController>.Instance.GetImage(ImageNames.AirshipAdminButton);
                 // return buttonSprite;
                 byte mapId = PlayerControl.GameOptions.MapId;
-                UseButtonSettings button = HudManager.Instance.UseButton.fastUseSettings[ImageNames.PolusAdminButton]; // Polus
-                if (mapId == 0 || mapId == 3) button = HudManager.Instance.UseButton.fastUseSettings[ImageNames.AdminMapButton]; // Skeld || Dleks
-                else if (mapId == 1) button = HudManager.Instance.UseButton.fastUseSettings[ImageNames.MIRAAdminButton]; // Mira HQ
-                else if (mapId == 4) button = HudManager.Instance.UseButton.fastUseSettings[ImageNames.AirshipAdminButton]; // Airship
+                UseButtonSettings button = FastDestroyableSingleton<HudManager>.Instance.UseButton.fastUseSettings[ImageNames.PolusAdminButton]; // Polus
+                if (mapId == 0 || mapId == 3) button = FastDestroyableSingleton<HudManager>.Instance.UseButton.fastUseSettings[ImageNames.AdminMapButton]; // Skeld || Dleks
+                else if (mapId == 1) button = FastDestroyableSingleton<HudManager>.Instance.UseButton.fastUseSettings[ImageNames.MIRAAdminButton]; // Mira HQ
+                else if (mapId == 4) button = FastDestroyableSingleton<HudManager>.Instance.UseButton.fastUseSettings[ImageNames.AirshipAdminButton]; // Airship
                 buttonSprite = button.Image;
                 return buttonSprite;
             }
@@ -371,24 +364,24 @@ namespace TheOtherRoles
             public static Sprite getVitalsSprite()
             {
                 if (vitalsSprite) return vitalsSprite;
-                vitalsSprite = HudManager.Instance.UseButton.fastUseSettings[ImageNames.VitalsButton].Image;
+                vitalsSprite = FastDestroyableSingleton<HudManager>.Instance.UseButton.fastUseSettings[ImageNames.VitalsButton].Image;
                 return vitalsSprite;
             }
 
             public static Sprite getLogSprite()
             {
                 if (logSprite) return logSprite;
-                logSprite = HudManager.Instance.UseButton.fastUseSettings[ImageNames.DoorLogsButton].Image;
+                logSprite = FastDestroyableSingleton<HudManager>.Instance.UseButton.fastUseSettings[ImageNames.DoorLogsButton].Image;
                 return logSprite;
             }
 
             public static Sprite getAdminSprite()
             {
                 byte mapId = PlayerControl.GameOptions.MapId;
-                UseButtonSettings button = HudManager.Instance.UseButton.fastUseSettings[ImageNames.PolusAdminButton]; // Polus
-                if (mapId == 0 || mapId == 3) button = HudManager.Instance.UseButton.fastUseSettings[ImageNames.AdminMapButton]; // Skeld || Dleks
-                else if (mapId == 1) button = HudManager.Instance.UseButton.fastUseSettings[ImageNames.MIRAAdminButton]; // Mira HQ
-                else if (mapId == 4) button = HudManager.Instance.UseButton.fastUseSettings[ImageNames.AirshipAdminButton]; // Airship
+                UseButtonSettings button = FastDestroyableSingleton<HudManager>.Instance.UseButton.fastUseSettings[ImageNames.PolusAdminButton]; // Polus
+                if (mapId == 0 || mapId == 3) button = FastDestroyableSingleton<HudManager>.Instance.UseButton.fastUseSettings[ImageNames.AdminMapButton]; // Skeld || Dleks
+                else if (mapId == 1) button = FastDestroyableSingleton<HudManager>.Instance.UseButton.fastUseSettings[ImageNames.MIRAAdminButton]; // Mira HQ
+                else if (mapId == 4) button = FastDestroyableSingleton<HudManager>.Instance.UseButton.fastUseSettings[ImageNames.AirshipAdminButton]; // Airship
                 adminSprite = button.Image;
                 return adminSprite;
             }
@@ -409,39 +402,6 @@ namespace TheOtherRoles
                 chargesVitals = Mathf.RoundToInt(CustomOptionHolder.hackerToolsNumber.getFloat()) / 2;
                 chargesAdminTable = Mathf.RoundToInt(CustomOptionHolder.hackerToolsNumber.getFloat()) / 2;
                 cantMove = CustomOptionHolder.hackerNoMove.getBool();
-            }
-        }
-
-        public static class Mini
-        {
-            public static PlayerControl mini;
-            public static Color color = Color.white;
-            public const float defaultColliderRadius = 0.2233912f;
-            public const float defaultColliderOffset = 0.3636057f;
-
-            public static float growingUpDuration = 400f;
-            public static DateTime timeOfGrowthStart = DateTime.UtcNow;
-            public static bool triggerMiniLose = false;
-
-            public static void clearAndReload()
-            {
-                mini = null;
-                triggerMiniLose = false;
-                growingUpDuration = CustomOptionHolder.miniGrowingUpDuration.getFloat();
-                timeOfGrowthStart = DateTime.UtcNow;
-            }
-
-            public static float growingProgress()
-            {
-                if (timeOfGrowthStart == null) return 0f;
-
-                float timeSinceStart = (float)(DateTime.UtcNow - timeOfGrowthStart).TotalMilliseconds;
-                return Mathf.Clamp(timeSinceStart / (growingUpDuration * 1000), 0f, 1f);
-            }
-
-            public static bool isGrownUp()
-            {
-                return growingProgress() == 1f;
             }
         }
 
@@ -876,7 +836,7 @@ namespace TheOtherRoles
             public static Sprite getAnimatedVentSealedSprite()
             {
                 float ppu = 185f;
-                if (SubmergedCompatibility.isSubmerged()) ppu = 120f;
+                if (SubmergedCompatibility.IsSubmerged) ppu = 120f;
                 if (lastPPU != ppu)
                 {
                     animatedVentSealedSprite = null;
@@ -915,7 +875,7 @@ namespace TheOtherRoles
             public static Sprite getCamSprite()
             {
                 if (camSprite) return camSprite;
-                camSprite = HudManager.Instance.UseButton.fastUseSettings[ImageNames.CamsButton].Image;
+                camSprite = FastDestroyableSingleton<HudManager>.Instance.UseButton.fastUseSettings[ImageNames.CamsButton].Image;
                 return camSprite;
             }
 
@@ -923,7 +883,7 @@ namespace TheOtherRoles
             public static Sprite getLogSprite()
             {
                 if (logSprite) return logSprite;
-                logSprite = HudManager.Instance.UseButton.fastUseSettings[ImageNames.DoorLogsButton].Image;
+                logSprite = FastDestroyableSingleton<HudManager>.Instance.UseButton.fastUseSettings[ImageNames.DoorLogsButton].Image;
                 return logSprite;
             }
 
@@ -999,11 +959,11 @@ namespace TheOtherRoles
                 if (Arsonist.arsonist != null && Arsonist.arsonist == PlayerControl.LocalPlayer)
                 {
                     int visibleCounter = 0;
-                    Vector3 bottomLeft = HudManager.Instance.UseButton.transform.localPosition;
+                    Vector3 bottomLeft = FastDestroyableSingleton<HudManager>.Instance.UseButton.transform.localPosition;
                     bottomLeft.x *= -1;
                     bottomLeft += new Vector3(-0.25f, -0.25f, 0);
 
-                    foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+                    foreach (PlayerControl p in PlayerControl.AllPlayerControls.GetFastEnumerator())
                     {
                         if (p.PlayerId == PlayerControl.LocalPlayer.PlayerId) continue;
                         if (!MapOptions.playerIcons.ContainsKey(p.PlayerId)) continue;
@@ -1200,7 +1160,7 @@ namespace TheOtherRoles
             public static Sprite getLogSprite()
             {
                 if (logSprite) return logSprite;
-                logSprite = HudManager.Instance.UseButton.fastUseSettings[ImageNames.DoorLogsButton].Image;
+                logSprite = FastDestroyableSingleton<HudManager>.Instance.UseButton.fastUseSettings[ImageNames.DoorLogsButton].Image;
                 return logSprite;
             }
 

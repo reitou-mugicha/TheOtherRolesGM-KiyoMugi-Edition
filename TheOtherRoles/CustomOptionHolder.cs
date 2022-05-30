@@ -1,12 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using BepInEx.Configuration;
-using System;
-using System.Linq;
-using HarmonyLib;
-using Hazel;
-using System.Reflection;
-using System.Text;
 using static TheOtherRoles.TheOtherRoles;
 using static TheOtherRoles.TheOtherRolesGM;
 using static TheOtherRoles.CustomOption;
@@ -52,7 +45,8 @@ namespace TheOtherRoles
         public static CustomOption evilHackerCanCreateMadmate;
         public static CustomOption evilHackerCanCreateMadmateFromFox;
         public static CustomOption evilHackerCanCreateMadmateFromJackal;
-        public static CustomOption createdMadmateCanDieToSheriff;
+        public static CustomOption evilHackerCanMoveEvenIfUsesAdmin;
+        public static CustomOption createdMadmateCanDieToSheriffOrYakuza;
         public static CustomOption createdMadmateCanEnterVents;
         public static CustomOption createdMadmateHasImpostorVision;
         public static CustomOption createdMadmateCanSabotage;
@@ -78,9 +72,8 @@ namespace TheOtherRoles
 
         public static CustomRoleOption miniSpawnRate;
         public static CustomOption miniGrowingUpDuration;
-        public static CustomOption miniIsImpRate;
 
-        public static CustomOption loversSpawnRate;
+        public static CustomRoleOption loversSpawnRate;
         public static CustomOption loversNumCouples;
         public static CustomOption loversImpLoverRate;
         public static CustomOption loversBothDie;
@@ -223,7 +216,7 @@ namespace TheOtherRoles
         public static CustomOption snitchTeamJackalUseDifferentArrowColor;
 
         public static CustomRoleOption spySpawnRate;
-        public static CustomOption spyCanDieToSheriff;
+        public static CustomOption spyCanDieToSheriffOrYakuza;
         public static CustomOption spyImpostorsCanKillAnyone;
         public static CustomOption spyCanEnterVents;
         public static CustomOption spyHasImpostorVision;
@@ -303,7 +296,7 @@ namespace TheOtherRoles
 
         // GM Edition options
         public static CustomRoleOption madmateSpawnRate;
-        public static CustomOption madmateCanDieToSheriff;
+        public static CustomOption madmateCanDieToSheriffOrYakuza;
         public static CustomOption madmateCanEnterVents;
         public static CustomOption madmateHasImpostorVision;
         public static CustomOption madmateCanSabotage;
@@ -357,7 +350,7 @@ namespace TheOtherRoles
         public static CustomOption restrictDevices;
         public static CustomOption restrictAdmin;
         public static CustomOption restrictCameras;
-        public static CustomOption restrictVents;
+        public static CustomOption restrictVitals;
 
         public static CustomOption hideOutOfSightNametags;
         public static CustomOption refundVotesOnDeath;
@@ -413,11 +406,35 @@ namespace TheOtherRoles
         public static CustomOption customImpostorCanUseVents;
         public static CustomOption customImpostorCanSabotage;
 
-        public static CustomRoleOption underTakerSpawnRate;
-        public static CustomOption underTakerDragCooldown;
-        public static CustomOption underTakerDragSpeed;
-
         public static CustomRoleOption coolSpawnRate;
+
+        public static CustomRoleOption doubleKillerSpawnRate;
+        public static CustomOption doubleKillerKillButtonCooldown;
+
+        public static CustomRoleOption chunibyoSpawnRate;
+        public static CustomOption chunibyoCooldown;
+        public static CustomOption chunibyoDuration;
+        public static CustomOption chunibyoEnableSpeedUp;
+        public static CustomOption chunibyoEnableSpeedDown;
+        public static CustomOption chunibyoEnableHighVision;
+        public static CustomOption chunibyoEnableLowVision;
+        public static CustomOption chunibyoAddNoneAbility;
+        public static CustomOption chunibyoSpeedUpBonus;
+        public static CustomOption chunibyoSpeedDownBonus;
+        public static CustomOption chunibyoHighVisionBonus;
+        public static CustomOption chunibyoLowVisionBonus;
+
+        public static CustomRoleOption yakuzaSpawnRate;
+        public static CustomOption yakuzaKillCooldown;
+        public static CustomOption yakuzaNumShots;
+        public static CustomOption yakuzaShotsShare;
+        public static CustomOption yakuzaCanKillNeutrals;
+        public static CustomOption yakuzaMisfireKillsTarget;
+
+        public static CustomRoleOption underTakerSpawnRate;
+        public static CustomOption underTakerSpeed;
+
+        public static CustomRoleOption breadSpawnRate;
 
         internal static Dictionary<byte, byte[]> blockedRolePairings = new Dictionary<byte, byte[]>();
 
@@ -436,7 +453,7 @@ namespace TheOtherRoles
         {
 
             // Role Options
-            activateRoles = CustomOption.Create(1, CustomOptionType.General, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "blockOriginal"), true, null, true);
+            activateRoles = CustomOption.Create(1, CustomOptionType.General, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "selectMode"), true, null, true);
 
             presetSelection = CustomOption.Create(2, CustomOptionType.General, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "presetSelection"), presets, null, true);
 
@@ -478,7 +495,8 @@ namespace TheOtherRoles
             evilHackerSpawnRate = new CustomRoleOption(140, CustomOptionType.Impostor, "evilHacker", EvilHacker.color, 1);
             evilHackerCanHasBetterAdmin = CustomOption.Create(141, CustomOptionType.Impostor, "evilHackerCanHasBetterAdmin", false, evilHackerSpawnRate);
             evilHackerCanCreateMadmate = CustomOption.Create(142, CustomOptionType.Impostor, "evilHackerCanCreateMadmate", false, evilHackerSpawnRate);
-            createdMadmateCanDieToSheriff = CustomOption.Create(143, CustomOptionType.Impostor, "createdMadmateCanDieToSheriff", false, evilHackerCanCreateMadmate);
+            evilHackerCanMoveEvenIfUsesAdmin = CustomOption.Create(153, CustomOptionType.Impostor, "evilHackerCanMoveEvenIfUsesAdmin", true, evilHackerSpawnRate);
+            createdMadmateCanDieToSheriffOrYakuza = CustomOption.Create(143, CustomOptionType.Impostor, "createdMadmateCanDieToSheriff", false, evilHackerCanCreateMadmate);
             createdMadmateCanEnterVents = CustomOption.Create(144, CustomOptionType.Impostor, "createdMadmateCanEnterVents", false, evilHackerCanCreateMadmate);
             evilHackerCanCreateMadmateFromFox = CustomOption.Create(145, CustomOptionType.Impostor, "evilHackerCanCreateMadmateFromFox", false, evilHackerCanCreateMadmate);
             evilHackerCanCreateMadmateFromJackal = CustomOption.Create(146, CustomOptionType.Impostor, "evilHackerCanCreateMadmateFromJackal", false, evilHackerCanCreateMadmate);
@@ -563,16 +581,15 @@ namespace TheOtherRoles
             customImpostorCanUseVents = CustomOption.Create(652, CustomOptionType.Impostor, "customImpostorCanUseVents", false, customImpostorSpawnRate);
             customImpostorCanSabotage = CustomOption.Create(653, CustomOptionType.Impostor, "customImpostorCanSabotage", false, customImpostorSpawnRate);
 
-            /*underTakerSpawnRate = new CustomRoleOption(660, CustomOptionType.Impostor, "underTaker", UnderTaker.color, 1);
-            underTakerDragCooldown = CustomOption(661, CustomOptionType.Impostor, "underTakerDragCooldown", 30f, 2.5f, 60f, 2.5, underTakerDragTime, format: "unitSeconds");
-            underTakerDragSpeed = CustomOption.Create(662, CustomOptionType.Crewmate, "underTakerDragSpeed", 150f, 100f, 250f, 10f, underTakerSpawnRate, format: "unitPercent");*/
+            underTakerSpawnRate = new CustomRoleOption(700, CustomOptionType.Impostor, "underTaker", UnderTaker.color, 1);
+            underTakerSpeed = CustomOption.Create(701, CustomOptionType.Impostor, "underTakerSpeed", 125f, 50f, 200f, 5f, underTakerSpawnRate, format: "unitPercent");
 
             madmateSpawnRate = new CustomRoleOption(280, CustomOptionType.Modifier, "madmate", Madmate.color);
             madmateType = CustomOption.Create(281, CustomOptionType.Modifier, "madmateType", new string[] { "madmateDefault", "madmateWithRole", "madmateRandom" }, madmateSpawnRate);
             madmateFixedRole = new CustomRoleSelectionOption(282, CustomOptionType.Modifier, "madmateFixedRole", Madmate.validRoles, madmateType);
             madmateAbility = CustomOption.Create(283, CustomOptionType.Modifier, "madmateAbility", new string[] { "madmateNone", "madmateFanatic" }, madmateSpawnRate);
             madmateTasks = new CustomTasksOption(284, CustomOptionType.Modifier, 1, 1, 3, madmateAbility);
-            madmateCanDieToSheriff = CustomOption.Create(285, CustomOptionType.Modifier, "madmateCanDieToSheriff", false, madmateSpawnRate);
+            madmateCanDieToSheriffOrYakuza = CustomOption.Create(285, CustomOptionType.Modifier, "madmateCanDieToSheriffOrYakuza", false, madmateSpawnRate);
             madmateCanEnterVents = CustomOption.Create(286, CustomOptionType.Modifier, "madmateCanEnterVents", false, madmateSpawnRate);
             madmateHasImpostorVision = CustomOption.Create(287, CustomOptionType.Modifier, "madmateHasImpostorVision", false, madmateSpawnRate);
             madmateCanSabotage = CustomOption.Create(288, CustomOptionType.Modifier, "madmateCanSabotage", false, madmateSpawnRate);
@@ -583,8 +600,7 @@ namespace TheOtherRoles
             //taskHackerAddCrewNumTasks = CustomOption.Create(293, CustomOptionType.Modifier, "taskHackerAdditionalCrewNumTasks", 5f, 1f, 10f, 1f, taskHackerEnabled);
 
             miniSpawnRate = new CustomRoleOption(300, CustomOptionType.Other, "mini", Mini.color, 1);
-            miniIsImpRate = CustomOption.Create(301, CustomOptionType.Other, "miniIsImpRate", rates, miniSpawnRate);
-            miniGrowingUpDuration = CustomOption.Create(302, CustomOptionType.Other, "miniGrowingUpDuration", 400f, 100f, 1500f, 100f, miniSpawnRate, format: "unitSeconds");
+            miniGrowingUpDuration = CustomOption.Create(301, CustomOptionType.Other, "miniGrowingUpDuration", 400f, 100f, 1500f, 100f, miniSpawnRate, format: "unitSeconds");
 
             loversSpawnRate = new CustomRoleOption(310, CustomOptionType.Other, "lovers", Lovers.color, 1);
             loversImpLoverRate = CustomOption.Create(311, CustomOptionType.Other, "loversImpLoverRate", rates, loversSpawnRate);
@@ -641,9 +657,6 @@ namespace TheOtherRoles
 
             sunglassesSpawnRate = new CustomRoleOption(640, CustomOptionType.Modifier, "sunglasses", Sunglasses.color, 15);
             sunglass = CustomOption.Create(641, CustomOptionType.Modifier, "sunglassesEye", 50f, 10f, 90f, 10f, sunglassesSpawnRate, format: "unitPercent");
-
-            //kingdomSpawnRate = new CustomRoleOption(380, CustomOptionType.Neutral, "kingdom", King.color, 1);
-            //kingTasks = new CustomTasksOption(381, CustomOptionType.Neutral, 5,3,7, kingdomSpawnRate);
 
             vultureSpawnRate = new CustomRoleOption(390, CustomOptionType.Neutral, "vulture", Vulture.color, 1);
             vultureCooldown = CustomOption.Create(391, CustomOptionType.Neutral, "vultureCooldown", 15f, 2.5f, 60f, 2.5f, vultureSpawnRate, format: "unitSeconds");
@@ -747,7 +760,7 @@ namespace TheOtherRoles
             hackerNoMove = CustomOption.Create(546, CustomOptionType.Crewmate, "hackerNoMove", true, hackerSpawnRate);
 
             trackerSpawnRate = new CustomRoleOption(550, CustomOptionType.Crewmate, "tracker", Tracker.color, 1);
-            trackerUpdateIntervall = CustomOption.Create(551, CustomOptionType.Crewmate, "Tracker Update Intervall", 5f, 1f, 30f, 1f, trackerSpawnRate);
+            trackerUpdateIntervall = CustomOption.Create(551, CustomOptionType.Crewmate, "trackerUpdateIntervall", 5f, 1f, 30f, 1f, trackerSpawnRate, format: "unitSeconds");
             trackerResetTargetAfterMeeting = CustomOption.Create(552, CustomOptionType.Crewmate, "trackerResetTargetAfterMeeting", false, trackerSpawnRate);
             trackerCanTrackCorpses = CustomOption.Create(553, CustomOptionType.Crewmate, "trackerTrackCorpses", true, trackerSpawnRate);
             trackerCorpsesTrackingCooldown = CustomOption.Create(554, CustomOptionType.Crewmate, "trackerCorpseCooldown", 30f, 0f, 120f, 5f, trackerCanTrackCorpses, format: "unitSeconds");
@@ -759,7 +772,7 @@ namespace TheOtherRoles
             snitchTeamJackalUseDifferentArrowColor = CustomOption.Create(563, CustomOptionType.Crewmate, "snitchTeamJackalUseDifferentArrowColor", true, snitchIncludeTeamJackal);
 
             spySpawnRate = new CustomRoleOption(570, CustomOptionType.Crewmate, "spy", Spy.color, 1);
-            spyCanDieToSheriff = CustomOption.Create(571, CustomOptionType.Crewmate, "spyCanDieToSheriff", false, spySpawnRate);
+            spyCanDieToSheriffOrYakuza = CustomOption.Create(571, CustomOptionType.Crewmate, "spyCanDieToSheriffOrYakuza", false, spySpawnRate);
             spyImpostorsCanKillAnyone = CustomOption.Create(572, CustomOptionType.Crewmate, "spyImpostorsCanKillAnyone", true, spySpawnRate);
             spyCanEnterVents = CustomOption.Create(573, CustomOptionType.Crewmate, "spyCanEnterVents", false, spySpawnRate);
             spyHasImpostorVision = CustomOption.Create(574, CustomOptionType.Crewmate, "spyHasImpostorVision", false, spySpawnRate);
@@ -796,7 +809,30 @@ namespace TheOtherRoles
             sprinterDuration = CustomOption.Create(622, CustomOptionType.Crewmate, "sprinterDuration", 15f, 2.5f, 60f, 2.5f, sprinterSpawnRate, format: "unitSeconds");
             sprinterSpeedBonus = CustomOption.Create(623, CustomOptionType.Crewmate, "sprinterSpeedBonus", 125f, 50f, 200f, 5f, sprinterSpawnRate, format: "unitPercent");
 
-            //coolSpawnRate = new CustomRoleOption(629, CustomOptionType.Modifier, "cool", Cool.color, 15);
+            doubleKillerSpawnRate = new CustomRoleOption(660, CustomOptionType.Impostor, "doubleKiller", DoubleKiller.color, 1);
+            doubleKillerKillButtonCooldown = CustomOption.Create(661, CustomOptionType.Impostor, "doubleKillerKillCooldown", 0f, 0f, 60f, 2.5f, doubleKillerSpawnRate, format: "unitSeconds");
+
+            chunibyoSpawnRate = new CustomRoleOption(670, CustomOptionType.Crewmate, "chunibyo", Chunibyo.color, 15);
+            chunibyoDuration = CustomOption.Create(671, CustomOptionType.Crewmate, "chunibyoDuration", 10f, 2.5f, 30f, 2.5f, chunibyoSpawnRate, format: "unitSeconds");
+            chunibyoCooldown = CustomOption.Create(672, CustomOptionType.Crewmate, "chunibyoCooldown", 30f, 2.5f, 60f, 2.5f, chunibyoSpawnRate, format: "unitSeconds");
+            chunibyoEnableSpeedUp = CustomOption.Create(673, CustomOptionType.Crewmate, "chunibyoEnableSpeedUp", true, chunibyoSpawnRate);
+            chunibyoEnableSpeedDown = CustomOption.Create(674, CustomOptionType.Crewmate, "chunibyoEnableSpeedDown", true, chunibyoSpawnRate);
+            chunibyoEnableHighVision = CustomOption.Create(675, CustomOptionType.Crewmate, "chunibyoEnableHighVision", true, chunibyoSpawnRate);
+            chunibyoEnableLowVision = CustomOption.Create(676, CustomOptionType.Crewmate, "chunibyoEnableLowVision", true, chunibyoSpawnRate);
+            chunibyoAddNoneAbility = CustomOption.Create(677, CustomOptionType.Crewmate, "chunibyoAddNoneAbility", true, chunibyoSpawnRate);
+            chunibyoSpeedUpBonus = CustomOption.Create(678, CustomOptionType.Crewmate, "chunibyoSpeedUpBonus", 125f, 50f, 200f, 5f, chunibyoEnableSpeedUp, format: "unitPercent");
+            chunibyoSpeedDownBonus = CustomOption.Create(679, CustomOptionType.Crewmate, "chunibyoSpeedDownBonus", 125f, 50f, 200f, 5f, chunibyoEnableSpeedDown, format: "unitPercent");
+            chunibyoHighVisionBonus = CustomOption.Create(680, CustomOptionType.Crewmate, "chunibyoHighVisionBonus", 150f, 110f, 200f, 10f, chunibyoEnableHighVision, format: "unitPercent");
+            chunibyoLowVisionBonus = CustomOption.Create(681, CustomOptionType.Crewmate, "chunibyoLowVisionBonus", 50f, 10f, 90f, 10f, chunibyoEnableLowVision, format: "unitPercent");
+
+            yakuzaSpawnRate = new CustomRoleOption(690, CustomOptionType.Crewmate, "yakuza", Boss.color, 1);
+            yakuzaNumShots = CustomOption.Create(691, CustomOptionType.Crewmate, "yakuzaNumShots", 2f, 1f, 15f, 1f, yakuzaSpawnRate, format: "unitShots");
+            yakuzaShotsShare = CustomOption.Create(692, CustomOptionType.Crewmate, "yakuzaNumShare", true, yakuzaSpawnRate);
+            yakuzaKillCooldown = CustomOption.Create(693, CustomOptionType.Crewmate, "yakuzaKillCooldown", 30f, 2.5f, 60f, 2.5f, yakuzaSpawnRate, format: "unitSeconds");
+            yakuzaCanKillNeutrals = CustomOption.Create(694, CustomOptionType.Crewmate, "yakuzaCanKillNeutral", true, yakuzaSpawnRate);
+            yakuzaMisfireKillsTarget = CustomOption.Create(695, CustomOptionType.Crewmate, "yakuzaMisfireKillTarget", false, yakuzaSpawnRate);
+
+            //breadSpawnRate = new CustomRoleOption(699, CustomOptionType.Crewmate, "bakery", Bread.color, 1);
 
             // Other options
             specialOptions = new CustomOptionBlank(null);
@@ -820,7 +856,7 @@ namespace TheOtherRoles
             restrictDevices = CustomOption.Create(29, CustomOptionType.General, "restrictDevices", new string[] { "optionOff", "restrictPerTurn", "restrictPerGame" }, specialOptions);
             restrictAdmin = CustomOption.Create(30, CustomOptionType.General, "disableAdmin", 30f, 0f, 600f, 5f, restrictDevices, format: "unitSeconds");
             restrictCameras = CustomOption.Create(31, CustomOptionType.General, "disableCameras", 30f, 0f, 600f, 5f, restrictDevices, format: "unitSeconds");
-            restrictVents = CustomOption.Create(32, CustomOptionType.General, "disableVitals", 30f, 0f, 600f, 5f, restrictDevices, format: "unitSeconds");
+            restrictVitals = CustomOption.Create(32, CustomOptionType.General, "disableVitals", 30f, 0f, 600f, 5f, restrictDevices, format: "unitSeconds");
 
             uselessOptions = CustomOption.Create(33, CustomOptionType.General, "uselessOptions", false, null, isHeader: true);
             dynamicMap = CustomOption.Create(34, CustomOptionType.General, "playRandomMaps", false, uselessOptions);
@@ -838,8 +874,6 @@ namespace TheOtherRoles
 
             blockedRolePairings.Add((byte)RoleType.Vampire, new[] { (byte)RoleType.Warlock });
             blockedRolePairings.Add((byte)RoleType.Warlock, new[] { (byte)RoleType.Vampire });
-            blockedRolePairings.Add((byte)RoleType.Spy, new[] { (byte)RoleType.Mini });
-            blockedRolePairings.Add((byte)RoleType.Mini, new[] { (byte)RoleType.Spy });
             blockedRolePairings.Add((byte)RoleType.Vulture, new[] { (byte)RoleType.Cleaner });
             blockedRolePairings.Add((byte)RoleType.Cleaner, new[] { (byte)RoleType.Vulture });
         }

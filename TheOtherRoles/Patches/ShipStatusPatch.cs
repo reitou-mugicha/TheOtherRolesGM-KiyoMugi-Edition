@@ -4,6 +4,7 @@ using static TheOtherRoles.TheOtherRolesGM;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using TheOtherRoles.Utilities;
 
 namespace TheOtherRoles.Patches
 {
@@ -49,20 +50,29 @@ namespace TheOtherRoles.Patches
             else
                 __result = Mathf.Lerp(__instance.MinLightRadius, __instance.MaxLightRadius, num) * PlayerControl.GameOptions.CrewLightMod;
             if (PlayerControl.LocalPlayer.hasModifier(ModifierType.Sunglasses))
-                __result *= 1f - Sunglasses.vision * 0.01f;
+                __result *= 1f - Sunglasses.vision * 0.01f;/*
+            if (PlayerControl.LocalPlayer.isRole(RoleType.Chunibyo))
+            {
+                if (Chunibyo.chunibyoButton.isEffectActive && Chunibyo.ab == 2)
+                    __result *= 1f + Chunibyo.highVisionBonus * 0.01f;
+                else if (Chunibyo.chunibyoButton.isEffectActive && Chunibyo.ab == 3)
+                    __result *= 1f - Chunibyo.lowVisionBonus * 0.01f;
+                else if (!Chunibyo.chunibyoButton.isEffectActive || Chunibyo.ab == 0 || Chunibyo.ab == 1)
+                    __result *= PlayerControl.GameOptions.CrewLightMod;
+            }*/
             return false;
         }
 
         public static float GetNeutralLightRadius(ShipStatus shipStatus, bool isImpostor)
         {
-            if (SubmergedCompatibility.isSubmerged())
+            if (SubmergedCompatibility.IsSubmerged)
             {
                 return SubmergedCompatibility.GetSubmergedNeutralLightRadius(isImpostor);
             }
 
             if (isImpostor) return shipStatus.MaxLightRadius * PlayerControl.GameOptions.ImpostorLightMod;
 
-            SwitchSystem switchSystem = shipStatus.Systems[SystemTypes.Electrical].TryCast<SwitchSystem>();
+            SwitchSystem switchSystem = MapUtilities.Systems[SystemTypes.Electrical].CastFast<SwitchSystem>();
             float lerpValue = switchSystem.Value / 255f;
 
             return Mathf.Lerp(shipStatus.MinLightRadius, shipStatus.MaxLightRadius, lerpValue) * PlayerControl.GameOptions.CrewLightMod;

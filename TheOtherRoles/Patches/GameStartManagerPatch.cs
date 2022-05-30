@@ -4,7 +4,8 @@ using System.Reflection;
 using System.Collections.Generic;
 using Hazel;
 using System;
-using UnhollowerBaseLib;
+using TheOtherRoles.Utilities;
+using TheOtherRoles.Modules;
 
 namespace TheOtherRoles.Patches
 {
@@ -42,7 +43,7 @@ namespace TheOtherRoles.Patches
                 // Copy lobby code
                 string code = InnerNet.GameCode.IntToGameName(AmongUsClient.Instance.GameId);
                 GUIUtility.systemCopyBuffer = code;
-                lobbyCodeText = DestroyableSingleton<TranslationController>.Instance.GetString(StringNames.RoomCode, new Il2CppReferenceArray<Il2CppSystem.Object>(0)) + "\r\n" + code;
+                lobbyCodeText = FastDestroyableSingleton<TranslationController>.Instance.GetString(StringNames.RoomCode, new Il2CppReferenceArray<Il2CppSystem.Object>(0)) + "\r\n" + code;
             }
         }
 
@@ -184,7 +185,7 @@ namespace TheOtherRoles.Patches
 
                 if (AmongUsClient.Instance.AmHost)
                 {
-                    foreach (InnerNet.ClientData client in AmongUsClient.Instance.allClients)
+                    foreach (InnerNet.ClientData client in AmongUsClient.Instance.allClients.GetFastEnumerator())
                     {
                         if (client.Character == null) continue;
                         var dummyComponent = client.Character.GetComponent<DummyBehaviour>();

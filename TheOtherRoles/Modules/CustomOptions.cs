@@ -7,7 +7,8 @@ using HarmonyLib;
 using Hazel;
 using System.Reflection;
 using System.Text;
-using static TheOtherRoles.TheOtherRoles;
+using TheOtherRoles.Utilities;
+using TheOtherRoles.Modules;
 
 namespace TheOtherRoles
 {
@@ -44,7 +45,7 @@ namespace TheOtherRoles
         {
             get
             {
-                return Helpers.RolesEnabled && this.getBool();
+                return CustomOptionHolder.activateRoles.getBool() && this.getBool();
             }
         }
 
@@ -99,10 +100,10 @@ namespace TheOtherRoles
 
         public static CustomOption Create(int id, CustomOptionType type, string name, float defaultValue, float min, float max, float step, CustomOption parent = null, bool isHeader = false, bool isHidden = false, string format = "")
         {
-            List<float> selections = new List<float>();
+            List<object> selections = new();
             for (float s = min; s <= max; s += step)
                 selections.Add(s);
-            return new CustomOption(id, type, name, selections.Cast<object>().ToArray(), defaultValue, parent, isHeader, isHidden, format);
+            return new CustomOption(id, type, name, selections.ToArray(), defaultValue, parent, isHeader, isHidden, format);
         }
 
         public static CustomOption Create(int id, CustomOptionType type, string name, bool defaultValue, CustomOption parent = null, bool isHeader = false, bool isHidden = false, string format = "")
@@ -211,7 +212,7 @@ namespace TheOtherRoles
         {
             get
             {
-                return Helpers.RolesEnabled && roleEnabled && selection > 0;
+                return CustomOptionHolder.activateRoles.getBool() && roleEnabled && selection > 0;
             }
         }
 
@@ -1104,10 +1105,10 @@ namespace TheOtherRoles
             }
             if (page != TheOtherRolesPlugin.optionsPage)
             {
-                Vector3 position = (Vector3)HudManager.Instance?.GameSettings?.transform.localPosition;
+                Vector3 position = (Vector3)FastDestroyableSingleton<HudManager>.Instance?.GameSettings?.transform.localPosition;
                 if (position != null)
                 {
-                    HudManager.Instance.GameSettings.transform.localPosition = new Vector3(position.x, 2.9f, position.z);
+                    FastDestroyableSingleton<HudManager>.Instance.GameSettings.transform.localPosition = new Vector3(position.x, 2.9f, position.z);
                 }
             }
         }

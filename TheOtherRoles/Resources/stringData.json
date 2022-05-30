@@ -350,8 +350,8 @@
         "13": "\u66f4\u65b0\n\u8d85\u591a\u804c\u4e1a\u6a21\u7ec4GM\u7248"
     },
     "updatePleaseWait": {
-        "0": "Updating The Other Roles GM\nPlease wait...",
-        "11": "\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u4e2d\n\u5c11\u3005\u304a\u5f85\u3061\u304f\u3060\u3055\u3044\u2026",
+        "0": "Updating TheOtherRolesGM KM\nPlease wait...",
+        "11": "TheOtherRolesGM KM\u3092\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u4e2d\n\u5c11\u3005\u304a\u5f85\u3061\u304f\u3060\u3055\u3044\u2026",
         "13": "\u6b63\u5728\u66f4\u65b0\u8d85\u591a\u804c\u4e1a\u6a21\u7ec4GM\u7248\n\u8bf7\u7a0d\u5019..."
     },
     "updateManually": {
@@ -365,8 +365,8 @@
         "13": "\u5df2\u7ecf\u5f00\u59cb\u66f4\u65b0\u3002"
     },
     "updateRestart": {
-        "0": "The Other Roles GM\nupdated successfully.\nPlease restart the game.",
-        "11": "The Other Roles GM\u306e\n\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u304c\u5b8c\u4e86\u3057\u307e\u3057\u305f\n\u30b2\u30fc\u30e0\u3092\u518d\u8d77\u52d5\u3057\u3066\u304f\u3060\u3055\u3044",
+        "0": "TheOtherRolesGM KM\nupdated successfully.\nPlease restart the game.",
+        "11": "TheOtherRolesGM KM\u306e\n\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u304c\u5b8c\u4e86\u3057\u307e\u3057\u305f\n\u30b2\u30fc\u30e0\u3092\u518d\u8d77\u52d5\u3057\u3066\u304f\u3060\u3055\u3044",
         "13": "\u8d85\u591a\u804c\u4e1a\u6a21\u7ec4GM\u7248\u5df2\u7ecf\u66f4\u65b0\u5b8c\u6bd5\u3002\n\u8bf7\u91cd\u542f\u6e38\u620f\u3002"
     },
     "updateFailed": {
@@ -375,39 +375,9 @@
         "13": "\u66f4\u65b0\u5931\u8d25\u3002\n\u8bf7\u7a0d\u540e\u518d\u8bd5\uff0c\u6216\u8fdb\u884c\u624b\u52a8\u66f4\u65b0\u3002"
     },
     "announcementUpdate": {
-        "0": "<size=150%>A new <color=#FC0303>TheOtherRoles GM Edition</color> update to Ver.{ver} is available:</size>\n\n{1}",
-        "11": "<size=125%><color=#FC0303>TheOtherRoles GM\u30a8\u30c7\u30a3\u30b7\u30e7\u30f3</color> Ver.{0}\u306e\u66f4\u65b0\u304c\u3042\u308a\u307e\u3059:</size>\n\n{1}",
+        "0": "<size=150%>A new <color=#FC0303>TheOtherRolesGM KM</color> update to Ver.{ver} is available:</size>\n{0}",
+        "11": "<size=125%><color=#FC0303>TheOtherRolesGM KM</color> Ver.{ver}\u306e\u66f4\u65b0\u304c\u3042\u308a\u307e\u3059:</size>\n\n{0}",
         "13": "<size=150%><color=#FC0303>\u8d85\u591a\u804c\u4e1a\u6a21\u7ec4GM\u7248</color>\u5df2\u7ecf\u53ef\u4ee5\u66f4\u65b0\u81f3v{ver}:</size>\n\n{1}"
-    },
-    "submergedUpdateButton": {
-        "0": "Submerged\nUpdate",
-        "11": "\u30b5\u30d6\u30de\u30fc\u30b8\u30c9\n\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8",
-        "13": "\u66f4\u65b0\n\u8d85\u591a\u804c\u4e1a\u6a21\u7ec4GM\u7248"
-    },
-    "submergedUpdatePleaseWait": {
-        "0": "Updating Submerged\nPlease wait...",
-        "11": "\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u4e2d\n\u5c11\u3005\u304a\u5f85\u3061\u304f\u3060\u3055\u3044\u2026",
-        "13": "\u6b63\u5728\u66f4\u65b0\u8d85\u591a\u804c\u4e1a\u6a21\u7ec4GM\u7248\n\u8bf7\u7a0d\u5019..."
-    },
-    "submergedUpdateManually": {
-        "0": "Unable to auto-update.\nPlease update manually.",
-        "11": "\u81ea\u52d5\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u304c\n\u3067\u304d\u307e\u305b\u3093\u3067\u3057\u305f\n\u624b\u52d5\u3067\u66f4\u65b0\u3057\u3066\u304f\u3060\u3055\u3044",
-        "13": "\u65e0\u6cd5\u8fdb\u884c\u81ea\u52a8\u66f4\u65b0\u3002\n\u8bf7\u5c1d\u8bd5\u624b\u52a8\u66f4\u65b0\u3002"
-    },
-    "submergedUpdateInProgress": {
-        "0": "Update might already\nbe in progress.",
-        "11": "\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u5b9f\u884c\u4e2d",
-        "13": "\u5df2\u7ecf\u5f00\u59cb\u66f4\u65b0\u3002"
-    },
-    "submergedUpdateRestart": {
-        "0": "Submerged\nupdated successfully.\nPlease restart the game.",
-        "11": "\u30b5\u30d6\u30de\u30fc\u30b8\u30c9\u306e\n\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u304c\u5b8c\u4e86\u3057\u307e\u3057\u305f\n\u30b2\u30fc\u30e0\u3092\u518d\u8d77\u52d5\u3057\u3066\u304f\u3060\u3055\u3044",
-        "13": "\u8d85\u591a\u804c\u4e1a\u6a21\u7ec4GM\u7248\u5df2\u7ecf\u66f4\u65b0\u5b8c\u6bd5\u3002\n\u8bf7\u91cd\u542f\u6e38\u620f\u3002"
-    },
-    "submergedUpdateFailed": {
-        "0": "Update failed.\nTry again later,\nor update manually.",
-        "11": "\u81ea\u52d5\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u304c\n\u3067\u304d\u307e\u305b\u3093\u3067\u3057\u305f\n\u624b\u52d5\u3067\u66f4\u65b0\u3057\u3066\u304f\u3060\u3055\u3044",
-        "13": "\u66f4\u65b0\u5931\u8d25\u3002\n\u8bf7\u7a0d\u540e\u518d\u8bd5\uff0c\u6216\u8fdb\u884c\u624b\u52a8\u66f4\u65b0\u3002"
     },
     "forceEndText": {
         "0": "Force End",
@@ -436,21 +406,6 @@
     "janitor": {
         "0": "Janitor",
         "11": "\u30b8\u30e3\u30cb\u30bf\u30fc",
-        "13": "\u6e05\u6d01\u5de5"
-    },
-    "mafiaG": {
-        "0": "G",
-        "11": "G",
-        "13": "\u6559\u7236"
-    },
-    "mafiaM": {
-        "0": "M",
-        "11": "M",
-        "13": "\u5c0f\u5f1f"
-    },
-    "mafiaJ": {
-        "0": "J",
-        "11": "J",
         "13": "\u6e05\u6d01\u5de5"
     },
     "morphling": {
@@ -776,6 +731,34 @@
         "0": "Custom Impostor",
         "11": "\u30ab\u30b9\u30bf\u30e0\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc"
     },
+    "doubleKiller": {
+        "0": "Double Killer",
+        "11": "\u30c0\u30d6\u30eb\u30ad\u30e9\u30fc"
+    },
+    "chunibyo": {
+        "0": "Chunibyo",
+        "11": "\u4e2d\u4e8c\u75c5"
+    },
+    "boss": {
+        "0": "Boss",
+        "11": "\u7d44\u9577"
+    },
+    "staff": {
+        "0": "Staff",
+        "11": "\u5e79\u90e8"
+    },
+    "gun": {
+        "0": "Gun",
+        "11": "\u9244\u7832\u7389"
+    },
+    "yakuza": {
+        "0": "Yakuza",
+        "11": "\u30e4\u30af\u30b6"
+    },
+    "underTaker": {
+        "0": "Under Taker",
+        "11": "\u30a2\u30f3\u30c0\u30fc\u30c6\u30a4\u30ab\u30fc"
+    },
     "gmIsHost": {
         "0": "Always The Host",
         "11": "\u5fc5\u305a\u30db\u30b9\u30c8\u306b\u5272\u308a\u632f\u3089\u308c\u308b",
@@ -895,9 +878,9 @@
         "11": "\u30b8\u30e3\u30c3\u30ab\u30eb\u3092\u30de\u30c3\u30c9\u30e1\u30a4\u30c8\u306b\u3059\u308b\u3053\u3068\u304c\u3067\u304d\u308b",
         "13": "\u90aa\u6076\u9ed1\u5ba2\u53ef\u4ee5\u9ed1\u5165\u8c7a\u72fc\u6765\u521b\u9020\u75af\u5b50"
     },
-    "createdMadmateCanDieToSheriff": {
-        "0": "Madmate Can Die To Sheriff",
-        "11": "\u30b7\u30a7\u30ea\u30d5\u304c\u30de\u30c3\u30c9\u30e1\u30a4\u30c8\u3092\u6bba\u305b\u308b",
+    "createdMadmateCanDieToSheriffOrYakuza": {
+        "0": "Madmate Can Die To Sheriff Or Yakuza",
+        "11": "\u30b7\u30a7\u30ea\u30d5\u3068\u30e4\u30af\u30b6\u304c\u30de\u30c3\u30c9\u30e1\u30a4\u30c8\u3092\u6bba\u305b\u308b",
         "13": "\u75af\u5b50\u53ef\u4ee5\u88ab\u8b66\u957f\u51fb\u6740"
     },
     "createdMadmateCanEnterVents": {
@@ -933,6 +916,10 @@
     "createdMadmateNumTasks": {
         "0": "Number of Tasks",
         "11": "\u30bf\u30b9\u30af\u6570"
+    },
+    "evilHackerCanMoveEvenIfUsesAdmin": {
+        "0": "EvilHacker Can Move Even If Uses Admin",
+        "11": "\u30a2\u30c9\u30df\u30f3\u4f7f\u7528\u4e2d\u306b\u52d5\u3051\u308b"
     },
     "madmateNoticeImpostors": {
         "0": "Show Impostors After Madmate Finishes Tasks",
@@ -1521,9 +1508,9 @@
         "11": "\u30b8\u30e3\u30c3\u30ab\u30eb\u9663\u55b6\u306e\u77e2\u5370\u304c\u9752\u3044",
         "13": "\u5bf9\u8c7a\u72fc\u56e2\u961f\u4f7f\u7528\u4e0d\u540c\u7bad\u5934"
     },
-    "spyCanDieToSheriff": {
-        "0": "Can Die To Sheriff",
-        "11": "\u30b7\u30a7\u30ea\u30d5\u304c\u30b9\u30d1\u30a4\u3092\u6bba\u305b\u308b",
+    "spyCanDieToSheriffOrYakuza": {
+        "0": "Can Die To Sheriff Or Yakuza",
+        "11": "\u30b7\u30a7\u30ea\u30d5\u3068\u30e4\u30af\u30b6\u304c\u30b9\u30d1\u30a4\u3092\u6bba\u305b\u308b",
         "13": "\u5367\u5e95\u53ef\u88ab\u8b66\u957f\u51fb\u6740"
     },
     "spyImpostorsCanKillAnyone": {
@@ -1596,9 +1583,9 @@
         "11": "\u6b7b\u4ea1\u6642\u3001\u72af\u4eba\u306b\u8b66\u544a\u3059\u308b",
         "13": "\u8bf1\u9975\u88ab\u51fb\u6740\u65f6\u7528\u95ea\u5149\u8b66\u544a\u51f6\u624b"
     },
-    "madmateCanDieToSheriff": {
-        "0": "Can Die To Sheriff",
-        "11": "\u30b7\u30a7\u30ea\u30d5\u304c\u30de\u30c3\u30c9\u30e1\u30a4\u30c8\u3092\u6bba\u305b\u308b",
+    "madmateCanDieToSheriffOrYakuza": {
+        "0": "Can Die To Sheriff Or Yakuza",
+        "11": "\u30b7\u30a7\u30ea\u30d5\u3068\u30e4\u30af\u30b6\u304c\u30de\u30c3\u30c9\u30e1\u30a4\u30c8\u3092\u6bba\u305b\u308b",
         "13": "\u53db\u5f92\u53ef\u4ee5\u88ab\u8b66\u957f\u51fb\u6740"
     },
     "madmateCanEnterVents": {
@@ -2054,6 +2041,78 @@
         "0": "Can Sabotage",
         "11": "\u30b5\u30dc\u30bf\u30fc\u30b8\u30e5\u304c\u3067\u304d\u308b"
     },
+    "doubleKillerKillCooldown": {
+        "0": "Second Kill Button Cooldown",
+        "11": "\u7b2c\u4e8c\u30ad\u30eb\u30dc\u30bf\u30f3\u30af\u30fc\u30eb\u30c0\u30a6\u30f3"
+    },
+    "chunibyoDuration": {
+        "0": "Chunibyo Duration",
+        "11": "\u7d99\u7d9a\u6642\u9593"
+    },
+    "chunibyoCooldown": {
+        "0": "Chunibyo Cooldown",
+        "11": "\u30af\u30fc\u30eb\u30c0\u30a6\u30f3"
+    },
+    "chunibyoEnableSpeedUp": {
+        "0": "Enable Speed Up",
+        "11": "\u30b9\u30d4\u30fc\u30c9\u30a2\u30c3\u30d7\u6709\u52b9\u5316"
+    },
+    "chunibyoEnableSpeedDown": {
+        "0": "Enable Speed Down",
+        "11": "\u30b9\u30d4\u30fc\u30c9\u30c0\u30a6\u30f3\u6709\u52b9\u5316"
+    },
+    "chunibyoEnableHighVision": {
+        "0": "Enable High Vision",
+        "11": "\u62e1\u5927\u8996\u91ce\u6709\u52b9\u5316"
+    },
+    "chunibyoEnableLowVision": {
+        "0": "Enable Low Vision",
+        "11": "\u7e2e\u5c0f\u8996\u91ce\u6709\u52b9\u5316"
+    },
+    "chunibyoAddNoneAbility": {
+        "0": "Add No Ability",
+        "11": "\u7a7a\u632f\u308a\u6709\u52b9\u5316"
+    },
+    "chunibyoSpeedUpBonus": {
+        "0": "Speed Up Bonus",
+        "11": "\u30b9\u30d4\u30fc\u30c9\u30a2\u30c3\u30d7\u306e\u5f37\u5ea6"
+    },
+    "chunibyoSpeedDownBonus": {
+        "0": "Speed Down Bonus",
+        "11": "\u30b9\u30d4\u30fc\u30c9\u30c0\u30a6\u30f3\u306e\u5f37\u5ea6"
+    },
+    "chunibyoHighVisionBonus": {
+        "0": "High Vision Bonus",
+        "11": "\u8996\u91ce\u62e1\u5927\u306e\u5f37\u5ea6"
+    },
+    "chunibyoLowVisionBonus": {
+        "0": "Low Vision Bonus",
+        "11": "\u8996\u91ce\u7e2e\u5c0f\u306e\u5f37\u5ea6"
+    },
+    "yakuzaKillCooldown": {
+        "0": "Kill Cooldown",
+        "11": "\u30ad\u30eb\u30af\u30fc\u30eb"
+    },
+    "yakuzaCanKillNeutral": {
+        "0": "Can Kill Neutrals",
+        "11": "\u7b2c\u4e09\u9663\u55b6\u3092\u30ad\u30eb\u3067\u304d\u308b"
+    },
+    "yakuzaMisfireKillTarget": {
+        "0": "Misfire Kills Target",
+        "11": "\u8aa4\u7206\u6642\u3001\u30bf\u30fc\u30b2\u30c3\u30c8\u3082\u6b7b\u306c"
+    },
+    "yakuzaNumShots": {
+        "0": "Num Shots",
+        "11": "\u5f3e\u6570"
+    },
+    "yakuzaNumShare": {
+        "0": "Num Share",
+        "11": "\u5f3e\u6570\u3092\u5171\u6709"
+    },
+    "underTakerSpeed": {
+        "0": "Under Taking Speed",
+        "11": "\u6b7b\u4f53\u904b\u642c\u4e2d\u306e\u8db3\u306e\u901f\u3055"
+    },
     "torSettings": {
         "0": "The Other Roles Settings",
         "11": "The Other Roles\u306e\u8a2d\u5b9a",
@@ -2460,22 +2519,22 @@
     },
     "detectiveColorLight": {
         "0": "lighter",
-        "11": "\u6de1\u3044",
+        "11": "\u6de1",
         "13": "\u6d45"
     },
     "detectiveColorDark": {
         "0": "darker",
-        "11": "\u6fc3\u3044",
+        "11": "\u6fc3",
         "13": "\u6df1"
     },
     "detectiveLightLabel": {
         "0": "L",
-        "11": "\u6de1\u3044",
+        "11": "\u6de1",
         "13": "\u6d45"
     },
     "detectiveDarkLabel": {
         "0": "D",
-        "11": "\u6fc3\u3044",
+        "11": "\u6fc3",
         "13": "\u6df1"
     },
     "hackerChargesText": {
@@ -2604,6 +2663,57 @@
     "portalLog": {
         "0": "{0} used the teleporter",
         "11": "{0}\u304c\u4f7f\u7528\u3057\u307e\u3057\u305f\u3002"
+    },
+    "mafiaG": {
+        "0": "G",
+        "11": "G",
+        "13": "\u6559\u7236"
+    },
+    "mafiaM": {
+        "0": "M",
+        "11": "M",
+        "13": "\u5c0f\u5f1f"
+    },
+    "mafiaJ": {
+        "0": "J",
+        "11": "J",
+        "13": "\u6e05\u6d01\u5de5"
+    },
+    "yakuzaB": {
+        "0": "B",
+        "11": "B"
+    },
+    "yakuzaS": {
+        "0": "S",
+        "11": "S"
+    },
+    "yakuzaG": {
+        "0": "G",
+        "11": "G"
+    },
+    "yakuzaShots": {
+        "0": "Shots: {0}",
+        "11": "\u6b8b\u308a {0}\u767a"
+    },
+    "runFast": {
+        "0": "Oh my God! I'm run fast!",
+        "11": "\u3046\u304a\u304a\u3002\u4ffa\u8db3\u3081\u3063\u3061\u3083\u8db3\u65e9\u3044\uff01"
+    },
+    "runSlow": {
+        "0": "Fmm...? I'm very slowly...?",
+        "11": "\u3042\u308c? \u4ffa\u8db3\u9045\u3044?"
+    },
+    "highVision": {
+        "0": "Wow! I had High Vision!",
+        "11": "\u3069\u308f\u3041!? \u8996\u529b\u4e0a\u304c\u3063\u305f\uff01"
+    },
+    "lowVision": {
+        "0": "Oh, My Vision is Low!",
+        "11": "\u3046\u308f\u3042\u3093\u3002\u76ee\u304c\u898b\u3048\u306a\u3044\u3088\u304a"
+    },
+    "noAbility": {
+        "0": "(No Ability...)",
+        "11": "(\u4f55\u3082\u8d77\u304d\u306a\u304b\u3063\u305f)"
     },
     "gmIntroDesc": {
         "0": "You're the Game Master",
@@ -2896,6 +3006,30 @@
         "0": "You were Customized!",
         "11": "\u30ab\u30b9\u30bf\u30de\u30a4\u30ba\u3055\u308c\u3066\u3057\u307e\u3063\u305f\uff01"
     },
+    "doubleKillerIntroDesc": {
+        "0": "Let's get lots of kills!",
+        "11": "\u3044\u3063\u3071\u3044\u30ad\u30eb\u3057\u3061\u3083\u304a\u3046!"
+    },
+    "chunibyoIntroDesc": {
+        "0": "You got a lot of Ability (would-be)",
+        "11": "\u591a\u304f\u306e\u80fd\u529b\u3092\u624b\u306b\u5165\u308c\u305f(\u81ea\u79f0)"
+    },
+    "gunIntroDesc": {
+        "0": "You have Sheriff Ability",
+        "11": "\u30b7\u30a7\u30ea\u30d5\u306e\u80fd\u529b\u3092\u624b\u306b\u5165\u308c\u305f"
+    },
+    "staffIntroDesc": {
+        "0": "You are The Staff",
+        "11": "\u9244\u7832\u7389\u306e\u610f\u5fd7\u3092\u7d99\u3052"
+    },
+    "bossIntroDesc": {
+        "0": "You are The Boss",
+        "11": "\u624b\u4e0b\u306e\u610f\u5fd7\u3092\u7d99\u3052"
+    },
+    "underTakerIntroDesc": {
+        "0": "Move The Dead Body",
+        "11": "\u6b7b\u4f53\u3092\u52d5\u304b\u305b"
+    },
     "gmShortDesc": {
         "0": "You're the Game Master",
         "11": "\u30b2\u30fc\u30e0\u30de\u30b9\u30bf\u30fc\u3060",
@@ -3187,6 +3321,34 @@
         "0": "Set Portal And Do Teleport",
         "11": "\u30dd\u30fc\u30bf\u30eb\u3067\u30c6\u30ec\u30dd\u30fc\u30c8\u3057\u3088\u3046"
     },
+    "customImpostorShortDesc": {
+        "0": "You were Customized!",
+        "11": "\u30ab\u30b9\u30bf\u30de\u30a4\u30ba\u3055\u308c\u3066\u3057\u307e\u3063\u305f\uff01"
+    },
+    "doubleKillerShortDesc": {
+        "0": "Let's get lots of kills!",
+        "11": "\u3044\u3063\u3071\u3044\u30ad\u30eb\u3057\u3061\u3083\u304a\u3046!"
+    },
+    "chunibyoShortDesc": {
+        "0": "You got a lot of Ability (would-be)",
+        "11": "\u591a\u304f\u306e\u80fd\u529b\u3092\u624b\u306b\u5165\u308c\u305f(\u81ea\u79f0)"
+    },
+    "gunShortDesc": {
+        "0": "You have Sheriff Ability",
+        "11": "\u30b7\u30a7\u30ea\u30d5\u306e\u80fd\u529b\u3092\u624b\u306b\u5165\u308c\u305f"
+    },
+    "staffShortDesc": {
+        "0": "You are The Staff",
+        "11": "\u9244\u7832\u7389\u306e\u610f\u5fd7\u3092\u7d99\u3052"
+    },
+    "bossShortDesc": {
+        "0": "You are The Boss",
+        "11": "\u624b\u4e0b\u306e\u610f\u5fd7\u3092\u7d99\u3052"
+    },
+    "underTakerShortDesc": {
+        "0": "Move Dead Body",
+        "11": "\u6b7b\u4f53\u3092\u52d5\u304b\u305d\u3046"
+    },
     "jesterFullDesc": {
         "0": "The Jester does not have any tasks.\nThey win the game as a solo if they get voted out during a meeting.",
         "11": "\u30fb\u4eba\u72fc\u3067\u3044\u3046\u300e\u3066\u308b\u3066\u308b\u300f\n\u30fb\u306a\u306b\u3082\u80fd\u529b\u3092\u6301\u305f\u306a\u3044\n\u30fb\u81ea\u8eab\u304c\u540a\u3089\u308c\u305f\u3068\u304d\u306b\u52dd\u5229\u3059\u308b",
@@ -3477,6 +3639,34 @@
         "0": "You can teleport with it in two portals.\nTeleporting will bring up a log of the person who used it.\nAnyone can teleport.",
         "11": "\u30dd\u30fc\u30bf\u30eb\u3092\u4e8c\u304b\u6240\u306b\u304a\u3044\u3066\u305d\u308c\u3067\u30c6\u30ec\u30dd\u30fc\u30c8\u3059\u308b\u3053\u3068\u304c\u3067\u304d\u307e\u3059\u3002\n\u30c6\u30ec\u30dd\u30fc\u30c8\u3092\u3059\u308b\u3068\u4f7f\u7528\u3057\u305f\u4eba\u306e\u30ed\u30b0\u304c\u51fa\u3066\u304d\u307e\u3059\u3002\n\u30c6\u30ec\u30dd\u30fc\u30c8\u306f\u8ab0\u3067\u3082\u3067\u304d\u307e\u3059\u3002"
     },
+    "customImpostorFullDesc": {
+        "0": "You were Customized!",
+        "11": "\u30ab\u30b9\u30bf\u30de\u30a4\u30ba\u3055\u308c\u3066\u3057\u307e\u3063\u305f\uff01"
+    },
+    "doubleKillerFullDesc": {
+        "0": "You have two asynchronous kill buttons.",
+        "11": "\u975e\u540c\u671f\u306e\u30ad\u30eb\u30dc\u30bf\u30f3\u304c2\u3064\u3042\u308b\u3002"
+    },
+    "chunibyoFullDesc": {
+        "0": "Pressing the button will randomly activate the ability.\nThe ability can be positive or negative.",
+        "11": "\u30dc\u30bf\u30f3\u3092\u62bc\u3059\u3068\u30e9\u30f3\u30c0\u30e0\u306b\u80fd\u529b\u3092\u767a\u63ee\u3059\u308b\u3002\n\u80fd\u529b\u306f\u30d7\u30e9\u30b9\u304b\u30de\u30a4\u30ca\u30b9\u304b\u308f\u304b\u3089\u306a\u3044\u3002"
+    },
+    "gunFullDesc": {
+        "0": "You have Sheriff Ability",
+        "11": "\u30fb\u30b7\u30a7\u30ea\u30d5\u306e\u80fd\u529b\u3092\u6301\u3064\n\u30fb\u6b7b\u3093\u3060\u3089\u5e79\u90e8\u306b\u80fd\u529b\u304c\u7d99\u304c\u308c\u308b"
+    },
+    "staffFullDesc": {
+        "0": "You are The Staff",
+        "11": "\u30fb\u9244\u7832\u7389\u304c\u6b7b\u3093\u3060\u3089\u30b7\u30a7\u30ea\u30d5\u306e\u80fd\u529b\u304c\u7d99\u304c\u308c\u308b"
+    },
+    "bossFullDesc": {
+        "0": "You are The Boss",
+        "11": "\u30fb\u9244\u7832\u7389\u3001\u5e79\u90e8\u304c\u3069\u3061\u3089\u3082\u6b7b\u3093\u3060\u3089\u30b7\u30a7\u30ea\u30d5\u306e\u80fd\u529b\u3092\u624b\u306b\u5165\u308c\u308b"
+    },
+    "underTakerFullDesc": {
+        "0": "You can move the Dead Body",
+        "11": "\u30fb\u6b7b\u4f53\u3092\u52d5\u304b\u3059\u3053\u3068\u304c\u3067\u304d\u307e\u3059\u3002\n\u30fb\u6b7b\u4f53\u3092\u52d5\u304b\u3057\u3066\u3044\u308b\u9593\u306f\u8db3\u304c\u9045\u304f\u306a\u308a\u307e\u3059\u3002\n\u30fb\u79fb\u52d5\u4e2d\u306f\u30d9\u30f3\u30c8\u3068\u30ad\u30eb\u304c\u4e0d\u53ef\u80fd\u306b\u306a\u308a\u307e\u3059\u3002\n\u30fb\u79fb\u52d5\u4e2d\u3082\u901a\u5831\u306f\u3067\u304d\u307e\u3059\u3002"
+    },
     "Banner": {
         "0": "Banner.png"
     },
@@ -3559,137 +3749,137 @@
         "0": "VampireButton.png"
     },
     "CamoText": {
-        "0": "[BLANK]",
+        "0": "CAMO",
         "11": "\u30ab\u30e2",
         "13": "\u9690\u853d"
     },
     "CleanText": {
-        "0": "[BLANK]",
+        "0": "CLEAN",
         "11": "\u6383\u9664",
         "13": "\u6e05\u7406"
     },
     "CloseVentText": {
-        "0": "[BLANK]",
+        "0": "CLOSE",
         "11": "\u5c01\u9396",
         "13": "\u5c01\u9501"
     },
     "CurseText": {
-        "0": "[BLANK]",
+        "0": "CURSE",
         "11": "\u546a\u3046",
         "13": "\u8bc5\u5492"
     },
     "CurseKillText": {
-        "0": "[BLANK]",
+        "0": "KILL",
         "11": "\u546a\u6bba",
         "13": "\u5492\u6740"
     },
     "DouseText": {
-        "0": "[BLANK]",
+        "0": "DOUSE",
         "11": "\u304b\u3051\u308b",
         "13": "\u6d82\u6cb9"
     },
     "EraserText": {
-        "0": "[BLANK]",
+        "0": "ERACE",
         "11": "\u524a\u9664",
         "13": "\u62b9\u9664"
     },
     "GarlicText": {
-        "0": "[BLANK]",
+        "0": "GARLIC",
         "11": "\u30cb\u30f3\u30cb\u30af",
         "13": "\u5927\u849c"
     },
     "HackerText": {
-        "0": "[BLANK]",
+        "0": "HACK",
         "11": "\u30cf\u30c3\u30af",
         "13": "\u9ed1\u5165"
     },
     "IgniteText": {
-        "0": "[BLANK]",
+        "0": "IGNITE",
         "11": "\u7740\u706b",
         "13": "\u7eb5\u706b"
     },
     "LighterText": {
-        "0": "[BLANK]",
+        "0": "LIGHT",
         "11": "\u30e9\u30a4\u30c8",
         "13": "\u70b9\u706f"
     },
     "LightsOutText": {
-        "0": "[BLANK]",
+        "0": "LIGHT",
         "11": "\u5f37\u5236\u505c\u96fb",
         "13": "\u5173\u706f"
     },
     "MorphText": {
-        "0": "[BLANK]",
+        "0": "MORPH",
         "11": "\u5909\u8eab",
         "13": "\u5316\u5f62"
     },
     "PlaceCameraText": {
-        "0": "[BLANK]",
+        "0": "PLACE",
         "11": "\u8a2d\u7f6e",
         "13": "\u5b89\u88c5"
     },
     "PlaceJackInTheBoxText": {
-        "0": "[BLANK]",
+        "0": "PLACE",
         "11": "\u8a2d\u7f6e",
         "13": "\u653e\u7f6e"
     },
     "RepairText": {
-        "0": "[BLANK]",
+        "0": "REPAIR",
         "11": "\u4fee\u5fa9",
         "13": "\u4fee\u7406"
     },
     "RewindText": {
-        "0": "[BLANK]",
+        "0": "REWIND",
         "11": "\u5dfb\u304d\u623b\u3059",
         "13": "\u56de\u6eaf"
     },
     "SampleText": {
-        "0": "[BLANK]",
+        "0": "SAMPLE",
         "11": "\u30b5\u30f3\u30d7\u30eb",
         "13": "\u53d6\u6837"
     },
     "SeerText": {
-        "0": "[BLANK]",
+        "0": "SEER",
         "11": "\u898b\u305b\u308b",
         "13": "\u7075\u5a92"
     },
     "ShieldText": {
-        "0": "[BLANK]",
+        "0": "SHIELD",
         "11": "\u30b7\u30fc\u30eb\u30c9",
         "13": "\u62a4\u76fe"
     },
     "ShiftText": {
-        "0": "[BLANK]",
+        "0": "SHIFT",
         "11": "\u30b7\u30d5\u30c8",
         "13": "\u4ea4\u6362"
     },
     "SidekickText": {
-        "0": "[BLANK]",
+        "0": "SIDEKICK",
         "11": "\u30b5\u30a4\u30c9\u30ad\u30c3\u30af",
         "13": "\u62db\u52df"
     },
     "TimeShieldText": {
-        "0": "[BLANK]",
+        "0": "SHIELD",
         "11": "\u30b7\u30fc\u30eb\u30c9",
         "13": "\u65f6\u5149\u4e4b\u76fe"
     },
     "TrackerText": {
-        "0": "[BLANK]",
+        "0": "TRACK",
         "11": "\u30c8\u30e9\u30c3\u30af",
         "13": "\u8ffd\u8e2a"
     },
     "TricksterVentText": {
-        "0": "[BLANK]",
+        "0": "VENT",
         "11": "\u30d9\u30f3\u30c8",
         "13": "\u9a97\u672f\u7bb1"
     },
     "VampireText": {
-        "0": "[BLANK]",
+        "0": "BITE",
         "11": "\u565b\u3080",
         "13": "\u5438\u8840"
     },
     "VultureText": {
-        "0": "[BLANK]",
+        "0": "EAT",
         "11": "\u55b0\u3089\u3046",
         "13": "\u541e\u566c"
     },
@@ -3739,7 +3929,7 @@
         "13": "\u89e3\u9664"
     },
     "FoxRepairText": {
-        "0": "[BLANK]",
+        "0": "REPAIR",
         "11": "\u4fee\u5fa9",
         "13": "\u4fee\u7406"
     },
@@ -3787,16 +3977,32 @@
         "11": "\u30c6\u30ec\u30dd\u30fc\u30c8"
     },
     "assassinText": {
-        "0": "[BLANK]",
+        "0": "TARGET",
         "11": "\u6a19\u7684"
     },
     "assassinKillText": {
-        "0": "[BLANK]",
+        "0": "KILL",
         "11": "\u6697\u6bba"
     },
     "mayorMeetingText": {
         "0": "Emergency",
         "11": "\u7dca\u6025\u4f1a\u8b70"
+    },
+    "ChunibyoText": {
+        "0": "Start",
+        "11": "\u767a\u52d5"
+    },
+    "ChunibyoFinishText": {
+        "0": "Until Finish",
+        "11": "\u7d42\u4e86\u307e\u3067"
+    },
+    "dropText": {
+        "0": "Drop",
+        "11": "\u6368\u3066\u308b"
+    },
+    "dragText": {
+        "0": "Drag",
+        "11": "\u63b4\u3080"
     },
     "colorSalmon": {
         "0": "Salmon",
@@ -3912,6 +4118,14 @@
         "0": "GM Edition Exclusive",
         "11": "GM\u30a8\u30c7\u30a3\u30b7\u30e7\u30f3\u9650\u5b9a",
         "13": "GM\u7248\u9650\u5b9a"
+    },
+    "YJWhite": {
+        "0": "YJ Hats Collection",
+        "11": "YJ*Hats/\u767d\u685c\u30b3\u30ec\u30af\u30b7\u30e7\u30f3"
+    },
+    "YJBlack": {
+        "0": "YJ Visors Collection",
+        "11": "YJ*Visors/\u9ed2\u685c\u30b3\u30ec\u30af\u30b7\u30e7\u30f3"
     },
     "antiTeleportPostfix": {
         "0": " AT",

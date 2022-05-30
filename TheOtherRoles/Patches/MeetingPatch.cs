@@ -2,17 +2,15 @@ using HarmonyLib;
 using Hazel;
 using System.Collections.Generic;
 using System.Linq;
-using UnhollowerBaseLib;
 using static TheOtherRoles.TheOtherRoles;
 using static TheOtherRoles.TheOtherRolesGM;
 using static TheOtherRoles.MapOptions;
 using static TheOtherRoles.GameHistory;
 using TheOtherRoles.Objects;
-using System.Collections;
 using System;
-using System.Text;
 using UnityEngine;
-using System.Reflection;
+using TheOtherRoles.Utilities;
+using TheOtherRoles.Modules;
 
 namespace TheOtherRoles.Patches
 {
@@ -242,7 +240,7 @@ namespace TheOtherRoles.Patches
                 }
 
 
-                __instance.TitleText.text = DestroyableSingleton<TranslationController>.Instance.GetString(StringNames.MeetingVotingResults, new Il2CppReferenceArray<Il2CppSystem.Object>(0));
+                __instance.TitleText.text = FastDestroyableSingleton<TranslationController>.Instance.GetString(StringNames.MeetingVotingResults, new Il2CppReferenceArray<Il2CppSystem.Object>(0));
                 int num = 0;
                 for (int i = 0; i < __instance.playerStates.Length; i++)
                 {
@@ -468,7 +466,7 @@ namespace TheOtherRoles.Patches
                 Transform button = UnityEngine.Object.Instantiate(buttonTemplate, buttonParent);
                 Transform buttonMask = UnityEngine.Object.Instantiate(maskTemplate, buttonParent);
                 TMPro.TextMeshPro label = UnityEngine.Object.Instantiate(textTemplate, button);
-                button.GetComponent<SpriteRenderer>().sprite = DestroyableSingleton<HatManager>.Instance.GetNamePlateById("nameplate_NoPlate")?.viewData?.viewData?.Image;
+                button.GetComponent<SpriteRenderer>().sprite = FastDestroyableSingleton<HatManager>.Instance.GetNamePlateById("nameplate_NoPlate")?.viewData?.viewData?.Image;
                 buttons.Add(button);
                 int row = i / 5, col = i % 5;
                 buttonParent.localPosition = new Vector3(-3.47f + 1.75f * col, 1.5f - 0.45f * row, -200f);
@@ -751,7 +749,7 @@ namespace TheOtherRoles.Patches
                         float timeBeforeMeeting = ((float)(DateTime.UtcNow - entry.time).TotalMilliseconds) / 1000;
                         string msg = Portalmaker.logShowsTime ? String.Format(ModTranslation.getString("portalLogTime"), (int)timeBeforeMeeting) : "";
                         msg = msg + string.Format(ModTranslation.getString("portalLog"), entry.name);
-                        DestroyableSingleton<HudManager>.Instance.Chat.AddChat(PlayerControl.LocalPlayer, $"{msg}");
+                        FastDestroyableSingleton<HudManager>.Instance.Chat.AddChat(PlayerControl.LocalPlayer, $"{msg}");
                     }
                 }
             }

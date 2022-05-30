@@ -2,17 +2,12 @@ using HarmonyLib;
 using Hazel;
 using System.Collections.Generic;
 using System.Linq;
-using UnhollowerBaseLib;
 using static TheOtherRoles.TheOtherRoles;
 using static TheOtherRoles.TheOtherRolesGM;
-using static TheOtherRoles.GameHistory;
 using TheOtherRoles.Objects;
-using static TheOtherRoles.MapOptions;
-using System.Collections;
 using System;
-using System.Text;
 using UnityEngine;
-using System.Reflection;
+using TheOtherRoles.Utilities;
 
 namespace TheOtherRoles.Patches
 {
@@ -113,14 +108,14 @@ namespace TheOtherRoles.Patches
             Witch.futureSpelled = new List<PlayerControl>();
 
             // SecurityGuard vents and cameras
-            var allCameras = ShipStatus.Instance.AllCameras.ToList();
+            var allCameras = MapUtilities.CachedShipStatus.AllCameras.ToList();
             MapOptions.camerasToAdd.ForEach(camera =>
             {
                 camera.gameObject.SetActive(true);
                 camera.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
                 allCameras.Add(camera);
             });
-            ShipStatus.Instance.AllCameras = allCameras.ToArray();
+            MapUtilities.CachedShipStatus.AllCameras = allCameras.ToArray();
             MapOptions.camerasToAdd = new List<SurvCamera>();
 
             foreach (Vent vent in MapOptions.ventsToSeal)
@@ -129,8 +124,8 @@ namespace TheOtherRoles.Patches
                 animator?.Stop();
                 vent.EnterVentAnim = vent.ExitVentAnim = null;
                 vent.myRend.sprite = animator == null ? SecurityGuard.getStaticVentSealedSprite() : SecurityGuard.getAnimatedVentSealedSprite();
-                if (SubmergedCompatibility.isSubmerged() && vent.Id == 0) vent.myRend.sprite = SecurityGuard.getSubmergedCentralUpperSealedSprite();
-                if (SubmergedCompatibility.isSubmerged() && vent.Id == 14) vent.myRend.sprite = SecurityGuard.getSubmergedCentralLowerSealedSprite();
+                if (SubmergedCompatibility.IsSubmerged && vent.Id == 0) vent.myRend.sprite = SecurityGuard.getSubmergedCentralUpperSealedSprite();
+                if (SubmergedCompatibility.IsSubmerged && vent.Id == 14) vent.myRend.sprite = SecurityGuard.getSubmergedCentralLowerSealedSprite();
                 vent.myRend.color = Color.white;
                 vent.name = "SealedVent_" + vent.name;
             }
@@ -194,7 +189,7 @@ namespace TheOtherRoles.Patches
             public static void Postfix(AirshipExileController __instance)
             {
                 WrapUpPostfix(__instance.exiled);
-                if (SubmergedCompatibility.isSubmerged()) ExileControllerReEnableGameplayPatch.ReEnableGameplay();
+                if (SubmergedCompatibility.IsSubmerged) ExileControllerReEnableGameplayPatch.ReEnableGameplay();
             }
         }
 
@@ -202,7 +197,7 @@ namespace TheOtherRoles.Patches
         [HarmonyPatch(typeof(UnityEngine.Object), nameof(UnityEngine.Object.Destroy), new Type[] { typeof(GameObject) })]
         public static void Prefix(GameObject obj)
         {
-            if (!SubmergedCompatibility.isSubmerged()) return;
+            if (!SubmergedCompatibility.IsSubmerged) return;
             if (obj.name.Contains("ExileCutscene"))
             {
                 WrapUpPostfix(ExileControllerBeginPatch.lastExiled);
@@ -212,7 +207,8 @@ namespace TheOtherRoles.Patches
         static void WrapUpPostfix(GameData.PlayerInfo exiled)
         {
             // Mini exile lose condition
-            if (exiled != null && Mini.mini != null && Mini.mini.PlayerId == exiled.PlayerId && !Mini.isGrownUp() && !Mini.mini.Data.Role.IsImpostor)
+            var p = Helpers.playerById(exiled.PlayerId);
+            if (exiled != null && p.hasModifier(ModifierType.Mini) && !Mini.isGrownUp(p) && !p.Data.Role.IsImpostor)
             {
                 Mini.triggerMiniLose = true;
             }
@@ -241,10 +237,10 @@ namespace TheOtherRoles.Patches
             TheOtherRolesGM.OnMeetingEnd();
 
             // Mini set adapted cooldown
-            if (Mini.mini != null && PlayerControl.LocalPlayer == Mini.mini && Mini.mini.Data.Role.IsImpostor)
+            if (PlayerControl.LocalPlayer.hasModifier(ModifierType.Mini) && PlayerControl.LocalPlayer.Data.Role.IsImpostor)
             {
-                var multiplier = Mini.isGrownUp() ? 0.66f : 2f;
-                Mini.mini.SetKillTimer(PlayerControl.GameOptions.KillCooldown * multiplier);
+                var multiplier = Mini.isGrownUp(PlayerControl.LocalPlayer) ? 0.66f : 2f;
+                PlayerControl.LocalPlayer.SetKillTimer(PlayerControl.GameOptions.KillCooldown * multiplier);
             }
 
             // Seer spawn souls
@@ -261,7 +257,7 @@ namespace TheOtherRoles.Patches
 
                     if (Seer.limitSoulDuration)
                     {
-                        HudManager.Instance.StartCoroutine(Effects.Lerp(Seer.soulDuration, new Action<float>((p) =>
+                        FastDestroyableSingleton<HudManager>.Instance.StartCoroutine(Effects.Lerp(Seer.soulDuration, new Action<float>((p) =>
                         {
                             if (rend != null)
                             {
@@ -319,7 +315,7 @@ namespace TheOtherRoles.Patches
                 if (AntiTeleport.position != new Vector3())
                 {
                     PlayerControl.LocalPlayer.transform.position = AntiTeleport.position;
-                    if (SubmergedCompatibility.isSubmerged())
+                    if (SubmergedCompatibility.IsSubmerged)
                     {
                         SubmergedCompatibility.ChangeFloor(AntiTeleport.position.y > -7);
                     }

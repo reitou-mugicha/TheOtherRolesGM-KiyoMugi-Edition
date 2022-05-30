@@ -3,14 +3,13 @@ using HarmonyLib;
 using static TheOtherRoles.TheOtherRoles;
 using static TheOtherRoles.TheOtherRolesGM;
 using static TheOtherRoles.GameHistory;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using Hazel;
-using UnhollowerBaseLib;
 using System;
 using System.Text;
+using TheOtherRoles.Modules;
+using TheOtherRoles.Utilities;
 
 namespace TheOtherRoles.Patches
 {
@@ -25,7 +24,6 @@ namespace TheOtherRoles.Patches
         LawyerSoloWin = 16,
         PlagueDoctorWin = 17,
         FoxWin = 18,
-        //TeamKingdomWin = 19,
     }
 
     enum WinCondition
@@ -45,7 +43,6 @@ namespace TheOtherRoles.Patches
         AdditionalAlivePursuerWin,
         PlagueDoctorWin,
         FoxWin,
-        //KingdomWin,
 
         EveryoneDied,
     }
@@ -143,7 +140,7 @@ namespace TheOtherRoles.Patches
 
             //foreach (var pc in PlayerControl.AllPlayerControls)
             var excludeRoles = new RoleType[] { RoleType.Lovers };
-            foreach (var p in GameData.Instance.AllPlayers)
+            foreach (var p in GameData.Instance.AllPlayers.GetFastEnumerator())
             {
                 //var p = pc.Data;
                 var roles = RoleInfo.getRoleInfoForPlayer(p.Object, excludeRoles, includeHidden: true);
@@ -188,7 +185,6 @@ namespace TheOtherRoles.Patches
             //if (King.king != null) notWinners.Add(King.king);
 
             notWinners.AddRange(Jackal.formerJackals);
-            //notWinners.AddRange(King.formerKingdoms);
             notWinners.AddRange(Madmate.allPlayers);
             notWinners.AddRange(CreatedMadmate.allPlayers);
             notWinners.AddRange(Opportunist.allPlayers);
@@ -212,7 +208,7 @@ namespace TheOtherRoles.Patches
             }
 
             List<WinningPlayerData> winnersToRemove = new List<WinningPlayerData>();
-            foreach (WinningPlayerData winner in TempData.winners)
+            foreach (WinningPlayerData winner in TempData.winners.GetFastEnumerator())
             {
                 if (notWinners.Any(x => x.Data.PlayerName == winner.PlayerName)) winnersToRemove.Add(winner);
             }
@@ -222,10 +218,9 @@ namespace TheOtherRoles.Patches
 
             bool jesterWin = Jester.jester != null && gameOverReason == (GameOverReason)CustomGameOverReason.JesterWin;
             bool arsonistWin = Arsonist.arsonist != null && gameOverReason == (GameOverReason)CustomGameOverReason.ArsonistWin;
-            bool miniLose = Mini.mini != null && gameOverReason == (GameOverReason)CustomGameOverReason.MiniLose;
+            bool miniLose = Mini.exists && gameOverReason == (GameOverReason)CustomGameOverReason.MiniLose;
             bool loversWin = Lovers.anyAlive() && !(Lovers.separateTeam && gameOverReason == GameOverReason.HumansByTask);
             bool teamJackalWin = gameOverReason == (GameOverReason)CustomGameOverReason.TeamJackalWin && ((Jackal.jackal != null && Jackal.jackal.isAlive()) || (Sidekick.sidekick != null && !Sidekick.sidekick.isAlive()));
-            //bool teamKingdomWin = gameOverReason == (GameOverReason)CustomGameOverReason.TeamKingdomWin && ((King.king != null && King.king.isAlive()) || (Minions.minions != null && !Minions.minions.isAlive()));
             bool vultureWin = Vulture.vulture != null && gameOverReason == (GameOverReason)CustomGameOverReason.VultureWin;
             bool lawyerSoloWin = Lawyer.lawyer != null && gameOverReason == (GameOverReason)CustomGameOverReason.LawyerSoloWin;
             bool plagueDoctorWin = PlagueDoctor.exists && gameOverReason == (GameOverReason)CustomGameOverReason.PlagueDoctorWin;
@@ -236,10 +231,10 @@ namespace TheOtherRoles.Patches
             // Mini lose
             if (miniLose)
             {
-                TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
+                TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();/*
                 WinningPlayerData wpd = new WinningPlayerData(Mini.mini.Data);
                 wpd.IsYou = false; // If "no one is the Mini", it will display the Mini, but also show defeat to everyone
-                TempData.winners.Add(wpd);
+                TempData.winners.Add(wpd);*/
                 AdditionalTempData.winCondition = WinCondition.MiniLose;
             }
 
@@ -335,30 +330,7 @@ namespace TheOtherRoles.Patches
                     wpdFormerJackal.IsImpostor = false;
                     TempData.winners.Add(wpdFormerJackal);
                 }
-            }/*
-            // Kingdom win condition
-            else if (teamKingdomWin)
-            {
-                // Jackal wins if nobody except jackal is alive
-                AdditionalTempData.winCondition = WinCondition.KingdomWin;
-                TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
-                WinningPlayerData wpd = new WinningPlayerData(King.king.Data);
-                wpd.IsImpostor = false;
-                TempData.winners.Add(wpd);
-
-                if (Minions.minions != null)
-                {
-                    WinningPlayerData wpdMinions = new WinningPlayerData(Sidekick.sidekick.Data);
-                    wpdMinions.IsImpostor = false;
-                    TempData.winners.Add(wpdMinions);
-                }
-                foreach (var player in King.formerKingdoms)
-                {
-                    WinningPlayerData wpdFormerKing = new WinningPlayerData(player.Data);
-                    wpdFormerKing.IsImpostor = false;
-                    TempData.winners.Add(wpdFormerKing);
-                }
-            }*/
+            }
             // Lawyer solo win
             else if (lawyerSoloWin)
             {
@@ -407,7 +379,7 @@ namespace TheOtherRoles.Patches
             if (!lawyerSoloWin && Lawyer.lawyer != null && Lawyer.target != null && Lawyer.target.isAlive())
             {
                 WinningPlayerData winningClient = null;
-                foreach (WinningPlayerData winner in TempData.winners)
+                foreach (WinningPlayerData winner in TempData.winners.GetFastEnumerator())
                 {
                     if (winner.PlayerName == Lawyer.target.Data.PlayerName)
                         winningClient = winner;
@@ -600,13 +572,7 @@ namespace TheOtherRoles.Patches
                         bonusText = "jackalWin";
                         textRenderer.color = Jackal.color;
                         __instance.BackgroundBar.material.SetColor("_Color", Jackal.color);
-                    }/*
-                    else if (AdditionalTempData.winCondition == WinCondition.KingdomWin)
-                    {
-                        bonusText = "kingdomWin";
-                        textRenderer.color = King.color;
-                        __instance.BackgroundBar.material.SetColor("_Color", King.color);
-                    }*/
+                    }
                     else if (AdditionalTempData.winCondition == WinCondition.EveryoneDied)
                     {
                         bonusText = "everyoneDied";
@@ -744,7 +710,7 @@ namespace TheOtherRoles.Patches
                 {
                     if (!GameData.Instance) return false;
                     if (DestroyableSingleton<TutorialManager>.InstanceExists) return true; // InstanceExists | Don't check Custom Criteria when in Tutorial
-                    if (HudManager.Instance.IsIntroDisplayed) return false;
+                    if (FastDestroyableSingleton<HudManager>.Instance.IsIntroDisplayed) return false;
 
                     var statistics = new PlayerStatistics(__instance);
                     if (CheckAndEndGameForMiniLose(__instance)) return false;
@@ -825,8 +791,8 @@ namespace TheOtherRoles.Patches
 
                 private static bool CheckAndEndGameForSabotageWin(ShipStatus __instance)
                 {
-                    if (__instance.Systems == null) return false;
-                    ISystemType systemType = __instance.Systems.ContainsKey(SystemTypes.LifeSupp) ? __instance.Systems[SystemTypes.LifeSupp] : null;
+                    if (MapUtilities.Systems == null) return false;
+                    var systemType = MapUtilities.Systems.ContainsKey(SystemTypes.LifeSupp) ? MapUtilities.Systems[SystemTypes.LifeSupp] : null;
                     if (systemType != null)
                     {
                         LifeSuppSystemType lifeSuppSystemType = systemType.TryCast<LifeSuppSystemType>();
@@ -837,10 +803,10 @@ namespace TheOtherRoles.Patches
                             return true;
                         }
                     }
-                    ISystemType systemType2 = __instance.Systems.ContainsKey(SystemTypes.Reactor) ? __instance.Systems[SystemTypes.Reactor] : null;
+                    var systemType2 = MapUtilities.Systems.ContainsKey(SystemTypes.Reactor) ? MapUtilities.Systems[SystemTypes.Reactor] : null;
                     if (systemType2 == null)
                     {
-                        systemType2 = __instance.Systems.ContainsKey(SystemTypes.Laboratory) ? __instance.Systems[SystemTypes.Laboratory] : null;
+                        systemType2 = MapUtilities.Systems.ContainsKey(SystemTypes.Laboratory) ? MapUtilities.Systems[SystemTypes.Laboratory] : null;
                     }
                     if (systemType2 != null)
                     {
@@ -891,43 +857,7 @@ namespace TheOtherRoles.Patches
                         }
                     }
                     return false;
-                }/*
-
-                private static bool CheckAndEndGameForKingdomWin(ShipStatus __instance, PlayerStatistics statistics)
-                {
-                    if (GameData.Instance.TotalTasks > 0 && GameData.Instance.TotalTasks <= GameData.Instance.CompletedTasks)
-                    {
-                        UncheckedEndGame(GameOverReason.HumansByTask);
-                        return true;
-                    }
-
-                    if (King.exists)
-                    {
-                        bool isKingAlive = King.isKingAlive();
-                        bool isKingCompletedtasks = King.isKingCompletedTasks();
-                        int numDeadPlayerUncompletedTasks = 0;
-                        foreach (var player in PlayerControl.AllPlayerControls)
-                        {
-                            foreach (var task in player.Data.Tasks)
-                            {
-                                if (player.Data.IsDead && player.isCrew() && !player.hasModifier(ModifierType.Madmate) && !player.hasModifier(ModifierType.CreatedMadmate))
-                                {
-                                    if (!task.Complete)
-                                    {
-                                        numDeadPlayerUncompletedTasks++;
-                                    }
-                                }
-                            }
-                        }
-
-                        if (isKingCompletedtasks && isKingAlive && GameData.Instance.TotalTasks > 0 && GameData.Instance.TotalTasks <= GameData.Instance.CompletedTasks + numDeadPlayerUncompletedTasks)
-                        {
-                            UncheckedEndGame(GameOverReason.HumansByTask);
-                            return true;
-                        }
-                    }
-                    return false;
-                }*/
+                }
 
                 private static bool CheckAndEndGameForLoverWin(ShipStatus __instance, PlayerStatistics statistics)
                 {
@@ -957,7 +887,7 @@ namespace TheOtherRoles.Patches
                     if (statistics.TeamImpostorsAlive >= statistics.TotalAlive - statistics.TeamImpostorsAlive - statistics.FoxAlive &&
                         statistics.TeamJackalAlive == 0 &&
                         (statistics.TeamImpostorLovers == 0 || statistics.TeamImpostorLovers >= statistics.CouplesAlive * 2)
-                       )
+                        )
                     {
                         GameOverReason endReason;
                         switch (TempData.LastDeathReason)

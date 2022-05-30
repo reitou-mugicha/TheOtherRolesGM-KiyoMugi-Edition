@@ -1,26 +1,19 @@
-﻿using System.Net;
-using System.Linq;
-using BepInEx;
-using BepInEx.Configuration;
-using BepInEx.IL2CPP;
-using HarmonyLib;
-using Hazel;
+﻿using HarmonyLib;
 using System;
 using System.Collections.Generic;
-using System.Collections;
-using System.IO;
 using UnityEngine;
 using TheOtherRoles.Objects;
 using static TheOtherRoles.GameHistory;
 using static TheOtherRoles.TheOtherRoles;
 using TheOtherRoles.Patches;
+using TheOtherRoles.Modules;
+using TheOtherRoles.Utilities;
 
 namespace TheOtherRoles
 {
     [HarmonyPatch]
     public static class TheOtherRolesGM
     {
-
         public static void clearAndReloadRoles()
         {
             Morphling.clearAndReload();
@@ -28,7 +21,8 @@ namespace TheOtherRoles
             Shifter.clearAndReload();
             Swapper.clearAndReload();
             Portalmaker.clearAndReload();
-            Mayor.Clear();
+            UnderTaker.clearAndReload();
+            Mayor.clearAndReload();
             GM.clearAndReload();
 
             Lovers.Clear();
@@ -42,10 +36,17 @@ namespace TheOtherRoles
             Fox.Clear();
             FortuneTeller.Clear();
             HawkEye.Clear();
+            DoubleKiller.Clear();
+            Chunibyo.Clear();
+            Boss.Clear();
+            Staff.Clear();
+            Gun.Clear();
+            Mini.Clear();
+            AntiTeleport.Clear();
+            Sprinter.Clear();
+            Bread.Clear();
             //Creator.Clear();
             //Student.Clear();
-            //King.Clear();
-            //Minions.Clear();
             Role.ClearAll();
         }
 
@@ -195,7 +196,7 @@ namespace TheOtherRoles
                 else
                     camoData.ColorId = 6;
 
-                foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+                foreach (PlayerControl p in PlayerControl.AllPlayerControls.GetFastEnumerator())
                 {
                     if (p == null) continue;
                     p.setOutfit(camoData, visible: false);
@@ -205,7 +206,7 @@ namespace TheOtherRoles
             public static void resetCamouflage()
             {
                 camouflageTimer = 0f;
-                foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+                foreach (PlayerControl p in PlayerControl.AllPlayerControls.GetFastEnumerator())
                 {
                     if (p == null) continue;
 
@@ -349,6 +350,43 @@ namespace TheOtherRoles
             }
         }
 
+        public static class UnderTaker
+        {
+            public static PlayerControl underTaker;
+            public static Color color = Palette.ImpostorRed;
+
+            public static float speedDown = 100f;
+            public static bool dragginBody = false;
+            public static byte bodyId = 0;
+
+            private static Sprite buttonSprite;
+            public static Sprite getButtonSprite()
+            {
+                if (buttonSprite) return buttonSprite;
+                buttonSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.UnderTakerButton.png", 115f);
+                return buttonSprite;
+            }
+
+            public static void clearAndReload()
+            {
+                underTaker = null;
+                speedDown = CustomOptionHolder.underTakerSpeed.getFloat();
+                dragginBody = false;
+                bodyId = 0;
+            }
+            public static void underTakerResetValuesAtDead()
+            {
+                // Restore janitor values when dead
+                dragginBody = false;
+                bodyId = 0;
+                if (PlayerControl.GameOptions.MapId == 5)
+                {
+                    GameObject vent = GameObject.Find("LowerCentralVent");
+                    vent.GetComponent<BoxCollider2D>().enabled = true;
+                }
+            }
+        }
+
         public static class GM
         {
             public static PlayerControl gm;
@@ -380,8 +418,8 @@ namespace TheOtherRoles
             public static void resetZoom()
             {
                 Camera.main.orthographicSize = 3.0f;
-                HudManager.Instance.UICamera.orthographicSize = 3.0f;
-                HudManager.Instance.transform.localScale = Vector3.one;
+                FastDestroyableSingleton<HudManager>.Instance.UICamera.orthographicSize = 3.0f;
+                FastDestroyableSingleton<HudManager>.Instance.transform.localScale = Vector3.one;
             }
 
             public static void FixedUpdate()

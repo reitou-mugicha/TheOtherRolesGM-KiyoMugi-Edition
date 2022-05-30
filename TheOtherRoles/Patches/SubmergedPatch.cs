@@ -1,16 +1,7 @@
 using HarmonyLib;
-using Hazel;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using UnityEngine;
 using BepInEx;
 using BepInEx.IL2CPP;
-using UnhollowerRuntimeLib;
-using static TheOtherRoles.TheOtherRoles;
-using static TheOtherRoles.TheOtherRolesGM;
-using TheOtherRoles.Objects;
 
 namespace TheOtherRoles.Patches
 {

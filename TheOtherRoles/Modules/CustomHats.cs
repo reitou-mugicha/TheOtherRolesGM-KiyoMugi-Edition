@@ -1,26 +1,17 @@
-using System;
-using BepInEx;
-using BepInEx.Configuration;
-using BepInEx.IL2CPP;
-using Il2CppSystem;
+
 using HarmonyLib;
 using UnityEngine;
-using UnhollowerBaseLib;
 using System.IO;
 using System.Reflection;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
-
+using TheOtherRoles.Utilities;
 
 namespace TheOtherRoles.Modules
 {
@@ -260,6 +251,8 @@ namespace TheOtherRoles.Modules
                 if (DestroyableSingleton<TutorialManager>.InstanceExists)
                 {
                     string filePath = Path.GetDirectoryName(Application.dataPath) + @"\TheOtherHats\Test";
+                    if (!Directory.Exists(filePath))
+                        Directory.CreateDirectory(filePath);
                     DirectoryInfo d = new DirectoryInfo(filePath);
                     string[] filePaths = d.GetFiles("*.png").Select(x => x.FullName).ToArray(); // Getting Text files
                     List<CustomHat> hats = createCustomHatDetails(filePaths, true);
@@ -336,7 +329,7 @@ namespace TheOtherRoles.Modules
                     if (ActiveInputManager.currentControlType == ActiveInputManager.InputType.Keyboard)
                     {
                         colorChip.Button.OnMouseOver.AddListener((UnityEngine.Events.UnityAction)(() => __instance.SelectHat(hat)));
-                        colorChip.Button.OnMouseOut.AddListener((UnityEngine.Events.UnityAction)(() => __instance.SelectHat(DestroyableSingleton<HatManager>.Instance.GetHatById(SaveManager.LastHat))));
+                        colorChip.Button.OnMouseOut.AddListener((System.Action)(() => __instance.SelectHat(FastDestroyableSingleton<HatManager>.Instance.GetHatById(SaveManager.LastHat))));
                         colorChip.Button.OnClick.AddListener((UnityEngine.Events.UnityAction)(() => __instance.ClickEquip()));
                     }
                     else
@@ -358,7 +351,7 @@ namespace TheOtherRoles.Modules
             {
                 calcItemBounds(__instance);
 
-                HatData[] unlockedHats = DestroyableSingleton<HatManager>.Instance.GetUnlockedHats();
+                HatData[] unlockedHats = FastDestroyableSingleton<HatManager>.Instance.GetUnlockedHats();
                 Dictionary<string, List<System.Tuple<HatData, HatExtension>>> packages = new Dictionary<string, List<System.Tuple<HatData, HatExtension>>>();
 
                 Helpers.destroyList(hatsTabCustomTexts);
@@ -630,7 +623,7 @@ namespace TheOtherRoles.Modules
     }
 
     [HarmonyPatch(typeof(PoolablePlayer), nameof(PoolablePlayer.UpdateFromPlayerOutfit))]
-    public static class PoolablePlayerPatch
+    public static class HatsPoolablePlayerPatch
     {
         public static void Postfix(PoolablePlayer __instance, GameData.PlayerOutfit outfit)
         {

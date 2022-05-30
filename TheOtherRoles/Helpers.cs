@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using System.Collections;
-using UnhollowerBaseLib;
 using UnityEngine;
 using System.Linq;
 using static TheOtherRoles.TheOtherRoles;
@@ -13,6 +11,7 @@ using TheOtherRoles.Modules;
 using HarmonyLib;
 using Hazel;
 using TheOtherRoles.Patches;
+using TheOtherRoles.Utilities;
 
 namespace TheOtherRoles
 {
@@ -26,13 +25,15 @@ namespace TheOtherRoles
 
     public static class Helpers
     {
+
+        public static Dictionary<string, Sprite> CachedSprites = new();
         public static bool ShowButtons
         {
             get
             {
                 return !(MapBehaviour.Instance && MapBehaviour.Instance.IsOpen) &&
-                      !MeetingHud.Instance &&
-                      !ExileController.Instance;
+                        !MeetingHud.Instance &&
+                        !ExileController.Instance;
             }
         }
 
@@ -42,8 +43,8 @@ namespace TheOtherRoles
             {
                 return MeetingHud.Instance != null &&
                     (MeetingHud.Instance.state == MeetingHud.VoteStates.Voted ||
-                     MeetingHud.Instance.state == MeetingHud.VoteStates.NotVoted ||
-                     MeetingHud.Instance.state == MeetingHud.VoteStates.Discussion);
+                    MeetingHud.Instance.state == MeetingHud.VoteStates.NotVoted ||
+                    MeetingHud.Instance.state == MeetingHud.VoteStates.Discussion);
             }
         }
 
@@ -165,8 +166,11 @@ namespace TheOtherRoles
         {
             try
             {
+                if (CachedSprites.TryGetValue(path + pixelsPerUnit, out var sprite)) return sprite;
                 Texture2D texture = loadTextureFromResources(path);
-                return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f), pixelsPerUnit);
+                sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f), pixelsPerUnit);
+                sprite.hideFlags |= HideFlags.HideAndDontSave | HideFlags.DontSaveInEditor;
+                return CachedSprites[path + pixelsPerUnit] = sprite;
             }
             catch
             {
@@ -175,7 +179,7 @@ namespace TheOtherRoles
             return null;
         }
 
-        public static Texture2D loadTextureFromResources(string path)
+        public static unsafe Texture2D loadTextureFromResources(string path)
         {
             try
             {
@@ -225,7 +229,7 @@ namespace TheOtherRoles
 
         public static PlayerControl playerById(byte id)
         {
-            foreach (PlayerControl player in PlayerControl.AllPlayerControls)
+            foreach (PlayerControl player in PlayerControl.AllPlayerControls.GetFastEnumerator())
                 if (player.PlayerId == id)
                     return player;
             return null;
@@ -234,7 +238,7 @@ namespace TheOtherRoles
         public static Dictionary<byte, PlayerControl> allPlayersById()
         {
             Dictionary<byte, PlayerControl> res = new Dictionary<byte, PlayerControl>();
-            foreach (PlayerControl player in PlayerControl.AllPlayerControls)
+            foreach (PlayerControl player in PlayerControl.AllPlayerControls.GetFastEnumerator())
                 res.Add(player.PlayerId, player);
             return res;
         }
@@ -252,22 +256,19 @@ namespace TheOtherRoles
 
         public static void refreshRoleDescription(PlayerControl player)
         {
-            if (player == null) return;
-
             List<RoleInfo> infos = RoleInfo.getRoleInfoForPlayer(player);
+            List<string> taskTexts = new(infos.Count);
 
             var toRemove = new List<PlayerTask>();
-            foreach (PlayerTask t in player.myTasks)
+            foreach (PlayerTask t in player.myTasks.GetFastEnumerator())
             {
-                var textTask = t.gameObject.GetComponent<ImportantTextTask>();
-                if (textTask != null)
-                {
-                    var info = infos.FirstOrDefault(x => textTask.Text.StartsWith(x.name));
-                    if (info != null)
-                        infos.Remove(info); // TextTask for this RoleInfo does not have to be added, as it already exists
-                    else
-                        toRemove.Add(t); // TextTask does not have a corresponding RoleInfo and will hence be deleted
-                }
+                var textTask = t.TryCast<ImportantTextTask>();
+                if (textTask == null) continue;
+
+                var currentText = textTask.Text;
+
+                if (taskTexts.Contains(currentText)) taskTexts.Remove(currentText); // TextTask for this RoleInfo does not have to be added, as it already exists
+                else toRemove.Add(t); // TextTask does not have a corresponding RoleInfo and will hence be deleted
             }
 
             foreach (PlayerTask t in toRemove)
@@ -278,26 +279,11 @@ namespace TheOtherRoles
             }
 
             // Add TextTask for remaining RoleInfos
-            foreach (RoleInfo roleInfo in infos)
+            foreach (string title in taskTexts)
             {
                 var task = new GameObject("RoleTask").AddComponent<ImportantTextTask>();
                 task.transform.SetParent(player.transform, false);
-
-                if (roleInfo.roleType == RoleType.Jackal)
-                {
-                    if (Jackal.canCreateSidekick)
-                    {
-                        task.Text = cs(roleInfo.color, $"{roleInfo.name}: " + ModTranslation.getString("jackalWithSidekick"));
-                    }
-                    else
-                    {
-                        task.Text = cs(roleInfo.color, $"{roleInfo.name}: " + ModTranslation.getString("jackalShortDesc"));
-                    }
-                }
-                else
-                {
-                    task.Text = cs(roleInfo.color, $"{roleInfo.name}: {roleInfo.shortDescription}");
-                }
+                task.Text = title;
 
                 player.myTasks.Insert(0, task);
             }
@@ -318,8 +304,8 @@ namespace TheOtherRoles
 
         public static bool isCustomServer()
         {
-            if (DestroyableSingleton<ServerManager>.Instance == null) return false;
-            StringNames n = DestroyableSingleton<ServerManager>.Instance.CurrentRegion.TranslateName;
+            if (FastDestroyableSingleton<ServerManager>.Instance == null) return false;
+            StringNames n = FastDestroyableSingleton<ServerManager>.Instance.CurrentRegion.TranslateName;
             return n != StringNames.ServerNA && n != StringNames.ServerEU && n != StringNames.ServerAS;
         }
 
@@ -340,9 +326,6 @@ namespace TheOtherRoles
                     (player.isRole(RoleType.Jackal) ||
                     player.isRole(RoleType.Sidekick) ||
                     Jackal.formerJackals.Contains(player) ||
-                    /*player.isRole(RoleType.King) ||
-                    player.isRole(RoleType.Minions) ||
-                    King.formerKingdoms.Contains(player) ||*/
                     player.isRole(RoleType.Arsonist) ||
                     player.isRole(RoleType.Jester) ||
                     player.isRole(RoleType.PlagueDoctor) ||
@@ -367,18 +350,18 @@ namespace TheOtherRoles
         public static bool hasFakeTasks(this PlayerControl player)
         {
             return (player.isNeutral() && !player.neutralHasTasks()) ||
-                   (player.hasModifier(ModifierType.CreatedMadmate) && !CreatedMadmate.hasTasks) ||
-                   (player.hasModifier(ModifierType.Madmate) && !Madmate.hasTasks) ||
-                   (player.isLovers() && Lovers.separateTeam && !Lovers.tasksCount);
+                    (player.hasModifier(ModifierType.CreatedMadmate) && !CreatedMadmate.hasTasks) ||
+                    (player.hasModifier(ModifierType.Madmate) && !Madmate.hasTasks) ||
+                    (player.isLovers() && Lovers.separateTeam && !Lovers.tasksCount);
         }
 
         public static bool neutralHasTasks(this PlayerControl player)
         {
             return player.isNeutral() &&
                 (player.isRole(RoleType.Lawyer) ||
-                 player.isRole(RoleType.Pursuer) ||
-                 player.isRole(RoleType.Shifter) ||
-                 player.isRole(RoleType.Fox));
+                player.isRole(RoleType.Pursuer) ||
+                player.isRole(RoleType.Shifter) ||
+                player.isRole(RoleType.Fox));
         }
 
         public static bool isGM(this PlayerControl player)
@@ -500,7 +483,7 @@ namespace TheOtherRoles
             target.RawSetHat(hatId, colorId);
             target.RawSetName(hidePlayerName(PlayerControl.LocalPlayer, target) ? "" : playerName);
 
-            SkinViewData nextSkin = DestroyableSingleton<HatManager>.Instance.GetSkinById(skinId).viewData.viewData;
+            SkinViewData nextSkin = FastDestroyableSingleton<HatManager>.Instance.GetSkinById(skinId).viewData.viewData;
             PlayerPhysics playerPhysics = target.MyPhysics;
             AnimationClip clip = null;
             var spriteAnim = playerPhysics.Skin.animator;
@@ -513,12 +496,14 @@ namespace TheOtherRoles
             else clip = nextSkin.IdleAnim;
             float progress = playerPhysics.Animator.m_animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
             playerPhysics.Skin.skin = nextSkin;
+            if (playerPhysics.Skin.layer.material == FastDestroyableSingleton<HatManager>.Instance.PlayerMaterial)
+                PlayerControl.SetPlayerMaterialColors(colorId, playerPhysics.Skin.layer);
             spriteAnim.Play(clip, 1f);
             spriteAnim.m_animator.Play("a", 0, progress % 1);
             spriteAnim.m_animator.Update(0f);
 
             if (target.CurrentPet) UnityEngine.Object.Destroy(target.CurrentPet.gameObject);
-            target.CurrentPet = UnityEngine.Object.Instantiate<PetBehaviour>(DestroyableSingleton<HatManager>.Instance.GetPetById(petId).viewData.viewData);
+            target.CurrentPet = UnityEngine.Object.Instantiate<PetBehaviour>(FastDestroyableSingleton<HatManager>.Instance.GetPetById(petId).viewData.viewData);
             target.CurrentPet.transform.position = target.transform.position;
             target.CurrentPet.Source = target;
             target.CurrentPet.Visible = target.Visible;
@@ -527,12 +512,12 @@ namespace TheOtherRoles
 
         public static void showFlash(Color color, float duration = 1f)
         {
-            if (HudManager.Instance == null || HudManager.Instance.FullScreen == null) return;
-            HudManager.Instance.FullScreen.gameObject.SetActive(true);
-            HudManager.Instance.FullScreen.enabled = true;
-            HudManager.Instance.StartCoroutine(Effects.Lerp(duration, new Action<float>((p) =>
+            if (FastDestroyableSingleton<HudManager>.Instance == null || FastDestroyableSingleton<HudManager>.Instance.FullScreen == null) return;
+            FastDestroyableSingleton<HudManager>.Instance.FullScreen.gameObject.SetActive(true);
+            FastDestroyableSingleton<HudManager>.Instance.FullScreen.enabled = true;
+            FastDestroyableSingleton<HudManager>.Instance.StartCoroutine(Effects.Lerp(duration, new Action<float>((p) =>
             {
-                var renderer = HudManager.Instance.FullScreen;
+                var renderer = FastDestroyableSingleton<HudManager>.Instance.FullScreen;
 
                 if (p < 0.5)
                 {
@@ -577,6 +562,8 @@ namespace TheOtherRoles
                     roleCouldUse = false;
                 else if (!CustomImpostor.canUseVents && player.isRole(RoleType.CustomImpostor))
                     roleCouldUse = false;
+                else if (UnderTaker.underTaker != null && UnderTaker.underTaker == player && UnderTaker.dragginBody)
+                    roleCouldUse = false;
                 else
                     roleCouldUse = true;
             }
@@ -603,15 +590,6 @@ namespace TheOtherRoles
 
             return roleCouldUse;
         }
-
-        /*public static bool roleCanReport(this PlayerControl player)
-        {
-            bool roleCouldUse = true;
-            if (CustomImpostor.canReport && player.isRole(RoleType.CustomImpostor))
-                roleCouldUse = false;
-
-            return roleCouldUse;
-        }*/
 
         public static MurderAttemptResult checkMuderAttempt(PlayerControl killer, PlayerControl target, bool blockRewind = false)
         {
@@ -642,7 +620,7 @@ namespace TheOtherRoles
             }
 
             // Block impostor not fully grown mini kill
-            else if (Mini.mini != null && target.isRole(RoleType.Mini) && !Mini.isGrownUp())
+            else if (target.hasModifier(ModifierType.Mini) && !Mini.isGrownUp(target))
             {
                 return MurderAttemptResult.SuppressKill;
             }
@@ -695,7 +673,7 @@ namespace TheOtherRoles
         public static List<PlayerControl> getKillerTeamMembers(PlayerControl player)
         {
             List<PlayerControl> team = new List<PlayerControl>();
-            foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+            foreach (PlayerControl p in PlayerControl.AllPlayerControls.GetFastEnumerator())
             {
                 if (player.Data.Role.IsImpostor && p.Data.Role.IsImpostor && player.PlayerId != p.PlayerId && team.All(x => x.PlayerId != p.PlayerId)) team.Add(p);
                 else if (player.isRole(RoleType.Jackal) && p.isRole(RoleType.Sidekick)) team.Add(p);

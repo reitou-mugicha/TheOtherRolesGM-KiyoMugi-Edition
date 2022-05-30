@@ -1,13 +1,14 @@
 using HarmonyLib;
 using System.Collections.Generic;
 using UnityEngine;
+using TheOtherRoles.Modules;
 
 namespace TheOtherRoles
 {
     [HarmonyPatch]
     public class Opportunist : ModifierBase<Opportunist>
     {
-        public static Color color = new Color32(0, 255, 00, byte.MaxValue);
+        public static Color color = new Color32(0, 255, 0, byte.MaxValue);
 
         public static List<PlayerControl> candidates
         {

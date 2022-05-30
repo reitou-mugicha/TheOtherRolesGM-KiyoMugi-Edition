@@ -4,8 +4,9 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
-using static TheOtherRoles.TheOtherRoles;
 using System.Reflection;
+using TheOtherRoles.Modules;
+using TheOtherRoles.Utilities;
 
 namespace TheOtherRoles.Patches
 {
@@ -90,31 +91,26 @@ namespace TheOtherRoles.Patches
                     cameraTimer += Time.deltaTime;
                     if (cameraTimer > 0.1f)
                         UseCameraTime();
-
                     if (MapOptions.restrictDevices > 0)
                     {
                         if (TimeRemaining == null)
                         {
-                            TimeRemaining = UnityEngine.Object.Instantiate(HudManager.Instance.TaskText, __instance.transform);
+                            TimeRemaining = UnityEngine.Object.Instantiate(FastDestroyableSingleton<HudManager>.Instance.TaskText, __instance.transform);
                             TimeRemaining.alignment = TMPro.TextAlignmentOptions.Center;
                             TimeRemaining.transform.position = Vector3.zero;
                             TimeRemaining.transform.localPosition = new Vector3(0.0f, -1.7f);
                             TimeRemaining.transform.localScale *= 1.8f;
                             TimeRemaining.color = Palette.White;
                         }
-
                         if (MapOptions.restrictCamerasTime <= 0f)
                         {
                             __instance.Close();
                             return false;
                         }
-
                         string timeString = TimeSpan.FromSeconds(MapOptions.restrictCamerasTime).ToString(@"mm\:ss\.ff");
                         TimeRemaining.text = String.Format(ModTranslation.getString("timeRemaining"), timeString);
                         TimeRemaining.gameObject.SetActive(true);
-
                     }
-
                     // Update normal and securityGuard cameras
                     timer += Time.deltaTime;
                     int numberOfPages = Mathf.CeilToInt(ShipStatus.Instance.AllCameras.Length / 4f);
@@ -201,30 +197,26 @@ namespace TheOtherRoles.Patches
                     cameraTimer += Time.deltaTime;
                     if (cameraTimer > 0.1f)
                         UseCameraTime();
-
                     if (MapOptions.restrictDevices > 0)
                     {
                         if (TimeRemaining == null)
                         {
-                            TimeRemaining = UnityEngine.Object.Instantiate(HudManager.Instance.TaskText, __instance.transform);
+                            TimeRemaining = UnityEngine.Object.Instantiate(FastDestroyableSingleton<HudManager>.Instance.TaskText, __instance.transform);
                             TimeRemaining.alignment = TMPro.TextAlignmentOptions.BottomRight;
                             TimeRemaining.transform.position = Vector3.zero;
                             TimeRemaining.transform.localPosition = new Vector3(0.95f, 4.45f);
                             TimeRemaining.transform.localScale *= 1.8f;
                             TimeRemaining.color = Palette.White;
                         }
-
                         if (MapOptions.restrictCamerasTime <= 0f)
                         {
                             __instance.Close();
                             return false;
                         }
-
                         string timeString = TimeSpan.FromSeconds(MapOptions.restrictCamerasTime).ToString(@"mm\:ss\.ff");
                         TimeRemaining.text = String.Format(ModTranslation.getString("timeRemaining"), timeString);
                         TimeRemaining.gameObject.SetActive(true);
                     }
-
                     return true;
                 }
             }
@@ -272,34 +264,29 @@ namespace TheOtherRoles.Patches
                     cameraTimer += Time.deltaTime;
                     if (cameraTimer > 0.1f)
                         UseCameraTime();
-
                     if (MapOptions.restrictDevices > 0)
                     {
                         if (TimeRemaining == null)
                         {
-                            TimeRemaining = UnityEngine.Object.Instantiate(HudManager.Instance.TaskText, __instance.transform);
+                            TimeRemaining = UnityEngine.Object.Instantiate(FastDestroyableSingleton<HudManager>.Instance.TaskText, __instance.transform);
                             TimeRemaining.alignment = TMPro.TextAlignmentOptions.BottomRight;
                             TimeRemaining.transform.position = Vector3.zero;
                             TimeRemaining.transform.localPosition = new Vector3(1.0f, 4.25f);
                             TimeRemaining.transform.localScale *= 1.6f;
                             TimeRemaining.color = Palette.White;
                         }
-
                         if (MapOptions.restrictCamerasTime <= 0f)
                         {
                             __instance.Close();
                             return false;
                         }
-
                         string timeString = TimeSpan.FromSeconds(MapOptions.restrictCamerasTime).ToString(@"mm\:ss\.ff");
                         TimeRemaining.text = String.Format(ModTranslation.getString("timeRemaining"), timeString);
                         TimeRemaining.gameObject.SetActive(true);
                     }
-
                     return true;
                 }
             }
-
 
             [HarmonyPatch]
             class SecurityLogGameClosePatch

@@ -3,13 +3,13 @@ using Hazel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TheOtherRoles.Utilities;
 using static TheOtherRoles.TheOtherRoles;
 using static TheOtherRoles.TheOtherRolesGM;
 using static TheOtherRoles.GameHistory;
 using TheOtherRoles.Objects;
 using UnityEngine;
+using TheOtherRoles.Modules;
 
 namespace TheOtherRoles.Patches
 {
@@ -17,12 +17,11 @@ namespace TheOtherRoles.Patches
     public static class PlayerControlFixedUpdatePatch
     {
         // Helpers
-
         public static PlayerControl setTarget(bool onlyCrewmates = false, bool targetPlayersInVents = false, List<PlayerControl> untargetablePlayers = null, PlayerControl targetingPlayer = null)
         {
             PlayerControl result = null;
             float num = GameOptionsData.KillDistances[Mathf.Clamp(PlayerControl.GameOptions.KillDistance, 0, 2)];
-            if (!ShipStatus.Instance) return result;
+            if (!MapUtilities.CachedShipStatus) return result;
             if (targetingPlayer == null) targetingPlayer = PlayerControl.LocalPlayer;
             if (targetingPlayer.isDead() || targetingPlayer.inVent) return result;
             if (targetingPlayer.isGM()) return result;
@@ -92,10 +91,9 @@ namespace TheOtherRoles.Patches
         }
 
         // Update functions
-
         static void setBasePlayerOutlines()
         {
-            foreach (PlayerControl target in PlayerControl.AllPlayerControls)
+            foreach (PlayerControl target in PlayerControl.AllPlayerControls.GetFastEnumerator())
             {
                 if (target == null || target.MyRend == null) continue;
 
@@ -133,7 +131,7 @@ namespace TheOtherRoles.Patches
                         // Exit current vent if necessary
                         if (PlayerControl.LocalPlayer.inVent)
                         {
-                            foreach (Vent vent in ShipStatus.Instance.AllVents)
+                            foreach (Vent vent in MapUtilities.CachedShipStatus.AllVents)
                             {
                                 bool canUse;
                                 bool couldUse;
@@ -152,7 +150,7 @@ namespace TheOtherRoles.Patches
                     {
                         PlayerControl.LocalPlayer.transform.position = next.Item1;
                     }
-                    if (SubmergedCompatibility.isSubmerged())
+                    if (SubmergedCompatibility.IsSubmerged)
                     {
                         SubmergedCompatibility.ChangeFloor(next.Item1.y > -7);
                     }
@@ -217,7 +215,8 @@ namespace TheOtherRoles.Patches
         {
             if (Assassin.arrow?.arrow != null)
             {
-                if (Assassin.assassin == null || Assassin.assassin != PlayerControl.LocalPlayer || !Assassin.knowsTargetLocation) {
+                if (Assassin.assassin == null || Assassin.assassin != PlayerControl.LocalPlayer || !Assassin.knowsTargetLocation)
+                {
                     Assassin.arrow.arrow.SetActive(false);
                     return;
                 }
@@ -236,7 +235,8 @@ namespace TheOtherRoles.Patches
                     }
                     Assassin.arrow.Update(position);
                     Assassin.arrow.arrow.SetActive(trackedOnMap);
-                } else
+                }
+                else
                 {
                     Assassin.arrow.arrow.SetActive(false);
                 }
@@ -248,7 +248,10 @@ namespace TheOtherRoles.Patches
             if (Assassin.assassin == null || Assassin.assassin != PlayerControl.LocalPlayer) return;
             List<PlayerControl> untargetables = new List<PlayerControl>();
             if (Spy.spy != null && !Spy.impostorsCanKillAnyone) untargetables.Add(Spy.spy);
-            if (Mini.mini != null) untargetables.Add(Mini.mini);
+            foreach (var mini in Mini.players)
+            {
+                untargetables.Add(mini.player);
+            }
             if (Sidekick.wasTeamRed && !Spy.impostorsCanKillAnyone) untargetables.Add(Sidekick.sidekick);
             if (Jackal.wasTeamRed && !Spy.impostorsCanKillAnyone) untargetables.Add(Jackal.jackal);
             Assassin.currentTarget = setTarget(onlyCrewmates: true, untargetablePlayers: untargetables);
@@ -270,11 +273,11 @@ namespace TheOtherRoles.Patches
             if (Detective.timer <= 0f)
             {
                 Detective.timer = Detective.footprintIntervall;
-                foreach (PlayerControl player in PlayerControl.AllPlayerControls)
+                foreach (PlayerControl player in PlayerControl.AllPlayerControls.GetFastEnumerator())
                 {
-                    if (player != null && player != PlayerControl.LocalPlayer && !player.Data.IsDead && !player.inVent && !player.isGM())
+                    if (player != null && player != PlayerControl.LocalPlayer && !player.Data.IsDead && !player.inVent)
                     {
-                        new Footprint(Detective.footprintDuration, Detective.anonymousFootprints, player);
+                        FootprintHolder.Instance.MakeFootprint(player);
                     }
                 }
             }
@@ -326,7 +329,9 @@ namespace TheOtherRoles.Patches
                 // Only exclude sidekick from beeing targeted if the jackal can create sidekicks from impostors
                 if (Sidekick.sidekick != null) untargetablePlayers.Add(Sidekick.sidekick);
             }
-            if (Mini.mini != null && !Mini.isGrownUp()) untargetablePlayers.Add(Mini.mini); // Exclude Jackal from targeting the Mini unless it has grown up
+            foreach (var mini in Mini.players)
+                if (!Mini.isGrownUp(mini.player))
+                    untargetablePlayers.Add(mini.player);
             Jackal.currentTarget = setTarget(untargetablePlayers: untargetablePlayers);
             setPlayerOutline(Jackal.currentTarget, Palette.ImpostorRed);
         }
@@ -336,7 +341,9 @@ namespace TheOtherRoles.Patches
             if (Sidekick.sidekick == null || Sidekick.sidekick != PlayerControl.LocalPlayer) return;
             var untargetablePlayers = new List<PlayerControl>();
             if (Jackal.jackal != null) untargetablePlayers.Add(Jackal.jackal);
-            if (Mini.mini != null && !Mini.isGrownUp()) untargetablePlayers.Add(Mini.mini); // Exclude Sidekick from targeting the Mini unless it has grown up
+            foreach (var mini in Mini.players)
+                if (!Mini.isGrownUp(mini.player))
+                    untargetablePlayers.Add(mini.player);
             Sidekick.currentTarget = setTarget(untargetablePlayers: untargetablePlayers);
             if (Sidekick.canKill) setPlayerOutline(Sidekick.currentTarget, Palette.ImpostorRed);
         }
@@ -373,9 +380,9 @@ namespace TheOtherRoles.Patches
 
             bool jackalHighlight = Engineer.highlightForTeamJackal && (PlayerControl.LocalPlayer == Jackal.jackal || PlayerControl.LocalPlayer == Sidekick.sidekick);
             bool impostorHighlight = Engineer.highlightForImpostors && PlayerControl.LocalPlayer.Data.Role.IsImpostor;
-            if ((jackalHighlight || impostorHighlight) && ShipStatus.Instance?.AllVents != null)
+            if ((jackalHighlight || impostorHighlight) && MapUtilities.CachedShipStatus?.AllVents != null)
             {
-                foreach (Vent vent in ShipStatus.Instance.AllVents)
+                foreach (Vent vent in MapUtilities.CachedShipStatus.AllVents)
                 {
                     try
                     {
@@ -401,7 +408,7 @@ namespace TheOtherRoles.Patches
         {
             if (!PlayerControl.LocalPlayer.Data.Role.IsImpostor || !PlayerControl.LocalPlayer.CanMove || PlayerControl.LocalPlayer.Data.IsDead)
             { // !isImpostor || !canMove || isDead
-                HudManager.Instance.KillButton.SetTarget(null);
+                FastDestroyableSingleton<HudManager>.Instance.KillButton.SetTarget(null);
                 return;
             }
 
@@ -422,7 +429,7 @@ namespace TheOtherRoles.Patches
                 target = setTarget(true, true, new List<PlayerControl>() { Sidekick.wasImpostor ? Sidekick.sidekick : null, Jackal.wasImpostor ? Jackal.jackal : null });
             }
 
-            HudManager.Instance.KillButton.SetTarget(target); // Includes setPlayerOutline(target, Palette.ImpstorRed);
+            FastDestroyableSingleton<HudManager>.Instance.KillButton.SetTarget(target); // Includes setPlayerOutline(target, Palette.ImpstorRed);
         }
 
         static void warlockSetTarget()
@@ -517,28 +524,31 @@ namespace TheOtherRoles.Patches
         public static void playerSizeUpdate(PlayerControl p)
         {
             // Set default player size
-            CircleCollider2D collider = p.GetComponent<CircleCollider2D>();
+            CircleCollider2D collider = p.Collider.CastFast<CircleCollider2D>();
 
             p.transform.localScale = new Vector3(0.7f, 0.7f, 1f);
             collider.radius = Mini.defaultColliderRadius;
             collider.offset = Mini.defaultColliderOffset * Vector2.down;
 
             // Set adapted player size to Mini and Morphling
-            if (Mini.mini == null || Camouflager.camouflageTimer > 0f) return;
+            if (Camouflager.camouflageTimer > 0f) return;
 
-            float growingProgress = Mini.growingProgress();
-            float scale = growingProgress * 0.35f + 0.35f;
-            float correctedColliderRadius = Mini.defaultColliderRadius * 0.7f / scale; // scale / 0.7f is the factor by which we decrease the player size, hence we need to increase the collider size by 0.7f / scale
+            foreach (var mini in Mini.players)
+            {
+                float growingProgress = mini.growingProgress();
+                float scale = growingProgress * 0.35f + 0.35f;
+                float correctedColliderRadius = Mini.defaultColliderRadius * 0.7f / scale; // scale / 0.7f is the factor by which we decrease the player size, hence we need to increase the collider size by 0.7f / scale
 
-            if (p == Mini.mini)
-            {
-                p.transform.localScale = new Vector3(scale, scale, 1f);
-                collider.radius = correctedColliderRadius;
-            }
-            if (Morphling.morphling != null && p == Morphling.morphling && Morphling.morphTarget == Mini.mini && Morphling.morphTimer > 0f)
-            {
-                p.transform.localScale = new Vector3(scale, scale, 1f);
-                collider.radius = correctedColliderRadius;
+                if (p.hasModifier(ModifierType.Mini))
+                {
+                    p.transform.localScale = new Vector3(scale, scale, 1f);
+                    collider.radius = correctedColliderRadius;
+                }
+                if (Morphling.morphling != null && p == Morphling.morphling && Morphling.morphTarget.hasModifier(ModifierType.Mini) && Morphling.morphTimer > 0f)
+                {
+                    p.transform.localScale = new Vector3(scale, scale, 1f);
+                    collider.radius = correctedColliderRadius;
+                }
             }
         }
 
@@ -607,9 +617,9 @@ namespace TheOtherRoles.Patches
                     if (p == PlayerControl.LocalPlayer)
                     {
                         playerInfoText = $"{roleNames}";
-                        if (DestroyableSingleton<TaskPanelBehaviour>.InstanceExists)
+                        if (TaskPanelBehaviour.InstanceExists)
                         {
-                            TMPro.TextMeshPro tabText = DestroyableSingleton<TaskPanelBehaviour>.Instance.tab.transform.FindChild("TabText_TMP").GetComponent<TMPro.TextMeshPro>();
+                            TMPro.TextMeshPro tabText = TaskPanelBehaviour.Instance.tab.transform.FindChild("TabText_TMP").GetComponent<TMPro.TextMeshPro>();
                             tabText.SetText($"{TranslationController.Instance.GetString(StringNames.Tasks)} {taskInfo}");
                         }
                         meetingInfoText = $"{roleNames} {taskInfo}".Trim();
@@ -644,16 +654,16 @@ namespace TheOtherRoles.Patches
 
         public static void securityGuardSetTarget()
         {
-            if (SecurityGuard.securityGuard == null || SecurityGuard.securityGuard != PlayerControl.LocalPlayer || ShipStatus.Instance == null || ShipStatus.Instance.AllVents == null) return;
+            if (SecurityGuard.securityGuard == null || SecurityGuard.securityGuard != PlayerControl.LocalPlayer || MapUtilities.CachedShipStatus == null || MapUtilities.CachedShipStatus.AllVents == null) return;
 
             Vent target = null;
             Vector2 truePosition = PlayerControl.LocalPlayer.GetTruePosition();
             float closestDistance = float.MaxValue;
-            for (int i = 0; i < ShipStatus.Instance.AllVents.Length; i++)
+            for (int i = 0; i < MapUtilities.CachedShipStatus.AllVents.Length; i++)
             {
-                Vent vent = ShipStatus.Instance.AllVents[i];
+                Vent vent = MapUtilities.CachedShipStatus.AllVents[i];
                 if (vent.gameObject.name.StartsWith("JackInTheBoxVent_") || vent.gameObject.name.StartsWith("SealedVent_") || vent.gameObject.name.StartsWith("FutureSealedVent_")) continue;
-                if (SubmergedCompatibility.isSubmerged() && vent.Id == 9) continue; // cannot seal submergeds exit only vent!
+                if (SubmergedCompatibility.IsSubmerged && vent.Id == 9) continue; // cannot seal submergeds exit only vent!
                 float distance = Vector2.Distance(vent.transform.position, truePosition);
                 if (distance <= vent.UsableDistance && distance < closestDistance)
                 {
@@ -711,7 +721,7 @@ namespace TheOtherRoles.Patches
             else if (PlayerControl.LocalPlayer == Snitch.snitch && numberOfTasks == 0)
             {
                 int arrowIndex = 0;
-                foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+                foreach (PlayerControl p in PlayerControl.AllPlayerControls.GetFastEnumerator())
                 {
                     bool arrowForImp = p.Data.Role.IsImpostor;
                     bool arrowForTeamJackal = Snitch.includeTeamJackal && (p == Jackal.jackal || p == Sidekick.sidekick);
@@ -773,15 +783,15 @@ namespace TheOtherRoles.Patches
                 BountyHunter.arrowUpdateTimer = 0f; // Force arrow to update
                 BountyHunter.bountyUpdateTimer = BountyHunter.bountyDuration;
                 var possibleTargets = new List<PlayerControl>();
-                foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+                foreach (PlayerControl p in PlayerControl.AllPlayerControls.GetFastEnumerator())
                 {
-                    if (!p.Data.IsDead && !p.Data.Disconnected && p != p.Data.Role.IsImpostor && p != Spy.spy && (p != Sidekick.sidekick || !Sidekick.wasTeamRed) && (p != Jackal.jackal || !Jackal.wasTeamRed) && (p != Mini.mini || Mini.isGrownUp()) && (Lovers.getPartner(BountyHunter.bountyHunter) == null || p != Lovers.getPartner(BountyHunter.bountyHunter))) possibleTargets.Add(p);
+                    if (!p.Data.IsDead && !p.Data.Disconnected && p != p.Data.Role.IsImpostor && p != Spy.spy && (p != Sidekick.sidekick || !Sidekick.wasTeamRed) && (p != Jackal.jackal || !Jackal.wasTeamRed) && (p.hasModifier(ModifierType.Mini) || Mini.isGrownUp(p)) && (Lovers.getPartner(BountyHunter.bountyHunter) == null || p != Lovers.getPartner(BountyHunter.bountyHunter))) possibleTargets.Add(p);
                 }
                 BountyHunter.bounty = possibleTargets[TheOtherRoles.rnd.Next(0, possibleTargets.Count)];
                 if (BountyHunter.bounty == null) return;
 
                 // Show poolable player
-                if (HudManager.Instance != null && HudManager.Instance.UseButton != null)
+                if (FastDestroyableSingleton<HudManager>.Instance != null && FastDestroyableSingleton<HudManager>.Instance.UseButton != null)
                 {
                     foreach (PoolablePlayer pp in MapOptions.playerIcons.Values) pp.gameObject.SetActive(false);
                     if (MapOptions.playerIcons.ContainsKey(BountyHunter.bounty.PlayerId) && MapOptions.playerIcons[BountyHunter.bounty.PlayerId].gameObject != null)
@@ -903,12 +913,12 @@ namespace TheOtherRoles.Patches
 
         public static void mediumSetTarget()
         {
-            if (Medium.medium == null || Medium.medium != PlayerControl.LocalPlayer || Medium.medium.Data.IsDead || Medium.deadBodies == null || ShipStatus.Instance?.AllVents == null) return;
+            if (Medium.medium == null || Medium.medium != PlayerControl.LocalPlayer || Medium.medium.Data.IsDead || Medium.deadBodies == null || MapUtilities.CachedShipStatus?.AllVents == null) return;
 
             DeadPlayer target = null;
             Vector2 truePosition = PlayerControl.LocalPlayer.GetTruePosition();
             float closestDistance = float.MaxValue;
-            float usableDistance = ShipStatus.Instance.AllVents.FirstOrDefault().UsableDistance;
+            float usableDistance = MapUtilities.CachedShipStatus.AllVents.FirstOrDefault().UsableDistance;
             foreach ((DeadPlayer dp, Vector3 ps) in Medium.deadBodies)
             {
                 float distance = Vector2.Distance(ps, truePosition);
@@ -1096,6 +1106,7 @@ namespace TheOtherRoles.Patches
                 pursuerSetTarget();
                 // Witch
                 witchSetTarget();
+                // Hacker
                 hackerUpdate();
                 // Assassin
                 assassinSetTarget();
@@ -1113,10 +1124,12 @@ namespace TheOtherRoles.Patches
         private static Vector2 offset = Vector2.zero;
         public static void Prefix(PlayerPhysics __instance)
         {
-            bool correctOffset = Camouflager.camouflageTimer <= 0f && (__instance.myPlayer == Mini.mini || (Morphling.morphling != null && __instance.myPlayer == Morphling.morphling && Morphling.morphTarget == Mini.mini && Morphling.morphTimer > 0f));
+            bool correctOffset = Camouflager.camouflageTimer <= 0f && (__instance.myPlayer.hasModifier(ModifierType.Mini) || (Morphling.morphling != null && __instance.myPlayer == Morphling.morphling && Morphling.morphTarget.hasModifier(ModifierType.Mini) && Morphling.morphTimer > 0f));
             if (correctOffset)
             {
-                float currentScaling = (Mini.growingProgress() + 1) * 0.5f;
+                Mini mini = Mini.players.First(x => x.player == __instance.myPlayer);
+                if (mini == null) return;
+                float currentScaling = (mini.growingProgress() + 1) * 0.5f;
                 __instance.myPlayer.Collider.offset = currentScaling * Mini.defaultColliderOffset * Vector2.down;
             }
         }
@@ -1179,13 +1192,13 @@ namespace TheOtherRoles.Patches
 
                     if (!string.IsNullOrWhiteSpace(msg))
                     {
-                        if (AmongUsClient.Instance.AmClient && DestroyableSingleton<HudManager>.Instance)
+                        if (AmongUsClient.Instance.AmClient && FastDestroyableSingleton<HudManager>.Instance)
                         {
-                            DestroyableSingleton<HudManager>.Instance.Chat.AddChat(PlayerControl.LocalPlayer, msg);
+                            FastDestroyableSingleton<HudManager>.Instance.Chat.AddChat(PlayerControl.LocalPlayer, msg);
                         }
                         if (msg.IndexOf("who", StringComparison.OrdinalIgnoreCase) >= 0)
                         {
-                            DestroyableSingleton<Assets.CoreScripts.Telemetry>.Instance.SendWho();
+                            FastDestroyableSingleton<Assets.CoreScripts.Telemetry>.Instance.SendWho();
                         }
                     }
                 }
@@ -1245,6 +1258,12 @@ namespace TheOtherRoles.Patches
                 RPCProcedure.lawyerPromotesToPursuer();
             }
 
+            // UnderTaker Button Sync
+            if (UnderTaker.underTaker != null && target == UnderTaker.underTaker && UnderTaker.dragginBody)
+            {
+                UnderTaker.underTakerResetValuesAtDead();
+            }
+
             // Cleaner Button Sync
             if (Cleaner.cleaner != null && PlayerControl.LocalPlayer == Cleaner.cleaner && __instance == Cleaner.cleaner && HudManagerStartPatch.cleanerCleanButton != null)
                 HudManagerStartPatch.cleanerCleanButton.Timer = Cleaner.cleaner.killTimer;
@@ -1280,10 +1299,10 @@ namespace TheOtherRoles.Patches
             }
 
             // Mini set adapted kill cooldown
-            if (Mini.mini != null && PlayerControl.LocalPlayer == Mini.mini && Mini.mini.Data.Role.IsImpostor && Mini.mini == __instance)
+            if (PlayerControl.LocalPlayer.hasModifier(ModifierType.Mini) && PlayerControl.LocalPlayer.Data.Role.IsImpostor && PlayerControl.LocalPlayer == __instance)
             {
-                var multiplier = Mini.isGrownUp() ? 0.66f : 2f;
-                Mini.mini.SetKillTimer(PlayerControl.GameOptions.KillCooldown * multiplier);
+                var multiplier = Mini.isGrownUp(PlayerControl.LocalPlayer) ? 0.66f : 2f;
+                PlayerControl.LocalPlayer.SetKillTimer(PlayerControl.GameOptions.KillCooldown * multiplier);
             }
 
             // Set bountyHunter cooldown
@@ -1324,7 +1343,7 @@ namespace TheOtherRoles.Patches
             if (PlayerControl.GameOptions.KillCooldown <= 0f) return false;
             float multiplier = 1f;
             float addition = 0f;
-            if (PlayerControl.LocalPlayer.isRole(RoleType.Mini) && PlayerControl.LocalPlayer.isImpostor()) multiplier = Mini.isGrownUp() ? 0.66f : 2f;
+            if (PlayerControl.LocalPlayer.hasModifier(ModifierType.Mini) && PlayerControl.LocalPlayer.isImpostor()) multiplier = Mini.isGrownUp(PlayerControl.LocalPlayer) ? 0.66f : 2f;
             if (PlayerControl.LocalPlayer.isRole(RoleType.BountyHunter)) addition = BountyHunter.punishmentTime;
             if (PlayerControl.LocalPlayer.isRole(RoleType.Ninja) && Ninja.isPenalized(PlayerControl.LocalPlayer)) addition = Ninja.killPenalty;
 
@@ -1338,7 +1357,7 @@ namespace TheOtherRoles.Patches
             if (max == float.NegativeInfinity) max = time;
 
             player.killTimer = time;
-            DestroyableSingleton<HudManager>.Instance.KillButton.SetCoolDown(time, max);
+            FastDestroyableSingleton<HudManager>.Instance.KillButton.SetCoolDown(time, max);
         }
     }
 
@@ -1475,6 +1494,18 @@ namespace TheOtherRoles.Patches
                 __instance.targetSyncPosition += __instance.targetSyncVelocity * Time.fixedDeltaTime * 0.1f;
             }
             return false;
+        }
+    }
+
+    [HarmonyPatch]
+    public static class Utils
+    {
+        public static PlayerControl PlayerById(byte id)
+        {
+            foreach (var player in PlayerControl.AllPlayerControls)
+                if (player.PlayerId == id)
+                    return player;
+            return null;
         }
     }
 }

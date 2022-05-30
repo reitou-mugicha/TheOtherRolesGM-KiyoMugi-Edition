@@ -4,9 +4,10 @@ using static TheOtherRoles.TheOtherRoles;
 using static TheOtherRoles.TheOtherRolesGM;
 using static TheOtherRoles.HudManagerStartPatch;
 using static TheOtherRoles.GameHistory;
-using static TheOtherRoles.MapOptions;
+using TheOtherRoles.Utilities;
 using TheOtherRoles.Objects;
 using TheOtherRoles.Patches;
+using TheOtherRoles.Modules;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -97,8 +98,14 @@ namespace TheOtherRoles
         FoxStealth,
         FoxCreatesImmoralist,
         SwapperAnimate,
-        SprinterSprint,/*
-        CreatorCreateSheriff,
+        SprinterSprint,
+        NormalKill,
+        GunKill,
+        StaffKill,
+        BossKill,
+        DragPlaceBody,
+        DevourBody = 170,
+        /*CreatorCreateSheriff,
         StudentPromotion,
         SheriffCreateStudent,*/
     }
@@ -284,7 +291,7 @@ namespace TheOtherRoles
 
         public static void engineerFixLights()
         {
-            SwitchSystem switchSystem = ShipStatus.Instance.Systems[SystemTypes.Electrical].Cast<SwitchSystem>();
+            SwitchSystem switchSystem = MapUtilities.Systems[SystemTypes.Electrical].CastFast<SwitchSystem>();
             switchSystem.ActualSwitches = switchSystem.ExpectedSwitches;
         }
 
@@ -318,7 +325,10 @@ namespace TheOtherRoles
 
             Sheriff role = Sheriff.getRole(sheriff);
             if (role != null)
-                role.numShots--;
+                if (!CustomOptionHolder.yakuzaShotsShare.getBool())
+                    role.numShots--;
+                else
+                    Gun.shareShots--;
 
             if (misfire)
             {
@@ -332,6 +342,100 @@ namespace TheOtherRoles
             sheriff.MurderPlayer(target);
         }
 
+        public static void gunKill(byte gunId, byte targetId, bool misfire)
+        {
+            PlayerControl gun = Helpers.playerById(gunId);
+            PlayerControl target = Helpers.playerById(targetId);
+            if (gun == null || target == null) return;
+
+            Gun role = Gun.getRole(gun);
+            if (role != null && !CustomOptionHolder.yakuzaShotsShare.getBool())
+                role.numShots--;
+            else
+
+
+            if (misfire)
+            {
+                gun.MurderPlayer(gun);
+                finalStatuses[gunId] = FinalStatus.Misfire;
+
+                if (!Gun.misfireKillsTarget) return;
+                finalStatuses[targetId] = FinalStatus.Misfire;
+
+                if (!Staff.misfireKillsTarget) return;
+                finalStatuses[targetId] = FinalStatus.Misfire;
+
+                if (!Boss.misfireKillsTarget) return;
+                finalStatuses[targetId] = FinalStatus.Misfire;
+            }
+
+            gun.MurderPlayer(target);
+        }
+
+        public static void staffKill(byte gunId, byte targetId, bool misfire)
+        {
+            PlayerControl staff = Helpers.playerById(gunId);
+            PlayerControl target = Helpers.playerById(targetId);
+            if (staff == null || target == null) return;
+
+            Staff role = Staff.getRole(staff);
+            if (role != null)
+                if (!CustomOptionHolder.yakuzaShotsShare.getBool())
+                    role.numShots--;
+                else
+                    Gun.shareShots--;
+
+
+            if (misfire)
+            {
+                staff.MurderPlayer(staff);
+                finalStatuses[gunId] = FinalStatus.Misfire;
+
+                if (!Gun.misfireKillsTarget) return;
+                finalStatuses[targetId] = FinalStatus.Misfire;
+
+                if (!Staff.misfireKillsTarget) return;
+                finalStatuses[targetId] = FinalStatus.Misfire;
+
+                if (!Boss.misfireKillsTarget) return;
+                finalStatuses[targetId] = FinalStatus.Misfire;
+            }
+
+            staff.MurderPlayer(target);
+        }
+
+        public static void bossKill(byte gunId, byte targetId, bool misfire)
+        {
+            PlayerControl boss = Helpers.playerById(gunId);
+            PlayerControl target = Helpers.playerById(targetId);
+            if (boss == null || target == null) return;
+
+            Boss role = Boss.getRole(boss);
+            if (role != null)
+                if (!CustomOptionHolder.yakuzaShotsShare.getBool())
+                    role.numShots--;
+                else
+                    Gun.shareShots--;
+
+
+            if (misfire)
+            {
+                boss.MurderPlayer(boss);
+                finalStatuses[gunId] = FinalStatus.Misfire;
+
+                if (!Gun.misfireKillsTarget) return;
+                finalStatuses[targetId] = FinalStatus.Misfire;
+
+                if (!Staff.misfireKillsTarget) return;
+                finalStatuses[targetId] = FinalStatus.Misfire;
+
+                if (!Boss.misfireKillsTarget) return;
+                finalStatuses[targetId] = FinalStatus.Misfire;
+            }
+
+            boss.MurderPlayer(target);
+        }
+
         public static void timeMasterRewindTime()
         {
             TimeMaster.shieldActive = false; // Shield is no longer active when rewinding
@@ -339,12 +443,12 @@ namespace TheOtherRoles
             {
                 resetTimeMasterButton();
             }
-            HudManager.Instance.FullScreen.color = new Color(0f, 0.5f, 0.8f, 0.3f);
-            HudManager.Instance.FullScreen.enabled = true;
-            HudManager.Instance.FullScreen.gameObject.SetActive(true);
-            HudManager.Instance.StartCoroutine(Effects.Lerp(TimeMaster.rewindTime / 2, new Action<float>((p) =>
+            FastDestroyableSingleton<HudManager>.Instance.FullScreen.color = new Color(0f, 0.5f, 0.8f, 0.3f);
+            FastDestroyableSingleton<HudManager>.Instance.FullScreen.enabled = true;
+            FastDestroyableSingleton<HudManager>.Instance.FullScreen.gameObject.SetActive(true);
+            FastDestroyableSingleton<HudManager>.Instance.StartCoroutine(Effects.Lerp(TimeMaster.rewindTime / 2, new Action<float>((p) =>
             {
-                if (p == 1f) HudManager.Instance.FullScreen.enabled = false;
+                if (p == 1f) FastDestroyableSingleton<HudManager>.Instance.FullScreen.enabled = false;
             })));
 
             if (TimeMaster.timeMaster == null || PlayerControl.LocalPlayer == TimeMaster.timeMaster) return; // Time Master himself does not rewind
@@ -357,12 +461,18 @@ namespace TheOtherRoles
             if (Minigame.Instance)
                 Minigame.Instance.ForceClose();
             PlayerControl.LocalPlayer.moveable = false;
+
+            // Remove body dragging for UnderTaker
+            if (UnderTaker.underTaker != null && UnderTaker.dragginBody)
+            {
+                UnderTaker.underTakerResetValuesAtDead();
+            }
         }
 
         public static void timeMasterShield()
         {
             TimeMaster.shieldActive = true;
-            HudManager.Instance.StartCoroutine(Effects.Lerp(TimeMaster.shieldDuration, new Action<float>((p) =>
+            FastDestroyableSingleton<HudManager>.Instance.StartCoroutine(Effects.Lerp(TimeMaster.shieldDuration, new Action<float>((p) =>
             {
                 if (p == 1f) TimeMaster.shieldActive = false;
             })));
@@ -485,7 +595,7 @@ namespace TheOtherRoles
             }
 
             if (Vampire.vampire == null) return;
-            foreach (PlayerControl player in PlayerControl.AllPlayerControls)
+            foreach (PlayerControl player in PlayerControl.AllPlayerControls.GetFastEnumerator())
             {
                 if (player.PlayerId == targetId && !player.Data.IsDead)
                 {
@@ -543,7 +653,7 @@ namespace TheOtherRoles
         public static void trackerUsedTracker(byte targetId)
         {
             Tracker.usedTracker = true;
-            foreach (PlayerControl player in PlayerControl.AllPlayerControls)
+            foreach (PlayerControl player in PlayerControl.AllPlayerControls.GetFastEnumerator())
                 if (player.PlayerId == targetId)
                     Tracker.tracked = player;
         }
@@ -565,7 +675,13 @@ namespace TheOtherRoles
             {
                 bool wasSpy = Spy.spy != null && player == Spy.spy;
                 bool wasImpostor = player.Data.Role.IsImpostor;  // This can only be reached if impostors can be sidekicked.
-                DestroyableSingleton<RoleManager>.Instance.SetRole(player, RoleTypes.Crewmate);
+                FastDestroyableSingleton<RoleManager>.Instance.SetRole(player, RoleTypes.Crewmate);
+                if (player == Lawyer.lawyer && Lawyer.target != null)
+                {
+                    Transform playerInfoTransform = Lawyer.target.nameText.transform.parent.FindChild("Info");
+                    TMPro.TextMeshPro playerInfo = playerInfoTransform != null ? playerInfoTransform.GetComponent<TMPro.TextMeshPro>() : null;
+                    if (playerInfo != null) playerInfo.text = "";
+                }
                 erasePlayerRoles(player.PlayerId, true);
                 Sidekick.sidekick = player;
                 if (player.PlayerId == PlayerControl.LocalPlayer.PlayerId) PlayerControl.LocalPlayer.moveable = true;
@@ -683,7 +799,7 @@ namespace TheOtherRoles
             // If the local player is impostor indicate lights out
             if (PlayerControl.LocalPlayer.Data.Role.IsImpostor)
             {
-                new CustomMessage("tricksterLightsOutText", Trickster.lightsOutDuration);
+                new CustomMessage(ModTranslation.getString("tricksterLightsOutText"), Trickster.lightsOutDuration);
             }
         }
 
@@ -757,7 +873,7 @@ namespace TheOtherRoles
 
             if (PlayerControl.GameOptions.MapId == 2 || PlayerControl.GameOptions.MapId == 4) camera.transform.localRotation = new Quaternion(0, 0, 1, 1); // Polus and Airship
 
-            if (SubmergedCompatibility.isSubmerged())
+            if (SubmergedCompatibility.IsSubmerged)
             {
                 // remove 2d box collider of console, so that no barrier can be created. (irrelevant for now, but who knows... maybe we need it later)
                 var fixConsole = camera.transform.FindChild("FixConsole");
@@ -782,7 +898,7 @@ namespace TheOtherRoles
 
         public static void sealVent(int ventId)
         {
-            Vent vent = ShipStatus.Instance.AllVents.FirstOrDefault((x) => x != null && x.Id == ventId);
+            Vent vent = MapUtilities.CachedShipStatus.AllVents.FirstOrDefault((x) => x != null && x.Id == ventId);
             if (vent == null) return;
 
             SecurityGuard.remainingScrews -= SecurityGuard.ventPrice;
@@ -792,8 +908,8 @@ namespace TheOtherRoles
                 animator?.Stop();
                 vent.EnterVentAnim = vent.ExitVentAnim = null;
                 vent.myRend.sprite = animator == null ? SecurityGuard.getStaticVentSealedSprite() : SecurityGuard.getAnimatedVentSealedSprite();
-                if (SubmergedCompatibility.isSubmerged() && vent.Id == 0) vent.myRend.sprite = SecurityGuard.getSubmergedCentralUpperSealedSprite();
-                if (SubmergedCompatibility.isSubmerged() && vent.Id == 14) vent.myRend.sprite = SecurityGuard.getSubmergedCentralLowerSealedSprite();
+                if (SubmergedCompatibility.IsSubmerged && vent.Id == 0) vent.myRend.sprite = SecurityGuard.getSubmergedCentralUpperSealedSprite();
+                if (SubmergedCompatibility.IsSubmerged && vent.Id == 14) vent.myRend.sprite = SecurityGuard.getSubmergedCentralLowerSealedSprite();
                 vent.myRend.color = new Color(1f, 1f, 1f, 0.5f);
                 vent.name = "FutureSealedVent_" + vent.name;
             }
@@ -869,21 +985,21 @@ namespace TheOtherRoles
             if (Constants.ShouldPlaySfx()) SoundManager.Instance.PlaySound(dyingTarget.KillSfx, false, 0.8f);
 
             PlayerControl guesser = Helpers.playerById(killerId);
-            if (HudManager.Instance != null && guesser != null)
+            if (FastDestroyableSingleton<HudManager>.Instance != null && guesser != null)
                 if (PlayerControl.LocalPlayer == dyingTarget)
-                    HudManager.Instance.KillOverlay.ShowKillAnimation(guesser.Data, dyingTarget.Data);
+                    FastDestroyableSingleton<HudManager>.Instance.KillOverlay.ShowKillAnimation(guesser.Data, dyingTarget.Data);
                 else if (dyingLoverPartner != null && PlayerControl.LocalPlayer == dyingLoverPartner)
-                    HudManager.Instance.KillOverlay.ShowKillAnimation(dyingLoverPartner.Data, dyingLoverPartner.Data);
+                    FastDestroyableSingleton<HudManager>.Instance.KillOverlay.ShowKillAnimation(dyingLoverPartner.Data, dyingLoverPartner.Data);
 
             PlayerControl guessedTarget = Helpers.playerById(guessedTargetId);
             if (Guesser.showInfoInGhostChat && PlayerControl.LocalPlayer.Data.IsDead && guessedTarget != null)
             {
                 RoleInfo roleInfo = RoleInfo.allRoleInfos.FirstOrDefault(x => (byte)x.roleType == guessedRoleId);
                 string msg = string.Format(ModTranslation.getString("guesserGuessChat"), roleInfo.name, guessedTarget.Data.PlayerName);
-                if (AmongUsClient.Instance.AmClient && DestroyableSingleton<HudManager>.Instance)
-                    DestroyableSingleton<HudManager>.Instance.Chat.AddChat(guesser, msg);
+                if (AmongUsClient.Instance.AmClient && FastDestroyableSingleton<HudManager>.Instance)
+                    FastDestroyableSingleton<HudManager>.Instance.Chat.AddChat(guesser, msg);
                 if (msg.IndexOf("who", StringComparison.OrdinalIgnoreCase) >= 0)
-                    DestroyableSingleton<Assets.CoreScripts.Telemetry>.Instance.SendWho();
+                    FastDestroyableSingleton<Assets.CoreScripts.Telemetry>.Instance.SendWho();
             }
         }
 
@@ -949,15 +1065,14 @@ namespace TheOtherRoles
                 finalStatuses[partner.PlayerId] = FinalStatus.GMExecuted;
             }
 
-            if (HudManager.Instance != null && GM.gm != null)
+            if (FastDestroyableSingleton<HudManager>.Instance != null && GM.gm != null)
             {
                 if (PlayerControl.LocalPlayer == target)
-                    HudManager.Instance.KillOverlay.ShowKillAnimation(GM.gm.Data, target.Data);
+                    FastDestroyableSingleton<HudManager>.Instance.KillOverlay.ShowKillAnimation(GM.gm.Data, target.Data);
                 else if (partner != null && PlayerControl.LocalPlayer == partner)
-                    HudManager.Instance.KillOverlay.ShowKillAnimation(GM.gm.Data, partner.Data);
+                    FastDestroyableSingleton<HudManager>.Instance.KillOverlay.ShowKillAnimation(GM.gm.Data, partner.Data);
             }
         }
-
         public static void GMRevive(byte targetId)
         {
             PlayerControl target = Helpers.playerById(targetId);
@@ -976,7 +1091,7 @@ namespace TheOtherRoles
 
             if (PlayerControl.LocalPlayer.isGM())
             {
-                HudManager.Instance.ShadowQuad.gameObject.SetActive(false);
+                FastDestroyableSingleton<HudManager>.Instance.ShadowQuad.gameObject.SetActive(false);
             }
         }
 
@@ -1096,6 +1211,91 @@ namespace TheOtherRoles
             if (target.isRole(RoleType.Immoralist) && target == PlayerControl.LocalPlayer)
             {
                 FortuneTeller.fortuneTellerMessage(ModTranslation.getString("fortuneTellerDivinedYou"), 5f, Color.white);
+            }
+        }
+
+        public static void NormalKill(byte killerId, byte targetId)
+        {
+            var killer = Helpers.playerById(killerId);
+            var target = Helpers.playerById(targetId);
+
+
+            if (killer == PlayerControl.LocalPlayer)
+                target.MurderPlayer(target);
+            killer.transform.position = target.transform.position;
+        }
+
+        public static void dragPlaceBody(byte playerId)
+        {
+            DeadBody[] array = UnityEngine.Object.FindObjectsOfType<DeadBody>();
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (GameData.Instance.GetPlayerById(array[i].ParentId).PlayerId == playerId)
+                {
+                    if (!UnderTaker.dragginBody)
+                    {
+                        UnderTaker.dragginBody = true;
+                        UnderTaker.bodyId = playerId;
+                        if (PlayerControl.GameOptions.MapId == 5)
+                        {
+                            GameObject vent = GameObject.Find("LowerCentralVent");
+                            vent.GetComponent<BoxCollider2D>().enabled = false;
+                        }
+                    }
+                    else
+                    {
+                        UnderTaker.dragginBody = false;
+                        UnderTaker.bodyId = 0;
+                        var currentPosition = UnderTaker.underTaker.GetTruePosition();
+                        var velocity = UnderTaker.underTaker.gameObject.GetComponent<Rigidbody2D>().velocity.normalized;
+                        var newPos = ((Vector2)UnderTaker.underTaker.GetTruePosition()) - (velocity / 3) + new Vector2(0.15f, 0.25f) + array[i].myCollider.offset;
+                        if (!PhysicsHelpers.AnythingBetween(
+                            currentPosition,
+                            newPos,
+                            Constants.ShipAndObjectsMask,
+                            false
+                        ))
+                        {
+                            if (PlayerControl.GameOptions.MapId == 5)
+                            {
+                                array[i].transform.position = newPos;
+                                array[i].transform.position += new Vector3(0, 0, -0.5f);
+                                GameObject vent = GameObject.Find("LowerCentralVent");
+                                vent.GetComponent<BoxCollider2D>().enabled = true;
+                            }
+                            else
+                            {
+                                array[i].transform.position = newPos;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        public static void underTakerResetValues()
+        {
+            // Restore UnderTaker values when rewind time
+            if (UnderTaker.underTaker != null && UnderTaker.dragginBody)
+            {
+                UnderTaker.dragginBody = false;
+                UnderTaker.bodyId = 0;
+            }
+        }
+
+        public static void devourBody(byte playerId)
+        {
+            DeadBody[] array = UnityEngine.Object.FindObjectsOfType<DeadBody>();
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (GameData.Instance.GetPlayerById(array[i].ParentId).PlayerId == playerId)
+                {
+                    UnityEngine.Object.Destroy(array[i].gameObject);
+                    if (UnderTaker.underTaker != null && UnderTaker.dragginBody && UnderTaker.bodyId == playerId)
+                    {
+                        underTakerResetValues();
+                    }
+                }
             }
         }/*
 
@@ -1226,6 +1426,15 @@ namespace TheOtherRoles
                         break;
                     case (byte)CustomRPC.SheriffKill:
                         RPCProcedure.sheriffKill(reader.ReadByte(), reader.ReadByte(), reader.ReadBoolean());
+                        break;
+                    case (byte)CustomRPC.GunKill:
+                        RPCProcedure.gunKill(reader.ReadByte(), reader.ReadByte(), reader.ReadBoolean());
+                        break;
+                    case (byte)CustomRPC.StaffKill:
+                        RPCProcedure.staffKill(reader.ReadByte(), reader.ReadByte(), reader.ReadBoolean());
+                        break;
+                    case (byte)CustomRPC.BossKill:
+                        RPCProcedure.bossKill(reader.ReadByte(), reader.ReadByte(), reader.ReadBoolean());
                         break;
                     case (byte)CustomRPC.TimeMasterRewindTime:
                         RPCProcedure.timeMasterRewindTime();
@@ -1406,6 +1615,15 @@ namespace TheOtherRoles
                         break;
                     case (byte)CustomRPC.FoxCreatesImmoralist:
                         RPCProcedure.foxCreatesImmoralist(reader.ReadByte());
+                        break;
+                    case (byte)CustomRPC.NormalKill:
+                        RPCProcedure.NormalKill(reader.ReadByte(), reader.ReadByte());
+                        break;
+                    case (byte)CustomRPC.DragPlaceBody:
+                        RPCProcedure.dragPlaceBody(reader.ReadByte());
+                        break;
+                    case (byte)CustomRPC.DevourBody:
+                        RPCProcedure.devourBody(reader.ReadByte());
                         break;/*
                     case (byte)CustomRPC.CreatorCreateSheriff:
                         RPCProcedure.CreatorCreateSheriff(reader.ReadByte());

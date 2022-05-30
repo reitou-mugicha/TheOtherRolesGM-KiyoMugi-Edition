@@ -27,6 +27,7 @@ using HarmonyLib;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using TheOtherRoles.Utilities;
 using UnityEngine.Events;
 
 namespace TheOtherRoles.Patches
@@ -39,7 +40,8 @@ namespace TheOtherRoles.Patches
 
         public static void Postfix(RegionMenu __instance)
         {
-            var template = DestroyableSingleton<JoinGameButton>.Instance;
+            if (!__instance.TryCast<RegionMenu>()) return;
+            var template = FastDestroyableSingleton<JoinGameButton>.Instance;
             var joinGameButtons = GameObject.FindObjectsOfType<JoinGameButton>();
             foreach (var t in joinGameButtons)
             {  // The correct button has a background, the other 2 dont
@@ -49,7 +51,6 @@ namespace TheOtherRoles.Patches
                     break;
                 }
             }
-
             if (template == null || template.GameIdText == null) return;
 
             if (ipField == null || ipField.gameObject == null)

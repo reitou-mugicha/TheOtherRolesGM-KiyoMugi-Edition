@@ -2,11 +2,10 @@
 using Hazel;
 using System.Collections.Generic;
 using System.Linq;
-using UnhollowerBaseLib;
 using UnityEngine;
 using System;
 using static TheOtherRoles.TheOtherRoles;
-using static TheOtherRoles.TheOtherRolesGM;
+using TheOtherRoles.Utilities;
 
 namespace TheOtherRoles.Patches
 {
@@ -17,13 +16,14 @@ namespace TheOtherRoles.Patches
         {
             if (role == RoleTypes.Crewmate || role == RoleTypes.Impostor) return;
 
-            if (CustomOptionHolder.activateRoles.getBool()) __result = 0; // Deactivate Vanilla Roles if the mod roles are active
+            if (CustomOptionHolder.activateRoles.getBool()) __result = 0; // Deactivate Vanilla Roles
         }
     }
 
     [HarmonyPatch(typeof(RoleManager), nameof(RoleManager.SelectRoles))]
     class RoleManagerSelectRolesPatch
     {
+
         private static List<byte> blockLovers = new List<byte>();
         public static int blockedAssignments = 0;
         public static int maxBlocks = 10;
@@ -34,7 +34,7 @@ namespace TheOtherRoles.Patches
             AmongUsClient.Instance.FinishRpcImmediately(writer);
             RPCProcedure.resetVariables();
 
-            if (!DestroyableSingleton<TutorialManager>.InstanceExists && CustomOptionHolder.activateRoles.getBool()) // Don't assign Roles in Tutorial or if deactivated
+            if (CustomOptionHolder.activateRoles.getBool()) // Don't assign Roles in Tutorial or if deactivated
                 assignRoles();
         }
 
@@ -94,7 +94,7 @@ namespace TheOtherRoles.Patches
             }
 
             var data = getRoleAssignmentData();
-            assignSpecialRoles(data); // Assign special roles like mafia and lovers first as they assign a role to multiple players and the chances are independent of the ticket system
+            assignSpecialRoles(data); // Assign special roles like mafia, yakuza and lovers first as they assign a role to multiple players and the chances are independent of the ticket system
             selectFactionForFactionIndependentRoles(data);
             assignEnsuredRoles(data); // Assign roles that should always be in the game next
             assignChanceRoles(data); // Assign roles that may or may not be in the game last
@@ -131,7 +131,7 @@ namespace TheOtherRoles.Patches
             int maxNeutralRoles = Mathf.Min(crewmates.Count, neutralCountSettings);
             int maxImpostorRoles = Mathf.Min(impostors.Count, impCountSettings);
 
-            // Fill in the lists with the roles that should be assigned to players. Note that the special roles (like Mafia or Lovers) are NOT included in these lists
+            // Fill in the lists with the roles that should be assigned to players. Note that the special roles (like Mafia, yakuza or Lovers) are NOT included in these lists
             Dictionary<byte, (int rate, int count)> impSettings = new Dictionary<byte, (int, int)>();
             Dictionary<byte, (int rate, int count)> neutralSettings = new Dictionary<byte, (int, int)>();
             Dictionary<byte, (int rate, int count)> crewSettings = new Dictionary<byte, (int, int)>();
@@ -153,6 +153,8 @@ namespace TheOtherRoles.Patches
             impSettings.Add((byte)RoleType.HawkEye, CustomOptionHolder.hawkEyeSpawnRate.data);
             impSettings.Add((byte)RoleType.Assassin, CustomOptionHolder.assassinSpawnRate.data);
             impSettings.Add((byte)RoleType.CustomImpostor, CustomOptionHolder.customImpostorSpawnRate.data);
+            impSettings.Add((byte)RoleType.DoubleKiller, CustomOptionHolder.doubleKillerSpawnRate.data);
+            impSettings.Add((byte)RoleType.UnderTaker, CustomOptionHolder.underTakerSpawnRate.data);
 
             neutralSettings.Add((byte)RoleType.Jester, CustomOptionHolder.jesterSpawnRate.data);
             neutralSettings.Add((byte)RoleType.Arsonist, CustomOptionHolder.arsonistSpawnRate.data);
@@ -178,6 +180,8 @@ namespace TheOtherRoles.Patches
             crewSettings.Add((byte)RoleType.Mayor, CustomOptionHolder.mayorSpawnRate.data);
             crewSettings.Add((byte)RoleType.SecurityGuard, CustomOptionHolder.securityGuardSpawnRate.data);
             crewSettings.Add((byte)RoleType.Portalmaker, CustomOptionHolder.portalmakerSpawnRate.data);
+            crewSettings.Add((byte)RoleType.Chunibyo, CustomOptionHolder.chunibyoSpawnRate.data);
+            //crewSettings.Add((byte)RoleType.Bread, CustomOptionHolder.breadSpawnRate.data);
             crewSettings.Add((byte)RoleType.Medium, CustomOptionHolder.mediumSpawnRate.data);/*
             crewSettings.Add((byte)RoleType.Student, CustomOptionHolder.sheriffSpawnRate.data);
             crewSettings.Add((byte)RoleType.Creator, CustomOptionHolder.creatorSpawnRate.data);*/
@@ -288,6 +292,15 @@ namespace TheOtherRoles.Patches
                 }
             }
 
+            // Assign Yakuza
+            if (data.crewmates.Count >= 3 && data.maxCrewmateRoles >= 3 && (rnd.Next(1, 101) <= CustomOptionHolder.yakuzaSpawnRate.getSelection() * 10))
+            {
+                setRoleToRandomPlayer((byte)RoleType.Boss, data.crewmates);
+                setRoleToRandomPlayer((byte)RoleType.Staff, data.crewmates);
+                setRoleToRandomPlayer((byte)RoleType.Gun, data.crewmates);
+                data.maxCrewmateRoles -= 3;
+            }
+
             // Assign Mafia
             if (data.impostors.Count >= 3 && data.maxImpostorRoles >= 3 && (rnd.Next(1, 101) <= CustomOptionHolder.mafiaSpawnRate.getSelection() * 10))
             {
@@ -296,28 +309,10 @@ namespace TheOtherRoles.Patches
                 setRoleToRandomPlayer((byte)RoleType.Mafioso, data.impostors);
                 data.maxImpostorRoles -= 3;
             }
-
-            /* Assign Kingdom
-            if (data.neutral.Count >= 2 && data.maxNeutralRoles >= 2 && (rnd.Next(1, 101) <= CustomOptionHolder.kingdomSpawnRate.getSelection() * 10))
-            {
-                setRoleToRandomPlayer((byte)RoleType.King, data.neutral);
-                setRoleToRandomPlayer((byte)RoleType.Minions, data.neutral);
-                data.maxNeutralRoles -= 2;
-            }*/
         }
 
         private static void selectFactionForFactionIndependentRoles(RoleAssignmentData data)
         {
-            // Assign Mini (33% chance impostor / 67% chance crewmate)
-            if (data.impostors.Count > 0 && data.maxImpostorRoles > 0 && rnd.Next(1, 101) <= CustomOptionHolder.miniIsImpRate.getSelection() * 10)
-            {
-                data.impSettings.Add((byte)RoleType.Mini, (CustomOptionHolder.miniSpawnRate.getSelection(), 1));
-            }
-            else if (data.crewmates.Count > 0 && data.maxCrewmateRoles > 0)
-            {
-                data.crewSettings.Add((byte)RoleType.Mini, (CustomOptionHolder.miniSpawnRate.getSelection(), 1));
-            }
-
             // Assign Guesser (chance to be impostor based on setting)
             bool isEvilGuesser = (rnd.Next(1, 101) <= CustomOptionHolder.guesserIsImpGuesserRate.getSelection() * 10);
             if (CustomOptionHolder.guesserSpawnBothRate.getSelection() > 0)
@@ -554,7 +549,7 @@ namespace TheOtherRoles.Patches
             if (Lawyer.lawyer != null)
             {
                 var possibleTargets = new List<PlayerControl>();
-                foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+                foreach (PlayerControl p in PlayerControl.AllPlayerControls.GetFastEnumerator())
                 {
                     if (!p.Data.IsDead && !p.Data.Disconnected && !p.isLovers() && (p.Data.Role.IsImpostor || p == Jackal.jackal))
                         possibleTargets.Add(p);
@@ -655,6 +650,20 @@ namespace TheOtherRoles.Patches
                         break;
                     }
                     setModifierToRandomPlayer((byte)ModifierType.Sunglasses, Sunglasses.candidates);
+                }
+            }
+
+            // Mini
+            for (int i = 0; i < CustomOptionHolder.miniSpawnRate.count; i++)
+            {
+                if (rnd.Next(1, 100) <= CustomOptionHolder.miniSpawnRate.rate * 10)
+                {
+                    var candidates = Mini.candidates;
+                    if (candidates.Count <= 0)
+                    {
+                        break;
+                    }
+                    setModifierToRandomPlayer((byte)ModifierType.Mini, Mini.candidates);
                 }
             }
         }

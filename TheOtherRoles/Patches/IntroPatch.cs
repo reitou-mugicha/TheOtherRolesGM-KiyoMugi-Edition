@@ -6,14 +6,16 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using TheOtherRoles.Objects;
+using TheOtherRoles.Utilities;
 using BepInEx.IL2CPP.Utils.Collections;
+using TheOtherRoles.Modules;
 
 namespace TheOtherRoles.Patches
 {
     [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.OnDestroy))]
     class IntroCutsceneOnDestroyPatch
     {
+        public static PoolablePlayer playerPrefab;
         public static void Prefix(IntroCutscene __instance)
         {
             // Generate and initialize player icons
@@ -23,7 +25,8 @@ namespace TheOtherRoles.Patches
                 foreach (PlayerControl p in PlayerControl.AllPlayerControls)
                 {
                     GameData.PlayerInfo data = p.Data;
-                    PoolablePlayer player = UnityEngine.Object.Instantiate<PoolablePlayer>(__instance.PlayerPrefab, HudManager.Instance.transform);
+                    PoolablePlayer player = UnityEngine.Object.Instantiate<PoolablePlayer>(__instance.PlayerPrefab, FastDestroyableSingleton<HudManager>.Instance.transform);
+                    playerPrefab = __instance.PlayerPrefab;
                     player.UpdateFromPlayerOutfit(p.Data.DefaultOutfit, p.Data.IsDead);
                     player.SetFlipX(true);
                     player.PetSlot.gameObject.SetActive(false);
@@ -54,10 +57,10 @@ namespace TheOtherRoles.Patches
             if (BountyHunter.bounty != null && PlayerControl.LocalPlayer == BountyHunter.bountyHunter)
             {
                 BountyHunter.bountyUpdateTimer = 0f;
-                if (HudManager.Instance != null)
+                if (FastDestroyableSingleton<HudManager>.Instance != null)
                 {
-                    Vector3 bottomLeft = new Vector3(-HudManager.Instance.UseButton.transform.localPosition.x, HudManager.Instance.UseButton.transform.localPosition.y, HudManager.Instance.UseButton.transform.localPosition.z) + new Vector3(-0.25f, 1f, 0);
-                    BountyHunter.cooldownText = UnityEngine.Object.Instantiate<TMPro.TextMeshPro>(HudManager.Instance.KillButton.cooldownTimerText, HudManager.Instance.transform);
+                    Vector3 bottomLeft = new Vector3(-FastDestroyableSingleton<HudManager>.Instance.UseButton.transform.localPosition.x, FastDestroyableSingleton<HudManager>.Instance.UseButton.transform.localPosition.y, FastDestroyableSingleton<HudManager>.Instance.UseButton.transform.localPosition.z) + new Vector3(-0.25f, 1f, 0);
+                    BountyHunter.cooldownText = UnityEngine.Object.Instantiate<TMPro.TextMeshPro>(FastDestroyableSingleton<HudManager>.Instance.KillButton.cooldownTimerText, FastDestroyableSingleton<HudManager>.Instance.transform);
                     BountyHunter.cooldownText.alignment = TMPro.TextAlignmentOptions.Center;
                     BountyHunter.cooldownText.transform.localPosition = bottomLeft + new Vector3(0f, -1f, -1f);
                     BountyHunter.cooldownText.gameObject.SetActive(true);
@@ -75,19 +78,19 @@ namespace TheOtherRoles.Patches
 
             if (PlayerControl.LocalPlayer.isGM())
             {
-                HudManager.Instance.ShadowQuad.gameObject.SetActive(false);
-                HudManager.Instance.ReportButton.gameObject.SetActiveRecursively(false);
-                HudManager.Instance.ReportButton.SetActive(false);
-                HudManager.Instance.ReportButton.graphic.enabled = false;
-                HudManager.Instance.ReportButton.enabled = false;
-                HudManager.Instance.ReportButton.graphic.sprite = null;
-                HudManager.Instance.ReportButton.buttonLabelText.enabled = false;
-                HudManager.Instance.ReportButton.buttonLabelText.SetText("");
+                FastDestroyableSingleton<HudManager>.Instance.ShadowQuad.gameObject.SetActive(false);
+                FastDestroyableSingleton<HudManager>.Instance.ReportButton.gameObject.SetActiveRecursively(false);
+                FastDestroyableSingleton<HudManager>.Instance.ReportButton.SetActive(false);
+                FastDestroyableSingleton<HudManager>.Instance.ReportButton.graphic.enabled = false;
+                FastDestroyableSingleton<HudManager>.Instance.ReportButton.enabled = false;
+                FastDestroyableSingleton<HudManager>.Instance.ReportButton.graphic.sprite = null;
+                FastDestroyableSingleton<HudManager>.Instance.ReportButton.buttonLabelText.enabled = false;
+                FastDestroyableSingleton<HudManager>.Instance.ReportButton.buttonLabelText.SetText("");
 
-                HudManager.Instance.roomTracker.gameObject.SetActiveRecursively(false);
-                HudManager.Instance.roomTracker.text.enabled = false;
-                HudManager.Instance.roomTracker.text.SetText("");
-                HudManager.Instance.roomTracker.enabled = false;
+                FastDestroyableSingleton<HudManager>.Instance.roomTracker.gameObject.SetActiveRecursively(false);
+                FastDestroyableSingleton<HudManager>.Instance.roomTracker.text.enabled = false;
+                FastDestroyableSingleton<HudManager>.Instance.roomTracker.text.SetText("");
+                FastDestroyableSingleton<HudManager>.Instance.roomTracker.enabled = false;
             }
         }
     }

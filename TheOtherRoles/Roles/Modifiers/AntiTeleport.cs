@@ -1,14 +1,7 @@
 using HarmonyLib;
-using Hazel;
-using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using System.Linq;
 using UnityEngine;
-using TheOtherRoles.Objects;
-using TheOtherRoles.Patches;
-using static TheOtherRoles.TheOtherRoles;
-using static TheOtherRoles.GameHistory;
+using TheOtherRoles.Modules;
 
 namespace TheOtherRoles
 {

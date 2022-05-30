@@ -7,6 +7,8 @@ using UnityEngine;
 using static TheOtherRoles.TheOtherRoles;
 using static TheOtherRoles.GameHistory;
 using System.Reflection;
+using TheOtherRoles.Modules;
+using TheOtherRoles.Utilities;
 
 namespace TheOtherRoles.Patches
 {
@@ -58,7 +60,6 @@ namespace TheOtherRoles.Patches
                         text.gameObject.SetActive(false);
                         text.transform.localScale = Vector3.one * 0.75f;
                         text.transform.localPosition = new Vector3(-0.75f, -0.23f, 0f);
-
                     }
                 }
             }
@@ -77,7 +78,7 @@ namespace TheOtherRoles.Patches
                 {
                     if (TimeRemaining == null)
                     {
-                        TimeRemaining = UnityEngine.Object.Instantiate(HudManager.Instance.TaskText, __instance.transform);
+                        TimeRemaining = UnityEngine.Object.Instantiate(FastDestroyableSingleton<HudManager>.Instance.TaskText, __instance.transform);
                         TimeRemaining.alignment = TMPro.TextAlignmentOptions.BottomRight;
                         TimeRemaining.transform.position = Vector3.zero;
                         TimeRemaining.transform.localPosition = new Vector3(1.7f, 4.45f);

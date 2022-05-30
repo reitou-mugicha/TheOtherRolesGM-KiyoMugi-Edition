@@ -1,20 +1,9 @@
-using System.Net;
 using System.Linq;
-using BepInEx;
-using BepInEx.Configuration;
-using BepInEx.IL2CPP;
 using HarmonyLib;
-using Hazel;
 using System;
 using System.Collections.Generic;
-using System.Collections;
-using System.IO;
-using UnityEngine;
-using TheOtherRoles.Objects;
-using static TheOtherRoles.GameHistory;
 using static TheOtherRoles.TheOtherRoles;
 using static TheOtherRoles.TheOtherRolesGM;
-using TheOtherRoles.Patches;
 using System.Reflection;
 
 namespace TheOtherRoles
@@ -41,6 +30,12 @@ namespace TheOtherRoles
         FortuneTeller,
         Sprinter,
         Portalmaker,
+        Chunibyo,
+        Boss,
+        Staff,
+        Gun,
+        Mayor,
+        Bread,
 
 
         Impostor = 100,
@@ -64,14 +59,14 @@ namespace TheOtherRoles
         Assassin,
         CustomImpostor,
         HawkEye,
+        DoubleKiller,
+        UnderTaker,
 
 
-        Mini = 150,
-        Lovers,
+        Lovers = 150,
         EvilGuesser,
         NiceGuesser,
         Jester,
-        Mayor,
         Arsonist,
         Jackal,
         Sidekick,
@@ -81,8 +76,6 @@ namespace TheOtherRoles
         PlagueDoctor,
         Fox,
         Immoralist,
-        //King,
-        //Minions,
 
 
         GM = 200,
@@ -103,6 +96,12 @@ namespace TheOtherRoles
             { RoleType.FortuneTeller, typeof(RoleBase<FortuneTeller>) },
             { RoleType.Sprinter, typeof(RoleBase<Sprinter>) },
             { RoleType.Mayor, typeof(RoleBase<Mayor>) },
+            { RoleType.Chunibyo, typeof(RoleBase<Chunibyo>) },
+            { RoleType.Boss, typeof(RoleBase<Boss>) },
+            { RoleType.Staff, typeof(RoleBase<Staff>) },
+            { RoleType.Gun, typeof(RoleBase<Gun>) },
+            { RoleType.Bread, typeof(RoleBase<Bread>) },
+            //{ RoleType.Creator, typeof(RoleBase<Creator>) },
 
             // Impostor
             { RoleType.Ninja, typeof(RoleBase<Ninja>) },
@@ -110,6 +109,7 @@ namespace TheOtherRoles
             { RoleType.SerialKiller, typeof(RoleBase<SerialKiller>) },
             { RoleType.HawkEye, typeof(RoleBase<HawkEye>) },
             { RoleType.CustomImpostor, typeof(RoleBase<CustomImpostor>) },
+            { RoleType.DoubleKiller, typeof(RoleBase<DoubleKiller>) },
 
             // Neutral
             { RoleType.PlagueDoctor, typeof(RoleBase<PlagueDoctor>) },
@@ -189,7 +189,7 @@ namespace TheOtherRoles
 
         public static bool exists
         {
-            get { return Helpers.RolesEnabled && players.Count > 0; }
+            get { return CustomOptionHolder.activateRoles.getBool() && players.Count > 0; }
         }
 
         public static T getRole(PlayerControl player = null)
@@ -223,9 +223,7 @@ namespace TheOtherRoles
         {
             var index = players.FindIndex(x => x.player == p1);
             if (index >= 0)
-            {
                 players[index].player = p2;
-            }
         }
     }
 
@@ -234,12 +232,8 @@ namespace TheOtherRoles
         public static bool isRole(this PlayerControl player, RoleType role)
         {
             foreach (var t in RoleData.allRoleTypes)
-            {
                 if (role == t.Key)
-                {
                     return (bool)t.Value.GetMethod("isRole", BindingFlags.Public | BindingFlags.Static)?.Invoke(null, new object[] { player });
-                }
-            }
 
             switch (role)
             {
@@ -273,8 +267,6 @@ namespace TheOtherRoles
                     return EvilHacker.evilHacker == player;
                 case RoleType.Hacker:
                     return Hacker.hacker == player;
-                case RoleType.Mini:
-                    return Mini.mini == player;
                 case RoleType.Tracker:
                     return Tracker.tracker == player;
                 case RoleType.Vampire:
@@ -323,6 +315,8 @@ namespace TheOtherRoles
                     return Portalmaker.portalmaker == player;
                 case RoleType.Assassin:
                     return Assassin.assassin == player;
+                case RoleType.UnderTaker:
+                    return UnderTaker.underTaker == player;
                 default:
                     TheOtherRolesPlugin.Logger.LogError("isRole: no method found for role type {role}");
                     break;
@@ -388,9 +382,6 @@ namespace TheOtherRoles
                     break;
                 case RoleType.Hacker:
                     Hacker.hacker = player;
-                    break;
-                case RoleType.Mini:
-                    Mini.mini = player;
                     break;
                 case RoleType.Tracker:
                     Tracker.tracker = player;
@@ -464,6 +455,9 @@ namespace TheOtherRoles
                 case RoleType.Assassin:
                     Assassin.assassin = player;
                     break;
+                case RoleType.UnderTaker:
+                    UnderTaker.underTaker = player;
+                    break;
                 default:
                     TheOtherRolesPlugin.Logger.LogError("setRole: no method found for role type {role}");
                     return;
@@ -501,7 +495,6 @@ namespace TheOtherRoles
             if (player.isRole(RoleType.Shifter)) Shifter.clearAndReload();
             if (player.isRole(RoleType.Seer)) Seer.clearAndReload();
             if (player.isRole(RoleType.Hacker)) Hacker.clearAndReload();
-            if (player.isRole(RoleType.Mini)) Mini.clearAndReload();
             if (player.isRole(RoleType.Tracker)) Tracker.clearAndReload();
             if (player.isRole(RoleType.Snitch)) Snitch.clearAndReload();
             if (player.isRole(RoleType.Swapper)) Swapper.clearAndReload();
@@ -525,6 +518,7 @@ namespace TheOtherRoles
             if (player.isRole(RoleType.Witch)) Witch.clearAndReload();
             if (player.isRole(RoleType.EvilHacker)) EvilHacker.clearAndReload();
             if (player.isRole(RoleType.Assassin)) Assassin.clearAndReload();
+            if (player.isRole(RoleType.UnderTaker)) UnderTaker.clearAndReload();
 
             // Other roles
             if (player.isRole(RoleType.Jester)) Jester.clearAndReload();
@@ -591,7 +585,6 @@ namespace TheOtherRoles
             if (player.isRole(RoleType.BountyHunter)) BountyHunter.bountyHunter = target;
             if (player.isRole(RoleType.Witch)) Witch.witch = target;
             if (player.isRole(RoleType.EvilHacker)) EvilHacker.evilHacker = target;
-            if (player.isRole(RoleType.Mini)) Mini.mini = target;
             if (player.isRole(RoleType.EvilGuesser)) Guesser.evilGuesser = target;
             if (player.isRole(RoleType.NiceGuesser)) Guesser.niceGuesser = target;
             if (player.isRole(RoleType.Jester)) Jester.jester = target;
@@ -601,6 +594,7 @@ namespace TheOtherRoles
             if (player.isRole(RoleType.Vulture)) Vulture.vulture = target;
             if (player.isRole(RoleType.Lawyer)) Lawyer.lawyer = target;
             if (player.isRole(RoleType.Pursuer)) Pursuer.pursuer = target;
+            if (player.isRole(RoleType.UnderTaker)) UnderTaker.underTaker = target;
         }
 
         public static void OnKill(this PlayerControl player, PlayerControl target)
