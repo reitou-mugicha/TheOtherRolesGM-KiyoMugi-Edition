@@ -416,7 +416,7 @@ namespace TheOtherRoles.Modules
                     if (x.Contains("shiune")) return 10001;
                     if (x.Contains("01haomingHat")) return 0;
                     if (x.Contains("02haomingHat")) return 1;
-                    if (x.Contains("nationalflagHats")) return 2;
+                    if (x.Contains("nationalFlagHats")) return 2;
                     return 500;
                 });
 

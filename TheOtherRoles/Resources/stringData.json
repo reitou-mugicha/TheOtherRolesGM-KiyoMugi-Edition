@@ -761,8 +761,16 @@
     },
     "01haomingHat": {
         "0": "GM-Haoming Community Hats",
-        "11": "GM-Haoming Community Hats",
+        "11": "GM-Haoming \u30b3\u30df\u30e5\u30cb\u30c6\u30a3\u30cf\u30c3\u30c8",
         "13": "GM-Haoming \u793e\u533a\u5e3d"
+    },
+    "02haomingHat": {
+        "0": "GM-Haoming Experimental Hats",
+        "11": "GM-Haoming \u304a\u8a66\u3057\u30cf\u30c3\u30c8"
+    },
+    "nationalFlagHats": {
+        "0": "National Flag Hats",
+        "11": "\u56fd\u65d7\u30cf\u30c3\u30c8"
     },
     "jekyllAndHyde": {
         "0": "Jekyll and Hyde",
