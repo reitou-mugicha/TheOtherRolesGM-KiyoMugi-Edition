@@ -2,7 +2,7 @@
 
 ## This Readme Language is Japanese. If you want English Readme, Click [Here](https://github.com/Dekokiyo/TheOtherRolesGM-KiyoMugi-Edition/blob/main/Readme_EN.md)
 <br>
-一部の情報を 公式サイト(https://dekokiyo.github.io/Home/index.html)に移動させました。
+一部の情報を 公式サイト(https://dekokiyo.github.io/Home/index.html) に移動させました。
 
 こちらもご覧ください。
 
