@@ -35,7 +35,7 @@ namespace TheOtherRoles
         Staff,
         Gun,
         Mayor,
-        Bread,
+        Bakery,
 
 
         Impostor = 100,
@@ -61,6 +61,8 @@ namespace TheOtherRoles
         HawkEye,
         DoubleKiller,
         UnderTaker,
+        Randomizer,
+        Accelerator,
 
 
         Lovers = 150,
@@ -100,7 +102,7 @@ namespace TheOtherRoles
             { RoleType.Boss, typeof(RoleBase<Boss>) },
             { RoleType.Staff, typeof(RoleBase<Staff>) },
             { RoleType.Gun, typeof(RoleBase<Gun>) },
-            { RoleType.Bread, typeof(RoleBase<Bread>) },
+            { RoleType.Bakery, typeof(RoleBase<Bakery>) },
             //{ RoleType.Creator, typeof(RoleBase<Creator>) },
 
             // Impostor
@@ -110,6 +112,8 @@ namespace TheOtherRoles
             { RoleType.HawkEye, typeof(RoleBase<HawkEye>) },
             { RoleType.CustomImpostor, typeof(RoleBase<CustomImpostor>) },
             { RoleType.DoubleKiller, typeof(RoleBase<DoubleKiller>) },
+            { RoleType.Randomizer, typeof(RoleBase<Randomizer>) },
+            { RoleType.Accelerator, typeof(RoleBase<Accelerator>) },
 
             // Neutral
             { RoleType.PlagueDoctor, typeof(RoleBase<PlagueDoctor>) },

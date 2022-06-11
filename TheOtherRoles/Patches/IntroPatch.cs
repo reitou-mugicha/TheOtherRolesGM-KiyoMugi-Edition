@@ -19,9 +19,9 @@ namespace TheOtherRoles.Patches
         public static void Prefix(IntroCutscene __instance)
         {
             // Generate and initialize player icons
-            if (PlayerControl.LocalPlayer != null && HudManager.Instance != null)
+            if (PlayerControl.LocalPlayer != null && FastDestroyableSingleton<HudManager>.Instance != null)
             {
-                Vector3 bottomLeft = new Vector3(-HudManager.Instance.UseButton.transform.localPosition.x, HudManager.Instance.UseButton.transform.localPosition.y, HudManager.Instance.UseButton.transform.localPosition.z);
+                Vector3 bottomLeft = new Vector3(-FastDestroyableSingleton<HudManager>.Instance.UseButton.transform.localPosition.x, FastDestroyableSingleton<HudManager>.Instance.UseButton.transform.localPosition.y, FastDestroyableSingleton<HudManager>.Instance.UseButton.transform.localPosition.z);
                 foreach (PlayerControl p in PlayerControl.AllPlayerControls)
                 {
                     GameData.PlayerInfo data = p.Data;

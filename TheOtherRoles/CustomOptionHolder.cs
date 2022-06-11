@@ -434,7 +434,15 @@ namespace TheOtherRoles
         public static CustomRoleOption underTakerSpawnRate;
         public static CustomOption underTakerSpeed;
 
-        public static CustomRoleOption breadSpawnRate;
+        public static CustomRoleOption randomizerSpawnRate;
+        public static CustomOption randomizerKillCooldownMin;
+        public static CustomOption randomizerKillCooldownMax;
+
+        public static CustomRoleOption acceleratorSpawnRate;
+        public static CustomOption acceleratorDecreaseCooldown;
+
+        public static CustomRoleOption bakerySpawnRate;
+        public static CustomOption bakeryEnableBombBread;
 
         internal static Dictionary<byte, byte[]> blockedRolePairings = new Dictionary<byte, byte[]>();
 
@@ -583,6 +591,13 @@ namespace TheOtherRoles
 
             underTakerSpawnRate = new CustomRoleOption(700, CustomOptionType.Impostor, "underTaker", UnderTaker.color, 1);
             underTakerSpeed = CustomOption.Create(701, CustomOptionType.Impostor, "underTakerSpeed", 125f, 50f, 200f, 5f, underTakerSpawnRate, format: "unitPercent");
+
+            randomizerSpawnRate = new CustomRoleOption(980, CustomOptionType.Impostor, "randomizer", Randomizer.color, 1);
+            randomizerKillCooldownMin = CustomOption.Create(981, CustomOptionType.Impostor, "randomizerKillCooldownMin", 2.5f, 2.5f, 60f, 2.5f, randomizerSpawnRate, format: "unitSeconds");
+            randomizerKillCooldownMax = CustomOption.Create(982, CustomOptionType.Impostor, "randomizerKillCooldownMax", 30f, 2.5f, 60f, 2.5f, randomizerSpawnRate, format: "unitSeconds");
+
+            acceleratorSpawnRate = new CustomRoleOption(7550, CustomOptionType.Impostor, "accelerator", Accelerator.color, 1);
+            acceleratorDecreaseCooldown = CustomOption.Create(7551, CustomOptionType.Impostor, "acceleratorDecreaseCooldown", 2f, 1f, 60f, 1f, acceleratorSpawnRate, format: "unitSeconds");
 
             madmateSpawnRate = new CustomRoleOption(280, CustomOptionType.Modifier, "madmate", Madmate.color);
             madmateType = CustomOption.Create(281, CustomOptionType.Modifier, "madmateType", new string[] { "madmateDefault", "madmateWithRole", "madmateRandom" }, madmateSpawnRate);
@@ -832,7 +847,8 @@ namespace TheOtherRoles
             yakuzaCanKillNeutrals = CustomOption.Create(694, CustomOptionType.Crewmate, "yakuzaCanKillNeutral", true, yakuzaSpawnRate);
             yakuzaMisfireKillsTarget = CustomOption.Create(695, CustomOptionType.Crewmate, "yakuzaMisfireKillTarget", false, yakuzaSpawnRate);
 
-            //breadSpawnRate = new CustomRoleOption(699, CustomOptionType.Crewmate, "bakery", Bread.color, 1);
+            bakerySpawnRate = new CustomRoleOption(698, CustomOptionType.Crewmate, "bakery", Bakery.color, 15);
+            bakeryEnableBombBread = CustomOption.Create(699, CustomOptionType.Crewmate, "bakeryEnableBombBread", true, bakerySpawnRate);
 
             // Other options
             specialOptions = new CustomOptionBlank(null);

@@ -108,6 +108,7 @@ namespace TheOtherRoles
         /*CreatorCreateSheriff,
         StudentPromotion,
         SheriffCreateStudent,*/
+        RPCExiled,
     }
 
     public static class RPCProcedure
@@ -1220,8 +1221,7 @@ namespace TheOtherRoles
             var target = Helpers.playerById(targetId);
 
 
-            if (killer == PlayerControl.LocalPlayer)
-                target.MurderPlayer(target);
+            target.MurderPlayer(target);
             killer.transform.position = target.transform.position;
         }
 
@@ -1322,6 +1322,14 @@ namespace TheOtherRoles
             erasePlayerRoles(player.PlayerId, true);
             player.setRole(RoleType.Student);
         }*/
+
+        public static void RPCExiled(byte targetId)
+        {
+            var target = Helpers.playerById(targetId);
+
+            target.Exiled();
+            FastDestroyableSingleton<HudManager>.Instance.KillOverlay.ShowKillAnimation(target.Data, target.Data);
+        }
 
         [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.HandleRpc))]
         class RPCHandlerPatch
@@ -1634,6 +1642,9 @@ namespace TheOtherRoles
                     case (byte)CustomRPC.SheriffCreateStudent:
                         RPCProcedure.SheriffCreateStudent(reader.ReadByte());
                         break;*/
+                    case (byte)CustomRPC.RPCExiled:
+                        RPCProcedure.RPCExiled(reader.ReadByte());
+                        break;
                 }
             }
         }

@@ -44,7 +44,7 @@ namespace TheOtherRoles
             Mini.Clear();
             AntiTeleport.Clear();
             Sprinter.Clear();
-            Bread.Clear();
+            Bakery.Clear();
             //Creator.Clear();
             //Student.Clear();
             Role.ClearAll();

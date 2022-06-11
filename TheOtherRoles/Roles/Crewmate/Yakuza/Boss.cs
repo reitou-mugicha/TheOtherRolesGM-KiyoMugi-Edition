@@ -6,7 +6,9 @@ using TheOtherRoles.Objects;
 using UnityEngine;
 using static TheOtherRoles.TheOtherRoles;
 using static TheOtherRoles.Patches.PlayerControlFixedUpdatePatch;
+using static TheOtherRoles.GameHistory;
 using TheOtherRoles.Modules;
+using TheOtherRoles.Patches;
 
 namespace TheOtherRoles
 {
@@ -57,6 +59,40 @@ namespace TheOtherRoles
         public override void OnDeath(PlayerControl killer = null)
         {
             dead = true;
+
+            if (boss.isDead())
+            {
+                foreach (var gun in Gun.allPlayers)
+                {
+                    if (gun.isAlive())
+                    {
+                        if (killer == null)
+                        {
+                            gun.Exiled();
+                        }
+                        else
+                        {
+                            gun.MurderPlayer(gun);
+                        }
+                        finalStatuses[gun.PlayerId] = FinalStatus.Suicide;
+                    }
+                }
+                foreach (var staff in Staff.allPlayers)
+                {
+                    if (staff.isAlive())
+                    {
+                        if (killer == null)
+                        {
+                            staff.Exiled();
+                        }
+                        else
+                        {
+                            staff.MurderPlayer(staff);
+                        }
+                        finalStatuses[staff.PlayerId] = FinalStatus.Suicide;
+                    }
+                }
+            }
         }
         public override void HandleDisconnect(PlayerControl player, DisconnectReasons reason) { }
 
@@ -154,6 +190,12 @@ namespace TheOtherRoles
         public static void SetButtonCooldowns()
         {
             bossKillButton.MaxTimer = Boss.cooldown;
+        }
+
+        public static bool isDead()
+        {
+            if(dead) return true;
+            else return false;
         }
 
         public static void Clear()

@@ -155,6 +155,8 @@ namespace TheOtherRoles.Patches
             impSettings.Add((byte)RoleType.CustomImpostor, CustomOptionHolder.customImpostorSpawnRate.data);
             impSettings.Add((byte)RoleType.DoubleKiller, CustomOptionHolder.doubleKillerSpawnRate.data);
             impSettings.Add((byte)RoleType.UnderTaker, CustomOptionHolder.underTakerSpawnRate.data);
+            impSettings.Add((byte)RoleType.Randomizer, CustomOptionHolder.randomizerSpawnRate.data);
+            impSettings.Add((byte)RoleType.Accelerator, CustomOptionHolder.acceleratorSpawnRate.data);
 
             neutralSettings.Add((byte)RoleType.Jester, CustomOptionHolder.jesterSpawnRate.data);
             neutralSettings.Add((byte)RoleType.Arsonist, CustomOptionHolder.arsonistSpawnRate.data);
@@ -181,7 +183,7 @@ namespace TheOtherRoles.Patches
             crewSettings.Add((byte)RoleType.SecurityGuard, CustomOptionHolder.securityGuardSpawnRate.data);
             crewSettings.Add((byte)RoleType.Portalmaker, CustomOptionHolder.portalmakerSpawnRate.data);
             crewSettings.Add((byte)RoleType.Chunibyo, CustomOptionHolder.chunibyoSpawnRate.data);
-            //crewSettings.Add((byte)RoleType.Bread, CustomOptionHolder.breadSpawnRate.data);
+            crewSettings.Add((byte)RoleType.Bakery, CustomOptionHolder.bakerySpawnRate.data);
             crewSettings.Add((byte)RoleType.Medium, CustomOptionHolder.mediumSpawnRate.data);/*
             crewSettings.Add((byte)RoleType.Student, CustomOptionHolder.sheriffSpawnRate.data);
             crewSettings.Add((byte)RoleType.Creator, CustomOptionHolder.creatorSpawnRate.data);*/

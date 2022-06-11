@@ -102,10 +102,13 @@ namespace TheOtherRoles
         public static RoleInfo staff = new RoleInfo("staff", Staff.color, CustomOptionHolder.yakuzaSpawnRate, RoleType.Staff);
         public static RoleInfo gun = new RoleInfo("gun", Gun.color, CustomOptionHolder.yakuzaSpawnRate, RoleType.Gun);
         public static RoleInfo underTaker = new RoleInfo("underTaker", UnderTaker.color, CustomOptionHolder.underTakerSpawnRate, RoleType.UnderTaker);
-        public static RoleInfo bread = new RoleInfo("bread", Bread.color, CustomOptionHolder.breadSpawnRate, RoleType.Bread);
+        public static RoleInfo bakery = new RoleInfo("bakery", Bakery.color, CustomOptionHolder.bakerySpawnRate, RoleType.Bakery);
         public static RoleInfo hawkEye = new RoleInfo("hawkEye", HawkEye.color, CustomOptionHolder.hawkEyeSpawnRate, RoleType.HawkEye);/*
         public static RoleInfo creator = new RoleInfo("creator", Creator.color, CustomOptionHolder.creatorSpawnRate, RoleType.Creator);
         public static RoleInfo student = new RoleInfo("student", Student.color, CustomOptionHolder.sheriffSpawnRate, RoleType.Student);*/
+        public static RoleInfo randomizer = new RoleInfo("randomizer", Randomizer.color, CustomOptionHolder.randomizerSpawnRate, RoleType.Randomizer);
+        public static RoleInfo accelerator = new RoleInfo("accelerator", Accelerator.color, CustomOptionHolder.acceleratorSpawnRate, RoleType.Accelerator);
+
 
         public static List<RoleInfo> allRoleInfos = new List<RoleInfo>() {
                 impostor,
@@ -171,9 +174,11 @@ namespace TheOtherRoles
                 gun,
                 hawkEye,
                 underTaker,
-                bread,
+                bakery,
                 //student,
                 //creator
+                randomizer,
+                accelerator,
             };
 
         public static string tl(string key)
@@ -240,7 +245,7 @@ namespace TheOtherRoles
             if (p.isRole(RoleType.PlagueDoctor)) infos.Add(plagueDoctor);
             if (p.isRole(RoleType.NekoKabocha)) infos.Add(nekoKabocha);
             if (p.isRole(RoleType.UnderTaker)) infos.Add(underTaker);
-            if (p.isRole(RoleType.Bread)) infos.Add(bread);
+            if (p.isRole(RoleType.Bakery)) infos.Add(bakery);
             if (p.isRole(RoleType.SerialKiller)) infos.Add(serialKiller);/*
             if (p.isRole(RoleType.Student)) infos.Add(student);
             if (p.isRole(RoleType.Creator)) infos.Add(creator);*/
@@ -259,6 +264,9 @@ namespace TheOtherRoles
                 }
             }
             if (p.isRole(RoleType.Sprinter)) infos.Add(sprinter);
+            if (p.isRole(RoleType.Randomizer)) infos.Add(randomizer);
+            if (p.isRole(RoleType.Accelerator)) infos.Add(accelerator);
+
 
 
             // Default roles

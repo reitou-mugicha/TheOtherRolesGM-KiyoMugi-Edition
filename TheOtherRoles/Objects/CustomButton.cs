@@ -198,5 +198,12 @@ namespace TheOtherRoles.Objects
             // Trigger OnClickEvent if the hotkey is being pressed down
             if (hotkey.HasValue && Input.GetKeyDown(hotkey.Value)) onClickEvent();
         }
+
+        public void Destroy()
+        {
+            setActive(false);
+            UnityEngine.Object.Destroy(actionButton);
+            actionButton = null;
+        }
     }
 }

@@ -22,7 +22,7 @@ namespace TheOtherRoles
     public class TheOtherRolesPlugin : BasePlugin
     {
         public const string Id = "kiyomori.mugicha.theotherrolesgmkm";
-        public const string VersionString = "2.0.0";
+        public const string VersionString = "2.0.1";
         public static System.Version Version = System.Version.Parse(VersionString);
         internal static BepInEx.Logging.ManualLogSource Logger;
 
@@ -156,6 +156,14 @@ namespace TheOtherRoles
                 MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.ImpostorEnd, Hazel.SendOption.Reliable, -1);
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
                 RPCProcedure.impostorEnd();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Colon) && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started && AmongUsClient.Instance.AmHost)
+            {
+                MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.UseAdminTime, Hazel.SendOption.Reliable, -1);
+                writer.Write(10000);
+                AmongUsClient.Instance.FinishRpcImmediately(writer);
+                RPCProcedure.useAdminTime(10000);
             }
 
             // F11&F12を変えた理由・・・誰かがSteamでスクショ撮ろうとして廃村したから

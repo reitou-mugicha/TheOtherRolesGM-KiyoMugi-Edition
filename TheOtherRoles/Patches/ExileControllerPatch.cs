@@ -1,13 +1,13 @@
-using HarmonyLib;
-using Hazel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using HarmonyLib;
+using Hazel;
+using TheOtherRoles.Objects;
+using UnhollowerBaseLib;
+using UnityEngine;
 using static TheOtherRoles.TheOtherRoles;
 using static TheOtherRoles.TheOtherRolesGM;
-using TheOtherRoles.Objects;
-using System;
-using UnityEngine;
-using TheOtherRoles.Utilities;
 
 namespace TheOtherRoles.Patches
 {
@@ -84,9 +84,6 @@ namespace TheOtherRoles.Patches
                 JackInTheBox.convertToVents();
             }
 
-            // Activate portals.
-            Portal.meetingEndsUpdate();
-
             // Witch execute casted spells
             if (Witch.witch != null && Witch.futureSpelled != null && AmongUsClient.Instance.AmHost)
             {
@@ -108,14 +105,14 @@ namespace TheOtherRoles.Patches
             Witch.futureSpelled = new List<PlayerControl>();
 
             // SecurityGuard vents and cameras
-            var allCameras = MapUtilities.CachedShipStatus.AllCameras.ToList();
+            var allCameras = ShipStatus.Instance.AllCameras.ToList();
             MapOptions.camerasToAdd.ForEach(camera =>
             {
                 camera.gameObject.SetActive(true);
                 camera.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
                 allCameras.Add(camera);
             });
-            MapUtilities.CachedShipStatus.AllCameras = allCameras.ToArray();
+            ShipStatus.Instance.AllCameras = allCameras.ToArray();
             MapOptions.camerasToAdd = new List<SurvCamera>();
 
             foreach (Vent vent in MapOptions.ventsToSeal)
@@ -189,16 +186,15 @@ namespace TheOtherRoles.Patches
             public static void Postfix(AirshipExileController __instance)
             {
                 WrapUpPostfix(__instance.exiled);
-                if (SubmergedCompatibility.IsSubmerged) ExileControllerReEnableGameplayPatch.ReEnableGameplay();
             }
         }
 
-        // Workaround to add a "postfix" to the destroying of the exile controller(i.e.cutscene) of submerged
+        // Workaround to add a "postfix" to the destroying of the exile controller (i.e. cutscene) of submerged
         [HarmonyPatch(typeof(UnityEngine.Object), nameof(UnityEngine.Object.Destroy), new Type[] { typeof(GameObject) })]
         public static void Prefix(GameObject obj)
         {
             if (!SubmergedCompatibility.IsSubmerged) return;
-            if (obj.name.Contains("ExileCutscene"))
+            if (obj != null && obj.name.Contains("ExileCutscene"))
             {
                 WrapUpPostfix(ExileControllerBeginPatch.lastExiled);
             }
@@ -207,16 +203,25 @@ namespace TheOtherRoles.Patches
         static void WrapUpPostfix(GameData.PlayerInfo exiled)
         {
             // Mini exile lose condition
-            var p = Helpers.playerById(exiled.PlayerId);
-            if (exiled != null && p.hasModifier(ModifierType.Mini) && !Mini.isGrownUp(p) && !p.Data.Role.IsImpostor)
+            if (exiled != null)
             {
-                Mini.triggerMiniLose = true;
+                var p = Helpers.playerById(exiled.PlayerId);
+                if (p.hasModifier(ModifierType.Mini) && !Mini.isGrownUp(p) && !p.Data.Role.IsImpostor && !p.isNeutral())
+                {
+                    Mini.triggerMiniLose = true;
+                }
+
+                // Jester win condition
+                else if (p.isRole(RoleType.Jester))
+                {
+                    Jester.triggerJesterWin = true;
+                }
             }
 
-            // Jester win condition
-            else if (exiled != null && Jester.jester != null && Jester.jester.PlayerId == exiled.PlayerId)
+            if (SubmergedCompatibility.IsSubmerged)
             {
-                Jester.triggerJesterWin = true;
+                var fullscreen = UnityEngine.GameObject.Find("FullScreen500(Clone)");
+                if (fullscreen) fullscreen.SetActive(false);
             }
         }
     }
@@ -248,8 +253,9 @@ namespace TheOtherRoles.Patches
             {
                 foreach (Vector3 pos in Seer.deadBodyPositions)
                 {
-                    GameObject soul = new GameObject();
-                    soul.transform.position = pos;
+                    GameObject soul = new();
+                    // soul.transform.position = pos;
+                    soul.transform.position = new Vector3(pos.x, pos.y, pos.y / 1000 - 1f);
                     soul.layer = 5;
                     var rend = soul.AddComponent<SpriteRenderer>();
                     soul.AddSubmergedComponent(SubmergedCompatibility.Classes.ElevatorMover);
@@ -295,8 +301,9 @@ namespace TheOtherRoles.Patches
                 {
                     foreach ((DeadPlayer db, Vector3 ps) in Medium.featureDeadBodies)
                     {
-                        GameObject s = new GameObject();
-                        s.transform.position = ps;
+                        GameObject s = new();
+                        // s.transform.position = ps;
+                        s.transform.position = new Vector3(ps.x, ps.y, ps.y / 1000 - 1f);
                         s.layer = 5;
                         var rend = s.AddComponent<SpriteRenderer>();
                         s.AddSubmergedComponent(SubmergedCompatibility.Classes.ElevatorMover);
@@ -312,6 +319,7 @@ namespace TheOtherRoles.Patches
                 Lawyer.meetings++;
 
             if (PlayerControl.LocalPlayer.hasModifier(ModifierType.AntiTeleport))
+            {
                 if (AntiTeleport.position != new Vector3())
                 {
                     PlayerControl.LocalPlayer.transform.position = AntiTeleport.position;
@@ -320,6 +328,13 @@ namespace TheOtherRoles.Patches
                         SubmergedCompatibility.ChangeFloor(AntiTeleport.position.y > -7);
                     }
                 }
+            }
+            // Remove DeadBodys
+            DeadBody[] array = UnityEngine.Object.FindObjectsOfType<DeadBody>();
+            for (int i = 0; i < array.Length; i++)
+            {
+                UnityEngine.Object.Destroy(array[i].gameObject);
+            }
         }
     }
 
@@ -335,12 +350,12 @@ namespace TheOtherRoles.Patches
                     PlayerControl player = Helpers.playerById(ExileController.Instance.exiled.Object.PlayerId);
                     if (player == null) return;
                     // Exile role text
-                    if (id == StringNames.ExileTextPN || id == StringNames.ExileTextSN || id == StringNames.ExileTextPP || id == StringNames.ExileTextSP)
+                    if (id is StringNames.ExileTextPN or StringNames.ExileTextSN or StringNames.ExileTextPP or StringNames.ExileTextSP)
                     {
                         __result = player.Data.PlayerName + " was The " + String.Join(" ", RoleInfo.getRoleInfoForPlayer(player).Select(x => x.name).ToArray());
                     }
                     // Hide number of remaining impostors on Jester win
-                    if (id == StringNames.ImpostorsRemainP || id == StringNames.ImpostorsRemainS)
+                    if (id is StringNames.ImpostorsRemainP or StringNames.ImpostorsRemainS)
                     {
                         if (Jester.jester != null && player.PlayerId == Jester.jester.PlayerId) __result = "";
                     }

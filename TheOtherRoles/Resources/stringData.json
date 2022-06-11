@@ -759,6 +759,18 @@
         "0": "Under Taker",
         "11": "\u30a2\u30f3\u30c0\u30fc\u30c6\u30a4\u30ab\u30fc"
     },
+    "randomizer": {
+        "0": "Randomizer",
+        "11": "\u30e9\u30f3\u30c0\u30de\u30a4\u30b6\u30fc"
+    },
+    "accelerator": {
+        "0": "Accelerator",
+        "11": "\u30a2\u30af\u30bb\u30e9\u30ec\u30fc\u30bf"
+    },
+    "bakery": {
+        "0": "Bakery",
+        "11": "\u30d1\u30f3\u5c4b"
+    },
     "gmIsHost": {
         "0": "Always The Host",
         "11": "\u5fc5\u305a\u30db\u30b9\u30c8\u306b\u5272\u308a\u632f\u3089\u308c\u308b",
@@ -2113,6 +2125,22 @@
         "0": "Under Taking Speed",
         "11": "\u6b7b\u4f53\u904b\u642c\u4e2d\u306e\u8db3\u306e\u901f\u3055"
     },
+    "randomizerKillCooldownMin": {
+        "0": "Min Cooldown",
+        "11": "\u6700\u5c0f\u30af\u30fc\u30eb\u30c0\u30a6\u30f3"
+    },
+    "randomizerKillCooldownMax": {
+        "0": "Max Cooldown",
+        "11": "\u6700\u5927\u30af\u30fc\u30eb\u30c0\u30a6\u30f3"
+    },
+    "acceleratorDecreaseCooldown": {
+        "0": "Decrease Cooldown",
+        "11": "\u6e1b\u3089\u3059\u79d2\u6570"
+    },
+    "bakeryEnableBombBread": {
+        "0": "Enable BombBread",
+        "11": "\u7206\u767a\u3059\u308b\u30d1\u30f3\u3092\u6709\u52b9\u306b\u3059\u308b"
+    },
     "torSettings": {
         "0": "The Other Roles Settings",
         "11": "The Other Roles\u306e\u8a2d\u5b9a",
@@ -2436,12 +2464,12 @@
     },
     "modOptionsText": {
         "0": "Mod Options...",
-        "11": "MOD\u306e\u8a2d\u5b9a",
+        "11": "\u30b2\u30fc\u30e0\u306e\u8a2d\u5b9a",
         "13": "\u6a21\u7ec4\u8bbe\u7f6e..."
     },
     "moreOptionsText": {
         "0": "More Options...",
-        "11": "MOD\u306e\u8a2d\u5b9a",
+        "11": "\u30b2\u30fc\u30e0\u306e\u8a2d\u5b9a",
         "13": "\u66f4\u591a\u8bbe\u7f6e..."
     },
     "ventAnimation": {
@@ -2714,6 +2742,26 @@
     "noAbility": {
         "0": "(No Ability...)",
         "11": "(\u4f55\u3082\u8d77\u304d\u306a\u304b\u3063\u305f)"
+    },
+    "GoodBakeryText": {
+        "0": "Good Bread!",
+        "11": "\u30d1\u30f3\u304c\u3067\u304d\u307e\u3057\u305f\uff01"
+    },
+    "BombBakeryText": {
+        "0": "oops! The bread has exploded.",
+        "11": "\u304a\u3063\u3068\u3002\u6b8b\u5ff5\u306a\u3053\u3068\u306b\u3001\u30d1\u30f3\u304c\u7206\u767a\u3057\u3066\u3057\u307e\u3044\u307e\u3057\u305f\u2026"
+    },
+    "FrenchBakeryText": {
+        "0": "French Bread!",
+        "11": "\u30d5\u30e9\u30f3\u30b9\u30d1\u30f3\u304c\u3067\u304d\u307e\u3057\u305f\uff01"
+    },
+    "AnpanBakeryText": {
+        "0": "Anpan Bread!",
+        "11": "\u30a2\u30f3\u30d1\u30f3\u304c\u3067\u304d\u307e\u3057\u305f\uff01"
+    },
+    "MelonBakeryText": {
+        "0": "Melon Bread!",
+        "11": "\u30e1\u30ed\u30f3\u30d1\u30f3\u304c\u3067\u304d\u307e\u3057\u305f\uff01"
     },
     "gmIntroDesc": {
         "0": "You're the Game Master",
@@ -3029,6 +3077,18 @@
     "underTakerIntroDesc": {
         "0": "Move The Dead Body",
         "11": "\u6b7b\u4f53\u3092\u52d5\u304b\u305b"
+    },
+    "randomizerIntroDesc": {
+        "0": "Let's start a series of murders.",
+        "11": "\u9023\u7d9a\u6bba\u4eba\u3092\u8d77\u3053\u305d\u3046"
+    },
+    "acceleratorIntroDesc": {
+        "0": "Aim for mass kills.",
+        "11": "\u5927\u91cf\u30ad\u30eb\u3092\u76ee\u6307\u305d\u3046"
+    },
+    "bakeryIntroDesc": {
+        "0": "Let's make some good bread.",
+        "11": "\u7f8e\u5473\u3057\u3044\u30d1\u30f3\u3092\u4f5c\u308d\u3046"
     },
     "gmShortDesc": {
         "0": "You're the Game Master",
@@ -3349,6 +3409,18 @@
         "0": "Move Dead Body",
         "11": "\u6b7b\u4f53\u3092\u52d5\u304b\u305d\u3046"
     },
+    "randomizerShortDesc": {
+        "0": "Let's start a series of murders.",
+        "11": "\u9023\u7d9a\u6bba\u4eba\u3092\u8d77\u3053\u305d\u3046"
+    },
+    "acceleratorShortDesc": {
+        "0": "Aim for mass kills.",
+        "11": "\u5927\u91cf\u30ad\u30eb\u3092\u76ee\u6307\u305d\u3046"
+    },
+    "bakeryShortDesc": {
+        "0": "Let's make some good bread.",
+        "11": "\u7f8e\u5473\u3057\u3044\u30d1\u30f3\u3092\u4f5c\u308d\u3046"
+    },
     "jesterFullDesc": {
         "0": "The Jester does not have any tasks.\nThey win the game as a solo if they get voted out during a meeting.",
         "11": "\u30fb\u4eba\u72fc\u3067\u3044\u3046\u300e\u3066\u308b\u3066\u308b\u300f\n\u30fb\u306a\u306b\u3082\u80fd\u529b\u3092\u6301\u305f\u306a\u3044\n\u30fb\u81ea\u8eab\u304c\u540a\u3089\u308c\u305f\u3068\u304d\u306b\u52dd\u5229\u3059\u308b",
@@ -3666,6 +3738,18 @@
     "underTakerFullDesc": {
         "0": "You can move the Dead Body",
         "11": "\u30fb\u6b7b\u4f53\u3092\u52d5\u304b\u3059\u3053\u3068\u304c\u3067\u304d\u307e\u3059\u3002\n\u30fb\u6b7b\u4f53\u3092\u52d5\u304b\u3057\u3066\u3044\u308b\u9593\u306f\u8db3\u304c\u9045\u304f\u306a\u308a\u307e\u3059\u3002\n\u30fb\u79fb\u52d5\u4e2d\u306f\u30d9\u30f3\u30c8\u3068\u30ad\u30eb\u304c\u4e0d\u53ef\u80fd\u306b\u306a\u308a\u307e\u3059\u3002\n\u30fb\u79fb\u52d5\u4e2d\u3082\u901a\u5831\u306f\u3067\u304d\u307e\u3059\u3002"
+    },
+    "randomizerFullDesc": {
+        "0": "The kill cool time changes randomly for each kill.",
+        "11": "\u30fb\u30ad\u30eb\u3092\u3059\u308b\u3054\u3068\u306b\u30ad\u30eb\u30af\u30fc\u30eb\u30c0\u30a6\u30f3\u304c\u30e9\u30f3\u30c0\u30e0\u306b\u5909\u5316\u3059\u308b\u3002"
+    },
+    "acceleratorFullDesc": {
+        "0": "Each kill shortens the kill cool.",
+        "11": "\u30fb\u30ad\u30eb\u3092\u3059\u308b\u3054\u3068\u306b\u5207\u308b\u30af\u30fc\u30eb\u304c\u77ed\u304f\u306a\u308b"
+    },
+    "bakeryFullDesc": {
+        "0": "At each meeting, it is checked whether bread has been made.\nThere is a 1/100 chance that the bread will explode.",
+        "11": "\u30fb\u4f1a\u8b70\u3054\u3068\u306b\u3001\u30d1\u30f3\u304c\u4f5c\u3089\u308c\u305f\u304b\u304c\u78ba\u8a8d\u3055\u308c\u308b\u3002\n\u30fb1/100\u306e\u78ba\u7387\u3067\u30d1\u30f3\u304c\u7206\u767a\u3059\u308b\u3002"
     },
     "Banner": {
         "0": "Banner.png"
@@ -4147,6 +4231,10 @@
         "0": " SG",
         "11": " SG"
     },
+    "release": {
+        "0": "<size=110%><color=#FC0303>TOR GM KM Update!</color>Ver.2.0.0</size><size=70%>\nPlease Read Github Page</size>",
+        "11": "<size=110%><color=#FC0303>TOR GM KM \u30a2\u30c3\u30d7\u30c7\u30fc\u30c8!</color>Ver.2.0.0</size><size=70%>\n\u60c5\u5831\u91cf\u304c\u591a\u3059\u304e\u3066\u66f8\u304d\u5165\u308c\u306a\u3044\u306e\u3067Github\u898b\u3066\u304f\u3060\u3055\u3044\u3002</size>"
+    },
     "atIntro": {
         "0": "You have the ability to stay in place.",
         "11": "\u305d\u306e\u5834\u306b\u3068\u3069\u307e\u308b\u80fd\u529b\u3092\u624b\u306b\u5165\u308c\u305f\u3002"
@@ -4166,9 +4254,5 @@
     "sgIntro": {
         "0": "You got the sunglasses",
         "11": "\u30b5\u30f3\u30b0\u30e9\u30b9\u3092\u624b\u306b\u5165\u308c\u305f"
-    },
-    "release": {
-        "0": "<size=110%><color=#FC0303>TOR GM KM Update!</color>Ver1.2.0</size><size=70%>\nHi! I'm Kiyomori!\nThis Update Contents is...\n1.Fixed Some Bugs\n2.Fixed Chat Bugs (You need Push F1)\n3.Fixed Die Player Zoom In&Out\n4.Fixed HawkEye Cooldown\n5.Change key in description overlay from H to left control\n6.Reduced the text size of the description overlay so that the full description is displayed\n7.Add Submerged update Button(Test)\n8.Remove unnecessary source code\n9.Fixed TheHorseRoles Logo\n10.Add New Role\n<color=#FC0303>Custom Impostor</color>\n  You Can Customize Kill Cooldown, Can Sabotage, Can Use Vents\n11.Added option to enhance the position assignment system\n\nSee you next Update~~~!                        DekoKiyo&Mugicha</size>",
-        "11": "<size=110%><color=#FC0303>TOR GM KM \u30a2\u30c3\u30d7\u30c7\u30fc\u30c8!</color>Ver1.2.0</size><size=70%>\n\u3046\u3048\u30fc\u3044\u3002\u6e05\u76db\u3060\u3088\uff5e\n\u4eca\u56de\u306e\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u306e\u5185\u5bb9\u306f\u3053\u3093\u306a\u611f\u3058\u306a\u3093\u3067\u3059\u308f\n1.\u30d0\u30b0\u96c6\u82f1\n2.\u30c1\u30e3\u30c3\u30c8\u30d0\u30b0\u4fee\u6b63(F1\u3092\u62bc\u3057\u3066\u304f\u3060\u3055\u3044)\n3.\u6b7b\u4ea1\u6642\u306e\u30ba\u30fc\u30e0\u30a4\u30f3\u30fb\u30a2\u30a6\u30c8\u3092\u4fee\u6b63\n4.\u30db\u30fc\u30af\u30a2\u30a4\u306e\u30af\u30fc\u30eb\u30c0\u30a6\u30f3\u3092\u4fee\u6b63\n5.\u8aac\u660e\u30aa\u30fc\u30d0\u30fc\u30ec\u30a4\u306e\u30ad\u30fc\u3092H\u304b\u3089\u5de6\u30b3\u30f3\u30c8\u30ed\u30fc\u30eb\u306b\u5909\u66f4\n6.\u8aac\u660e\u30aa\u30fc\u30d0\u30fc\u30ec\u30a4\u306e\u6587\u5b57\u30b5\u30a4\u30ba\u3092\u5c0f\u3055\u304f\u3057\u3066\u3001\u8aac\u660e\u304c\u5168\u90e8\u8868\u793a\u3055\u308c\u308b\u3088\u3046\u306b\u5909\u66f4\n7.\u8a66\u9a13\u7684\u306b\u30b5\u30d6\u30de\u30fc\u30b8\u30c9\u7528\u306e\u30a2\u30d7\u30c7\u30dc\u30bf\u30f3\u3092\u8ffd\u52a0\n8.\u4e0d\u8981\u306a\u30bd\u30fc\u30b9\u30b3\u30fc\u30c9\u3092\u524a\u9664\n9.TheHorseRoles\u306e\u30ed\u30b4\u304c\u8868\u793a\u3055\u308c\u306a\u3044\u554f\u984c\u3092\u4fee\u6b63\n10.\u65b0\u5f79\u8077\u3092\u8ffd\u52a0\n<color=#FC0303>\u30ab\u30b9\u30bf\u30e0\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc</color>\n  \u30ad\u30eb\u30af\u30fc\u30eb\u3001\u30d9\u30f3\u30c8\u4f7f\u7528\u3001\u30b5\u30dc\u30bf\u30fc\u30b8\u30e5\u304c\u3067\u304d\u308b\u304b\u8a2d\u5b9a\u3067\u304d\u307e\u3059\u3002\n11.\u5f79\u8077\u4ed8\u4e0e\u30b7\u30b9\u30c6\u30e0\u3092\u5f37\u5316\u3059\u308b\u30aa\u30d7\u30b7\u30e7\u30f3\u3092\u8ffd\u52a0\n\nSee you next Update~~~!                        DekoKiyo&Mugicha</size>"
     }
 }
