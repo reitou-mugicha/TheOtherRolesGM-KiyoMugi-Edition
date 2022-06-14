@@ -285,6 +285,7 @@ namespace TheOtherRoles
         public static CustomOption betterStartButtons;
 
         public static CustomOption enableMirrorMap;
+        public static CustomOption enableAddCustomVent;
 
         public static CustomOption dynamicMap;
         public static CustomOption dynamicMapEnableSkeld;
@@ -443,6 +444,23 @@ namespace TheOtherRoles
 
         public static CustomRoleOption bakerySpawnRate;
         public static CustomOption bakeryEnableBombBread;
+        public static CustomOption bakeryBombBreadRate;
+
+        public static CustomRoleOption trapperSpawnRate;
+        public static CustomOption trapperTrapCooldown;
+        public static CustomOption trapperTrapTime;
+
+        public static CustomRoleOption timeReviverSpawnRate;
+        public static CustomOption timeReviverDeathReport;
+        public static CustomOption timeReviverExileAddMeetingTime;
+        public static CustomOption timeReviverTimeCutoffCooldown;
+        public static CustomOption timeReviverTimeCutoffDuration;
+
+        public static CustomRoleOption timerSpawnRate;
+        public static CustomOption timerMeetingEndTimeReset;
+
+        public static CustomRoleOption silencerSpawnRate;
+        public static CustomOption silencerSilenceKillCooldown;
 
         internal static Dictionary<byte, byte[]> blockedRolePairings = new Dictionary<byte, byte[]>();
 
@@ -598,6 +616,13 @@ namespace TheOtherRoles
 
             acceleratorSpawnRate = new CustomRoleOption(7550, CustomOptionType.Impostor, "accelerator", Accelerator.color, 1);
             acceleratorDecreaseCooldown = CustomOption.Create(7551, CustomOptionType.Impostor, "acceleratorDecreaseCooldown", 2f, 1f, 60f, 1f, acceleratorSpawnRate, format: "unitSeconds");
+
+            trapperSpawnRate = new CustomRoleOption(7225, CustomOptionType.Impostor, "trapper", Trapper.color, 1);
+            trapperTrapCooldown = CustomOption.Create(7226, CustomOptionType.Impostor, "trapperTrapCooldown", 30f, 2.5f, 60f, 2.5f, trapperSpawnRate, format: "unitSeconds");
+            trapperTrapTime = CustomOption.Create(7227, CustomOptionType.Impostor, "trapperTrapTime", 5f, 2.5f, 60f, 2.5f, trapperSpawnRate, format: "unitSeconds");
+
+            silencerSpawnRate = new CustomRoleOption(1090, CustomOptionType.Impostor, "silencer", Silencer.color, 1);
+            silencerSilenceKillCooldown = CustomOption.Create(1091, CustomOptionType.Impostor, "silencerSilenceKillCooldown", 45f, 2.5f, 60f, 2.5f, silencerSpawnRate, format: "unitSeconds");
 
             madmateSpawnRate = new CustomRoleOption(280, CustomOptionType.Modifier, "madmate", Madmate.color);
             madmateType = CustomOption.Create(281, CustomOptionType.Modifier, "madmateType", new string[] { "madmateDefault", "madmateWithRole", "madmateRandom" }, madmateSpawnRate);
@@ -849,6 +874,16 @@ namespace TheOtherRoles
 
             bakerySpawnRate = new CustomRoleOption(698, CustomOptionType.Crewmate, "bakery", Bakery.color, 15);
             bakeryEnableBombBread = CustomOption.Create(699, CustomOptionType.Crewmate, "bakeryEnableBombBread", true, bakerySpawnRate);
+            bakeryBombBreadRate = CustomOption.Create(697, CustomOptionType.Crewmate, "bakeryBombBreadRate", 1, 1, 100, 1, bakerySpawnRate, format: "unitPercent");
+
+            timeReviverSpawnRate = new CustomRoleOption(7590, CustomOptionType.Crewmate, "timeReviver", TimeReviver.color, 15);
+            //timeReviverDeathReport = CustomOption.Create(7591, CustomOptionType.Crewmate, "timeReviverDeathReport", false, timeReviverSpawnRate);
+            //timeReviverExileAddMeetingTime = CustomOption.Create(7592, CustomOptionType.Crewmate, "timeReviverExileAddMeetingTime", 20f, 2.5f, 60f, 2.5f, timeReviverSpawnRate, format: "unitSeconds");
+            timeReviverTimeCutoffCooldown = CustomOption.Create(7593, CustomOptionType.Crewmate, "timeReviverTimeCutoffCooldown", 30f, 2.5f, 60f, 2.5f, timeReviverSpawnRate, format: "unitSeconds");
+            timeReviverTimeCutoffDuration = CustomOption.Create(7594, CustomOptionType.Crewmate, "timeReviverTimeCutoffDuration", 10f, 2.5f, 60f, 2.5f, timeReviverSpawnRate, format: "unitSeconds");
+
+            //timerSpawnRate = new CustomRoleOption(8518, CustomOptionType.Crewmate, "timer", Timer.color, 15);
+            //timerMeetingEndTimeReset = CustomOption.Create(8519, CustomOptionType.Crewmate, "timerMeetingEndTimeReset", true, timerSpawnRate);
 
             // Other options
             specialOptions = new CustomOptionBlank(null);
@@ -866,6 +901,7 @@ namespace TheOtherRoles
             //helloweenMode = CustomOption.Create(26, CustomOptionType.General, "helloweenMode", false, specialOptions);
 
             enableMirrorMap = CustomOption.Create(27, CustomOptionType.General, "enableMirror", false, specialOptions);
+            enableAddCustomVent = CustomOption.Create(45, CustomOptionType.General, "enableAddCustomVent", false, specialOptions);
 
             hideSettings = CustomOption.Create(28, CustomOptionType.General, "hideSettings", false, specialOptions);
 
@@ -895,3 +931,17 @@ namespace TheOtherRoles
         }
     }
 }
+
+/*
+unitSeconds	{0}秒
+unitMinutes	{0}分
+unitShots	{0}発
+unitScrews	{0}本
+unitMultiplier	{0}x	
+unitTimes	{0}回
+unitMeters	{0}m
+unitVotes	{0}票
+unitCouples	{0}組
+unitPlayers	{0}人
+unitPercent	{0}%
+*/

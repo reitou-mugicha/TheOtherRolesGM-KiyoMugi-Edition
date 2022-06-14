@@ -34,6 +34,10 @@ namespace TheOtherRoles
             Boss.SetButtonCooldowns();
             Staff.SetButtonCooldowns();
             Gun.SetButtonCooldowns();
+            Trapper.SetButtonCooldowns();
+            Timer.SetButtonCooldowns();
+            TimeReviver.SetButtonCooldowns();
+            Silencer.SetButtonCooldowns();
 
             foreach (CustomButton gmButton in gmButtons)
             {
@@ -67,6 +71,10 @@ namespace TheOtherRoles
             Boss.MakeButtons(hm);
             Staff.MakeButtons(hm);
             Gun.MakeButtons(hm);
+            Trapper.MakeButtons(hm);
+            Timer.MakeButtons(hm);
+            TimeReviver.MakeButtons(hm);
+            Silencer.MakeButtons(hm);
 
             gmButtons = new List<CustomButton>();
             gmKillButtons = new List<CustomButton>();

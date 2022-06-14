@@ -5,7 +5,7 @@ using UnityEngine;
 namespace TheOtherRoles
 {
     [HarmonyPatch]
-    public class AlivePlayer : RoleBase<Template>
+    public class AlivePlayer : RoleBase<AlivePlayer>
     {
         public static Color color = Palette.CrewmateBlue;
 
@@ -26,7 +26,7 @@ namespace TheOtherRoles
 
         public static void Clear()
         {
-            players = new List<Template>();
+            players = new List<AlivePlayer>();
         }
     }
 }

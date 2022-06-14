@@ -179,6 +179,7 @@ namespace TheOtherRoles.Patches
                     // RPCVotingComplete
                     __instance.RpcVotingComplete(array, exiled, tie);
                 }
+                
                 return false;
             }
         }
@@ -649,7 +650,7 @@ namespace TheOtherRoles.Patches
             // Uses remaining text for guesser/swapper
             if (meetingInfoText == null)
             {
-                meetingInfoText = UnityEngine.Object.Instantiate(FastDestroyableSingleton<HudManager>.Instance.TaskText, __instance.transform);
+                meetingInfoText = UnityEngine.Object.Instantiate(HudManager.Instance.TaskText, __instance.transform);
                 meetingInfoText.alignment = TMPro.TextAlignmentOptions.BottomLeft;
                 meetingInfoText.transform.position = Vector3.zero;
                 meetingInfoText.transform.localPosition = new Vector3(-3.07f, 3.33f, -20f);

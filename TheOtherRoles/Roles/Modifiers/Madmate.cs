@@ -76,6 +76,7 @@ namespace TheOtherRoles
             RoleType.Medium,
             RoleType.NiceGuesser,
             RoleType.Sprinter,
+            RoleType.Timer
         };
 
         public static List<PlayerControl> candidates

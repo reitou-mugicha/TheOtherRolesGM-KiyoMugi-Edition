@@ -60,6 +60,7 @@ namespace TheOtherRoles.Patches
                 else if (!Chunibyo.chunibyoButton.isEffectActive || Chunibyo.ab == 0 || Chunibyo.ab == 1)
                     __result *= PlayerControl.GameOptions.CrewLightMod;
             }*/
+
             return false;
         }
 

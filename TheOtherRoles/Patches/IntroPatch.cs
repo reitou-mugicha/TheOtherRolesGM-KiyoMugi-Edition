@@ -2,6 +2,7 @@ using HarmonyLib;
 using System;
 using static TheOtherRoles.TheOtherRoles;
 using static TheOtherRoles.TheOtherRolesGM;
+using TheOtherRoles.Objects;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -19,9 +20,9 @@ namespace TheOtherRoles.Patches
         public static void Prefix(IntroCutscene __instance)
         {
             // Generate and initialize player icons
-            if (PlayerControl.LocalPlayer != null && FastDestroyableSingleton<HudManager>.Instance != null)
+            if (PlayerControl.LocalPlayer != null && HudManager.Instance != null)
             {
-                Vector3 bottomLeft = new Vector3(-FastDestroyableSingleton<HudManager>.Instance.UseButton.transform.localPosition.x, FastDestroyableSingleton<HudManager>.Instance.UseButton.transform.localPosition.y, FastDestroyableSingleton<HudManager>.Instance.UseButton.transform.localPosition.z);
+                Vector3 bottomLeft = new Vector3(-HudManager.Instance.UseButton.transform.localPosition.x, HudManager.Instance.UseButton.transform.localPosition.y, HudManager.Instance.UseButton.transform.localPosition.z);
                 foreach (PlayerControl p in PlayerControl.AllPlayerControls)
                 {
                     GameData.PlayerInfo data = p.Data;
@@ -92,6 +93,8 @@ namespace TheOtherRoles.Patches
                 FastDestroyableSingleton<HudManager>.Instance.roomTracker.text.SetText("");
                 FastDestroyableSingleton<HudManager>.Instance.roomTracker.enabled = false;
             }
+
+            CustomVent.AddAdditionalVents();
         }
     }
 

@@ -46,8 +46,16 @@ namespace TheOtherRoles.Patches
             float xCursor = 0f;
             float yCursor = 0f;
             float maxHeight = 0f;
-            if(KMCustomFolder != null && KMCustomFolder.FolderName == taskFolder.FolderName)
+            if(CustomRoleFolder != null && CustomRoleFolder.FolderName == taskFolder.FolderName)
             {
+                foreach(RoleInfo roleInfo in RoleInfo.allRoleInfos)
+                {
+                    string RoleName = Helpers.cs(roleInfo.color, roleInfo.name);
+                    TaskAddButton roleButton = UnityEngine.Object.Instantiate<TaskAddButton>(__instance.RoleButton);
+                    roleButton.Text.text = "<size=80%>" + RoleName + "</size>";
+                    roleButton.Text.transform.position += new Vector3(0f, 0.5f, 0f);
+                    __instance.AddFileAsChild(CustomRoleFolder, roleButton, ref xCursor, ref yCursor, ref maxHeight);
+                }
                 //ここにファイルを追加するコード書く
                 //xCursorとかはrefで渡す
             }

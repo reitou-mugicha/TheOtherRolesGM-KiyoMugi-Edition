@@ -37,14 +37,14 @@ namespace TheOtherRoles.Mode.InversionMode
                 PolusShipStatus.Instance.InitialSpawnCenter = new Vector2(-16.7f, -2.1f);
                 PolusShipStatus.Instance.MeetingSpawnCenter = new Vector2(-19.5f, -17f);
                 PolusShipStatus.Instance.MeetingSpawnCenter2 = new Vector2(-19.5f, -17f);
-            }/*
+            }
             else if (PlayerControl.GameOptions.MapId == 4 && CustomOptionHolder.enableMirrorMap.getBool())
-            {
-                airship = GameObject.Find("Airship(Clone)");
-                airshipsp = GameObject.Find("SpawnInGame");
-                airship.transform.localScale = new Vector3(-0.7f, 0.7f, 1f);
-
-            }*/
+            {/*
+                AirshipStatus.Instance.InitialSpawnCenter = new Vector2(-3.4f, -28.35f);
+                AirshipStatus.Instance.MeetingSpawnCenter = new Vector2(-3.4f, -28.35f);
+                AirshipStatus.Instance.MeetingSpawnCenter2 = new Vector2(-3.4f, -28.35f);
+                AirshipStatus.Instance.transform.localScale = new Vector3(-0.8f, 0.8f, 1f);*/
+            }
         }
     }
 }

@@ -98,7 +98,7 @@ namespace TheOtherRoles.Objects
 
         public static void showBlackBG()
         {
-            if (FastDestroyableSingleton<HudManager>.Instance == null) return;
+            if (HudManager.Instance == null) return;
             if (!initializeOverlays()) return;
 
             meetingUnderlay.sprite = colorBG;
@@ -171,7 +171,7 @@ namespace TheOtherRoles.Objects
 
             var underlayTransparent = new Color(0.1f, 0.1f, 0.1f, 0.0f);
             var underlayOpaque = new Color(0.1f, 0.1f, 0.1f, 0.88f);
-            FastDestroyableSingleton<HudManager>.Instance.StartCoroutine(Effects.Lerp(0.2f, new Action<float>(t =>
+            HudManager.Instance.StartCoroutine(Effects.Lerp(0.2f, new Action<float>(t =>
             {
                 infoUnderlay.color = Color.Lerp(underlayTransparent, underlayOpaque, t);
                 infoOverlayRules.color = Color.Lerp(Palette.ClearWhite, Palette.White, t);

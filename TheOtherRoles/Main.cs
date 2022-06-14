@@ -22,7 +22,7 @@ namespace TheOtherRoles
     public class TheOtherRolesPlugin : BasePlugin
     {
         public const string Id = "kiyomori.mugicha.theotherrolesgmkm";
-        public const string VersionString = "2.0.1";
+        public const string VersionString = "2.1.2";
         public static System.Version Version = System.Version.Parse(VersionString);
         internal static BepInEx.Logging.ManualLogSource Logger;
 
@@ -227,7 +227,21 @@ namespace TheOtherRoles
                     new LateTask(() =>
                     {
                         __instance.SetVisible(true);
-                    }, 0f, "AntiChatBag");
+                    }, 0f, "AntiChatBug");
+                }
+            }
+        }
+
+        [HarmonyPatch(typeof(VersionShower), nameof(VersionShower.Start))]
+        public class DebugModeOnPatch
+        {
+            public static void Postfix(VersionShower __instance)
+            {
+                __instance.text.text += "\n <color=#ff351f>TheOtherRolesGM KiyoMugiEdition</color>";
+                __instance.text.transform.position = new Vector3(-5.2333f, 2.75f, 0f);
+                if(TheOtherRolesPlugin.DebugMode.Value)
+                {
+                    __instance.text.text += " : <color=#7fffd4>DebugMode</color> <color=#00ff7f>On</color>";
                 }
             }
         }

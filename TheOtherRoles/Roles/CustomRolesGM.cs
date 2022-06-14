@@ -47,6 +47,10 @@ namespace TheOtherRoles
             Bakery.Clear();
             //Creator.Clear();
             //Student.Clear();
+            Trapper.Clear();
+            TimeReviver.Clear();
+            Timer.Clear();
+            Silencer.Clear();
             Role.ClearAll();
         }
 

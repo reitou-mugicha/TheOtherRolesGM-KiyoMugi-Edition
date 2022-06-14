@@ -10,16 +10,16 @@ namespace TheOtherRoles.Patches
     public class BreadPatch
     {
         private static TMPro.TextMeshPro breadText;
-        private static TMPro.TextMeshPro text;
         public static bool isBomb = false;
         public static System.Random bombBread = new System.Random();
         public static System.Random luckyBread = new System.Random();
+        public static int rate {get{return Mathf.RoundToInt(CustomOptionHolder.bakeryBombBreadRate.getFloat());}}
         
         public static void Postfix(ExileController __instance)
         {
             if(!Bakery.isBakeryAlive()) return;
 
-            int num = Bakery.num;
+            int num = bombBread.Next(1, 101);
             int lnum = Bakery.lnum;
 
             breadText = UnityEngine.Object.Instantiate(__instance.ImpostorText, __instance.Text.transform);
@@ -29,7 +29,7 @@ namespace TheOtherRoles.Patches
             if(Bakery.isBakeryAlive())
             {   
                 
-                if(num == 100 && Bakery.enableBombBread && Bakery.bakery == PlayerControl.LocalPlayer) //爆発するパン
+                if(num >= 100 - rate && Bakery.enableBombBread) //爆発するパン
                 {
                     ExileStr = ModTranslation.getString("BombBakeryText");
                     isBomb = true;

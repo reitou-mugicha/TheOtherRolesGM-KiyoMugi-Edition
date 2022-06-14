@@ -36,6 +36,8 @@ namespace TheOtherRoles
         Gun,
         Mayor,
         Bakery,
+        TimeReviver,
+        Timer,
 
 
         Impostor = 100,
@@ -63,6 +65,8 @@ namespace TheOtherRoles
         UnderTaker,
         Randomizer,
         Accelerator,
+        Trapper,
+        Silencer,
 
 
         Lovers = 150,
@@ -78,6 +82,8 @@ namespace TheOtherRoles
         PlagueDoctor,
         Fox,
         Immoralist,
+        Necromancer,
+        Zombie,
 
 
         GM = 200,
@@ -104,6 +110,8 @@ namespace TheOtherRoles
             { RoleType.Gun, typeof(RoleBase<Gun>) },
             { RoleType.Bakery, typeof(RoleBase<Bakery>) },
             //{ RoleType.Creator, typeof(RoleBase<Creator>) },
+            { RoleType.TimeReviver, typeof(RoleBase<TimeReviver>) },
+            { RoleType.Timer, typeof(RoleBase<Timer>) },
 
             // Impostor
             { RoleType.Ninja, typeof(RoleBase<Ninja>) },
@@ -114,6 +122,8 @@ namespace TheOtherRoles
             { RoleType.DoubleKiller, typeof(RoleBase<DoubleKiller>) },
             { RoleType.Randomizer, typeof(RoleBase<Randomizer>) },
             { RoleType.Accelerator, typeof(RoleBase<Accelerator>) },
+            { RoleType.Trapper, typeof(RoleBase<Trapper>) },
+            { RoleType.Silencer, typeof(RoleBase<Silencer>) },
 
             // Neutral
             { RoleType.PlagueDoctor, typeof(RoleBase<PlagueDoctor>) },

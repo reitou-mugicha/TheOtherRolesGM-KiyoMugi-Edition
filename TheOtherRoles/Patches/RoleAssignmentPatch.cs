@@ -157,6 +157,9 @@ namespace TheOtherRoles.Patches
             impSettings.Add((byte)RoleType.UnderTaker, CustomOptionHolder.underTakerSpawnRate.data);
             impSettings.Add((byte)RoleType.Randomizer, CustomOptionHolder.randomizerSpawnRate.data);
             impSettings.Add((byte)RoleType.Accelerator, CustomOptionHolder.acceleratorSpawnRate.data);
+            impSettings.Add((byte)RoleType.Trapper, CustomOptionHolder.trapperSpawnRate.data);
+            impSettings.Add((byte)RoleType.Silencer, CustomOptionHolder.silencerSpawnRate.data);
+
 
             neutralSettings.Add((byte)RoleType.Jester, CustomOptionHolder.jesterSpawnRate.data);
             neutralSettings.Add((byte)RoleType.Arsonist, CustomOptionHolder.arsonistSpawnRate.data);
@@ -187,6 +190,9 @@ namespace TheOtherRoles.Patches
             crewSettings.Add((byte)RoleType.Medium, CustomOptionHolder.mediumSpawnRate.data);/*
             crewSettings.Add((byte)RoleType.Student, CustomOptionHolder.sheriffSpawnRate.data);
             crewSettings.Add((byte)RoleType.Creator, CustomOptionHolder.creatorSpawnRate.data);*/
+            crewSettings.Add((byte)RoleType.TimeReviver, CustomOptionHolder.timeReviverSpawnRate.data);
+            crewSettings.Add((byte)RoleType.Timer, CustomOptionHolder.timerSpawnRate.data);
+
             if (impostors.Count > 1)
             {
                 // Only add Spy if more than 1 impostor as the spy role is otherwise useless

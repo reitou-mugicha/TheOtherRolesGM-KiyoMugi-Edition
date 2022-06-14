@@ -771,6 +771,18 @@
         "0": "Bakery",
         "11": "\u30d1\u30f3\u5c4b"
     },
+    "trapper": {
+        "0": "Trapper",
+        "11": "\u30c8\u30e9\u30c3\u30d1\u30fc"
+    },
+    "timeReviver": {
+        "0": "Time Reviver",
+        "11": "\u30bf\u30a4\u30e0\u30ea\u30d0\u30a4\u30d0\u30fc"
+    },
+    "silencer": {
+        "0": "Silencer",
+        "11": "\u30b5\u30a4\u30ec\u30f3\u30b5\u30fc"
+    },
     "gmIsHost": {
         "0": "Always The Host",
         "11": "\u5fc5\u305a\u30db\u30b9\u30c8\u306b\u5272\u308a\u632f\u3089\u308c\u308b",
@@ -2141,6 +2153,34 @@
         "0": "Enable BombBread",
         "11": "\u7206\u767a\u3059\u308b\u30d1\u30f3\u3092\u6709\u52b9\u306b\u3059\u308b"
     },
+    "bakeryBombBreadRate": {
+        "0": "BombBread Rate",
+        "11": "\u7206\u767a\u3059\u308b\u30d1\u30f3\u306e\u51fa\u73fe\u78ba\u7387"
+    },
+    "trapperTrapCooldown": {
+        "0": "Trap Cooldown",
+        "11": "\u30c8\u30e9\u30c3\u30d7\u30af\u30fc\u30eb\u30c0\u30a6\u30f3"
+    },
+    "trapperTrapTime": {
+        "0": "Trap Time",
+        "11": "\u30c8\u30e9\u30c3\u30d7\u306e\u6642\u9593"
+    },
+    "timeReviverDeathReport": {
+        "0": "DeathReport",
+        "11": "\u6b7b\u3093\u3060\u3068\u304d\u306b\u81ea\u5206\u81ea\u8eab\u3092\u901a\u5831\u3059\u308b"
+    },
+    "timeReviverTimeCutoffCooldown": {
+        "0": "Time Cutoff Cooldown",
+        "11": "\u6642\u9593\u5207\u65ad\u30af\u30fc\u30eb\u30c0\u30a6\u30f3"
+    },
+    "timeReviverTimeCutoffDuration": {
+        "0": "Time Cutoff Duration",
+        "11": "\u6642\u9593\u5207\u65ad\u7d99\u7d9a\u6642\u9593"
+    },
+    "silencerSilenceKillCooldown": {
+        "0": "Silencer Silence Kill Cooldown",
+        "11": "\u30b5\u30a4\u30ec\u30f3\u30c8\u30ad\u30eb\u30af\u30fc\u30eb\u30c0\u30a6\u30f3"
+    },
     "torSettings": {
         "0": "The Other Roles Settings",
         "11": "The Other Roles\u306e\u8a2d\u5b9a",
@@ -2499,6 +2539,10 @@
     "betterStart": {
         "0": "better Start Buttons",
         "11": "\u5f37\u5316\u7248\u958b\u59cb\u30dc\u30bf\u30f3"
+    },
+    "enableAddCustomVent": {
+        "0": "Enable Custom Vent",
+        "11": "\u30ab\u30b9\u30bf\u30e0\u30d9\u30f3\u30c8\u3092\u6709\u52b9\u306b\u3059\u308b"
     },
     "loversFlavor": {
         "0": "\u2665 You are in love with {0} \u2665",
@@ -3090,6 +3134,18 @@
         "0": "Let's make some good bread.",
         "11": "\u7f8e\u5473\u3057\u3044\u30d1\u30f3\u3092\u4f5c\u308d\u3046"
     },
+    "trapperIntroDesc": {
+        "0": "Let's trap everyone.",
+        "11": "\u307f\u3093\u306a\u3092\u7f60\u306b\u306f\u3081\u3088\u3046"
+    },
+    "timeReviverIntroDesc": {
+        "0": "Think again!",
+        "11": "\u3082\u3046\u4e00\u56de\u8003\u3048\u76f4\u3057\u3066\u304f\u308c\uff01"
+    },
+    "silencerIntroDesc": {
+        "0": "Let's act quietly.",
+        "11": "\u9759\u304b\u306b\u884c\u52d5\u3057\u3088\u3046"
+    },
     "gmShortDesc": {
         "0": "You're the Game Master",
         "11": "\u30b2\u30fc\u30e0\u30de\u30b9\u30bf\u30fc\u3060",
@@ -3421,6 +3477,14 @@
         "0": "Let's make some good bread.",
         "11": "\u7f8e\u5473\u3057\u3044\u30d1\u30f3\u3092\u4f5c\u308d\u3046"
     },
+    "trapperShortDesc": {
+        "0": "Let's trap everyone.",
+        "11": "\u307f\u3093\u306a\u3092\u7f60\u306b\u306f\u3081\u3088\u3046"
+    },
+    "timeReviverShortDesc": {
+        "0": "Think again!",
+        "11": "\u3082\u3046\u4e00\u56de\u8003\u3048\u76f4\u3057\u3066\u304f\u308c\uff01"
+    },
     "jesterFullDesc": {
         "0": "The Jester does not have any tasks.\nThey win the game as a solo if they get voted out during a meeting.",
         "11": "\u30fb\u4eba\u72fc\u3067\u3044\u3046\u300e\u3066\u308b\u3066\u308b\u300f\n\u30fb\u306a\u306b\u3082\u80fd\u529b\u3092\u6301\u305f\u306a\u3044\n\u30fb\u81ea\u8eab\u304c\u540a\u3089\u308c\u305f\u3068\u304d\u306b\u52dd\u5229\u3059\u308b",
@@ -3750,6 +3814,18 @@
     "bakeryFullDesc": {
         "0": "At each meeting, it is checked whether bread has been made.\nThere is a 1/100 chance that the bread will explode.",
         "11": "\u30fb\u4f1a\u8b70\u3054\u3068\u306b\u3001\u30d1\u30f3\u304c\u4f5c\u3089\u308c\u305f\u304b\u304c\u78ba\u8a8d\u3055\u308c\u308b\u3002\n\u30fb1/100\u306e\u78ba\u7387\u3067\u30d1\u30f3\u304c\u7206\u767a\u3059\u308b\u3002"
+    },
+    "trapperFullDesc": {
+        "0": "Renders the designated person immobile for a certain period of time.",
+        "11": "\u30fb\u6307\u5b9a\u3057\u305f\u4eba\u3092\u4e00\u5b9a\u6642\u9593\u52d5\u3051\u306a\u304f\u3059\u308b\u3002"
+    },
+    "timeReviverFullDesc": {
+        "0": "When you get exiled, you can open the meeting again.",
+        "11": "\u30fb\u3064\u3089\u308c\u305f\u6642\u3001\u3082\u3046\u4e00\u5ea6\u4f1a\u8b70\u3092\u958b\u3051\u308b\u3002"
+    },
+    "silencerFullDesc": {
+        "0": "Kills can be made without a kill motion and kill sound.",
+        "11": "\u30ad\u30eb\u30e2\u30fc\u30b7\u30e7\u30f3\u3068\u30ad\u30eb\u97f3\u3092\u51fa\u3055\u305a\u306b\u30ad\u30eb\u3059\u308b\u3053\u3068\u304c\u3067\u304d\u308b\u3002"
     },
     "Banner": {
         "0": "Banner.png"
@@ -4087,6 +4163,18 @@
     "dragText": {
         "0": "Drag",
         "11": "\u63b4\u3080"
+    },
+    "trapperTrapText": {
+        "0": "Trap",
+        "11": "\u7f60"
+    },
+    "TimeCutoffText": {
+        "0": "Time Cutoff",
+        "11": "\u6642\u9593\u5207\u65ad"
+    },
+    "SilenceKillText": {
+        "0": "SilenceKill",
+        "11": "\u30b5\u30a4\u30ec\u30f3\u30c8\u30ad\u30eb"
     },
     "colorSalmon": {
         "0": "Salmon",

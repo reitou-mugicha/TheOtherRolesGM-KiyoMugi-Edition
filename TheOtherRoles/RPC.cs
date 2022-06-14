@@ -109,6 +109,8 @@ namespace TheOtherRoles
         StudentPromotion,
         SheriffCreateStudent,*/
         RPCExiled,
+        TrapperTrap,
+        SilencerSilenceKill,
     }
 
     public static class RPCProcedure
@@ -129,6 +131,7 @@ namespace TheOtherRoles
             CameraPatch.ResetData();
             VitalsPatch.ResetData();
             MapBehaviorPatch.resetIcons();
+            CustomVent.clearAndReload();
             CustomOverlays.resetOverlays();
 
             KillAnimationCoPerformKillPatch.hideNextAnimation = false;
@@ -1331,6 +1334,28 @@ namespace TheOtherRoles
             FastDestroyableSingleton<HudManager>.Instance.KillOverlay.ShowKillAnimation(target.Data, target.Data);
         }
 
+        public static void TrapperTrap(byte targetId, byte trapTime)
+        {
+            var target = Helpers.playerById(targetId);
+            int time = (int)trapTime;
+
+            PlayerControl.LocalPlayer.NetTransform.Halt();
+            target.moveable = false; //動けなくする
+            Trapper.isTrap = true;
+
+            new LateTask(() =>
+            {
+                target.moveable = true;
+                Trapper.isTrap = false;
+            }, time, "trapperTrapTask");
+        }
+
+        public static void SilencerSilenceKill(byte targetId)
+        {
+            var target = Helpers.playerById(targetId);
+            target.MurderPlayer(target);
+        }
+
         [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.HandleRpc))]
         class RPCHandlerPatch
         {
@@ -1645,8 +1670,21 @@ namespace TheOtherRoles
                     case (byte)CustomRPC.RPCExiled:
                         RPCProcedure.RPCExiled(reader.ReadByte());
                         break;
+                    case (byte)CustomRPC.TrapperTrap:
+                        RPCProcedure.TrapperTrap(reader.ReadByte(), reader.ReadByte());
+                        break;
+                    case (byte)CustomRPC.SilencerSilenceKill:
+                        RPCProcedure.SilencerSilenceKill(reader.ReadByte());
+                        break;
                 }
             }
         }
     }
 }
+
+/* RPCの呼び出し方
+MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.RPCの名前, Hazel.SendOption.Reliable, -1);
+writer.Write(引数);
+AmongUsClient.Instance.FinishRpcImmediately(writer);
+RPCProcedure.RPCの名前(引数);
+*/

@@ -108,6 +108,10 @@ namespace TheOtherRoles
         public static RoleInfo student = new RoleInfo("student", Student.color, CustomOptionHolder.sheriffSpawnRate, RoleType.Student);*/
         public static RoleInfo randomizer = new RoleInfo("randomizer", Randomizer.color, CustomOptionHolder.randomizerSpawnRate, RoleType.Randomizer);
         public static RoleInfo accelerator = new RoleInfo("accelerator", Accelerator.color, CustomOptionHolder.acceleratorSpawnRate, RoleType.Accelerator);
+        public static RoleInfo trapper = new RoleInfo("trapper", Trapper.color, CustomOptionHolder.trapperSpawnRate, RoleType.Trapper);
+        public static RoleInfo timeReviver = new RoleInfo("timeReviver", TimeReviver.color, CustomOptionHolder.timeReviverSpawnRate, RoleType.TimeReviver);
+        public static RoleInfo timer = new RoleInfo("timer", Timer.color, CustomOptionHolder.timerSpawnRate, RoleType.Timer);
+        public static RoleInfo silencer = new RoleInfo("silencer", Silencer.color, CustomOptionHolder.silencerSpawnRate, RoleType.Silencer);
 
 
         public static List<RoleInfo> allRoleInfos = new List<RoleInfo>() {
@@ -179,6 +183,10 @@ namespace TheOtherRoles
                 //creator
                 randomizer,
                 accelerator,
+                trapper,
+                timeReviver,
+                timer,
+                silencer,
             };
 
         public static string tl(string key)
@@ -266,7 +274,10 @@ namespace TheOtherRoles
             if (p.isRole(RoleType.Sprinter)) infos.Add(sprinter);
             if (p.isRole(RoleType.Randomizer)) infos.Add(randomizer);
             if (p.isRole(RoleType.Accelerator)) infos.Add(accelerator);
-
+            if (p.isRole(RoleType.Trapper)) infos.Add(trapper);
+            if (p.isRole(RoleType.TimeReviver)) infos.Add(timeReviver);
+            if (p.isRole(RoleType.Timer)) infos.Add(timer);
+            if (p.isRole(RoleType.Silencer)) infos.Add(silencer);
 
 
             // Default roles

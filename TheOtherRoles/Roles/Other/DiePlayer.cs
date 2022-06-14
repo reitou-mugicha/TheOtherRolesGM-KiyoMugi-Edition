@@ -7,7 +7,7 @@ using TheOtherRoles.Utilities;
 namespace TheOtherRoles
 {
     [HarmonyPatch]
-    public class DiePlayer : RoleBase<Template>
+    public class DiePlayer : RoleBase<DiePlayer>
     {
         public static Color color = Palette.CrewmateBlue;
         private static CustomButton zoomIn;
@@ -108,7 +108,7 @@ namespace TheOtherRoles
 
         public static void Clear()
         {
-            players = new List<Template>();
+            players = new List<DiePlayer>();
         }
 
         public static Sprite getZoomInSprite()

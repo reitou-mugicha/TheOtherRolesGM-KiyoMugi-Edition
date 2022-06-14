@@ -216,6 +216,19 @@ namespace TheOtherRoles.Patches
                 {
                     Jester.triggerJesterWin = true;
                 }
+
+                else if (p.isRole(RoleType.TimeReviver))
+                {
+                    PlayerControl.LocalPlayer.NetTransform.Halt(); // Stop current movement
+                    Helpers.handleVampireBiteOnBodyReport(); // Manually call Vampire handling, since the CmdReportDeadBody Prefix won't be called
+                    RPCProcedure.uncheckedCmdReportDeadBody(PlayerControl.LocalPlayer.PlayerId, Byte.MinValue);
+
+                    MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.UncheckedCmdReportDeadBody, Hazel.SendOption.Reliable, -1);
+                    writer.Write(PlayerControl.LocalPlayer.PlayerId);
+                    writer.Write(Byte.MaxValue);
+                    AmongUsClient.Instance.FinishRpcImmediately(writer);
+                    RPCProcedure.uncheckedCmdReportDeadBody(PlayerControl.LocalPlayer.PlayerId, Byte.MinValue);
+                }
             }
 
             if (SubmergedCompatibility.IsSubmerged)
@@ -263,7 +276,7 @@ namespace TheOtherRoles.Patches
 
                     if (Seer.limitSoulDuration)
                     {
-                        FastDestroyableSingleton<HudManager>.Instance.StartCoroutine(Effects.Lerp(Seer.soulDuration, new Action<float>((p) =>
+                        HudManager.Instance.StartCoroutine(Effects.Lerp(Seer.soulDuration, new Action<float>((p) =>
                         {
                             if (rend != null)
                             {
@@ -329,12 +342,14 @@ namespace TheOtherRoles.Patches
                     }
                 }
             }
+
             // Remove DeadBodys
             DeadBody[] array = UnityEngine.Object.FindObjectsOfType<DeadBody>();
             for (int i = 0; i < array.Length; i++)
             {
                 UnityEngine.Object.Destroy(array[i].gameObject);
             }
+
         }
     }
 
