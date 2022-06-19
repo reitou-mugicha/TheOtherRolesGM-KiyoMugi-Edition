@@ -92,6 +92,12 @@ namespace TheOtherRoles.Patches
             {
                 if (!AmongUsClient.Instance.AmHost || !GameData.Instance) return; // Not host or no instance
                 update = GameData.Instance.PlayerCount != __instance.LastPlayerCount;
+                //カウントダウンキャンセル
+                if (Input.GetKeyDown(KeyCode.C) && GameStartManager.Instance.startState == GameStartManager.StartingStates.Countdown)
+                    GameStartManager.Instance.ResetStartState();
+                //即スタート
+                if (Input.GetKeyDown(KeyCode.LeftShift) && GameStartManager.Instance.startState == GameStartManager.StartingStates.Countdown)
+                    GameStartManager.Instance.countDownTimer = 0;
             }
 
             public static void Postfix(GameStartManager __instance)
