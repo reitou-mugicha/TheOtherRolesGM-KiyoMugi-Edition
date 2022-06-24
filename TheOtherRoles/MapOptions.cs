@@ -172,10 +172,8 @@ namespace TheOtherRoles
                     y += 0.2f;
                 AdminTimerText.transform.localPosition = new Vector3(-3.5f, y, 0);
                 if (restrictAdminTime > 0)
-                    // AdminTimerText.text = $"Admin: {Mathf.RoundToInt(restrictAdminTime)} sec remaining";
                     AdminTimerText.text = String.Format(ModTranslation.getString("adminText"), restrictAdminTime.ToString("0.00"));
                 else
-                    // AdminTimerText.text = "Admin: ran out of time";
                     AdminTimerText.text = ModTranslation.getString("adminRanOut");
                 AdminTimerText.gameObject.SetActive(true);
             }
@@ -189,10 +187,8 @@ namespace TheOtherRoles
                     y += 0.2f;
                 CamerasTimerText.transform.localPosition = new Vector3(-3.5f, y, 0);
                 if (restrictCamerasTime > 0)
-                    // CamerasTimerText.text = $"Cameras: {Mathf.RoundToInt(restrictCamerasTime)} sec remaining";
                     CamerasTimerText.text = String.Format(ModTranslation.getString("camerasText"), restrictCamerasTime.ToString("0.00"));
                 else
-                    // CamerasTimerText.text = "Cameras: ran out of time";
                     CamerasTimerText.text = ModTranslation.getString("camerasRanOut");
                 CamerasTimerText.gameObject.SetActive(true);
             }
@@ -203,10 +199,8 @@ namespace TheOtherRoles
                 VitalsTimerText = UnityEngine.Object.Instantiate(HudManager.Instance.TaskText, HudManager.Instance.transform);
                 VitalsTimerText.transform.localPosition = new Vector3(-3.5f, -4.0f, 0);
                 if (restrictVitalsTime > 0)
-                    // VitalsTimerText.text = $"Vitals: {Mathf.RoundToInt(restrictVitalsTime)} sec remaining";
                     VitalsTimerText.text = String.Format(ModTranslation.getString("vitalsText"), restrictVitalsTime.ToString("0.00"));
                 else
-                    // VitalsTimerText.text = "Vitals: ran out of time";
                     VitalsTimerText.text = ModTranslation.getString("vitalsRanOut");
                 VitalsTimerText.gameObject.SetActive(true);
             }

@@ -70,7 +70,7 @@ namespace TheOtherRoles.Patches
             static bool Prefix(VitalsMinigame __instance)
             {
                 vitalsTimer += Time.deltaTime;
-                if (vitalsTimer > 0.1f)
+                if (vitalsTimer > 0.05f)
                     UseVitalsTime();
 
                 if (MapOptions.restrictDevices > 0 && MapOptions.restrictVitals)
@@ -132,19 +132,19 @@ namespace TheOtherRoles.Patches
             }
         }
 
-        [HarmonyPatch]
-        class VitalsMinigameClosePatch
-        {
-            private static IEnumerable<MethodBase> TargetMethods()
-            {
-                return typeof(Minigame).GetMethods().Where(x => x.Name == "Close");
-            }
+        // [HarmonyPatch]
+        // class VitalsMinigameClosePatch
+        // {
+        //     private static IEnumerable<MethodBase> TargetMethods()
+        //     {
+        //         return typeof(Minigame).GetMethods().Where(x => x.Name == "Close");
+        //     }
 
-            static void Prefix(Minigame __instance)
-            {
-                if (__instance is VitalsMinigame)
-                    UseVitalsTime();
-            }
-        }
+        //     static void Prefix(Minigame __instance)
+        //     {
+        //         if (__instance is VitalsMinigame)
+        //             UseVitalsTime();
+        //     }
+        // }
     }
 }

@@ -390,7 +390,7 @@ namespace TheOtherRoles.Patches
                     }
                 }
             }
-            // Lawyer solo win 
+            // Lawyer solo win
             else if (lawyerSoloWin)
             {
                 TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
@@ -550,10 +550,10 @@ namespace TheOtherRoles.Patches
                         float num7 = Mathf.Lerp(1f, 0.65f, num4) * 0.9f;
                         Vector3 vector = new(num7, num7, 1f);
                         poolablePlayer.transform.localScale = vector;
-                        poolablePlayer.UpdateFromPlayerOutfit(winningPlayerData2, winningPlayerData2.IsDead);
+                        poolablePlayer.UpdateFromPlayerOutfit((GameData.PlayerOutfit) winningPlayerData2, PlayerMaterial.MaskType.ComplexUI, winningPlayerData2.IsDead, true);
                         if (winningPlayerData2.IsDead)
                         {
-                            poolablePlayer.CurrentBodySprite.BodySprite.sprite = __instance.GhostSprite;
+                            poolablePlayer.cosmetics.currentBodySprite.BodySprite.sprite = __instance.GhostSprite;
                             poolablePlayer.SetDeadFlipX(i % 2 == 0);
                         }
                         else
@@ -561,16 +561,16 @@ namespace TheOtherRoles.Patches
                             poolablePlayer.SetFlipX(i % 2 == 0);
                         }
 
-                        poolablePlayer.NameText.color = Color.white;
-                        poolablePlayer.NameText.lineSpacing *= 0.7f;
-                        poolablePlayer.NameText.transform.localScale = new Vector3(1f / vector.x, 1f / vector.y, 1f / vector.z);
-                        poolablePlayer.NameText.transform.localPosition = new Vector3(poolablePlayer.NameText.transform.localPosition.x, poolablePlayer.NameText.transform.localPosition.y, -15f);
-                        poolablePlayer.NameText.text = winningPlayerData2.PlayerName;
+                        poolablePlayer.cosmetics.nameText.color = Color.white;
+                        poolablePlayer.cosmetics.nameText.lineSpacing *= 0.7f;
+                        poolablePlayer.cosmetics.nameText.transform.localScale = new Vector3(1f / vector.x, 1f / vector.y, 1f / vector.z);
+                        poolablePlayer.cosmetics.nameText.transform.localPosition = new Vector3(poolablePlayer.cosmetics.nameText.transform.localPosition.x, poolablePlayer.cosmetics.nameText.transform.localPosition.y, -15f);
+                        poolablePlayer.cosmetics.nameText.text = winningPlayerData2.PlayerName;
 
                         foreach (var data in AdditionalTempData.playerRoles)
                         {
                             if (data.PlayerName != winningPlayerData2.PlayerName) continue;
-                            poolablePlayer.NameText.text += data.NameSuffix + $"\n<size=80%>{data.RoleString}</size>";
+                            poolablePlayer.cosmetics.nameText.text += data.NameSuffix + $"\n<size=80%>{data.RoleString}</size>";
                         }
                     }
 

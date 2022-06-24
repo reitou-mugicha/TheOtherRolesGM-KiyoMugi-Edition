@@ -269,7 +269,7 @@ namespace TheOtherRoles.Patches
                 public static bool Prefix(SecurityLogGame __instance)
                 {
                     cameraTimer += Time.deltaTime;
-                    if (cameraTimer > 0.1f)
+                    if (cameraTimer > 0.05f)
                         UseCameraTime();
 
                     if (MapOptions.restrictDevices > 0)
@@ -300,20 +300,20 @@ namespace TheOtherRoles.Patches
             }
 
 
-            [HarmonyPatch]
-            class SecurityLogGameClosePatch
-            {
-                private static IEnumerable<MethodBase> TargetMethods()
-                {
-                    return typeof(Minigame).GetMethods().Where(x => x.Name == "Close");
-                }
+            // [HarmonyPatch]
+            // class SecurityLogGameClosePatch
+            // {
+            //     private static IEnumerable<MethodBase> TargetMethods()
+            //     {
+            //         return typeof(Minigame).GetMethods().Where(x => x.Name == "Close");
+            //     }
 
-                static void Prefix(Minigame __instance)
-                {
-                    if (__instance is SecurityLogGame)
-                        UseCameraTime();
-                }
-            }
+            //     static void Prefix(Minigame __instance)
+            //     {
+            //         if (__instance is SecurityLogGame)
+            //             UseCameraTime();
+            //     }
+            // }
         }
     }
 }

@@ -281,6 +281,8 @@ namespace TheOtherRoles
         public static CustomOption airshipSetOriginalCooldown;
         public static CustomOption airshipInitialDoorCooldown;
         public static CustomOption airshipInitialSabotageCooldown;
+        public static CustomOption airshipOldAdmin;
+
         public static CustomOption maxNumberOfMeetings;
         public static CustomOption blockSkippingInEmergencyMeetings;
         public static CustomOption noVoteIsSelfVote;
@@ -888,6 +890,7 @@ namespace TheOtherRoles
             airshipSetOriginalCooldown = CustomOption.Create(9919, CustomOptionType.General, "airshipSetOriginalCooldown", false, mapOptions);
             airshipInitialDoorCooldown = CustomOption.Create(9923, CustomOptionType.General, "airshipInitialDoorCooldown", 0f, 0f, 60f, 1f, mapOptions);
             airshipInitialSabotageCooldown = CustomOption.Create(9924, CustomOptionType.General, "airshipInitialSabotageCooldown", 15f, 0f, 60f, 1f, mapOptions);
+            airshipOldAdmin = CustomOption.Create(9925, CustomOptionType.General, "airshipOldAdmin", false, mapOptions);
 
             specialOptions = new CustomOptionBlank(null);
             enabledHorseMode = CustomOption.Create(552, CustomOptionType.General, "enableHorseMode", false, specialOptions, true);

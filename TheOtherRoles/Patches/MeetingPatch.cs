@@ -20,7 +20,6 @@ namespace TheOtherRoles.Patches
     {
         static bool[] selections;
         static SpriteRenderer[] renderers;
-        private static GameData.PlayerInfo target = null;
         private const float scale = 0.65f;
         private static Sprite blankNameplate = null;
         public static bool nameplatesChanged = true;
@@ -202,14 +201,15 @@ namespace TheOtherRoles.Patches
             public static bool Prefix(MeetingHud __instance, [HarmonyArgument(0)] GameData.PlayerInfo voterPlayer, [HarmonyArgument(1)] int index, [HarmonyArgument(2)] Transform parent)
             {
                 SpriteRenderer spriteRenderer = UnityEngine.Object.Instantiate<SpriteRenderer>(__instance.PlayerVotePrefab);
-                if (!PlayerControl.GameOptions.AnonymousVotes || (PlayerControl.LocalPlayer.Data.IsDead && MapOptions.ghostsSeeVotes) || PlayerControl.LocalPlayer.isRole(RoleType.Watcher))
-                    PlayerControl.SetPlayerMaterialColors(voterPlayer.DefaultOutfit.ColorId, spriteRenderer);
-                else
-                    PlayerControl.SetPlayerMaterialColors(Palette.DisabledGrey, spriteRenderer);
+                int cId = voterPlayer.DefaultOutfit.ColorId;
+                if (!(!PlayerControl.GameOptions.AnonymousVotes || (PlayerControl.LocalPlayer.Data.IsDead && MapOptions.ghostsSeeVotes)))
+                    voterPlayer.Object.SetColor(6);
+                voterPlayer.Object.SetPlayerMaterialColors(spriteRenderer);
                 spriteRenderer.transform.SetParent(parent);
                 spriteRenderer.transform.localScale = Vector3.zero;
                 __instance.StartCoroutine(Effects.Bloop((float)index * 0.3f, spriteRenderer.transform, 1f, 0.5f));
                 parent.GetComponent<VoteSpreader>().AddVote(spriteRenderer);
+                voterPlayer.Object.SetColor(cId);
                 return false;
             }
         }
@@ -802,167 +802,162 @@ namespace TheOtherRoles.Patches
             }
         }
 
-        [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.CoStartMeeting))]
-        class StartMeetingPatch
+        [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.StartMeeting))]
+        class PlayerControlStartMeetingPatch
         {
             private static float delay { get { return CustomOptionHolder.delayBeforeMeeting.getFloat(); } }
-            public static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)] GameData.PlayerInfo meetingTarget, ref Il2CppSystem.Collections.IEnumerator __result)
+
+            private static IEnumerator CoStartMeeting(PlayerControl reporter, GameData.PlayerInfo target)
             {
-                startMeeting();
-                // Safe AntiTeleport positions
-                AntiTeleport.position = PlayerControl.LocalPlayer.transform.position;
-                // Medium meeting start time
-                Medium.meetingStartTime = DateTime.UtcNow;
-                // Reset vampire bitten
-                Vampire.bitten = null;
-                // Count meetings
-                if (meetingTarget == null) meetingsCount++;
-                // Save the meeting target
-                target = meetingTarget;
-
-                __result = CoStartMeeting(__instance, meetingTarget).WrapToIl2Cpp();
-                return false;
-            }
-            private static IEnumerator CoStartMeeting2(PlayerControl __instance, GameData.PlayerInfo meetingTarget)
-            {
-                // ボタンと同時に通報が入った場合のバグ対応、他のクライアントからキルイベントが飛んでくるのを待つ
-                // 見えては行けないものが見えるので暗転させる
-                MeetingHud.Instance.state = MeetingHud.VoteStates.Animating; //ゲッサーのキル用meetingupdateが呼ばれないようにするおまじない（呼ばれるとバグる）
-                HudManager hudManager = DestroyableSingleton<HudManager>.Instance;
-                var blackscreen = UnityEngine.Object.Instantiate(hudManager.FullScreen, hudManager.transform);
-                var greyscreen = UnityEngine.Object.Instantiate(hudManager.FullScreen, hudManager.transform);
-                blackscreen.color = Palette.Black;
-                blackscreen.transform.position = Vector3.zero;
-                blackscreen.transform.localPosition = new Vector3(0f, 0f, -910f);
-                blackscreen.transform.localScale = new Vector3(10f, 10f, 1f);
-                blackscreen.gameObject.SetActive(true);
-                blackscreen.enabled = true;
-                greyscreen.color = Palette.Black;
-                greyscreen.transform.position = Vector3.zero;
-                greyscreen.transform.localPosition = new Vector3(0f, 0f, -920f);
-                greyscreen.transform.localScale = new Vector3(10f, 10f, 1f);
-                greyscreen.gameObject.SetActive(true);
-                greyscreen.enabled = true;
-                TMPro.TMP_Text text;
-                RoomTracker roomTracker = HudManager.Instance?.roomTracker;
-                GameObject gameObject = UnityEngine.Object.Instantiate(roomTracker.gameObject);
-                UnityEngine.Object.DestroyImmediate(gameObject.GetComponent<RoomTracker>());
-                gameObject.transform.SetParent(HudManager.Instance.transform);
-                gameObject.transform.localPosition = new Vector3(0, 0, -930f);
-                gameObject.transform.localScale = Vector3.one * 5f;
-                text = gameObject.GetComponent<TMPro.TMP_Text>();
-                yield return Effects.Lerp(delay, new Action<float>((p) =>
-                { // Delayed action
-                    greyscreen.color = new Color(1.0f, 1.0f, 1.0f, 0.5f - p / 2);
-                    string message = (delay - (p * delay)).ToString("0.00");
-                    if (message == "0") return;
-                    string prefix = "<color=#FFFFFFFF>";
-                    text.text = prefix + message + "</color>";
-                    if (text != null) text.color = Color.white;
-                }));
-                // yield return new WaitForSeconds(2f);
-                UnityEngine.Object.Destroy(text.gameObject);
-                UnityEngine.Object.Destroy(blackscreen);
-                UnityEngine.Object.Destroy(greyscreen);
-
-                // ミーティング画面の並び替えを直す
-                populateButtons(MeetingHud.Instance, __instance.Data.PlayerId);
-                populateButtonsPostfix(MeetingHud.Instance);
-
-                DeadBody[] array = UnityEngine.GameObject.FindObjectsOfType<DeadBody>();
-                GameData.PlayerInfo[] deadBodies = (from b in array
-                                                    select GameData.Instance.GetPlayerById(b.ParentId)).ToArray<GameData.PlayerInfo>();
-                for (int j = 0; j < array.Length; j++)
+                // 既存処理の移植
                 {
-                    if (array[j] != null && array[j].gameObject != null)
+                    while (!MeetingHud.Instance)
                     {
-                        UnityEngine.GameObject.Destroy(array[j].gameObject);
+                        yield return null;
                     }
-                    else
+                    MeetingRoomManager.Instance.RemoveSelf();
+                    for (int i = 0; i < PlayerControl.AllPlayerControls.Count; i++)
                     {
-                        Debug.LogError("Encountered a null Dead Body while destroying.");
+                        PlayerControl playerControl = PlayerControl.AllPlayerControls[i];
+                        if (playerControl != null)
+                        {
+                            playerControl.ResetForMeeting();
+                        }
                     }
+                    if (MapBehaviour.Instance)
+                    {
+                        MapBehaviour.Instance.Close();
+                    }
+                    if (Minigame.Instance)
+                    {
+                        Minigame.Instance.ForceClose();
+                    }
+                    ShipStatus.Instance.OnMeetingCalled();
+                    KillAnimation.SetMovement(reporter, true);
                 }
-                ShapeshifterEvidence[] array2 = UnityEngine.GameObject.FindObjectsOfType<ShapeshifterEvidence>();
-                for (int k = 0; k < array2.Length; k++)
-                {
-                    if (array2[k] != null && array2[k].gameObject != null)
-                    {
-                        UnityEngine.GameObject.Destroy(array2[k].gameObject);
-                    }
-                    else
-                    {
-                        Debug.LogError("Encountered a null Evidence while destroying.");
-                    }
-                }
-                for (int l = 0; l < __instance.currentRoleAnimations.Count; l++)
-                {
-                    if (__instance.currentRoleAnimations[l] != null && __instance.currentRoleAnimations[l].gameObject != null)
-                    {
-                        UnityEngine.GameObject.Destroy(__instance.currentRoleAnimations[l].gameObject);
-                        Debug.LogError("Encountered a null Role Animation while destroying.");
-                    }
-                }
-                __instance.currentRoleAnimations.Clear();
-                MeetingHud.Instance.StartCoroutine(MeetingHud.Instance.CoIntro(__instance.Data, target, deadBodies));
+
+                // 遅延処理追加そのままyield returnで待ちを入れるとロックしたのでHudManagerのコルーチンとして実行させる
+                DestroyableSingleton<HudManager>._instance.StartCoroutine(CoStartMeeting2(reporter, target).WrapToIl2Cpp());
                 yield break;
             }
-            private static IEnumerator CoStartMeeting(PlayerControl __instance, GameData.PlayerInfo meetingTarget)
+            private static IEnumerator CoStartMeeting2(PlayerControl reporter, GameData.PlayerInfo target)
             {
-                bool isEmergency = target == null;
-                DestroyableSingleton<Telemetry>.Instance.WriteMeetingStarted(isEmergency);
-                while (!MeetingHud.Instance)
+                // Modで追加する遅延処理
                 {
-                    yield return null;
+                    // ボタンと同時に通報が入った場合のバグ対応、他のクライアントからキルイベントが飛んでくるのを待つ
+                    // 見えては行けないものが見えるので暗転させる
+                    MeetingHud.Instance.state = MeetingHud.VoteStates.Animating; //ゲッサーのキル用meetingupdateが呼ばれないようにするおまじない（呼ばれるとバグる）
+                    HudManager hudManager = DestroyableSingleton<HudManager>.Instance;
+                    var blackscreen = UnityEngine.Object.Instantiate(hudManager.FullScreen, hudManager.transform);
+                    var greyscreen = UnityEngine.Object.Instantiate(hudManager.FullScreen, hudManager.transform);
+                    blackscreen.color = Palette.Black;
+                    blackscreen.transform.position = Vector3.zero;
+                    blackscreen.transform.localPosition = new Vector3(0f, 0f, -910f);
+                    blackscreen.transform.localScale = new Vector3(10f, 10f, 1f);
+                    blackscreen.gameObject.SetActive(true);
+                    blackscreen.enabled = true;
+                    greyscreen.color = Palette.Black;
+                    greyscreen.transform.position = Vector3.zero;
+                    greyscreen.transform.localPosition = new Vector3(0f, 0f, -920f);
+                    greyscreen.transform.localScale = new Vector3(10f, 10f, 1f);
+                    greyscreen.gameObject.SetActive(true);
+                    greyscreen.enabled = true;
+                    TMPro.TMP_Text text;
+                    RoomTracker roomTracker = HudManager.Instance?.roomTracker;
+                    GameObject gameObject = UnityEngine.Object.Instantiate(roomTracker.gameObject);
+                    UnityEngine.Object.DestroyImmediate(gameObject.GetComponent<RoomTracker>());
+                    gameObject.transform.SetParent(HudManager.Instance.transform);
+                    gameObject.transform.localPosition = new Vector3(0, 0, -930f);
+                    gameObject.transform.localScale = Vector3.one * 5f;
+                    text = gameObject.GetComponent<TMPro.TMP_Text>();
+                    yield return Effects.Lerp(delay, new Action<float>((p) =>
+                    { // Delayed action
+                        greyscreen.color = new Color(1.0f, 1.0f, 1.0f, 0.5f - p / 2);
+                        string message = (delay - (p * delay)).ToString("0.00");
+                        if (message == "0") return;
+                        string prefix = "<color=#FFFFFFFF>";
+                        text.text = prefix + message + "</color>";
+                        if (text != null) text.color = Color.white;
+                    }));
+                    // yield return new WaitForSeconds(2f);
+                    UnityEngine.Object.Destroy(text.gameObject);
+                    UnityEngine.Object.Destroy(blackscreen);
+                    UnityEngine.Object.Destroy(greyscreen);
+
+                    // ミーティング画面の並び替えを直す
+                    populateButtons(MeetingHud.Instance, reporter.Data.PlayerId);
+                    populateButtonsPostfix(MeetingHud.Instance);
                 }
-                MeetingRoomManager.Instance.RemoveSelf();
-                for (int i = 0; i < PlayerControl.AllPlayerControls.Count; i++)
+
+                // 既存処理の移植
                 {
-                    PlayerControl playerControl = PlayerControl.AllPlayerControls[i];
-                    if (playerControl == null)
+                    DeadBody[] array = UnityEngine.Object.FindObjectsOfType<DeadBody>();
+                    GameData.PlayerInfo[] deadBodies = (from b in array
+                                                        select GameData.Instance.GetPlayerById(b.ParentId)).ToArray<GameData.PlayerInfo>();
+                    for (int j = 0; j < array.Length; j++)
                     {
-                        Debug.LogError("Encountered a null PlayerControl when starting a meeting");
-                    }
-                    else
-                    {
-                        if (!playerControl.GetComponent<DummyBehaviour>().enabled)
+                        if (array[j] != null && array[j].gameObject != null)
                         {
-                            playerControl.MyPhysics.ExitAllVents();
-                            ShipStatus.Instance.SpawnPlayer(playerControl, GameData.Instance.PlayerCount, false);
+                            UnityEngine.Object.Destroy(array[j].gameObject);
                         }
-                        playerControl.RemoveProtection();
-                        playerControl.NetTransform.enabled = true;
-                        playerControl.MyPhysics.ResetMoveState(true);
+                        else
+                        {
+                            Debug.LogError("Encountered a null Dead Body while destroying.");
+                        }
                     }
+                    ShapeshifterEvidence[] array2 = UnityEngine.Object.FindObjectsOfType<ShapeshifterEvidence>();
+                    for (int k = 0; k < array2.Length; k++)
+                    {
+                        if (array2[k] != null && array2[k].gameObject != null)
+                        {
+                            UnityEngine.Object.Destroy(array2[k].gameObject);
+                        }
+                        else
+                        {
+                            Debug.LogError("Encountered a null Evidence while destroying.");
+                        }
+                    }
+                    MeetingHud.Instance.StartCoroutine(MeetingHud.Instance.CoIntro(reporter.Data, target, deadBodies));
                 }
-                if (__instance.AmOwner)
+                yield break;
+            }
+            private static void StartMeeting(PlayerControl reporter, GameData.PlayerInfo target)
+            {
+                ShipStatus.Instance.StartCoroutine(CoStartMeeting(reporter, target).WrapToIl2Cpp());
+            }
+            public static bool Prefix(PlayerControl __instance, GameData.PlayerInfo target)
+            {
+                // MOD追加処理
                 {
-                    if (isEmergency)
+                    Logger.info("ShipStatus.StartMeeting");
+                    startMeeting();
+                    // Safe AntiTeleport positions
+                    AntiTeleport.position = PlayerControl.LocalPlayer.transform.position;
+                    // Medium meeting start time
+                    Medium.meetingStartTime = DateTime.UtcNow;
+                    // Reset vampire bitten
+                    Vampire.bitten = null;
+                    // Count meetings
+                    if (target == null) meetingsCount++;
+                }
+
+                // 既存処理の移植
+                {
+                    bool flag = target == null;
+                    DestroyableSingleton<Telemetry>.Instance.WriteMeetingStarted(flag);
+                    StartMeeting(__instance, target); // 変更部分
+                    if (__instance.AmOwner)
                     {
-                        __instance.RemainingEmergencies--;
-                        StatsManager.Instance.IncrementStat(StringNames.StatsEmergenciesCalled);
-                    }
-                    else
-                    {
+                        if (flag)
+                        {
+                            __instance.RemainingEmergencies--;
+                            StatsManager.Instance.IncrementStat(StringNames.StatsEmergenciesCalled);
+                            return false;
+                        }
                         StatsManager.Instance.IncrementStat(StringNames.StatsBodiesReported);
                     }
                 }
-                if (MapBehaviour.Instance)
-                {
-                    MapBehaviour.Instance.Close();
-                }
-                if (Minigame.Instance)
-                {
-                    Minigame.Instance.ForceClose();
-                }
-                ShipStatus.Instance.OnMeetingCalled();
-                KillAnimation.SetMovement(__instance, true);
-
-                // そのままyield returnで待ちを入れるとロックしたのでHudManagerのコルーチンとして実行させる
-                DestroyableSingleton<HudManager>._instance.StartCoroutine(CoStartMeeting2(__instance, meetingTarget).WrapToIl2Cpp());
-
-                yield break;
-
+                return false;
             }
         }
 

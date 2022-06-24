@@ -206,31 +206,34 @@ namespace TheOtherRoles
 
         public static void setOpacity(PlayerControl player, float opacity)
         {
-            // Sometimes it just doesn't work?
+              // Sometimes it just doesn't work?
             var color = Color.Lerp(Palette.ClearWhite, Palette.White, opacity);
             try
             {
-                if (player.MyPhysics?.rend != null)
+                if (player.MyPhysics?.myPlayer.cosmetics.currentBodySprite.BodySprite != null)
                 {
-                    if (player.MyPhysics.rend.color != color)
-                        Logger.info($"ChangeOpacity {player.MyPhysics.rend.color.a} to {opacity} of {player.getNameWithRole()}", "setOpacity");
-                    player.MyPhysics.rend.color = color;
+                    if (player.MyPhysics.myPlayer.cosmetics.currentBodySprite.BodySprite.color != color)
+                        Logger.info($"ChangeOpacity {player.MyPhysics.myPlayer.cosmetics.currentBodySprite.BodySprite.color.a} to {opacity} of {player.getNameWithRole()}", "setOpacity");
+                    player.MyPhysics.myPlayer.cosmetics.currentBodySprite.BodySprite.color = color;
                 }
 
-                if (player.MyPhysics?.Skin?.layer != null)
-                    player.MyPhysics.Skin.layer.color = color;
+                if (player.MyPhysics?.myPlayer.cosmetics.skin?.layer != null)
+                    player.MyPhysics.myPlayer.cosmetics.skin.layer.color = color;
 
-                if (player.HatRenderer != null)
-                    player.HatRenderer.color = color;
+                if (player.cosmetics.hat != null)
+                    player.cosmetics.hat.SpriteColor = color;
 
-                if (player.CurrentPet?.rend != null)
-                    player.CurrentPet.rend.color = color;
+                if (player.cosmetics.currentPet?.rend != null)
+                    player.cosmetics.currentPet.rend.color = color;
 
-                if (player.CurrentPet?.shadowRend != null)
-                    player.CurrentPet.shadowRend.color = color;
+                if (player.cosmetics.currentPet?.shadowRend != null)
+                    player.cosmetics.currentPet.shadowRend.color = color;
 
-                if (player.VisorSlot != null)
-                    player.VisorSlot.color = color;
+                // TODO 暫定コメントアウト
+                /*
+                if (player.cosmetics.visor != null)
+                    player.cosmetics.visor.currentVisor = color;
+                */
             }
             catch { }
         }
@@ -260,7 +263,7 @@ namespace TheOtherRoles
                     if (isStealthed(ninja))
                     {
                         opacity = Math.Max(opacity, 1.0f - stealthFade(ninja));
-                        ninja.MyRend.material.SetFloat("_Outline", 0f);
+                        ninja.cosmetics.currentBodySprite.BodySprite.material.SetFloat("_Outline", 0f);
                     }
                     else
                     {

@@ -48,9 +48,9 @@ package:
     - build
   stage: package
   script:
-    - curl -LO https://builds.bepinex.dev/projects/bepinex_be/553/BepInEx_UnityIL2CPP_x86_fa9b1ab_6.0.0-be.553.zip
+    - curl -LO https://builds.bepinex.dev/projects/bepinex_be/570/BepInEx_UnityIL2CPP_x86_3febd6a_6.0.0-be.570.zip
     - mkdir TheOtherRoles-GM-Haoming
-    - unzip BepInEx_UnityIL2CPP_x86_fa9b1ab_6.0.0-be.553.zip -d TheOtherRoles-GM-Haoming
+    - unzip BepInEx_UnityIL2CPP_x86_3febd6a_6.0.0-be.570.zip -d TheOtherRoles-GM-Haoming
     - mkdir -p TheOtherRoles-GM-Haoming/BepinEx/plugins
     - mkdir -p TheOtherRoles-GM-Haoming/TheOtherHats/Test
     - cp CICD/TestHat.png TheOtherRoles-GM-Haoming/TheOtherHats/Test/

@@ -246,13 +246,13 @@ namespace TheOtherRoles.Modules
             {
                 AnimationClip currentAnimation = __instance.Animator.GetCurrentAnimation();
                 if (currentAnimation == __instance.CurrentAnimationGroup.ClimbAnim || currentAnimation == __instance.CurrentAnimationGroup.ClimbDownAnim) return;
-                HatParent hp = __instance.myPlayer.HatRenderer;
+                HatParent hp = __instance.myPlayer.cosmetics.hat;
                 if (hp.Hat == null) return;
                 HatExtension extend = hp.Hat.getHatExtension();
                 if (extend == null) return;
                 if (extend.FlipImage != null)
                 {
-                    if (__instance.rend.flipX)
+                    if (__instance.FlipX)
                     {
                         hp.FrontLayer.sprite = extend.FlipImage;
                     }
@@ -263,7 +263,7 @@ namespace TheOtherRoles.Modules
                 }
                 if (extend.BackFlipImage != null)
                 {
-                    if (__instance.rend.flipX)
+                    if (__instance.FlipX)
                     {
                         hp.BackLayer.sprite = extend.BackFlipImage;
                     }
@@ -292,8 +292,8 @@ namespace TheOtherRoles.Modules
                         {
                             var color = pc.CurrentOutfit.ColorId;
                             pc.SetHat("hat_dusk", color);
-                            pc.HatRenderer.Hat = CreateHatData(hats[0], true, true);
-                            pc.HatRenderer.SetHat(color);
+                            pc.cosmetics.hat.Hat = CreateHatData(hats[0], true, true);
+                            pc.cosmetics.hat.SetHat(color);
                         }
                     }
                 }
@@ -749,6 +749,8 @@ namespace TheOtherRoles.Modules
         }
     }
 
+    // TODO 暫定コメントアウト
+    /*
     [HarmonyPatch(typeof(PoolablePlayer), nameof(PoolablePlayer.UpdateFromPlayerOutfit))]
     public static class PoolablePlayerPatch
     {
@@ -765,4 +767,5 @@ namespace TheOtherRoles.Modules
                 );
         }
     }
+    */
 }

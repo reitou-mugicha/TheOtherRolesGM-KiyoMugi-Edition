@@ -177,7 +177,7 @@ namespace TheOtherRoles.Patches
                     List<Color> roomColors = new();
                     playerColors.Add(counterArea.RoomType, roomColors);
 
-                    if (!commsActive)
+                    if (!commsActive && counterArea.RoomType > SystemTypes.Hallway)
                     {
                         PlainShipRoom plainShipRoom = ShipStatus.Instance.FastRooms[counterArea.RoomType];
 
@@ -185,6 +185,11 @@ namespace TheOtherRoles.Patches
                         {
                             int num = plainShipRoom.roomArea.OverlapCollider(__instance.filter, __instance.buffer);
                             int num2 = num;
+                            // ロミジュリと絵画の部屋をアドミンの対象から外す
+                            if(CustomOptionHolder.airshipOldAdmin.getBool() && (counterArea.RoomType == SystemTypes.Ventilation || counterArea.RoomType == SystemTypes.HallOfPortraits))
+                            {
+                                num2 = 0;
+                            }
                             for (int j = 0; j < num; j++)
                             {
                                 Collider2D collider2D = __instance.buffer[j];
@@ -203,7 +208,7 @@ namespace TheOtherRoles.Patches
                                     {
                                         num2--;
                                     }
-                                    else if (component?.MyRend?.material != null)
+                                    else if (component?.cosmetics?.currentBodySprite?.BodySprite.material != null)
                                     {
                                         // Color color = component.myRend.material.GetColor("_BodyColor");
                                         Color color = Palette.PlayerColors[component.Data.DefaultOutfit.ColorId];

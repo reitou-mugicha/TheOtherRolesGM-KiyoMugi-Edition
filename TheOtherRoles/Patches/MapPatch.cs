@@ -182,16 +182,16 @@ namespace TheOtherRoles.Patches
                     __instance.taskOverlay.Hide();
                     foreach (byte id in mapIcons.Keys)
                     {
-                        GameData.PlayerInfo playerById = GameData.Instance.GetPlayerById(id);
-                        PlayerControl.SetPlayerMaterialColors(playerById.Object.CurrentOutfit.ColorId, mapIcons[id]);
-                        mapIcons[id].enabled = !playerById.IsDead;
+                        PlayerControl p = Helpers.getPlayerById(id);
+                        p.SetPlayerMaterialColors(mapIcons[id]);
+                        mapIcons[id].enabled = !p.Data.IsDead;
                     }
 
                     foreach (DeadBody b in Object.FindObjectsOfType<DeadBody>())
                     {
                         byte id = b.ParentId;
-                        GameData.PlayerInfo playerById = GameData.Instance.GetPlayerById(id);
-                        PlayerControl.SetPlayerMaterialColors(playerById.Object.CurrentOutfit.ColorId, corpseIcons[id]);
+                        PlayerControl p = Helpers.getPlayerById(id);
+                        p.SetPlayerMaterialColors(corpseIcons[id]);
                         corpseIcons[id].enabled = true;
                     }
                 }

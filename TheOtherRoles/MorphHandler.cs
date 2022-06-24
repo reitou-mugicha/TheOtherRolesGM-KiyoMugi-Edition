@@ -22,14 +22,14 @@ namespace TheOtherRoles
             pc.RawSetColor(outfit.ColorId);
             Helpers.setSkinWithAnim(pc.MyPhysics, outfit.SkinId);
 
-            if (pc.CurrentPet) UnityEngine.Object.Destroy(pc.CurrentPet.gameObject);
+            if (pc.cosmetics.currentPet) UnityEngine.Object.Destroy(pc.cosmetics.currentPet.gameObject);
             if (!pc.Data.IsDead)
             {
-                pc.CurrentPet = UnityEngine.Object.Instantiate<PetBehaviour>(DestroyableSingleton<HatManager>.Instance.GetPetById(outfit.PetId).viewData.viewData);
-                pc.CurrentPet.transform.position = pc.transform.position;
-                pc.CurrentPet.Source = pc;
-                pc.CurrentPet.Visible = visible;
-                PlayerControl.SetPlayerMaterialColors(outfit.ColorId, pc.CurrentPet.rend);
+                pc.cosmetics.currentPet = UnityEngine.Object.Instantiate<PetBehaviour>(DestroyableSingleton<HatManager>.Instance.GetPetById(outfit.PetId).viewData.viewData);
+                pc.cosmetics.currentPet.transform.position = pc.transform.position;
+                pc.cosmetics.currentPet.Source = pc;
+                pc.cosmetics.currentPet.Visible = visible;
+                pc.SetPlayerMaterialColors(pc.cosmetics.currentPet.rend);
             }
         }
 

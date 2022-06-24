@@ -64,7 +64,7 @@ namespace TheOtherRoles
                         icon.transform.localScale = Vector3.one * 0.4f;
                         if (targetText == null)
                         {
-                            targetText = GameObject.Instantiate(icon.NameText, icon.NameText.transform.parent);
+                            targetText = GameObject.Instantiate(icon.cosmetics.nameText, icon.cosmetics.nameText.transform.parent);
                             targetText.enableWordWrapping = false;
                             targetText.transform.localScale = Vector3.one * 1.5f;
                             targetText.transform.localPosition += new Vector3(0f, 1.7f, 0);
@@ -83,7 +83,7 @@ namespace TheOtherRoles
                         icon.transform.localScale = Vector3.one * 0.4f;
                         if (partnerTargetText == null)
                         {
-                            partnerTargetText = GameObject.Instantiate(icon.NameText, icon.NameText.transform.parent);
+                            partnerTargetText = GameObject.Instantiate(icon.cosmetics.nameText, icon.cosmetics.nameText.transform.parent);
                             partnerTargetText.enableWordWrapping = false;
                             partnerTargetText.transform.localScale = Vector3.one * 1.5f;
                             partnerTargetText.transform.localPosition += new Vector3(0f, 1.7f, 0);
@@ -319,10 +319,10 @@ namespace TheOtherRoles
                     {
                         GameData.PlayerInfo data = p.Data;
                         PoolablePlayer player = UnityEngine.Object.Instantiate<PoolablePlayer>(__instance.PlayerPrefab, HudManager.Instance.transform);
-                        player.UpdateFromPlayerOutfit(p.Data.DefaultOutfit, p.Data.IsDead);
+                        player.UpdateFromPlayerOutfit((GameData.PlayerOutfit)p.Data.DefaultOutfit, PlayerMaterial.MaskType.ComplexUI, p.Data.IsDead, true);
                         player.SetFlipX(true);
-                        player.PetSlot.gameObject.SetActive(false);
-                        player.NameText.text = p.Data.DefaultOutfit.PlayerName;
+                        player.cosmetics.currentPet?.gameObject.SetActive(false);
+                        player.cosmetics.nameText.text = p.Data.DefaultOutfit.PlayerName;
                         player.gameObject.SetActive(false);
                         playerIcons[p.PlayerId] = player;
                     }

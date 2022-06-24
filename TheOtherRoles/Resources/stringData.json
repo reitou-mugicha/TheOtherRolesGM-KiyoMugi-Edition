@@ -569,6 +569,10 @@
         "11": "\u521d\u671f\u30b5\u30dc\u30bf\u30fc\u30b8\u30e5\u30af\u30fc\u30eb\u30c0\u30a6\u30f3(\u30a8\u30a2\u30b7\u30c3\u30d7)",
         "13": "\u98de\u8247\uff1a\u6e38\u620f\u5f00\u59cb\u65f6\u5185\u9b3c\u9635\u8425\u7d27\u6025\u7834\u574f\u51b7\u5374"
     },
+    "airshipOldAdmin": {
+        "0": "Old Admin (Airship)",
+        "11": "\u65e7\u30a2\u30c9\u30df\u30f3(\u30a8\u30a2\u30b7\u30c3\u30d7)"
+    },
     "delayBeforeMeeting": {
         "0": "Delay time before meeting",
         "11": "\u4f1a\u8b70\u9045\u5ef6\u6642\u9593",
@@ -3794,12 +3798,12 @@
     "updatePleaseWait": {
         "0": "Updating The Other Roles GM\nPlease wait...",
         "11": "\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u4e2d\n\u5c11\u3005\u304a\u5f85\u3061\u304f\u3060\u3055\u3044\u2026",
-        "13": "\u6b63\u5728\u66f4\u65b0\u8d85\u591a\u804c\u4e1aGMrebuidbyHaoming_x005f\n\u8bf7\u7a0d\u540e..."
+        "13": "\u6b63\u5728\u66f4\u65b0\u8d85\u591a\u804c\u4e1aGMrebuidbyHaoming\n\u8bf7\u7a0d\u540e..."
     },
     "updateManually": {
         "0": "Unable to auto-update.\nPlease update manually.",
         "11": "\u81ea\u52d5\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u304c\n\u3067\u304d\u307e\u305b\u3093\u3067\u3057\u305f\n\u624b\u52d5\u3067\u66f4\u65b0\u3057\u3066\u304f\u3060\u3055\u3044",
-        "13": "\u65e0\u6cd5\u81ea\u52a8\u66f4\u65b0._x005f\n\u8bf7\u624b\u52a8\u66f4\u65b0"
+        "13": "\u65e0\u6cd5\u81ea\u52a8\u66f4\u65b0.\n\u8bf7\u624b\u52a8\u66f4\u65b0"
     },
     "updateInProgress": {
         "0": "Update might already\nbe in progress.",

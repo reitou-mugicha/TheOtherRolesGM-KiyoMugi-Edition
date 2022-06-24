@@ -279,7 +279,7 @@ namespace TheOtherRoles
                 AmongUsClient.Instance.Dispatcher.Add(new Action(() =>
                 {
                     ShipStatus.Instance.enabled = false;
-                    ShipStatus.Instance.BeginCalled = false;
+                    ShipStatus.Instance.ShouldCheckForGameEnd = false;
                     AmongUsClient.Instance.OnGameEnd(new EndGameResult((GameOverReason)reason, false));
 
                     if (AmongUsClient.Instance.AmHost)
@@ -848,7 +848,7 @@ namespace TheOtherRoles
 
             if (player.PlayerId == PlayerControl.LocalPlayer.PlayerId && client != null)
             {
-                Transform playerInfoTransform = client.nameText.transform.parent.FindChild("Info");
+                Transform playerInfoTransform = client.cosmetics.nameText.transform.parent.FindChild("Info");
                 TMPro.TextMeshPro playerInfo = playerInfoTransform != null ? playerInfoTransform.GetComponent<TMPro.TextMeshPro>() : null;
                 if (playerInfo != null) playerInfo.text = "";
             }

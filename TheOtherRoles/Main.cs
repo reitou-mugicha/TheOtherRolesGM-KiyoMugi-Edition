@@ -122,7 +122,7 @@ namespace TheOtherRoles
     {
         private static void Prefix()
         {
-            if (!EOSManager.Instance.IsMinor())
+            if (!EOSManager.Instance.isKWSMinor)
             {
                 SaveManager.chatModeType = 1;
                 SaveManager.isGuest = false;
@@ -209,12 +209,12 @@ namespace TheOtherRoles
             }
         }
     }
-    [HarmonyPatch(typeof(SignInGuestOfflineChoice), nameof(SignInGuestOfflineChoice.Open))]
-    public class SignInGuestOfflineChoiceOpenPatch
-    {
-        private static void Postfix(SignInGuestOfflineChoice __instance)
-        {
-            if (TheOtherRolesPlugin.DebugMode.Value) __instance?.continueOfflineButton?.OnClick?.Invoke();
-        }
-    }
+    // [HarmonyPatch(typeof(SignInGuestOfflineChoice), nameof(SignInGuestOfflineChoice.Open))]
+    // public class SignInGuestOfflineChoiceOpenPatch
+    // {
+    //     private static void Postfix(SignInGuestOfflineChoice __instance)
+    //     {
+    //         if (TheOtherRolesPlugin.DebugMode.Value) __instance?.continueOfflineButton?.OnClick?.Invoke();
+    //     }
+    // }
 }
