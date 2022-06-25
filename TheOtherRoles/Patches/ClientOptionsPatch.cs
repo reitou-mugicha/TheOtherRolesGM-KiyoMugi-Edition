@@ -98,7 +98,7 @@ namespace TheOtherRoles.Patches
         {
             __instance.BackButton.transform.localPosition += Vector3.right * 1.8f;
             moreOptions = Object.Instantiate(buttonPrefab, __instance.CensorChatButton.transform.parent);
-            moreOptions.transform.localPosition = __instance.CensorChatButton.transform.localPosition + Vector3.down * 0.5f;
+            moreOptions.transform.localPosition = __instance.CensorChatButton.transform.localPosition + Vector3.down * 1.0f;
 
             moreOptions.gameObject.SetActive(true);
             moreOptions.Text.text = ModTranslation.getString("modOptionsText");
