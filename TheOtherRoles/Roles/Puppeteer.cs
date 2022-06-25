@@ -553,11 +553,8 @@ namespace TheOtherRoles
                 if (player.cosmetics.currentPet?.shadowRend != null)
                     player.cosmetics.currentPet.shadowRend.color = color;
 
-                // TODO 暫定コメントアウト
-                /*
                 if (player.cosmetics.visor != null)
-                    player.cosmetics.visor.currentVisor = color;
-                */
+                    player.cosmetics.visor.Image.color = color;
             }
             catch { }
         }
