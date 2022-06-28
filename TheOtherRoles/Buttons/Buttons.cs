@@ -420,7 +420,7 @@ namespace TheOtherRoles
                 {
                     PlayerControl.LocalPlayer.NetTransform.Halt();
                     Action<MapBehaviour> tmpAction = (MapBehaviour m) => { m.ShowCountOverlay(); };
-                    DestroyableSingleton<HudManager>.Instance.ShowMap(tmpAction);
+                    FastDestroyableSingleton<HudManager>.Instance.ShowMap(tmpAction);
                 },
                 () =>
                 {
@@ -439,7 +439,7 @@ namespace TheOtherRoles
                 0f,
                 () => { },
                 PlayerControl.GameOptions.MapId == 3,
-                DestroyableSingleton<TranslationController>.Instance.GetString(StringNames.Admin)
+                FastDestroyableSingleton<TranslationController>.Instance.GetString(StringNames.Admin)
             );
 
             // EvilHacker creates madmate button
@@ -533,7 +533,7 @@ namespace TheOtherRoles
                     if (MapBehaviour.Instance && MapBehaviour.Instance.isActiveAndEnabled) MapBehaviour.Instance.Close();
                 },
                 PlayerControl.GameOptions.MapId == 3,
-                DestroyableSingleton<TranslationController>.Instance.GetString(StringNames.Admin)
+                FastDestroyableSingleton<TranslationController>.Instance.GetString(StringNames.Admin)
             );
 
             // Hacker Admin Table Charges

@@ -198,7 +198,7 @@ namespace TheOtherRoles
         {
             var player = Helpers.playerById(playerId);
             player.roleAssigned = false;
-            DestroyableSingleton<RoleManager>.Instance.SetRole(player, (RoleTypes)roleType);
+            FastDestroyableSingleton<RoleManager>.Instance.SetRole(player, (RoleTypes)roleType);
         }
 
         public static void versionHandshake(int major, int minor, int build, int revision, Guid guid, int clientId)
@@ -548,8 +548,8 @@ namespace TheOtherRoles
 
                 if (player.Data.Role.IsImpostor)
                 {
-                    DestroyableSingleton<RoleManager>.Instance.SetRole(player, RoleTypes.Crewmate);
-                    DestroyableSingleton<RoleManager>.Instance.SetRole(oldShifter, RoleTypes.Impostor);
+                    FastDestroyableSingleton<RoleManager>.Instance.SetRole(player, RoleTypes.Crewmate);
+                    FastDestroyableSingleton<RoleManager>.Instance.SetRole(oldShifter, RoleTypes.Impostor);
                 }
             }
 
@@ -1047,7 +1047,7 @@ namespace TheOtherRoles
         public static void foxCreatesImmoralist(byte targetId)
         {
             PlayerControl player = Helpers.playerById(targetId);
-            DestroyableSingleton<RoleManager>.Instance.SetRole(player, RoleTypes.Crewmate);
+            FastDestroyableSingleton<RoleManager>.Instance.SetRole(player, RoleTypes.Crewmate);
             erasePlayerRoles(player.PlayerId, true);
             player.setRole(RoleType.Immoralist);
             player.clearAllTasks();

@@ -1,3 +1,4 @@
+/*
 using HarmonyLib;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,8 +21,8 @@ namespace TheOtherRoles
 
         public override void OnMeetingStart() { }
         public override void OnMeetingEnd() { }
-        public override void FixedUpdate() 
-        { 
+        public override void FixedUpdate()
+        {
             new LateTask(() =>
             {
                 timerButton.Timer += 1;
@@ -38,8 +39,8 @@ namespace TheOtherRoles
                 {},//押したときの挙動
                 () => { return PlayerControl.LocalPlayer.isRole(RoleType.Timer) && !PlayerControl.LocalPlayer.Data.IsDead; },
                 () => { return false; },
-                () => 
-                { 
+                () =>
+                {
                     if(resetTimer)
                     {
                         timerButton.Timer = 0;
@@ -53,8 +54,8 @@ namespace TheOtherRoles
             );
             timerButton.buttonText = ModTranslation.getString("timerText");//ボタンの文字
         }
-        public static void SetButtonCooldowns() 
-        { 
+        public static void SetButtonCooldowns()
+        {
             timerButton.Timer = timerButton.MaxTimer = 0;
         }
 
@@ -71,4 +72,4 @@ namespace TheOtherRoles
             players = new List<Timer>();
         }
     }
-}
+}*/
