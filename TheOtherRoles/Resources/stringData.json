@@ -674,7 +674,7 @@
         "13": "\u90aa\u6076\u7684\u9ed1\u5ba2\u8f6c\u5316\u7684\u53db\u5f92\u7684\u4efb\u52a1\u6570"
     },
     "MadmateText": {
-        "0": "\u30de\u30c3\u30c9\u30e1\u30a4\u30c8",
+        "0": "Madmate ",
         "11": "\u30de\u30c3\u30c9\u30e1\u30a4\u30c8",
         "13": "\u53db\u5f92"
     },
@@ -775,6 +775,14 @@
     "nationalFlagHats": {
         "0": "National Flag Hats",
         "11": "\u56fd\u65d7\u30cf\u30c3\u30c8"
+    },
+    "NonOHat": {
+        "0": "NonOHat",
+        "11": "NonO\u30cf\u30c3\u30c8"
+    },
+    "CameraCrew": {
+        "0": "CameraCrew",
+        "11": "\u64ae\u5f71\u73ed"
     },
     "jekyllAndHyde": {
         "0": "Jekyll and Hyde",

@@ -143,7 +143,7 @@ namespace TheOtherRoles.Modules
                 hat.hatViewData.viewData.ClimbImage = CreateHatSprite(ch.climbresource, fromDisk);
             hat.name = ch.name + "\nby " + ch.author;
             hat.displayOrder = 99;
-            hat.ProductId = "hat_" + ch.name.Replace(' ', '_');
+            hat.ProductId = "hat_" + ch.name.Replace(' ', '_') + "_" + ch.author;
             hat.InFront = !ch.behind;
             hat.NoBounce = !ch.bounce;
             hat.ChipOffset = new Vector2(0f, 0.2f);
@@ -410,13 +410,15 @@ namespace TheOtherRoles.Modules
 
                 var orderedKeys = packages.Keys.OrderBy((string x) =>
                 {
-                    if (x == innerslothPackageName) return 100003;
+                    if (x == innerslothPackageName) return 10004;
                     if (x == "developerHats") return 10000;
-                    if (x.Contains("gmEdition")) return 10002;
-                    if (x.Contains("shiune")) return 10001;
+                    if (x.Contains("gmEdition")) return 10003;
+                    if (x.Contains("shiune")) return 10002;
                     if (x.Contains("01haomingHat")) return 0;
                     if (x.Contains("02haomingHat")) return 1;
                     if (x.Contains("nationalFlagHats")) return 2;
+                    if (x.Contains("CameraCrew")) return 3;
+                    if (x.Contains("NonOHat")) return 10001;
                     return 500;
                 });
 
