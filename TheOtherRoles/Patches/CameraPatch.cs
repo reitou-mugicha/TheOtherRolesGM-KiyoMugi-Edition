@@ -287,7 +287,7 @@ namespace TheOtherRoles.Patches
                     return true;
                 }
             }
-
+/*
             [HarmonyPatch]
             class SecurityLogGameClosePatch
             {
@@ -301,7 +301,7 @@ namespace TheOtherRoles.Patches
                     if (__instance is SecurityLogGame)
                         UseCameraTime();
                 }
-            }
+            }*/
         }
     }
 }

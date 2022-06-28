@@ -19,7 +19,6 @@ namespace TheOtherRoles.Patches
     {
         static bool[] selections;
         static SpriteRenderer[] renderers;
-        private static GameData.PlayerInfo target = null;
         private const float scale = 0.65f;
         private static Sprite blankNameplate = null;
         public static bool nameplatesChanged = true;
@@ -179,7 +178,7 @@ namespace TheOtherRoles.Patches
                     // RPCVotingComplete
                     __instance.RpcVotingComplete(array, exiled, tie);
                 }
-                
+
                 return false;
             }
         }
@@ -205,9 +204,9 @@ namespace TheOtherRoles.Patches
             {
                 SpriteRenderer spriteRenderer = UnityEngine.Object.Instantiate<SpriteRenderer>(__instance.PlayerVotePrefab);
                 if (!PlayerControl.GameOptions.AnonymousVotes || (PlayerControl.LocalPlayer.Data.IsDead && MapOptions.ghostsSeeVotes) || PlayerControl.LocalPlayer.hasModifier(ModifierType.Watcher))
-                    PlayerControl.SetPlayerMaterialColors(voterPlayer.DefaultOutfit.ColorId, spriteRenderer);
+                    voterPlayer.Object.SetPlayerMaterialColors(spriteRenderer);
                 else
-                    PlayerControl.SetPlayerMaterialColors(Palette.DisabledGrey, spriteRenderer);
+                    voterPlayer.Object.SetPlayerMaterialColors(spriteRenderer);
                 spriteRenderer.transform.SetParent(parent);
                 spriteRenderer.transform.localScale = Vector3.zero;
                 __instance.StartCoroutine(Effects.Bloop((float)index * 0.3f, spriteRenderer.transform, 1f, 0.5f));
@@ -726,34 +725,35 @@ namespace TheOtherRoles.Patches
             }
         }
 
-        [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.CoStartMeeting))]
-        class StartMeetingPatch
-        {
-            public static void Prefix(PlayerControl __instance, [HarmonyArgument(0)] GameData.PlayerInfo meetingTarget)
-            {
-                startMeeting();
-                // Safe AntiTeleport positions
-                AntiTeleport.position = PlayerControl.LocalPlayer.transform.position;
-                // Medium meeting start time
-                Medium.meetingStartTime = DateTime.UtcNow;
-                // Reset vampire bitten
-                Vampire.bitten = null;
-                // Count meetings
-                if (meetingTarget == null) meetingsCount++;
-                // Save the meeting target
-                target = meetingTarget;
-                // Add Portal info into Portalmaker Chat:
-                if (Portalmaker.portalmaker != null && PlayerControl.LocalPlayer == Portalmaker.portalmaker && !PlayerControl.LocalPlayer.Data.IsDead && CustomOptionHolder.enablePortalLog.getBool())
+        /*
+                [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.StartMeeting))]
+                class StartMeetingPatch
                 {
-                    foreach (var entry in Portal.teleportedPlayers)
+                    public static void Prefix(PlayerControl __instance, [HarmonyArgument(0)] GameData.PlayerInfo meetingTarget)
                     {
-                        float timeBeforeMeeting = ((float)(DateTime.UtcNow - entry.time).TotalMilliseconds) / 1000;
-                        string msg = Portalmaker.logShowsTime ? String.Format(ModTranslation.getString("portalLogTime"), (int)timeBeforeMeeting) : "";
-                        msg = msg + string.Format(ModTranslation.getString("portalLog"), entry.name);
-                        FastDestroyableSingleton<HudManager>.Instance.Chat.AddChat(PlayerControl.LocalPlayer, $"{msg}");
+                        startMeeting();
+                        // Safe AntiTeleport positions
+                        AntiTeleport.position = PlayerControl.LocalPlayer.transform.position;
+                        // Medium meeting start time
+                        Medium.meetingStartTime = DateTime.UtcNow;
+                        // Reset vampire bitten
+                        Vampire.bitten = null;
+                        // Count meetings
+                        if (meetingTarget == null) meetingsCount++;
+                        // Save the meeting target
+                        target = meetingTarget;
+                        // Add Portal info into Portalmaker Chat:
+                        if (Portalmaker.portalmaker != null && PlayerControl.LocalPlayer == Portalmaker.portalmaker && !PlayerControl.LocalPlayer.Data.IsDead && CustomOptionHolder.enablePortalLog.getBool())
+                        {
+                            foreach (var entry in Portal.teleportedPlayers)
+                            {
+                                float timeBeforeMeeting = ((float)(DateTime.UtcNow - entry.time).TotalMilliseconds) / 1000;
+                                string msg = Portalmaker.logShowsTime ? String.Format(ModTranslation.getString("portalLogTime"), (int)timeBeforeMeeting) : "";
+                                msg = msg + string.Format(ModTranslation.getString("portalLog"), entry.name);
+                                FastDestroyableSingleton<HudManager>.Instance.Chat.AddChat(PlayerControl.LocalPlayer, $"{msg}");
+                            }
+                        }
                     }
-                }
-            }
-        }
+                }*/
     }
 }

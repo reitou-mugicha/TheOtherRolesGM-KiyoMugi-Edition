@@ -20,11 +20,11 @@ namespace TheOtherRoles
             pc.RawSetPet(outfit.PetId, outfit.ColorId);
             Helpers.setSkinWithAnim(pc.MyPhysics, outfit.SkinId, outfit.ColorId);
 
-            if (pc.CurrentPet != null)
+            if (pc.cosmetics.currentPet != null)
             {
-                pc.CurrentPet.enabled = false;
-                pc.CurrentPet.Visible = false;
-                UnityEngine.GameObject.Destroy(pc.CurrentPet);
+                pc.cosmetics.currentPet.enabled = false;
+                pc.cosmetics.currentPet.Visible = false;
+                UnityEngine.GameObject.Destroy(pc.cosmetics.currentPet);
             }
 
             FastDestroyableSingleton<HatManager>.Instance.StartCoroutine(
@@ -32,11 +32,11 @@ namespace TheOtherRoles
                 {
                     if (!pc.Data.IsDead)
                     {
-                        pc.CurrentPet = UnityEngine.GameObject.Instantiate(data);
-                        pc.CurrentPet.transform.position = pc.transform.position;
-                        pc.CurrentPet.Source = pc;
-                        pc.CurrentPet.Visible = visible;
-                        PlayerControl.SetPlayerMaterialColors(outfit.ColorId, pc.CurrentPet.rend);
+                        pc.cosmetics.currentPet = UnityEngine.GameObject.Instantiate(data);
+                        pc.cosmetics.currentPet.transform.position = pc.transform.position;
+                        pc.cosmetics.currentPet.Source = pc;
+                        pc.cosmetics.currentPet.Visible = visible;
+                        pc.SetPlayerMaterialColors(pc.cosmetics.currentPet.rend);
                     }
                 }))
             );

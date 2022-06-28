@@ -31,7 +31,7 @@ namespace TheOtherRoles.Patches
                 {
                     var playerName = text;
                     if (morphTimerNotUp && morphTargetNotNull && Morphling.morphling == player) playerName = Morphling.morphTarget.Data.PlayerName;
-                    var nameText = player.nameText;
+                    var nameText = player.cosmetics.nameText;
 
                     nameText.text = Helpers.hidePlayerName(localPlayer, player) ? "" : playerName;
                     nameText.color = color = amImpostor && data.Role.IsImpostor ? Palette.ImpostorRed : Color.white;
@@ -54,7 +54,7 @@ namespace TheOtherRoles.Patches
 
         static void setPlayerNameColor(PlayerControl p, Color color)
         {
-            p.nameText.color = color;
+            p.cosmetics.nameText.color = color;
             if (MeetingHud.Instance != null)
                 foreach (PlayerVoteArea player in MeetingHud.Instance.playerStates)
                     if (player.NameText != null && p.PlayerId == player.TargetPlayerId)
@@ -206,13 +206,13 @@ namespace TheOtherRoles.Patches
             {
                 foreach (PlayerControl player in PlayerControl.AllPlayerControls.GetFastEnumerator())
                 {
-                    if (player.nameText.text == "") continue;
+                    if (player.cosmetics.nameText.text == "") continue;
                     if (Godfather.godfather != null && Godfather.godfather == player)
-                        player.nameText.text = player.Data.PlayerName + $" ({ModTranslation.getString("mafiaG")})";
+                        player.cosmetics.nameText.text = player.Data.PlayerName + $" ({ModTranslation.getString("mafiaG")})";
                     else if (Mafioso.mafioso != null && Mafioso.mafioso == player)
-                        player.nameText.text = player.Data.PlayerName + $" ({ModTranslation.getString("mafiaM")})";
+                        player.cosmetics.nameText.text = player.Data.PlayerName + $" ({ModTranslation.getString("mafiaM")})";
                     else if (Janitor.janitor != null && Janitor.janitor == player)
-                        player.nameText.text = player.Data.PlayerName + $" ({ModTranslation.getString("mafiaJ")})";
+                        player.cosmetics.nameText.text = player.Data.PlayerName + $" ({ModTranslation.getString("mafiaJ")})";
                 }
                 if (MeetingHud.Instance != null)
                     foreach (PlayerVoteArea player in MeetingHud.Instance.playerStates)
@@ -231,9 +231,9 @@ namespace TheOtherRoles.Patches
                 var lover1 = PlayerControl.LocalPlayer;
                 var lover2 = PlayerControl.LocalPlayer.getPartner();
 
-                lover1.nameText.text += suffix;
+                lover1.cosmetics.nameText.text += suffix;
                 if (!Helpers.hidePlayerName(lover2))
-                    lover2.nameText.text += suffix;
+                    lover2.cosmetics.nameText.text += suffix;
 
                 if (Helpers.ShowMeetingText)
                     foreach (PlayerVoteArea player in MeetingHud.Instance.playerStates)
@@ -248,7 +248,7 @@ namespace TheOtherRoles.Patches
             {
                 string suffix = Helpers.cs(Lawyer.color, " §");
                 if (!Helpers.hidePlayerName(Lawyer.target))
-                    Lawyer.target.nameText.text += suffix;
+                    Lawyer.target.cosmetics.nameText.text += suffix;
 
                 if (Helpers.ShowMeetingText)
                     foreach (PlayerVoteArea player in MeetingHud.Instance.playerStates)
@@ -338,7 +338,7 @@ namespace TheOtherRoles.Patches
                 suffix = " <color=#FAD934FF>(" + Mathf.FloorToInt(growingProgress * 18) + ")</color>";
 
             if (!Helpers.hidePlayerName(mini.player))
-                mini.player.nameText.text += suffix;
+                mini.player.cosmetics.nameText.text += suffix;
 
             if (MeetingHud.Instance != null)
             {
@@ -348,7 +348,7 @@ namespace TheOtherRoles.Patches
             }
 
             if (Morphling.morphling != null && Morphling.morphTarget == mini.player && Morphling.morphTimer > 0f && !Helpers.hidePlayerName(Morphling.morphling))
-                Morphling.morphling.nameText.text += suffix;
+                Morphling.morphling.cosmetics.nameText.text += suffix;
         }
 
         static void updateImpostorKillButton(HudManager __instance)

@@ -19,7 +19,7 @@ namespace TheOtherRoles.Modules
     [HarmonyPatch]
     public class CustomHats
     {
-        public static Material altHatShader;
+        public static Material hatShader;
 
         public static Dictionary<string, HatExtension> CustomHatRegistry = new Dictionary<string, HatExtension>();
         public static HatExtension TestExt = null;
@@ -127,18 +127,16 @@ namespace TheOtherRoles.Modules
             return sprite;
         }
 
-        private static HatData CreateHatBehaviour(CustomHat ch, bool fromDisk = false, bool testOnly = false)
+        private static HatData CreateHatData(CustomHat ch, bool fromDisk = false, bool testOnly = false)
         {
-            if (altHatShader == null)
-            {
-                Material tmpShader = new Material("PlayerMaterial");
-                tmpShader.shader = Shader.Find("Unlit/PlayerShader");
-                altHatShader = tmpShader;
-            }
+            if (hatShader == null && DestroyableSingleton<HatManager>.InstanceExists)
+                hatShader = new Material(Shader.Find("Unlit/PlayerShader"));
 
-            HatData hat = new HatData();
-            hat.hatViewData.viewData = new HatViewData();
-            hat.hatViewData.viewData.MainImage = CreateHatSprite(ch.resource, fromDisk);
+            HatData hat = new();
+            hat.hatViewData.viewData = new HatViewData
+            {
+                MainImage = CreateHatSprite(ch.resource, fromDisk)
+            };
             if (ch.backresource != null)
             {
                 hat.hatViewData.viewData.BackImage = CreateHatSprite(ch.backresource, fromDisk);
@@ -146,10 +144,6 @@ namespace TheOtherRoles.Modules
             }
             if (ch.climbresource != null)
                 hat.hatViewData.viewData.ClimbImage = CreateHatSprite(ch.climbresource, fromDisk);
-            if (ch.flipresource != null)
-                hat.hatViewData.viewData.LeftMainImage = CreateHatSprite(ch.flipresource, fromDisk);
-            if (ch.backflipresource != null)
-                hat.hatViewData.viewData.LeftBackImage = CreateHatSprite(ch.backflipresource, fromDisk);
             hat.name = ch.name + "\nby " + ch.author;
             hat.displayOrder = 99;
             hat.ProductId = "hat_" + ch.name.Replace(' ', '_');
@@ -159,14 +153,21 @@ namespace TheOtherRoles.Modules
             hat.Free = true;
             hat.NotInStore = true;
 
-            if (ch.adaptive && altHatShader != null)
-                hat.hatViewData.viewData.AltShader = altHatShader;
 
-            HatExtension extend = new HatExtension();
-            extend.author = ch.author != null ? ch.author : "Unknown";
-            extend.package = ch.package != null ? ch.package : "Misc.";
-            extend.condition = ch.condition != null ? ch.condition : "none";
-            extend.adaptive = ch.adaptive;
+            if (ch.adaptive && hatShader != null)
+                hat.hatViewData.viewData.AltShader = hatShader;
+
+            HatExtension extend = new()
+            {
+                author = ch.author ?? "Unknown",
+                package = ch.package ?? "Misc.",
+                condition = ch.condition ?? "none"
+            };
+
+            if (ch.flipresource != null)
+                extend.FlipImage = CreateHatSprite(ch.flipresource, fromDisk);
+            if (ch.backflipresource != null)
+                extend.BackFlipImage = CreateHatSprite(ch.backflipresource, fromDisk);
 
             if (testOnly)
             {
@@ -181,7 +182,7 @@ namespace TheOtherRoles.Modules
             return hat;
         }
 
-        private static HatData CreateHatBehaviour(CustomHatLoader.CustomHatOnline chd)
+        private static HatData CreateHatData(CustomHatLoader.CustomHatOnline chd)
         {
             string filePath = Path.GetDirectoryName(Application.dataPath) + @"\TheOtherHats\";
             chd.resource = filePath + chd.resource;
@@ -193,54 +194,7 @@ namespace TheOtherRoles.Modules
                 chd.flipresource = filePath + chd.flipresource;
             if (chd.backflipresource != null)
                 chd.backflipresource = filePath + chd.backflipresource;
-            return CreateHatBehaviour(chd, true);
-        }
-
-        [HarmonyPatch(typeof(HatManager), nameof(HatManager.GetHatById))]
-        private static class HatManagerPatch
-        {
-            private static bool LOADED;
-            private static bool RUNNING;
-
-            static void Prefix(HatManager __instance)
-            {
-                if (RUNNING) return;
-                RUNNING = true; // prevent simultanious execution
-
-                try
-                {
-                    if (!LOADED)
-                    {
-                        Assembly assembly = Assembly.GetExecutingAssembly();
-                        string hatres = $"{assembly.GetName().Name}.Resources.CustomHats";
-                        string[] hats = (from r in assembly.GetManifestResourceNames()
-                                         where r.StartsWith(hatres) && r.EndsWith(".png")
-                                         select r).ToArray<string>();
-
-                        List<CustomHat> customhats = createCustomHatDetails(hats);
-                        foreach (CustomHat ch in customhats)
-                            __instance.allHats.Add(CreateHatBehaviour(ch));
-                    }
-
-                    // If we have any asynchronously loaded hats, add them here.
-                    while (CustomHatLoader.hatDetails.Count > 0)
-                    {
-                        __instance.allHats.Add(CreateHatBehaviour(CustomHatLoader.hatDetails[0]));
-                        CustomHatLoader.hatDetails.RemoveAt(0);
-                    }
-                }
-                catch (System.Exception e)
-                {
-                    if (!LOADED)
-                        Helpers.log("Unable to add Custom Hats\n" + e);
-                }
-                LOADED = true;
-            }
-
-            static void Postfix(HatManager __instance)
-            {
-                RUNNING = false;
-            }
+            return CreateHatData(chd, true);
         }
 
         [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.Begin))]
@@ -251,9 +205,7 @@ namespace TheOtherRoles.Modules
                 if (DestroyableSingleton<TutorialManager>.InstanceExists)
                 {
                     string filePath = Path.GetDirectoryName(Application.dataPath) + @"\TheOtherHats\Test";
-                    if (!Directory.Exists(filePath))
-                        Directory.CreateDirectory(filePath);
-                    DirectoryInfo d = new DirectoryInfo(filePath);
+                    DirectoryInfo d = new(filePath);
                     string[] filePaths = d.GetFiles("*.png").Select(x => x.FullName).ToArray(); // Getting Text files
                     List<CustomHat> hats = createCustomHatDetails(filePaths, true);
                     if (hats.Count > 0)
@@ -262,8 +214,8 @@ namespace TheOtherRoles.Modules
                         {
                             var color = pc.CurrentOutfit.ColorId;
                             pc.SetHat("hat_dusk", color);
-                            pc.HatRenderer.Hat = CreateHatBehaviour(hats[0], true, true);
-                            pc.HatRenderer.SetHat(color);
+                            pc.cosmetics.hat.Hat = CreateHatData(hats[0], true, true);
+                            pc.cosmetics.hat.SetHat(color);
                         }
                     }
                 }
@@ -622,7 +574,7 @@ namespace TheOtherRoles.Modules
         }
     }
 
-    [HarmonyPatch(typeof(PoolablePlayer), nameof(PoolablePlayer.UpdateFromPlayerOutfit))]
+    /*[HarmonyPatch(typeof(PoolablePlayer), nameof(PoolablePlayer.UpdateFromPlayerOutfit))]
     public static class HatsPoolablePlayerPatch
     {
         public static void Postfix(PoolablePlayer __instance, GameData.PlayerOutfit outfit)
@@ -637,5 +589,5 @@ namespace TheOtherRoles.Modules
                 __instance.HatSlot.transform.localPosition.z - 1
                 );
         }
+    }*/
     }
-}

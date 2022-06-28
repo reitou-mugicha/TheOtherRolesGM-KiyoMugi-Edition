@@ -1,3 +1,4 @@
+/*
 using HarmonyLib;
 using System.Collections.Generic;
 using UnityEngine;
@@ -141,7 +142,6 @@ namespace TheOtherRoles
             players = new List<Chunibyo>();
         }
     }
-
     [HarmonyPatch(typeof(PlayerPhysics), nameof(PlayerPhysics.FixedUpdate))]
     public class SpeedUpOrDown
     {
@@ -157,7 +157,6 @@ namespace TheOtherRoles
             }
         }
     }
-
     [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.CalculateLightRadius))]
     public class HighOrLowVision
     {
@@ -173,4 +172,4 @@ namespace TheOtherRoles
             }
         }
     }
-}
+*/

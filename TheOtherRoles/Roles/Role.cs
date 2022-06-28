@@ -104,14 +104,13 @@ namespace TheOtherRoles
             { RoleType.FortuneTeller, typeof(RoleBase<FortuneTeller>) },
             { RoleType.Sprinter, typeof(RoleBase<Sprinter>) },
             { RoleType.Mayor, typeof(RoleBase<Mayor>) },
-            { RoleType.Chunibyo, typeof(RoleBase<Chunibyo>) },
+            //{ RoleType.Chunibyo, typeof(RoleBase<Chunibyo>) },
             { RoleType.Boss, typeof(RoleBase<Boss>) },
             { RoleType.Staff, typeof(RoleBase<Staff>) },
             { RoleType.Gun, typeof(RoleBase<Gun>) },
             { RoleType.Bakery, typeof(RoleBase<Bakery>) },
             //{ RoleType.Creator, typeof(RoleBase<Creator>) },
             { RoleType.TimeReviver, typeof(RoleBase<TimeReviver>) },
-            { RoleType.Timer, typeof(RoleBase<Timer>) },
 
             // Impostor
             { RoleType.Ninja, typeof(RoleBase<Ninja>) },
@@ -158,7 +157,7 @@ namespace TheOtherRoles
     [HarmonyPatch]
     public abstract class RoleBase<T> : Role where T : RoleBase<T>, new()
     {
-        public static List<T> players = new List<T>();
+        public static List<T> players = new();
         public static RoleType RoleType;
 
         public void Init(PlayerControl player)
@@ -203,7 +202,7 @@ namespace TheOtherRoles
 
         public static bool exists
         {
-            get { return CustomOptionHolder.activateRoles.getBool() && players.Count > 0; }
+            get { return Helpers.RolesEnabled && players.Count > 0; }
         }
 
         public static T getRole(PlayerControl player = null)

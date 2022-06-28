@@ -132,7 +132,7 @@ namespace TheOtherRoles.Patches
                 }
             }
         }
-
+/*
         [HarmonyPatch]
         class VitalsMinigameClosePatch
         {
@@ -146,6 +146,6 @@ namespace TheOtherRoles.Patches
                 if (__instance is VitalsMinigame)
                     UseVitalsTime();
             }
-        }
+        }*/
     }
 }

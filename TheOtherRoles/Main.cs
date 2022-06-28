@@ -22,7 +22,7 @@ namespace TheOtherRoles
     public class TheOtherRolesPlugin : BasePlugin
     {
         public const string Id = "kiyomori.mugicha.theotherrolesgmkm";
-        public const string VersionString = "2.2.0";
+        public const string VersionString = "2.3.0";
         public static System.Version Version = System.Version.Parse(VersionString);
         internal static BepInEx.Logging.ManualLogSource Logger;
 
@@ -32,7 +32,6 @@ namespace TheOtherRoles
         public static int optionsPage = 1;
 
         public static ConfigEntry<bool> DebugMode { get; private set; }
-        public static ConfigEntry<bool> StreamerMode { get; set; }
         public static ConfigEntry<bool> GhostsSeeTasks { get; set; }
         public static ConfigEntry<bool> GhostsSeeRoles { get; set; }
         public static ConfigEntry<bool> GhostsSeeVotes { get; set; }
@@ -42,6 +41,7 @@ namespace TheOtherRoles
         public static ConfigEntry<bool> HideTaskArrows { get; set; }
         //public static ConfigEntry<bool> ShowDebugData { get; set; }
         public static ConfigEntry<bool> EnableHorseMode { get; set; }
+        public static ConfigEntry<bool> StreamerMode { get; set; }
         public static ConfigEntry<string> StreamerModeReplacementText { get; set; }
         public static ConfigEntry<string> StreamerModeReplacementColor { get; set; }
         public static ConfigEntry<string> Ip { get; set; }
@@ -78,9 +78,9 @@ namespace TheOtherRoles
             //ShowDebugData = Config.Bind("Custom", "Show Debug Data", false);
             EnableHorseMode = Config.Bind("Custom", "Enable Horse Mode", false);
             ShowPopUpVersion = Config.Bind("Custom", "Show PopUp", "0");
+            DebugRepo = Config.Bind("Custom", "Debug Hat Repo", "");
             StreamerModeReplacementText = Config.Bind("Custom", "Streamer Mode Replacement Text", "\n\nTheOtherRolesGM KM");
             StreamerModeReplacementColor = Config.Bind("Custom", "Streamer Mode Replacement Text Hex Color", "#87AAF5FF");
-            DebugRepo = Config.Bind("Custom", "Debug Hat Repo", "");
 
             Ip = Config.Bind("Custom", "Custom Server IP", "127.0.0.1");
             Port = Config.Bind("Custom", "Custom Server Port", (ushort)22023);
@@ -125,7 +125,7 @@ namespace TheOtherRoles
     {
         private static void Prefix()
         {
-            if (!EOSManager.Instance.IsMinor())
+            if (!EOSManager.Instance.isKWSMinor)
             {
                 SaveManager.chatModeType = 1;
                 SaveManager.isGuest = false;

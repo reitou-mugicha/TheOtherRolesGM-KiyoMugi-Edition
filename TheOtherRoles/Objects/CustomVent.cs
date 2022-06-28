@@ -63,10 +63,10 @@ namespace TheOtherRoles.Objects
             {
                 CustomVentPos.SkeldVentPos.SAOVent();
             }
-            /*else if(SubmergedCompatibility.IsSubmerged && CustomOptionHolder.enableAddCustomVent.getBool())
+            else if(SubmergedCompatibility.IsSubmerged && CustomOptionHolder.enableAddCustomVent.getBool())
             {
                 CustomVentPos.SubmergedVentPos.SLBVent();
-            }*/
+            }
         }
 
         public static void clearAndReload()

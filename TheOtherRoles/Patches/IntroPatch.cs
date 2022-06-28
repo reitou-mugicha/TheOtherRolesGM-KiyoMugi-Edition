@@ -28,11 +28,14 @@ namespace TheOtherRoles.Patches
                     GameData.PlayerInfo data = p.Data;
                     PoolablePlayer player = UnityEngine.Object.Instantiate<PoolablePlayer>(__instance.PlayerPrefab, FastDestroyableSingleton<HudManager>.Instance.transform);
                     playerPrefab = __instance.PlayerPrefab;
-                    player.UpdateFromPlayerOutfit(p.Data.DefaultOutfit, p.Data.IsDead);
+                    p.SetPlayerMaterialColors(player.cosmetics.currentBodySprite.BodySprite);
+                    player.SetSkin(data.DefaultOutfit.SkinId, data.DefaultOutfit.ColorId);
+                    player.cosmetics.SetHat(data.DefaultOutfit.HatId, data.DefaultOutfit.ColorId);
+                    // PlayerControl.SetPetImage(data.DefaultOutfit.PetId, data.DefaultOutfit.ColorId, player.PetSlot);
+                    player.cosmetics.nameText.text = data.PlayerName;
                     player.SetFlipX(true);
-                    player.PetSlot.gameObject.SetActive(false);
-                    player.NameText.text = p.Data.DefaultOutfit.PlayerName;
                     MapOptions.playerIcons[p.PlayerId] = player;
+
 
                     if (PlayerControl.LocalPlayer == BountyHunter.bountyHunter)
                     {

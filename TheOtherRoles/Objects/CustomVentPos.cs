@@ -50,7 +50,7 @@ namespace TheOtherRoles.Objects
             }
         }
 
-        /*public class SubmergedVentPos
+        public class SubmergedVentPos
         {
             public static void SLBVent()
             {
@@ -65,6 +65,6 @@ namespace TheOtherRoles.Objects
                 storage.vent.Right = ballast.vent;
                 ballast.vent.Left = storage.vent;
             }
-        }*/
+        }
     }
 }

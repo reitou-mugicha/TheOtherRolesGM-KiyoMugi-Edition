@@ -20,7 +20,7 @@ namespace TheOtherRoles
     {
         // Main Controls
 
-        ResetVaribles = 60,
+        ResetVariables = 60,
         ShareOptions,
         CrewmateEnd,
         ImpostorEnd,
@@ -269,7 +269,7 @@ namespace TheOtherRoles
                 AmongUsClient.Instance.Dispatcher.Add(new Action(() =>
                 {
                     ShipStatus.Instance.enabled = false;
-                    ShipStatus.Instance.BeginCalled = false;
+                    ShipStatus.Instance.ShouldCheckForGameEnd = false;
                     AmongUsClient.Instance.OnGameEnd(new EndGameResult((GameOverReason)reason, false));
 
                     if (AmongUsClient.Instance.AmHost)
@@ -682,7 +682,7 @@ namespace TheOtherRoles
                 FastDestroyableSingleton<RoleManager>.Instance.SetRole(player, RoleTypes.Crewmate);
                 if (player == Lawyer.lawyer && Lawyer.target != null)
                 {
-                    Transform playerInfoTransform = Lawyer.target.nameText.transform.parent.FindChild("Info");
+                    Transform playerInfoTransform = Lawyer.target.cosmetics.nameText.transform.parent.FindChild("Info");
                     TMPro.TextMeshPro playerInfo = playerInfoTransform != null ? playerInfoTransform.GetComponent<TMPro.TextMeshPro>() : null;
                     if (playerInfo != null) playerInfo.text = "";
                 }
@@ -967,7 +967,7 @@ namespace TheOtherRoles
 
             if (player.PlayerId == PlayerControl.LocalPlayer.PlayerId && client != null)
             {
-                Transform playerInfoTransform = client.nameText.transform.parent.FindChild("Info");
+                Transform playerInfoTransform = client.cosmetics.nameText.transform.parent.FindChild("Info");
                 TMPro.TextMeshPro playerInfo = playerInfoTransform != null ? playerInfoTransform.GetComponent<TMPro.TextMeshPro>() : null;
                 if (playerInfo != null) playerInfo.text = "";
             }
@@ -1367,7 +1367,7 @@ namespace TheOtherRoles
 
                     // Main Controls
 
-                    case (byte)CustomRPC.ResetVaribles:
+                    case (byte)CustomRPC.ResetVariables:
                         RPCProcedure.resetVariables();
                         break;
                     case (byte)CustomRPC.ShareOptions:
@@ -1432,9 +1432,9 @@ namespace TheOtherRoles
                         byte reportTarget = reader.ReadByte();
                         RPCProcedure.uncheckedCmdReportDeadBody(reportSource, reportTarget);
                         break;
-                    case (byte)CustomRPC.UncheckedEndGame:
+                    /*case (byte)CustomRPC.UncheckedEndGame:
                         RPCProcedure.uncheckedEndGame(reader.ReadByte());
-                        break;
+                        break;*/
                     case (byte)CustomRPC.UncheckedSetTasks:
                         RPCProcedure.uncheckedSetTasks(reader.ReadByte(), reader.ReadBytesAndSize());
                         break;

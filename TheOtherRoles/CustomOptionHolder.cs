@@ -411,7 +411,7 @@ namespace TheOtherRoles
 
         public static CustomRoleOption doubleKillerSpawnRate;
         public static CustomOption doubleKillerKillButtonCooldown;
-
+/*
         public static CustomRoleOption chunibyoSpawnRate;
         public static CustomOption chunibyoCooldown;
         public static CustomOption chunibyoDuration;
@@ -424,7 +424,7 @@ namespace TheOtherRoles
         public static CustomOption chunibyoSpeedDownBonus;
         public static CustomOption chunibyoHighVisionBonus;
         public static CustomOption chunibyoLowVisionBonus;
-
+*/
         public static CustomRoleOption yakuzaSpawnRate;
         public static CustomOption yakuzaKillCooldown;
         public static CustomOption yakuzaNumShots;
@@ -455,9 +455,6 @@ namespace TheOtherRoles
         public static CustomOption timeReviverExileAddMeetingTime;
         public static CustomOption timeReviverTimeCutoffCooldown;
         public static CustomOption timeReviverTimeCutoffDuration;
-
-        public static CustomRoleOption timerSpawnRate;
-        public static CustomOption timerMeetingEndTimeReset;
 
         public static CustomRoleOption silencerSpawnRate;
         public static CustomOption silencerSilenceKillCooldown;
@@ -852,6 +849,7 @@ namespace TheOtherRoles
             doubleKillerSpawnRate = new CustomRoleOption(660, CustomOptionType.Impostor, "doubleKiller", DoubleKiller.color, 1);
             doubleKillerKillButtonCooldown = CustomOption.Create(661, CustomOptionType.Impostor, "doubleKillerKillCooldown", 0f, 0f, 60f, 2.5f, doubleKillerSpawnRate, format: "unitSeconds");
 
+/*
             chunibyoSpawnRate = new CustomRoleOption(670, CustomOptionType.Crewmate, "chunibyo", Chunibyo.color, 15);
             chunibyoDuration = CustomOption.Create(671, CustomOptionType.Crewmate, "chunibyoDuration", 10f, 2.5f, 30f, 2.5f, chunibyoSpawnRate, format: "unitSeconds");
             chunibyoCooldown = CustomOption.Create(672, CustomOptionType.Crewmate, "chunibyoCooldown", 30f, 2.5f, 60f, 2.5f, chunibyoSpawnRate, format: "unitSeconds");
@@ -863,7 +861,7 @@ namespace TheOtherRoles
             chunibyoSpeedUpBonus = CustomOption.Create(678, CustomOptionType.Crewmate, "chunibyoSpeedUpBonus", 125f, 50f, 200f, 5f, chunibyoEnableSpeedUp, format: "unitPercent");
             chunibyoSpeedDownBonus = CustomOption.Create(679, CustomOptionType.Crewmate, "chunibyoSpeedDownBonus", 125f, 50f, 200f, 5f, chunibyoEnableSpeedDown, format: "unitPercent");
             chunibyoHighVisionBonus = CustomOption.Create(680, CustomOptionType.Crewmate, "chunibyoHighVisionBonus", 150f, 110f, 200f, 10f, chunibyoEnableHighVision, format: "unitPercent");
-            chunibyoLowVisionBonus = CustomOption.Create(681, CustomOptionType.Crewmate, "chunibyoLowVisionBonus", 50f, 10f, 90f, 10f, chunibyoEnableLowVision, format: "unitPercent");
+            chunibyoLowVisionBonus = CustomOption.Create(681, CustomOptionType.Crewmate, "chunibyoLowVisionBonus", 50f, 10f, 90f, 10f, chunibyoEnableLowVision, format: "unitPercent");*/
 
             yakuzaSpawnRate = new CustomRoleOption(690, CustomOptionType.Crewmate, "yakuza", Boss.color, 1);
             yakuzaNumShots = CustomOption.Create(691, CustomOptionType.Crewmate, "yakuzaNumShots", 2f, 1f, 15f, 1f, yakuzaSpawnRate, format: "unitShots");
@@ -882,9 +880,6 @@ namespace TheOtherRoles
             timeReviverTimeCutoffCooldown = CustomOption.Create(7593, CustomOptionType.Crewmate, "timeReviverTimeCutoffCooldown", 30f, 2.5f, 60f, 2.5f, timeReviverSpawnRate, format: "unitSeconds");
             timeReviverTimeCutoffDuration = CustomOption.Create(7594, CustomOptionType.Crewmate, "timeReviverTimeCutoffDuration", 10f, 2.5f, 60f, 2.5f, timeReviverSpawnRate, format: "unitSeconds");
 
-            //timerSpawnRate = new CustomRoleOption(8518, CustomOptionType.Crewmate, "timer", Timer.color, 15);
-            //timerMeetingEndTimeReset = CustomOption.Create(8519, CustomOptionType.Crewmate, "timerMeetingEndTimeReset", true, timerSpawnRate);
-
             // Other options
             specialOptions = new CustomOptionBlank(null);
             betterStartButtons = CustomOption.Create(45, CustomOptionType.General, "betterStart", true, specialOptions);
@@ -901,7 +896,7 @@ namespace TheOtherRoles
             //helloweenMode = CustomOption.Create(26, CustomOptionType.General, "helloweenMode", false, specialOptions);
 
             enableMirrorMap = CustomOption.Create(27, CustomOptionType.General, "enableMirror", false, specialOptions);
-            enableAddCustomVent = CustomOption.Create(45, CustomOptionType.General, "enableAddCustomVent", false, specialOptions);
+            enableAddCustomVent = CustomOption.Create(46, CustomOptionType.General, "enableAddCustomVent", false, specialOptions);
 
             hideSettings = CustomOption.Create(28, CustomOptionType.General, "hideSettings", false, specialOptions);
 
@@ -937,7 +932,7 @@ unitSeconds	{0}秒
 unitMinutes	{0}分
 unitShots	{0}発
 unitScrews	{0}本
-unitMultiplier	{0}x	
+unitMultiplier	{0}x
 unitTimes	{0}回
 unitMeters	{0}m
 unitVotes	{0}票

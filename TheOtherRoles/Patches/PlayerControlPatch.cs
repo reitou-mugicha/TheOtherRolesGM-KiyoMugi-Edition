@@ -84,10 +84,10 @@ namespace TheOtherRoles.Patches
 
         public static void setPlayerOutline(PlayerControl target, Color color)
         {
-            if (target == null || target.MyRend == null) return;
+            if (target == null || target.cosmetics.currentBodySprite.BodySprite == null) return;
 
-            target.MyRend.material.SetFloat("_Outline", 1f);
-            target.MyRend.material.SetColor("_OutlineColor", color);
+            target.cosmetics.currentBodySprite.BodySprite.material.SetFloat("_Outline", 1f);
+            target.cosmetics.currentBodySprite.BodySprite.material.SetColor("_OutlineColor", color);
         }
 
         // Update functions
@@ -95,7 +95,7 @@ namespace TheOtherRoles.Patches
         {
             foreach (PlayerControl target in PlayerControl.AllPlayerControls.GetFastEnumerator())
             {
-                if (target == null || target.MyRend == null) continue;
+                if (target == null || target.cosmetics.currentBodySprite.BodySprite == null) continue;
 
                 bool isMorphedMorphling = target == Morphling.morphling && Morphling.morphTarget != null && Morphling.morphTimer > 0f;
                 bool hasVisibleShield = false;
@@ -108,12 +108,12 @@ namespace TheOtherRoles.Patches
 
                 if (hasVisibleShield)
                 {
-                    target.MyRend.material.SetFloat("_Outline", 1f);
-                    target.MyRend.material.SetColor("_OutlineColor", Medic.shieldedColor);
+                    target.cosmetics.currentBodySprite.BodySprite.material.SetFloat("_Outline", 1f);
+                    target.cosmetics.currentBodySprite.BodySprite.material.SetColor("_OutlineColor", Medic.shieldedColor);
                 }
                 else
                 {
-                    target.MyRend.material.SetFloat("_Outline", 0f);
+                    target.cosmetics.currentBodySprite.BodySprite.material.SetFloat("_Outline", 0f);
                 }
             }
         }
@@ -576,17 +576,17 @@ namespace TheOtherRoles.Patches
 
                 if (canSeeInfo)
                 {
-                    Transform playerInfoTransform = p.nameText.transform.parent.FindChild("Info");
+                    Transform playerInfoTransform = p.cosmetics.nameText.transform.parent.FindChild("Info");
                     TMPro.TextMeshPro playerInfo = playerInfoTransform != null ? playerInfoTransform.GetComponent<TMPro.TextMeshPro>() : null;
                     if (playerInfo == null)
                     {
-                        playerInfo = UnityEngine.Object.Instantiate(p.nameText, p.nameText.transform.parent);
+                        playerInfo = UnityEngine.Object.Instantiate(p.cosmetics.nameText, p.cosmetics.nameText.transform.parent);
                         playerInfo.fontSize *= 0.75f;
                         playerInfo.gameObject.name = "Info";
                     }
 
                     // Set the position every time bc it sometimes ends up in the wrong place due to camoflauge
-                    playerInfo.transform.localPosition = p.nameText.transform.localPosition + Vector3.up * 0.5f;
+                    playerInfo.transform.localPosition = p.cosmetics.nameText.transform.localPosition + Vector3.up * 0.5f;
 
                     PlayerVoteArea playerVoteArea = MeetingHud.Instance?.playerStates?.FirstOrDefault(x => x.TargetPlayerId == p.PlayerId);
                     Transform meetingInfoTransform = playerVoteArea != null ? playerVoteArea.NameText.transform.parent.FindChild("Info") : null;
@@ -1106,17 +1106,18 @@ namespace TheOtherRoles.Patches
                 pursuerSetTarget();
                 // Witch
                 witchSetTarget();
-                // Hacker
-                hackerUpdate();
                 // Assassin
                 assassinSetTarget();
                 AssassinTrace.UpdateAll();
                 assassinUpdate();
+
+                hackerUpdate();
             }
 
             TheOtherRolesGM.FixedUpdate(__instance);
         }
     }
+
 
     [HarmonyPatch(typeof(PlayerPhysics), nameof(PlayerPhysics.WalkPlayerTo))]
     class PlayerPhysicsWalkPlayerToPatch
@@ -1380,7 +1381,7 @@ namespace TheOtherRoles.Patches
         private static int? colorId = null;
         public static void Prefix(PlayerControl source, bool canMove)
         {
-            Color color = source.MyRend.material.GetColor("_BodyColor");
+            Color color = source.cosmetics.currentBodySprite.BodySprite.material.GetColor("_BodyColor");
             if (color != null && Morphling.morphling != null && source.Data.PlayerId == Morphling.morphling.PlayerId)
             {
                 var index = Palette.PlayerColors.IndexOf(color);
