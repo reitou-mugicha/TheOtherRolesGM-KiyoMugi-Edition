@@ -209,8 +209,11 @@ namespace TheOtherRoles
             var color = Color.Lerp(Palette.ClearWhite, Palette.White, opacity);
             try
             {
-                if (player.MyPhysics?.myPlayer.cosmetics.bodySprites != null)
-                    player.MyPhysics.myPlayer.cosmetics.colorBlindText.color = color;
+                if (player.MyPhysics?.myPlayer.cosmetics.currentBodySprite.BodySprite != null)
+                {
+                    if (player.MyPhysics.myPlayer.cosmetics.currentBodySprite.BodySprite.color != color)
+                    player.MyPhysics.myPlayer.cosmetics.currentBodySprite.BodySprite.color = color;
+                }
 
                 if (player.MyPhysics?.myPlayer.cosmetics.skin?.layer != null)
                     player.MyPhysics.myPlayer.cosmetics.skin.layer.color = color;
