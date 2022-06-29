@@ -206,7 +206,7 @@ namespace TheOtherRoles
 
         public static void setOpacity(PlayerControl player, float opacity)
         {
-              // Sometimes it just doesn't work?
+            // Sometimes it just doesn't work?
             var color = Color.Lerp(Palette.ClearWhite, Palette.White, opacity);
             try
             {

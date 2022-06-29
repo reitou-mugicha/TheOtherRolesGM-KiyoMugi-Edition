@@ -24,7 +24,7 @@ namespace TheOtherRoles.Patches
                 {
                     GameData.PlayerInfo data = p.Data;
                     PoolablePlayer player = UnityEngine.Object.Instantiate<PoolablePlayer>(__instance.PlayerPrefab, HudManager.Instance.transform);
-                    player.UpdateFromPlayerOutfit((GameData.PlayerOutfit) p.Data.DefaultOutfit, PlayerMaterial.MaskType.ComplexUI, p.Data.IsDead, true);
+                    player.UpdateFromPlayerOutfit((GameData.PlayerOutfit)p.Data.DefaultOutfit, PlayerMaterial.MaskType.ComplexUI, p.Data.IsDead, true);
                     player.SetFlipX(true);
                     // player.PetSlot.gameObject.SetActive(false);
                     player.cosmetics.currentPet?.gameObject.SetActive(false);

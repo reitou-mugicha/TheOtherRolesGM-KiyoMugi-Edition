@@ -550,7 +550,7 @@ namespace TheOtherRoles.Patches
                         float num7 = Mathf.Lerp(1f, 0.65f, num4) * 0.9f;
                         Vector3 vector = new(num7, num7, 1f);
                         poolablePlayer.transform.localScale = vector;
-                        poolablePlayer.UpdateFromPlayerOutfit((GameData.PlayerOutfit) winningPlayerData2, PlayerMaterial.MaskType.ComplexUI, winningPlayerData2.IsDead, true);
+                        poolablePlayer.UpdateFromPlayerOutfit((GameData.PlayerOutfit)winningPlayerData2, PlayerMaterial.MaskType.ComplexUI, winningPlayerData2.IsDead, true);
                         if (winningPlayerData2.IsDead)
                         {
                             poolablePlayer.cosmetics.currentBodySprite.BodySprite.sprite = __instance.GhostSprite;

@@ -35,15 +35,15 @@ namespace TheOtherRoles.Patches
         private static bool filterAdmin(SystemTypes type)
         {
             // イビルハッカーのアドミンは今まで通り
-            if(PlayerControl.LocalPlayer.isRole(RoleType.EvilHacker)) return true;
+            if (PlayerControl.LocalPlayer.isRole(RoleType.EvilHacker)) return true;
 
-            if(CustomOptionHolder.airshipRestrictedAdmin.getBool())
+            if (CustomOptionHolder.airshipRestrictedAdmin.getBool())
             {
-                if(room.name == "Cockpit" && !filterCockpitAdmin.Contains(type))
+                if (room.name == "Cockpit" && !filterCockpitAdmin.Contains(type))
                 {
                     return false;
                 }
-                if(room.name == "Records" && !filterRecordsAdmin.Contains(type))
+                if (room.name == "Records" && !filterRecordsAdmin.Contains(type))
                 {
                     return false;
                 }
