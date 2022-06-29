@@ -141,7 +141,7 @@ namespace TheOtherRoles.Patches
                 }
 
                 // アドミンの画像を差し替える
-                if (PlayerControl.GameOptions.MapId == 4 && CustomOptionHolder.airshipRestrictedAdmin.getBool() && (room.name == "Cockpit" || room.name == "Records"))
+                if (!PlayerControl.LocalPlayer.isRole(RoleType.EvilHacker) && PlayerControl.GameOptions.MapId == 4 && CustomOptionHolder.airshipRestrictedAdmin.getBool() && (room.name == "Cockpit" || room.name == "Records"))
                 {
                     if (!adminCockpitSprite) adminCockpitSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.admin_cockpit.png", 100f);
                     if (!adminRecordsSprite) adminRecordsSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.admin_records.png", 100f);
