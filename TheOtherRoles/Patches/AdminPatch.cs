@@ -16,6 +16,42 @@ namespace TheOtherRoles.Patches
         static TMPro.TextMeshPro TimeRemaining;
         static bool clearedIcons = false;
 
+        static PlainShipRoom room;
+        static List<SystemTypes> filterCockpitAdmin = new(){
+            SystemTypes.Cockpit,
+            SystemTypes.Armory,
+            SystemTypes.Kitchen,
+            SystemTypes.VaultRoom,
+            SystemTypes.Comms
+        };
+        static List<SystemTypes> filterRecordsAdmin = new(){
+            SystemTypes.Records,
+            SystemTypes.Lounge,
+            SystemTypes.CargoBay,
+            SystemTypes.Showers,
+            SystemTypes.Ventilation
+        };
+
+        private static bool filterAdmin(SystemTypes type)
+        {
+            // イビルハッカーのアドミンは今まで通り
+            if(PlayerControl.LocalPlayer.isRole(RoleType.EvilHacker)) return true;
+
+            if(CustomOptionHolder.airshipRestrictedAdmin.getBool())
+            {
+                if(room.name == "Cockpit" && !filterCockpitAdmin.Contains(type))
+                {
+                    return false;
+                }
+                if(room.name == "Records" && !filterRecordsAdmin.Contains(type))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+
         public static void ResetData()
         {
             adminTimer = 0f;
@@ -71,6 +107,35 @@ namespace TheOtherRoles.Patches
             static void Prefix(MapCountOverlay __instance)
             {
                 adminTimer = 0f;
+
+                // 現在地からどのアドミンを使っているか特定する
+                PlainShipRoom[] array = null;
+                UnhollowerBaseLib.Il2CppReferenceArray<Collider2D> buffer = new Collider2D[10];
+                ContactFilter2D filter = default(ContactFilter2D);
+                filter.layerMask = Constants.PlayersOnlyMask;
+                filter.useLayerMask = true;
+                filter.useTriggers = false;
+                if (ShipStatus.Instance)
+                {
+                    array = ShipStatus.Instance.AllRooms;
+                }
+                foreach (PlainShipRoom plainShipRoom in array)
+                {
+                    if (plainShipRoom.roomArea)
+                    {
+                        int hitCount = plainShipRoom.roomArea.OverlapCollider(filter, buffer);
+                        if (hitCount == 0) continue;
+                        for (int i = 0; i < hitCount; i++)
+                        {
+                            if (buffer[i].gameObject == PlayerControl.LocalPlayer.gameObject)
+                            {
+                                room = plainShipRoom;
+                                break;
+                            }
+                        }
+                        if (room != null) break;
+                    }
+                }
             }
         }
 
@@ -185,11 +250,19 @@ namespace TheOtherRoles.Patches
                         {
                             int num = plainShipRoom.roomArea.OverlapCollider(__instance.filter, __instance.buffer);
                             int num2 = num;
+
                             // ロミジュリと絵画の部屋をアドミンの対象から外す
-                            if(CustomOptionHolder.airshipOldAdmin.getBool() && (counterArea.RoomType == SystemTypes.Ventilation || counterArea.RoomType == SystemTypes.HallOfPortraits))
+                            if (CustomOptionHolder.airshipOldAdmin.getBool() && (counterArea.RoomType == SystemTypes.Ventilation || counterArea.RoomType == SystemTypes.HallOfPortraits))
                             {
                                 num2 = 0;
                             }
+
+                            // アドミン毎に表示する範囲を制限する
+                            if (!filterAdmin(counterArea.RoomType))
+                            {
+                                num2 = 0;
+                            }
+
                             for (int j = 0; j < num; j++)
                             {
                                 Collider2D collider2D = __instance.buffer[j];
