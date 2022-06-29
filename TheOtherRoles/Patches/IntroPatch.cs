@@ -104,13 +104,20 @@ namespace TheOtherRoles.Patches
                 records.GetComponentsInChildren<MapConsole>().Where(x => x.name == "records_admin_map").FirstOrDefault()?.gameObject.SetActive(false);
             }
 
+            GameObject gapRoom = DestroyableSingleton<ShipStatus>.Instance.FastRooms[SystemTypes.GapRoom].gameObject;
             // GapRoomの配電盤を消す
             if (PlayerControl.GameOptions.MapId == 4 && CustomOptionHolder.airshipDisableGapSwitchBoard.getBool())
             {
-                GameObject gapRoom = DestroyableSingleton<ShipStatus>.Instance.FastRooms[SystemTypes.GapRoom].gameObject;
                 GameObject sabo = gapRoom.GetComponentsInChildren<Console>().Where(x => x.name == "task_lightssabotage (gap)").FirstOrDefault()?.gameObject;
                 sabo.SetActive(false);
                 ShipStatus.Instance.AllConsoles = ShipStatus.Instance.AllConsoles.Where(x => x != sabo.GetComponent<Console>()).ToArray();
+            }
+
+            // ぬ～んを消す
+            if (PlayerControl.GameOptions.MapId == 4 && CustomOptionHolder.airshipDisableMovingPlatform.getBool())
+            {
+                gapRoom.GetComponentInChildren<MovingPlatformBehaviour>().gameObject.SetActive(false);
+                gapRoom.GetComponentsInChildren<PlatformConsole>().ForEach(x=> x.gameObject.SetActive(false));
             }
 
 
