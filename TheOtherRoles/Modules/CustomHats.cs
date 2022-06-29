@@ -1,4 +1,5 @@
 
+using System.Reflection;
 using HarmonyLib;
 using UnityEngine;
 using System.IO;
@@ -20,7 +21,7 @@ namespace TheOtherRoles.Modules
     {
         public static Material hatShader;
 
-        public static Dictionary<string, HatExtension> CustomHatRegistry = new Dictionary<string, HatExtension>();
+        public static Dictionary<string, HatExtension> CustomHatRegistry = new();
         public static HatExtension TestExt = null;
 
         public class HatExtension
@@ -51,11 +52,11 @@ namespace TheOtherRoles.Modules
 
         private static List<CustomHat> createCustomHatDetails(string[] hats, bool fromDisk = false)
         {
-            Dictionary<string, CustomHat> fronts = new Dictionary<string, CustomHat>();
-            Dictionary<string, string> backs = new Dictionary<string, string>();
-            Dictionary<string, string> flips = new Dictionary<string, string>();
-            Dictionary<string, string> backflips = new Dictionary<string, string>();
-            Dictionary<string, string> climbs = new Dictionary<string, string>();
+            Dictionary<string, CustomHat> fronts = new();
+            Dictionary<string, string> backs = new();
+            Dictionary<string, string> flips = new();
+            Dictionary<string, string> backflips = new();
+            Dictionary<string, string> climbs = new();
 
             for (int i = 0; i < hats.Length; i++)
             {
@@ -196,6 +197,78 @@ namespace TheOtherRoles.Modules
             return CreateHatData(chd, true);
         }
 
+        [HarmonyPatch(typeof(HatManager), nameof(HatManager.GetHatById))]
+        private static class HatManagerPatch
+        {
+            private static bool LOADED;
+            private static bool RUNNING;
+
+            static void Prefix(HatManager __instance)
+            {
+                if (RUNNING) return;
+                RUNNING = true; // prevent simultaneous execution
+
+                if (!LOADED)
+                {
+                    Assembly assembly = Assembly.GetExecutingAssembly();
+                    string hatres = $"{assembly.GetName().Name}.Resources.CustomHats";
+                    string[] hats = (from r in assembly.GetManifestResourceNames()
+                                     where r.StartsWith(hatres) && r.EndsWith(".png")
+                                     select r).ToArray<string>();
+
+                    List<CustomHat> customhats = createCustomHatDetails(hats);
+                    foreach (CustomHat ch in customhats)
+                        __instance.allHats.Add(CreateHatData(ch));
+                }
+                while (CustomHatLoader.hatDetails.Count > 0)
+                {
+                    __instance.allHats.Add(CreateHatData(CustomHatLoader.hatDetails[0]));
+                    CustomHatLoader.hatDetails.RemoveAt(0);
+                }
+                LOADED = true;
+            }
+            static void Postfix(HatManager __instance)
+            {
+                RUNNING = false;
+            }
+        }
+
+        [HarmonyPatch(typeof(PlayerPhysics), nameof(PlayerPhysics.HandleAnimation))]
+        private static class PlayerPhysicsHandleAnimationPatch
+        {
+            private static void Postfix(PlayerPhysics __instance)
+            {
+                AnimationClip currentAnimation = __instance.Animator.GetCurrentAnimation();
+                if (currentAnimation == __instance.CurrentAnimationGroup.ClimbAnim || currentAnimation == __instance.CurrentAnimationGroup.ClimbDownAnim) return;
+                HatParent hp = __instance.myPlayer.cosmetics.hat;
+                if (hp.Hat == null) return;
+                HatExtension extend = hp.Hat.getHatExtension();
+                if (extend == null) return;
+                if (extend.FlipImage != null)
+                {
+                    if (__instance.FlipX)
+                    {
+                        hp.FrontLayer.sprite = extend.FlipImage;
+                    }
+                    else
+                    {
+                        hp.FrontLayer.sprite = hp.Hat.hatViewData.viewData.MainImage;
+                    }
+                }
+                if (extend.BackFlipImage != null)
+                {
+                    if (__instance.FlipX)
+                    {
+                        hp.BackLayer.sprite = extend.BackFlipImage;
+                    }
+                    else
+                    {
+                        hp.BackLayer.sprite = hp.Hat.hatViewData.viewData.BackImage;
+                    }
+                }
+            }
+        }
+
         [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.Begin))]
         private static class ShipStatusSetHat
         {
@@ -221,7 +294,7 @@ namespace TheOtherRoles.Modules
             }
         }
 
-        private static List<TMPro.TMP_Text> hatsTabCustomTexts = new List<TMPro.TMP_Text>();
+        private static List<TMPro.TMP_Text> hatsTabCustomTexts = new();
         public static string innerslothPackageName = "innerslothHats";
         private static float headerSize = 0.8f;
         private static float headerX = 0.8f;
@@ -589,4 +662,4 @@ namespace TheOtherRoles.Modules
                 );
         }
     }*/
-    }
+}
