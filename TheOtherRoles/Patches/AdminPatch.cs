@@ -15,6 +15,10 @@ namespace TheOtherRoles.Patches
         static TMPro.TextMeshPro OutOfTime;
         static TMPro.TextMeshPro TimeRemaining;
         static bool clearedIcons = false;
+        static Sprite adminCockpitSprite;
+        static Sprite adminRecordsSprite;
+        static GameObject map;
+        static GameObject newmap;
 
         static PlainShipRoom room;
         static List<SystemTypes> filterCockpitAdmin = new(){
@@ -127,15 +131,39 @@ namespace TheOtherRoles.Patches
                         if (hitCount == 0) continue;
                         for (int i = 0; i < hitCount; i++)
                         {
-                            if (buffer[i].gameObject == PlayerControl.LocalPlayer.gameObject)
+                            if (buffer[i]?.gameObject == PlayerControl.LocalPlayer.gameObject)
                             {
                                 room = plainShipRoom;
                                 break;
                             }
                         }
-                        if (room != null) break;
                     }
                 }
+
+                // アドミンの画像を差し替える
+                if (PlayerControl.GameOptions.MapId == 4 && CustomOptionHolder.airshipRestrictedAdmin.getBool() && (room.name == "Cockpit" || room.name == "Records"))
+                {
+                    if (!adminCockpitSprite) adminCockpitSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.admin_cockpit.png", 100f);
+                    if (!adminRecordsSprite) adminRecordsSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.admin_records.png", 100f);
+                    if (!map) map = GameObject.Find("Main Camera/Hud/AirshipMap(Clone)/Background");
+                    if (!newmap) newmap = UnityEngine.Object.Instantiate(map, map.transform.parent);
+
+                    SpriteRenderer renderer = newmap.GetComponent<SpriteRenderer>();
+                    if (room.name == "Cockpit")
+                    {
+                        renderer.sprite = adminCockpitSprite;
+                        newmap.transform.position = new Vector3(map.transform.position.x + 0.5f, map.transform.position.y, map.transform.position.z - 0.1f);
+                    }
+                    if (room.name == "Records")
+                    {
+                        renderer.sprite = adminRecordsSprite;
+                        newmap.transform.position = new Vector3(map.transform.position.x - 0.38f, map.transform.position.y, map.transform.position.z - 0.1f);
+                    }
+                    newmap.SetActive(true);
+                }
+
+
+
             }
         }
 
@@ -146,6 +174,7 @@ namespace TheOtherRoles.Patches
             static void Prefix(MapCountOverlay __instance)
             {
                 UseAdminTime();
+                if (newmap) newmap.SetActive(false);
             }
         }
 
@@ -309,6 +338,7 @@ namespace TheOtherRoles.Patches
                                     }
                                 }
                             }
+                            if (num2 < 0) num2 = 0;
                             counterArea.UpdateCount(num2);
                         }
                         else
