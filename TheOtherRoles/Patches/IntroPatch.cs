@@ -99,12 +99,16 @@ namespace TheOtherRoles.Patches
 
             // アーカイブのアドミンを消す
             if (PlayerControl.GameOptions.MapId == 4 && CustomOptionHolder.airshipOldAdmin.getBool())
-                GameObject.Find("records_admin_map").SetActive(false);
+            {
+                GameObject records = DestroyableSingleton<ShipStatus>.Instance.FastRooms[SystemTypes.Records].gameObject;
+                records.GetComponentsInChildren<MapConsole>().Where(x => x.name == "records_admin_map").FirstOrDefault()?.gameObject.SetActive(false);
+            }
 
             // GapRoomの配電盤を消す
             if (PlayerControl.GameOptions.MapId == 4 && CustomOptionHolder.airshipDisableGapSwitchBoard.getBool())
             {
-                GameObject sabo = GameObject.Find("task_lightssabotage (gap)");
+                GameObject gapRoom = DestroyableSingleton<ShipStatus>.Instance.FastRooms[SystemTypes.GapRoom].gameObject;
+                GameObject sabo = gapRoom.GetComponentsInChildren<Console>().Where(x => x.name == "task_lightssabotage (gap)").FirstOrDefault()?.gameObject;
                 sabo.SetActive(false);
                 ShipStatus.Instance.AllConsoles = ShipStatus.Instance.AllConsoles.Where(x => x != sabo.GetComponent<Console>()).ToArray();
             }

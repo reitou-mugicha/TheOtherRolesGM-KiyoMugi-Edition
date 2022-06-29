@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using HarmonyLib;
 using Hazel;
@@ -143,9 +144,12 @@ namespace TheOtherRoles.Patches
                 // アドミンの画像を差し替える
                 if (!PlayerControl.LocalPlayer.isRole(RoleType.EvilHacker) && PlayerControl.GameOptions.MapId == 4 && CustomOptionHolder.airshipRestrictedAdmin.getBool() && (room.name == "Cockpit" || room.name == "Records"))
                 {
-                    if (!adminCockpitSprite) adminCockpitSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.admin_cockpit.png", 100f);
-                    if (!adminRecordsSprite) adminRecordsSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.admin_records.png", 100f);
-                    if (!map) map = GameObject.Find("Main Camera/Hud/AirshipMap(Clone)/Background");
+                    if ( room.name == "Cockpit" && !adminCockpitSprite) adminCockpitSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.admin_cockpit.png", 100f);
+                    if ( room.name == "Records" && !adminRecordsSprite) adminRecordsSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.admin_records.png", 100f);
+                    if (!map)
+                    {
+                        map = DestroyableSingleton<MapBehaviour>.Instance.gameObject.GetComponentsInChildren<SpriteRenderer>().Where( x=> x.name == "Background").FirstOrDefault().gameObject;
+                    }
                     if (!newmap) newmap = UnityEngine.Object.Instantiate(map, map.transform.parent);
 
                     SpriteRenderer renderer = newmap.GetComponent<SpriteRenderer>();

@@ -44,19 +44,19 @@ namespace TheOtherRoles.Patches
                 renderer = fance.AddComponent<SpriteRenderer>();
                 renderer.sprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.AirshipFance.png", 100f);
 
-                GameObject pole = new("DownloadPole")
-                {
-                    layer = LayerMask.NameToLayer("Ship")
-                };
-                pole.transform.SetParent(obj.transform);
-                pole.transform.localPosition = new Vector3(4.1f, 0.75f, 0.8f);
-                pole.transform.localScale = new Vector3(1f, 1f, 1f);
-                renderer = pole.AddComponent<SpriteRenderer>();
-                renderer.sprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.AirshipDownloadG.png", 100f);
+                // GameObject pole = new("DownloadPole")
+                // {
+                //     layer = LayerMask.NameToLayer("Ship")
+                // };
+                // pole.transform.SetParent(obj.transform);
+                // pole.transform.localPosition = new Vector3(4.1f, 0.75f, 0.8f);
+                // pole.transform.localScale = new Vector3(1f, 1f, 1f);
+                // renderer = pole.AddComponent<SpriteRenderer>();
+                // renderer.sprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.AirshipDownloadG.png", 100f);
 
                 var panel = obj.transform.FindChild("panel_data");
-                panel.localPosition = new Vector3(4.1f, 0.72f, 0.1f);
-                panel.gameObject.GetComponent<Console>().usableDistance = 0.9f;
+                panel.localPosition = new Vector3(4.52f, -3.95f, 0.1f);
+                // panel.gameObject.GetComponent<Console>().usableDistance = 0.9f;
             }
 
         }
