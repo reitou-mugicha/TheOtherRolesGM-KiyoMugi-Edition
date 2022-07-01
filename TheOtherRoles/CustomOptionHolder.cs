@@ -285,6 +285,8 @@ namespace TheOtherRoles
         public static CustomOption airshipRestrictedAdmin;
         public static CustomOption airshipDisableGapSwitchBoard;
         public static CustomOption airshipDisableMovingPlatform;
+        public static CustomOption airshipAdditionalLadder;
+        public static CustomOption airshipOneWayLadder;
 
         public static CustomOption maxNumberOfMeetings;
         public static CustomOption blockSkippingInEmergencyMeetings;
@@ -897,6 +899,8 @@ namespace TheOtherRoles
             airshipRestrictedAdmin = CustomOption.Create(9926, CustomOptionType.General, "airshipRestrictedAdmin", false, mapOptions);
             airshipDisableGapSwitchBoard = CustomOption.Create(9927, CustomOptionType.General, "airshipDisableGapSwitchBoard", false, mapOptions);
             airshipDisableMovingPlatform = CustomOption.Create(9928, CustomOptionType.General, "airshipDisableMovingPlatform", false, mapOptions);
+            airshipAdditionalLadder = CustomOption.Create(9929, CustomOptionType.General, "airshipAdditionalLadder", false, mapOptions);
+            airshipOneWayLadder = CustomOption.Create(9930, CustomOptionType.General, "airshipOneWayLadder", false, mapOptions);
 
             specialOptions = new CustomOptionBlank(null);
             enabledHorseMode = CustomOption.Create(552, CustomOptionType.General, "enableHorseMode", false, specialOptions, true);
