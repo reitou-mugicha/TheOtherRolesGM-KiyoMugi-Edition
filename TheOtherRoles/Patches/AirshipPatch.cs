@@ -73,8 +73,16 @@ namespace TheOtherRoles.Patches
                 GameObject gapRoom = DestroyableSingleton<ShipStatus>.Instance.FastRooms[SystemTypes.GapRoom].gameObject;
                 GameObject ladder = meetingRoom.GetComponentsInChildren<SpriteRenderer>().Where(x => x.name == "ladder_meeting").FirstOrDefault().gameObject;
                 GameObject newLadder = GameObject.Instantiate(ladder, ladder.transform.parent);
+                UnhollowerBaseLib.Il2CppArrayBase<Ladder> ladders = newLadder.GetComponentsInChildren<Ladder>();
+                int id = 100;
+                foreach(var l in ladders)
+                {
+                    if(l.name == "LadderBottom") l.gameObject.SetActive(false);
+                    l.Id = (byte)id;
+                    DestroyableSingleton<AirshipStatus>.Instance.Ladders.AddItem(l);
+                    id++;
+                }
                 newLadder.transform.position = new Vector3(15.442f, 12.18f, 0.1f);
-                newLadder.GetComponentsInChildren<Ladder>().Where(x => x.name == "LadderBottom").FirstOrDefault().gameObject.SetActive(false);
                 if (!ladderSprite) ladderSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.ladder.png", 100f);
                 newLadder.GetComponentInChildren<SpriteRenderer>().sprite = ladderSprite;
 
