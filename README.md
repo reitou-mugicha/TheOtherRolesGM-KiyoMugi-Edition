@@ -24,6 +24,10 @@ This mod is not affiliated with Among Us or Innersloth LLC, and the content cont
 - エアシップの配線タスク位置の追加(オプション)
 - エアシップのリアクター時間変更(オプション)
 - エアシップの一部のタスクに壁判定を追加（現像、シャワー、ゴミ箱）
+- エアシップのアドミンを旧設定に戻す機能
+- エアシップのアドミンの表示領域の制限機能
+- エアシップのミーティングルーム右側に下りのみの梯子を追加
+- エアシップのミーティング左側の梯子を上りのみにする設定
 - ポーラスのランダムリスポン（オプション）
 - ポーラスの追加ベント（オプション）
 - ポーラスのバイタル移動（スペシメン）
@@ -35,104 +39,109 @@ This mod is not affiliated with Among Us or Innersloth LLC, and the content cont
 エアシップの追加リスポン位置は下記の画像のようになっている
 ![](Images/airship_mod.png)
 
+エアシップのアドミン制限は下記の画像のようになっている
+![](Images/admin_mod.png)
+
+エアシップの追加梯子は下記の画像のようになっている
+![](Images/ladder_mod.png)
 # 追加役職
 
-| Impostors | Crewmates | Neutral | Other | 
-|----------|-------------|-----------------|----------------|
-|[シリアルキラー](#シリアルキラー)| [占い師](#占い師) |[妖狐](#妖狐) ||
-|[イビルハッカー(tomarai氏制作)](#イビルハッカー)|[無能](#無能)|[背徳者](#背徳者)|
-|[ラストインポスター](#ラストインポスター)||[シュレディンガーの猫](#シュレディンガーの猫)|
-|[トラッパー](#トラッパー)||[人形遣い(テスト中)](#人形遣い)|
-|[爆弾魔](#爆弾魔)||[ジキルとハイド(テスト中)](#ジキルとハイド)||
-|[イビルトラッカー](#イビルトラッカー)||||
-|[ミミック](#ミミック)||||
+| Impostors                                        | Crewmates         | Neutral                                       | Other |
+| ------------------------------------------------ | ----------------- | --------------------------------------------- | ----- |
+| [シリアルキラー](#シリアルキラー)                | [占い師](#占い師) | [妖狐](#妖狐)                                 |       |
+| [イビルハッカー(tomarai氏制作)](#イビルハッカー) | [無能](#無能)     | [背徳者](#背徳者)                             |
+| [ラストインポスター](#ラストインポスター)        |                   | [シュレディンガーの猫](#シュレディンガーの猫) |
+| [トラッパー](#トラッパー)                        |                   | [人形遣い(テスト中)](#人形遣い)               |
+| [爆弾魔](#爆弾魔)                                |                   | [ジキルとハイド(テスト中)](#ジキルとハイド)   |       |
+| [イビルトラッカー](#イビルトラッカー)            |                   |                                               |       |
+| [ミミック](#ミミック)                            |                   |                                               |       |
 
 
 # GM本家とのバージョン対応表
 
 リリースの簡易化のため一部表を省略しています。
-|Among Us Version| GM本家 | Haoming Edition| Download|
-|----------------|--------|-----------------|--------|
-|2022.3.29s||最新版|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/latest/)|
-|-|-|-|-|
-|2022.3.29s|v3.5.4| v2.0.12|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v2.0.12/TheOtherRoles-GM-Haoming.v2.0.12.zip)|
-|2022.3.29s|v3.5.4| v2.0.11|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v2.0.11/TheOtherRoles-GM-Haoming.v2.0.11.zip)|
-|2022.3.29s|v3.5.4| v2.0.10|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v2.0.10/TheOtherRoles-GM-Haoming.v2.0.10.zip)|
-|2022.3.29s|v3.5.4| v2.0.9|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v2.0.9/TheOtherRoles-GM-Haoming.v2.0.9.zip)|
-|2022.3.29s|v3.5.4| v2.0.8|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v2.0.8/TheOtherRoles-GM-Haoming.v2.0.8.zip)|
-|2022.3.29s|v3.5.4| v2.0.7|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v2.0.7/TheOtherRoles-GM-Haoming.v2.0.7.zip)|
-|2022.3.29s|v3.5.4| v2.0.6|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v2.0.6/TheOtherRoles-GM-Haoming.v2.0.6.zip)|
-|2022.3.29s|v3.5.4| v2.0.5|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v2.0.5/TheOtherRoles-GM-Haoming.v2.0.5.zip)|
-|2022.3.29s|v3.5.4| v2.0.4|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v2.0.4/TheOtherRoles-GM-Haoming.v2.0.4.zip)|
-|2022.3.29s|v3.5.4| v2.0.3|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v2.0.3/TheOtherRoles-GM-Haoming.v2.0.3.zip)|
-|2022.3.29s|v3.5.4| v2.0.2|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v2.0.2/TheOtherRoles-GM-Haoming.v2.0.2.zip)|
-|2022.3.29s|v3.5.4| v2.0.1|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v2.0.1/TheOtherRoles-GM-Haoming.v2.0.1.zip)|
-|2022.3.29s|v3.5.4| v2.0.0|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v2.0.0/TheOtherRoles-GM-Haoming.v2.0.0.zip)|
-|2022.2.24s|v3.5.4| v1.12.16|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.12.16/TheOtherRoles-GM-Haoming.v1.12.16.zip)|
-|2022.2.24s|v3.5.4| v1.12.14|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.12.14/TheOtherRoles-GM-Haoming.v1.12.14.zip)|
-|2022.2.24s|v3.5.4| v1.12.13|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.12.13/TheOtherRoles-GM-Haoming.v1.12.13.zip)|
-|2022.2.24s|v3.5.4| v1.12.12|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.12.12/TheOtherRoles-GM-Haoming.v1.12.12.zip)|
-|2022.2.24s|v3.5.4| v1.12.11|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.12.11/TheOtherRoles-GM-Haoming.v1.12.11.zip)|
-|2022.2.24s|v3.5.4| v1.12.10|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.12.10/TheOtherRoles-GM-Haoming.v1.12.10.zip)|
-|2022.2.24s|v3.5.4| v1.12.9|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.12.9/TheOtherRoles-GM-Haoming.v1.12.9.zip)|
-|2022.2.24s|v3.5.4| v1.12.8|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.12.8/TheOtherRoles-GM-Haoming.v1.12.8.zip)|
-|2022.2.24s|v3.5.4| v1.12.7|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.12.7/TheOtherRoles-GM-Haoming.v1.12.7.zip)|
-|2022.2.24s|v3.5.4| v1.12.6|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.12.6/TheOtherRoles-GM-Haoming.v1.12.6.zip)|
-|2022.2.24s|v3.5.4| v1.12.5|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.12.5/TheOtherRoles-GM-Haoming.v1.12.5.zip)|
-|2022.2.24s|v3.5.4| v1.12.4|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.12.4/TheOtherRoles-GM-Haoming.v1.12.4.zip)|
-|2022.2.24s|v3.5.4| v1.12.3|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.12.3/TheOtherRoles-GM-Haoming.v1.12.3.zip)|
-|2022.2.24s|v3.5.4| v1.12.2|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.12.2/TheOtherRoles-GM-Haoming.v1.12.2.zip)|
-|2022.2.24s|v3.5.4| v1.12.1|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.12.1/TheOtherRoles-GM-Haoming.v1.12.1.zip)|
-|2022.2.24s|v3.5.4| v1.12.0|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.12.0/TheOtherRoles-GM-Haoming.v1.12.0.zip)|
-|2022.2.24s|v3.5.3| v1.11.17|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.11.17/TheOtherRoles-GM-Haoming.v1.11.17.zip)|
-|2022.2.24s|v3.5.3| v1.11.16|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.11.16/TheOtherRoles-GM-Haoming.v1.11.16.zip)|
-|2022.2.24s|v3.5.3| v1.11.10|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.11.10/TheOtherRoles-GM-Haoming.v1.11.10.zip)|
-|2022.2.24s|v3.5.3| v1.11.9|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.11.9/TheOtherRoles-GM-Haoming.v1.11.9.zip)|
-|2022.2.24s|v3.5.3| v1.11.8|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.11.8/TheOtherRoles-GM-Haoming.v1.11.8.zip)|
-|2022.2.24s|v3.5.3| v1.11.7|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.11.7/TheOtherRoles-GM-Haoming.v1.11.7.zip)|
-|2022.2.24s|v3.5.3| v1.11.6|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.11.6/TheOtherRoles-GM-Haoming.v1.11.6.zip)|
-|2022.2.24s|v3.5.3| v1.11.5|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.11.5/TheOtherRoles-GM-Haoming.v1.11.5.zip)|
-|2022.2.24s|v3.5.3| v1.11.4|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.11.4/TheOtherRoles-GM-Haoming.v1.11.4.zip)|
-|2022.2.24s|v3.5.3| v1.11.3|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.11.3/TheOtherRoles-GM-Haoming.v1.11.3.zip)|
-|2022.2.24s|v3.5.3| v1.11.2|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.11.2/TheOtherRoles-GM-Haoming.v1.11.2.zip)|
-|2022.2.24s|v3.5.3| v1.11.1|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.11.1/TheOtherRoles-GM-Haoming.v1.11.1.zip)|
-|2022.2.24s|v3.5.3| v1.11.0|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.11.0/TheOtherRoles-GM-Haoming.v1.11.0.zip)|
-|2022.2.8s|v3.5.2| v1.10.3|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.10.3/TheOtherRoles-GM-Haoming.v1.10.3.zip)|
-|2022.2.8s|v3.5.2| v1.10.2|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.10.2/TheOtherRoles-GM-Haoming.v1.10.2.zip)|
-|2022.2.8s|v3.5.2| v1.10.1|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.10.1/TheOtherRoles-GM-Haoming.v1.10.1.zip)|
-|2022.2.8s|v3.5.2| v1.10.0|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.10.0/TheOtherRoles-GM-Haoming.v1.10.0.zip)|
-|2022.2.8s|v3.5.2| v1.9.2|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.9.2/TheOtherRoles-GM-Haoming.v1.9.2.zip)|
-|2022.2.8s|v3.5.2| v1.9.1|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.9.1/TheOtherRoles-GM-Haoming.v1.9.1.zip)|
-|2022.2.8s|v3.5.2| v1.9.0|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.9.0/TheOtherRoles-GM-Haoming.v1.9.0.zip)|
-|2021.12.15s (build num: 1421)|v3.5.1| v1.8.3|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.8.3/TheOtherRoles-GM-Haoming.v1.8.3.zip)|
-|2021.12.15s (build num: 1421)|v3.5.1| v1.8.2|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.8.2/TheOtherRoles-GM-Haoming.v1.8.2.zip)|
-|2021.12.15s (build num: 1421)|v3.5.0| v1.8.1|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.8.1/TheOtherRoles-GM-Haoming.v1.8.1.zip)|
-|2021.12.15s (build num: 1421)|v3.5.0| v1.8.0|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.8.0/TheOtherRoles-GM-Haoming.v1.8.0.zip)|
-|2021.12.15s (build num: 1421)|v3.5.0| v1.8.0|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.8.0/TheOtherRoles-GM-Haoming.v1.8.0.zip)|
-|2021.12.15s (build num: 1421)|v3.4.2| v1.7.6|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.7.6/TheOtherRoles-GM-Haoming.v1.7.6.zip)|
-|2021.12.15s (build num: 1421)|v3.4.2| v1.7.5|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.7.5/TheOtherRoles-GM-Haoming.v1.7.5.zip)|
-|2021.12.15s (build num: 1421)|v3.4.2| v1.7.4|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.7.4/TheOtherRoles-GM-Haoming.v1.7.4.zip)|
-|2021.12.15s (build num: 1421)|v3.4.2| v1.7.3|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.7.3/TheOtherRoles-GM-Haoming.v1.7.3.zip)|
-|2021.12.15s (build num: 1421)|v3.4.2| v1.7.2|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.7.2/TheOtherRoles-GM-Haoming.v1.7.2.zip)|
-|2021.12.15s (build num: 1421)|v3.4.2| v1.7.1|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.7.1/TheOtherRoles-GM-Haoming.v1.7.1.zip)|
-|2021.12.15s (build num: 1421)|v3.4.2| v1.7.0|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.7.0/TheOtherRoles-GM-Haoming.v1.7.0.zip)|
-|2021.12.15s (build num: 1421)|v3.4.2| v1.6.2|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.6.2/TheOtherRoles-GM-Haoming.v1.6.2.zip)|
-|2021.12.15s (build num: 1421)|v3.4.2| v1.6.1|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.6.1/TheOtherRoles-GM-Haoming.v1.6.1.zip)|
-|2021.12.15s (build num: 1421)|v3.4.2| v1.6.0|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.6.0/TheOtherRoles-GM-Haoming.v1.6.0.zip)|
-|2021.12.15s (build num: 1421)|v3.4.2| v1.5.8|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.5.8/TheOtherRoles-GM-Haoming.v1.5.8.zip)|
-|2021.12.15s (build num: 1421)|v3.4.2| v1.5.7|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.5.7/TheOtherRoles-GM-Haoming.v1.5.7.zip)|
-|2021.12.15s (build num: 1421)|v3.4.2| v1.5.4|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.5.4/TheOtherRoles-GM-Haoming.v1.5.4.zip)|
-|2021.12.15s (build num: 1421)|v3.4.2| v1.5.3|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.5.3/TheOtherRoles-GM-Haoming.v1.5.3.zip)|
-|2021.12.15s (build num: 1421)|v3.4.2| v1.5.2|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.5.2/TheOtherRoles-GM-Haoming.v1.5.2.zip)|
-|2021.12.15s (build num: 1421)|v3.4.2| v1.5.1|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.5.1/TheOtherRoles-GM-Haoming.v1.5.1.zip)|
-|2021.12.15s (build num: 1421)|v3.4.2| v1.5.0|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.5.0/TheOtherRoles-GM-Haoming.v1.5.0.zip)|
-|2021.12.15s (build num: 1421)|v3.4.2| v1.4.0|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.4.0/TheOtherRoles-GM-Haoming.v1.4.0.zip)|
-|2021.12.15s (build num: 1421)|v3.4.2| v1.3.0|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.3.0/TheOtherRoles-GM-Haoming.v1.3.0.zip)|
-|2021.12.15s (build num: 1421)|v3.4.2| v1.2.1|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.2.1/TheOtherRoles-GM-Haoming.v1.2.1.zip)|
-|2021.12.15s (build num: 1421)|v3.4.2| v1.2.0|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.2.0/TheOtherRoles-GM-Haoming.v1.2.0.zip)|
-|2021.12.15s (build num: 1421)|v3.4.2| v1.1.0|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.1.0/TheOtherRoles-GM-Haoming.v1.1.0.zip)|
-|2021.12.15s (build num: 1421)|v3.4.2| v1.0.1|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.0.1/TheOtherRoles-GM-Haoming.v1.0.1.zip)|
-|2021.12.15s (build num: 1421)|v3.4.2| v1.0.0|[ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.0.0/TheOtherRoles-GM-Haoming.v1.0.0.zip)|
+| Among Us Version              | GM本家 | Haoming Edition | Download                                                                                                                               |
+| ----------------------------- | ------ | --------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| 2022.6.21s                    |        | 最新版          | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/latest/)                                                 |
+| -                             | -      | -               | -                                                                                                                                      |
+| 2022.3.29s                    | v3.5.4 | v2.0.12         | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v2.0.12/TheOtherRoles-GM-Haoming.v2.0.12.zip)   |
+| 2022.3.29s                    | v3.5.4 | v2.0.11         | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v2.0.11/TheOtherRoles-GM-Haoming.v2.0.11.zip)   |
+| 2022.3.29s                    | v3.5.4 | v2.0.10         | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v2.0.10/TheOtherRoles-GM-Haoming.v2.0.10.zip)   |
+| 2022.3.29s                    | v3.5.4 | v2.0.9          | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v2.0.9/TheOtherRoles-GM-Haoming.v2.0.9.zip)     |
+| 2022.3.29s                    | v3.5.4 | v2.0.8          | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v2.0.8/TheOtherRoles-GM-Haoming.v2.0.8.zip)     |
+| 2022.3.29s                    | v3.5.4 | v2.0.7          | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v2.0.7/TheOtherRoles-GM-Haoming.v2.0.7.zip)     |
+| 2022.3.29s                    | v3.5.4 | v2.0.6          | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v2.0.6/TheOtherRoles-GM-Haoming.v2.0.6.zip)     |
+| 2022.3.29s                    | v3.5.4 | v2.0.5          | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v2.0.5/TheOtherRoles-GM-Haoming.v2.0.5.zip)     |
+| 2022.3.29s                    | v3.5.4 | v2.0.4          | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v2.0.4/TheOtherRoles-GM-Haoming.v2.0.4.zip)     |
+| 2022.3.29s                    | v3.5.4 | v2.0.3          | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v2.0.3/TheOtherRoles-GM-Haoming.v2.0.3.zip)     |
+| 2022.3.29s                    | v3.5.4 | v2.0.2          | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v2.0.2/TheOtherRoles-GM-Haoming.v2.0.2.zip)     |
+| 2022.3.29s                    | v3.5.4 | v2.0.1          | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v2.0.1/TheOtherRoles-GM-Haoming.v2.0.1.zip)     |
+| 2022.3.29s                    | v3.5.4 | v2.0.0          | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v2.0.0/TheOtherRoles-GM-Haoming.v2.0.0.zip)     |
+| 2022.2.24s                    | v3.5.4 | v1.12.16        | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.12.16/TheOtherRoles-GM-Haoming.v1.12.16.zip) |
+| 2022.2.24s                    | v3.5.4 | v1.12.14        | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.12.14/TheOtherRoles-GM-Haoming.v1.12.14.zip) |
+| 2022.2.24s                    | v3.5.4 | v1.12.13        | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.12.13/TheOtherRoles-GM-Haoming.v1.12.13.zip) |
+| 2022.2.24s                    | v3.5.4 | v1.12.12        | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.12.12/TheOtherRoles-GM-Haoming.v1.12.12.zip) |
+| 2022.2.24s                    | v3.5.4 | v1.12.11        | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.12.11/TheOtherRoles-GM-Haoming.v1.12.11.zip) |
+| 2022.2.24s                    | v3.5.4 | v1.12.10        | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.12.10/TheOtherRoles-GM-Haoming.v1.12.10.zip) |
+| 2022.2.24s                    | v3.5.4 | v1.12.9         | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.12.9/TheOtherRoles-GM-Haoming.v1.12.9.zip)   |
+| 2022.2.24s                    | v3.5.4 | v1.12.8         | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.12.8/TheOtherRoles-GM-Haoming.v1.12.8.zip)   |
+| 2022.2.24s                    | v3.5.4 | v1.12.7         | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.12.7/TheOtherRoles-GM-Haoming.v1.12.7.zip)   |
+| 2022.2.24s                    | v3.5.4 | v1.12.6         | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.12.6/TheOtherRoles-GM-Haoming.v1.12.6.zip)   |
+| 2022.2.24s                    | v3.5.4 | v1.12.5         | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.12.5/TheOtherRoles-GM-Haoming.v1.12.5.zip)   |
+| 2022.2.24s                    | v3.5.4 | v1.12.4         | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.12.4/TheOtherRoles-GM-Haoming.v1.12.4.zip)   |
+| 2022.2.24s                    | v3.5.4 | v1.12.3         | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.12.3/TheOtherRoles-GM-Haoming.v1.12.3.zip)   |
+| 2022.2.24s                    | v3.5.4 | v1.12.2         | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.12.2/TheOtherRoles-GM-Haoming.v1.12.2.zip)   |
+| 2022.2.24s                    | v3.5.4 | v1.12.1         | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.12.1/TheOtherRoles-GM-Haoming.v1.12.1.zip)   |
+| 2022.2.24s                    | v3.5.4 | v1.12.0         | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.12.0/TheOtherRoles-GM-Haoming.v1.12.0.zip)   |
+| 2022.2.24s                    | v3.5.3 | v1.11.17        | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.11.17/TheOtherRoles-GM-Haoming.v1.11.17.zip) |
+| 2022.2.24s                    | v3.5.3 | v1.11.16        | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.11.16/TheOtherRoles-GM-Haoming.v1.11.16.zip) |
+| 2022.2.24s                    | v3.5.3 | v1.11.10        | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.11.10/TheOtherRoles-GM-Haoming.v1.11.10.zip) |
+| 2022.2.24s                    | v3.5.3 | v1.11.9         | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.11.9/TheOtherRoles-GM-Haoming.v1.11.9.zip)   |
+| 2022.2.24s                    | v3.5.3 | v1.11.8         | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.11.8/TheOtherRoles-GM-Haoming.v1.11.8.zip)   |
+| 2022.2.24s                    | v3.5.3 | v1.11.7         | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.11.7/TheOtherRoles-GM-Haoming.v1.11.7.zip)   |
+| 2022.2.24s                    | v3.5.3 | v1.11.6         | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.11.6/TheOtherRoles-GM-Haoming.v1.11.6.zip)   |
+| 2022.2.24s                    | v3.5.3 | v1.11.5         | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.11.5/TheOtherRoles-GM-Haoming.v1.11.5.zip)   |
+| 2022.2.24s                    | v3.5.3 | v1.11.4         | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.11.4/TheOtherRoles-GM-Haoming.v1.11.4.zip)   |
+| 2022.2.24s                    | v3.5.3 | v1.11.3         | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.11.3/TheOtherRoles-GM-Haoming.v1.11.3.zip)   |
+| 2022.2.24s                    | v3.5.3 | v1.11.2         | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.11.2/TheOtherRoles-GM-Haoming.v1.11.2.zip)   |
+| 2022.2.24s                    | v3.5.3 | v1.11.1         | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.11.1/TheOtherRoles-GM-Haoming.v1.11.1.zip)   |
+| 2022.2.24s                    | v3.5.3 | v1.11.0         | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.11.0/TheOtherRoles-GM-Haoming.v1.11.0.zip)   |
+| 2022.2.8s                     | v3.5.2 | v1.10.3         | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.10.3/TheOtherRoles-GM-Haoming.v1.10.3.zip)   |
+| 2022.2.8s                     | v3.5.2 | v1.10.2         | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.10.2/TheOtherRoles-GM-Haoming.v1.10.2.zip)   |
+| 2022.2.8s                     | v3.5.2 | v1.10.1         | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.10.1/TheOtherRoles-GM-Haoming.v1.10.1.zip)   |
+| 2022.2.8s                     | v3.5.2 | v1.10.0         | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.10.0/TheOtherRoles-GM-Haoming.v1.10.0.zip)   |
+| 2022.2.8s                     | v3.5.2 | v1.9.2          | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.9.2/TheOtherRoles-GM-Haoming.v1.9.2.zip)     |
+| 2022.2.8s                     | v3.5.2 | v1.9.1          | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.9.1/TheOtherRoles-GM-Haoming.v1.9.1.zip)     |
+| 2022.2.8s                     | v3.5.2 | v1.9.0          | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.9.0/TheOtherRoles-GM-Haoming.v1.9.0.zip)     |
+| 2021.12.15s (build num: 1421) | v3.5.1 | v1.8.3          | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.8.3/TheOtherRoles-GM-Haoming.v1.8.3.zip)     |
+| 2021.12.15s (build num: 1421) | v3.5.1 | v1.8.2          | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.8.2/TheOtherRoles-GM-Haoming.v1.8.2.zip)     |
+| 2021.12.15s (build num: 1421) | v3.5.0 | v1.8.1          | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.8.1/TheOtherRoles-GM-Haoming.v1.8.1.zip)     |
+| 2021.12.15s (build num: 1421) | v3.5.0 | v1.8.0          | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.8.0/TheOtherRoles-GM-Haoming.v1.8.0.zip)     |
+| 2021.12.15s (build num: 1421) | v3.5.0 | v1.8.0          | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.8.0/TheOtherRoles-GM-Haoming.v1.8.0.zip)     |
+| 2021.12.15s (build num: 1421) | v3.4.2 | v1.7.6          | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.7.6/TheOtherRoles-GM-Haoming.v1.7.6.zip)     |
+| 2021.12.15s (build num: 1421) | v3.4.2 | v1.7.5          | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.7.5/TheOtherRoles-GM-Haoming.v1.7.5.zip)     |
+| 2021.12.15s (build num: 1421) | v3.4.2 | v1.7.4          | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.7.4/TheOtherRoles-GM-Haoming.v1.7.4.zip)     |
+| 2021.12.15s (build num: 1421) | v3.4.2 | v1.7.3          | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.7.3/TheOtherRoles-GM-Haoming.v1.7.3.zip)     |
+| 2021.12.15s (build num: 1421) | v3.4.2 | v1.7.2          | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.7.2/TheOtherRoles-GM-Haoming.v1.7.2.zip)     |
+| 2021.12.15s (build num: 1421) | v3.4.2 | v1.7.1          | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.7.1/TheOtherRoles-GM-Haoming.v1.7.1.zip)     |
+| 2021.12.15s (build num: 1421) | v3.4.2 | v1.7.0          | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.7.0/TheOtherRoles-GM-Haoming.v1.7.0.zip)     |
+| 2021.12.15s (build num: 1421) | v3.4.2 | v1.6.2          | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.6.2/TheOtherRoles-GM-Haoming.v1.6.2.zip)     |
+| 2021.12.15s (build num: 1421) | v3.4.2 | v1.6.1          | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.6.1/TheOtherRoles-GM-Haoming.v1.6.1.zip)     |
+| 2021.12.15s (build num: 1421) | v3.4.2 | v1.6.0          | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.6.0/TheOtherRoles-GM-Haoming.v1.6.0.zip)     |
+| 2021.12.15s (build num: 1421) | v3.4.2 | v1.5.8          | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.5.8/TheOtherRoles-GM-Haoming.v1.5.8.zip)     |
+| 2021.12.15s (build num: 1421) | v3.4.2 | v1.5.7          | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.5.7/TheOtherRoles-GM-Haoming.v1.5.7.zip)     |
+| 2021.12.15s (build num: 1421) | v3.4.2 | v1.5.4          | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.5.4/TheOtherRoles-GM-Haoming.v1.5.4.zip)     |
+| 2021.12.15s (build num: 1421) | v3.4.2 | v1.5.3          | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.5.3/TheOtherRoles-GM-Haoming.v1.5.3.zip)     |
+| 2021.12.15s (build num: 1421) | v3.4.2 | v1.5.2          | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.5.2/TheOtherRoles-GM-Haoming.v1.5.2.zip)     |
+| 2021.12.15s (build num: 1421) | v3.4.2 | v1.5.1          | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.5.1/TheOtherRoles-GM-Haoming.v1.5.1.zip)     |
+| 2021.12.15s (build num: 1421) | v3.4.2 | v1.5.0          | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.5.0/TheOtherRoles-GM-Haoming.v1.5.0.zip)     |
+| 2021.12.15s (build num: 1421) | v3.4.2 | v1.4.0          | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.4.0/TheOtherRoles-GM-Haoming.v1.4.0.zip)     |
+| 2021.12.15s (build num: 1421) | v3.4.2 | v1.3.0          | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.3.0/TheOtherRoles-GM-Haoming.v1.3.0.zip)     |
+| 2021.12.15s (build num: 1421) | v3.4.2 | v1.2.1          | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.2.1/TheOtherRoles-GM-Haoming.v1.2.1.zip)     |
+| 2021.12.15s (build num: 1421) | v3.4.2 | v1.2.0          | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.2.0/TheOtherRoles-GM-Haoming.v1.2.0.zip)     |
+| 2021.12.15s (build num: 1421) | v3.4.2 | v1.1.0          | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.1.0/TheOtherRoles-GM-Haoming.v1.1.0.zip)     |
+| 2021.12.15s (build num: 1421) | v3.4.2 | v1.0.1          | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.0.1/TheOtherRoles-GM-Haoming.v1.0.1.zip)     |
+| 2021.12.15s (build num: 1421) | v3.4.2 | v1.0.0          | [ダウンロード](https://github.com/haoming37/TheOtherRoles-GM-Haoming/releases/download/v1.0.0/TheOtherRoles-GM-Haoming.v1.0.0.zip)     |
 
 # 役職一覧
 
@@ -143,18 +152,18 @@ This mod is not affiliated with Among Us or Innersloth LLC, and the content cont
 オプション設定でONにすると任意のプレイヤーをマッドメイトにすることができる  
 オプションで妖狐・ジャッカルをマッドメイトにできない設定になっている場合はボタンが消費されるが対象のプレイヤーは妖狐・ジャッカルのままになる  
 サイドキックを持つ妖狐をマッドメイトにした場合、背徳者は死亡する
-|オプション名|説明|
-|-----------|----|
-|マッドメイトを指名できる|ONにするとマッドメイトを指名できる|
-|妖狐をマッドメイトにすることができる|ONにすると妖狐をマッドメイトにできる|
-|ジャッカルをマッドメイトにすることができる|ONにするとジャッカルをマッドメイトにできる|
-|シェリフがマッドメイトを殺せる|ONにするとシェリフが作成したマッドメイトを殺すことができる|
-|マッドメイトがベントに入れる|ONにすると作成したマッドメイトがベントに入ることができる|
-|マッドメイトがインポスターと同じ視野|ONにすると作成したマッドメイトがインポスターと同じ視野を持つ|
-|マッドメイトがサボタージュできる|ONにすると作成したマッドメイトがサボタージュを行うことができる|
-|マッドメイトがコミュサボを直せる|ONにすると作成したマッドメイトがコミュサボを直すことができる|
-|マッドメイトがタスク完了でインポスターがわかる|ONにするとタスク完了時にインポスターの名前が赤文字で表示されるようになる|
-|マッドメイトが追放時クルーを追放する|ONにするとマッドメイトが追放された際にランダムでクルーメイトを一人道連れにする|
+| オプション名                                   | 説明                                                                           |
+| ---------------------------------------------- | ------------------------------------------------------------------------------ |
+| マッドメイトを指名できる                       | ONにするとマッドメイトを指名できる                                             |
+| 妖狐をマッドメイトにすることができる           | ONにすると妖狐をマッドメイトにできる                                           |
+| ジャッカルをマッドメイトにすることができる     | ONにするとジャッカルをマッドメイトにできる                                     |
+| シェリフがマッドメイトを殺せる                 | ONにするとシェリフが作成したマッドメイトを殺すことができる                     |
+| マッドメイトがベントに入れる                   | ONにすると作成したマッドメイトがベントに入ることができる                       |
+| マッドメイトがインポスターと同じ視野           | ONにすると作成したマッドメイトがインポスターと同じ視野を持つ                   |
+| マッドメイトがサボタージュできる               | ONにすると作成したマッドメイトがサボタージュを行うことができる                 |
+| マッドメイトがコミュサボを直せる               | ONにすると作成したマッドメイトがコミュサボを直すことができる                   |
+| マッドメイトがタスク完了でインポスターがわかる | ONにするとタスク完了時にインポスターの名前が赤文字で表示されるようになる       |
+| マッドメイトが追放時クルーを追放する           | ONにするとマッドメイトが追放された際にランダムでクルーメイトを一人道連れにする |
 
 
 ## シリアルキラー
@@ -181,13 +190,13 @@ This mod is not affiliated with Among Us or Innersloth LLC, and the content cont
 (通常キルと合わせてトリプルキルが狙える)  
 5人盤面から一気に勝利を目指そう
 
-|オプション名|説明|
-|-----------|----|
-|ラストインポスター有効化|ONにするとラストインポスターが有効になる|
-|ラストインポスター時に有効になる能力|ゲッサー/占いのどちらかを選ぶことができる
-|能力発動に必要なキル数|設定したキル数を行うと画面右下に一度だけ使える占いボタンが出現する|
-|占い結果がクルーとクルー以外になる|ONにすると占い結果がクルーとクルー以外の二択になる、OFFにすると役職名が表示される|
-|ゲッサー弾丸数|ゲッサー選択時に能力を発動できる回数|
+| オプション名                         | 説明                                                                              |
+| ------------------------------------ | --------------------------------------------------------------------------------- |
+| ラストインポスター有効化             | ONにするとラストインポスターが有効になる                                          |
+| ラストインポスター時に有効になる能力 | ゲッサー/占いのどちらかを選ぶことができる                                         |
+| 能力発動に必要なキル数               | 設定したキル数を行うと画面右下に一度だけ使える占いボタンが出現する                |
+| 占い結果がクルーとクルー以外になる   | ONにすると占い結果がクルーとクルー以外の二択になる、OFFにすると役職名が表示される |
+| ゲッサー弾丸数                       | ゲッサー選択時に能力を発動できる回数                                              |
 
 ## トラッパー
 ※オプションが多いので後日精査します  
@@ -204,16 +213,16 @@ This mod is not affiliated with Among Us or Innersloth LLC, and the content cont
 - トラップキルまたは通常のキルを行うとペナルティ分クールダウンが延長される(累積なし)
 - トラップ発動中のプレイヤーを殺した場合のみボーナス分クールダウンが短縮される(累積なし)
 
-|オプション名|説明|
-|-----------|----|
-|設置後有効になるまでの時間|トラップが有効になるまでの時間、その間クルーからトラップが視認できる|
-|トラップクールダウン|トラップの設置に必要なクールダウン|
-|トラップ発動後キルまでの猶予時間|発動からキルまでにかかる時間、この時間の間はトラップを解除することができる|
-|トラップの有効範囲|トラップが発動する範囲(それなりに吸い込むので1程度推奨)|
-|効果音の減衰開始距離|効果音が減衰を始める距離|
-|効果音の減衰終了距離|効果音が完全に聞こえなくなる距離(5~8程度推奨)|
-|通常キル時のペナルティタイム|トラップキル、解除、通常キル時にクールダウンに加算される時間|
-|罠キル時のボーナスタイム|トラップにかかったプレイヤーを通常キルした場合にクールダウンが短縮される時間|
+| オプション名                     | 説明                                                                         |
+| -------------------------------- | ---------------------------------------------------------------------------- |
+| 設置後有効になるまでの時間       | トラップが有効になるまでの時間、その間クルーからトラップが視認できる         |
+| トラップクールダウン             | トラップの設置に必要なクールダウン                                           |
+| トラップ発動後キルまでの猶予時間 | 発動からキルまでにかかる時間、この時間の間はトラップを解除することができる   |
+| トラップの有効範囲               | トラップが発動する範囲(それなりに吸い込むので1程度推奨)                      |
+| 効果音の減衰開始距離             | 効果音が減衰を始める距離                                                     |
+| 効果音の減衰終了距離             | 効果音が完全に聞こえなくなる距離(5~8程度推奨)                                |
+| 通常キル時のペナルティタイム     | トラップキル、解除、通常キル時にクールダウンに加算される時間                 |
+| 罠キル時のボーナスタイム         | トラップにかかったプレイヤーを通常キルした場合にクールダウンが短縮される時間 |
 
 
 ## 爆弾魔
@@ -225,14 +234,14 @@ This mod is not affiliated with Among Us or Innersloth LLC, and the content cont
 お互いに爆弾を設置すると矢印が表示されてお互いの位置が分かるようになる  
 片方が死亡すると残った一人は通常のインポスターになる  
 
-|オプション名|説明|
-|-----------|----|
-|爆弾クールダウン|爆弾設置のクールダウン時間|
-|爆弾設置時間|爆弾設置に必要な時間|
-|１インポスターとしてカウントする|2人で１人分のインポスターとしてカウントされる|
-|キル時にエフェクトを表示する|バグあるかも機能 キル時に死体の横に爆破エフェクトを表示する|
-|一人が死んだら両方死ぬ|片方が死んだらもう片方も死亡する|
-|投票が1票になる|爆弾魔の片方の投票がカウントされなくなる|
+| オプション名                     | 説明                                                        |
+| -------------------------------- | ----------------------------------------------------------- |
+| 爆弾クールダウン                 | 爆弾設置のクールダウン時間                                  |
+| 爆弾設置時間                     | 爆弾設置に必要な時間                                        |
+| １インポスターとしてカウントする | 2人で１人分のインポスターとしてカウントされる               |
+| キル時にエフェクトを表示する     | バグあるかも機能 キル時に死体の横に爆破エフェクトを表示する |
+| 一人が死んだら両方死ぬ           | 片方が死んだらもう片方も死亡する                            |
+| 投票が1票になる                  | 爆弾魔の片方の投票がカウントされなくなる                    |
 
 ## イビルトラッカー
 ※テスト中、バグがあったら報告をお願いします  
@@ -241,11 +250,11 @@ This mod is not affiliated with Among Us or Innersloth LLC, and the content cont
 - 味方インポスターのキル時にキルフラッシュが表示される(オプション)
 - 任意のプレイヤーを指定して矢印を表示することができる
 
-|オプション名|説明|
-|-----------|----|
-|トラッカークールダウン|トラッカー対象指定のクールダウン|
-|会議後に再度ターゲットを設定できる|ターゲットを再指定できるON/OFF|
-|インポスターキルのデスフラッシュを見ることができる|キルフラッシュ機能のON/OFF|
+| オプション名                                       | 説明                             |
+| -------------------------------------------------- | -------------------------------- |
+| トラッカークールダウン                             | トラッカー対象指定のクールダウン |
+| 会議後に再度ターゲットを設定できる                 | ターゲットを再指定できるON/OFF   |
+| インポスターキルのデスフラッシュを見ることができる | キルフラッシュ機能のON/OFF       |
 
 ## ミミック
 ミミックは二人組のインポスター役職  
@@ -260,11 +269,11 @@ This mod is not affiliated with Among Us or Innersloth LLC, and the content cont
 - キラーに向かってアローが表示される
 - キラーに変身できる
 
-|オプション名|説明|
-|-----------|----|
-|1インポスターとしてカウントする|2人で1インポスターとしてカウントする|
-|片方が死んだら両方死ぬ|どちらかが死ぬと両方死亡する|
-|2人で1票扱い|2人生存時にミミックアシスタントの投票がカウントされなくなる|
+| オプション名                    | 説明                                                        |
+| ------------------------------- | ----------------------------------------------------------- |
+| 1インポスターとしてカウントする | 2人で1インポスターとしてカウントする                        |
+| 片方が死んだら両方死ぬ          | どちらかが死ぬと両方死亡する                                |
+| 2人で1票扱い                    | 2人生存時にミミックアシスタントの投票がカウントされなくなる |
 
 ## 占い師
 クルーメイト陣営  
@@ -278,12 +287,12 @@ This mod is not affiliated with Among Us or Innersloth LLC, and the content cont
 - 狐を占うと呪殺できる
 - 占い結果は役職名そのもの or クルーかクルー以外をオプションで変更可能
 
-|オプション名|説明|
-|-----------|----|
-|占いに必要なタスク数|占い師を自認、占いを行えるようになるのに必要なタスク数|
-|占い結果が白黒のみ|ONにすると占いの結果がクルー orクルー以外となる、OFFの場合は役職名が表示される|
-|接触時間|生存しているプレイヤーを占うのに必要な接触時間(累積)|
-|接触判定距離|接触時間が更新される距離|
+| オプション名         | 説明                                                                           |
+| -------------------- | ------------------------------------------------------------------------------ |
+| 占いに必要なタスク数 | 占い師を自認、占いを行えるようになるのに必要なタスク数                         |
+| 占い結果が白黒のみ   | ONにすると占いの結果がクルー orクルー以外となる、OFFの場合は役職名が表示される |
+| 接触時間             | 生存しているプレイヤーを占うのに必要な接触時間(累積)                           |
+| 接触判定距離         | 接触時間が更新される距離                                                       |
 
 
 立ち回り
@@ -296,10 +305,10 @@ This mod is not affiliated with Among Us or Innersloth LLC, and the content cont
 - 自身の表示はクルーメイトとなる
 - ランダムで味方に対する視認がおかしくなる(初日は100%正常)
 
-|オプション名|説明|
-|-----------|----|
-|見た目が入れ替わる確率|会議終了後に見た目入れ替わりが発生する確率|
-|見た目が入れ替わる人数|会議終了後に見た目が入れ替わる人数
+| オプション名           | 説明                                       |
+| ---------------------- | ------------------------------------------ |
+| 見た目が入れ替わる確率 | 会議終了後に見た目入れ替わりが発生する確率 |
+| 見た目が入れ替わる人数 | 会議終了後に見た目が入れ替わる人数         |
 
 ## 妖狐
 第3陣営  
@@ -318,19 +327,19 @@ This mod is not affiliated with Among Us or Innersloth LLC, and the content cont
 - ジャッカルが妖狐をサイドキックにできかはオプションで設定可能、妖狐がサイドキックになった場合は背徳者は死亡する  
 - スニッチのタスク完了時に妖狐と背徳者に矢印が表示される
 
-|オプション名|説明|
-|-----------|----|
-|リアクターとO2を直せる|ONにするとリアクターとO2を直すことができる|
-|クルーはタスクで勝利する|ONにするとクルーがタスク勝利が可能になる|
-|インポスターはサボタージュで勝利する|ONにするとインポスターがサボタージュで勝利可能になる|
-|コモンタスク数|出現するコモンタスク数|
-|ロングタスク数|出現するロングタスク数|
-|ショートタスク数|出現するショートタスク数|
-|透明クールダウン|透明能力の発動に必要なクールダウン|
-|透明時間|透明になることができる時間|
-|透明中にサボタージュを直せる|ONにすると透明中二サボタージュを直すことができる|
-|背徳者を作れる|ONにすると背徳者を作ることができる|
-|背徳者矢印(背徳者→妖狐)|ONにすると背徳者から妖狐に矢印が表示される|
+| オプション名                         | 説明                                                 |
+| ------------------------------------ | ---------------------------------------------------- |
+| リアクターとO2を直せる               | ONにするとリアクターとO2を直すことができる           |
+| クルーはタスクで勝利する             | ONにするとクルーがタスク勝利が可能になる             |
+| インポスターはサボタージュで勝利する | ONにするとインポスターがサボタージュで勝利可能になる |
+| コモンタスク数                       | 出現するコモンタスク数                               |
+| ロングタスク数                       | 出現するロングタスク数                               |
+| ショートタスク数                     | 出現するショートタスク数                             |
+| 透明クールダウン                     | 透明能力の発動に必要なクールダウン                   |
+| 透明時間                             | 透明になることができる時間                           |
+| 透明中にサボタージュを直せる         | ONにすると透明中二サボタージュを直すことができる     |
+| 背徳者を作れる                       | ONにすると背徳者を作ることができる                   |
+| 背徳者矢印(背徳者→妖狐)              | ONにすると背徳者から妖狐に矢印が表示される           |
 
 立ち回り
 - キル陣営を把握して逃げることで死を回避する（必要に応じて透明能力を使う）
@@ -362,13 +371,13 @@ This mod is not affiliated with Among Us or Innersloth LLC, and the content cont
 占い師は占いでシュレディンガーの猫を呪殺することができる  
 どこの陣営にも属していない場合はクルー陣営として復活し、どこかの陣営に属している場合はそのまま死亡する  
 
-|オプション名|説明|
-|-----------|----|
-|キルクールダウン|ジャッカル、インポスターとして復活した際のキルクルールダウン|
-|マッドメイトの代わりにインポスターになる|ONにするとインポスター陣営として復活した際にインポスターになる|
-|キラーが死亡する|シュレディンガーの猫をキルしたプレイヤーは死亡する（クルー陣営は除く）|
-|最後の一人になるまでキルできない|インポスター、ジャッカル陣営になった場合に最後の一人になるまでキルできない|
-|追放時にランダムな陣営になる|追放時にインポスター・ジャッカル・クルー陣営のどれかに所属させられる|
+| オプション名                             | 説明                                                                       |
+| ---------------------------------------- | -------------------------------------------------------------------------- |
+| キルクールダウン                         | ジャッカル、インポスターとして復活した際のキルクルールダウン               |
+| マッドメイトの代わりにインポスターになる | ONにするとインポスター陣営として復活した際にインポスターになる             |
+| キラーが死亡する                         | シュレディンガーの猫をキルしたプレイヤーは死亡する（クルー陣営は除く）     |
+| 最後の一人になるまでキルできない         | インポスター、ジャッカル陣営になった場合に最後の一人になるまでキルできない |
+| 追放時にランダムな陣営になる             | 追放時にインポスター・ジャッカル・クルー陣営のどれかに所属させられる       |
 
 ## 人形遣い
 ※テスト中、バグがあったら報告をお願いします  
@@ -398,13 +407,13 @@ This mod is not affiliated with Among Us or Innersloth LLC, and the content cont
 - ダミーキルがあった場合は会議開始時に笑い声の音声が流れる
 - 人形遣いが死亡すると会議時に人形遣いの進捗状況がメッセージとして届くようになる(キル陣営のみ)
 
-|オプション名|説明|
-|-----------|----|
-|勝利に必要なポイント数|勝利に必要なポイント数 人形がキルされる or サンプル元が追放されると1増加する|
-|サンプル取得に必要な時間| サンプル取得に必要な接触時間|
-|死亡後にもダミーを操作できる| ONにすると死亡後にもダミーを操作することができる、サンプル元追放時のポイントは加算されなくなる|
-|死亡時のペナルティ|死亡した際に失うポイント数|
-|死亡時に千里眼能力を失う|死亡すると人形操作時に千里眼能力が使えなくなる|
+| オプション名                 | 説明                                                                                           |
+| ---------------------------- | ---------------------------------------------------------------------------------------------- |
+| 勝利に必要なポイント数       | 勝利に必要なポイント数 人形がキルされる or サンプル元が追放されると1増加する                   |
+| サンプル取得に必要な時間     | サンプル取得に必要な接触時間                                                                   |
+| 死亡後にもダミーを操作できる | ONにすると死亡後にもダミーを操作することができる、サンプル元追放時のポイントは加算されなくなる |
+| 死亡時のペナルティ           | 死亡した際に失うポイント数                                                                     |
+| 死亡時に千里眼能力を失う     | 死亡すると人形操作時に千里眼能力が使えなくなる                                                 |
 
 ## ジキルとハイド
 ジキルとハイドは特殊な勝利条件を持つ第3陣営  
@@ -423,16 +432,16 @@ This mod is not affiliated with Among Us or Innersloth LLC, and the content cont
 薬
 1. 使用することで一度だけ任意のタイミングでジキルとハイドを入れ替えることができる
 
-|オプション名|説明|
-|-----------|----|
-|勝利に必要なキル数|勝利に必要なキル数|
-|キルクールダウン| キルクールダウン|
-|自殺タイマー|ハイド時に有効になる自殺までのカウントダウン|
-|自殺タイマーを会議後にリセットする| 自殺タイマーを会議後にリセットするか|
-|通常タスク|通常タスク|
-|ロングタスク|ロングタスク|
-|ショートタスク|ショートタスク|
-|薬を得るのに必要なタスク数|薬を1個取得するのに必要なタスク数|
+| オプション名                       | 説明                                         |
+| ---------------------------------- | -------------------------------------------- |
+| 勝利に必要なキル数                 | 勝利に必要なキル数                           |
+| キルクールダウン                   | キルクールダウン                             |
+| 自殺タイマー                       | ハイド時に有効になる自殺までのカウントダウン |
+| 自殺タイマーを会議後にリセットする | 自殺タイマーを会議後にリセットするか         |
+| 通常タスク                         | 通常タスク                                   |
+| ロングタスク                       | ロングタスク                                 |
+| ショートタスク                     | ショートタスク                               |
+| 薬を得るのに必要なタスク数         | 薬を1個取得するのに必要なタスク数            |
 
 
 # クレジット
@@ -478,60 +487,60 @@ This mod is not affiliated with Among Us or Innersloth LLC, and the content cont
 The **The Other Roles**, is a mod for [Among Us](https://store.steampowered.com/app/945360/Among_Us) which adds many new roles, new [Settings](#settings), and new [Custom Hats](#custom-hats) to the game.
 Even more roles are coming soon :)
 
-| Impostors | Crewmates | Neutral | Other | 
-|----------|-------------|-----------------|----------------|
-| [Evil Mini](#mini) | [Nice Mini](#mini) | [Arsonist](#arsonist) | [GM](#gm) |
-| [Evil Guesser](#guesser) | [Nice Guesser](#guesser) | [Jester](#jester) |  
-| [Bounty Hunter](#bounty-hunter) | [Detective](#detective) | [Jackal](#jackal) |  |
-| [Camouflager](#camouflager) | [Engineer](#engineer) | [Sidekick](#sidekick) |  |
-| [Cleaner](#cleaner) | [Hacker](#hacker) | [Lover](#lovers) |  |
-| [Eraser](#eraser) | [Lighter](#lighter) | [Opportunist](#opportunist) |  |
-| [Godfather (Mafia)](#mafia) | [Mayor](#mayor) | [Vulture](#vulture)  |  |
-| [Mafioso (Mafia)](#mafia) | [Medic](#medic) | [Lawyer](#lawyer) |  |
-| [Janitor (Mafia)](#mafia)  | [Security Guard](#security-guard) | [Chain-Shifter](#shifter) |  |
-| [Morphling](#morphling) | [Seer](#seer) | [Plague Doctor](#plague-doctor) |  |
-| [Trickster](#trickster) | [Sheriff](#sheriff) | [Fox & Immoralist](#fox) |  |
-| [Vampire](#vampire) | [Shifter](#shifter) |  |  |
-| [Warlock](#warlock) | [Snitch](#snitch) |  |  |
-| [Witch](#witch) | [Spy](#spy) |  |  |
-| [Ninja](#ninja) | [Nice Swapper](#swapper) |  |  |
-| [Evil Swapper](#swapper) | [Time Master](#time-master) |  |  |
-| [Serial Killer](#serial-killer) |  [Tracker](#tracker) |  |  |
-| [Neko-Kabocha](#neko-kabocha) |  [Bait](#bait) |  |  |
-| [Evil Watcher](#Watcher) |  [Madmate](#madmate)  |  |  |
-|  |  [Medium](#medium) |  |  |
-|  |  [Fortune Teller](#fortune-teller) |  |  |
-|  |  [Nice Watcher](#Watcher) |  |  |
+| Impostors                       | Crewmates                         | Neutral                         | Other     |
+| ------------------------------- | --------------------------------- | ------------------------------- | --------- |
+| [Evil Mini](#mini)              | [Nice Mini](#mini)                | [Arsonist](#arsonist)           | [GM](#gm) |
+| [Evil Guesser](#guesser)        | [Nice Guesser](#guesser)          | [Jester](#jester)               |
+| [Bounty Hunter](#bounty-hunter) | [Detective](#detective)           | [Jackal](#jackal)               |           |
+| [Camouflager](#camouflager)     | [Engineer](#engineer)             | [Sidekick](#sidekick)           |           |
+| [Cleaner](#cleaner)             | [Hacker](#hacker)                 | [Lover](#lovers)                |           |
+| [Eraser](#eraser)               | [Lighter](#lighter)               | [Opportunist](#opportunist)     |           |
+| [Godfather (Mafia)](#mafia)     | [Mayor](#mayor)                   | [Vulture](#vulture)             |           |
+| [Mafioso (Mafia)](#mafia)       | [Medic](#medic)                   | [Lawyer](#lawyer)               |           |
+| [Janitor (Mafia)](#mafia)       | [Security Guard](#security-guard) | [Chain-Shifter](#shifter)       |           |
+| [Morphling](#morphling)         | [Seer](#seer)                     | [Plague Doctor](#plague-doctor) |           |
+| [Trickster](#trickster)         | [Sheriff](#sheriff)               | [Fox & Immoralist](#fox)        |           |
+| [Vampire](#vampire)             | [Shifter](#shifter)               |                                 |           |
+| [Warlock](#warlock)             | [Snitch](#snitch)                 |                                 |           |
+| [Witch](#witch)                 | [Spy](#spy)                       |                                 |           |
+| [Ninja](#ninja)                 | [Nice Swapper](#swapper)          |                                 |           |
+| [Evil Swapper](#swapper)        | [Time Master](#time-master)       |                                 |           |
+| [Serial Killer](#serial-killer) | [Tracker](#tracker)               |                                 |           |
+| [Neko-Kabocha](#neko-kabocha)   | [Bait](#bait)                     |                                 |           |
+| [Evil Watcher](#Watcher)        | [Madmate](#madmate)               |                                 |           |
+|                                 | [Medium](#medium)                 |                                 |           |
+|                                 | [Fortune Teller](#fortune-teller) |                                 |           |
+|                                 | [Nice Watcher](#Watcher)          |                                 |           |
 
 The [Role Assignment](#role-assignment) sections explains how the roles are being distributed among the players.
 
 # Releases
-| Among Us - Version | Mod Version | Link |
-|----------|-------------|-----------------|
-| 2022.2.24s | v3.5.4 GM | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.5.4/TheOtherRoles-GM.v3.5.4.zip)
-| 2022.2.24s | v3.5.3 GM | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.5.3/TheOtherRoles-GM.v3.5.3.zip)
-| 2022.2.8s | v3.5.2 GM | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.5.2/TheOtherRoles-GM.v3.5.2.zip)
-| 2021.12.15s (build num: 1421) | v3.5.1 GM | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.5.1/TheOtherRoles-GM.v3.5.1.zip)
-| 2021.12.15s (build num: 1421) | v3.5.0 GM | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.5.0/TheOtherRoles-GM.v3.5.0.zip)
-| 2021.12.15s (build num: 1421) | v3.4.1 GM | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.4.1/TheOtherRoles-GM.v3.4.1.zip)
-| 2021.12.15s (build num: 1421) | v3.4.0 GM | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.4.0/TheOtherRoles-GM.v3.4.0.zip)
-| 2021.12.15s (build num: 1421) | v3.3.3.1 GM | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.3.3.1/TheOtherRoles-GM.v3.3.3.1.zip)
-| 2021.12.15s (build num: 1421) | v3.3.2 GM | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.3.2/TheOtherRoles-GM.v3.3.2.zip)
-| 2021.12.15s (build num: 1421) | v3.3.1 GM | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.3.1/TheOtherRoles-GM.v3.3.1.zip)
-| 2021.12.15s (build num: 1421) | v3.3.0 GM | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.3.0/TheOtherRoles-GM.v3.3.0.zip)
-| 2021.12.15s (build num: 1421) | v3.2.6 GM | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.2.6/TheOtherRoles-GM.v3.2.6.zip)
-| 2021.12.14s (build num: 1402) | v3.2.5.3 GM | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.2.5.3/TheOtherRoles-GM.v3.2.5.3.zip)
-| 2021.11.9.5s | v3.2.5.2 GM | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.2.5.2/TheOtherRoles-GM.v3.2.5.2.zip)
-| 2021.11.9.5s | v3.2.5.1 GM | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.2.5.1/TheOtherRoles-GM.v3.2.5.1.zip)
-| 2021.11.9.5s | v3.2.5 GM | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.2.5/TheOtherRoles-GM.v3.2.5.zip)
-| 2021.11.9.5s | v3.2.4 GM | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.2.4/TheOtherRoles-GM.v3.2.4.zip)
-| 2021.11.9.5s | v3.2.3 GM | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.2.3/TheOtherRolesGM.dll)
-| 2021.11.9.5s | v3.2.2 GM | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/3.2.2/TheOtherRoles-GM.v3.2.2.zip)
-| 2021.11.9.5s | v3.1.2.1 GM | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.1.2.1/TheOtherRoles-GM.v3.1.2.1.zip)
-| 2021.11.9.5s | v3.1.2 GM | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.1.2/TheOtherRoles-GM.v3.1.2.zip)
-| 2021.6.30s | v2.9.2.1 GM | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v2.9.2.1/TheOtherRoles-GM.v2.9.2.1.zip)
-| 2021.6.30s | v2.9.2 GM | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v2.9.2/TheOtherRoles-GM.v2.9.2.zip)
-| 2021.6.30s | v2.9.0.1 GM | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v2.9.0/TheOtherRoles-GM.v2.9.0.1.zip)
+| Among Us - Version            | Mod Version | Link                                                                                                                  |
+| ----------------------------- | ----------- | --------------------------------------------------------------------------------------------------------------------- |
+| 2022.2.24s                    | v3.5.4 GM   | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.5.4/TheOtherRoles-GM.v3.5.4.zip)     |
+| 2022.2.24s                    | v3.5.3 GM   | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.5.3/TheOtherRoles-GM.v3.5.3.zip)     |
+| 2022.2.8s                     | v3.5.2 GM   | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.5.2/TheOtherRoles-GM.v3.5.2.zip)     |
+| 2021.12.15s (build num: 1421) | v3.5.1 GM   | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.5.1/TheOtherRoles-GM.v3.5.1.zip)     |
+| 2021.12.15s (build num: 1421) | v3.5.0 GM   | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.5.0/TheOtherRoles-GM.v3.5.0.zip)     |
+| 2021.12.15s (build num: 1421) | v3.4.1 GM   | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.4.1/TheOtherRoles-GM.v3.4.1.zip)     |
+| 2021.12.15s (build num: 1421) | v3.4.0 GM   | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.4.0/TheOtherRoles-GM.v3.4.0.zip)     |
+| 2021.12.15s (build num: 1421) | v3.3.3.1 GM | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.3.3.1/TheOtherRoles-GM.v3.3.3.1.zip) |
+| 2021.12.15s (build num: 1421) | v3.3.2 GM   | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.3.2/TheOtherRoles-GM.v3.3.2.zip)     |
+| 2021.12.15s (build num: 1421) | v3.3.1 GM   | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.3.1/TheOtherRoles-GM.v3.3.1.zip)     |
+| 2021.12.15s (build num: 1421) | v3.3.0 GM   | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.3.0/TheOtherRoles-GM.v3.3.0.zip)     |
+| 2021.12.15s (build num: 1421) | v3.2.6 GM   | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.2.6/TheOtherRoles-GM.v3.2.6.zip)     |
+| 2021.12.14s (build num: 1402) | v3.2.5.3 GM | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.2.5.3/TheOtherRoles-GM.v3.2.5.3.zip) |
+| 2021.11.9.5s                  | v3.2.5.2 GM | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.2.5.2/TheOtherRoles-GM.v3.2.5.2.zip) |
+| 2021.11.9.5s                  | v3.2.5.1 GM | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.2.5.1/TheOtherRoles-GM.v3.2.5.1.zip) |
+| 2021.11.9.5s                  | v3.2.5 GM   | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.2.5/TheOtherRoles-GM.v3.2.5.zip)     |
+| 2021.11.9.5s                  | v3.2.4 GM   | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.2.4/TheOtherRoles-GM.v3.2.4.zip)     |
+| 2021.11.9.5s                  | v3.2.3 GM   | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.2.3/TheOtherRolesGM.dll)             |
+| 2021.11.9.5s                  | v3.2.2 GM   | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/3.2.2/TheOtherRoles-GM.v3.2.2.zip)      |
+| 2021.11.9.5s                  | v3.1.2.1 GM | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.1.2.1/TheOtherRoles-GM.v3.1.2.1.zip) |
+| 2021.11.9.5s                  | v3.1.2 GM   | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v3.1.2/TheOtherRoles-GM.v3.1.2.zip)     |
+| 2021.6.30s                    | v2.9.2.1 GM | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v2.9.2.1/TheOtherRoles-GM.v2.9.2.1.zip) |
+| 2021.6.30s                    | v2.9.2 GM   | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v2.9.2/TheOtherRoles-GM.v2.9.2.zip)     |
+| 2021.6.30s                    | v2.9.0.1 GM | [Download](https://github.com/yukinogatari/TheOtherRoles-GM/releases/download/v2.9.0/TheOtherRoles-GM.v2.9.0.1.zip)   |
 
 # Changelog
 <details>
@@ -1034,12 +1043,12 @@ You can configure:
 Please note, that if the configured option exceeds the available number of tasks of a map, the tasks will be limited to that number of tasks. \
 Example: If you configure 4 common tasks on Airship crewmates will only receive 2 common tasks, as airship doesn't offer more than 2 common tasks.
 
-| Map | Common Tasks | Short Tasks | Long Tasks |
-|----------|:-------------:|:-------------:|:-------------:|
-| Skeld / Dleks | 2 | 19 | 8
-| Mira HQ | 2 | 13 | 11
-| Polus | 4 | 14 | 15
-| Airship | 2 | 23 | 15
+| Map           | Common Tasks | Short Tasks | Long Tasks |
+| ------------- | :----------: | :---------: | :--------: |
+| Skeld / Dleks |      2       |     19      |     8      |
+| Mira HQ       |      2       |     13      |     11     |
+| Polus         |      4       |     14      |     15     |
+| Airship       |      2       |     23      |     15     |
 -----------------------
 
 
@@ -1104,10 +1113,10 @@ The Janitor is an Impostor who cannot kill, but they can hide dead bodies instea
 - If only the Janitor is left alive, the Mafia loses as there's no one left able to kill.
 
 ### Game Options
-| Name | Description |
-|----------|:-------------:|
-| Mafia Spawn Chance | -
-| Janitor Cooldown | -
+| Name               | Description |
+| ------------------ | :---------: |
+| Mafia Spawn Chance |      -      |
+| Janitor Cooldown   |      -      |
 -----------------------
 
 ## Morphling
@@ -1123,11 +1132,11 @@ The Morphling is an Impostor which can additionally scan the appearance of a pla
 - Tracker and Snitch arrows keep working.
 
 ### Game Options
-| Name | Description |
-|----------|:-------------:|
-| Morphling Spawn Chance | -
-| Morphling Cooldown | -
-| Morph Duration | Time the Morphling stays morphed
+| Name                   |           Description            |
+| ---------------------- | :------------------------------: |
+| Morphling Spawn Chance |                -                 |
+| Morphling Cooldown     |                -                 |
+| Morph Duration         | Time the Morphling stays morphed |
 -----------------------
 
 ## Camouflager
@@ -1144,11 +1153,11 @@ are hidden and all players have the same color.\
 - Tracker and Snitch arrows keep working
 
 ### Game Options
-| Name | Description |
-|----------|:-------------:|
-| Camouflager Spawn Chance | -
-| Camouflager Cooldown | -
-| Camo Duration | Time players stay camouflaged
+| Name                     |          Description          |
+| ------------------------ | :---------------------------: |
+| Camouflager Spawn Chance |               -               |
+| Camouflager Cooldown     |               -               |
+| Camo Duration            | Time players stay camouflaged |
 -----------------------
 
 ## Vampire
@@ -1163,12 +1172,12 @@ If a victim is near a garlic, the "Bite Button" turns into the default "Kill But
 - If there is a Vampire in the game, there can't be a Warlock.
 
 ### Game Options
-| Name | Description |
-|----------|:-------------:|
-| Vampire Spawn Chance | -
-| Vampire Kill Delay | -
-| Vampire Cooldown | Sets the kill/bite cooldown
-| Vampire Can Kill Near Garlics | The Vampire can never bite when their victim is near a garlic. If this option is set to true, they can still perform a normal kill there.
+| Name                          |                                                                Description                                                                |
+| ----------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------: |
+| Vampire Spawn Chance          |                                                                     -                                                                     |
+| Vampire Kill Delay            |                                                                     -                                                                     |
+| Vampire Cooldown              |                                                        Sets the kill/bite cooldown                                                        |
+| Vampire Can Kill Near Garlics | The Vampire can never bite when their victim is near a garlic. If this option is set to true, they can still perform a normal kill there. |
 -----------------------
 
 ## Eraser
@@ -1188,11 +1197,11 @@ they can also erase them (Impostors will lose their special Impostor ability).
 ex Lover surviving as the partnership was erased before. Also a Jester win would not happen, as the erase will be triggered before.
 
 ### Game Options
-| Name | Description |
-|----------|:-------------:|
-| Eraser Spawn Chance | -
-| Eraser Cooldown | The Eraser's cooldown will increase by 10 seconds after every erase.
-| Eraser Can Erase Anyone | If set to false, they can't erase the Spy and other Impostors
+| Name                    |                             Description                              |
+| ----------------------- | :------------------------------------------------------------------: |
+| Eraser Spawn Chance     |                                  -                                   |
+| Eraser Cooldown         | The Eraser's cooldown will increase by 10 seconds after every erase. |
+| Eraser Can Erase Anyone |    If set to false, they can't erase the Spy and other Impostors     |
 -----------------------
 
 ## Trickster
@@ -1206,12 +1215,12 @@ If the boxes are converted to a vent network, the Trickster gains a new ability 
 - Impostors will get a text indicator at the bottom of the screen to notify them if the lights are out due to the Trickster ability, as there is no sabotage arrows or task to sabotage text to otherwise notify them about it.
 
 ### Game Options
-| Name | Description |
-|----------|:-------------:|
-| Trickster Spawn Chance | -
-| Trickster Box Cooldown | Cooldown for placing jack-in-the-boxes
-| Trickster Lights Out Cooldown | Cooldown for their "lights out" ability
-| Trickster Lights Out Duration | Duration after which the light is automatically restored
+| Name                          |                       Description                        |
+| ----------------------------- | :------------------------------------------------------: |
+| Trickster Spawn Chance        |                            -                             |
+| Trickster Box Cooldown        |          Cooldown for placing jack-in-the-boxes          |
+| Trickster Lights Out Cooldown |         Cooldown for their "lights out" ability          |
+| Trickster Lights Out Duration | Duration after which the light is automatically restored |
 -----------------------
 
 ## Cleaner
@@ -1224,10 +1233,10 @@ The Cleaner is an Impostor who has the ability to clean up dead bodies.\
 - If there is a Cleaner in the game, there can't be a Vulture.
 
 ### Game Options
-| Name | Description |
-|----------|:-------------:|
-| Cleaner Spawn Chance | -
-| Cleaner Cooldown | Cooldown for cleaning dead bodies
+| Name                 |            Description            |
+| -------------------- | :-------------------------------: |
+| Cleaner Spawn Chance |                 -                 |
+| Cleaner Cooldown     | Cooldown for cleaning dead bodies |
 -----------------------
 
 
@@ -1245,11 +1254,11 @@ The Warlock can still perform normal kills, but the two buttons share the same c
 - Performing a normal kill, doesn't lift the curse
 
 ### Game Options
-| Name | Description |
-|----------|:-------------:|
-| Warlock Spawn Chance | -
-| Warlock Cooldown | Cooldown for using the Curse and curse Kill
-| Warlock Root Time | Time the Warlock is rooted in place after killing using the curse
+| Name                 |                            Description                            |
+| -------------------- | :---------------------------------------------------------------: |
+| Warlock Spawn Chance |                                 -                                 |
+| Warlock Cooldown     |            Cooldown for using the Curse and curse Kill            |
+| Warlock Root Time    | Time the Warlock is rooted in place after killing using the curse |
 -----------------------
 
 
@@ -1267,14 +1276,14 @@ Depending on the options, there'll be an arrow pointing towards the current targ
 - Killing the target resets the timer and a new target will be selected.
 
 ### Game Options
-| Name | Description |
-|----------|:-------------:|
-| Bounty Hunter Spawn Chance | -
-| Duration After Which Bounty Changes | -
-| Cooldown After Killing Bounty | -
-| Additional Cooldown After Killing Others | Time will be added to the normal impostor cooldown if the Bounty Hunter kills a not-bounty player
-| Show Arrow Pointing Towards The Bounty | If set to true an arrow will appear (only visiable for the Bounty Hunter)
-| Bounty Hunter Arrow Update Interval | Sets how often the position is being updated
+| Name                                     |                                            Description                                            |
+| ---------------------------------------- | :-----------------------------------------------------------------------------------------------: |
+| Bounty Hunter Spawn Chance               |                                                 -                                                 |
+| Duration After Which Bounty Changes      |                                                 -                                                 |
+| Cooldown After Killing Bounty            |                                                 -                                                 |
+| Additional Cooldown After Killing Others | Time will be added to the normal impostor cooldown if the Bounty Hunter kills a not-bounty player |
+| Show Arrow Pointing Towards The Bounty   |             If set to true an arrow will appear (only visiable for the Bounty Hunter)             |
+| Bounty Hunter Arrow Update Interval      |                           Sets how often the position is being updated                            |
 
 -----------------------
 
@@ -1293,14 +1302,14 @@ The concepted originally comes from Are You a Werewolf?, and the name for this r
 5. The Madmate cannot fix lights.
 
 ### Game Options
-| Name | Description
-|----------|:-------------:|
-| Madmate Spawn Chance | - |
-| Madmate Can Die To Sheriff | Allows the Sheriff to kill the Madmate
-| Madmate Can Enter Vents | Allow the Madmate to enter/exit vents
-| Madmate Has Impostor Vision | Give the Madmate the same vision as the Impostors have
-| Madmate Can Sabotage | Allow the Madmate to sabotage
-| Madmate Can Fix Comm | Allow the Madmate to fix comms
+| Name                        |                      Description                       |
+| --------------------------- | :----------------------------------------------------: |
+| Madmate Spawn Chance        |                           -                            |
+| Madmate Can Die To Sheriff  |         Allows the Sheriff to kill the Madmate         |
+| Madmate Can Enter Vents     |         Allow the Madmate to enter/exit vents          |
+| Madmate Has Impostor Vision | Give the Madmate the same vision as the Impostors have |
+| Madmate Can Sabotage        |             Allow the Madmate to sabotage              |
+| Madmate Can Fix Comm        |             Allow the Madmate to fix comms             |
 -----------------------
 
 ## Witch
@@ -1319,15 +1328,15 @@ Depending on the options you can choose whether voting the Witch out will save a
 
 
 ### Game Options
-| Name | Description |
-|----------|:-------------:|
-| Witch Spawn Chance | -
-| Witch Spell Casting Cooldown | -
-| Witch Additional Cooldown | The spell casting cooldown will be increased by the amount you set here after each spell
-| Witch Can Spell Everyone | If set to false, the witch can't spell the Spy and other Impostors
-| Witch Spell Casting Duration | The time that you need to stay next to the target in order to cast a spell on it
-| Trigger Both Cooldowns | If set to true, casting a spell will also trigger cooldown of the kill button and vice versa (but the two cooldowns may vary)
-| Voting The Witch Saves All The Targets | If set to true, all the cursed targets will survive at the end of the meeting
+| Name                                   |                                                          Description                                                          |
+| -------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------: |
+| Witch Spawn Chance                     |                                                               -                                                               |
+| Witch Spell Casting Cooldown           |                                                               -                                                               |
+| Witch Additional Cooldown              |                   The spell casting cooldown will be increased by the amount you set here after each spell                    |
+| Witch Can Spell Everyone               |                              If set to false, the witch can't spell the Spy and other Impostors                               |
+| Witch Spell Casting Duration           |                       The time that you need to stay next to the target in order to cast a spell on it                        |
+| Trigger Both Cooldowns                 | If set to true, casting a spell will also trigger cooldown of the kill button and vice versa (but the two cooldowns may vary) |
+| Voting The Witch Saves All The Targets |                         If set to true, all the cursed targets will survive at the end of the meeting                         |
 -----------------------
 
 ## Ninja
@@ -1365,17 +1374,17 @@ Depending on the options, the Guesser can't guess the shielded player and depend
 - Jester wins won't be triggered, if the Guesser shoots the Jester before the Jester gets voted out
 
 ### Game Options
-| Name | Description |
-|----------|:-------------:|
-| Guesser Spawn Chance | -
-| Chance That The Guesser Is An Impostor | -
-| Guesser Number Of Shots Per Game | -
-| Guesser Can Shoot Multiple Times Per Meeting |  -
-| Guesses Visible In Ghost Chat | -
-| Guesses Ignore The Medic Shield | -
-| Evil Guesser Can Guess The Spy | -
-| Both Guesser Spawn Rate | -
-| Guesser Can't Guess Snitch When Tasks Completed | -
+| Name                                            | Description |
+| ----------------------------------------------- | :---------: |
+| Guesser Spawn Chance                            |      -      |
+| Chance That The Guesser Is An Impostor          |      -      |
+| Guesser Number Of Shots Per Game                |      -      |
+| Guesser Can Shoot Multiple Times Per Meeting    |      -      |
+| Guesses Visible In Ghost Chat                   |      -      |
+| Guesses Ignore The Medic Shield                 |      -      |
+| Evil Guesser Can Guess The Spy                  |      -      |
+| Both Guesser Spawn Rate                         |      -      |
+| Guesser Can't Guess Snitch When Tasks Completed |      -      |
 -----------------------
 
 ## Lovers
@@ -1396,15 +1405,15 @@ You can enable an exclusive chat only for Lovers\
 - The Lovers can change if the Shifter takes the role of a Lovers
 
 ### Game Options
-| Name | Description |
-|----------|:-------------:|
-| Lovers Spawn Chance | -
-| Chance That One Lover Is Impostor | -
-| Both Lovers Die | Whether the second Lover suicides when the first one dies
-| Lovers Can Have Another Role | If set to true, the Lovers can have a second role
-| Lovers Can Win With Crew | When false, the Lovers are treated as a separate team. (True: original TheOtherRoles behavior.)
-| Lovers Tasks Are Counted | Whether the Lovers' tasks count toward overall task completion.
-| Enable Lover Chat | -
+| Name                              |                                           Description                                           |
+| --------------------------------- | :---------------------------------------------------------------------------------------------: |
+| Lovers Spawn Chance               |                                                -                                                |
+| Chance That One Lover Is Impostor |                                                -                                                |
+| Both Lovers Die                   |                    Whether the second Lover suicides when the first one dies                    |
+| Lovers Can Have Another Role      |                        If set to true, the Lovers can have a second role                        |
+| Lovers Can Win With Crew          | When false, the Lovers are treated as a separate team. (True: original TheOtherRoles behavior.) |
+| Lovers Tasks Are Counted          |                 Whether the Lovers' tasks count toward overall task completion.                 |
+| Enable Lover Chat                 |                                                -                                                |
 -----------------------
 
 
@@ -1418,12 +1427,12 @@ If they try to kill a Crewmate, they die instead.
 - If the Sheriff shoots a Mini Impostor, the Sheriff dies if the Mini is still growing up. If it's 18, the Mini Impostor dies.
 
 ### Game Options
-| Name | Description |
-|----------|:-------------:|
-| Sheriff Spawn Chance | -
-| Sheriff Number of Shots | The number of times the Sheriff is able to kill
-| Sheriff Cooldown | -
-| Neutrals Can Die To Sheriff | -
+| Name                        |                   Description                   |
+| --------------------------- | :---------------------------------------------: |
+| Sheriff Spawn Chance        |                        -                        |
+| Sheriff Number of Shots     | The number of times the Sheriff is able to kill |
+| Sheriff Cooldown            |                        -                        |
+| Neutrals Can Die To Sheriff |                        -                        |
 -----------------------
 
 ## Jester
@@ -1431,10 +1440,10 @@ If they try to kill a Crewmate, they die instead.
 The Jester does not have any tasks. They win the game as a solo, if they get voted out during a meeting.
 
 ### Game Options
-| Name | Description |
-|----------|:-------------:|
-| Jester Spawn Chance | -
-| Jester Can Call Emergency Meeting | Option to disable the emergency button for the Jester
+| Name                              |                      Description                      |
+| --------------------------------- | :---------------------------------------------------: |
+| Jester Spawn Chance               |                           -                           |
+| Jester Can Call Emergency Meeting | Option to disable the emergency button for the Jester |
 -----------------------
 
 ## Arsonist
@@ -1445,11 +1454,11 @@ If the player that the Arsonist douses walks out of range, the cooldown will res
 After dousing everyone alive the Arsonist can ignite all the players which results in an Arsonist win.
 
 ### Game Options
-| Name | Description |
-|----------|:-------------:|
-| Arsonist Spawn Chance | -
-| Arsonist Countdown | -
-| Arsonist Douse Duration | The time it takes to douse a player
+| Name                    |             Description             |
+| ----------------------- | :---------------------------------: |
+| Arsonist Spawn Chance   |                  -                  |
+| Arsonist Countdown      |                  -                  |
+| Arsonist Douse Duration | The time it takes to douse a player |
 -----------------------
 
 ## Seer
@@ -1459,12 +1468,12 @@ The Seer sees the souls of players that died a round earlier, the souls slowly f
 The Seer gets a blue flash on their screen, if a player dies somewhere on the map.
 
 ### Game Options
-| Name | Description |
-|----------|:-------------:|
-| Seer Spawn Chance | -
-| Seer Mode | Options: Show death flash and souls, show death flash, show souls
-| Seer Limit Soul Duration | Toggle if souls should turn invisible after a while
-| Seer Soul Duration | Sets how long it will take the souls to turn invisible after a meeting
+| Name                     |                              Description                               |
+| ------------------------ | :--------------------------------------------------------------------: |
+| Seer Spawn Chance        |                                   -                                    |
+| Seer Mode                |   Options: Show death flash and souls, show death flash, show souls    |
+| Seer Limit Soul Duration |          Toggle if souls should turn invisible after a while           |
+| Seer Soul Duration       | Sets how long it will take the souls to turn invisible after a meeting |
 -----------------------
 
 ## Engineer
@@ -1478,12 +1487,12 @@ Because of the vents the Engineer might not be able to start some tasks using th
 - The kill button of Impostors activates if they stand next to a vent where the Engineer is. They can also kill them there. No other action (e.g. Morphling sample, Shifter shift, ...) can affect players inside vents.
 
 ### Game Options
-| Name | Description |
-|----------|:-------------:|
-| Engineer Spawn Chance | -
-| Number Of Sabotage Fixes| -
-| Impostors See Vents Highlighted | -
-| Jackal and Sidekick See Vents Highlighted | -
+| Name                                      | Description |
+| ----------------------------------------- | :---------: |
+| Engineer Spawn Chance                     |      -      |
+| Number Of Sabotage Fixes                  |      -      |
+| Impostors See Vents Highlighted           |      -      |
+| Jackal and Sidekick See Vents Highlighted |      -      |
 -----------------------
 
 ## Detective
@@ -1498,14 +1507,14 @@ The Detective's other feature shows when they report a corpse: they receive clue
 - During the meetings you can see, whether a player wears a darker or a lighter color, represented by (D) or (L) in the names.
 
 ### Game Options
-| Name | Description |
-|----------|:-------------:|
-| Detective Spawn Chance | -
-| Anonymous Footprints | If set to true, all footprints will have the same color. Otherwise they will have the color of the respective player.
-| Footprint Interval | The interval between two footprints
-| Footprint Duration | Sets how long the footprints remain visible.
-| Time Where Detective Reports Will Have Name | The amount of time that the Detective will have to report the body since death to get the killer's name.  |
-| Time Where Detective Reports Will Have Color Type| The amount of time that the Detective will have to report the body since death to get the killer's color type. |
+| Name                                              |                                                      Description                                                      |
+| ------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------: |
+| Detective Spawn Chance                            |                                                           -                                                           |
+| Anonymous Footprints                              | If set to true, all footprints will have the same color. Otherwise they will have the color of the respective player. |
+| Footprint Interval                                |                                          The interval between two footprints                                          |
+| Footprint Duration                                |                                     Sets how long the footprints remain visible.                                      |
+| Time Where Detective Reports Will Have Name       |       The amount of time that the Detective will have to report the body since death to get the killer's name.        |
+| Time Where Detective Reports Will Have Color Type |    The amount of time that the Detective will have to report the body since death to get the killer's color type.     |
 -----------------------
 
 ## Lighter
@@ -1513,13 +1522,13 @@ The Detective's other feature shows when they report a corpse: they receive clue
 The Lighter can turn on their Lighter every now and then, which increases their vision by a customizable amount.
 
 ### Game Options
-| Name | Description |
-|----------|:-------------:|
-| Lighter Spawn Chance | -
-| Lighter Mode Vision On Lights On | The vision the Lighter has when the lights are on and the Lighter mode is on
-| Lighter Mode Vision On Lights Off | The vision the Lighter has when the lights are down and the Lighter mode is on
-| Lighter Cooldown | -
-| Lighter Duration | -
+| Name                              |                                  Description                                   |
+| --------------------------------- | :----------------------------------------------------------------------------: |
+| Lighter Spawn Chance              |                                       -                                        |
+| Lighter Mode Vision On Lights On  |  The vision the Lighter has when the lights are on and the Lighter mode is on  |
+| Lighter Mode Vision On Lights Off | The vision the Lighter has when the lights are down and the Lighter mode is on |
+| Lighter Cooldown                  |                                       -                                        |
+| Lighter Duration                  |                                       -                                        |
 -----------------------
 
 ## Mini
@@ -1540,10 +1549,10 @@ The Mini cannot be killed until it turns 18 years old, however it can be voted o
 - The Sheriff can kill the Impostor Mini, but only if it's fully grown up
 
 ### Game Options
-| Name | Description |
-|----------|:-------------:|
-| Mini Spawn Chance | -
-| Mini  | Mini Growing Up Duration
+| Name              |       Description        |
+| ----------------- | :----------------------: |
+| Mini Spawn Chance |            -             |
+| Mini              | Mini Growing Up Duration |
 -----------------------
 
 ## Medic
@@ -1563,13 +1572,13 @@ The Medic's other feature shows when they report a corpse: they will see how lon
 
 
 ### Game Options
-| Name | Description | Options |
-|----------|:-------------:|:-------------:|
-| Medic Spawn Chance | - | -
-| Show Shielded Player | Sets who sees if a player has a shield | "Everyone", "Shielded + Medic", "Medic"
-| Shielded Player Sees Murder Attempt| Whether a shielded player sees if someone tries to kill them | True/false |
-| Shield Will Be Set After Next Meeting | - | True/false
-| Medic Sees Murder Attempt On Shielded Player | - | If anyone tries to harm the shielded player (Impostor, Sheriff, Guesser, ...), the Medic will see a red flash
+| Name                                         |                         Description                          |                                                    Options                                                    |
+| -------------------------------------------- | :----------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: |
+| Medic Spawn Chance                           |                              -                               |                                                       -                                                       |
+| Show Shielded Player                         |            Sets who sees if a player has a shield            |                                    "Everyone", "Shielded + Medic", "Medic"                                    |
+| Shielded Player Sees Murder Attempt          | Whether a shielded player sees if someone tries to kill them |                                                  True/false                                                   |
+| Shield Will Be Set After Next Meeting        |                              -                               |                                                  True/false                                                   |
+| Medic Sees Murder Attempt On Shielded Player |                              -                               | If anyone tries to harm the shielded player (Impostor, Sheriff, Guesser, ...), the Medic will see a red flash |
 -----------------------
 
 ## Mayor
@@ -1578,9 +1587,9 @@ The Mayor leads the Crewmates by having a vote that counts twice.\
 The Mayor can always use their meeting, even if the maximum number of meetings was reached.
 
 ### Game Options
-| Name | Description |
-|----------|:-------------:|
-| Mayor Spawn Chance | -
+| Name               | Description |
+| ------------------ | :---------: |
+| Mayor Spawn Chance |      -      |
 -----------------------
 
 ## Hacker
@@ -1598,15 +1607,15 @@ While accessing those mobile gadgets, the Hacker is not able to move.\
 - During the meetings you can see, whether a player wears a darker or a lighter color, represented by (D) or (L) in the names.
 
 ### Game Options
-| Name | Description |
-|----------|:-------------:|
-| Hacker Spawn Chance | -
-| Hacker Cooldown | -
-| Hacker Duration | Sets how long the "Hacker mode" remains active
-| Hacker Only Sees Color Type | Sets if the Hacker sees the player colors on the admin table or only white/gray (for Lighter and darker colors)
-| Max Mobile Gadget Charges | -
-| Number Of Tasks Needed For Recharging | Number of tasks to get a charge
-| Can't Move During Cam Duration | -
+| Name                                  |                                                   Description                                                   |
+| ------------------------------------- | :-------------------------------------------------------------------------------------------------------------: |
+| Hacker Spawn Chance                   |                                                        -                                                        |
+| Hacker Cooldown                       |                                                        -                                                        |
+| Hacker Duration                       |                                 Sets how long the "Hacker mode" remains active                                  |
+| Hacker Only Sees Color Type           | Sets if the Hacker sees the player colors on the admin table or only white/gray (for Lighter and darker colors) |
+| Max Mobile Gadget Charges             |                                                        -                                                        |
+| Number Of Tasks Needed For Recharging |                                         Number of tasks to get a charge                                         |
+| Can't Move During Cam Duration        |                                                        -                                                        |
 -----------------------
 
 
@@ -1629,10 +1638,10 @@ A Neutral version of the Shifter, known as the Chain-Shifter, is able to steal r
 can only use them, if the previous player did not use them before)
 
 ### Game Options
-| Name | Description
-|----------|:-------------:|
-| Shifter Spawn Chance | -
-| Shifter Shifts Modifiers | Sets if Lovers and/or Medic Shield will be shifted
+| Name                     |                    Description                     |
+| ------------------------ | :------------------------------------------------: |
+| Shifter Spawn Chance     |                         -                          |
+| Shifter Shifts Modifiers | Sets if Lovers and/or Medic Shield will be shifted |
 -----------------------
 
 ## Time Master
@@ -1652,11 +1661,11 @@ The Time Master won't be affected by the rewind.\
 - The shield itself ends immediately when triggered. So the Time Master can be attacked again as soon as the rewind ends.
 
 ### Game Options
-| Name | Description |
-|----------|:-------------:|
-| Time Master Spawn Chance | - |
-| Time Master Cooldown | - |
-| Rewind Duration | How much time to rewind |
+| Name                        |       Description       |
+| --------------------------- | :---------------------: |
+| Time Master Spawn Chance    |            -            |
+| Time Master Cooldown        |            -            |
+| Rewind Duration             | How much time to rewind |
 | Time Master Shield Duration |
 -----------------------
 
@@ -1668,11 +1677,11 @@ Because of the Swapper's strength in meetings, they might not start emergency me
 and can't fix lights and comms.
 
 ### Game Options
-| Name | Description
-|----------|:-------------:|
-| Swapper Spawn Chance | -
-| Swapper can call emergency meeting | Option to disable the emergency button for the Swapper
-| Swapper can only swap others | Sets whether the Swapper can swap themself or not
+| Name                               |                      Description                       |
+| ---------------------------------- | :----------------------------------------------------: |
+| Swapper Spawn Chance               |                           -                            |
+| Swapper can call emergency meeting | Option to disable the emergency button for the Swapper |
+| Swapper can only swap others       |   Sets whether the Swapper can swap themself or not    |
 -----------------------
 
 ## Tracker
@@ -1683,14 +1692,14 @@ The arrow updates its position every few seconds (configurable).
 Depending on the options, the Tracker has another ability: They can track all corpses on the map for a set amount of time. They will keep tracking corpses, even if they were cleaned or eaten by the Vulture.
 
 ### Game Options
-| Name | Description
-|----------|:-------------:|
-| Tracker Spawn Chance | -
-| Tracker Update Interval | Sets how often the position is being updated
-| Tracker Reset Target After Meeting | -
-| Tracker Can Track Corpses | -
-| Corpses Tracking Cooldown | -
-| Corpses Tracking Duration | -
+| Name                               |                 Description                  |
+| ---------------------------------- | :------------------------------------------: |
+| Tracker Spawn Chance               |                      -                       |
+| Tracker Update Interval            | Sets how often the position is being updated |
+| Tracker Reset Target After Meeting |                      -                       |
+| Tracker Can Track Corpses          |                      -                       |
+| Corpses Tracking Cooldown          |                      -                       |
+| Corpses Tracking Duration          |                      -                       |
 -----------------------
 
 ## Snitch
@@ -1700,13 +1709,13 @@ When the Snitch has one task left (configurable) the Snitch will be revealed to 
 
 
 ### Game Options
-| Name | Description
-|----------|:-------------:|
-| Snitch Spawn Chance | -
-| Task Count Where The Snitch Will Be Revealed | -
-| Include Team Jackal | -
-| Use Different Arrow Color For Team Jackal | -
-| Snitch can't be guessed after finishing all their tasks | -
+| Name                                                    | Description |
+| ------------------------------------------------------- | :---------: |
+| Snitch Spawn Chance                                     |      -      |
+| Task Count Where The Snitch Will Be Revealed            |      -      |
+| Include Team Jackal                                     |      -      |
+| Use Different Arrow Color For Team Jackal               |      -      |
+| Snitch can't be guessed after finishing all their tasks |      -      |
 -----------------------
 
 ## Jackal
@@ -1743,16 +1752,16 @@ If both Impostors and Jackals are in the game the game continues even if all Cre
 
 
 ### Game Options
-| Name | Description
-|----------|:-------------:|
-| Jackal Spawn Chance | - |
-| Jackal/Sidekick Kill Cooldown | Kill cooldown |
-| Jackal Create Sidekick Cooldown | Cooldown before a Sidekick can be created |
-| Jackal can use vents | Yes/No |
-| Jackal can create a Sidekick | Yes/No |
-| Jackals promoted from Sidekick can create a Sidekick | Yes/No (to prevent the Jackal team from growing) |
-| Jackals can make an Impostor to their Sidekick | Yes/No (to prevent a Jackal from turning an Impostor into a Sidekick, if they use the ability on an Impostor they see the Impostor as Sidekick, but the Impostor isn't converted to Sidekick. If this option is set to "No" Jackal and Sidekick can kill each other.) |
-| Jackal and Sidekick have Impostor vision | - |
+| Name                                                 |                                                                                                                              Description                                                                                                                              |
+| ---------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| Jackal Spawn Chance                                  |                                                                                                                                   -                                                                                                                                   |
+| Jackal/Sidekick Kill Cooldown                        |                                                                                                                             Kill cooldown                                                                                                                             |
+| Jackal Create Sidekick Cooldown                      |                                                                                                               Cooldown before a Sidekick can be created                                                                                                               |
+| Jackal can use vents                                 |                                                                                                                                Yes/No                                                                                                                                 |
+| Jackal can create a Sidekick                         |                                                                                                                                Yes/No                                                                                                                                 |
+| Jackals promoted from Sidekick can create a Sidekick |                                                                                                           Yes/No (to prevent the Jackal team from growing)                                                                                                            |
+| Jackals can make an Impostor to their Sidekick       | Yes/No (to prevent a Jackal from turning an Impostor into a Sidekick, if they use the ability on an Impostor they see the Impostor as Sidekick, but the Impostor isn't converted to Sidekick. If this option is set to "No" Jackal and Sidekick can kill each other.) |
+| Jackal and Sidekick have Impostor vision             |                                                                                                                                   -                                                                                                                                   |
 -----------------------
 
 ## Sidekick
@@ -1766,12 +1775,12 @@ Upon the death of the Jackal (depending on the options), they might get promoted
 - The Sidekick cannot target the Mini, while it's growing up.
 
 ### Game Options
-| Name | Description
-|----------|:-------------:|
-| Jackal/Sidekick Kill Cooldown | Uses the same kill cooldown setting as the Jackal |
-| Sidekick gets promoted to Jackal on Jackal death |  Yes/No |
-| Sidekick can kill | Yes/No |
-| Sidekick can use vents | Yes/No |
+| Name                                             |                    Description                    |
+| ------------------------------------------------ | :-----------------------------------------------: |
+| Jackal/Sidekick Kill Cooldown                    | Uses the same kill cooldown setting as the Jackal |
+| Sidekick gets promoted to Jackal on Jackal death |                      Yes/No                       |
+| Sidekick can kill                                |                      Yes/No                       |
+| Sidekick can use vents                           |                      Yes/No                       |
 -----------------------
 
 ## Spy
@@ -1784,13 +1793,13 @@ There are two possibilities (depending on the set options):
 You can set whether the Sheriff can kill the Spy or not (in order to keep the lie alive).
 
 ### Game Options
-| Name | Description
-|----------|:-------------:|
-| Spy Spawn Chance |
-| Spy Can Die To Sheriff |
-| Impostors Can Kill Anyone If There Is A Spy | This allows the Impostors to kill both the Spy and their Impostor partners
-| Spy Can Enter Vents | Allow the Spy to enter/exit vents (but not actually move to connected vents)
-| Spy Has Impostor Vision | Give the Spy the same vision as the Impostors have
+| Name                                        |                                 Description                                  |
+| ------------------------------------------- | :--------------------------------------------------------------------------: |
+| Spy Spawn Chance                            |
+| Spy Can Die To Sheriff                      |
+| Impostors Can Kill Anyone If There Is A Spy |  This allows the Impostors to kill both the Spy and their Impostor partners  |
+| Spy Can Enter Vents                         | Allow the Spy to enter/exit vents (but not actually move to connected vents) |
+| Spy Has Impostor Vision                     |              Give the Spy the same vision as the Impostors have              |
 -----------------------
 
 ## Security Guard
@@ -1810,17 +1819,17 @@ The vents will be sealed after the next meeting, players can't enter or exit sea
 - While accessing the mobile cameras, the Security Guard is not able to move
 
 ### Game Options
-| Name | Description
-|----------|:-------------:|
-| Security Guard Spawn Chance |
-| Security Guard Cooldown |
-| Security Guard Number Of Screws | The number of screws that a Security Guard can use in a game
-| Number Of Screws Per Cam | The number of screws it takes to place a camera
-| Number Of Screws Per Vent | The number of screws it takes to seal a vent
-| Security Guard Duration | -
-| Gadget Max Charges | -
-| Number Of Tasks Needed For Recharging | -
-| Can't Move During Cam Duration | -
+| Name                                  |                         Description                          |
+| ------------------------------------- | :----------------------------------------------------------: |
+| Security Guard Spawn Chance           |
+| Security Guard Cooldown               |
+| Security Guard Number Of Screws       | The number of screws that a Security Guard can use in a game |
+| Number Of Screws Per Cam              |       The number of screws it takes to place a camera        |
+| Number Of Screws Per Vent             |         The number of screws it takes to seal a vent         |
+| Security Guard Duration               |                              -                               |
+| Gadget Max Charges                    |                              -                               |
+| Number Of Tasks Needed For Recharging |                              -                               |
+| Can't Move During Cam Duration        |                              -                               |
 -----------------------
 
 ## Bait
@@ -1831,12 +1840,12 @@ Additionally, the Bait can see if someone is inside a vent (depending on the opt
 an outline or all vents do).
 
 ### Game Options
-| Name | Description
-|----------|:-------------:|
-| Bait Spawn Chance | -
-| Bait Highlight All Vents | If set to true, all vents will be highlighted if a player is inside of one of them. If set to false, only the vents where players are siting in will be highlighted.
-| Bait Report Delay | -
-| Warn The Killer With A Flash | -
+| Name                         |                                                                             Description                                                                              |
+| ---------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| Bait Spawn Chance            |                                                                                  -                                                                                   |
+| Bait Highlight All Vents     | If set to true, all vents will be highlighted if a player is inside of one of them. If set to false, only the vents where players are siting in will be highlighted. |
+| Bait Report Delay            |                                                                                  -                                                                                   |
+| Warn The Killer With A Flash |                                                                                  -                                                                                   |
 
 ## Opportunist
 ### **Team: N/A**
@@ -1853,13 +1862,13 @@ The GM (Game Master) is an observer role. Their presence has no effect on the ga
 The GM role is intended to allow groups to play with a wide variety of rules not supported by Among Us natively. 
 
 ### Game Options
-| Name | Description
-|----------|:-------------:|
-| GM is always the host | Always assign the GM role to the lobby's host
-| GM can warp to other players | Allow the GM to teleport to other players
-| GM can kill/revive players | Allow the GM to indiscriminately murder or revive players
-| Hide settings from other players | Hides mod-related settings from everyone except the lobby host
-| GM dies at start of game | The GM begins the game dead
+| Name                             |                          Description                           |
+| -------------------------------- | :------------------------------------------------------------: |
+| GM is always the host            |         Always assign the GM role to the lobby's host          |
+| GM can warp to other players     |           Allow the GM to teleport to other players            |
+| GM can kill/revive players       |   Allow the GM to indiscriminately murder or revive players    |
+| Hide settings from other players | Hides mod-related settings from everyone except the lobby host |
+| GM dies at start of game         |                  The GM begins the game dead                   |
 
 ## Medium
 ### **Team: Crewmates**
@@ -1874,12 +1883,12 @@ When did you die?
 What is your killers role? (mini exluded)
 
 ### Game Options
-| Name | Description
-|----------|:-------------:|
-| Medium Spawn Chance | -
-| Medium Cooldown | -
-| Medium Duration | The time it takes to question a soul
-| Medium Each Soul Can Only Be Questioned Once | If set to true, souls can only be questioned once and then disappear
+| Name                                         |                             Description                              |
+| -------------------------------------------- | :------------------------------------------------------------------: |
+| Medium Spawn Chance                          |                                  -                                   |
+| Medium Cooldown                              |                                  -                                   |
+| Medium Duration                              |                 The time it takes to question a soul                 |
+| Medium Each Soul Can Only Be Questioned Once | If set to true, souls can only be questioned once and then disappear |
 -----------------------
 
 ## Vulture
@@ -1891,13 +1900,13 @@ Depending on the options, when a player dies, the Vulture gets an arrow pointing
 If there is a Vulture in the game, there can't be a Cleaner.
 
 ### Game Options
-| Name | Description |
-|----------|:-------------:|
-| Vulture Spawn Chance | -
-| Vulture Countdown | -
-| Number Of Corpses Needed To Be Eaten | Corpses needed to be eaten to win the game
-| Vulture Can Use Vents | -
-| Show Arrows Pointing Towards The Corpses | -
+| Name                                     |                Description                 |
+| ---------------------------------------- | :----------------------------------------: |
+| Vulture Spawn Chance                     |                     -                      |
+| Vulture Countdown                        |                     -                      |
+| Number Of Corpses Needed To Be Eaten     | Corpses needed to be eaten to win the game |
+| Vulture Can Use Vents                    |                     -                      |
+| Show Arrows Pointing Towards The Corpses |                     -                      |
 -----------------------
 
 ## Lawyer
@@ -1917,15 +1926,15 @@ The Lawyer can win in multiple ways:
 - If "Lawyer Target Knows" is set to true, the client will know that someone is their Lawyer, but won't know who.
 
 ### Game Options
-| Name | Description |
-|----------|:-------------:|
-| Lawyer Target Knows | The target knows that it is the target (marked with "§", if the Lawyer dies, the mark will disappear)
-| Lawyer Wins After Meetings | If set to true, the Lawyer wins after a configurable amount of meetings (can't start meetings himself)
-| Lawyer Needed Meetings To Win | -
-| Lawyer Vision | Pursuer has normal vision
-| Lawyer Knows Target Role | -
-| Pursuer Blank Cooldown | -
-| Pursuer Number Of Blanks | -
+| Name                          |                                              Description                                               |
+| ----------------------------- | :----------------------------------------------------------------------------------------------------: |
+| Lawyer Target Knows           | The target knows that it is the target (marked with "§", if the Lawyer dies, the mark will disappear)  |
+| Lawyer Wins After Meetings    | If set to true, the Lawyer wins after a configurable amount of meetings (can't start meetings himself) |
+| Lawyer Needed Meetings To Win |                                                   -                                                    |
+| Lawyer Vision                 |                                       Pursuer has normal vision                                        |
+| Lawyer Knows Target Role      |                                                   -                                                    |
+| Pursuer Blank Cooldown        |                                                   -                                                    |
+| Pursuer Number Of Blanks      |                                                   -                                                    |
 -----------------------
 
 ## Pursuer
