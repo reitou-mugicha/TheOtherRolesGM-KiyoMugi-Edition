@@ -1073,8 +1073,10 @@ namespace TheOtherRoles.Patches
             {
                 // オプションがONの場合はベント内はクールダウン減少を止める
                 bool exceptInVent = CustomOptionHolder.exceptInVent.getBool() && __instance.inVent;
+                // 配電盤タスク中はクールダウン減少を止める
+                bool exceptOnTask = CustomOptionHolder.exceptOnTask.getBool() && Patches.ElectricPatch.onTask;
 
-                if (!__instance.Data.IsDead && !__instance.CanMove && !exceptInVent)
+                if (!__instance.Data.IsDead && !__instance.CanMove && !exceptInVent && !exceptOnTask)
                     __instance.SetKillTimer(__instance.killTimer - Time.fixedDeltaTime);
             }
 

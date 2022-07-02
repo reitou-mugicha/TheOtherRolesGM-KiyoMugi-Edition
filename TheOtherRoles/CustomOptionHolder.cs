@@ -454,6 +454,7 @@ namespace TheOtherRoles
         public static CustomOption disableVentAnimation;
         public static CustomOption alwaysReduceCooldown;
         public static CustomOption exceptInVent;
+        public static CustomOption exceptOnTask;
         public static CustomOption additionalVents;
         public static CustomOption specimenVital;
         public static CustomOption polusRandomSpawn;
@@ -879,6 +880,7 @@ namespace TheOtherRoles
             disableVentAnimation = CustomOption.Create(9910, CustomOptionType.General, "disableVentAnimation", false, mapOptions);
             alwaysReduceCooldown = CustomOption.Create(9911, CustomOptionType.General, "alwaysReduceCooldown", false, mapOptions);
             exceptInVent = CustomOption.Create(9912, CustomOptionType.General, "exceptInVent", false, alwaysReduceCooldown);
+            exceptOnTask = CustomOption.Create(9931, CustomOptionType.General, "exceptOnTask", false, alwaysReduceCooldown);
 
             delayBeforeMeeting = CustomOption.Create(9921, CustomOptionType.General, "delayBeforeMeeting", 0f, 0f, 10f, 0.25f, mapOptions, true);
             additionalVents = CustomOption.Create(9905, CustomOptionType.General, "additionalVents", false, mapOptions);
