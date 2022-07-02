@@ -29,8 +29,10 @@ namespace TheOtherRoles.Patches
             if (mapId == 4)
             {
                 var obj = ShipStatus.Instance.FastRooms[SystemTypes.GapRoom].gameObject;
-                //インポスターについてのみ影を無効化
-                obj.transform.FindChild("Shadow").FindChild("LedgeShadow").GetComponent<OneWayShadows>().IgnoreImpostor = true;
+                //昇降機右に影を追加
+                OneWayShadows oneWayShadow = obj.transform.FindChild("Shadow").FindChild("LedgeShadow").GetComponent<OneWayShadows>();
+                oneWayShadow.enabled = false;
+                if (PlayerControl.LocalPlayer.isImpostor()) oneWayShadow.gameObject.SetActive(false);
 
                 SpriteRenderer renderer;
 
@@ -70,16 +72,16 @@ namespace TheOtherRoles.Patches
             {
                 GameObject meetingRoom = DestroyableSingleton<ShipStatus>.Instance.FastRooms[SystemTypes.MeetingRoom].gameObject;
                 GameObject gapRoom = DestroyableSingleton<ShipStatus>.Instance.FastRooms[SystemTypes.GapRoom].gameObject;
-                if(CustomOptionHolder.airshipAdditionalLadder.getBool())
+                if (CustomOptionHolder.airshipAdditionalLadder.getBool())
                 {
                     // 梯子追加
                     GameObject ladder = meetingRoom.GetComponentsInChildren<SpriteRenderer>().Where(x => x.name == "ladder_meeting").FirstOrDefault().gameObject;
                     GameObject newLadder = GameObject.Instantiate(ladder, ladder.transform.parent);
                     UnhollowerBaseLib.Il2CppArrayBase<Ladder> ladders = newLadder.GetComponentsInChildren<Ladder>();
                     int id = 100;
-                    foreach(var l in ladders)
+                    foreach (var l in ladders)
                     {
-                        if(l.name == "LadderBottom") l.gameObject.SetActive(false);
+                        if (l.name == "LadderBottom") l.gameObject.SetActive(false);
                         l.Id = (byte)id;
                         DestroyableSingleton<AirshipStatus>.Instance.Ladders.AddItem(l);
                         id++;
@@ -113,7 +115,7 @@ namespace TheOtherRoles.Patches
                     // 梯子の背景を変更
                     SpriteRenderer side = meetingRoom.GetComponentsInChildren<SpriteRenderer>().Where(x => x.name == "meeting_side").FirstOrDefault();
                     SpriteRenderer bg = GameObject.Instantiate(side, side.transform.parent);
-                    if(!ladderBgSprite) ladderBgSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.ladder_bg.png", 100f);
+                    if (!ladderBgSprite) ladderBgSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.ladder_bg.png", 100f);
                     bg.sprite = ladderBgSprite;
                     bg.transform.localPosition = new Vector3(9.57f, -3.355f, 4.9f);
                 }

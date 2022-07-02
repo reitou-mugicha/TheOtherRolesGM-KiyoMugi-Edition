@@ -90,6 +90,13 @@ namespace TheOtherRoles.Patches
                 HudManager.Instance.roomTracker.text.SetText("");
                 HudManager.Instance.roomTracker.enabled = false;
             }
+            // インポスター視界の場合に昇降機右の影を無効化
+            if(CustomOptionHolder.airshipOptimizeMap.getBool() && Helpers.hasImpostorVision(PlayerControl.LocalPlayer))
+            {
+                var obj = ShipStatus.Instance.FastRooms[SystemTypes.GapRoom].gameObject;
+                OneWayShadows oneWayShadow = obj.transform.FindChild("Shadow").FindChild("LedgeShadow").GetComponent<OneWayShadows>();
+                oneWayShadow.gameObject.SetActive(false);
+            }
 
             // ベントを追加する
             AdditionalVents.AddAdditionalVents();

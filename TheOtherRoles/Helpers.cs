@@ -759,5 +759,23 @@ namespace TheOtherRoles
             }
             return list;
         }
+        public static bool hasImpostorVision(PlayerControl player)
+        {
+            if (player.isImpostor()
+                || (Jackal.jackal != null && Jackal.jackal.PlayerId == player.PlayerId && Jackal.hasImpostorVision)
+                || (Sidekick.sidekick != null && Sidekick.sidekick.PlayerId == player.PlayerId && Sidekick.hasImpostorVision)
+                || (Spy.spy != null && Spy.spy.PlayerId == player.PlayerId && Spy.hasImpostorVision)
+                || (Jester.jester != null && Jester.jester.PlayerId == player.PlayerId && Jester.hasImpostorVision)
+                || (player.hasModifier(ModifierType.Madmate) && Madmate.hasImpostorVision) // Impostor, Jackal/Sidekick, Spy, or Madmate with Impostor vision
+                || (player.hasModifier(ModifierType.CreatedMadmate) && CreatedMadmate.hasImpostorVision) // Impostor, Jackal/Sidekick, Spy, or Madmate with Impostor vision
+                || player.isRole(RoleType.Puppeteer)
+                || (player.isRole(RoleType.JekyllAndHyde) && !JekyllAndHyde.isJekyll())
+                || (Jester.jester != null && Jester.jester.PlayerId == player.PlayerId && Jester.hasImpostorVision) // Jester with Impostor vision
+                || player.isRole(RoleType.Fox))
+            {
+                return true;
+            }
+            else return false;
+        }
     }
 }
