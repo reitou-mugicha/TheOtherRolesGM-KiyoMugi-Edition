@@ -50,7 +50,7 @@ This mod is not affiliated with Among Us or Innersloth LLC, and the content cont
 ![](Images/ladder_mod.png)
 
 エアシップのぬーん削除、配電盤削除、マップ最適化有効後は下記の画像のようになっている
-![](images/gap_mod.png)
+![](Images/gap_mod.png)
 # 追加役職
 
 | Impostors                                        | Crewmates         | Neutral                                       | Other |
