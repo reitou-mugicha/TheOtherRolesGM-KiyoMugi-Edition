@@ -13,7 +13,12 @@ namespace TheOtherRoles.Patches
     [Harmony]
     public class ElectricPatch
     {
+        public static void reset()
+        {
+            onTask = false;
+        }
         public static bool onTask = false;
+        public static bool done = false;
         public static DateTime lastUpdate;
 
         [HarmonyPatch(typeof(SwitchMinigame), nameof(SwitchMinigame.Begin))]
@@ -21,7 +26,9 @@ namespace TheOtherRoles.Patches
         {
             static void Postfix(VitalsMinigame __instance)
             {
+                Logger.info("EnableElecTask");
                 onTask = true;
+                ElectricPatch.done = false;
             }
         }
         [HarmonyPatch(typeof(SwitchMinigame), nameof(SwitchMinigame.FixedUpdate))]
@@ -34,8 +41,13 @@ namespace TheOtherRoles.Patches
                 {
                     if (p == 1f)
                     {
-                        float diff = (float)(lastUpdate - DateTime.UtcNow).TotalMilliseconds;
-                        if (diff > 100) onTask = false;
+                        float diff = (float)((DateTime.UtcNow - lastUpdate).TotalMilliseconds);
+                        if (diff > 100 && !done)
+                        {
+                            Logger.info("DisableElecTask");
+                            done = true;
+                            onTask = false;
+                        }
                     }
                 })));
             }

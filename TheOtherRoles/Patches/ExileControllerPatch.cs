@@ -239,7 +239,7 @@ namespace TheOtherRoles.Patches
             // Reset custom button timers where necessary
             CustomButton.MeetingEndedUpdate();
 
-            // Update admin timer text 
+            // Update admin timer text
             MapOptions.MeetingEndedUpdate();
 
             // Custom role post-meeting functions
@@ -340,6 +340,8 @@ namespace TheOtherRoles.Patches
             {
                 UnityEngine.Object.Destroy(array[i].gameObject);
             }
+
+            ElectricPatch.reset();
 
         }
     }
