@@ -1000,5 +1000,14 @@ namespace TheOtherRoles.Patches
                 Logger.info("----------Meeting End-----------", "Phase");
             }
         }
+
+        [HarmonyPatch(typeof(HudManager), nameof(HudManager.SetHudActive))]
+        class HudManagerSetHudActive
+        {
+            public static void Postfix(HudManager __instance)
+            {
+                DestroyableSingleton<HudManager>.Instance.transform.FindChild("TaskDisplay").FindChild("TaskPanel").gameObject.SetActive(true);
+            }
+        }
     }
 }

@@ -207,6 +207,7 @@ namespace TheOtherRoles.Patches
                 {
                     HudManager.Instance.UseButton.transform.localPosition = useButtonPos;
                 }
+                DestroyableSingleton<HudManager>.Instance.transform.FindChild("TaskDisplay").FindChild("TaskPanel").gameObject.SetActive(true);
             }
         }
         [HarmonyPatch(typeof(MapBehaviour), "get_IsOpenStopped")]
