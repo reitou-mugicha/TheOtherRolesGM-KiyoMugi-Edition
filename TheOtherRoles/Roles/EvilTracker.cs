@@ -119,7 +119,7 @@ namespace TheOtherRoles
                 {
                     if (p.Data.IsDead) continue;
                     Arrow arrow;
-                    if (p.isImpostor())
+                    if (p.isImpostor() && p != PlayerControl.LocalPlayer)
                     {
                         arrow = new Arrow(Palette.ImpostorRed);
                         arrow.arrow.SetActive(true);
