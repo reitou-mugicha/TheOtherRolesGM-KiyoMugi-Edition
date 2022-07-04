@@ -666,7 +666,12 @@ namespace TheOtherRoles
                     if (renderer != null)
                         renderer.color = new Color(color.r, color.g, color.b, Mathf.Clamp01((1 - p) * 2 * 0.75f));
                 }
-                if (p == 1f && renderer != null) renderer.enabled = false;
+                if (p == 1f && renderer != null)
+                {
+                    renderer.color = Color.black;
+                    renderer.gameObject.SetActive(false);
+                }
+
             })));
         }
 
