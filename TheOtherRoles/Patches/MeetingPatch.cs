@@ -676,6 +676,15 @@ namespace TheOtherRoles.Patches
                         EvilTracker.target = focusedTarget;
                         // Reset the GUI
                         __instance.playerStates.ToList().ForEach(x => { if (x.transform.FindChild("EvilTrackerButton") != null) UnityEngine.Object.Destroy(x.transform.FindChild("EvilTrackerButton").gameObject); });
+                        GameObject targetMark = UnityEngine.Object.Instantiate(template, playerVoteArea.transform);
+                        targetMark.name = "EvilTrackerMark";
+                        PassiveButton button = targetMark.GetComponent<PassiveButton>();
+                        targetMark.transform.localPosition = new Vector3(1.1f, 0.03f, -20f);
+                        GameObject.Destroy(button);
+                        SpriteRenderer renderer = targetMark.GetComponent<SpriteRenderer>();
+                        renderer.sprite = EvilTracker.getArrowSprite();
+                        renderer.color = Palette.CrewmateBlue;
+
                         bool isGuesserButton = Guesser.isGuesser(PlayerControl.LocalPlayer.PlayerId) && PlayerControl.LocalPlayer.isAlive() && Guesser.remainingShots(PlayerControl.LocalPlayer) > 0;
                         bool isLastImpostorButton = PlayerControl.LocalPlayer.hasModifier(ModifierType.LastImpostor) && PlayerControl.LocalPlayer.isAlive() && LastImpostor.canGuess();
                         if (isGuesserButton || isLastImpostorButton)
