@@ -17,21 +17,22 @@ namespace TheOtherRoles
         public static PlayerControl currentTarget;
         public static CustomButton trackerButton;
         public static Sprite trackerButtonSprite;
+        public static Sprite arrowSprite;
+
 
         public EvilTracker()
         {
             RoleType = roleId = RoleType.EvilTracker;
         }
 
-        public override void OnMeetingStart() { }
-        public override void OnMeetingEnd()
+        public override void OnMeetingStart()
         {
             if (resetTargetAfterMeeting)
             {
                 target = null;
             }
-
         }
+        public override void OnMeetingEnd() { }
         public override void FixedUpdate()
         {
             if (PlayerControl.LocalPlayer.isRole(RoleType.EvilTracker))
@@ -140,6 +141,12 @@ namespace TheOtherRoles
                 // タイマーに時間をセット
                 updateTimer = arrowUpdateInterval;
             }
+        }
+        public static Sprite getArrowSprite()
+        {
+            if (!arrowSprite)
+                arrowSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.Arrow.png", 300f);
+            return arrowSprite;
         }
 
         [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.MurderPlayer))]

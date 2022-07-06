@@ -652,27 +652,66 @@ namespace TheOtherRoles.Patches
                 }
             }
 
-            // Add Guesser Buttons
-            bool isGuesserButton = Guesser.isGuesser(PlayerControl.LocalPlayer.PlayerId) && PlayerControl.LocalPlayer.isAlive() && Guesser.remainingShots(PlayerControl.LocalPlayer) > 0;
-            bool isLastImpostorButton = PlayerControl.LocalPlayer.hasModifier(ModifierType.LastImpostor) && PlayerControl.LocalPlayer.isAlive() && LastImpostor.canGuess();
-            if (isGuesserButton || isLastImpostorButton)
+            // トラックボタン
+            bool isTrackerButton = EvilTracker.target == null && PlayerControl.LocalPlayer.isRole(RoleType.EvilTracker) && PlayerControl.LocalPlayer.isAlive();
+            if (isTrackerButton)
             {
                 for (int i = 0; i < __instance.playerStates.Length; i++)
                 {
                     PlayerVoteArea playerVoteArea = __instance.playerStates[i];
-                    if (playerVoteArea.AmDead || playerVoteArea.TargetPlayerId == PlayerControl.LocalPlayer.PlayerId || playerVoteArea.TargetPlayerId == GM.gm?.PlayerId) continue;
-
+                    if (playerVoteArea.AmDead || playerVoteArea.TargetPlayerId == PlayerControl.LocalPlayer.PlayerId) continue;
                     GameObject template = playerVoteArea.Buttons.transform.Find("CancelButton").gameObject;
                     GameObject targetBox = UnityEngine.Object.Instantiate(template, playerVoteArea.transform);
-                    targetBox.name = "ShootButton";
+                    targetBox.name = "EvilTrackerButton";
                     targetBox.transform.localPosition = new Vector3(-0.95f, 0.03f, -1.3f);
                     SpriteRenderer renderer = targetBox.GetComponent<SpriteRenderer>();
-                    renderer.sprite = Guesser.getTargetSprite();
+                    renderer.sprite = EvilTracker.getArrowSprite();
                     PassiveButton button = targetBox.GetComponent<PassiveButton>();
                     button.OnClick.RemoveAllListeners();
                     int copiedIndex = i;
-                    button.OnClick.AddListener((System.Action)(() => guesserOnClick(copiedIndex, __instance)));
+                    button.OnClick.AddListener((System.Action)(() =>
+                    {
+                        PlayerControl focusedTarget = Helpers.playerById((byte)__instance.playerStates[copiedIndex].TargetPlayerId);
+                        EvilTracker.target = focusedTarget;
+                        // Reset the GUI
+                        __instance.playerStates.ToList().ForEach(x => { if (x.transform.FindChild("EvilTrackerButton") != null) UnityEngine.Object.Destroy(x.transform.FindChild("EvilTrackerButton").gameObject); });
+                        bool isGuesserButton = Guesser.isGuesser(PlayerControl.LocalPlayer.PlayerId) && PlayerControl.LocalPlayer.isAlive() && Guesser.remainingShots(PlayerControl.LocalPlayer) > 0;
+                        bool isLastImpostorButton = PlayerControl.LocalPlayer.hasModifier(ModifierType.LastImpostor) && PlayerControl.LocalPlayer.isAlive() && LastImpostor.canGuess();
+                        if (isGuesserButton || isLastImpostorButton)
+                        {
+                            createGuesserButton(__instance);
+                        }
+                    }));
                 }
+            }
+
+            // Add Guesser Buttons
+            bool isGuesserButton = !isTrackerButton && Guesser.isGuesser(PlayerControl.LocalPlayer.PlayerId) && PlayerControl.LocalPlayer.isAlive() && Guesser.remainingShots(PlayerControl.LocalPlayer) > 0;
+            bool isLastImpostorButton = !isTrackerButton && PlayerControl.LocalPlayer.hasModifier(ModifierType.LastImpostor) && PlayerControl.LocalPlayer.isAlive() && LastImpostor.canGuess();
+            if (isGuesserButton || isLastImpostorButton)
+            {
+                createGuesserButton(__instance);
+            }
+
+        }
+
+        public static void createGuesserButton(MeetingHud __instance)
+        {
+            for (int i = 0; i < __instance.playerStates.Length; i++)
+            {
+                PlayerVoteArea playerVoteArea = __instance.playerStates[i];
+                if (playerVoteArea.AmDead || playerVoteArea.TargetPlayerId == PlayerControl.LocalPlayer.PlayerId || playerVoteArea.TargetPlayerId == GM.gm?.PlayerId) continue;
+
+                GameObject template = playerVoteArea.Buttons.transform.Find("CancelButton").gameObject;
+                GameObject targetBox = UnityEngine.Object.Instantiate(template, playerVoteArea.transform);
+                targetBox.name = "ShootButton";
+                targetBox.transform.localPosition = new Vector3(-0.95f, 0.03f, -1.3f);
+                SpriteRenderer renderer = targetBox.GetComponent<SpriteRenderer>();
+                renderer.sprite = Guesser.getTargetSprite();
+                PassiveButton button = targetBox.GetComponent<PassiveButton>();
+                button.OnClick.RemoveAllListeners();
+                int copiedIndex = i;
+                button.OnClick.AddListener((System.Action)(() => guesserOnClick(copiedIndex, __instance)));
             }
         }
 
