@@ -668,7 +668,15 @@ namespace TheOtherRoles
                 }
                 if (p == 1f && renderer != null)
                 {
-                    renderer.color = Color.black;
+                    bool reactorActive = false;
+                    foreach (PlayerTask task in PlayerControl.LocalPlayer.myTasks)
+                    {
+                        if (task.TaskType == TaskTypes.StopCharles)
+                        {
+                            reactorActive = true;
+                        }
+                    }
+                    if (!reactorActive && PlayerControl.GameOptions.MapId == 4) renderer.color = Color.black;
                     renderer.gameObject.SetActive(false);
                 }
 
