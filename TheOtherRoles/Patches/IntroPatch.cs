@@ -91,7 +91,7 @@ namespace TheOtherRoles.Patches
                 HudManager.Instance.roomTracker.enabled = false;
             }
             // インポスター視界の場合に昇降機右の影を無効化
-            if(CustomOptionHolder.airshipOptimizeMap.getBool() && Helpers.hasImpostorVision(PlayerControl.LocalPlayer))
+            if (PlayerControl.GameOptions.MapId == 4 && CustomOptionHolder.airshipOptimizeMap.getBool() && Helpers.hasImpostorVision(PlayerControl.LocalPlayer))
             {
                 var obj = ShipStatus.Instance.FastRooms[SystemTypes.GapRoom].gameObject;
                 OneWayShadows oneWayShadow = obj.transform.FindChild("Shadow").FindChild("LedgeShadow").GetComponent<OneWayShadows>();
@@ -124,7 +124,7 @@ namespace TheOtherRoles.Patches
             if (PlayerControl.GameOptions.MapId == 4 && CustomOptionHolder.airshipDisableMovingPlatform.getBool())
             {
                 gapRoom.GetComponentInChildren<MovingPlatformBehaviour>().gameObject.SetActive(false);
-                gapRoom.GetComponentsInChildren<PlatformConsole>().ForEach(x=> x.gameObject.SetActive(false));
+                gapRoom.GetComponentsInChildren<PlatformConsole>().ForEach(x => x.gameObject.SetActive(false));
             }
 
 
