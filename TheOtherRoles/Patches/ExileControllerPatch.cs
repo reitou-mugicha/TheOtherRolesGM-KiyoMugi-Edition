@@ -346,6 +346,9 @@ namespace TheOtherRoles.Patches
             // ベントバグ対策
             VentilationSystem vs = DestroyableSingleton<ShipStatus>.Instance.Systems[SystemTypes.Ventilation].TryCast<VentilationSystem>();
             vs.PlayersInsideVents.Clear();
+
+            // イビルトラッカーで他のプレイヤーのタスク情報を表示する
+            MapBehaviorPatch.resetRealTasks();
         }
     }
 

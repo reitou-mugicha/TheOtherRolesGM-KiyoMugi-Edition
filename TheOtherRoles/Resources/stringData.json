@@ -877,6 +877,10 @@
         "0": "Offline Hats",
         "11": "\u30aa\u30d5\u30e9\u30a4\u30f3\u30cf\u30c3\u30c8"
     },
+    "hideFakeTasks": {
+        "0": "Hide Fake Tasks",
+        "11": "\u30d5\u30a7\u30a4\u30af\u30bf\u30b9\u30af\u3092\u96a0\u3059"
+    },
     "torSettings": {
         "0": "The Other Roles Settings",
         "11": "The Other Roles\u306e\u8a2d\u5b9a",

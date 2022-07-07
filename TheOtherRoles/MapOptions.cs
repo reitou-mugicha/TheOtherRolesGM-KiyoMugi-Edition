@@ -41,6 +41,7 @@ namespace TheOtherRoles
         public static bool showLighterDarker = false;
         public static bool hideTaskArrows = false;
         public static bool offlineHats = false;
+        public static bool hideFakeTasks = false;
 
         // Updating values
         public static int meetingsCount = 0;

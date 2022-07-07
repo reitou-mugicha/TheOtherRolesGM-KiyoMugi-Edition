@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using HarmonyLib;
 using UnityEngine;
+using System;
+using Hazel;
 
 namespace TheOtherRoles.Patches
 
@@ -26,7 +28,7 @@ namespace TheOtherRoles.Patches
             if (mapIcons != null)
             {
                 foreach (SpriteRenderer r in mapIcons.Values)
-                    Object.Destroy(r.gameObject);
+                    UnityEngine.Object.Destroy(r.gameObject);
                 mapIcons.Clear();
                 mapIcons = null;
             }
@@ -34,7 +36,7 @@ namespace TheOtherRoles.Patches
             if (corpseIcons != null)
             {
                 foreach (SpriteRenderer r in corpseIcons.Values)
-                    Object.Destroy(r.gameObject);
+                    UnityEngine.Object.Destroy(r.gameObject);
                 corpseIcons.Clear();
                 corpseIcons = null;
             }
@@ -120,7 +122,7 @@ namespace TheOtherRoles.Patches
                     }
 
                     foreach (SpriteRenderer r in corpseIcons.Values) { r.enabled = false; }
-                    foreach (DeadBody b in Object.FindObjectsOfType<DeadBody>())
+                    foreach (DeadBody b in UnityEngine.Object.FindObjectsOfType<DeadBody>())
                     {
                         byte id = b.ParentId;
                         Vector3 vector = b.transform.position;
@@ -187,7 +189,7 @@ namespace TheOtherRoles.Patches
                         mapIcons[id].enabled = !p.Data.IsDead;
                     }
 
-                    foreach (DeadBody b in Object.FindObjectsOfType<DeadBody>())
+                    foreach (DeadBody b in UnityEngine.Object.FindObjectsOfType<DeadBody>())
                     {
                         byte id = b.ParentId;
                         PlayerControl p = Helpers.getPlayerById(id);
@@ -221,6 +223,77 @@ namespace TheOtherRoles.Patches
                     return false;
                 }
                 return true;
+            }
+        }
+        [HarmonyPatch(typeof(MapBehaviour), nameof(MapBehaviour.ShowSabotageMap))]
+        class MapBehaviourShowSabotageMap
+        {
+            static void Postfix(MapBehaviour __instance)
+            {
+                if (TheOtherRolesPlugin.HideFakeTasks.Value)
+                {
+                    __instance.taskOverlay.Hide();
+                }
+            }
+        }
+
+        public static Dictionary<byte, Il2CppSystem.Collections.Generic.List<Vector2>> realTasks = new();
+        public static void resetRealTasks()
+        {
+            realTasks.Clear();
+        }
+        public static void shareRealTasks()
+        {
+            foreach (var task in PlayerControl.LocalPlayer.myTasks)
+            {
+                if (!task.IsComplete && task.HasLocation && !PlayerTask.TaskIsEmergency(task))
+                {
+                    foreach (var loc in task.Locations)
+                    {
+                        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.ShareRealTasks, Hazel.SendOption.Reliable, -1);
+                        writer.Write(PlayerControl.LocalPlayer.PlayerId);
+                        writer.Write(loc.x);
+                        writer.Write(loc.y);
+                        writer.Write(task.TaskStep);
+                        AmongUsClient.Instance.FinishRpcImmediately(writer);
+                    }
+                }
+            }
+        }
+        [HarmonyPatch(typeof(MapTaskOverlay), nameof(MapTaskOverlay.Show))]
+        class MapTaskOverlayShow
+        {
+            static bool Prefix(MapTaskOverlay __instance)
+            {
+                if (!MeetingHud.Instance) return true;  // Only run in meetings, and then set the Position of the HerePoint to the Position before the Meeting!
+                if (!PlayerControl.LocalPlayer.isRole(RoleType.EvilTracker)) return true;
+                if (EvilTracker.target == null) return true;
+                if (realTasks[EvilTracker.target.PlayerId] == null) return false;
+                __instance.gameObject.SetActive(true);
+                __instance.data.Clear();
+                for (int i = 0; i < realTasks[EvilTracker.target.PlayerId].Count; i++)
+                {
+                    try
+                    {
+                        Vector2 pos = realTasks[EvilTracker.target.PlayerId][i];
+
+                        Vector3 localPosition = pos / ShipStatus.Instance.MapScale;
+                        localPosition.z = -1f;
+                        PooledMapIcon pooledMapIcon = __instance.icons.Get<PooledMapIcon>();
+                        pooledMapIcon.transform.localScale = new Vector3(pooledMapIcon.NormalSize, pooledMapIcon.NormalSize, pooledMapIcon.NormalSize);
+                        pooledMapIcon.rend.color = Color.yellow;
+                        pooledMapIcon.name = $"{i}";
+                        pooledMapIcon.lastMapTaskStep = 0;
+                        pooledMapIcon.transform.localPosition = localPosition;
+                        string text = $"{i}";
+                        __instance.data.Add(text, pooledMapIcon);
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.error(ex.Message);
+                    }
+                }
+                return false;
             }
         }
     }

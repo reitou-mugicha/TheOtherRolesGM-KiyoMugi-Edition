@@ -800,6 +800,7 @@ namespace TheOtherRoles.Patches
             CustomOverlays.hideInfoOverlay();
             CustomOverlays.hideRoleOverlay();
             TheOtherRolesGM.OnMeetingStart();
+            MapBehaviorPatch.shareRealTasks();
         }
 
         public static void populateButtons(MeetingHud __instance, byte reporter)

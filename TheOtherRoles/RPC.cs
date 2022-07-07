@@ -120,6 +120,7 @@ namespace TheOtherRoles
         Synchronize,
         PlaceAssassinTrace,
         SetOddIsJekyll,
+        ShareRealTasks,
     }
 
     public static class RPCProcedure
@@ -1342,6 +1343,12 @@ namespace TheOtherRoles
             JekyllAndHyde.oddIsJekyll = b;
         }
 
+        public static void shareRealTasks(byte playerId, Vector2 pos)
+        {
+            if (!MapBehaviorPatch.realTasks.ContainsKey(playerId)) MapBehaviorPatch.realTasks[playerId] = new Il2CppSystem.Collections.Generic.List<Vector2>();
+            MapBehaviorPatch.realTasks[playerId].Add(pos);
+        }
+
         [HarmonyPatch(typeof(CustomNetworkTransform), nameof(CustomNetworkTransform.HandleRpc))]
         class CustomNetworkTransformRPCHandlerPatch
         {
@@ -1745,6 +1752,14 @@ namespace TheOtherRoles
                             break;
                         case (byte)CustomRPC.SetOddIsJekyll:
                             RPCProcedure.setOddIsJekyll(reader.ReadBoolean());
+                            break;
+                        case (byte)CustomRPC.ShareRealTasks:
+                            byte tmpid = reader.ReadByte();
+                            byte[] taskTmp = reader.ReadBytes(4);
+                            float taskX = System.BitConverter.ToSingle(taskTmp, 0);
+                            taskTmp = reader.ReadBytes(4);
+                            float taskY = System.BitConverter.ToSingle(taskTmp, 0);
+                            RPCProcedure.shareRealTasks(tmpid, new Vector2(taskX, taskY));
                             break;
                     }
                 }
