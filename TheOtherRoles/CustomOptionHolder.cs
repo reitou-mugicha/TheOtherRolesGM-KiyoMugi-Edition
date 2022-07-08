@@ -427,6 +427,7 @@ namespace TheOtherRoles
         public static CustomOption evilTrackerCooldown;
         public static CustomOption evilTrackerResetTargetAfterMeeting;
         public static CustomOption evilTrackerCanSeeDeathFlash;
+        public static CustomOption evilTrackerCanSeeTargetTask;
         public static CustomRoleOption puppeteerSpawnRate;
         public static CustomOption puppeteerNumKills;
         public static CustomOption puppeteerSampleDuration;
@@ -615,6 +616,7 @@ namespace TheOtherRoles
             evilTrackerCooldown = CustomOption.Create(1052, CustomOptionType.Impostor, "evilTrackerCooldown", 10f, 0f, 60f, 1f, evilTrackerSpawnRate);
             evilTrackerResetTargetAfterMeeting = CustomOption.Create(1053, CustomOptionType.Impostor, "evilTrackerResetTargetAfterMeeting", true, evilTrackerSpawnRate);
             evilTrackerCanSeeDeathFlash = CustomOption.Create(1054, CustomOptionType.Impostor, "evilTrackerCanSeeDeathFlash", true, evilTrackerSpawnRate);
+            evilTrackerCanSeeTargetTask = CustomOption.Create(1055, CustomOptionType.Impostor, "evilTrackerCanSeeTargetTask", true, evilTrackerSpawnRate);
 
             mimicSpawnRate = new CustomRoleOption(1080, CustomOptionType.Impostor, "mimic", MimicK.color, 1);
             mimicCountAsOne = CustomOption.Create(1081, CustomOptionType.Impostor, "mimicCountAsOne", true, mimicSpawnRate);

@@ -266,7 +266,7 @@ namespace TheOtherRoles.Patches
             static bool Prefix(MapTaskOverlay __instance)
             {
                 if (!MeetingHud.Instance) return true;  // Only run in meetings, and then set the Position of the HerePoint to the Position before the Meeting!
-                if (!PlayerControl.LocalPlayer.isRole(RoleType.EvilTracker)) return true;
+                if (!PlayerControl.LocalPlayer.isRole(RoleType.EvilTracker) || !CustomOptionHolder.evilTrackerCanSeeTargetTask.getBool()) return true;
                 if (EvilTracker.target == null) return true;
                 if (realTasks[EvilTracker.target.PlayerId] == null) return false;
                 __instance.gameObject.SetActive(true);

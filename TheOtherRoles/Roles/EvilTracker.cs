@@ -13,6 +13,7 @@ namespace TheOtherRoles
         public static float cooldown { get { return CustomOptionHolder.evilTrackerCooldown.getFloat(); } }
         public static bool resetTargetAfterMeeting { get { return CustomOptionHolder.evilTrackerResetTargetAfterMeeting.getBool(); } }
         public static bool canSeeDeathFlash { get { return CustomOptionHolder.evilTrackerCanSeeDeathFlash.getBool(); } }
+        public static bool canSeeTargetTask { get { return CustomOptionHolder.evilTrackerCanSeeTargetTask.getBool(); } }
         public static PlayerControl target;
         public static PlayerControl currentTarget;
         public static CustomButton trackerButton;
