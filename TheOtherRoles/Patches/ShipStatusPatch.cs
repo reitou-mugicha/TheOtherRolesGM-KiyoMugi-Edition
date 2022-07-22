@@ -50,7 +50,7 @@ namespace TheOtherRoles.Patches
             else
                 __result = Mathf.Lerp(__instance.MinLightRadius, __instance.MaxLightRadius, num) * PlayerControl.GameOptions.CrewLightMod;
             if (PlayerControl.LocalPlayer.hasModifier(ModifierType.Sunglasses))
-                __result *= 1f - Sunglasses.vision * 0.01f;/*
+                __result *= 1f - Sunglasses.vision * 0.01f;
             if (PlayerControl.LocalPlayer.isRole(RoleType.Chunibyo))
             {
                 if (Chunibyo.chunibyoButton.isEffectActive && Chunibyo.ab == 2)
@@ -59,7 +59,7 @@ namespace TheOtherRoles.Patches
                     __result *= 1f - Chunibyo.lowVisionBonus * 0.01f;
                 else if (!Chunibyo.chunibyoButton.isEffectActive || Chunibyo.ab == 0 || Chunibyo.ab == 1)
                     __result *= PlayerControl.GameOptions.CrewLightMod;
-            }*/
+            }
 
             return false;
         }

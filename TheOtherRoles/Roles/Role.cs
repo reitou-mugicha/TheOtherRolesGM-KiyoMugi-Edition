@@ -68,6 +68,7 @@ namespace TheOtherRoles
         Accelerator,
         Trapper,
         Silencer,
+        Eater,
 
 
         Lovers = 150,
@@ -106,7 +107,7 @@ namespace TheOtherRoles
             { RoleType.FortuneTeller, typeof(RoleBase<FortuneTeller>) },
             { RoleType.Sprinter, typeof(RoleBase<Sprinter>) },
             { RoleType.Mayor, typeof(RoleBase<Mayor>) },
-            //{ RoleType.Chunibyo, typeof(RoleBase<Chunibyo>) },
+            { RoleType.Chunibyo, typeof(RoleBase<Chunibyo>) },
             { RoleType.Boss, typeof(RoleBase<Boss>) },
             { RoleType.Staff, typeof(RoleBase<Staff>) },
             { RoleType.Gun, typeof(RoleBase<Gun>) },
@@ -127,6 +128,7 @@ namespace TheOtherRoles
             { RoleType.Accelerator, typeof(RoleBase<Accelerator>) },
             { RoleType.Trapper, typeof(RoleBase<Trapper>) },
             { RoleType.Silencer, typeof(RoleBase<Silencer>) },
+            { RoleType.Eater, typeof(RoleBase<Eater>) },
 
             // Neutral
             { RoleType.PlagueDoctor, typeof(RoleBase<PlagueDoctor>) },

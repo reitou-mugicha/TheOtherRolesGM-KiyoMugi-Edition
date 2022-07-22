@@ -124,6 +124,8 @@ namespace TheOtherRoles.Patches
                         TimeRemaining.color = Palette.White;
                     }
 
+//evilHackerのアドミンが壊れる問題修正 - ここの記述が146行目以降のelseとダブってます by.hawk
+/*
                     if (MapOptions.restrictAdminTime <= 0f)
                     {
                         __instance.BackgroundColor.SetColor(Palette.DisabledGrey);
@@ -136,7 +138,7 @@ namespace TheOtherRoles.Patches
                         }
                         return false;
                     }
-
+*/
                     if (PlayerControl.LocalPlayer.isRole(RoleType.EvilHacker))
                     {
                         TimeRemaining.gameObject.SetActive(false);

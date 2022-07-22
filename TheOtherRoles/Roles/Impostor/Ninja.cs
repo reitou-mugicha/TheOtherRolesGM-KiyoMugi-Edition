@@ -1,12 +1,12 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
 using Hazel;
-using System;
-using System.Collections.Generic;
-using UnityEngine;
 using TheOtherRoles.Objects;
 using TheOtherRoles.Patches;
 using TheOtherRoles.Modules;
+using UnityEngine;
 
 namespace TheOtherRoles
 {
@@ -188,9 +188,11 @@ namespace TheOtherRoles
 
                     PlayerControl.LocalPlayer.SetKillTimerUnchecked(Math.Max(PlayerControl.LocalPlayer.killTimer, Ninja.killPenalty));
                 }
-            );
-            ninjaButton.buttonText = ModTranslation.getString("NinjaText");
-            ninjaButton.effectCancellable = true;
+            )
+            {
+                buttonText = ModTranslation.getString("NinjaText"),
+                effectCancellable = true
+            };
         }
 
         public static void SetButtonCooldowns()
@@ -209,8 +211,10 @@ namespace TheOtherRoles
             var color = Color.Lerp(Palette.ClearWhite, Palette.White, opacity);
             try
             {
-                if (player.MyPhysics?.myPlayer.cosmetics.bodySprites != null)
-                    player.MyPhysics.myPlayer.cosmetics.colorBlindText.color = color;
+                if (player.MyPhysics?.myPlayer.cosmetics.currentBodySprite.BodySprite != null)
+                {
+                    player.MyPhysics.myPlayer.cosmetics.currentBodySprite.BodySprite.color = color;
+                }
 
                 if (player.MyPhysics?.myPlayer.cosmetics.skin?.layer != null)
                     player.MyPhysics.myPlayer.cosmetics.skin.layer.color = color;
@@ -226,6 +230,9 @@ namespace TheOtherRoles
 
                 if (player.cosmetics.visor != null)
                     player.cosmetics.visor.Image.color = color;
+
+                if (player.cosmetics.colorBlindText != null)
+                    player.cosmetics.colorBlindText.color = color;
             }
             catch { }
         }

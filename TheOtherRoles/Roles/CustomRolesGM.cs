@@ -37,7 +37,7 @@ namespace TheOtherRoles
             FortuneTeller.Clear();
             HawkEye.Clear();
             DoubleKiller.Clear();
-            //Chunibyo.Clear();
+            Chunibyo.Clear();
             Boss.Clear();
             Staff.Clear();
             Gun.Clear();
@@ -52,6 +52,7 @@ namespace TheOtherRoles
             Silencer.Clear();
             Jammer.Clear();
             Immortality.Clear();
+            Eater.Clear();
             Role.ClearAll();
         }
 
