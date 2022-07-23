@@ -464,16 +464,20 @@ namespace TheOtherRoles
         public static CustomOption ventAnimation;
         public static CustomOption enableDiePlayerZoomInOut;
         public static CustomOption onePlayerStart;
-        public static CustomOption airshipReactorDuration;
         public static CustomOption helloweenMode;
-        public static CustomOption oldAirShipAdmin;
-        public static CustomOption enableRecordsAdmin;
 
         public static CustomOption betterStartButtons;
 
         public static CustomOption enableMirrorMap;
         public static CustomOption enableRandomWireTask;
         public static CustomOption numWireTask;
+
+        public static CustomOption airshipSettings;
+        public static CustomOption airshipAdminSettings;
+        public static CustomOption oldAirShipAdmin;
+        public static CustomOption enableRecordsAdmin;
+        public static CustomOption enableCockpitAdmin;
+        public static CustomOption airshipReactorDuration;
 
         public static CustomOption enableAddCustomVent;
         public static CustomOption enableAirshipVaultMeetingArchiveVent;
@@ -940,7 +944,6 @@ namespace TheOtherRoles
             ventAnimation = CustomOption.Create(22, CustomOptionType.General, "ventAnimation", true, specialOptions);
             enableDiePlayerZoomInOut = CustomOption.Create(23, CustomOptionType.General, "diePlayerCanZoomInOut", false, specialOptions);
             onePlayerStart = CustomOption.Create(24, CustomOptionType.General, "onePlayerStart", false, specialOptions);
-            airshipReactorDuration = CustomOption.Create(25, CustomOptionType.General, "airShipReactorDuration", 60f, 0f, 600f, 5f, specialOptions, format: "unitSeconds");
 
             enableMirrorMap = CustomOption.Create(27, CustomOptionType.General, "enableMirror", false, specialOptions);
             enableAddCustomVent = CustomOption.Create(46, CustomOptionType.General, "enableAddCustomVent", false, specialOptions);
@@ -948,9 +951,6 @@ namespace TheOtherRoles
             enablePolusWeaponSpecimenOfficeVent = CustomOption.Create(53, CustomOptionType.General, "enablePolusWeaponSpecimenOfficeVent", false, enableAddCustomVent);
             enableMiraO2CommsYjiVent = CustomOption.Create(54, CustomOptionType.General, "enableMiraO2CommsYjiVent", false, enableAddCustomVent);
             enableSkeldStorageAdminO2Vent = CustomOption.Create(55, CustomOptionType.General, "enableSkeldStorageAdminO2Vent", false, enableAddCustomVent);
-
-            oldAirShipAdmin = CustomOption.Create(47, CustomOptionType.General, "oldAirShipAdmin", true, specialOptions);
-            enableRecordsAdmin = CustomOption.Create(48, CustomOptionType.General, "enableRecordsAdmin", false, specialOptions);
 
             enableRandomWireTask = CustomOption.Create(50, CustomOptionType.General, "enableRandomWireTask", false, specialOptions);
             numWireTask = CustomOption.Create(9913, CustomOptionType.General, "numWireTask", 3f, 1f, 10f, 1f, specialOptions);
@@ -961,6 +961,13 @@ namespace TheOtherRoles
             restrictAdmin = CustomOption.Create(30, CustomOptionType.General, "disableAdmin", 30f, 0f, 600f, 5f, restrictDevices, format: "unitSeconds");
             restrictCameras = CustomOption.Create(31, CustomOptionType.General, "disableCameras", 30f, 0f, 600f, 5f, restrictDevices, format: "unitSeconds");
             restrictVitals = CustomOption.Create(32, CustomOptionType.General, "disableVitals", 30f, 0f, 600f, 5f, restrictDevices, format: "unitSeconds");
+
+            airshipSettings = CustomOption.Create(56, CustomOptionType.General, "airshipSettings", false, specialOptions, isHeader: true);
+            airshipAdminSettings = CustomOption.Create(58, CustomOptionType.General, "airshipAdminSettings", true, airshipSettings);
+            oldAirShipAdmin = CustomOption.Create(47, CustomOptionType.General, "oldAirShipAdmin", true, airshipAdminSettings);
+            enableRecordsAdmin = CustomOption.Create(48, CustomOptionType.General, "enableRecordsAdmin", false, airshipAdminSettings);
+            enableCockpitAdmin = CustomOption.Create(57, CustomOptionType.General, "enableCockpitAdmin", false, airshipAdminSettings);
+            airshipReactorDuration = CustomOption.Create(25, CustomOptionType.General, "airShipReactorDuration", 60f, 0f, 600f, 5f, airshipSettings, format: "unitSeconds");
 
             uselessOptions = CustomOption.Create(33, CustomOptionType.General, "uselessOptions", false, null, isHeader: true);
             dynamicMap = CustomOption.Create(34, CustomOptionType.General, "playRandomMaps", false, uselessOptions);

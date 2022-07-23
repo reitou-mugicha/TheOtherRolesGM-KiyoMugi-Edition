@@ -73,7 +73,6 @@ namespace TheOtherRoles
         Silencer,
         Eater,
 
-
         Lovers = 150,
         EvilGuesser,
         NiceGuesser,

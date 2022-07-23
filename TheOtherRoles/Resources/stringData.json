@@ -2544,6 +2544,50 @@
         "0": "Enable Custom Vent",
         "11": "\u30ab\u30b9\u30bf\u30e0\u30d9\u30f3\u30c8\u3092\u6709\u52b9\u306b\u3059\u308b"
     },
+    "enableAirshipVaultMeetingArchiveVent": {
+        "0": "Airship Vault-Meeting-Archive",
+        "11": "\u30a8\u30a2\u30fc\u30b7\u30c3\u30d7 \u91d1\u5eab-\u30df\u30fc\u30c6\u30a3\u30f3\u30b0-\u30a2\u30fc\u30ab\u30a4\u30d6"
+    },
+    "enablePolusWeaponSpecimenOfficeVent": {
+        "0": "Polus Weapon-Sepecimen-Office",
+        "11": "\u30dd\u30fc\u30e9\u30b9 \u30a6\u30a7\u30dd\u30f3-\u30b9\u30da\u30b7\u30e1\u30f3-\u30aa\u30d5\u30a3\u30b9"
+    },
+    "enableMiraO2CommsYjiVent": {
+        "0": "Mira O2-Comms-Yji",
+        "11": "\u30df\u30e9 O2-\u30b3\u30df\u30e5-Y\u5b57\u8def\u4e2d\u592e"
+    },
+    "enableSkeldStorageAdminO2Vent": {
+        "0": "Skeld Storage-Admin-O2",
+        "11": "\u30b9\u30b1\u30eb\u30c9 \u30b9\u30c8\u30ec\u30fc\u30b8-\u30a2\u30c9\u30df\u30f3-O2"
+    },
+    "enableRandomWireTask": {
+        "0": "Random Wire Task",
+        "11": "\u914d\u7dda\u306e\u9806\u756a\u3092\u30e9\u30f3\u30c0\u30e0\u306b\u3059\u308b"
+    },
+    "numWireTask": {
+        "0": "Num Wire Task",
+        "11": "\u914d\u7dda\u306e\u6570"
+    },
+    "airshipSettings": {
+        "0": "AirShip Settings",
+        "11": "\u30a8\u30a2\u30fc\u30b7\u30c3\u30d7\u306e\u8a2d\u5b9a"
+    },
+    "airshipAdminSettings": {
+        "0": "AirShip Admin Settings",
+        "11": "\u30a8\u30a2\u30fc\u30b7\u30c3\u30d7\u306e\u30a2\u30c9\u30df\u30f3\u8a2d\u5b9a"
+    },
+    "oldAirShipAdmin": {
+        "0": "Old AirShip Admin",
+        "11": "\u65e7\u30a2\u30c9\u30df\u30f3\u4ed5\u69d8"
+    },
+    "enableRecordsAdmin": {
+        "0": "Enable Records Admin",
+        "11": "\u30a2\u30fc\u30ab\u30a4\u30d6\u306e\u30a2\u30c9\u30df\u30f3\u3092\u6709\u52b9\u5316"
+    },
+    "enableCockpitAdmin": {
+        "0": "Enable Cockpit Admin",
+        "11": "\u30b3\u30c3\u30af\u30d4\u30c3\u30c8\u306e\u30a2\u30c9\u30df\u30f3\u3092\u6709\u52b9\u5316"
+    },
     "loversFlavor": {
         "0": "\u2665 You are in love with {0} \u2665",
         "11": "\u2665 {0} \u3068\u604b\u4eba\u306b\u306a\u308a\u307e\u3057\u305f \u2665",

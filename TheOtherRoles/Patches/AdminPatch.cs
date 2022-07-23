@@ -377,6 +377,11 @@ namespace TheOtherRoles.Patches
                 Transform recordsAdmin = GameObject.Find("Airship(Clone)").transform.FindChild("Records").FindChild("records_admin_map");
                 GameObject.Destroy(recordsAdmin.gameObject);
             }
+            if (!CustomOptionHolder.enableCockpitAdmin.getBool() && PlayerControl.LocalPlayer.isAirship())
+            {
+                Transform cockpitAdmin = GameObject.Find("Airship(Clone)").transform.FindChild("Cockpit").FindChild("panel_cockpit_map");
+                GameObject.Destroy(cockpitAdmin.gameObject);
+            }
         }
     }
 }
