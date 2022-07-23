@@ -952,7 +952,7 @@ namespace TheOtherRoles
             enableMiraO2CommsYjiVent = CustomOption.Create(54, CustomOptionType.General, "enableMiraO2CommsYjiVent", false, enableAddCustomVent);
             enableSkeldStorageAdminO2Vent = CustomOption.Create(55, CustomOptionType.General, "enableSkeldStorageAdminO2Vent", false, enableAddCustomVent);
 
-            oldAirShipAdmin = CustomOption.Create(47, CustomOptionType.General, "oldAirShipAdmin", true, airshipAdminSettings);
+            oldAirShipAdmin = CustomOption.Create(47, CustomOptionType.General, "oldAirShipAdmin", true, specialOptions);
             enableRandomWireTask = CustomOption.Create(50, CustomOptionType.General, "enableRandomWireTask", false, specialOptions);
             numWireTask = CustomOption.Create(9913, CustomOptionType.General, "numWireTask", 3f, 1f, 10f, 1f, specialOptions);
 
