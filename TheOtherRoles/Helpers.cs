@@ -459,6 +459,11 @@ namespace TheOtherRoles
             return result;
         }
 
+        public static int RandomIdx<T>(this IList<T> self)
+        {
+            return UnityEngine.Random.Range(0, self.Count);
+        }
+
         public static bool hidePlayerName(PlayerControl target)
         {
             return hidePlayerName(PlayerControl.LocalPlayer, target);
@@ -755,6 +760,32 @@ namespace TheOtherRoles
             if(PlayerControl.GameOptions.MapId == 4)
                 return true;
             return false;
+        }
+
+        public static Dictionary<byte, VisorLayer> VisorSlotCache = new();
+        public static VisorLayer VisorSlot(this PlayerControl player)
+        {
+            byte PlayerId = player.PlayerId;
+            bool Isnull = true;
+            if (VisorSlotCache.ContainsKey(PlayerId))
+            {
+                if (VisorSlotCache[PlayerId] == null) Isnull = true;
+                else Isnull = false;
+            }
+            if (Isnull)
+            {
+                VisorSlotCache[PlayerId] = player.transform.FindChild("Sprite/Visor").GetComponent<VisorLayer>();
+            }
+            return VisorSlotCache[PlayerId];
+        }
+
+        public static HatParent HatSlot(this PoolablePlayer player)
+        {
+            return player.transform.FindChild("HatSlot").GetComponent<HatParent>();
+        }
+        public static VisorLayer VisorSlot(this PoolablePlayer player)
+        {
+            return player.transform.FindChild("Visor").GetComponent<VisorLayer>();
         }
     }
 }

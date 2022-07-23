@@ -35,6 +35,7 @@ namespace TheOtherRoles
         UncheckedEndGame,
         UncheckedSetTasks,
         DynamicMapOption,
+        UncheckedShapeShift,
 
         // Role functionality
 
@@ -113,6 +114,7 @@ namespace TheOtherRoles
         SilencerSilenceKill,
         CamouflagedComms,
         ResetCamouflagedComms,
+        EaterEat,
     }
 
     public static class RPCProcedure
@@ -288,6 +290,19 @@ namespace TheOtherRoles
             GameData.Instance.SetTasks(playerId, taskTypeIds);
         }
 
+        public static void UncheckedShapeShift(byte sourceId, byte targetId, byte useAnimation)
+        {
+            PlayerControl source = Helpers.playerById(sourceId);
+            PlayerControl target = Helpers.playerById(targetId);
+            bool animate = true;
+
+            if (useAnimation != byte.MaxValue)
+            {
+                animate = false;
+            }
+            source.Shapeshift(target, animate);
+        }
+
         public static void dynamicMapOption(byte mapId)
         {
             PlayerControl.GameOptions.MapId = mapId;
@@ -331,10 +346,13 @@ namespace TheOtherRoles
 
             Sheriff role = Sheriff.getRole(sheriff);
             if (role != null)
-                if (!CustomOptionHolder.yakuzaShotsShare.getBool())
+//                if (!CustomOptionHolder.yakuzaShotsShare.getBool())
                     role.numShots--;
-                else
-                    Gun.shareShots--;
+//                else
+//                    Gun.shareShots--;
+
+//シェリフの弾数制限を修正するため、場当たり的にヤクザの弾数共有破壊してます。そっちまで対応する気力ないんで直すんならそちらで　by.hawk
+
 
             if (misfire)
             {
@@ -1225,9 +1243,16 @@ namespace TheOtherRoles
             var killer = Helpers.playerById(killerId);
             var target = Helpers.playerById(targetId);
 
-
             target.MurderPlayer(target);
             killer.transform.position = target.transform.position;
+        }
+
+        public static void EaterEat(byte killerId, byte targetId)
+        {
+            var killer = Helpers.playerById(killerId);
+            var target = Helpers.playerById(targetId);
+
+            killer.MurderPlayer(target);
         }
 
         public static void dragPlaceBody(byte playerId)
@@ -1443,6 +1468,12 @@ namespace TheOtherRoles
                         byte reportSource = reader.ReadByte();
                         byte reportTarget = reader.ReadByte();
                         RPCProcedure.uncheckedCmdReportDeadBody(reportSource, reportTarget);
+                        break;
+                    case (byte)CustomRPC.UncheckedShapeShift:
+                        byte shapeshiftSource = reader.ReadByte();
+                        byte shapeshiftTarget = reader.ReadByte();
+                        byte useAnimation = reader.ReadByte();
+                        RPCProcedure.UncheckedShapeShift(shapeshiftSource, shapeshiftTarget, useAnimation);
                         break;
                     /*case (byte)CustomRPC.UncheckedEndGame:
                         RPCProcedure.uncheckedEndGame(reader.ReadByte());
@@ -1693,6 +1724,9 @@ namespace TheOtherRoles
                         break;
                     case (byte)CustomRPC.ResetCamouflagedComms:
                         RPCProcedure.ResetCamouflagedComms();
+                        break;
+                    case (byte)CustomRPC.EaterEat:
+                        RPCProcedure.EaterEat(reader.ReadByte(), reader.ReadByte());
                         break;
                 }
             }

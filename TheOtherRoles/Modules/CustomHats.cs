@@ -1,4 +1,3 @@
-
 using System.Reflection;
 using HarmonyLib;
 using UnityEngine;
@@ -389,7 +388,7 @@ namespace TheOtherRoles.Modules
                 foreach (HatData hatData in unlockedHats)
                 {
                     HatExtension ext = hatData.getHatExtension();
-
+                    HatManager.Instance.GetUnlockedHats();
                     if (ext != null)
                     {
                         if (!packages.ContainsKey(ext.package))
@@ -646,20 +645,20 @@ namespace TheOtherRoles.Modules
         }
     }
 
-    /*[HarmonyPatch(typeof(PoolablePlayer), nameof(PoolablePlayer.UpdateFromPlayerOutfit))]
+    [HarmonyPatch(typeof(PoolablePlayer), nameof(PoolablePlayer.UpdateFromPlayerOutfit))]
     public static class HatsPoolablePlayerPatch
     {
         public static void Postfix(PoolablePlayer __instance, GameData.PlayerOutfit outfit)
         {
-            if (__instance.VisorSlot?.transform == null || __instance.HatSlot?.transform == null) return;
+            if (__instance.VisorSlot()?.transform == null || __instance.HatSlot()?.transform == null) return;
 
             // fixes a bug in the original where the visor will show up beneath the hat,
             // instead of on top where it's supposed to be
-            __instance.VisorSlot.transform.localPosition = new Vector3(
-                __instance.VisorSlot.transform.localPosition.x,
-                __instance.VisorSlot.transform.localPosition.y,
-                __instance.HatSlot.transform.localPosition.z - 1
+            __instance.VisorSlot().transform.localPosition = new Vector3(
+                __instance.VisorSlot().transform.localPosition.x,
+                __instance.VisorSlot().transform.localPosition.y,
+                __instance.HatSlot().transform.localPosition.z - 1
                 );
         }
-    }*/
+    }
 }

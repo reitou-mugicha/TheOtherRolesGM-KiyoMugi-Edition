@@ -427,7 +427,7 @@ namespace TheOtherRoles.Patches
                 {
                     int localRemaining = PlayerControl.LocalPlayer.RemainingEmergencies;
                     int teamRemaining = Mathf.Max(0, maxNumberOfMeetings - meetingsCount);
-                    int remaining = Mathf.Min(localRemaining, (Mayor.mayor != null && Mayor.mayor == PlayerControl.LocalPlayer /*|| Mayor.evilMayor != null && Mayor.evilMayor == PlayerControl.LocalPlayer*/) ? 1 : teamRemaining);
+                    int remaining = Mathf.Min(localRemaining, (Mayor.mayor != null && Mayor.mayor == PlayerControl.LocalPlayer) ? 1 : teamRemaining);
 
                     __instance.StatusText.text = "<size=100%>" + String.Format(ModTranslation.getString("meetingStatus"), PlayerControl.LocalPlayer.name) + "</size>";
                     __instance.NumberText.text = String.Format(ModTranslation.getString("meetingCount"), localRemaining.ToString(), teamRemaining.ToString());

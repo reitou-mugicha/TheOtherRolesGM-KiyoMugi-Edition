@@ -77,6 +77,8 @@ namespace TheOtherRoles
             RoleType.NiceGuesser,
             RoleType.Sprinter,
             RoleType.Immortality,
+            //RoleType.Sunfish,
+            RoleType.Bat,
         };
 
         public static List<PlayerControl> candidates

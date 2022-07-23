@@ -10,9 +10,11 @@ using Hazel;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using System.IO;
 using UnityEngine;
 using TheOtherRoles.Modules;
 using TheOtherRoles.Utilities;
+using TheOtherRoles.Patches;
 
 namespace TheOtherRoles
 {
@@ -22,7 +24,7 @@ namespace TheOtherRoles
     public class TheOtherRolesPlugin : BasePlugin
     {
         public const string Id = "kiyomori.mugicha.theotherrolesgmkm";
-        public const string VersionString = "2.4.1";
+        public const string VersionString = "3.1.2.1";
         public static System.Version Version = System.Version.Parse(VersionString);
         internal static BepInEx.Logging.ManualLogSource Logger;
 
@@ -66,6 +68,10 @@ namespace TheOtherRoles
         {
             ModTranslation.Load();
             Logger = Log;
+            string path = "TheOtherHats";
+            if(!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+
             DebugMode = Config.Bind("Custom", "Enable Debug Mode", false);
             StreamerMode = Config.Bind("Custom", "Enable Streamer Mode", false);
             GhostsSeeTasks = Config.Bind("Custom", "Ghosts See Remaining Tasks", true);
@@ -96,6 +102,7 @@ namespace TheOtherRoles
             Instance = this;
             CustomOptionHolder.Load();
             CustomColors.Load();
+            RandomGeneratorPatch.Initialize();
 
             Patches.FreeNamePatch.Initialize();
             Harmony.PatchAll();
@@ -158,6 +165,12 @@ namespace TheOtherRoles
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
                 RPCProcedure.impostorEnd();
                 Modules.Logger.SendInGame("ForceEnd(Impostor Win)");
+            }
+
+            //MeetingでResetされないバグあるから対策
+            if (Input.GetKeyDown(KeyCode.F2) && CustomOptionHolder.enableDiePlayerZoomInOut.getBool() && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started)
+            {
+                DiePlayer.resetZoom();
             }
 
             // F11&F12を変えた理由・・・誰かがSteamでスクショ撮ろうとして廃村したから

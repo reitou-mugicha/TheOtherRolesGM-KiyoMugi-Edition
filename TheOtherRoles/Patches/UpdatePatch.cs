@@ -366,6 +366,8 @@ namespace TheOtherRoles.Patches
                 enabled &= false;
             else if (UnderTaker.underTaker != null && UnderTaker.dragginBody && PlayerControl.LocalPlayer == UnderTaker.underTaker)
                 enabled = false;
+            else if (PlayerControl.LocalPlayer.isRole(RoleType.Eater))
+                enabled &= false;
 
             if (enabled) __instance.KillButton.Show();
             else __instance.KillButton.Hide();
