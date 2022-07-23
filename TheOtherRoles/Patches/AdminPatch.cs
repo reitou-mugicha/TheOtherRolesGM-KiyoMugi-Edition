@@ -124,6 +124,11 @@ namespace TheOtherRoles.Patches
                         TimeRemaining.color = Palette.White;
                     }
 
+<<<<<<< HEAD
+=======
+//evilHackerのアドミンが壊れる問題修正 - ここの記述が146行目以降のelseとダブってます by.hawk
+/*
+>>>>>>> master
                     if (MapOptions.restrictAdminTime <= 0f)
                     {
                         __instance.BackgroundColor.SetColor(Palette.DisabledGrey);
@@ -136,7 +141,11 @@ namespace TheOtherRoles.Patches
                         }
                         return false;
                     }
+<<<<<<< HEAD
 
+=======
+*/
+>>>>>>> master
                     if (PlayerControl.LocalPlayer.isRole(RoleType.EvilHacker))
                     {
                         TimeRemaining.gameObject.SetActive(false);
@@ -200,6 +209,14 @@ namespace TheOtherRoles.Patches
                         {
                             int num = plainShipRoom.roomArea.OverlapCollider(__instance.filter, __instance.buffer);
                             int num2 = num;
+<<<<<<< HEAD
+=======
+                            //アプデ前アドミン仕様
+                            if (CustomOptionHolder.oldAirShipAdmin.getBool() && (counterArea.RoomType == SystemTypes.Ventilation || counterArea.RoomType == SystemTypes.HallOfPortraits))
+                            {
+                                num2 = 0;
+                            }
+>>>>>>> master
                             for (int j = 0; j < num; j++)
                             {
                                 Collider2D collider2D = __instance.buffer[j];
@@ -359,4 +376,20 @@ namespace TheOtherRoles.Patches
             }
         }
     }
+<<<<<<< HEAD
+=======
+
+    [HarmonyPatch(typeof(ShipStatus),nameof(ShipStatus.Awake))]
+    public class DisableRecordsAdminPatch
+    {
+        public static void Postfix()
+        {
+            if (!CustomOptionHolder.enableRecordsAdmin.getBool() && PlayerControl.LocalPlayer.isAirship())
+            {
+                Transform recordsAdmin = GameObject.Find("Airship(Clone)").transform.FindChild("Records").FindChild("records_admin_map");
+                GameObject.Destroy(recordsAdmin.gameObject);
+            }
+        }
+    }
+>>>>>>> master
 }

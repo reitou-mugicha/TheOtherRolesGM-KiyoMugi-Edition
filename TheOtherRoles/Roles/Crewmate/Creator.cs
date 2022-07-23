@@ -7,7 +7,11 @@ using TheOtherRoles.Objects;
 using TheOtherRoles.Patches;
 using static TheOtherRoles.Patches.PlayerControlFixedUpdatePatch;
 using static TheOtherRoles.TheOtherRoles;
+<<<<<<< HEAD
   using static TheOtherRoles.GameHistory;
+=======
+using static TheOtherRoles.GameHistory;
+>>>>>>> master
 
 namespace TheOtherRoles
 {

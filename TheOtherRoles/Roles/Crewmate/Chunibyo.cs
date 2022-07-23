@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 /*
+=======
+>>>>>>> master
 using HarmonyLib;
 using System.Collections.Generic;
 using UnityEngine;
@@ -172,4 +175,8 @@ namespace TheOtherRoles
             }
         }
     }
+<<<<<<< HEAD
 */
+=======
+}
+>>>>>>> master

@@ -6,14 +6,23 @@ using UnityEngine;
 using TheOtherRoles.Objects;
 using TheOtherRoles.Modules;
 using TheOtherRoles.Utilities;
+<<<<<<< HEAD
 
+=======
+using TheOtherRoles.Patches;
+>>>>>>> master
 
 namespace TheOtherRoles
 {
     [HarmonyPatch]
     public static class TheOtherRoles
     {
+<<<<<<< HEAD
         public static System.Random rnd = new System.Random((int)DateTime.Now.Ticks);
+=======
+        //public static System.Random rnd = new System.Random((int)DateTime.Now.Ticks); //Old Random
+        public static PermutedCongruentialGenerator rnd { get { return RandomGeneratorPatch.Instance; } }
+>>>>>>> master
 
         public enum Teams
         {

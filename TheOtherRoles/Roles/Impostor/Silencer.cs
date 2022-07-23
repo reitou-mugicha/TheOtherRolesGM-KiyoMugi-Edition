@@ -64,7 +64,11 @@ namespace TheOtherRoles
                     }
                 },
                 () => { return PlayerControl.LocalPlayer.isRole(RoleType.Silencer) && !PlayerControl.LocalPlayer.Data.IsDead; },
+<<<<<<< HEAD
                 () => { return local.currentTarget && PlayerControl.LocalPlayer.CanMove; },
+=======
+                () => { return local.currentTarget && !local.currentTarget.isImpostor() &&PlayerControl.LocalPlayer.CanMove; },
+>>>>>>> master
                 () => { silenceKillButton.Timer = silenceKillButton.MaxTimer = silenceCooldown; },
                 getButtonSprite(),
                 new Vector3(-1.8f, -0.06f, 0),

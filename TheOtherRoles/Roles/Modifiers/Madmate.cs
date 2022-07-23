@@ -76,7 +76,13 @@ namespace TheOtherRoles
             RoleType.Medium,
             RoleType.NiceGuesser,
             RoleType.Sprinter,
+<<<<<<< HEAD
             RoleType.Timer
+=======
+            RoleType.Immortality,
+            //RoleType.Sunfish,
+            RoleType.Bat,
+>>>>>>> master
         };
 
         public static List<PlayerControl> candidates

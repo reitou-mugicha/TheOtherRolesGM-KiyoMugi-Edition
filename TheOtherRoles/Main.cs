@@ -10,9 +10,17 @@ using Hazel;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+<<<<<<< HEAD
 using UnityEngine;
 using TheOtherRoles.Modules;
 using TheOtherRoles.Utilities;
+=======
+using System.IO;
+using UnityEngine;
+using TheOtherRoles.Modules;
+using TheOtherRoles.Utilities;
+using TheOtherRoles.Patches;
+>>>>>>> master
 
 namespace TheOtherRoles
 {
@@ -22,7 +30,11 @@ namespace TheOtherRoles
     public class TheOtherRolesPlugin : BasePlugin
     {
         public const string Id = "kiyomori.mugicha.theotherrolesgmkm";
+<<<<<<< HEAD
         public const string VersionString = "2.3.0";
+=======
+        public const string VersionString = "3.1.2.1";
+>>>>>>> master
         public static System.Version Version = System.Version.Parse(VersionString);
         internal static BepInEx.Logging.ManualLogSource Logger;
 
@@ -66,6 +78,13 @@ namespace TheOtherRoles
         {
             ModTranslation.Load();
             Logger = Log;
+<<<<<<< HEAD
+=======
+            string path = "TheOtherHats";
+            if(!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+
+>>>>>>> master
             DebugMode = Config.Bind("Custom", "Enable Debug Mode", false);
             StreamerMode = Config.Bind("Custom", "Enable Streamer Mode", false);
             GhostsSeeTasks = Config.Bind("Custom", "Ghosts See Remaining Tasks", true);
@@ -96,6 +115,10 @@ namespace TheOtherRoles
             Instance = this;
             CustomOptionHolder.Load();
             CustomColors.Load();
+<<<<<<< HEAD
+=======
+            RandomGeneratorPatch.Initialize();
+>>>>>>> master
 
             Patches.FreeNamePatch.Initialize();
             Harmony.PatchAll();
@@ -149,6 +172,10 @@ namespace TheOtherRoles
                 MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.CrewmateEnd, Hazel.SendOption.Reliable, -1);
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
                 RPCProcedure.crewmateEnd();
+<<<<<<< HEAD
+=======
+                Modules.Logger.SendInGame("ForceEnd(Crewmate Win)");
+>>>>>>> master
             }
             // F11でクルー強制勝利
             if (Input.GetKeyDown(KeyCode.F11) && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started && AmongUsClient.Instance.AmHost)
@@ -156,6 +183,7 @@ namespace TheOtherRoles
                 MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.ImpostorEnd, Hazel.SendOption.Reliable, -1);
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
                 RPCProcedure.impostorEnd();
+<<<<<<< HEAD
             }
 
             if (Input.GetKeyDown(KeyCode.Colon) && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started && AmongUsClient.Instance.AmHost)
@@ -164,6 +192,15 @@ namespace TheOtherRoles
                 writer.Write(10000);
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
                 RPCProcedure.useAdminTime(10000);
+=======
+                Modules.Logger.SendInGame("ForceEnd(Impostor Win)");
+            }
+
+            //MeetingでResetされないバグあるから対策
+            if (Input.GetKeyDown(KeyCode.F2) && CustomOptionHolder.enableDiePlayerZoomInOut.getBool() && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started)
+            {
+                DiePlayer.resetZoom();
+>>>>>>> master
             }
 
             // F11&F12を変えた理由・・・誰かがSteamでスクショ撮ろうとして廃村したから

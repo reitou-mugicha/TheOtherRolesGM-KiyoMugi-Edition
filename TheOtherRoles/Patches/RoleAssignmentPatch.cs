@@ -158,7 +158,11 @@ namespace TheOtherRoles.Patches
             impSettings.Add((byte)RoleType.Accelerator, CustomOptionHolder.acceleratorSpawnRate.data);
             impSettings.Add((byte)RoleType.Trapper, CustomOptionHolder.trapperSpawnRate.data);
             impSettings.Add((byte)RoleType.Silencer, CustomOptionHolder.silencerSpawnRate.data);
+<<<<<<< HEAD
 
+=======
+            impSettings.Add((byte)RoleType.Eater, CustomOptionHolder.eaterSpawnRate.data);
+>>>>>>> master
 
             neutralSettings.Add((byte)RoleType.Jester, CustomOptionHolder.jesterSpawnRate.data);
             neutralSettings.Add((byte)RoleType.Arsonist, CustomOptionHolder.arsonistSpawnRate.data);
@@ -184,12 +188,23 @@ namespace TheOtherRoles.Patches
             crewSettings.Add((byte)RoleType.Mayor, CustomOptionHolder.mayorSpawnRate.data);
             crewSettings.Add((byte)RoleType.SecurityGuard, CustomOptionHolder.securityGuardSpawnRate.data);
             crewSettings.Add((byte)RoleType.Portalmaker, CustomOptionHolder.portalmakerSpawnRate.data);
+<<<<<<< HEAD
             //crewSettings.Add((byte)RoleType.Chunibyo, CustomOptionHolder.chunibyoSpawnRate.data);
+=======
+            crewSettings.Add((byte)RoleType.Chunibyo, CustomOptionHolder.chunibyoSpawnRate.data);
+>>>>>>> master
             crewSettings.Add((byte)RoleType.Bakery, CustomOptionHolder.bakerySpawnRate.data);
             crewSettings.Add((byte)RoleType.Medium, CustomOptionHolder.mediumSpawnRate.data);/*
             crewSettings.Add((byte)RoleType.Student, CustomOptionHolder.sheriffSpawnRate.data);
             crewSettings.Add((byte)RoleType.Creator, CustomOptionHolder.creatorSpawnRate.data);*/
             crewSettings.Add((byte)RoleType.TimeReviver, CustomOptionHolder.timeReviverSpawnRate.data);
+<<<<<<< HEAD
+=======
+            crewSettings.Add((byte)RoleType.Jammer, CustomOptionHolder.jammerSpawnRate.data);
+            crewSettings.Add((byte)RoleType.Immortality, CustomOptionHolder.immortalitySpawnRate.data);
+            //crewSettings.Add((byte)RoleType.Sunfish, CustomOptionHolder.sunfishSpawnRate.data);
+            crewSettings.Add((byte)RoleType.Bat, CustomOptionHolder.batSpawnRate.data);
+>>>>>>> master
 
             if (impostors.Count > 1)
             {

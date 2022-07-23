@@ -2,7 +2,10 @@ using System;
 using HarmonyLib;
 using Hazel;
 using InnerNet;
+<<<<<<< HEAD
 using TheOtherRoles.Utilities;
+=======
+>>>>>>> master
 
 namespace TheOtherRoles.Modules
 {
@@ -24,7 +27,11 @@ namespace TheOtherRoles.Modules
                         if (AmongUsClient.Instance.AmHost && AmongUsClient.Instance.CanBan())
                         { // checking both just cause
                             handled = true;
+<<<<<<< HEAD
                             if (!Int32.TryParse(text.Substring(6), out LobbyLimit))
+=======
+                            if (!Int32.TryParse(text[6..], out LobbyLimit))
+>>>>>>> master
                             {
                                 __instance.AddChat(PlayerControl.LocalPlayer, "Invalid Size\nUsage: /size {amount}");
                             }
@@ -34,7 +41,11 @@ namespace TheOtherRoles.Modules
                                 if (LobbyLimit != PlayerControl.GameOptions.MaxPlayers)
                                 {
                                     PlayerControl.GameOptions.MaxPlayers = LobbyLimit;
+<<<<<<< HEAD
                                     FastDestroyableSingleton<GameStartManager>.Instance.LastPlayerCount = LobbyLimit;
+=======
+                                    DestroyableSingleton<GameStartManager>.Instance.LastPlayerCount = LobbyLimit;
+>>>>>>> master
                                     PlayerControl.LocalPlayer.RpcSyncSettings(PlayerControl.GameOptions);
                                     __instance.AddChat(PlayerControl.LocalPlayer, $"Lobby Size changed to {LobbyLimit} players");
                                 }
