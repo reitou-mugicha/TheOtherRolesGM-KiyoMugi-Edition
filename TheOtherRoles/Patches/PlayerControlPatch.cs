@@ -299,13 +299,10 @@ namespace TheOtherRoles.Patches
                     target = setTarget(true, true, new List<PlayerControl>() { Spy.spy, Sidekick.wasTeamRed ? Sidekick.sidekick : null, Jackal.wasTeamRed ? Jackal.jackal : null });
                 }
             }
-<<<<<<< HEAD
-=======
             else if (CustomOptionHolder.jammerAliveFriendlyFire.getBool() && Jammer.isJammerAlive())
             {
                 target = setTarget(false, true);
             }
->>>>>>> master
             else
             {
                 target = setTarget(true, true, new List<PlayerControl>() { Sidekick.wasImpostor ? Sidekick.sidekick : null, Jackal.wasImpostor ? Jackal.jackal : null });
@@ -431,13 +428,10 @@ namespace TheOtherRoles.Patches
                     target = setTarget(true, true, new List<PlayerControl>() { Spy.spy, Sidekick.wasTeamRed ? Sidekick.sidekick : null, Jackal.wasTeamRed ? Jackal.jackal : null });
                 }
             }
-<<<<<<< HEAD
-=======
             else if (CustomOptionHolder.jammerAliveFriendlyFire.getBool() && Jammer.isJammerAlive())
             {
                 target = setTarget(false, true);
             }
->>>>>>> master
             else
             {
                 target = setTarget(true, true, new List<PlayerControl>() { Sidekick.wasImpostor ? Sidekick.sidekick : null, Jackal.wasImpostor ? Jackal.jackal : null });
@@ -769,30 +763,16 @@ namespace TheOtherRoles.Patches
             }
         }
 
-<<<<<<< HEAD
-        static void bountyHunterUpdate()
-        {
-            if (BountyHunter.bountyHunter == null || PlayerControl.LocalPlayer != BountyHunter.bountyHunter) return;
-
-            if (BountyHunter.bountyHunter.Data.IsDead)
-            {
-=======
         static void bountyHunterUpdate() {
             if (BountyHunter.bountyHunter == null || PlayerControl.LocalPlayer != BountyHunter.bountyHunter) return;
 
             if (BountyHunter.bountyHunter.Data.IsDead) {
->>>>>>> master
                 if (BountyHunter.arrow != null || BountyHunter.arrow.arrow != null) UnityEngine.Object.Destroy(BountyHunter.arrow.arrow);
                 BountyHunter.arrow = null;
                 if (BountyHunter.cooldownText != null && BountyHunter.cooldownText.gameObject != null) UnityEngine.Object.Destroy(BountyHunter.cooldownText.gameObject);
                 BountyHunter.cooldownText = null;
                 BountyHunter.bounty = null;
-<<<<<<< HEAD
-                foreach (PoolablePlayer p in MapOptions.playerIcons.Values)
-                {
-=======
                 foreach (PoolablePlayer p in MapOptions.playerIcons.Values) {
->>>>>>> master
                     if (p != null && p.gameObject != null) p.gameObject.SetActive(false);
                 }
                 return;
@@ -801,36 +781,20 @@ namespace TheOtherRoles.Patches
             BountyHunter.arrowUpdateTimer -= Time.fixedDeltaTime;
             BountyHunter.bountyUpdateTimer -= Time.fixedDeltaTime;
 
-<<<<<<< HEAD
-            if (BountyHunter.bounty == null || BountyHunter.bountyUpdateTimer <= 0f)
-            {
-=======
             if (BountyHunter.bounty == null || BountyHunter.bountyUpdateTimer <= 0f) {
->>>>>>> master
                 // Set new bounty
                 BountyHunter.bounty = null;
                 BountyHunter.arrowUpdateTimer = 0f; // Force arrow to update
                 BountyHunter.bountyUpdateTimer = BountyHunter.bountyDuration;
                 var possibleTargets = new List<PlayerControl>();
-<<<<<<< HEAD
-                foreach (PlayerControl p in PlayerControl.AllPlayerControls.GetFastEnumerator())
-                {
-                    if (!p.Data.IsDead && !p.Data.Disconnected && p != p.Data.Role.IsImpostor && p != Spy.spy && (p != Sidekick.sidekick || !Sidekick.wasTeamRed) && (p != Jackal.jackal || !Jackal.wasTeamRed) && (p.hasModifier(ModifierType.Mini) || Mini.isGrownUp(p)) && (Lovers.getPartner(BountyHunter.bountyHunter) == null || p != Lovers.getPartner(BountyHunter.bountyHunter))) possibleTargets.Add(p);
-=======
                 foreach (PlayerControl p in PlayerControl.AllPlayerControls) {
                     if (!p.Data.IsDead && !p.Data.Disconnected && p != p.Data.Role.IsImpostor && p != Spy.spy && (p != Sidekick.sidekick || !Sidekick.wasTeamRed) && (p != Jackal.jackal || !Jackal.wasTeamRed) && !(p.hasModifier(ModifierType.Mini) && !Mini.isGrownUp(p)) && (Lovers.getPartner(BountyHunter.bountyHunter) == null || p != Lovers.getPartner(BountyHunter.bountyHunter))) possibleTargets.Add(p);
->>>>>>> master
                 }
                 BountyHunter.bounty = possibleTargets[TheOtherRoles.rnd.Next(0, possibleTargets.Count)];
                 if (BountyHunter.bounty == null) return;
 
                 // Show poolable player
-<<<<<<< HEAD
-                if (FastDestroyableSingleton<HudManager>.Instance != null && FastDestroyableSingleton<HudManager>.Instance.UseButton != null)
-                {
-=======
                 if (FastDestroyableSingleton<HudManager>.Instance != null && FastDestroyableSingleton<HudManager>.Instance.UseButton != null) {
->>>>>>> master
                     foreach (PoolablePlayer pp in MapOptions.playerIcons.Values) pp.gameObject.SetActive(false);
                     if (MapOptions.playerIcons.ContainsKey(BountyHunter.bounty.PlayerId) && MapOptions.playerIcons[BountyHunter.bounty.PlayerId].gameObject != null)
                         MapOptions.playerIcons[BountyHunter.bounty.PlayerId].gameObject.SetActive(true);
@@ -838,27 +802,14 @@ namespace TheOtherRoles.Patches
             }
 
             // Update Cooldown Text
-<<<<<<< HEAD
-            if (BountyHunter.cooldownText != null)
-            {
-=======
             if (BountyHunter.cooldownText != null) {
->>>>>>> master
                 BountyHunter.cooldownText.text = Mathf.CeilToInt(Mathf.Clamp(BountyHunter.bountyUpdateTimer, 0, BountyHunter.bountyDuration)).ToString();
             }
 
             // Update Arrow
-<<<<<<< HEAD
-            if (BountyHunter.showArrow && BountyHunter.bounty != null)
-            {
-                if (BountyHunter.arrow == null) BountyHunter.arrow = new Arrow(Color.red);
-                if (BountyHunter.arrowUpdateTimer <= 0f)
-                {
-=======
             if (BountyHunter.showArrow && BountyHunter.bounty != null) {
                 if (BountyHunter.arrow == null) BountyHunter.arrow = new Arrow(Color.red);
                 if (BountyHunter.arrowUpdateTimer <= 0f) {
->>>>>>> master
                     BountyHunter.arrow.Update(BountyHunter.bounty.transform.position);
                     BountyHunter.arrowUpdateTimer = BountyHunter.arrowUpdateIntervall;
                 }
@@ -1484,11 +1435,7 @@ namespace TheOtherRoles.Patches
         {
             __result = __instance.moveable &&
                 !Minigame.Instance &&
-<<<<<<< HEAD
-                (!DestroyableSingleton<HudManager>.InstanceExists || (!FastDestroyableSingleton<HudManager>.Instance.Chat.IsOpen && !FastDestroyableSingleton<HudManager>.Instance.KillOverlay.IsOpen && !FastDestroyableSingleton<HudManager>.Instance.GameMenu.IsOpen)) &&
-=======
                 (!DestroyableSingleton<HudManager>.InstanceExists || (!DestroyableSingleton<HudManager>.Instance.Chat.IsOpen && !DestroyableSingleton<HudManager>.Instance.KillOverlay.IsOpen && !DestroyableSingleton<HudManager>.Instance.GameMenu.IsOpen)) &&
->>>>>>> master
                 (!MapBehaviour.Instance || !MapBehaviour.Instance.IsOpenStopped) &&
                 !MeetingHud.Instance &&
                 !ExileController.Instance &&

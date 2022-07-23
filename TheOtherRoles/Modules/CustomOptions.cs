@@ -130,11 +130,7 @@ namespace TheOtherRoles
             }
         }
 
-<<<<<<< HEAD
-        public static void ShareOptionSelections()
-=======
         /*public static void ShareOptionSelections()
->>>>>>> master
         {
             if (PlayerControl.AllPlayerControls.Count <= 1 || AmongUsClient.Instance?.AmHost == false && PlayerControl.LocalPlayer == null) return;
 
@@ -146,8 +142,6 @@ namespace TheOtherRoles
                 messageWriter.WritePacked((uint)Convert.ToUInt32(option.selection));
             }
             messageWriter.EndMessage();
-<<<<<<< HEAD
-=======
         }*/
 
         public static void ShareOptionSelections() {
@@ -168,7 +162,6 @@ namespace TheOtherRoles
                 }
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
             }
->>>>>>> master
         }
 
         // Getter

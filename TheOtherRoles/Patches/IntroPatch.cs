@@ -114,8 +114,6 @@ namespace TheOtherRoles.Patches
                 yourTeam = soloTeam;
             }
 
-<<<<<<< HEAD
-=======
             // Jammer Alive Intro
             if (PlayerControl.LocalPlayer.isImpostor() && Jammer.isJammerAlive())
             {
@@ -124,7 +122,6 @@ namespace TheOtherRoles.Patches
                 yourTeam = jammerImpostorTeam;
             }
 
->>>>>>> master
             // Don't show the GM
             if (!PlayerControl.LocalPlayer.isGM())
             {

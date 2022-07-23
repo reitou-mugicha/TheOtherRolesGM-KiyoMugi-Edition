@@ -35,10 +35,7 @@ namespace TheOtherRoles
         UncheckedEndGame,
         UncheckedSetTasks,
         DynamicMapOption,
-<<<<<<< HEAD
-=======
         UncheckedShapeShift,
->>>>>>> master
 
         // Role functionality
 
@@ -115,12 +112,9 @@ namespace TheOtherRoles
         RPCExiled,
         TrapperTrap,
         SilencerSilenceKill,
-<<<<<<< HEAD
-=======
         CamouflagedComms,
         ResetCamouflagedComms,
         EaterEat,
->>>>>>> master
     }
 
     public static class RPCProcedure
@@ -208,11 +202,7 @@ namespace TheOtherRoles
         {
             var player = Helpers.playerById(playerId);
             player.roleAssigned = false;
-<<<<<<< HEAD
-            FastDestroyableSingleton<RoleManager>.Instance.SetRole(player, (RoleTypes)roleType);
-=======
             DestroyableSingleton<RoleManager>.Instance.SetRole(player, (RoleTypes)roleType);
->>>>>>> master
         }
 
         public static void versionHandshake(int major, int minor, int build, int revision, Guid guid, int clientId)
@@ -300,8 +290,6 @@ namespace TheOtherRoles
             GameData.Instance.SetTasks(playerId, taskTypeIds);
         }
 
-<<<<<<< HEAD
-=======
         public static void UncheckedShapeShift(byte sourceId, byte targetId, byte useAnimation)
         {
             PlayerControl source = Helpers.playerById(sourceId);
@@ -315,7 +303,6 @@ namespace TheOtherRoles
             source.Shapeshift(target, animate);
         }
 
->>>>>>> master
         public static void dynamicMapOption(byte mapId)
         {
             PlayerControl.GameOptions.MapId = mapId;
@@ -359,12 +346,6 @@ namespace TheOtherRoles
 
             Sheriff role = Sheriff.getRole(sheriff);
             if (role != null)
-<<<<<<< HEAD
-                if (!CustomOptionHolder.yakuzaShotsShare.getBool())
-                    role.numShots--;
-                else
-                    Gun.shareShots--;
-=======
 //                if (!CustomOptionHolder.yakuzaShotsShare.getBool())
                     role.numShots--;
 //                else
@@ -372,7 +353,6 @@ namespace TheOtherRoles
 
 //シェリフの弾数制限を修正するため、場当たり的にヤクザの弾数共有破壊してます。そっちまで対応する気力ないんで直すんならそちらで　by.hawk
 
->>>>>>> master
 
             if (misfire)
             {
@@ -588,13 +568,8 @@ namespace TheOtherRoles
 
                 if (player.Data.Role.IsImpostor)
                 {
-<<<<<<< HEAD
-                    FastDestroyableSingleton<RoleManager>.Instance.SetRole(player, RoleTypes.Crewmate);
-                    FastDestroyableSingleton<RoleManager>.Instance.SetRole(oldShifter, RoleTypes.Impostor);
-=======
                     DestroyableSingleton<RoleManager>.Instance.SetRole(player, RoleTypes.Crewmate);
                     DestroyableSingleton<RoleManager>.Instance.SetRole(oldShifter, RoleTypes.Impostor);
->>>>>>> master
                 }
             }
 
@@ -1092,11 +1067,7 @@ namespace TheOtherRoles
         public static void foxCreatesImmoralist(byte targetId)
         {
             PlayerControl player = Helpers.playerById(targetId);
-<<<<<<< HEAD
-            FastDestroyableSingleton<RoleManager>.Instance.SetRole(player, RoleTypes.Crewmate);
-=======
             DestroyableSingleton<RoleManager>.Instance.SetRole(player, RoleTypes.Crewmate);
->>>>>>> master
             erasePlayerRoles(player.PlayerId, true);
             player.setRole(RoleType.Immoralist);
             player.clearAllTasks();
@@ -1272,16 +1243,10 @@ namespace TheOtherRoles
             var killer = Helpers.playerById(killerId);
             var target = Helpers.playerById(targetId);
 
-<<<<<<< HEAD
-
-=======
->>>>>>> master
             target.MurderPlayer(target);
             killer.transform.position = target.transform.position;
         }
 
-<<<<<<< HEAD
-=======
         public static void EaterEat(byte killerId, byte targetId)
         {
             var killer = Helpers.playerById(killerId);
@@ -1290,7 +1255,6 @@ namespace TheOtherRoles
             killer.MurderPlayer(target);
         }
 
->>>>>>> master
         public static void dragPlaceBody(byte playerId)
         {
             DeadBody[] array = UnityEngine.Object.FindObjectsOfType<DeadBody>();
@@ -1419,8 +1383,6 @@ namespace TheOtherRoles
             target.MurderPlayer(target);
         }
 
-<<<<<<< HEAD
-=======
         public static void CamouflagedComms()
         {
             Camouflager.startCamouflage();
@@ -1431,7 +1393,6 @@ namespace TheOtherRoles
             Camouflager.resetCamouflage();
         }
 
->>>>>>> master
         [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.HandleRpc))]
         class RPCHandlerPatch
         {
@@ -1508,15 +1469,12 @@ namespace TheOtherRoles
                         byte reportTarget = reader.ReadByte();
                         RPCProcedure.uncheckedCmdReportDeadBody(reportSource, reportTarget);
                         break;
-<<<<<<< HEAD
-=======
                     case (byte)CustomRPC.UncheckedShapeShift:
                         byte shapeshiftSource = reader.ReadByte();
                         byte shapeshiftTarget = reader.ReadByte();
                         byte useAnimation = reader.ReadByte();
                         RPCProcedure.UncheckedShapeShift(shapeshiftSource, shapeshiftTarget, useAnimation);
                         break;
->>>>>>> master
                     /*case (byte)CustomRPC.UncheckedEndGame:
                         RPCProcedure.uncheckedEndGame(reader.ReadByte());
                         break;*/
@@ -1761,8 +1719,6 @@ namespace TheOtherRoles
                     case (byte)CustomRPC.SilencerSilenceKill:
                         RPCProcedure.SilencerSilenceKill(reader.ReadByte());
                         break;
-<<<<<<< HEAD
-=======
                     case (byte)CustomRPC.CamouflagedComms:
                         RPCProcedure.CamouflagedComms();
                         break;
@@ -1772,7 +1728,6 @@ namespace TheOtherRoles
                     case (byte)CustomRPC.EaterEat:
                         RPCProcedure.EaterEat(reader.ReadByte(), reader.ReadByte());
                         break;
->>>>>>> master
                 }
             }
         }

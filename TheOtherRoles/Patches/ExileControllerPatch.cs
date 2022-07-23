@@ -221,21 +221,13 @@ namespace TheOtherRoles.Patches
                 {
                     PlayerControl.LocalPlayer.NetTransform.Halt(); // Stop current movement
                     Helpers.handleVampireBiteOnBodyReport(); // Manually call Vampire handling, since the CmdReportDeadBody Prefix won't be called
-<<<<<<< HEAD
-                    RPCProcedure.uncheckedCmdReportDeadBody(PlayerControl.LocalPlayer.PlayerId, Byte.MinValue);
-=======
                     RPCProcedure.uncheckedCmdReportDeadBody(PlayerControl.LocalPlayer.PlayerId, Byte.MaxValue);
->>>>>>> master
 
                     MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.UncheckedCmdReportDeadBody, Hazel.SendOption.Reliable, -1);
                     writer.Write(PlayerControl.LocalPlayer.PlayerId);
                     writer.Write(Byte.MaxValue);
                     AmongUsClient.Instance.FinishRpcImmediately(writer);
-<<<<<<< HEAD
-                    RPCProcedure.uncheckedCmdReportDeadBody(PlayerControl.LocalPlayer.PlayerId, Byte.MinValue);
-=======
                     RPCProcedure.uncheckedCmdReportDeadBody(PlayerControl.LocalPlayer.PlayerId, Byte.MaxValue);
->>>>>>> master
                 }
             }
 

@@ -76,11 +76,7 @@ namespace TheOtherRoles
                     AmongUsClient.Instance.FinishRpcImmediately(writer);
                     mayorMeetingButton.Timer = mayorMeetingButton.MaxTimer;
                 },
-<<<<<<< HEAD
-                () => { return PlayerControl.LocalPlayer.isRole(RoleType.Mayor) && !PlayerControl.LocalPlayer.Data.IsDead && local.numButton > 0; },
-=======
                 () => { return PlayerControl.LocalPlayer.isRole(RoleType.Mayor) && !PlayerControl.LocalPlayer.Data.IsDead && Mayor.meetingButton && local.numButton > 0; },
->>>>>>> master
                 () =>
                 {
                     mayorMeetingButton.actionButton.OverrideText(ModTranslation.getString("mayorMeetingText"));

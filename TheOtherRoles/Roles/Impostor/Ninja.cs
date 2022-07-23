@@ -1,14 +1,3 @@
-<<<<<<< HEAD
-using System.Linq;
-using HarmonyLib;
-using Hazel;
-using System;
-using System.Collections.Generic;
-using UnityEngine;
-using TheOtherRoles.Objects;
-using TheOtherRoles.Patches;
-using TheOtherRoles.Modules;
-=======
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +7,6 @@ using TheOtherRoles.Objects;
 using TheOtherRoles.Patches;
 using TheOtherRoles.Modules;
 using UnityEngine;
->>>>>>> master
 
 namespace TheOtherRoles
 {
@@ -200,17 +188,11 @@ namespace TheOtherRoles
 
                     PlayerControl.LocalPlayer.SetKillTimerUnchecked(Math.Max(PlayerControl.LocalPlayer.killTimer, Ninja.killPenalty));
                 }
-<<<<<<< HEAD
-            );
-            ninjaButton.buttonText = ModTranslation.getString("NinjaText");
-            ninjaButton.effectCancellable = true;
-=======
             )
             {
                 buttonText = ModTranslation.getString("NinjaText"),
                 effectCancellable = true
             };
->>>>>>> master
         }
 
         public static void SetButtonCooldowns()
@@ -231,10 +213,6 @@ namespace TheOtherRoles
             {
                 if (player.MyPhysics?.myPlayer.cosmetics.currentBodySprite.BodySprite != null)
                 {
-<<<<<<< HEAD
-                    if (player.MyPhysics.myPlayer.cosmetics.currentBodySprite.BodySprite.color != color)
-=======
->>>>>>> master
                     player.MyPhysics.myPlayer.cosmetics.currentBodySprite.BodySprite.color = color;
                 }
 
@@ -252,12 +230,9 @@ namespace TheOtherRoles
 
                 if (player.cosmetics.visor != null)
                     player.cosmetics.visor.Image.color = color;
-<<<<<<< HEAD
-=======
 
                 if (player.cosmetics.colorBlindText != null)
                     player.cosmetics.colorBlindText.color = color;
->>>>>>> master
             }
             catch { }
         }

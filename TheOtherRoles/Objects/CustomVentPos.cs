@@ -66,8 +66,6 @@ namespace TheOtherRoles.Objects
                 ballast.vent.Left = storage.vent;
             }
         }
-<<<<<<< HEAD
-=======
 
         public class MiraVentPos
         {
@@ -83,6 +81,5 @@ namespace TheOtherRoles.Objects
                 Yji.vent.Left = comms.vent;
             }
         }
->>>>>>> master
     }
 }

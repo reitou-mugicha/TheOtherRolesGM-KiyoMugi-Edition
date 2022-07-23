@@ -459,14 +459,11 @@ namespace TheOtherRoles
             return result;
         }
 
-<<<<<<< HEAD
-=======
         public static int RandomIdx<T>(this IList<T> self)
         {
             return UnityEngine.Random.Range(0, self.Count);
         }
 
->>>>>>> master
         public static bool hidePlayerName(PlayerControl target)
         {
             return hidePlayerName(PlayerControl.LocalPlayer, target);
@@ -642,10 +639,7 @@ namespace TheOtherRoles
                 MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(killer.NetId, (byte)CustomRPC.ShieldedMurderAttempt, Hazel.SendOption.Reliable, -1);
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
                 RPCProcedure.shieldedMurderAttempt();
-<<<<<<< HEAD
-=======
                 Helpers.showFlash(new Color32(220, 20, 60, byte.MaxValue));
->>>>>>> master
                 return MurderAttemptResult.SuppressKill;
             }
 
@@ -739,8 +733,6 @@ namespace TheOtherRoles
         {
             return AccessTools.Method(self.GetType(), nameof(Il2CppObjectBase.TryCast)).MakeGenericMethod(type).Invoke(self, Array.Empty<object>());
         }
-<<<<<<< HEAD
-=======
 
         public static bool isSkeld(this PlayerControl player)
         {
@@ -795,6 +787,5 @@ namespace TheOtherRoles
         {
             return player.transform.FindChild("Visor").GetComponent<VisorLayer>();
         }
->>>>>>> master
     }
 }

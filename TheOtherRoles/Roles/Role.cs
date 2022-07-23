@@ -37,15 +37,11 @@ namespace TheOtherRoles
         Mayor,
         Bakery,
         TimeReviver,
-<<<<<<< HEAD
-        Timer,
-=======
         Jammer,
         Immortality,
         //Sunfish,
         Prophet,
         Bat,
->>>>>>> master
 
 
         Impostor = 100,
@@ -75,10 +71,7 @@ namespace TheOtherRoles
         Accelerator,
         Trapper,
         Silencer,
-<<<<<<< HEAD
-=======
         Eater,
->>>>>>> master
 
 
         Lovers = 150,
@@ -96,10 +89,7 @@ namespace TheOtherRoles
         Immoralist,
         Necromancer,
         Zombie,
-<<<<<<< HEAD
-=======
         ProTasker,
->>>>>>> master
 
 
         GM = 200,
@@ -120,24 +110,17 @@ namespace TheOtherRoles
             { RoleType.FortuneTeller, typeof(RoleBase<FortuneTeller>) },
             { RoleType.Sprinter, typeof(RoleBase<Sprinter>) },
             { RoleType.Mayor, typeof(RoleBase<Mayor>) },
-<<<<<<< HEAD
-            //{ RoleType.Chunibyo, typeof(RoleBase<Chunibyo>) },
-=======
             { RoleType.Chunibyo, typeof(RoleBase<Chunibyo>) },
->>>>>>> master
             { RoleType.Boss, typeof(RoleBase<Boss>) },
             { RoleType.Staff, typeof(RoleBase<Staff>) },
             { RoleType.Gun, typeof(RoleBase<Gun>) },
             { RoleType.Bakery, typeof(RoleBase<Bakery>) },
             //{ RoleType.Creator, typeof(RoleBase<Creator>) },
             { RoleType.TimeReviver, typeof(RoleBase<TimeReviver>) },
-<<<<<<< HEAD
-=======
             { RoleType.Jammer, typeof(RoleBase<Jammer>) },
             { RoleType.Immortality, typeof(RoleBase<Immortality>) },
             //{ RoleType.Sunfish, typeof(RoleBase<Sunfish>) },
             { RoleType.Bat, typeof(RoleBase<Bat>) },
->>>>>>> master
 
             // Impostor
             { RoleType.Ninja, typeof(RoleBase<Ninja>) },
@@ -150,10 +133,7 @@ namespace TheOtherRoles
             { RoleType.Accelerator, typeof(RoleBase<Accelerator>) },
             { RoleType.Trapper, typeof(RoleBase<Trapper>) },
             { RoleType.Silencer, typeof(RoleBase<Silencer>) },
-<<<<<<< HEAD
-=======
             { RoleType.Eater, typeof(RoleBase<Eater>) },
->>>>>>> master
 
             // Neutral
             { RoleType.PlagueDoctor, typeof(RoleBase<PlagueDoctor>) },

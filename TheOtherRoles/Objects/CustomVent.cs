@@ -51,23 +51,6 @@ namespace TheOtherRoles.Objects
             if (AmongUsClient.Instance.GameState != InnerNet.InnerNetClient.GameStates.Started) return;
 
             //ここにベントを追加していく
-<<<<<<< HEAD
-            if(PlayerControl.GameOptions.MapId == 4 && CustomOptionHolder.enableAddCustomVent.getBool()) //AirShip
-            {
-                CustomVentPos.AirShipVentPos.VMAVent();
-            }
-            else if(PlayerControl.GameOptions.MapId == 2 && CustomOptionHolder.enableAddCustomVent.getBool()) //Polus
-            {
-                CustomVentPos.PolusVentPos.WOSVent();
-            }
-            else if(PlayerControl.GameOptions.MapId == 0 && CustomOptionHolder.enableAddCustomVent.getBool()) //Skeld
-            {
-                CustomVentPos.SkeldVentPos.SAOVent();
-            }
-            else if(SubmergedCompatibility.IsSubmerged && CustomOptionHolder.enableAddCustomVent.getBool())
-            {
-                CustomVentPos.SubmergedVentPos.SLBVent();
-=======
             if(PlayerControl.GameOptions.MapId == 4 && 
                 CustomOptionHolder.enableAddCustomVent.getBool() &&
                 CustomOptionHolder.enableAirshipVaultMeetingArchiveVent.getBool()) //AirShip
@@ -95,7 +78,6 @@ namespace TheOtherRoles.Objects
                     CustomOptionHolder.enableMiraO2CommsYjiVent.getBool())
             {
                 CustomVentPos.MiraVentPos.OCYVent();
->>>>>>> master
             }
         }
 

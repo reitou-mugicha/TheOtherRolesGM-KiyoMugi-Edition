@@ -30,21 +30,14 @@ namespace TheOtherRoles
             Mayor.SetButtonCooldowns();
             DiePlayer.SetButtonCooldowns();
             DoubleKiller.SetButtonCooldowns();
-<<<<<<< HEAD
-            //Chunibyo.SetButtonCooldowns();
-=======
             Chunibyo.SetButtonCooldowns();
->>>>>>> master
             Boss.SetButtonCooldowns();
             Staff.SetButtonCooldowns();
             Gun.SetButtonCooldowns();
             Trapper.SetButtonCooldowns();
             TimeReviver.SetButtonCooldowns();
             Silencer.SetButtonCooldowns();
-<<<<<<< HEAD
-=======
             Eater.SetButtonCooldowns();
->>>>>>> master
 
             foreach (CustomButton gmButton in gmButtons)
             {
@@ -74,21 +67,14 @@ namespace TheOtherRoles
             Mayor.MakeButtons(hm);
             DiePlayer.MakeButtons(hm);
             DoubleKiller.MakeButtons(hm);
-<<<<<<< HEAD
-            //Chunibyo.MakeButtons(hm);
-=======
             Chunibyo.MakeButtons(hm);
->>>>>>> master
             Boss.MakeButtons(hm);
             Staff.MakeButtons(hm);
             Gun.MakeButtons(hm);
             Trapper.MakeButtons(hm);
             TimeReviver.MakeButtons(hm);
             Silencer.MakeButtons(hm);
-<<<<<<< HEAD
-=======
             Eater.MakeButtons(hm);
->>>>>>> master
 
             gmButtons = new List<CustomButton>();
             gmKillButtons = new List<CustomButton>();
