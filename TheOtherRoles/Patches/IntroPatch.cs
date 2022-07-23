@@ -114,6 +114,14 @@ namespace TheOtherRoles.Patches
                 yourTeam = soloTeam;
             }
 
+            // Jammer Alive Intro
+            if (PlayerControl.LocalPlayer.isImpostor() && Jammer.isJammerAlive())
+            {
+                var jammerImpostorTeam = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
+                jammerImpostorTeam.Add(PlayerControl.LocalPlayer);
+                yourTeam = jammerImpostorTeam;
+            }
+
             // Don't show the GM
             if (!PlayerControl.LocalPlayer.isGM())
             {

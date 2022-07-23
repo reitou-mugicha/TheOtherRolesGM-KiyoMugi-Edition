@@ -37,7 +37,11 @@ namespace TheOtherRoles
         Mayor,
         Bakery,
         TimeReviver,
-        Timer,
+        Jammer,
+        Immortality,
+        //Sunfish,
+        Prophet,
+        Bat,
 
 
         Impostor = 100,
@@ -67,6 +71,7 @@ namespace TheOtherRoles
         Accelerator,
         Trapper,
         Silencer,
+        Eater,
 
 
         Lovers = 150,
@@ -84,6 +89,7 @@ namespace TheOtherRoles
         Immoralist,
         Necromancer,
         Zombie,
+        ProTasker,
 
 
         GM = 200,
@@ -104,13 +110,17 @@ namespace TheOtherRoles
             { RoleType.FortuneTeller, typeof(RoleBase<FortuneTeller>) },
             { RoleType.Sprinter, typeof(RoleBase<Sprinter>) },
             { RoleType.Mayor, typeof(RoleBase<Mayor>) },
-            //{ RoleType.Chunibyo, typeof(RoleBase<Chunibyo>) },
+            { RoleType.Chunibyo, typeof(RoleBase<Chunibyo>) },
             { RoleType.Boss, typeof(RoleBase<Boss>) },
             { RoleType.Staff, typeof(RoleBase<Staff>) },
             { RoleType.Gun, typeof(RoleBase<Gun>) },
             { RoleType.Bakery, typeof(RoleBase<Bakery>) },
             //{ RoleType.Creator, typeof(RoleBase<Creator>) },
             { RoleType.TimeReviver, typeof(RoleBase<TimeReviver>) },
+            { RoleType.Jammer, typeof(RoleBase<Jammer>) },
+            { RoleType.Immortality, typeof(RoleBase<Immortality>) },
+            //{ RoleType.Sunfish, typeof(RoleBase<Sunfish>) },
+            { RoleType.Bat, typeof(RoleBase<Bat>) },
 
             // Impostor
             { RoleType.Ninja, typeof(RoleBase<Ninja>) },
@@ -123,6 +133,7 @@ namespace TheOtherRoles
             { RoleType.Accelerator, typeof(RoleBase<Accelerator>) },
             { RoleType.Trapper, typeof(RoleBase<Trapper>) },
             { RoleType.Silencer, typeof(RoleBase<Silencer>) },
+            { RoleType.Eater, typeof(RoleBase<Eater>) },
 
             // Neutral
             { RoleType.PlagueDoctor, typeof(RoleBase<PlagueDoctor>) },

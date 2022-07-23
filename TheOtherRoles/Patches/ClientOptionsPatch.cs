@@ -181,11 +181,11 @@ namespace TheOtherRoles.Patches
                 {
                     if (i == 0)
                     {
-                        button.Text.text = FastDestroyableSingleton<TranslationController>.Instance.GetString(StringNames.SettingsCensorChat);
+                        button.Text.text = DestroyableSingleton<TranslationController>.Instance.GetString(StringNames.SettingsCensorChat);
                     }
                     else
                     {
-                        button.Text.text = FastDestroyableSingleton<TranslationController>.Instance.GetString(StringNames.SettingsEnableFriendInvites);
+                        button.Text.text = DestroyableSingleton<TranslationController>.Instance.GetString(StringNames.SettingsEnableFriendInvites);
                     }
                 }
                 catch

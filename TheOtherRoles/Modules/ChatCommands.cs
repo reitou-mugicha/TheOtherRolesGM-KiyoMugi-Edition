@@ -1,7 +1,6 @@
 using System;
-using HarmonyLib;
 using System.Linq;
-using TheOtherRoles.Utilities;
+using HarmonyLib;
 using static TheOtherRoles.TheOtherRoles;
 
 namespace TheOtherRoles.Modules
@@ -20,7 +19,7 @@ namespace TheOtherRoles.Modules
                 {
                     if (text.ToLower().StartsWith("/kick "))
                     {
-                        string playerName = text.Substring(6);
+                        string playerName = text[6..];
                         PlayerControl target = PlayerControl.AllPlayerControls.ToArray().ToList().FirstOrDefault(x => x.Data.PlayerName.Equals(playerName));
                         if (target != null && AmongUsClient.Instance != null && AmongUsClient.Instance.CanBan())
                         {
@@ -34,7 +33,7 @@ namespace TheOtherRoles.Modules
                     }
                     else if (text.ToLower().StartsWith("/ban "))
                     {
-                        string playerName = text.Substring(5);
+                        string playerName = text[5..];
                         PlayerControl target = PlayerControl.AllPlayerControls.ToArray().ToList().FirstOrDefault(x => x.Data.PlayerName.Equals(playerName));
                         if (target != null && AmongUsClient.Instance != null && AmongUsClient.Instance.CanBan())
                         {
@@ -59,20 +58,19 @@ namespace TheOtherRoles.Modules
                     else if (text.ToLower().StartsWith("/color "))
                     {
                         handled = true;
-                        int col;
-                        if (!Int32.TryParse(text.Substring(7), out col))
+                        if (!Int32.TryParse(text[7..], out int col))
                         {
                             __instance.AddChat(PlayerControl.LocalPlayer, "Unable to parse color id\nUsage: /color {id}");
                         }
                         col = Math.Clamp(col, 0, Palette.PlayerColors.Length - 1);
                         PlayerControl.LocalPlayer.SetColor(col);
-                        __instance.AddChat(PlayerControl.LocalPlayer, "Changed color succesfully"); ;
+                        __instance.AddChat(PlayerControl.LocalPlayer, "Changed color successfully"); ;
                     }
                 }
 
                 if (text.ToLower().StartsWith("/tp ") && PlayerControl.LocalPlayer.Data.IsDead)
                 {
-                    string playerName = text.Substring(4).ToLower();
+                    string playerName = text[4..].ToLower();
                     PlayerControl target = PlayerControl.AllPlayerControls.ToArray().ToList().FirstOrDefault(x => x.Data.PlayerName.ToLower().Equals(playerName));
                     if (target != null)
                     {
@@ -106,7 +104,8 @@ namespace TheOtherRoles.Modules
             public static void Postfix(ChatBubble __instance, [HarmonyArgument(0)] string playerName)
             {
                 PlayerControl sourcePlayer = PlayerControl.AllPlayerControls.ToArray().ToList().FirstOrDefault(x => x.Data.PlayerName.Equals(playerName));
-                if (PlayerControl.LocalPlayer != null && PlayerControl.LocalPlayer.Data.Role.IsImpostor && (Spy.spy != null && sourcePlayer.PlayerId == Spy.spy.PlayerId || Sidekick.sidekick != null && Sidekick.wasTeamRed && sourcePlayer.PlayerId == Sidekick.sidekick.PlayerId || Jackal.jackal != null && Jackal.wasTeamRed && sourcePlayer.PlayerId == Jackal.jackal.PlayerId) && __instance != null) __instance.NameText.color = Palette.ImpostorRed;
+                if (PlayerControl.LocalPlayer.isImpostor() && Jammer.isJammerAlive())  __instance.NameText.color = Palette.White;
+                if (PlayerControl.LocalPlayer != null && PlayerControl.LocalPlayer.Data.Role.IsImpostor && ((Spy.spy != null && sourcePlayer.PlayerId == Spy.spy.PlayerId) || (Sidekick.sidekick != null && Sidekick.wasTeamRed && sourcePlayer.PlayerId == Sidekick.sidekick.PlayerId) || (Jackal.jackal != null && Jackal.wasTeamRed && sourcePlayer.PlayerId == Jackal.jackal.PlayerId)) && __instance != null) __instance.NameText.color = Palette.ImpostorRed;
             }
         }
 
@@ -115,7 +114,7 @@ namespace TheOtherRoles.Modules
         {
             public static bool Prefix(ChatController __instance, [HarmonyArgument(0)] PlayerControl sourcePlayer)
             {
-                if (__instance != FastDestroyableSingleton<HudManager>.Instance.Chat)
+                if (__instance != DestroyableSingleton<HudManager>.Instance.Chat)
                     return true;
                 PlayerControl localPlayer = PlayerControl.LocalPlayer;
                 return localPlayer == null ||

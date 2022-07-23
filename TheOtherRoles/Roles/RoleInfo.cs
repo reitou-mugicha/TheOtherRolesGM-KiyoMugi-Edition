@@ -17,7 +17,6 @@ namespace TheOtherRoles
         public virtual string introDescription { get { return ModTranslation.getString(nameKey + "IntroDesc"); } }
         public virtual string shortDescription { get { return ModTranslation.getString(nameKey + "ShortDesc"); } }
         public virtual string fullDescription { get { return ModTranslation.getString(nameKey + "FullDesc"); } }
-        public virtual string blurb { get { return ModTranslation.getString(nameKey + "Blurb"); } }
         public virtual string roleOptions
         {
             get
@@ -97,7 +96,7 @@ namespace TheOtherRoles
         public static RoleInfo assassin = new RoleInfo("assassin", Assassin.color, CustomOptionHolder.assassinSpawnRate, RoleType.Assassin);
         public static RoleInfo customImpostor = new RoleInfo("customImpostor", CustomImpostor.color, CustomOptionHolder.customImpostorSpawnRate, RoleType.CustomImpostor);
         public static RoleInfo doubleKiller = new RoleInfo("doubleKiller", DoubleKiller.color, CustomOptionHolder.doubleKillerSpawnRate, RoleType.DoubleKiller);
-        //public static RoleInfo chunibyo = new RoleInfo("chunibyo", Chunibyo.color, CustomOptionHolder.chunibyoSpawnRate, RoleType.Chunibyo);
+        public static RoleInfo chunibyo = new RoleInfo("chunibyo", Chunibyo.color, CustomOptionHolder.chunibyoSpawnRate, RoleType.Chunibyo);
         public static RoleInfo boss = new RoleInfo("boss", Boss.color, CustomOptionHolder.yakuzaSpawnRate, RoleType.Boss);
         public static RoleInfo staff = new RoleInfo("staff", Staff.color, CustomOptionHolder.yakuzaSpawnRate, RoleType.Staff);
         public static RoleInfo gun = new RoleInfo("gun", Gun.color, CustomOptionHolder.yakuzaSpawnRate, RoleType.Gun);
@@ -111,6 +110,11 @@ namespace TheOtherRoles
         public static RoleInfo trapper = new RoleInfo("trapper", Trapper.color, CustomOptionHolder.trapperSpawnRate, RoleType.Trapper);
         public static RoleInfo timeReviver = new RoleInfo("timeReviver", TimeReviver.color, CustomOptionHolder.timeReviverSpawnRate, RoleType.TimeReviver);
         public static RoleInfo silencer = new RoleInfo("silencer", Silencer.color, CustomOptionHolder.silencerSpawnRate, RoleType.Silencer);
+        public static RoleInfo jammer = new RoleInfo("jammer", Jammer.color, CustomOptionHolder.jammerSpawnRate, RoleType.Jammer);
+        public static RoleInfo immortality = new RoleInfo("immortality", Immortality.color, CustomOptionHolder.immortalitySpawnRate, RoleType.Immortality);
+        //public static RoleInfo sunfish = new RoleInfo("sunfish", Sunfish.color, CustomOptionHolder.sunfishSpawnRate, RoleType.Sunfish);
+        public static RoleInfo eater = new RoleInfo("eater", Eater.color, CustomOptionHolder.eaterSpawnRate, RoleType.Eater);
+        public static RoleInfo bat = new RoleInfo("bat", Bat.color, CustomOptionHolder.batSpawnRate, RoleType.Bat);
 
 
         public static List<RoleInfo> allRoleInfos = new List<RoleInfo>() {
@@ -171,7 +175,7 @@ namespace TheOtherRoles
                 assassin,
                 customImpostor,
                 doubleKiller,
-                //chunibyo,
+                chunibyo,
                 boss,
                 staff,
                 gun,
@@ -185,6 +189,11 @@ namespace TheOtherRoles
                 trapper,
                 timeReviver,
                 silencer,
+                jammer,
+                immortality,
+                //sunfish,
+                eater,
+                bat,
             };
 
         public static string tl(string key)
@@ -243,7 +252,7 @@ namespace TheOtherRoles
             if (p.isRole(RoleType.Portalmaker)) infos.Add(portalmaker);
             if (p.isRole(RoleType.CustomImpostor)) infos.Add(customImpostor);
             if (p.isRole(RoleType.DoubleKiller)) infos.Add(doubleKiller);
-            //if (p.isRole(RoleType.Chunibyo)) infos.Add(chunibyo);
+            if (p.isRole(RoleType.Chunibyo)) infos.Add(chunibyo);
             if (p.isRole(RoleType.Boss)) infos.Add(boss);
             if (p.isRole(RoleType.Staff)) infos.Add(staff);
             if (p.isRole(RoleType.Gun)) infos.Add(gun);
@@ -275,7 +284,22 @@ namespace TheOtherRoles
             if (p.isRole(RoleType.Trapper)) infos.Add(trapper);
             if (p.isRole(RoleType.TimeReviver)) infos.Add(timeReviver);
             if (p.isRole(RoleType.Silencer)) infos.Add(silencer);
-
+            if (p.isRole(RoleType.Jammer)) infos.Add(jammer);
+            if (p.isRole(RoleType.Immortality)) infos.Add(immortality);
+            /*if (p.isRole(RoleType.Sunfish))
+            {
+                if(includeHidden || PlayerControl.LocalPlayer.isDead())
+                {
+                    infos.Add(sunfish);
+                }
+                else 
+                {
+                    var info = Sunfish.isSunfishCompletedTasks() ? sunfish : crewmate;
+                    infos.Add(info);
+                }
+            }*/
+            if (p.isRole(RoleType.Eater)) infos.Add(eater);
+            if (p.isRole(RoleType.Bat)) infos.Add(bat);
 
             // Default roles
             if (infos.Count == 0 && p.Data.Role.IsImpostor) infos.Add(impostor); // Just Impostor

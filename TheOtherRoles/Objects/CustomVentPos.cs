@@ -66,5 +66,20 @@ namespace TheOtherRoles.Objects
                 ballast.vent.Left = storage.vent;
             }
         }
+
+        public class MiraVentPos
+        {
+            public static void OCYVent()
+            {
+                CustomVent o2 = new(new Vector3(4.6f, -1.2f, z));
+                CustomVent comms = new(new Vector3(15.4f, 4.1f, z));
+                CustomVent Yji = new(new Vector3(17.8f, 11.4f, z));
+
+                o2.vent.Right = comms.vent;
+                comms.vent.Left = o2.vent;
+                comms.vent.Right = Yji.vent;
+                Yji.vent.Left = comms.vent;
+            }
+        }
     }
 }

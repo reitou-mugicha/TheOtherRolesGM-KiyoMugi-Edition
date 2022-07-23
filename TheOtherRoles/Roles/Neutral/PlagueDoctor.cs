@@ -1,13 +1,12 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using HarmonyLib;
 using Hazel;
-using System;
-using System.Linq;
-using System.Collections.Generic;
 using TheOtherRoles.Objects;
 using UnityEngine;
-using static TheOtherRoles.Patches.PlayerControlFixedUpdatePatch;
 using TheOtherRoles.Modules;
-using TheOtherRoles.Utilities;
+using static TheOtherRoles.Patches.PlayerControlFixedUpdatePatch;
 
 namespace TheOtherRoles
 {
@@ -71,7 +70,7 @@ namespace TheOtherRoles
 
             updateDead();
 
-            FastDestroyableSingleton<HudManager>.Instance.StartCoroutine(Effects.Lerp(immunityTime, new Action<float>((p) =>
+            HudManager.Instance.StartCoroutine(Effects.Lerp(immunityTime, new Action<float>((p) =>
             { // 5秒後から感染開始
                 if (p == 1f)
                 {
@@ -107,7 +106,7 @@ namespace TheOtherRoles
 
                 if (!meetingFlag && (canWinDead || player.isAlive()))
                 {
-                    List<PlayerControl> newInfected = new List<PlayerControl>();
+                    List<PlayerControl> newInfected = new();
                     foreach (PlayerControl target in PlayerControl.AllPlayerControls)
                     { // 非感染プレイヤーのループ
                         if (target == player || target.isDead() || infected.ContainsKey(target.PlayerId) || target.inVent) continue;
@@ -181,8 +180,24 @@ namespace TheOtherRoles
             UpdateStatusText();
         }
 
+        private bool hasInfected()
+        {
+            bool flag = false;
+            foreach (var item in progress)
+            {
+                if (item.Value != 0f)
+                {
+                    flag = true;
+                    break;
+                }
+            }
+            return flag;
+        }
+
         public void UpdateStatusText()
         {
+            // ロード画面でstatusTextを生成すると上手く表示されないのでゲームが開始してから最初に感染させた時点から表示する
+            if (!hasInfected()) return;
             if (MeetingHud.Instance != null)
             {
                 if (statusText != null)
@@ -196,16 +211,18 @@ namespace TheOtherRoles
             {
                 if (statusText == null)
                 {
-                    var position = Camera.main.ViewportToWorldPoint(new Vector3(0f, 1f, Camera.main.nearClipPlane));
-                    var obj = UnityEngine.Object.Instantiate(HudManager._instance.GameSettings);
-                    statusText = obj.GetComponent<TMPro.TMP_Text>();
-                    statusText.transform.position = new Vector3(HudManager._instance.GameSettings.transform.position.x, position.y - 0.1f, -14f);
+                    GameObject gameObject = UnityEngine.Object.Instantiate(HudManager.Instance?.roomTracker.gameObject);
+                    gameObject.transform.SetParent(HudManager.Instance.transform);
+                    gameObject.SetActive(true);
+                    UnityEngine.Object.DestroyImmediate(gameObject.GetComponent<RoomTracker>());
+                    statusText = gameObject.GetComponent<TMPro.TMP_Text>();
+                    gameObject.transform.localPosition = new Vector3(-2.7f, -0.1f, gameObject.transform.localPosition.z);
+
                     statusText.transform.localScale = new Vector3(1f, 1f, 1f);
                     statusText.fontSize = 1.5f;
                     statusText.fontSizeMin = 1.5f;
                     statusText.fontSizeMax = 1.5f;
                     statusText.alignment = TMPro.TextAlignmentOptions.BottomLeft;
-                    statusText.transform.parent = HudManager._instance.GameSettings.transform.parent;
                 }
 
                 statusText.gameObject.SetActive(true);
@@ -270,8 +287,10 @@ namespace TheOtherRoles
                 hm,
                 hm.UseButton,
                 KeyCode.F
-            );
-            plagueDoctorButton.buttonText = ModTranslation.getString("plagueDoctorInfectButton");
+            )
+            {
+                buttonText = ModTranslation.getString("plagueDoctorInfectButton")
+            };
 
             numInfectionsText = GameObject.Instantiate(plagueDoctorButton.actionButton.cooldownTimerText, plagueDoctorButton.actionButton.cooldownTimerText.transform.parent);
             numInfectionsText.text = "";
@@ -311,7 +330,7 @@ namespace TheOtherRoles
                 color = Color.Lerp(Color.yellow, Color.red, prog * 2 - 1);
 
             float progPercent = prog * 100;
-            return Helpers.cs(color, $"{progPercent.ToString("F1")}%");
+            return Helpers.cs(color, $"{progPercent:F1}%");
         }
 
         public static void Clear()

@@ -10,9 +10,11 @@ using Hazel;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using System.IO;
 using UnityEngine;
 using TheOtherRoles.Modules;
 using TheOtherRoles.Utilities;
+using TheOtherRoles.Patches;
 
 namespace TheOtherRoles
 {
@@ -22,7 +24,7 @@ namespace TheOtherRoles
     public class TheOtherRolesPlugin : BasePlugin
     {
         public const string Id = "kiyomori.mugicha.theotherrolesgmkm";
-        public const string VersionString = "2.3.0";
+        public const string VersionString = "3.0.0";
         public static System.Version Version = System.Version.Parse(VersionString);
         internal static BepInEx.Logging.ManualLogSource Logger;
 
@@ -66,6 +68,10 @@ namespace TheOtherRoles
         {
             ModTranslation.Load();
             Logger = Log;
+            string path = "TheOtherHats";
+            if(!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+
             DebugMode = Config.Bind("Custom", "Enable Debug Mode", false);
             StreamerMode = Config.Bind("Custom", "Enable Streamer Mode", false);
             GhostsSeeTasks = Config.Bind("Custom", "Ghosts See Remaining Tasks", true);
@@ -96,6 +102,7 @@ namespace TheOtherRoles
             Instance = this;
             CustomOptionHolder.Load();
             CustomColors.Load();
+            RandomGeneratorPatch.Initialize();
 
             Patches.FreeNamePatch.Initialize();
             Harmony.PatchAll();
@@ -149,6 +156,7 @@ namespace TheOtherRoles
                 MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.CrewmateEnd, Hazel.SendOption.Reliable, -1);
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
                 RPCProcedure.crewmateEnd();
+                Modules.Logger.SendInGame("ForceEnd(Crewmate Win)");
             }
             // F11でクルー強制勝利
             if (Input.GetKeyDown(KeyCode.F11) && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started && AmongUsClient.Instance.AmHost)
@@ -156,14 +164,13 @@ namespace TheOtherRoles
                 MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.ImpostorEnd, Hazel.SendOption.Reliable, -1);
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
                 RPCProcedure.impostorEnd();
+                Modules.Logger.SendInGame("ForceEnd(Impostor Win)");
             }
 
-            if (Input.GetKeyDown(KeyCode.Colon) && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started && AmongUsClient.Instance.AmHost)
+            //MeetingでResetされないバグあるから対策
+            if (Input.GetKeyDown(KeyCode.F2) && CustomOptionHolder.enableDiePlayerZoomInOut.getBool() && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started)
             {
-                MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.UseAdminTime, Hazel.SendOption.Reliable, -1);
-                writer.Write(10000);
-                AmongUsClient.Instance.FinishRpcImmediately(writer);
-                RPCProcedure.useAdminTime(10000);
+                DiePlayer.resetZoom();
             }
 
             // F11&F12を変えた理由・・・誰かがSteamでスクショ撮ろうとして廃村したから

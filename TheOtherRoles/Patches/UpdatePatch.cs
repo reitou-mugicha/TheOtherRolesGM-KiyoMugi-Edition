@@ -195,6 +195,9 @@ namespace TheOtherRoles.Patches
                 foreach (var fox in Fox.allPlayers)
                     setPlayerNameColor(fox, Fox.color);
 
+            if (PlayerControl.LocalPlayer.isImpostor() && Jammer.isJammerAlive())
+                foreach (var player in PlayerControl.AllPlayerControls)
+                    setPlayerNameColor(player, Palette.White);
             // Crewmate roles with no changes: Mini
             // Impostor roles with no changes: Morphling, Camouflager, Vampire, Godfather, Eraser, Janitor, Cleaner, Warlock, BountyHunter,  Witch and Mafioso
         }
@@ -363,6 +366,8 @@ namespace TheOtherRoles.Patches
                 enabled &= false;
             else if (UnderTaker.underTaker != null && UnderTaker.dragginBody && PlayerControl.LocalPlayer == UnderTaker.underTaker)
                 enabled = false;
+            else if (PlayerControl.LocalPlayer.isRole(RoleType.Eater))
+                enabled &= false;
 
             if (enabled) __instance.KillButton.Show();
             else __instance.KillButton.Hide();

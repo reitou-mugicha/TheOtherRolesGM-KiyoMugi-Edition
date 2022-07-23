@@ -130,7 +130,7 @@ namespace TheOtherRoles
             }
         }
 
-        public static void ShareOptionSelections()
+        /*public static void ShareOptionSelections()
         {
             if (PlayerControl.AllPlayerControls.Count <= 1 || AmongUsClient.Instance?.AmHost == false && PlayerControl.LocalPlayer == null) return;
 
@@ -142,6 +142,26 @@ namespace TheOtherRoles
                 messageWriter.WritePacked((uint)Convert.ToUInt32(option.selection));
             }
             messageWriter.EndMessage();
+        }*/
+
+        public static void ShareOptionSelections() {
+            if (PlayerControl.AllPlayerControls.Count <= 1 || AmongUsClient.Instance!.AmHost == false && PlayerControl.LocalPlayer == null) return;
+
+            var optionsList = new List<CustomOption>(CustomOption.options);
+            while (optionsList.Any())
+            {
+                byte amount = (byte) Math.Min(optionsList.Count, 20);
+                var writer = AmongUsClient.Instance!.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.ShareOptions, SendOption.Reliable, -1);
+                writer.Write(amount);
+                for (int i = 0; i < amount; i++)
+                {
+                    var option = optionsList[0];
+                    optionsList.RemoveAt(0);
+                    writer.WritePacked((uint) option.id);
+                    writer.WritePacked(Convert.ToUInt32(option.selection));
+                }
+                AmongUsClient.Instance.FinishRpcImmediately(writer);
+            }
         }
 
         // Getter

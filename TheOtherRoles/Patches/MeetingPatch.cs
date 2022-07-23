@@ -96,26 +96,20 @@ namespace TheOtherRoles.Patches
         [HarmonyPatch(typeof(MeetingHud), nameof(MeetingHud.CheckForEndVoting))]
         class MeetingCalculateVotesPatch
         {
-            private static Dictionary<byte, int> CalculateVotes(MeetingHud __instance)
-            {
+            private static Dictionary<byte, int> CalculateVotes(MeetingHud __instance) {
                 Dictionary<byte, int> dictionary = new Dictionary<byte, int>();
-                for (int i = 0; i < __instance.playerStates.Length; i++)
-                {
+                for (int i = 0; i < __instance.playerStates.Length; i++) {
                     PlayerVoteArea playerVoteArea = __instance.playerStates[i];
                     byte votedFor = playerVoteArea.VotedFor;
-                    if (votedFor != 252 && votedFor != 255 && votedFor != 254)
-                    {
+                    if (votedFor != 252 && votedFor != 255 && votedFor != 254) {
                         PlayerControl player = Helpers.playerById((byte)playerVoteArea.TargetPlayerId);
                         if (player == null || player.Data == null || player.Data.IsDead || player.Data.Disconnected || player.isGM()) continue;
 
                         // don't try to vote for the GM
                         if (GM.gm != null && votedFor == GM.gm.PlayerId) continue;
 
-                        int currentVotes;
-
                         int additionalVotes = (Mayor.mayor != null && Mayor.mayor.PlayerId == playerVoteArea.TargetPlayerId) ? Mayor.numVotes : 1; // Mayor vote
-
-                        if (dictionary.TryGetValue(votedFor, out currentVotes))
+                        if (dictionary.TryGetValue(votedFor, out int currentVotes))
                             dictionary[votedFor] = currentVotes + additionalVotes;
                         else
                             dictionary[votedFor] = additionalVotes;
@@ -123,18 +117,15 @@ namespace TheOtherRoles.Patches
                 }
 
                 // Swapper swap votes
-                if (Swapper.swapper != null && !Swapper.swapper.Data.IsDead)
-                {
+                if (Swapper.swapper != null && !Swapper.swapper.Data.IsDead) {
                     PlayerVoteArea swapped1 = null;
                     PlayerVoteArea swapped2 = null;
-                    foreach (PlayerVoteArea playerVoteArea in __instance.playerStates)
-                    {
+                    foreach (PlayerVoteArea playerVoteArea in __instance.playerStates) {
                         if (playerVoteArea.TargetPlayerId == Swapper.playerId1) swapped1 = playerVoteArea;
                         if (playerVoteArea.TargetPlayerId == Swapper.playerId2) swapped2 = playerVoteArea;
                     }
 
-                    if (swapped1 != null && swapped2 != null)
-                    {
+                    if (swapped1 != null && swapped2 != null) {
                         if (!dictionary.ContainsKey(swapped1.TargetPlayerId)) dictionary[swapped1.TargetPlayerId] = 0;
                         if (!dictionary.ContainsKey(swapped2.TargetPlayerId)) dictionary[swapped2.TargetPlayerId] = 0;
                         int tmp = dictionary[swapped1.TargetPlayerId];
@@ -154,10 +145,8 @@ namespace TheOtherRoles.Patches
             }
 
 
-            static bool Prefix(MeetingHud __instance)
-            {
-                if (__instance.playerStates.All((PlayerVoteArea ps) => ps.AmDead || ps.DidVote))
-                {
+            static bool Prefix(MeetingHud __instance) {
+                if (__instance.playerStates.All((PlayerVoteArea ps) => ps.AmDead || ps.DidVote)) {
 
                     Dictionary<byte, int> self = CalculateVotes(__instance);
                     bool tie;
@@ -168,8 +157,7 @@ namespace TheOtherRoles.Patches
                     for (int i = 0; i < __instance.playerStates.Length; i++)
                     {
                         PlayerVoteArea playerVoteArea = __instance.playerStates[i];
-                        array[i] = new MeetingHud.VoterState
-                        {
+                        array[i] = new MeetingHud.VoterState {
                             VoterId = playerVoteArea.TargetPlayerId,
                             VotedForId = playerVoteArea.VotedFor
                         };
@@ -178,7 +166,6 @@ namespace TheOtherRoles.Patches
                     // RPCVotingComplete
                     __instance.RpcVotingComplete(array, exiled, tie);
                 }
-
                 return false;
             }
         }
@@ -198,19 +185,18 @@ namespace TheOtherRoles.Patches
         }
 
         [HarmonyPatch(typeof(MeetingHud), nameof(MeetingHud.BloopAVoteIcon))]
-        class MeetingHudBloopAVoteIconPatch
-        {
-            public static bool Prefix(MeetingHud __instance, [HarmonyArgument(0)] GameData.PlayerInfo voterPlayer, [HarmonyArgument(1)] int index, [HarmonyArgument(2)] Transform parent)
-            {
+        class MeetingHudBloopAVoteIconPatch {
+            public static bool Prefix(MeetingHud __instance, [HarmonyArgument(0)] GameData.PlayerInfo voterPlayer, [HarmonyArgument(1)] int index, [HarmonyArgument(2)] Transform parent) {
                 SpriteRenderer spriteRenderer = UnityEngine.Object.Instantiate<SpriteRenderer>(__instance.PlayerVotePrefab);
-                if (!PlayerControl.GameOptions.AnonymousVotes || (PlayerControl.LocalPlayer.Data.IsDead && MapOptions.ghostsSeeVotes) || PlayerControl.LocalPlayer.hasModifier(ModifierType.Watcher))
-                    voterPlayer.Object.SetPlayerMaterialColors(spriteRenderer);
-                else
-                    voterPlayer.Object.SetPlayerMaterialColors(spriteRenderer);
+                int cId = voterPlayer.DefaultOutfit.ColorId;
+                if (!(!PlayerControl.GameOptions.AnonymousVotes || (PlayerControl.LocalPlayer.Data.IsDead && MapOptions.ghostsSeeVotes) || PlayerControl.LocalPlayer.hasModifier(ModifierType.Watcher)))
+                    voterPlayer.Object.SetColor(6);
+                voterPlayer.Object.SetPlayerMaterialColors(spriteRenderer);
                 spriteRenderer.transform.SetParent(parent);
                 spriteRenderer.transform.localScale = Vector3.zero;
                 __instance.StartCoroutine(Effects.Bloop((float)index * 0.3f, spriteRenderer.transform, 1f, 0.5f));
                 parent.GetComponent<VoteSpreader>().AddVote(spriteRenderer);
+                voterPlayer.Object.SetColor(cId);
                 return false;
             }
         }
@@ -410,6 +396,20 @@ namespace TheOtherRoles.Patches
                     }
                 }
             }
+        }
+
+        static void prophetOnClick(PlayerControl target, MeetingHud __instance)
+        {
+            if (guesserUI != null || !(__instance.state == MeetingHud.VoteStates.Voted || __instance.state == MeetingHud.VoteStates.NotVoted)) return;
+            __instance.playerStates.ToList().ForEach(x => x.gameObject.SetActive(false));
+
+            if(CustomOptionHolder.prophetBlackWhite.getBool())
+            {
+                if(target.isImpostor()) FastDestroyableSingleton<HudManager>.Instance.Chat.AddChat(PlayerControl.LocalPlayer, ModTranslation.getString("impostorText"));
+                if(target.isNeutral()) FastDestroyableSingleton<HudManager>.Instance.Chat.AddChat(PlayerControl.LocalPlayer, ModTranslation.getString("neutralText"));
+                if(target.isCrew()) FastDestroyableSingleton<HudManager>.Instance.Chat.AddChat(PlayerControl.LocalPlayer, ModTranslation.getString("crewText"));
+            }
+            else FastDestroyableSingleton<HudManager>.Instance.Chat.AddChat(PlayerControl.LocalPlayer, ModTranslation.getString("prophetText", RoleInfo.GetRolesString(target, false, includeHidden: true)));
         }
 
         private static GameObject guesserUI;
@@ -640,6 +640,29 @@ namespace TheOtherRoles.Patches
                     button.OnClick.RemoveAllListeners();
                     int copiedIndex = i;
                     button.OnClick.AddListener((UnityEngine.Events.UnityAction)(() => guesserOnClick(copiedIndex, __instance)));
+                }
+            }
+
+            PlayerControl target;
+            //Add Prophet Buttons
+            if (PlayerControl.LocalPlayer.isRole(RoleType.Prophet) && PlayerControl.LocalPlayer.isAlive() && Prophet.remainingNum > 0)
+            {
+                for (int i = 0; i < __instance.playerStates.Length; i++)
+                {
+                    PlayerVoteArea playerVoteArea = __instance.playerStates[i];
+                    if (playerVoteArea.AmDead || playerVoteArea.TargetPlayerId == PlayerControl.LocalPlayer.PlayerId || playerVoteArea.TargetPlayerId == GM.gm?.PlayerId) continue;
+
+                    GameObject template = playerVoteArea.Buttons.transform.Find("CancelButton").gameObject;
+                    GameObject targetBox = UnityEngine.Object.Instantiate(template, playerVoteArea.transform);
+                    target = Helpers.playerById(playerVoteArea.TargetPlayerId);
+                    targetBox.name = "ProphetButton";
+                    targetBox.transform.localPosition = new Vector3(-0.95f, 0.03f, -1.3f);
+                    SpriteRenderer renderer = targetBox.GetComponent<SpriteRenderer>();
+                    renderer.sprite = Guesser.getTargetSprite();
+                    PassiveButton button = targetBox.GetComponent<PassiveButton>();
+                    button.OnClick.RemoveAllListeners();
+                    int copiedIndex = i;
+                    button.OnClick.AddListener((UnityEngine.Events.UnityAction)(() => prophetOnClick(target, __instance)));
                 }
             }
         }

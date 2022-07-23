@@ -1,4 +1,5 @@
 using HarmonyLib;
+using Hazel;
 
 namespace TheOtherRoles.Patches
 {
