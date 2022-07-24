@@ -193,7 +193,6 @@ namespace TheOtherRoles.Patches
             crewSettings.Add((byte)RoleType.Jammer, CustomOptionHolder.jammerSpawnRate.data);
             crewSettings.Add((byte)RoleType.Immortality, CustomOptionHolder.immortalitySpawnRate.data);
             //crewSettings.Add((byte)RoleType.Sunfish, CustomOptionHolder.sunfishSpawnRate.data);
-            crewSettings.Add((byte)RoleType.Bat, CustomOptionHolder.batSpawnRate.data);
 
             if (impostors.Count > 1)
             {

@@ -447,10 +447,6 @@ namespace TheOtherRoles
         public static CustomOption eaterEatCooldown;
         public static CustomOption eaterEatTime;
 
-        public static CustomRoleOption batSpawnRate;
-        public static CustomOption batBlackOutOnVision;
-        public static CustomOption batBlackOutOffVision;
-
         //CustomOptions
 
         public static CustomOption specialOptions;
@@ -923,10 +919,6 @@ namespace TheOtherRoles
 
             immortalitySpawnRate = new CustomRoleOption(3670, CustomOptionType.Crewmate, "immortality", Immortality.color, 15);
             immortalityMeetingStartSuicideTime = CustomOption.Create(3671, CustomOptionType.Crewmate, "immortalityMeetingStartSuicideTime", 10f, 2.5f, 60f, 2.5f, immortalitySpawnRate, format: "unitSeconds");
-
-            //batSpawnRate = new CustomRoleOption(5670, CustomOptionType.Crewmate, "bat", Bat.color, 15);
-            //batBlackOutOnVision = CustomOption.Create(5671, CustomOptionType.Crewmate, "batBlackOutOnVision", 2f, 0.25f, 5f, 0.25f, batSpawnRate, format: "unitMultiplier");
-            //batBlackOutOffVision = CustomOption.Create(5672, CustomOptionType.Crewmate, "batBlackOutOffVision", 0.5f, 0.25f, 5f, 0.25f, batSpawnRate, format: "unitMultiplier");
 
             //prophetSpawnRate = new CustomRoleOption(8130, CustomOptionType.Crewmate, "prophet", Prophet.color, 15);
             
