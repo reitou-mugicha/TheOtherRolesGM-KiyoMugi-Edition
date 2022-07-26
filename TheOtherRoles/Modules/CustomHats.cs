@@ -1,16 +1,16 @@
-using System.Reflection;
-using HarmonyLib;
-using UnityEngine;
-using System.IO;
+/*using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Threading.Tasks;
+using System.Reflection;
 using System.Security.Cryptography;
+using System.Threading.Tasks;
+using HarmonyLib;
 using Newtonsoft.Json.Linq;
-using TheOtherRoles.Utilities;
+using UnityEngine;
 
 namespace TheOtherRoles.Modules
 {
@@ -28,7 +28,6 @@ namespace TheOtherRoles.Modules
             public string author { get; set; }
             public string package { get; set; }
             public string condition { get; set; }
-            public bool adaptive { get; set; }
             public Sprite FlipImage { get; set; }
             public Sprite BackFlipImage { get; set; }
         }
@@ -59,10 +58,10 @@ namespace TheOtherRoles.Modules
 
             for (int i = 0; i < hats.Length; i++)
             {
-                string s = fromDisk ? hats[i].Substring(hats[i].LastIndexOf("\\") + 1).Split('.')[0] : hats[i].Split('.')[3];
+                string s = fromDisk ? hats[i][(hats[i].LastIndexOf("\\") + 1)..].Split('.')[0] : hats[i].Split('.')[3];
                 string[] p = s.Split('_');
 
-                HashSet<string> options = new HashSet<string>();
+                HashSet<string> options = new();
                 for (int j = 1; j < p.Length; j++)
                     options.Add(p[j]);
 
@@ -76,26 +75,28 @@ namespace TheOtherRoles.Modules
                     flips.Add(p[0], hats[i]);
                 else
                 {
-                    CustomHat ch = new CustomHat { resource = hats[i] };
-                    ch.name = p[0].Replace('-', ' ');
-                    ch.bounce = options.Contains("bounce");
-                    ch.adaptive = options.Contains("adaptive");
-                    ch.behind = options.Contains("behind");
+                    CustomHat custom = new()
+                    {
+                        resource = hats[i],
+                        name = p[0].Replace('-', ' '),
+                        bounce = options.Contains("bounce"),
+                        adaptive = options.Contains("adaptive"),
+                        behind = options.Contains("behind")
+                    };
 
-                    fronts.Add(p[0], ch);
+                    fronts.Add(p[0], custom);
                 }
             }
 
-            List<CustomHat> customhats = new List<CustomHat>();
+            List<CustomHat> customhats = new();
 
             foreach (string k in fronts.Keys)
             {
                 CustomHat hat = fronts[k];
-                string br, cr, fr, bfr;
-                backs.TryGetValue(k, out br);
-                climbs.TryGetValue(k, out cr);
-                flips.TryGetValue(k, out fr);
-                backflips.TryGetValue(k, out bfr);
+                backs.TryGetValue(k, out string br);
+                climbs.TryGetValue(k, out string cr);
+                flips.TryGetValue(k, out string fr);
+                backflips.TryGetValue(k, out string bfr);
                 if (br != null)
                     hat.backresource = br;
                 if (cr != null)
@@ -145,7 +146,7 @@ namespace TheOtherRoles.Modules
                 hat.hatViewData.viewData.ClimbImage = CreateHatSprite(ch.climbresource, fromDisk);
             hat.name = ch.name + "\nby " + ch.author;
             hat.displayOrder = 99;
-            hat.ProductId = "hat_" + ch.name.Replace(' ', '_');
+            hat.ProductId = "hat_" + ch.name.Replace(' ', '_') + "_" + ch.author;
             hat.InFront = !ch.behind;
             hat.NoBounce = !ch.bounce;
             hat.ChipOffset = new Vector2(0f, 0.2f);
@@ -207,22 +208,30 @@ namespace TheOtherRoles.Modules
                 if (RUNNING) return;
                 RUNNING = true; // prevent simultaneous execution
 
-                if (!LOADED)
+                try
                 {
-                    Assembly assembly = Assembly.GetExecutingAssembly();
-                    string hatres = $"{assembly.GetName().Name}.Resources.CustomHats";
-                    string[] hats = (from r in assembly.GetManifestResourceNames()
-                                     where r.StartsWith(hatres) && r.EndsWith(".png")
-                                     select r).ToArray<string>();
+                    if (!LOADED)
+                    {
+                        Assembly assembly = Assembly.GetExecutingAssembly();
+                        string hatres = $"{assembly.GetName().Name}.Resources.CustomHats";
+                        string[] hats = (from r in assembly.GetManifestResourceNames()
+                                         where r.StartsWith(hatres) && r.EndsWith(".png")
+                                         select r).ToArray<string>();
 
-                    List<CustomHat> customhats = createCustomHatDetails(hats);
-                    foreach (CustomHat ch in customhats)
-                        __instance.allHats.Add(CreateHatData(ch));
+                        List<CustomHat> customhats = createCustomHatDetails(hats);
+                        foreach (CustomHat ch in customhats)
+                            __instance.allHats.Add(CreateHatData(ch));
+                    }
+                    while (CustomHatLoader.hatDetails.Count > 0)
+                    {
+                        __instance.allHats.Add(CreateHatData(CustomHatLoader.hatDetails[0]));
+                        CustomHatLoader.hatDetails.RemoveAt(0);
+                    }
                 }
-                while (CustomHatLoader.hatDetails.Count > 0)
+                catch (System.Exception e)
                 {
-                    __instance.allHats.Add(CreateHatData(CustomHatLoader.hatDetails[0]));
-                    CustomHatLoader.hatDetails.RemoveAt(0);
+                    if (!LOADED)
+                        Logger.error("Unable to add Custom Hats\n" + e, "CustomHats");
                 }
                 LOADED = true;
             }
@@ -314,10 +323,6 @@ namespace TheOtherRoles.Modules
 
             public static float createHatPackage(List<System.Tuple<HatData, HatExtension>> hats, string packageName, float YStart, HatsTab __instance)
             {
-                bool isDefaultPackage = innerslothPackageName == packageName;
-                if (!isDefaultPackage)
-                    hats = hats.OrderBy(x => x.Item1.ProductId).ToList();
-
                 float offset = YStart;
 
                 if (textTemplate != null)
@@ -352,7 +357,7 @@ namespace TheOtherRoles.Modules
                     if (ActiveInputManager.currentControlType == ActiveInputManager.InputType.Keyboard)
                     {
                         colorChip.Button.OnMouseOver.AddListener((UnityEngine.Events.UnityAction)(() => __instance.SelectHat(hat)));
-                        colorChip.Button.OnMouseOut.AddListener((System.Action)(() => __instance.SelectHat(FastDestroyableSingleton<HatManager>.Instance.GetHatById(SaveManager.LastHat))));
+                        colorChip.Button.OnMouseOut.AddListener((UnityEngine.Events.UnityAction)(() => __instance.SelectHat(DestroyableSingleton<HatManager>.Instance.GetHatById(SaveManager.LastHat))));
                         colorChip.Button.OnClick.AddListener((UnityEngine.Events.UnityAction)(() => __instance.ClickEquip()));
                     }
                     else
@@ -374,8 +379,8 @@ namespace TheOtherRoles.Modules
             {
                 calcItemBounds(__instance);
 
-                HatData[] unlockedHats = FastDestroyableSingleton<HatManager>.Instance.GetUnlockedHats();
-                Dictionary<string, List<System.Tuple<HatData, HatExtension>>> packages = new Dictionary<string, List<System.Tuple<HatData, HatExtension>>>();
+                HatData[] unlockedHats = DestroyableSingleton<HatManager>.Instance.GetUnlockedHats();
+                Dictionary<string, List<System.Tuple<HatData, HatExtension>>> packages = new();
 
                 Helpers.destroyList(hatsTabCustomTexts);
                 Helpers.destroyList(__instance.ColorChips);
@@ -388,7 +393,7 @@ namespace TheOtherRoles.Modules
                 foreach (HatData hatData in unlockedHats)
                 {
                     HatExtension ext = hatData.getHatExtension();
-                    HatManager.Instance.GetUnlockedHats();
+
                     if (ext != null)
                     {
                         if (!packages.ContainsKey(ext.package))
@@ -414,7 +419,7 @@ namespace TheOtherRoles.Modules
                     if (x.Contains("YJBlack")) return 2;
                     if (x.Contains("YJWhite")) return 1;
                     if (x.Contains("mememura")) return 0;
-                    return 600;
+                    return 500;
                 });
 
                 foreach (string key in orderedKeys)
@@ -451,7 +456,6 @@ namespace TheOtherRoles.Modules
                 }
             }
         }
-
     }
 
     public class CustomHatLoader
@@ -466,7 +470,7 @@ namespace TheOtherRoles.Modules
             "https://raw.githubusercontent.com/hinakkyu/TheOtherHats/master"
         };
 
-        public static List<CustomHatOnline> hatDetails = new List<CustomHatOnline>();
+        public static List<CustomHatOnline> hatDetails = new();
         private static Task hatFetchTask = null;
         public static void LaunchHatFetcher()
         {
@@ -479,7 +483,7 @@ namespace TheOtherRoles.Modules
         private static async Task LaunchHatFetcherAsync()
         {
             hatDetails = new List<CustomHatOnline>();
-            List<string> repos = new List<string>(hatRepos);
+            List<string> repos = new(hatRepos);
 
             if (TheOtherRolesPlugin.DebugRepo.Value != "")
                 repos.Insert(0, TheOtherRolesPlugin.DebugRepo.Value);
@@ -490,11 +494,11 @@ namespace TheOtherRoles.Modules
                 {
                     HttpStatusCode status = await FetchHats(repo);
                     if (status != HttpStatusCode.OK)
-                        Helpers.log($"Custom hats could not be loaded from repo: {repo}\n");
+                        System.Console.WriteLine($"Custom hats could not be loaded from repo: {repo}\n");
                 }
                 catch (System.Exception e)
                 {
-                    Helpers.log($"Unable to fetch hats from repo: {repo}\n" + e.Message);
+                    System.Console.WriteLine($"Unable to fetch hats from repo: {repo}\n" + e.Message);
                 }
             }
             running = false;
@@ -512,9 +516,97 @@ namespace TheOtherRoles.Modules
             return res;
         }
 
+        // オフラインハット用
+        public static void FetchHats()
+        {
+            HttpClient http = new();
+            http.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue { NoCache = true };
+            try
+            {
+                string jsonPath = Path.GetDirectoryName(Application.dataPath) + @"\CustomHats.json";
+                string json = File.ReadAllText(jsonPath);
+                JToken jobj = JObject.Parse(json)["hats"];
+                if (!jobj.HasValues) return;
+
+                List<CustomHatOnline> hatdatas = new();
+
+                for (JToken current = jobj.First; current != null; current = current.Next)
+                {
+                    if (current.HasValues)
+                    {
+                        CustomHatOnline info = new()
+                        {
+                            name = current["name"]?.ToString(),
+                            resource = sanitizeResourcePath(current["resource"]?.ToString())
+                        };
+                        if (info.resource == null || info.name == null) // required
+                            continue;
+                        info.backresource = sanitizeResourcePath(current["backresource"]?.ToString());
+                        info.climbresource = sanitizeResourcePath(current["climbresource"]?.ToString());
+                        info.flipresource = sanitizeResourcePath(current["flipresource"]?.ToString());
+                        info.backflipresource = sanitizeResourcePath(current["backflipresource"]?.ToString());
+
+                        info.author = current["author"]?.ToString();
+                        info.package = current["package"]?.ToString();
+                        info.condition = current["condition"]?.ToString();
+                        info.bounce = current["bounce"] != null;
+                        info.adaptive = current["adaptive"] != null;
+                        info.behind = current["behind"] != null;
+
+                        if (info.package == "Developer Hats")
+                            info.package = "developerHats";
+
+                        if (info.package == "Community Hats")
+                            info.package = "communityHats";
+
+                        hatdatas.Add(info);
+                    }
+                }
+
+                List<string> markedNotExist = new();
+
+                string filePath = Path.GetDirectoryName(Application.dataPath) + @"\TheOtherHats\";
+                for (int i = 0; i < hatdatas.Count; i++)
+                {
+                    CustomHatOnline data = hatdatas[i];
+                    markedNotExist.Clear();
+
+                    if (!doesResourceExist(filePath + data.resource))
+                        markedNotExist.Add(data.resource);
+                    if (data.backresource != null && !doesResourceExist(filePath + data.backresource))
+                        markedNotExist.Add(data.backresource);
+                    if (data.climbresource != null && !doesResourceExist(filePath + data.climbresource))
+                        markedNotExist.Add(data.climbresource);
+                    if (data.flipresource != null && !doesResourceExist(filePath + data.flipresource))
+                        markedNotExist.Add(data.flipresource);
+                    if (data.backflipresource != null && !doesResourceExist(filePath + data.backflipresource))
+                        markedNotExist.Add(data.backflipresource);
+
+                    if (markedNotExist.Count != 0)
+                    {
+                        TheOtherRolesPlugin.Logger.LogMessage(data.name + " Removed!");
+                        hatdatas.RemoveAt(i);
+                    }
+                }
+                hatDetails = hatdatas;
+            }
+            catch (System.Exception ex)
+            {
+                TheOtherRolesPlugin.Instance.Log.LogError(ex.ToString());
+                System.Console.WriteLine(ex);
+            }
+        }
+
+        private static bool doesResourceExist(string respath)
+        {
+            if (!File.Exists(respath))
+                return false;
+            return true;
+        }
+
         public static async Task<HttpStatusCode> FetchHats(string repo)
         {
-            HttpClient http = new HttpClient();
+            HttpClient http = new();
             http.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue { NoCache = true };
             var response = await http.GetAsync(new System.Uri($"{repo}/CustomHats.json"), HttpCompletionOption.ResponseContentRead);
             try
@@ -522,23 +614,24 @@ namespace TheOtherRoles.Modules
                 if (response.StatusCode != HttpStatusCode.OK) return response.StatusCode;
                 if (response.Content == null)
                 {
-                    Helpers.log("Server returned no data: " + response.StatusCode.ToString());
+                    System.Console.WriteLine("Server returned no data: " + response.StatusCode.ToString());
                     return HttpStatusCode.ExpectationFailed;
                 }
                 string json = await response.Content.ReadAsStringAsync();
                 JToken jobj = JObject.Parse(json)["hats"];
                 if (!jobj.HasValues) return HttpStatusCode.ExpectationFailed;
 
-                List<CustomHatOnline> hatdatas = new List<CustomHatOnline>();
+                List<CustomHatOnline> hatdatas = new();
 
                 for (JToken current = jobj.First; current != null; current = current.Next)
                 {
                     if (current.HasValues)
                     {
-                        CustomHatOnline info = new CustomHatOnline();
-
-                        info.name = current["name"]?.ToString();
-                        info.resource = sanitizeResourcePath(current["resource"]?.ToString());
+                        CustomHatOnline info = new()
+                        {
+                            name = current["name"]?.ToString(),
+                            resource = sanitizeResourcePath(current["resource"]?.ToString())
+                        };
                         if (info.resource == null || info.name == null) // required
                             continue;
                         info.reshasha = current["reshasha"]?.ToString();
@@ -568,9 +661,10 @@ namespace TheOtherRoles.Modules
                     }
                 }
 
-                List<string> markedfordownload = new List<string>();
+                List<string> markedfordownload = new();
 
                 string filePath = Path.GetDirectoryName(Application.dataPath) + @"\TheOtherHats\";
+                if (!Directory.Exists(filePath)) Directory.CreateDirectory(filePath);
                 MD5 md5 = MD5.Create();
                 foreach (CustomHatOnline data in hatdatas)
                 {
@@ -588,15 +682,12 @@ namespace TheOtherRoles.Modules
 
                 foreach (var file in markedfordownload)
                 {
+
                     var hatFileResponse = await http.GetAsync($"{repo}/hats/{file}", HttpCompletionOption.ResponseContentRead);
                     if (hatFileResponse.StatusCode != HttpStatusCode.OK) continue;
-                    using (var responseStream = await hatFileResponse.Content.ReadAsStreamAsync())
-                    {
-                        using (var fileStream = File.Create($"{filePath}\\{file}"))
-                        {
-                            responseStream.CopyTo(fileStream);
-                        }
-                    }
+                    using var responseStream = await hatFileResponse.Content.ReadAsStreamAsync();
+                    using var fileStream = File.Create($"{filePath}\\{file}");
+                    responseStream.CopyTo(fileStream);
                 }
 
                 hatDetails.AddRange(hatdatas);
@@ -614,11 +705,9 @@ namespace TheOtherRoles.Modules
             if (reshash == null || !File.Exists(respath))
                 return true;
 
-            using (var stream = File.OpenRead(respath))
-            {
-                var hash = System.BitConverter.ToString(md5.ComputeHash(stream)).Replace("-", "").ToLowerInvariant();
-                return !reshash.Equals(hash);
-            }
+            using var stream = File.OpenRead(respath);
+            var hash = System.BitConverter.ToString(md5.ComputeHash(stream)).Replace("-", "").ToLowerInvariant();
+            return !reshash.Equals(hash);
         }
 
         public class CustomHatOnline : CustomHats.CustomHat
@@ -630,25 +719,23 @@ namespace TheOtherRoles.Modules
             public string reshashbf { get; set; }
         }
     }
-
     public static class CustomHatExtensions
     {
         public static CustomHats.HatExtension getHatExtension(this HatData hat)
         {
-            CustomHats.HatExtension ret = null;
             if (CustomHats.TestExt != null && CustomHats.TestExt.condition.Equals(hat.name))
             {
                 return CustomHats.TestExt;
             }
-            CustomHats.CustomHatRegistry.TryGetValue(hat.name, out ret);
+            CustomHats.CustomHatRegistry.TryGetValue(hat.name, out CustomHats.HatExtension ret);
             return ret;
         }
     }
 
     [HarmonyPatch(typeof(PoolablePlayer), nameof(PoolablePlayer.UpdateFromPlayerOutfit))]
-    public static class HatsPoolablePlayerPatch
+    public static class PoolablePlayerPatch
     {
-        public static void Postfix(PoolablePlayer __instance, GameData.PlayerOutfit outfit)
+        public static void Postfix(PoolablePlayer __instance)
         {
             if (__instance.VisorSlot()?.transform == null || __instance.HatSlot()?.transform == null) return;
 
@@ -661,4 +748,4 @@ namespace TheOtherRoles.Modules
                 );
         }
     }
-}
+}*/

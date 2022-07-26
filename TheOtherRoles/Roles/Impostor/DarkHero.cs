@@ -1,25 +1,40 @@
 using HarmonyLib;
 using System.Collections.Generic;
 using UnityEngine;
+using TheOtherRoles.Utilities;
 
 namespace TheOtherRoles
 {
     [HarmonyPatch]
-    public class Bat : RoleBase<Bat>
+    public class DarkHero : RoleBase<DarkHero>
     {
-        public static Color color = new Color32(128, 128, 128, byte.MaxValue);
-        public static float onVision { get { return CustomOptionHolder.batBlackOutOnVision.getFloat(); } }
-        public static float offVision { get { return CustomOptionHolder.batBlackOutOffVision.getFloat(); } }
+        public static Color color = Palette.ImpostorRed;
+        public static float cooldown { get { return CustomOptionHolder.darkHeroKillCooldown.getFloat(); } }
 
-        public Bat()
+        public DarkHero()
         {
-            RoleType = roleId = RoleType.Bat;
+            RoleType = roleId = RoleType.DarkHero;
+            PlayerControl.LocalPlayer.SetKillTimer(cooldown);
         }
 
         public override void OnMeetingStart() { }
         public override void OnMeetingEnd() { }
-        public override void FixedUpdate() { }
-        public override void OnKill(PlayerControl target) { }
+        public override void FixedUpdate() 
+        { 
+            if (PlayerControl.LocalPlayer.isRole(RoleType.DarkHero))
+            {
+                var sabo = MapUtilities.CachedShipStatus.Systems[SystemTypes.Electrical].CastFast<SwitchSystem>();
+                FastDestroyableSingleton<HudManager>.Instance.KillButton.enabled = true;
+                if (sabo != null && !sabo.IsActive)
+                {
+                    FastDestroyableSingleton<HudManager>.Instance.KillButton.enabled = false;
+                }
+            }
+        }
+        public override void OnKill(PlayerControl target) 
+        { 
+            PlayerControl.LocalPlayer.SetKillTimer(cooldown);
+        }
         public override void OnDeath(PlayerControl killer = null) { }
         public override void HandleDisconnect(PlayerControl player, DisconnectReasons reason) { }
 
@@ -48,7 +63,7 @@ namespace TheOtherRoles
 
         public static void Clear()
         {
-            players = new List<Bat>();
+            players = new List<DarkHero>();
         }
     }
 }

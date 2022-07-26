@@ -68,9 +68,9 @@ namespace TheOtherRoles
         {
             ModTranslation.Load();
             Logger = Log;
-            string path = "TheOtherHats";
+            /*string path = "TheOtherHats";
             if(!Directory.Exists(path))
-                Directory.CreateDirectory(path);
+                Directory.CreateDirectory(path);*/
 
             DebugMode = Config.Bind("Custom", "Enable Debug Mode", false);
             StreamerMode = Config.Bind("Custom", "Enable Streamer Mode", false);

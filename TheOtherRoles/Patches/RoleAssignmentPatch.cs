@@ -159,6 +159,7 @@ namespace TheOtherRoles.Patches
             impSettings.Add((byte)RoleType.Trapper, CustomOptionHolder.trapperSpawnRate.data);
             impSettings.Add((byte)RoleType.Silencer, CustomOptionHolder.silencerSpawnRate.data);
             impSettings.Add((byte)RoleType.Eater, CustomOptionHolder.eaterSpawnRate.data);
+            impSettings.Add((byte)RoleType.DarkHero, CustomOptionHolder.darkHeroSpawnRate.data);
 
             neutralSettings.Add((byte)RoleType.Jester, CustomOptionHolder.jesterSpawnRate.data);
             neutralSettings.Add((byte)RoleType.Arsonist, CustomOptionHolder.arsonistSpawnRate.data);
@@ -193,7 +194,6 @@ namespace TheOtherRoles.Patches
             crewSettings.Add((byte)RoleType.Jammer, CustomOptionHolder.jammerSpawnRate.data);
             crewSettings.Add((byte)RoleType.Immortality, CustomOptionHolder.immortalitySpawnRate.data);
             //crewSettings.Add((byte)RoleType.Sunfish, CustomOptionHolder.sunfishSpawnRate.data);
-            crewSettings.Add((byte)RoleType.Bat, CustomOptionHolder.batSpawnRate.data);
 
             if (impostors.Count > 1)
             {
