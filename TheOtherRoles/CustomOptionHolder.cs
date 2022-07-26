@@ -438,14 +438,17 @@ namespace TheOtherRoles
 
         //public static CustomRoleOption sunfishSpawnRate;
 
-        public static CustomRoleOption prophetSpawnRate;
+        /*public static CustomRoleOption prophetSpawnRate;
         public static CustomOption prophetProphecyNum;
         public static CustomOption prophetMultipleProphecy;
-        public static CustomOption prophetBlackWhite;
+        public static CustomOption prophetBlackWhite;*/
 
         public static CustomRoleOption eaterSpawnRate;
         public static CustomOption eaterEatCooldown;
         public static CustomOption eaterEatTime;
+
+        public static CustomRoleOption darkHeroSpawnRate;
+        public static CustomOption darkHeroKillCooldown;
 
         //CustomOptions
 
@@ -659,6 +662,9 @@ namespace TheOtherRoles
             eaterEatCooldown = CustomOption.Create(8011, CustomOptionType.Impostor, "eaterEatCooldown", 30f, 2.5f, 60f, 2.5f, eaterSpawnRate, format: "unitSeconds");
             eaterEatTime = CustomOption.Create(8012, CustomOptionType.Impostor, "eaterEatTime", 3f, 0.5f, 30f, 0.5f, eaterSpawnRate, format: "unitSeconds");
             
+            darkHeroSpawnRate = new CustomRoleOption(6330, CustomOptionType.Impostor, "darkHero", DarkHero.color, 1);
+            darkHeroKillCooldown = CustomOption.Create(6331, CustomOptionType.Impostor, "darkHeroKillCooldown", 5f, 2.5f, 60f, 2.5f, darkHeroSpawnRate, format: "unitSeconds");
+
             madmateSpawnRate = new CustomRoleOption(280, CustomOptionType.Modifier, "madmate", Madmate.color);
             madmateType = CustomOption.Create(281, CustomOptionType.Modifier, "madmateType", new string[] { "madmateDefault", "madmateWithRole", "madmateRandom" }, madmateSpawnRate);
             madmateFixedRole = new CustomRoleSelectionOption(282, CustomOptionType.Modifier, "madmateFixedRole", Madmate.validRoles, madmateType);

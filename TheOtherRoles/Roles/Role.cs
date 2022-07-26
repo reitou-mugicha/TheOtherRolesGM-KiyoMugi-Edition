@@ -40,7 +40,7 @@ namespace TheOtherRoles
         Jammer,
         Immortality,
         //Sunfish,
-        Prophet,
+        //Prophet,
 
 
         Impostor = 100,
@@ -71,6 +71,7 @@ namespace TheOtherRoles
         Trapper,
         Silencer,
         Eater,
+        DarkHero,
 
         Lovers = 150,
         EvilGuesser,
@@ -131,6 +132,7 @@ namespace TheOtherRoles
             { RoleType.Trapper, typeof(RoleBase<Trapper>) },
             { RoleType.Silencer, typeof(RoleBase<Silencer>) },
             { RoleType.Eater, typeof(RoleBase<Eater>) },
+            { RoleType.DarkHero, typeof(RoleBase<DarkHero>) },
 
             // Neutral
             { RoleType.PlagueDoctor, typeof(RoleBase<PlagueDoctor>) },
