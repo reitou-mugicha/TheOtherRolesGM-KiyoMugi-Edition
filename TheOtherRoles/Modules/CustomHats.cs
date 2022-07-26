@@ -350,6 +350,7 @@ namespace TheOtherRoles.Modules
                     title.transform.localScale = Vector3.one * 1.5f;
                     title.fontSize *= 0.5f;
                     title.enableAutoSizing = false;
+                    title.text = ModTranslation.getString(packageName);
                     __instance.StartCoroutine(Effects.Lerp(0.1f, new System.Action<float>((p) => { title.SetText(packageName); })));
                     offset -= 0.8f * __instance.YOffset;
                 }
