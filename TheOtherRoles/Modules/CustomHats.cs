@@ -440,8 +440,13 @@ namespace TheOtherRoles.Modules
 
                 var orderedKeys = packages.Keys.OrderBy((string x) =>
                 {
-                    if (x == innerslothPackageName) return 1000;
-                    if (x == "Developer Hats") return 0;
+                    if (x == innerslothPackageName) return 10004;
+                    if (x == "developerHats") return 10003;
+                    if (x.Contains("gmEdition")) return 10002;
+                    if (x.Contains("shiune")) return 10001;
+                    if (x.Contains("YJBlack")) return 2;
+                    if (x.Contains("YJWhite")) return 1;
+                    if (x.Contains("mememura")) return 0;
                     return 500;
                 });
                 foreach (string key in orderedKeys)
