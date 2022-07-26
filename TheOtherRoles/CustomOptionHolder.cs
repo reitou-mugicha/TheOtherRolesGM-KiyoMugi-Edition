@@ -6,7 +6,6 @@ using static TheOtherRoles.CustomOption;
 
 namespace TheOtherRoles
 {
-
     public class CustomOptionHolder
     {
         public static string[] rates = new string[] { "0%", "10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%" };
@@ -508,9 +507,8 @@ namespace TheOtherRoles
 
         public static void Load()
         {
-
             // Role Options
-            activateRoles = CustomOption.Create(1, CustomOptionType.General, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "selectMode"), true, null, true);
+            activateRoles = CustomOption.Create(1, CustomOptionType.General, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "blockOriginal"), true, null, true);
 
             presetSelection = CustomOption.Create(2, CustomOptionType.General, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "presetSelection"), presets, null, true);
 
@@ -661,7 +659,7 @@ namespace TheOtherRoles
             eaterSpawnRate = new CustomRoleOption(8010, CustomOptionType.Impostor, "eater", Eater.color, 1);
             eaterEatCooldown = CustomOption.Create(8011, CustomOptionType.Impostor, "eaterEatCooldown", 30f, 2.5f, 60f, 2.5f, eaterSpawnRate, format: "unitSeconds");
             eaterEatTime = CustomOption.Create(8012, CustomOptionType.Impostor, "eaterEatTime", 3f, 0.5f, 30f, 0.5f, eaterSpawnRate, format: "unitSeconds");
-            
+
             darkHeroSpawnRate = new CustomRoleOption(6330, CustomOptionType.Impostor, "darkHero", DarkHero.color, 1);
             darkHeroKillCooldown = CustomOption.Create(6331, CustomOptionType.Impostor, "darkHeroKillCooldown", 5f, 2.5f, 60f, 2.5f, darkHeroSpawnRate, format: "unitSeconds");
 
@@ -927,7 +925,7 @@ namespace TheOtherRoles
             immortalityMeetingStartSuicideTime = CustomOption.Create(3671, CustomOptionType.Crewmate, "immortalityMeetingStartSuicideTime", 10f, 2.5f, 60f, 2.5f, immortalitySpawnRate, format: "unitSeconds");
 
             //prophetSpawnRate = new CustomRoleOption(8130, CustomOptionType.Crewmate, "prophet", Prophet.color, 15);
-            
+
             //sunfishSpawnRate = new CustomRoleOption(3675, CustomOptionType.Crewmate, "sunfish", Sunfish.color, 15);
 
             // Other options

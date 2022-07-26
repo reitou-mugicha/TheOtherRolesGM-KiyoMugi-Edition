@@ -1,4 +1,3 @@
-/*using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,17 +10,18 @@ using System.Threading.Tasks;
 using HarmonyLib;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
+using TheOtherRoles.Utilities;
 
 namespace TheOtherRoles.Modules
 {
-
     [HarmonyPatch]
     public class CustomHats
     {
         public static Material hatShader;
 
-        public static Dictionary<string, HatExtension> CustomHatRegistry = new();
+        public static Dictionary<string, HatExtension> CustomHatRegistry = new Dictionary<string, HatExtension>();
         public static HatExtension TestExt = null;
+        public static bool IsEnd = false;
 
         public class HatExtension
         {
@@ -50,18 +50,18 @@ namespace TheOtherRoles.Modules
 
         private static List<CustomHat> createCustomHatDetails(string[] hats, bool fromDisk = false)
         {
-            Dictionary<string, CustomHat> fronts = new();
-            Dictionary<string, string> backs = new();
-            Dictionary<string, string> flips = new();
-            Dictionary<string, string> backflips = new();
-            Dictionary<string, string> climbs = new();
+            Dictionary<string, CustomHat> fronts = new Dictionary<string, CustomHat>();
+            Dictionary<string, string> backs = new Dictionary<string, string>();
+            Dictionary<string, string> flips = new Dictionary<string, string>();
+            Dictionary<string, string> backflips = new Dictionary<string, string>();
+            Dictionary<string, string> climbs = new Dictionary<string, string>();
 
             for (int i = 0; i < hats.Length; i++)
             {
-                string s = fromDisk ? hats[i][(hats[i].LastIndexOf("\\") + 1)..].Split('.')[0] : hats[i].Split('.')[3];
+                string s = fromDisk ? hats[i].Substring(hats[i].LastIndexOf("\\") + 1).Split('.')[0] : hats[i].Split('.')[3];
                 string[] p = s.Split('_');
 
-                HashSet<string> options = new();
+                HashSet<string> options = new HashSet<string>();
                 for (int j = 1; j < p.Length; j++)
                     options.Add(p[j]);
 
@@ -75,28 +75,26 @@ namespace TheOtherRoles.Modules
                     flips.Add(p[0], hats[i]);
                 else
                 {
-                    CustomHat custom = new()
-                    {
-                        resource = hats[i],
-                        name = p[0].Replace('-', ' '),
-                        bounce = options.Contains("bounce"),
-                        adaptive = options.Contains("adaptive"),
-                        behind = options.Contains("behind")
-                    };
+                    CustomHat custom = new CustomHat { resource = hats[i] };
+                    custom.name = p[0].Replace('-', ' ');
+                    custom.bounce = options.Contains("bounce");
+                    custom.adaptive = options.Contains("adaptive");
+                    custom.behind = options.Contains("behind");
 
                     fronts.Add(p[0], custom);
                 }
             }
 
-            List<CustomHat> customhats = new();
+            List<CustomHat> customhats = new List<CustomHat>();
 
             foreach (string k in fronts.Keys)
             {
                 CustomHat hat = fronts[k];
-                backs.TryGetValue(k, out string br);
-                climbs.TryGetValue(k, out string cr);
-                flips.TryGetValue(k, out string fr);
-                backflips.TryGetValue(k, out string bfr);
+                string br, cr, fr, bfr;
+                backs.TryGetValue(k, out br);
+                climbs.TryGetValue(k, out cr);
+                flips.TryGetValue(k, out fr);
+                backflips.TryGetValue(k, out bfr);
                 if (br != null)
                     hat.backresource = br;
                 if (cr != null)
@@ -107,10 +105,8 @@ namespace TheOtherRoles.Modules
                     hat.backflipresource = bfr;
                 if (hat.backresource != null)
                     hat.behind = true;
-
                 customhats.Add(hat);
             }
-
             return customhats;
         }
 
@@ -132,11 +128,9 @@ namespace TheOtherRoles.Modules
             if (hatShader == null && DestroyableSingleton<HatManager>.InstanceExists)
                 hatShader = new Material(Shader.Find("Unlit/PlayerShader"));
 
-            HatData hat = new();
-            hat.hatViewData.viewData = new HatViewData
-            {
-                MainImage = CreateHatSprite(ch.resource, fromDisk)
-            };
+            HatData hat = ScriptableObject.CreateInstance<HatData>();
+            hat.hatViewData.viewData = ScriptableObject.CreateInstance<HatViewData>();
+            hat.hatViewData.viewData.MainImage = CreateHatSprite(ch.resource, fromDisk);
             if (ch.backresource != null)
             {
                 hat.hatViewData.viewData.BackImage = CreateHatSprite(ch.backresource, fromDisk);
@@ -144,25 +138,21 @@ namespace TheOtherRoles.Modules
             }
             if (ch.climbresource != null)
                 hat.hatViewData.viewData.ClimbImage = CreateHatSprite(ch.climbresource, fromDisk);
-            hat.name = ch.name + "\nby " + ch.author;
+            hat.name = ch.name;
             hat.displayOrder = 99;
-            hat.ProductId = "hat_" + ch.name.Replace(' ', '_') + "_" + ch.author;
+            hat.ProductId = "hat_" + ch.name.Replace(' ', '_');
             hat.InFront = !ch.behind;
             hat.NoBounce = !ch.bounce;
             hat.ChipOffset = new Vector2(0f, 0.2f);
             hat.Free = true;
-            hat.NotInStore = true;
-
 
             if (ch.adaptive && hatShader != null)
                 hat.hatViewData.viewData.AltShader = hatShader;
 
-            HatExtension extend = new()
-            {
-                author = ch.author ?? "Unknown",
-                package = ch.package ?? "Misc.",
-                condition = ch.condition ?? "none"
-            };
+            HatExtension extend = new HatExtension();
+            extend.author = ch.author != null ? ch.author : "Unknown";
+            extend.package = ch.package != null ? ch.package : "Misc.";
+            extend.condition = ch.condition != null ? ch.condition : "none";
 
             if (ch.flipresource != null)
                 extend.FlipImage = CreateHatSprite(ch.flipresource, fromDisk);
@@ -201,12 +191,13 @@ namespace TheOtherRoles.Modules
         private static class HatManagerPatch
         {
             private static bool LOADED;
-            private static bool RUNNING;
+            private static bool RUNNING = false;
 
             static void Prefix(HatManager __instance)
             {
+                if (!IsEnd) return;
                 if (RUNNING) return;
-                RUNNING = true; // prevent simultaneous execution
+                RUNNING = true; // prevent simultanious execution
 
                 try
                 {
@@ -215,8 +206,8 @@ namespace TheOtherRoles.Modules
                         Assembly assembly = Assembly.GetExecutingAssembly();
                         string hatres = $"{assembly.GetName().Name}.Resources.CustomHats";
                         string[] hats = (from r in assembly.GetManifestResourceNames()
-                                         where r.StartsWith(hatres) && r.EndsWith(".png")
-                                         select r).ToArray<string>();
+                                        where r.StartsWith(hatres) && r.EndsWith(".png")
+                                        select r).ToArray<string>();
 
                         List<CustomHat> customhats = createCustomHatDetails(hats);
                         foreach (CustomHat ch in customhats)
@@ -231,13 +222,9 @@ namespace TheOtherRoles.Modules
                 catch (System.Exception e)
                 {
                     if (!LOADED)
-                        Logger.error("Unable to add Custom Hats\n" + e, "CustomHats");
+                        System.Console.WriteLine("Unable to add Custom Hats\n" + e);
                 }
                 LOADED = true;
-            }
-            static void Postfix(HatManager __instance)
-            {
-                RUNNING = false;
             }
         }
 
@@ -260,7 +247,7 @@ namespace TheOtherRoles.Modules
                     }
                     else
                     {
-                        hp.FrontLayer.sprite = hp.Hat.hatViewData.viewData.MainImage;
+                        hp.FrontLayer.sprite = hp.hatView.MainImage;
                     }
                 }
                 if (extend.BackFlipImage != null)
@@ -271,189 +258,198 @@ namespace TheOtherRoles.Modules
                     }
                     else
                     {
-                        hp.BackLayer.sprite = hp.Hat.hatViewData.viewData.BackImage;
+                        hp.BackLayer.sprite = hp.hatView.BackImage;
                     }
                 }
             }
         }
 
-        [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.Begin))]
-        private static class ShipStatusSetHat
+        [HarmonyPatch]
+        private static class FreeplayHatTestingPatches
         {
-            static void Postfix(ShipStatus __instance)
+            [HarmonyPatch(typeof(HatParent), nameof(HatParent.SetHat), typeof(int))]
+            private static class HatParentSetHatPatchColor
             {
-                if (DestroyableSingleton<TutorialManager>.InstanceExists)
+                static void Prefix(HatParent __instance)
                 {
-                    string filePath = Path.GetDirectoryName(Application.dataPath) + @"\TheOtherHats\Test";
-                    DirectoryInfo d = new(filePath);
-                    string[] filePaths = d.GetFiles("*.png").Select(x => x.FullName).ToArray(); // Getting Text files
-                    List<CustomHat> hats = createCustomHatDetails(filePaths, true);
-                    if (hats.Count > 0)
+                    if (DestroyableSingleton<TutorialManager>.InstanceExists)
                     {
-                        foreach (PlayerControl pc in PlayerControl.AllPlayerControls)
+                        try
                         {
-                            var color = pc.CurrentOutfit.ColorId;
-                            pc.SetHat("hat_dusk", color);
-                            pc.cosmetics.hat.Hat = CreateHatData(hats[0], true, true);
-                            pc.cosmetics.hat.SetHat(color);
+                            string filePath = Path.GetDirectoryName(Application.dataPath) + @"\TheOtherHats\Test";
+                            if (!Directory.Exists(filePath)) Directory.CreateDirectory(filePath);
+                            DirectoryInfo d = new DirectoryInfo(filePath);
+                            string[] filePaths = d.GetFiles("*.png").Select(x => x.FullName).ToArray(); // Getting Text files
+                            List<CustomHat> hats = createCustomHatDetails(filePaths, true);
+                            if (hats.Count > 0)
+                            {
+                                __instance.Hat = CreateHatData(hats[0], true, true);
+                            }
+                        }
+                        catch (System.Exception e)
+                        {
+                            System.Console.WriteLine("Unable to create test hat\n" + e);
                         }
                     }
                 }
             }
-        }
 
-        private static List<TMPro.TMP_Text> hatsTabCustomTexts = new();
-        public static string innerslothPackageName = "innerslothHats";
-        private static float headerSize = 0.8f;
-        private static float headerX = 0.8f;
-        private static float inventoryTop = 1.5f;
-        private static float inventoryBot = -2.5f;
-        private static float inventoryZ = -2f;
+            [HarmonyPatch(typeof(HatParent), nameof(HatParent.SetHat), typeof(HatData), typeof(HatViewData), typeof(int))]
+            private static class HatParentSetHatPatchExtra
+            {
+                static bool Prefix(HatParent __instance, HatData hat, HatViewData hatViewData, int color)
+                {
+                    if (!DestroyableSingleton<TutorialManager>.InstanceExists) return true;
 
-        public static void calcItemBounds(HatsTab __instance)
-        {
-            inventoryTop = __instance.scroller.Inner.position.y - 0.5f;
-            inventoryBot = __instance.scroller.Inner.position.y - 4.5f;
+                    try
+                    {
+                        __instance.Hat = hat;
+                        __instance.hatView = hatViewData;
+
+                        string filePath = Path.GetDirectoryName(Application.dataPath) + @"\TheOtherHats\Test";
+                        if (!Directory.Exists(filePath)) return true;
+                        DirectoryInfo d = new DirectoryInfo(filePath);
+                        string[] filePaths = d.GetFiles("*.png").Select(x => x.FullName).ToArray(); // Getting Text files
+                        List<CustomHat> hats = createCustomHatDetails(filePaths, true);
+                        if (hats.Count > 0)
+                        {
+                            __instance.Hat = CreateHatData(hats[0], true, true);
+                            __instance.hatView = __instance.Hat.hatViewData.viewData;
+                        }
+                    }
+                    catch (System.Exception e)
+                    {
+                        System.Console.WriteLine("Unable to create test hat\n" + e);
+                        return true;
+                    }
+
+                    __instance.PopulateFromHatViewData();
+                    __instance.SpriteColor = Palette.PlayerColors[color];
+                    return false;
+                }
+            }
         }
 
         [HarmonyPatch(typeof(HatsTab), nameof(HatsTab.OnEnable))]
         public class HatsTabOnEnablePatch
         {
-            public static TMPro.TMP_Text textTemplate;
+            public static string innerslothPackageName = "Innersloth Hats";
+            private static TMPro.TMP_Text textTemplate;
 
             public static float createHatPackage(List<System.Tuple<HatData, HatExtension>> hats, string packageName, float YStart, HatsTab __instance)
             {
+                bool isDefaultPackage = innerslothPackageName == packageName;
+                if (!isDefaultPackage)
+                    hats = hats.OrderBy(x => x.Item1.name).ToList();
                 float offset = YStart;
 
                 if (textTemplate != null)
                 {
                     TMPro.TMP_Text title = UnityEngine.Object.Instantiate<TMPro.TMP_Text>(textTemplate, __instance.scroller.Inner);
-                    title.transform.parent = __instance.scroller.Inner;
-                    title.transform.localPosition = new Vector3(headerX, YStart, inventoryZ);
-                    title.alignment = TMPro.TextAlignmentOptions.Center;
-                    title.fontSize *= 1.25f;
-                    title.fontWeight = TMPro.FontWeight.Thin;
+                    title.transform.localPosition = new Vector3(2.25f, YStart, -1f);
+                    title.transform.localScale = Vector3.one * 1.5f;
+                    title.fontSize *= 0.5f;
                     title.enableAutoSizing = false;
-                    title.autoSizeTextContainer = true;
-                    title.text = ModTranslation.getString(packageName);
-                    offset -= headerSize * __instance.YOffset;
-                    hatsTabCustomTexts.Add(title);
+                    __instance.StartCoroutine(Effects.Lerp(0.1f, new System.Action<float>((p) => { title.SetText(packageName); })));
+                    offset -= 0.8f * __instance.YOffset;
                 }
-
-                var numHats = hats.Count;
-
                 for (int i = 0; i < hats.Count; i++)
                 {
                     HatData hat = hats[i].Item1;
                     HatExtension ext = hats[i].Item2;
 
                     float xpos = __instance.XRange.Lerp((i % __instance.NumPerRow) / (__instance.NumPerRow - 1f));
-                    float ypos = offset - (i / __instance.NumPerRow) * __instance.YOffset;
+                    float ypos = offset - (i / __instance.NumPerRow) * (isDefaultPackage ? 1f : 1.5f) * __instance.YOffset;
                     ColorChip colorChip = UnityEngine.Object.Instantiate<ColorChip>(__instance.ColorTabPrefab, __instance.scroller.Inner);
-
-                    int color = __instance.HasLocalPlayer() ? PlayerControl.LocalPlayer.Data.DefaultOutfit.ColorId : SaveManager.BodyColor;
-
-                    colorChip.transform.localPosition = new Vector3(xpos, ypos, inventoryZ);
                     if (ActiveInputManager.currentControlType == ActiveInputManager.InputType.Keyboard)
                     {
-                        colorChip.Button.OnMouseOver.AddListener((UnityEngine.Events.UnityAction)(() => __instance.SelectHat(hat)));
-                        colorChip.Button.OnMouseOut.AddListener((UnityEngine.Events.UnityAction)(() => __instance.SelectHat(DestroyableSingleton<HatManager>.Instance.GetHatById(SaveManager.LastHat))));
-                        colorChip.Button.OnClick.AddListener((UnityEngine.Events.UnityAction)(() => __instance.ClickEquip()));
+                        colorChip.Button.OnMouseOver.AddListener((System.Action)(() => __instance.SelectHat(hat)));
+                        colorChip.Button.OnMouseOut.AddListener((System.Action)(() => __instance.SelectHat(FastDestroyableSingleton<HatManager>.Instance.GetHatById(SaveManager.LastHat))));
+                        colorChip.Button.OnClick.AddListener((System.Action)(() => __instance.ClickEquip()));
                     }
                     else
                     {
-                        colorChip.Button.OnClick.AddListener((UnityEngine.Events.UnityAction)(() => __instance.SelectHat(hat)));
+                        colorChip.Button.OnClick.AddListener((System.Action)(() => __instance.SelectHat(hat)));
+                    }
+                    colorChip.Button.ClickMask = __instance.scroller.Hitbox;
+                    Transform background = colorChip.transform.FindChild("Background");
+                    Transform foreground = colorChip.transform.FindChild("ForeGround");
+
+                    if (ext != null)
+                    {
+                        if (background != null)
+                        {
+                            background.localPosition = Vector3.down * 0.243f;
+                            background.localScale = new Vector3(background.localScale.x, 0.8f, background.localScale.y);
+                        }
+                        if (foreground != null)
+                        {
+                            foreground.localPosition = Vector3.down * 0.243f;
+                        }
+
+                        if (textTemplate != null)
+                        {
+                            TMPro.TMP_Text description = UnityEngine.Object.Instantiate<TMPro.TMP_Text>(textTemplate, colorChip.transform);
+                            description.transform.localPosition = new Vector3(0f, -0.65f, -1f);
+                            description.alignment = TMPro.TextAlignmentOptions.Center;
+                            description.transform.localScale = Vector3.one * 0.65f;
+                            __instance.StartCoroutine(Effects.Lerp(0.1f, new System.Action<float>((p) => { description.SetText($"{hat.name}\nby {ext.author}"); })));
+                        }
                     }
 
-                    colorChip.Inner.SetHat(hat, color);
+                    colorChip.transform.localPosition = new Vector3(xpos, ypos, -1f);
+                    colorChip.Inner.SetHat(hat, __instance.HasLocalPlayer() ? PlayerControl.LocalPlayer.Data.DefaultOutfit.ColorId : ((int)SaveManager.BodyColor));
                     colorChip.Inner.transform.localPosition = hat.ChipOffset;
                     colorChip.Tag = hat;
-                    colorChip.Button.ClickMask = __instance.scroller.Hitbox;
+                    colorChip.SelectionHighlight.gameObject.SetActive(false);
                     __instance.ColorChips.Add(colorChip);
                 }
-
-                return offset - ((numHats - 1) / __instance.NumPerRow) * __instance.YOffset - headerSize;
+                return offset - ((hats.Count - 1) / __instance.NumPerRow) * (isDefaultPackage ? 1f : 1.5f) * __instance.YOffset - 1.75f;
             }
 
-            public static bool Prefix(HatsTab __instance)
+            public static void Postfix(HatsTab __instance)
             {
-                calcItemBounds(__instance);
+                for (int i = 0; i < __instance.scroller.Inner.childCount; i++)
+                    UnityEngine.Object.Destroy(__instance.scroller.Inner.GetChild(i).gameObject);
+                __instance.ColorChips = new Il2CppSystem.Collections.Generic.List<ColorChip>();
 
-                HatData[] unlockedHats = DestroyableSingleton<HatManager>.Instance.GetUnlockedHats();
-                Dictionary<string, List<System.Tuple<HatData, HatExtension>>> packages = new();
+                HatData[] unlockedHats = FastDestroyableSingleton<HatManager>.Instance.GetUnlockedHats();
+                Dictionary<string, List<System.Tuple<HatData, HatExtension>>> packages = new Dictionary<string, List<System.Tuple<HatData, HatExtension>>>();
 
-                Helpers.destroyList(hatsTabCustomTexts);
-                Helpers.destroyList(__instance.ColorChips);
-
-                hatsTabCustomTexts.Clear();
-                __instance.ColorChips.Clear();
-
-                textTemplate = PlayerCustomizationMenu.Instance.itemName;
-
-                foreach (HatData hatData in unlockedHats)
+                foreach (HatData hatBehaviour in unlockedHats)
                 {
-                    HatExtension ext = hatData.getHatExtension();
+                    HatExtension ext = hatBehaviour.getHatExtension();
 
                     if (ext != null)
                     {
                         if (!packages.ContainsKey(ext.package))
                             packages[ext.package] = new List<System.Tuple<HatData, HatExtension>>();
-                        packages[ext.package].Add(new System.Tuple<HatData, HatExtension>(hatData, ext));
+                        packages[ext.package].Add(new System.Tuple<HatData, HatExtension>(hatBehaviour, ext));
                     }
                     else
                     {
                         if (!packages.ContainsKey(innerslothPackageName))
                             packages[innerslothPackageName] = new List<System.Tuple<HatData, HatExtension>>();
-                        packages[innerslothPackageName].Add(new System.Tuple<HatData, HatExtension>(hatData, null));
+                        packages[innerslothPackageName].Add(new System.Tuple<HatData, HatExtension>(hatBehaviour, null));
                     }
                 }
 
                 float YOffset = __instance.YStart;
+                textTemplate = GameObject.Find("HatsGroup").transform.FindChild("Text").GetComponent<TMPro.TMP_Text>();
 
                 var orderedKeys = packages.Keys.OrderBy((string x) =>
                 {
-                    if (x == innerslothPackageName) return 10004;
-                    if (x == "developerHats") return 10003;
-                    if (x.Contains("gmEdition")) return 10002;
-                    if (x.Contains("shiune")) return 10001;
-                    if (x.Contains("YJBlack")) return 2;
-                    if (x.Contains("YJWhite")) return 1;
-                    if (x.Contains("mememura")) return 0;
+                    if (x == innerslothPackageName) return 1000;
+                    if (x == "Developer Hats") return 0;
                     return 500;
                 });
-
                 foreach (string key in orderedKeys)
                 {
                     List<System.Tuple<HatData, HatExtension>> value = packages[key];
                     YOffset = createHatPackage(value, key, YOffset, __instance);
                 }
 
-                __instance.scroller.ContentYBounds.max = -(YOffset + 3.0f + headerSize);
-                return false;
-            }
-        }
-
-        [HarmonyPatch(typeof(HatsTab), nameof(HatsTab.Update))]
-        public class HatsTabUpdatePatch
-        {
-            public static bool Prefix()
-            {
-                //return false;
-                return true;
-            }
-
-            public static void Postfix(HatsTab __instance)
-            {
-                // Manually hide all custom TMPro.TMP_Text objects that are outside the ScrollRect
-                foreach (TMPro.TMP_Text customText in hatsTabCustomTexts)
-                {
-                    if (customText != null && customText.transform != null && customText.gameObject != null)
-                    {
-                        bool active = customText.transform.position.y <= inventoryTop && customText.transform.position.y >= inventoryBot;
-                        float epsilon = Mathf.Min(Mathf.Abs(customText.transform.position.y - inventoryTop), Mathf.Abs(customText.transform.position.y - inventoryBot));
-                        if (active != customText.gameObject.active && epsilon > 0.1f) customText.gameObject.SetActive(active);
-                    }
-                }
+                __instance.scroller.ContentYBounds.max = -(YOffset + 4.1f);
             }
         }
     }
@@ -482,24 +478,30 @@ namespace TheOtherRoles.Modules
 
         private static async Task LaunchHatFetcherAsync()
         {
+            Directory.CreateDirectory(Path.GetDirectoryName(Application.dataPath) + @"\TheOtherHats\");
             hatDetails = new List<CustomHatOnline>();
             List<string> repos = new(hatRepos);
-
-            if (TheOtherRolesPlugin.DebugRepo.Value != "")
-                repos.Insert(0, TheOtherRolesPlugin.DebugRepo.Value);
-
+            TheOtherRolesPlugin.Logger.LogInfo("[CustomHats] Fetch");
             foreach (string repo in repos)
             {
+                Repos.Add(repo);
+            }
+            foreach (string repo in repos)
+            {
+                TheOtherRolesPlugin.Logger.LogInfo("[CustomHats] Starts Hats:" + repo);
                 try
                 {
                     HttpStatusCode status = await FetchHats(repo);
                     if (status != HttpStatusCode.OK)
                         System.Console.WriteLine($"Custom hats could not be loaded from repo: {repo}\n");
+                    else
+                        TheOtherRolesPlugin.Logger.LogInfo("[CustomHats] Finish Hats:" + repo);
                 }
                 catch (System.Exception e)
                 {
                     System.Console.WriteLine($"Unable to fetch hats from repo: {repo}\n" + e.Message);
                 }
+
             }
             running = false;
         }
@@ -510,99 +512,12 @@ namespace TheOtherRoles.Modules
                 return null;
 
             res = res.Replace("\\", "")
-                     .Replace("/", "")
-                     .Replace("*", "")
-                     .Replace("..", "");
+                    .Replace("/", "")
+                    .Replace("*", "")
+                    .Replace("..", "");
             return res;
         }
-
-        // オフラインハット用
-        public static void FetchHats()
-        {
-            HttpClient http = new();
-            http.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue { NoCache = true };
-            try
-            {
-                string jsonPath = Path.GetDirectoryName(Application.dataPath) + @"\CustomHats.json";
-                string json = File.ReadAllText(jsonPath);
-                JToken jobj = JObject.Parse(json)["hats"];
-                if (!jobj.HasValues) return;
-
-                List<CustomHatOnline> hatdatas = new();
-
-                for (JToken current = jobj.First; current != null; current = current.Next)
-                {
-                    if (current.HasValues)
-                    {
-                        CustomHatOnline info = new()
-                        {
-                            name = current["name"]?.ToString(),
-                            resource = sanitizeResourcePath(current["resource"]?.ToString())
-                        };
-                        if (info.resource == null || info.name == null) // required
-                            continue;
-                        info.backresource = sanitizeResourcePath(current["backresource"]?.ToString());
-                        info.climbresource = sanitizeResourcePath(current["climbresource"]?.ToString());
-                        info.flipresource = sanitizeResourcePath(current["flipresource"]?.ToString());
-                        info.backflipresource = sanitizeResourcePath(current["backflipresource"]?.ToString());
-
-                        info.author = current["author"]?.ToString();
-                        info.package = current["package"]?.ToString();
-                        info.condition = current["condition"]?.ToString();
-                        info.bounce = current["bounce"] != null;
-                        info.adaptive = current["adaptive"] != null;
-                        info.behind = current["behind"] != null;
-
-                        if (info.package == "Developer Hats")
-                            info.package = "developerHats";
-
-                        if (info.package == "Community Hats")
-                            info.package = "communityHats";
-
-                        hatdatas.Add(info);
-                    }
-                }
-
-                List<string> markedNotExist = new();
-
-                string filePath = Path.GetDirectoryName(Application.dataPath) + @"\TheOtherHats\";
-                for (int i = 0; i < hatdatas.Count; i++)
-                {
-                    CustomHatOnline data = hatdatas[i];
-                    markedNotExist.Clear();
-
-                    if (!doesResourceExist(filePath + data.resource))
-                        markedNotExist.Add(data.resource);
-                    if (data.backresource != null && !doesResourceExist(filePath + data.backresource))
-                        markedNotExist.Add(data.backresource);
-                    if (data.climbresource != null && !doesResourceExist(filePath + data.climbresource))
-                        markedNotExist.Add(data.climbresource);
-                    if (data.flipresource != null && !doesResourceExist(filePath + data.flipresource))
-                        markedNotExist.Add(data.flipresource);
-                    if (data.backflipresource != null && !doesResourceExist(filePath + data.backflipresource))
-                        markedNotExist.Add(data.backflipresource);
-
-                    if (markedNotExist.Count != 0)
-                    {
-                        TheOtherRolesPlugin.Logger.LogMessage(data.name + " Removed!");
-                        hatdatas.RemoveAt(i);
-                    }
-                }
-                hatDetails = hatdatas;
-            }
-            catch (System.Exception ex)
-            {
-                TheOtherRolesPlugin.Instance.Log.LogError(ex.ToString());
-                System.Console.WriteLine(ex);
-            }
-        }
-
-        private static bool doesResourceExist(string respath)
-        {
-            if (!File.Exists(respath))
-                return false;
-            return true;
-        }
+        public static List<string> Repos = new();
 
         public static async Task<HttpStatusCode> FetchHats(string repo)
         {
@@ -630,11 +545,12 @@ namespace TheOtherRoles.Modules
                         CustomHatOnline info = new()
                         {
                             name = current["name"]?.ToString(),
+                            author = current["author"]?.ToString(),
                             resource = sanitizeResourcePath(current["resource"]?.ToString())
                         };
                         if (info.resource == null || info.name == null) // required
                             continue;
-                        info.reshasha = current["reshasha"]?.ToString();
+                        info.reshasha = info.resource + info.name + info.author;
                         info.backresource = sanitizeResourcePath(current["backresource"]?.ToString());
                         info.reshashb = current["reshashb"]?.ToString();
                         info.climbresource = sanitizeResourcePath(current["climbresource"]?.ToString());
@@ -644,7 +560,6 @@ namespace TheOtherRoles.Modules
                         info.backflipresource = sanitizeResourcePath(current["backflipresource"]?.ToString());
                         info.reshashbf = current["reshashbf"]?.ToString();
 
-                        info.author = current["author"]?.ToString();
                         info.package = current["package"]?.ToString();
                         info.condition = current["condition"]?.ToString();
                         info.bounce = current["bounce"] != null;
@@ -664,7 +579,6 @@ namespace TheOtherRoles.Modules
                 List<string> markedfordownload = new();
 
                 string filePath = Path.GetDirectoryName(Application.dataPath) + @"\TheOtherHats\";
-                if (!Directory.Exists(filePath)) Directory.CreateDirectory(filePath);
                 MD5 md5 = MD5.Create();
                 foreach (CustomHatOnline data in hatdatas)
                 {
@@ -682,8 +596,8 @@ namespace TheOtherRoles.Modules
 
                 foreach (var file in markedfordownload)
                 {
-
                     var hatFileResponse = await http.GetAsync($"{repo}/hats/{file}", HttpCompletionOption.ResponseContentRead);
+                    // TheOtherRolesPlugin.Logger.LogInfo(file);
                     if (hatFileResponse.StatusCode != HttpStatusCode.OK) continue;
                     using var responseStream = await hatFileResponse.Content.ReadAsStreamAsync();
                     using var fileStream = File.Create($"{filePath}\\{file}");
@@ -691,6 +605,11 @@ namespace TheOtherRoles.Modules
                 }
 
                 hatDetails.AddRange(hatdatas);
+                Repos.Remove(repo);
+                if (Repos.Count < 1)
+                {
+                    CustomHats.IsEnd = true;
+                }
             }
             catch (System.Exception ex)
             {
@@ -737,15 +656,15 @@ namespace TheOtherRoles.Modules
     {
         public static void Postfix(PoolablePlayer __instance)
         {
-            if (__instance.VisorSlot()?.transform == null || __instance.HatSlot()?.transform == null) return;
+            if (__instance.cosmetics.visor?.transform == null || __instance.cosmetics.hat?.transform == null) return;
 
             // fixes a bug in the original where the visor will show up beneath the hat,
             // instead of on top where it's supposed to be
-            __instance.VisorSlot().transform.localPosition = new Vector3(
-                __instance.VisorSlot().transform.localPosition.x,
-                __instance.VisorSlot().transform.localPosition.y,
-                __instance.HatSlot().transform.localPosition.z - 1
+            __instance.cosmetics.visor.transform.localPosition = new Vector3(
+                __instance.cosmetics.visor.transform.localPosition.x,
+                __instance.cosmetics.visor.transform.localPosition.y,
+                __instance.cosmetics.hat.transform.localPosition.z - 1
                 );
         }
     }
-}*/
+}

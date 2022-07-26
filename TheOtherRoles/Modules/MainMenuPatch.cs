@@ -16,7 +16,7 @@ namespace TheOtherRoles.Modules
 
         private static void Prefix(MainMenuManager __instance)
         {
-            //CustomHatLoader.LaunchHatFetcher();
+            CustomHatLoader.LaunchHatFetcher();
             var template = GameObject.Find("ExitGameButton");
             if (template == null) return;
 
