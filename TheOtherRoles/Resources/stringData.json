@@ -383,6 +383,15 @@
         "0": "Force End",
         "11": "\u5ec3\u6751"
     },
+    "vanillaOptionsText": {
+        "0": "AmongUs Options",
+        "11": "AmongUs\u306e\u8a2d\u5b9a"
+    },
+    "modOptionsText": {
+        "0": "Mod Options...",
+        "11": "\u30b2\u30fc\u30e0\u306e\u8a2d\u5b9a",
+        "13": "\u6a21\u7ec4\u8bbe\u7f6e..."
+    },
     "gm": {
         "0": "GM",
         "11": "GM",
@@ -2537,11 +2546,6 @@
     "horseMode": {
         "0": "Horse Mode",
         "11": "\u99ac\u30e2\u30fc\u30c9"
-    },
-    "modOptionsText": {
-        "0": "Mod Options...",
-        "11": "\u30b2\u30fc\u30e0\u306e\u8a2d\u5b9a",
-        "13": "\u6a21\u7ec4\u8bbe\u7f6e..."
     },
     "moreOptionsText": {
         "0": "More Options...",

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine.Events;
-using TheOtherRoles.Utilities;
+using UnityEngine.SceneManagement;
 using static UnityEngine.UI.Button;
 using Object = UnityEngine.Object;
 using TheOtherRoles.Modules;
@@ -36,9 +36,9 @@ namespace TheOtherRoles.Patches
         private static ToggleButtonBehaviour moreOptions;
         private static List<ToggleButtonBehaviour> modButtons;
         private static TextMeshPro titleTextTitle;
+        public static Vector3? _origin;
 
         public static ToggleButtonBehaviour buttonPrefab;
-        public static Vector3? _origin;
 
         [HarmonyPostfix]
         [HarmonyPatch(typeof(MainMenuManager), nameof(MainMenuManager.Start))]
@@ -53,22 +53,13 @@ namespace TheOtherRoles.Patches
             titleText.gameObject.SetActive(false);
             Object.DontDestroyOnLoad(titleText);
         }
-        public static Vector3? origin;
-        public static float xOffset = 1.75f;
-        [HarmonyPatch(typeof(OptionsMenuBehaviour), nameof(OptionsMenuBehaviour.Update))]
-        class OptionsUpdate
-        {
-            public static void Postfix(OptionsMenuBehaviour __instance)
-            {
-                if (__instance.CensorChatButton?.gameObject != null) __instance.CensorChatButton.gameObject.SetActive(false);
-                if (__instance.EnableFriendInvitesButton?.gameObject != null) __instance.EnableFriendInvitesButton.gameObject.SetActive(false);
-            }
-        }
+
         [HarmonyPostfix]
         [HarmonyPatch(typeof(OptionsMenuBehaviour), nameof(OptionsMenuBehaviour.Start))]
         public static void OptionsMenuBehaviour_StartPostfix(OptionsMenuBehaviour __instance)
         {
             if (!__instance.CensorChatButton) return;
+
             if (!popUp)
             {
                 CreateCustom(__instance);
@@ -82,7 +73,7 @@ namespace TheOtherRoles.Patches
                 buttonPrefab.gameObject.SetActive(false);
             }
 
-            SetUpOptions(__instance);
+            SetUpOptions();
             InitializeMoreButton(__instance);
         }
 
@@ -101,6 +92,7 @@ namespace TheOtherRoles.Patches
                 if (gObj.name != "Background" && gObj.name != "CloseButton")
                     Object.Destroy(gObj);
             }
+
             popUp.SetActive(false);
         }
 
@@ -110,7 +102,7 @@ namespace TheOtherRoles.Patches
             var transform = __instance.CensorChatButton.transform;
             _origin ??= transform.localPosition;
             transform.localPosition = _origin.Value + Vector3.left * 1.3f;
-            moreOptions.transform.localPosition = _origin.Value + Vector3.right * 1.3f;
+            moreOptions.transform.localPosition = _origin.Value + Vector3.right * 2.6f;
             var trans = moreOptions.transform.localPosition;
             moreOptions.gameObject.SetActive(true);
             trans = moreOptions.transform.position;
@@ -120,9 +112,10 @@ namespace TheOtherRoles.Patches
             moreOptionsButton.OnClick.AddListener((Action)(() =>
             {
                 if (!popUp) return;
-                if (__instance.transform.parent && __instance.transform.parent == FastDestroyableSingleton<HudManager>.Instance.transform)
+
+                if (__instance.transform.parent && __instance.transform.parent == HudManager.Instance.transform)
                 {
-                    popUp.transform.SetParent(FastDestroyableSingleton<HudManager>.Instance.transform);
+                    popUp.transform.SetParent(HudManager.Instance.transform);
                     popUp.transform.localPosition = new Vector3(0, 0, -800f);
                 }
                 else
@@ -130,16 +123,17 @@ namespace TheOtherRoles.Patches
                     popUp.transform.SetParent(null);
                     Object.DontDestroyOnLoad(popUp);
                 }
+
                 CheckSetTitle();
-                RefreshOpen(__instance);
+                RefreshOpen();
             }));
         }
 
-        private static void RefreshOpen(OptionsMenuBehaviour __instance)
+        private static void RefreshOpen()
         {
             popUp.gameObject.SetActive(false);
             popUp.gameObject.SetActive(true);
-            SetUpOptions(__instance);
+            SetUpOptions();
         }
 
         private static void CheckSetTitle()
@@ -149,87 +143,19 @@ namespace TheOtherRoles.Patches
             var title = titleTextTitle = Object.Instantiate(titleText, popUp.transform);
             title.GetComponent<RectTransform>().localPosition = Vector3.up * 2.3f;
             title.gameObject.SetActive(true);
-            title.text = ModTranslation.getString("moreOptionsText");
+            title.text = ModTranslation.getString("modOptionsText");
             title.name = "TitleText";
         }
 
-        private static void SetUpOptions(OptionsMenuBehaviour __instance)
+        private static void SetUpOptions()
         {
             if (popUp.transform.GetComponentInChildren<ToggleButtonBehaviour>()) return;
 
             modButtons = new List<ToggleButtonBehaviour>();
-            for (var i = 0; i < 2; i++)
+
+            for (var i = 0; i < AllOptions.Length; i++)
             {
-                ToggleButtonBehaviour mainbutton = null;
-                if (i == 0)
-                {
-                    mainbutton = __instance.CensorChatButton;
-                }
-                else
-                {
-                    mainbutton = __instance.EnableFriendInvitesButton;
-                }
-                var button = Object.Instantiate(buttonPrefab, popUp.transform);
-                var pos = new Vector3(i % 2 == 0 ? -1.17f : 1.17f, 1.3f - i / 2 * 0.8f, -.5f);
-
-                var transform = button.transform;
-                transform.localPosition = pos;
-
-                button.onState = mainbutton.onState;
-                button.Background.color = mainbutton.onState ? Color.green : Palette.ImpostorRed;
-                try
-                {
-                    if (i == 0)
-                    {
-                        button.Text.text = DestroyableSingleton<TranslationController>.Instance.GetString(StringNames.SettingsCensorChat);
-                    }
-                    else
-                    {
-                        button.Text.text = DestroyableSingleton<TranslationController>.Instance.GetString(StringNames.SettingsEnableFriendInvites);
-                    }
-                }
-                catch
-                {
-                    if (i == 0)
-                    {
-                        button.Text.text = __instance.CensorChatButton.Text.text;
-                    }
-                    else
-                    {
-                        button.Text.text = __instance.EnableFriendInvitesButton.Text.text;
-                    }
-                }
-                button.Text.fontSizeMin = button.Text.fontSizeMax = 2.2f;
-                button.Text.font = Object.Instantiate(titleText.font);
-                button.Text.GetComponent<RectTransform>().sizeDelta = new Vector2(2, 2);
-
-                button.name = mainbutton.name;
-                button.gameObject.SetActive(true);
-
-                var passiveButton = button.GetComponent<PassiveButton>();
-                var colliderButton = button.GetComponent<BoxCollider2D>();
-
-                colliderButton.size = new Vector2(2.2f, .7f);
-
-                passiveButton.OnClick = mainbutton.GetComponent<PassiveButton>().OnClick;
-                passiveButton.OnClick.AddListener((Action)(() =>
-                {
-                    button.onState = !button.onState;
-                    button.Background.color = button.onState ? Color.green : Palette.ImpostorRed;
-                }));
-                passiveButton.OnMouseOver = mainbutton.GetComponent<PassiveButton>().OnMouseOver;
-                passiveButton.OnMouseOut = mainbutton.GetComponent<PassiveButton>().OnMouseOut;
-
-                passiveButton.OnMouseOver.AddListener((Action)(() => button.Background.color = new Color32(34, 139, 34, byte.MaxValue)));
-                passiveButton.OnMouseOut.AddListener((Action)(() => button.Background.color = button.onState ? Color.green : Palette.ImpostorRed));
-
-                foreach (var spr in button.gameObject.GetComponentsInChildren<SpriteRenderer>())
-                    spr.size = new Vector2(2.2f, .7f);
-                modButtons.Add(button);
-            }
-            for (var i = 2; i < AllOptions.Length + 2; i++)
-            {
-                var info = AllOptions[i - 2];
+                var info = AllOptions[i];
 
                 var button = Object.Instantiate(buttonPrefab, popUp.transform);
                 var pos = new Vector3(i % 2 == 0 ? -1.17f : 1.17f, 1.3f - i / 2 * 0.8f, -.5f);
@@ -268,7 +194,7 @@ namespace TheOtherRoles.Patches
 
                 foreach (var spr in button.gameObject.GetComponentsInChildren<SpriteRenderer>())
                     spr.size = new Vector2(2.2f, .7f);
-                var trans = transform.position;
+
                 modButtons.Add(button);
             }
         }
@@ -283,20 +209,15 @@ namespace TheOtherRoles.Patches
         public static void updateTranslations()
         {
             if (titleTextTitle)
-                titleTextTitle.text = ModTranslation.getString("moreOptionsText");
+                titleTextTitle.text = ModTranslation.getString("modOptionsText");
 
             if (moreOptions)
                 moreOptions.Text.text = ModTranslation.getString("modOptionsText");
-            try
-            {
-                modButtons[0].Text.text = DestroyableSingleton<TranslationController>.Instance.GetString(StringNames.SettingsCensorChat);
-                modButtons[1].Text.text = DestroyableSingleton<TranslationController>.Instance.GetString(StringNames.SettingsEnableFriendInvites);
-            }
-            catch { }
+
             for (int i = 0; i < AllOptions.Length; i++)
             {
                 if (i >= modButtons.Count) break;
-                modButtons[i + 2].Text.text = ModTranslation.getString(AllOptions[i].Title);
+                modButtons[i].Text.text = ModTranslation.getString(AllOptions[i].Title);
             }
         }
 

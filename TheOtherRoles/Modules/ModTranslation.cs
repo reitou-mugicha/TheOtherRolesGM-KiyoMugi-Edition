@@ -121,6 +121,7 @@ namespace TheOtherRoles.Modules
         static void Postfix()
         {
             ClientOptionsPatch.updateTranslations();
+            VanillaOptionsPatch.updateTranslations();
         }
     }
 }
