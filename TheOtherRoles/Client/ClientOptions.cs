@@ -101,7 +101,7 @@ namespace TheOtherRoles.Patches
             moreOptions = Object.Instantiate(buttonPrefab, __instance.CensorChatButton.transform.parent);
             var transform = __instance.CensorChatButton.transform;
             _origin ??= transform.localPosition;
-            transform.localPosition = _origin.Value + Vector3.left * 1.3f;
+            transform.localPosition = _origin.Value + Vector3.left * 2.6f;
             moreOptions.transform.localPosition = _origin.Value + Vector3.right * 2.6f;
             var trans = moreOptions.transform.localPosition;
             moreOptions.gameObject.SetActive(true);
