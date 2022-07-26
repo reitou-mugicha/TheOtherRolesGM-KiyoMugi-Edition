@@ -24,7 +24,7 @@ namespace TheOtherRoles
     public class TheOtherRolesPlugin : BasePlugin
     {
         public const string Id = "kiyomori.mugicha.theotherrolesgmkm";
-        public const string VersionString = "3.0.1";
+        public const string VersionString = "3.0.2";
         public static System.Version Version = System.Version.Parse(VersionString);
         internal static BepInEx.Logging.ManualLogSource Logger;
 
@@ -68,9 +68,9 @@ namespace TheOtherRoles
         {
             ModTranslation.Load();
             Logger = Log;
-            /*string path = "TheOtherHats";
+            string path = "TheOtherHats";
             if(!Directory.Exists(path))
-                Directory.CreateDirectory(path);*/
+                Directory.CreateDirectory(path);
 
             DebugMode = Config.Bind("Custom", "Enable Debug Mode", false);
             StreamerMode = Config.Bind("Custom", "Enable Streamer Mode", false);
