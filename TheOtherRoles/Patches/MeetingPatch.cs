@@ -399,19 +399,31 @@ namespace TheOtherRoles.Patches
             }
         }
 
-        /*static void prophetOnClick(PlayerControl target, MeetingHud __instance)
+        static void prophetOnClick(int target, MeetingHud __instance)
         {
             if (guesserUI != null || !(__instance.state == MeetingHud.VoteStates.Voted || __instance.state == MeetingHud.VoteStates.NotVoted)) return;
-            __instance.playerStates.ToList().ForEach(x => x.gameObject.SetActive(false));
+            PlayerControl focusedTarget = Helpers.playerById(__instance.playerStates[target].TargetPlayerId);
 
             if(CustomOptionHolder.prophetBlackWhite.getBool())
             {
-                if(target.isImpostor()) FastDestroyableSingleton<HudManager>.Instance.Chat.AddChat(PlayerControl.LocalPlayer, ModTranslation.getString("impostorText"));
-                if(target.isNeutral()) FastDestroyableSingleton<HudManager>.Instance.Chat.AddChat(PlayerControl.LocalPlayer, ModTranslation.getString("neutralText"));
-                if(target.isCrew()) FastDestroyableSingleton<HudManager>.Instance.Chat.AddChat(PlayerControl.LocalPlayer, ModTranslation.getString("crewText"));
+                if(focusedTarget.isImpostor()) FastDestroyableSingleton<HudManager>.Instance.Chat.AddChat(PlayerControl.LocalPlayer, String.Format(ModTranslation.getString("impostorText"),  focusedTarget.Data.PlayerName));
+                if(focusedTarget.isNeutral()) FastDestroyableSingleton<HudManager>.Instance.Chat.AddChat(PlayerControl.LocalPlayer, String.Format(ModTranslation.getString("neutralText"),  focusedTarget.Data.PlayerName));
+                if(focusedTarget.isCrew()) FastDestroyableSingleton<HudManager>.Instance.Chat.AddChat(PlayerControl.LocalPlayer, String.Format(ModTranslation.getString("crewText"),  focusedTarget.Data.PlayerName));
             }
-            else FastDestroyableSingleton<HudManager>.Instance.Chat.AddChat(PlayerControl.LocalPlayer, ModTranslation.getString("prophetText", RoleInfo.GetRolesString(target, false, includeHidden: true)));
-        }*/
+            else FastDestroyableSingleton<HudManager>.Instance.Chat.AddChat(PlayerControl.LocalPlayer, String.Format(ModTranslation.getString("prophetText"),  focusedTarget.Data.PlayerName, RoleInfo.GetRolesString(focusedTarget, false)));
+
+            Prophet.remainingNum -= 1;
+            Prophet.isProphecy = true;
+
+            if (CustomOptionHolder.prophetMultipleProphecy.getBool() && Prophet.remainingNums() > 1 && focusedTarget != PlayerControl.LocalPlayer)
+            {
+                __instance.playerStates.ToList().ForEach(x => { if (x.TargetPlayerId == focusedTarget.PlayerId && x.transform.FindChild("ProphetButton") != null) UnityEngine.Object.Destroy(x.transform.FindChild("ProphetButton").gameObject); });
+            }
+            else
+            {
+                __instance.playerStates.ToList().ForEach(x => { if (x.transform.FindChild("ProphetButton") != null) UnityEngine.Object.Destroy(x.transform.FindChild("ProphetButton").gameObject); });
+            }
+        }
 
         private static GameObject guesserUI;
         static void guesserOnClick(int buttonTarget, MeetingHud __instance)
@@ -644,9 +656,8 @@ namespace TheOtherRoles.Patches
                 }
             }
 
-            /*PlayerControl target;
             //Add Prophet Buttons
-            if (PlayerControl.LocalPlayer.isRole(RoleType.Prophet) && PlayerControl.LocalPlayer.isAlive() && Prophet.remainingNum > 0)
+            if (PlayerControl.LocalPlayer.isRole(RoleType.Prophet) && PlayerControl.LocalPlayer.isAlive() && Prophet.remainingNums() > 0)
             {
                 for (int i = 0; i < __instance.playerStates.Length; i++)
                 {
@@ -655,7 +666,6 @@ namespace TheOtherRoles.Patches
 
                     GameObject template = playerVoteArea.Buttons.transform.Find("CancelButton").gameObject;
                     GameObject targetBox = UnityEngine.Object.Instantiate(template, playerVoteArea.transform);
-                    target = Helpers.playerById(playerVoteArea.TargetPlayerId);
                     targetBox.name = "ProphetButton";
                     targetBox.transform.localPosition = new Vector3(-0.95f, 0.03f, -1.3f);
                     SpriteRenderer renderer = targetBox.GetComponent<SpriteRenderer>();
@@ -663,9 +673,9 @@ namespace TheOtherRoles.Patches
                     PassiveButton button = targetBox.GetComponent<PassiveButton>();
                     button.OnClick.RemoveAllListeners();
                     int copiedIndex = i;
-                    button.OnClick.AddListener((UnityEngine.Events.UnityAction)(() => prophetOnClick(target, __instance)));
+                    button.OnClick.AddListener((UnityEngine.Events.UnityAction)(() => prophetOnClick(copiedIndex, __instance)));
                 }
-            }*/
+            }
         }
 
         public static void updateMeetingText(MeetingHud __instance)

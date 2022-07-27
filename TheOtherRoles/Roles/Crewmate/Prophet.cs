@@ -1,6 +1,7 @@
-/*using HarmonyLib;
+using HarmonyLib;
 using System.Collections.Generic;
 using UnityEngine;
+using Hazel;
 
 namespace TheOtherRoles
 {
@@ -10,19 +11,37 @@ namespace TheOtherRoles
         public static Color color = new Color32(238, 130, 238, byte.MaxValue);
         public static int Num {get{return Mathf.RoundToInt(CustomOptionHolder.prophetProphecyNum.getFloat());}}
         public static int remainingNum;
+        public static bool isProphecy;
 
         public Prophet()
         {
             RoleType = roleId = RoleType.Prophet;
             remainingNum = Num;
+            isProphecy = false;
         }
 
         public override void OnMeetingStart() { }
-        public override void OnMeetingEnd() { }
+        public override void OnMeetingEnd() 
+        { 
+            if(isProphecy)
+            {
+                MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.RPCExiled, Hazel.SendOption.Reliable, -1);
+                writer.Write(PlayerControl.LocalPlayer.PlayerId);
+                AmongUsClient.Instance.FinishRpcImmediately(writer);
+                RPCProcedure.RPCExiled(PlayerControl.LocalPlayer.PlayerId);
+            }
+        }
         public override void FixedUpdate() { }
         public override void OnKill(PlayerControl target) { }
         public override void OnDeath(PlayerControl killer = null) { }
         public override void HandleDisconnect(PlayerControl player, DisconnectReasons reason) { }
+
+        public static int remainingNums()
+        {
+            int remainingShots = remainingNum;
+            return remainingShots;
+        }
+
 
         public static void MakeButtons(HudManager hm)
         {
@@ -34,4 +53,4 @@ namespace TheOtherRoles
             players = new List<Prophet>();
         }
     }
-}*/
+}

@@ -173,7 +173,7 @@ namespace TheOtherRoles.Modules
             });
 
 
-            //Colored by Hawk
+            //Color by Hawk
             colors.Add(new CustomColor { longname = "Red",
                                         color = new Color32(255, 0, 0, byte.MaxValue), // color = new Color32(0xD8, 0x82, 0x83, byte.MaxValue),
                                         shadow = new Color32(128, 0, 0, byte.MaxValue), // shadow = new Color32(0xA5, 0x63, 0x65, byte.MaxValue),
