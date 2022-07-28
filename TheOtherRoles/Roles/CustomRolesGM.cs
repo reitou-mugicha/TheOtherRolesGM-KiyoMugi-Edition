@@ -55,6 +55,7 @@ namespace TheOtherRoles
             //Sunfish.Clear();
             Eater.Clear();
             DarkHero.Clear();
+            Prophet.Clear();
             Role.ClearAll();
         }
 

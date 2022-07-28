@@ -437,10 +437,10 @@ namespace TheOtherRoles
 
         //public static CustomRoleOption sunfishSpawnRate;
 
-        /*public static CustomRoleOption prophetSpawnRate;
+        public static CustomRoleOption prophetSpawnRate;
         public static CustomOption prophetProphecyNum;
         public static CustomOption prophetMultipleProphecy;
-        public static CustomOption prophetBlackWhite;*/
+        public static CustomOption prophetBlackWhite;
 
         public static CustomRoleOption eaterSpawnRate;
         public static CustomOption eaterEatCooldown;
@@ -924,7 +924,10 @@ namespace TheOtherRoles
             immortalitySpawnRate = new CustomRoleOption(3670, CustomOptionType.Crewmate, "immortality", Immortality.color, 15);
             immortalityMeetingStartSuicideTime = CustomOption.Create(3671, CustomOptionType.Crewmate, "immortalityMeetingStartSuicideTime", 10f, 2.5f, 60f, 2.5f, immortalitySpawnRate, format: "unitSeconds");
 
-            //prophetSpawnRate = new CustomRoleOption(8130, CustomOptionType.Crewmate, "prophet", Prophet.color, 15);
+            prophetSpawnRate = new CustomRoleOption(8130, CustomOptionType.Crewmate, "prophet", Prophet.color, 15);
+            prophetProphecyNum = CustomOption.Create(8131, CustomOptionType.Crewmate, "prophetProphecyNum", 1, 1, 10, 1, prophetSpawnRate, format: "unitTimes");
+            prophetMultipleProphecy = CustomOption.Create(8132, CustomOptionType.Crewmate, "prophetMultipleProphecy", false, prophetSpawnRate);
+            prophetBlackWhite = CustomOption.Create(8133, CustomOptionType.Crewmate, "prophetBlackWhite", false, prophetSpawnRate);
 
             //sunfishSpawnRate = new CustomRoleOption(3675, CustomOptionType.Crewmate, "sunfish", Sunfish.color, 15);
 

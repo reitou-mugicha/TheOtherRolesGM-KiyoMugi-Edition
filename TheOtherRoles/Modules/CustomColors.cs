@@ -26,7 +26,7 @@ namespace TheOtherRoles.Modules
                                                                     36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47,
                                                                     48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59,
                                                                     60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71,
-                                                                    72, 73, 74};
+                                                                    72, 73, 74, 75, 76};
         public static void Load()
         {
             List<StringNames> longlist = Enumerable.ToList<StringNames>(Palette.ColorNames);
@@ -173,7 +173,7 @@ namespace TheOtherRoles.Modules
             });
 
 
-            //Colored by Hawk
+            //Color by Hawk
             colors.Add(new CustomColor { longname = "Red",
                                         color = new Color32(255, 0, 0, byte.MaxValue), // color = new Color32(0xD8, 0x82, 0x83, byte.MaxValue),
                                         shadow = new Color32(128, 0, 0, byte.MaxValue), // shadow = new Color32(0xA5, 0x63, 0x65, byte.MaxValue),
@@ -342,6 +342,14 @@ namespace TheOtherRoles.Modules
                                         color = new Color32(40, 0, 224, byte.MaxValue), 
                                         shadow = new Color32(16, 0, 112, byte.MaxValue),
                                         isLighterColor = false });   
+            colors.Add(new CustomColor { longname = "Sakura",
+                                        color = new Color32(255, 192, 216, byte.MaxValue), 
+                                        shadow = new Color32(224, 152, 176, byte.MaxValue),
+                                        isLighterColor = true });   
+            colors.Add(new CustomColor { longname = "Night",
+                                        color = new Color32(0, 4, 56, byte.MaxValue), 
+                                        shadow = new Color32(0, 2, 28, byte.MaxValue),
+                                        isLighterColor = false });  
 
             pickableColors += (uint)colors.Count; // Colors to show in Tab
             /** Hidden Colors **/

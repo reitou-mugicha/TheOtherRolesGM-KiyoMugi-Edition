@@ -115,6 +115,7 @@ namespace TheOtherRoles
         //public static RoleInfo sunfish = new RoleInfo("sunfish", Sunfish.color, CustomOptionHolder.sunfishSpawnRate, RoleType.Sunfish);
         public static RoleInfo eater = new RoleInfo("eater", Eater.color, CustomOptionHolder.eaterSpawnRate, RoleType.Eater);
         public static RoleInfo darkHero = new RoleInfo("darkHero", DarkHero.color, CustomOptionHolder.darkHeroSpawnRate, RoleType.DarkHero);
+        public static RoleInfo prophet = new RoleInfo("prophet", Prophet.color, CustomOptionHolder.prophetSpawnRate, RoleType.Prophet);
 
 
         public static List<RoleInfo> allRoleInfos = new List<RoleInfo>() {
@@ -194,6 +195,7 @@ namespace TheOtherRoles
                 //sunfish,
                 eater,
                 darkHero,
+                prophet,
             };
 
         public static string tl(string key)
@@ -300,6 +302,7 @@ namespace TheOtherRoles
             }*/
             if (p.isRole(RoleType.Eater)) infos.Add(eater);
             if (p.isRole(RoleType.DarkHero)) infos.Add(darkHero);
+            if (p.isRole(RoleType.Prophet)) infos.Add(prophet);
 
             // Default roles
             if (infos.Count == 0 && p.Data.Role.IsImpostor) infos.Add(impostor); // Just Impostor

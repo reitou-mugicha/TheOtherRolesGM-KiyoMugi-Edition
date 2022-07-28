@@ -40,7 +40,7 @@ namespace TheOtherRoles
         Jammer,
         Immortality,
         //Sunfish,
-        //Prophet,
+        Prophet,
 
 
         Impostor = 100,
@@ -119,6 +119,7 @@ namespace TheOtherRoles
             { RoleType.Jammer, typeof(RoleBase<Jammer>) },
             { RoleType.Immortality, typeof(RoleBase<Immortality>) },
             //{ RoleType.Sunfish, typeof(RoleBase<Sunfish>) },
+            { RoleType.Prophet, typeof(RoleBase<Prophet>) },
 
             // Impostor
             { RoleType.Ninja, typeof(RoleBase<Ninja>) },

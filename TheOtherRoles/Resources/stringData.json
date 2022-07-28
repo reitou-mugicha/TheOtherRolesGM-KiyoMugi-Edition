@@ -808,6 +808,10 @@
         "0": "Dark Hero",
         "11": "\u30c0\u30fc\u30af\u30d2\u30fc\u30ed\u30fc"
     },
+    "prophet": {
+        "0": "Prophet",
+        "11": "\u9810\u8a00\u8005"
+    },
     "gmIsHost": {
         "0": "Always The Host",
         "11": "\u5fc5\u305a\u30db\u30b9\u30c8\u306b\u5272\u308a\u632f\u3089\u308c\u308b",
@@ -2226,6 +2230,18 @@
         "0": "Cooldown",
         "11": "\u30af\u30fc\u30eb\u30c0\u30a6\u30f3"
     },
+    "prophetProphecyNum": {
+        "0": "Maximum prophesy count",
+        "11": "\u9810\u8a00\u53ef\u80fd\u56de\u6570"
+    },
+    "prophetMultipleProphecy": {
+        "0": "Prophesy multiple players in one meeting",
+        "11": "1\u56de\u306e\u4f1a\u8b70\u3067\u8907\u6570\u540d\u306e\u9810\u8a00\u304c\u53ef\u80fd"
+    },
+    "prophetBlackWhite": {
+        "0": "Show only teams",
+        "11": "\u9663\u55b6\u306e\u307f\u8868\u793a"
+    },
     "torSettings": {
         "0": "The Other Roles Settings",
         "11": "The Other Roles\u306e\u8a2d\u5b9a",
@@ -2915,6 +2931,22 @@
         "0": "Melon Bread!",
         "11": "\u30e1\u30ed\u30f3\u30d1\u30f3\u304c\u3067\u304d\u307e\u3057\u305f\uff01"
     },
+    "impostorText": {
+        "0": "{0}'s team is the Impostor.",
+        "11": "{0} \u306e\u9663\u55b6\u306f\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc\u3067\u3059\u3002"
+    },
+    "neutralText": {
+        "0": "{0}'s team is the Neutral.",
+        "11": "{0} \u306e\u9663\u55b6\u306f\u30cb\u30e5\u30fc\u30c8\u30e9\u30eb\u3067\u3059\u3002"
+    },
+    "crewText": {
+        "0": "{0}'s team is the Crewmate.",
+        "11": "{0} \u306e\u9663\u55b6\u306f\u30af\u30eb\u30fc\u30e1\u30a4\u30c8\u3067\u3059\u3002"
+    },
+    "prophetText": {
+        "0": "{0}'s role is the {1}.",
+        "11": "{0} \u306e\u5f79\u8077\u306f {1} \u3067\u3059\u3002"
+    },
     "gmIntroDesc": {
         "0": "You're the Game Master",
         "11": "\u30b2\u30fc\u30e0\u30de\u30b9\u30bf\u30fc\u3060",
@@ -3270,6 +3302,10 @@
         "0": "Let's move quietly.",
         "11": "\u3072\u3063\u305d\u308a\u3068\u52d5\u3053\u3046"
     },
+    "prophetIntroDesc": {
+        "0": "I'll tell you who he is.",
+        "11": "\u5974\u306e\u6b63\u4f53\u3092\u9810\u8a00\u3057\u3088\u3046"
+    },
     "gmShortDesc": {
         "0": "You're the Game Master",
         "11": "\u30b2\u30fc\u30e0\u30de\u30b9\u30bf\u30fc\u3060",
@@ -3624,6 +3660,10 @@
     "darkHeroShortDesc": {
         "0": "Let's move quietly.",
         "11": "\u3072\u3063\u305d\u308a\u3068\u52d5\u3053\u3046"
+    },
+    "prophetShortDesc": {
+        "0": "I'll tell you who he is.",
+        "11": "\u5974\u306e\u6b63\u4f53\u3092\u9810\u8a00\u3057\u3088\u3046"
     },
     "jesterFullDesc": {
         "0": "The Jester does not have any tasks.\nThey win the game as a solo if they get voted out during a meeting.",
@@ -3982,6 +4022,10 @@
     "darkHeroFullDesc": {
         "0": "Kills can be made only during power outages.\nInstead, the cooldown is shorter.",
         "11": "\u30fb\u505c\u96fb\u4e2d\u3060\u3051\u30ad\u30eb\u304c\u3067\u304d\u308b\u3002\n\u30fb\u305d\u306e\u4ee3\u308f\u308a\u3001\u30af\u30fc\u30eb\u30c0\u30a6\u30f3\u304c\u77ed\u304f\u306a\u308b\u3002"
+    },
+    "prophetFullDesc": {
+        "0": "The prophet can see the player's role selected during the meeting.\nIf the ability is spent, you will die just after the end of the meeting.\n\nNOTES:\nThe role is shown in the chat. Other players cannot see it.\nOnce you have spent the ability, you will be treated as a already dead player, with no body left on the map.\nIf Show only teams is active, either Crewmate, Imposter, or Neutral will be shown.",
+        "11": "\u30fb\u9810\u8a00\u8005\u306f\u3001\u4f1a\u8b70\u4e2d\u306b\u9078\u629e\u3057\u305f\u30d7\u30ec\u30a4\u30e4\u30fc\u306e\u5f79\u8077\u3092\u78ba\u8a8d\u3059\u308b\u3053\u3068\u304c\u3067\u304d\u308b\u3002\n\u30fb\u80fd\u529b\u3092\u4f7f\u3044\u5207\u308b\u3068\u3001\u4f1a\u8b70\u660e\u3051\u76f4\u5f8c\u306b\u6b7b\u4ea1\u3059\u308b\u3002\n\n\u6ce8\u610f\uff1a\n\u5f79\u8077\u306f\u30c1\u30e3\u30c3\u30c8\u306b\u8868\u793a\u3055\u308c\u308b\u3002\u4ed6\u306e\u30d7\u30ec\u30a4\u30e4\u30fc\u306f\u898b\u308b\u3053\u3068\u304c\u3067\u304d\u306a\u3044\u3002\n\u80fd\u529b\u3092\u4f7f\u3044\u5207\u3063\u305f\u9810\u8a00\u8005\u306f\u3001\u6b7b\u4f53\u304c\u30de\u30c3\u30d7\u4e0a\u306b\u6b8b\u3089\u305a\u65e2\u306b\u6b7b\u4ea1\u6e08\u307f\u306e\u30d7\u30ec\u30a4\u30e4\u30fc\u3068\u3057\u3066\u6271\u308f\u308c\u308b\u3002\n\u9663\u55b6\u306e\u307f\u8868\u793a\u304c\u6709\u52b9\u306e\u5834\u5408\u3001\u30af\u30eb\u30fc\u30e1\u30a4\u30c8/\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc/\u30cb\u30e5\u30fc\u30c8\u30e9\u30eb\u306e\u3044\u305a\u308c\u304b\u304c\u8868\u793a\u3055\u308c\u308b\u3002"
     },
     "Banner": {
         "0": "Banner.png"
@@ -4576,6 +4620,14 @@
     "Iris": {
         "0": "Iris",
         "11": "\u30a2\u30a4\u30ea\u30b9"
+    },
+    "Sakura": {
+        "0": "Sakura",
+        "11": "\u685c"
+    },
+    "Night": {
+        "0": "Night",
+        "11": "\u30ca\u30a4\u30c8"
     },
     "innerslothHats": {
         "0": "Innersloth Hats",
