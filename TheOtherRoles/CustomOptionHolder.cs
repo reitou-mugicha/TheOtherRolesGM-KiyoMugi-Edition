@@ -224,6 +224,7 @@ namespace TheOtherRoles
         public static CustomOption tricksterPlaceBoxCooldown;
         public static CustomOption tricksterLightsOutCooldown;
         public static CustomOption tricksterLightsOutDuration;
+        public static CustomOption tricksterBoxLimit;
 
         public static CustomRoleOption cleanerSpawnRate;
         public static CustomOption cleanerCooldown;
@@ -576,6 +577,7 @@ namespace TheOtherRoles
             tricksterPlaceBoxCooldown = CustomOption.Create(181, CustomOptionType.Impostor, "tricksterPlaceBoxCooldown", 10f, 2.5f, 30f, 2.5f, tricksterSpawnRate, format: "unitSeconds");
             tricksterLightsOutCooldown = CustomOption.Create(182, CustomOptionType.Impostor, "tricksterLightsOutCooldown", 30f, 5f, 60f, 5f, tricksterSpawnRate, format: "unitSeconds");
             tricksterLightsOutDuration = CustomOption.Create(183, CustomOptionType.Impostor, "tricksterLightsOutDuration", 15f, 5f, 60f, 2.5f, tricksterSpawnRate, format: "unitSeconds");
+            tricksterBoxLimit = CustomOption.Create(184, CustomOptionType.Impostor, "tricksterBoxLimit", 3f, 2f, 10f, 1f, tricksterSpawnRate);
 
             cleanerSpawnRate = new CustomRoleOption(190, CustomOptionType.Impostor, "cleaner", Cleaner.color, 1);
             cleanerCooldown = CustomOption.Create(191, CustomOptionType.Impostor, "cleanerCooldown", 30f, 2.5f, 60f, 2.5f, cleanerSpawnRate, format: "unitSeconds");

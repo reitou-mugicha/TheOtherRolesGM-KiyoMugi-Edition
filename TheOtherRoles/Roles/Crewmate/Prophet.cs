@@ -42,6 +42,13 @@ namespace TheOtherRoles
             return remainingShots;
         }
 
+        private static Sprite buttonSprite;
+        public static Sprite getTargetSprite()
+        {
+            if (buttonSprite) return buttonSprite;
+            buttonSprite = Helpers.loadSpriteFromResources("TheOtherRoles.Resources.ProphetTargetButton.png", 115f);
+            return buttonSprite;
+        }
 
         public static void MakeButtons(HudManager hm)
         {

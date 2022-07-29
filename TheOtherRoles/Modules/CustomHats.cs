@@ -469,7 +469,7 @@ namespace TheOtherRoles.Modules
             "https://raw.githubusercontent.com/yukinogatari/TheOtherHats-GM/master",
             "https://raw.githubusercontent.com/Eisbison/TheOtherHats/master",
             "https://raw.githubusercontent.com/Dekokiyo/TheOtherHatsGM-KiyoMugi-Edition/master",
-            "https://raw.githubusercontent.com/hinakkyu/TheOtherHats/master"
+            "https://raw.githubusercontent.com/hinakkyu/TheOtherHats/master",
         };
 
         public static List<CustomHatOnline> hatDetails = new();

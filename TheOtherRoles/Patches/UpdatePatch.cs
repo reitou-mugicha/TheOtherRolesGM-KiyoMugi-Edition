@@ -127,6 +127,8 @@ namespace TheOtherRoles.Patches
                 setPlayerNameColor(PlayerControl.LocalPlayer, Immoralist.color);
             else if (PlayerControl.LocalPlayer.isRole(RoleType.FortuneTeller) && (FortuneTeller.isCompletedNumTasks(PlayerControl.LocalPlayer) || PlayerControl.LocalPlayer.Data.IsDead))
                 setPlayerNameColor(PlayerControl.LocalPlayer, FortuneTeller.color);
+            //else if (PlayerControl.LocalPlayer.isRole(RoleType.Sunfish) && (Sunfish.isSunfishCompletedTasks() || PlayerControl.LocalPlayer.Data.IsDead))
+                //setPlayerNameColor(PlayerControl.LocalPlayer, Sunfish.color);
             else if (PlayerControl.LocalPlayer.isRole(RoleType.Jackal))
             {
                 // Jackal can see his sidekick

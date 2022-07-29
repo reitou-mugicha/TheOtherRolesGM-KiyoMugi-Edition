@@ -669,7 +669,7 @@ namespace TheOtherRoles.Patches
                     targetBox.name = "ProphetButton";
                     targetBox.transform.localPosition = new Vector3(-0.95f, 0.03f, -1.3f);
                     SpriteRenderer renderer = targetBox.GetComponent<SpriteRenderer>();
-                    renderer.sprite = Guesser.getTargetSprite();
+                    renderer.sprite = Prophet.getTargetSprite();
                     PassiveButton button = targetBox.GetComponent<PassiveButton>();
                     button.OnClick.RemoveAllListeners();
                     int copiedIndex = i;

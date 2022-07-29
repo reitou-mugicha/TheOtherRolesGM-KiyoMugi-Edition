@@ -183,6 +183,11 @@ namespace TheOtherRoles.Patches
                     roleInfo = RoleInfo.crewmate;
                 }
 
+                /*if(roleInfo == RoleInfo.sunfish && Sunfish.isSunfishCompletedTasks())
+                {
+                    roleInfo = RoleInfo.crewmate;
+                }*/
+
                 Helpers.log($"{roleInfo.name}");
                 Helpers.log($"{roleInfo.introDescription}");
 

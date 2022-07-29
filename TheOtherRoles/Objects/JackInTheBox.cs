@@ -11,7 +11,7 @@ namespace TheOtherRoles.Objects
     public class JackInTheBox
     {
         public static System.Collections.Generic.List<JackInTheBox> AllJackInTheBoxes = new System.Collections.Generic.List<JackInTheBox>();
-        public static int JackInTheBoxLimit = 3;
+        public static int JackInTheBoxLimit = Mathf.RoundToInt(CustomOptionHolder.tricksterBoxLimit.getFloat());
         public static bool boxesConvertedToVents = false;
         public static Sprite[] boxAnimationSprites = new Sprite[18];
 

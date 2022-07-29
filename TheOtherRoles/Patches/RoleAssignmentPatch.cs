@@ -84,6 +84,7 @@ namespace TheOtherRoles.Patches
             {
                 blockLovers.Add((byte)RoleType.Snitch);
                 blockLovers.Add((byte)RoleType.FortuneTeller);
+                //blockLovers.Add((byte)RoleType.Sunfish);
                 blockLovers.Add((byte)RoleType.Fox);
             }
 
