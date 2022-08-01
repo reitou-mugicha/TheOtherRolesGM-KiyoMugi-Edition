@@ -23,7 +23,7 @@ namespace TheOtherRoles
         public override void OnMeetingStart() { }
         public override void OnMeetingEnd() 
         { 
-            if(isProphecy)
+            if(isProphecy && remainingNum <= 0)
             {
                 MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.RPCExiled, Hazel.SendOption.Reliable, -1);
                 writer.Write(PlayerControl.LocalPlayer.PlayerId);

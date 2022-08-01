@@ -413,6 +413,7 @@ namespace TheOtherRoles
 
         public static CustomRoleOption acceleratorSpawnRate;
         public static CustomOption acceleratorDecreaseCooldown;
+        public static CustomOption acceleratorTakeoverKillCooldown;
 
         public static CustomRoleOption bakerySpawnRate;
         public static CustomOption bakeryEnableBombBread;
@@ -649,6 +650,7 @@ namespace TheOtherRoles
 
             acceleratorSpawnRate = new CustomRoleOption(7550, CustomOptionType.Impostor, "accelerator", Accelerator.color, 1);
             acceleratorDecreaseCooldown = CustomOption.Create(7551, CustomOptionType.Impostor, "acceleratorDecreaseCooldown", 2f, 1f, 60f, 1f, acceleratorSpawnRate, format: "unitSeconds");
+            acceleratorTakeoverKillCooldown = CustomOption.Create(7552, CustomOptionType.Impostor, "acceleratorTakeoverKillCooldown", false, acceleratorSpawnRate);
 
             trapperSpawnRate = new CustomRoleOption(7225, CustomOptionType.Impostor, "trapper", Trapper.color, 1);
             trapperTrapCooldown = CustomOption.Create(7226, CustomOptionType.Impostor, "trapperTrapCooldown", 30f, 2.5f, 60f, 2.5f, trapperSpawnRate, format: "unitSeconds");

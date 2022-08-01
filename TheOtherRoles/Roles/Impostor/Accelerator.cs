@@ -15,6 +15,7 @@ namespace TheOtherRoles
         public static Color color = Palette.ImpostorRed;
         public static float decreaseCooldown {get{return CustomOptionHolder.acceleratorDecreaseCooldown.getFloat();}}
         public static float killCooldown;
+        public static bool TakeoverKillcooldown {get{return CustomOptionHolder.acceleratorTakeoverKillCooldown.getBool();}}
 
         public Accelerator()
         {
@@ -23,13 +24,24 @@ namespace TheOtherRoles
         }
 
         public override void OnMeetingStart() { }
-        public override void OnMeetingEnd() { }
+        public override void OnMeetingEnd() 
+        { 
+            if (TakeoverKillcooldown)
+            {
+                PlayerControl.LocalPlayer.SetKillTimer(killCooldown);
+            }
+        }
         public override void FixedUpdate() { }
         public override void OnKill(PlayerControl target) 
         { 
-            killCooldown -= decreaseCooldown;
-            if(killCooldown >= 0)
+            if (killCooldown > 0)
+            {
+                killCooldown -= decreaseCooldown;
                 PlayerControl.LocalPlayer.SetKillTimer(killCooldown);
+            } else {
+                PlayerControl.LocalPlayer.SetKillTimer(0f);
+            }
+            
         }
         public override void OnDeath(PlayerControl killer = null) { }
         public override void HandleDisconnect(PlayerControl player, DisconnectReasons reason) { }
