@@ -52,16 +52,8 @@ namespace TheOtherRoles.Objects
             // Create the marker
             gameObject.transform.position = position;
             boxRenderer = gameObject.AddComponent<SpriteRenderer>();
-            if(CustomOptionHolder.tricksterBoxNormalVentSprite.getBool())
-            {
-                var vent = UnityEngine.Object.FindObjectOfType<Vent>();
-                boxRenderer.sprite = vent.GetComponent<SpriteRenderer>().sprite;
-            }
-            else
-            {
-                boxRenderer.sprite = getBoxAnimationSprite(0);
-            }
-            
+            boxRenderer.sprite = getBoxAnimationSprite(0);
+
             // Create the vent
             var referenceVent = UnityEngine.Object.FindObjectOfType<Vent>();
             vent = UnityEngine.Object.Instantiate<Vent>(referenceVent);

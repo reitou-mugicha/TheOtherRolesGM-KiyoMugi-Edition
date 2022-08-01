@@ -1,4 +1,4 @@
-/*using HarmonyLib;
+using HarmonyLib;
 using System.Collections.Generic;
 using UnityEngine;
 using TheOtherRoles.Objects;
@@ -172,4 +172,3 @@ namespace TheOtherRoles
         }
     }
 }
-*/

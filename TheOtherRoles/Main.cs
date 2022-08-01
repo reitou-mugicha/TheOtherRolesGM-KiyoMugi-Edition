@@ -24,7 +24,7 @@ namespace TheOtherRoles
     public class TheOtherRolesPlugin : BasePlugin
     {
         public const string Id = "kiyomori.mugicha.theotherrolesgmkm";
-        public const string VersionString = "3.1.1.5";
+        public const string VersionString = "3.1.1";
         public static System.Version Version = System.Version.Parse(VersionString);
         internal static BepInEx.Logging.ManualLogSource Logger;
 
@@ -106,8 +106,8 @@ namespace TheOtherRoles
 
             Patches.FreeNamePatch.Initialize();
             Harmony.PatchAll();
-            SubmergedCompatibility.Initialize();
-            Patches.SubmergedPatch.Patch();
+            // SubmergedCompatibility.Initialize();
+            // Patches.SubmergedPatch.Patch();
         }
 
         public static Sprite GetModStamp()
