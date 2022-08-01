@@ -96,7 +96,7 @@ namespace TheOtherRoles
         public static RoleInfo assassin = new RoleInfo("assassin", Assassin.color, CustomOptionHolder.assassinSpawnRate, RoleType.Assassin);
         public static RoleInfo customImpostor = new RoleInfo("customImpostor", CustomImpostor.color, CustomOptionHolder.customImpostorSpawnRate, RoleType.CustomImpostor);
         public static RoleInfo doubleKiller = new RoleInfo("doubleKiller", DoubleKiller.color, CustomOptionHolder.doubleKillerSpawnRate, RoleType.DoubleKiller);
-        public static RoleInfo chunibyo = new RoleInfo("chunibyo", Chunibyo.color, CustomOptionHolder.chunibyoSpawnRate, RoleType.Chunibyo);
+        //public static RoleInfo chunibyo = new RoleInfo("chunibyo", Chunibyo.color, CustomOptionHolder.chunibyoSpawnRate, RoleType.Chunibyo);
         public static RoleInfo boss = new RoleInfo("boss", Boss.color, CustomOptionHolder.yakuzaSpawnRate, RoleType.Boss);
         public static RoleInfo staff = new RoleInfo("staff", Staff.color, CustomOptionHolder.yakuzaSpawnRate, RoleType.Staff);
         public static RoleInfo gun = new RoleInfo("gun", Gun.color, CustomOptionHolder.yakuzaSpawnRate, RoleType.Gun);
@@ -176,7 +176,7 @@ namespace TheOtherRoles
                 assassin,
                 customImpostor,
                 doubleKiller,
-                chunibyo,
+                //chunibyo,
                 boss,
                 staff,
                 gun,
@@ -254,7 +254,7 @@ namespace TheOtherRoles
             if (p.isRole(RoleType.Portalmaker)) infos.Add(portalmaker);
             if (p.isRole(RoleType.CustomImpostor)) infos.Add(customImpostor);
             if (p.isRole(RoleType.DoubleKiller)) infos.Add(doubleKiller);
-            if (p.isRole(RoleType.Chunibyo)) infos.Add(chunibyo);
+            //if (p.isRole(RoleType.Chunibyo)) infos.Add(chunibyo);
             if (p.isRole(RoleType.Boss)) infos.Add(boss);
             if (p.isRole(RoleType.Staff)) infos.Add(staff);
             if (p.isRole(RoleType.Gun)) infos.Add(gun);

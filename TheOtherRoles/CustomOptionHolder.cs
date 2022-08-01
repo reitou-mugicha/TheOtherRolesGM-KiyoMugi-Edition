@@ -225,6 +225,7 @@ namespace TheOtherRoles
         public static CustomOption tricksterLightsOutCooldown;
         public static CustomOption tricksterLightsOutDuration;
         public static CustomOption tricksterBoxLimit;
+        //public static CustomOption tricksterBoxNormalVentSprite;
 
         public static CustomRoleOption cleanerSpawnRate;
         public static CustomOption cleanerCooldown;
@@ -385,7 +386,7 @@ namespace TheOtherRoles
         public static CustomRoleOption doubleKillerSpawnRate;
         public static CustomOption doubleKillerKillButtonCooldown;
         public static CustomRoleOption chunibyoSpawnRate;
-        public static CustomOption chunibyoCooldown;
+        /*public static CustomOption chunibyoCooldown;
         public static CustomOption chunibyoDuration;
         public static CustomOption chunibyoEnableSpeedUp;
         public static CustomOption chunibyoEnableSpeedDown;
@@ -395,7 +396,7 @@ namespace TheOtherRoles
         public static CustomOption chunibyoSpeedUpBonus;
         public static CustomOption chunibyoSpeedDownBonus;
         public static CustomOption chunibyoHighVisionBonus;
-        public static CustomOption chunibyoLowVisionBonus;
+        public static CustomOption chunibyoLowVisionBonus;*/
         public static CustomRoleOption yakuzaSpawnRate;
         public static CustomOption yakuzaKillCooldown;
         public static CustomOption yakuzaNumShots;
@@ -578,6 +579,7 @@ namespace TheOtherRoles
             tricksterLightsOutCooldown = CustomOption.Create(182, CustomOptionType.Impostor, "tricksterLightsOutCooldown", 30f, 5f, 60f, 5f, tricksterSpawnRate, format: "unitSeconds");
             tricksterLightsOutDuration = CustomOption.Create(183, CustomOptionType.Impostor, "tricksterLightsOutDuration", 15f, 5f, 60f, 2.5f, tricksterSpawnRate, format: "unitSeconds");
             tricksterBoxLimit = CustomOption.Create(184, CustomOptionType.Impostor, "tricksterBoxLimit", 3f, 2f, 10f, 1f, tricksterSpawnRate);
+            //tricksterBoxNormalVentSprite = CustomOption.Create(185, CustomOptionType.Impostor, "tricksterBoxNormalVentSprite", false, tricksterSpawnRate);
 
             cleanerSpawnRate = new CustomRoleOption(190, CustomOptionType.Impostor, "cleaner", Cleaner.color, 1);
             cleanerCooldown = CustomOption.Create(191, CustomOptionType.Impostor, "cleanerCooldown", 30f, 2.5f, 60f, 2.5f, cleanerSpawnRate, format: "unitSeconds");
@@ -890,7 +892,7 @@ namespace TheOtherRoles
             sprinterDuration = CustomOption.Create(622, CustomOptionType.Crewmate, "sprinterDuration", 15f, 2.5f, 60f, 2.5f, sprinterSpawnRate, format: "unitSeconds");
             sprinterSpeedBonus = CustomOption.Create(623, CustomOptionType.Crewmate, "sprinterSpeedBonus", 125f, 50f, 200f, 5f, sprinterSpawnRate, format: "unitPercent");
 
-            chunibyoSpawnRate = new CustomRoleOption(670, CustomOptionType.Crewmate, "chunibyo", Chunibyo.color, 15);
+            /*chunibyoSpawnRate = new CustomRoleOption(670, CustomOptionType.Crewmate, "chunibyo", Chunibyo.color, 15);
             chunibyoDuration = CustomOption.Create(671, CustomOptionType.Crewmate, "chunibyoDuration", 10f, 2.5f, 30f, 2.5f, chunibyoSpawnRate, format: "unitSeconds");
             chunibyoCooldown = CustomOption.Create(672, CustomOptionType.Crewmate, "chunibyoCooldown", 30f, 2.5f, 60f, 2.5f, chunibyoSpawnRate, format: "unitSeconds");
             chunibyoEnableSpeedUp = CustomOption.Create(673, CustomOptionType.Crewmate, "chunibyoEnableSpeedUp", true, chunibyoSpawnRate);
@@ -902,7 +904,7 @@ namespace TheOtherRoles
             chunibyoSpeedDownBonus = CustomOption.Create(679, CustomOptionType.Crewmate, "chunibyoSpeedDownBonus", 125f, 50f, 200f, 5f, chunibyoEnableSpeedDown, format: "unitPercent");
             chunibyoHighVisionBonus = CustomOption.Create(680, CustomOptionType.Crewmate, "chunibyoHighVisionBonus", 150f, 110f, 200f, 10f, chunibyoEnableHighVision, format: "unitPercent");
             chunibyoLowVisionBonus = CustomOption.Create(681, CustomOptionType.Crewmate, "chunibyoLowVisionBonus", 50f, 10f, 90f, 10f, chunibyoEnableLowVision, format: "unitPercent");
-
+*/
             yakuzaSpawnRate = new CustomRoleOption(690, CustomOptionType.Crewmate, "yakuza", Boss.color, 1);
             yakuzaNumShots = CustomOption.Create(691, CustomOptionType.Crewmate, "yakuzaNumShots", 2f, 1f, 15f, 1f, yakuzaSpawnRate, format: "unitShots");
             yakuzaShotsShare = CustomOption.Create(692, CustomOptionType.Crewmate, "yakuzaNumShare", true, yakuzaSpawnRate);
