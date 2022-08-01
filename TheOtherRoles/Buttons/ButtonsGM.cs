@@ -30,7 +30,7 @@ namespace TheOtherRoles
             Mayor.SetButtonCooldowns();
             DiePlayer.SetButtonCooldowns();
             DoubleKiller.SetButtonCooldowns();
-            Chunibyo.SetButtonCooldowns();
+            //Chunibyo.SetButtonCooldowns();
             Boss.SetButtonCooldowns();
             Staff.SetButtonCooldowns();
             Gun.SetButtonCooldowns();
@@ -67,7 +67,7 @@ namespace TheOtherRoles
             Mayor.MakeButtons(hm);
             DiePlayer.MakeButtons(hm);
             DoubleKiller.MakeButtons(hm);
-            Chunibyo.MakeButtons(hm);
+            //Chunibyo.MakeButtons(hm);
             Boss.MakeButtons(hm);
             Staff.MakeButtons(hm);
             Gun.MakeButtons(hm);
