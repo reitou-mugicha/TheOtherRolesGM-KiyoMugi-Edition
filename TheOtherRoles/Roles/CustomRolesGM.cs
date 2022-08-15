@@ -57,6 +57,7 @@ namespace TheOtherRoles
             DarkHero.Clear();
             Prophet.Clear();
             Role.ClearAll();
+            Role.ClearAll();
         }
 
         public static void FixedUpdate(PlayerControl player)

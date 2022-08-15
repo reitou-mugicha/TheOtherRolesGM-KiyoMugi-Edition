@@ -1033,6 +1033,10 @@
         "0": "Box Limit",
         "11": "\u8a2d\u7f6e\u3067\u304d\u308b\u7bb1\u306e\u6700\u5927\u6570"
     },
+    "tricksterBoxNormalVentSprite": {
+        "0": "Box Sprite Change Normal Vent",
+        "11": "\u7bb1\u306e\u8868\u793a\u3092\u30d9\u30f3\u30c8\u306b\u3059\u308b"
+    },
     "cleanerCooldown": {
         "0": "Clean Cooldown",
         "11": "\u6383\u9664\u30af\u30fc\u30eb\u30c0\u30a6\u30f3",
@@ -2181,6 +2185,10 @@
     "acceleratorDecreaseCooldown": {
         "0": "Decrease Cooldown",
         "11": "\u6e1b\u3089\u3059\u79d2\u6570"
+    },
+    "acceleratorTakeoverKillCooldown": {
+        "0": "Takeover KillCooldown",
+        "11": "\u30ad\u30eb\u30af\u30fc\u30eb\u30bf\u30a4\u30e0\u3092\u5f15\u304d\u7d99\u3050"
     },
     "bakeryEnableBombBread": {
         "0": "Enable BombBread",

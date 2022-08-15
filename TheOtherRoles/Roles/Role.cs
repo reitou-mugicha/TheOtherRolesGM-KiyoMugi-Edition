@@ -30,7 +30,7 @@ namespace TheOtherRoles
         FortuneTeller,
         Sprinter,
         Portalmaker,
-        Chunibyo,
+        //Chunibyo,
         Boss,
         Staff,
         Gun,

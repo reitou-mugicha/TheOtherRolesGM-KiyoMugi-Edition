@@ -385,7 +385,7 @@ namespace TheOtherRoles
 
         public static CustomRoleOption doubleKillerSpawnRate;
         public static CustomOption doubleKillerKillButtonCooldown;
-        public static CustomRoleOption chunibyoSpawnRate;
+        //public static CustomRoleOption chunibyoSpawnRate;
         /*public static CustomOption chunibyoCooldown;
         public static CustomOption chunibyoDuration;
         public static CustomOption chunibyoEnableSpeedUp;
