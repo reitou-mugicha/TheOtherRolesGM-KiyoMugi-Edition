@@ -152,7 +152,6 @@ namespace TheOtherRoles
                 if (__instance.AmOwner && __instance.myPlayer.CanMove && GameData.Instance && isSprinting(__instance.myPlayer))
                 {
                     __instance.body.velocity *= speedBonus;
-                    __instance.body.AddForce(new Vector2(9, 6));
                 }
             }
         }
