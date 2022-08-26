@@ -15,7 +15,7 @@ namespace TheOtherRoles
             pc.CurrentOutfitType = PlayerOutfitType.Shapeshifted;
             pc.RawSetName(outfit.PlayerName);
             pc.RawSetHat(outfit.HatId, outfit.ColorId);
-            pc.RawSetVisor(outfit.VisorId);
+            pc.RawSetVisor(outfit.VisorId, outfit.ColorId);
             pc.RawSetColor(outfit.ColorId);
             pc.RawSetPet(outfit.PetId, outfit.ColorId);
             Helpers.setSkinWithAnim(pc.MyPhysics, outfit.SkinId, outfit.ColorId);
