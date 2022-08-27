@@ -77,15 +77,5 @@ namespace TheOtherRoles.Patches
                 }
             }
         }
-
-        [HarmonyPatch(typeof(ExileController), nameof(ExileController.ReEnableGameplay))]
-        public class BakeryChatDisable
-        {
-            static void Postfix(ExileController __instance)
-            {
-                //会議終了時、テキストを消す
-                breadText.gameObject.SetActive(false); 
-            }
-        }
     }
 }
